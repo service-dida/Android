@@ -13,7 +13,7 @@
         android:name=".GlobalApplication"
         android:theme="@style/Theme.DIDA">
         <activity
-            android:name=".presentation.views.MainActivity"
+            android:name=".presentation.views.NavHostActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
