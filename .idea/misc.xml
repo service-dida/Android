@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/activity_nav_host.xml" value="0.1875" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/dialog_loading.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_nav_host.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.13055555555555556" />

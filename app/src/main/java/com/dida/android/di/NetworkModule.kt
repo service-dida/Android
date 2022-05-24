@@ -3,6 +3,7 @@ package com.dida.android.di
 import androidx.databinding.ktx.BuildConfig
 import com.dida.android.data.interceptor.BearerInterceptor
 import com.dida.android.data.interceptor.XAccessTokenInterceptor
+import com.dida.android.data.repository.MainAPIService
 import com.dida.android.util.GlobalConstant.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -44,6 +45,11 @@ object NetworkModule {
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
+
+    @Singleton
+    @Provides
+    fun provideMainAPIService(retrofit: Retrofit) : MainAPIService =
+        retrofit.create(MainAPIService::class.java)
 
 //    @Provides
 //    @Singleton

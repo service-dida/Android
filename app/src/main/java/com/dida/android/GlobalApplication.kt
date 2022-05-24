@@ -4,8 +4,10 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import dagger.hilt.android.HiltAndroidApp
 import retrofit2.Retrofit
 
+@HiltAndroidApp
 class GlobalApplication :Application(){
     // 코틀린의 전역변수 문법
     companion object {
