@@ -3,7 +3,7 @@ package com.dida.android.di
 import androidx.databinding.ktx.BuildConfig
 import com.dida.android.data.interceptor.BearerInterceptor
 import com.dida.android.data.interceptor.XAccessTokenInterceptor
-import com.dida.android.data.repository.MainAPIService
+import com.dida.android.domain.usecase.MainAPIService
 import com.dida.android.util.GlobalConstant.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -50,20 +50,4 @@ object NetworkModule {
     @Provides
     fun provideMainAPIService(retrofit: Retrofit) : MainAPIService =
         retrofit.create(MainAPIService::class.java)
-
-//    @Provides
-//    @Singleton
-//    fun provideKakaoLoginApi(retrofit: Retrofit): KakaoLoginAPI =
-//        retrofit.create(KakaoLoginAPI::class.java)
-//
-//    @Provides
-//    @Singleton
-//    fun provideNaverLoginApi(retrofit: Retrofit): NaverLoginAPI =
-//        retrofit.create(NaverLoginAPI::class.java)
-//
-//    @Provides
-//    @Singleton
-//    fun provideRegisterApi(retrofit: Retrofit): RegisterAPI =
-//        retrofit.create(RegisterAPI::class.java)
-
 }

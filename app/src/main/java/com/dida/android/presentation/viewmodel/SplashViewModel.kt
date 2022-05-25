@@ -20,7 +20,6 @@ class SplashViewModel @Inject constructor(private val mainRepository: MainReposi
     val appVersion: LiveData<AppVersionResponse>
         get() = _appVersion
 
-
     fun checkVersion(){
         viewModelScope.launch {
             val version = mainRepository.checkVersion()
