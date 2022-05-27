@@ -65,9 +65,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         initStartView()
         initDataBinding()
         initAfterBinding()
-
-        // 다크모드 비활성화
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     override fun onDestroy() {

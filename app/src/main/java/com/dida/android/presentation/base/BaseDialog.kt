@@ -68,9 +68,6 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
         initStartView()
         initDataBinding()
         initAfterBinding()
-
-        // 다크모드 비활성화
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     override fun onResume() {
