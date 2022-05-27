@@ -10,7 +10,8 @@ import com.dida.android.util.LoadingDialog
 
 abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {
 
-    lateinit var binding: T
+    private var _binding: T? = null
+    val binding get()= requireNotNull(_binding)
 
     /**
      * setContentView로 호출할 Layout의 리소스 Id.
@@ -50,7 +51,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, layoutResourceId)
+        _binding = DataBindingUtil.setContentView(this, layoutResourceId)
 
         initStartView()
         initDataBinding()
@@ -59,7 +60,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     override fun onDestroy() {
         super.onDestroy()
-        binding
+        _binding = null
     }
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.

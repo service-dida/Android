@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -22,6 +23,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
     override fun initStartView() {
         navController = Navigation.findNavController(requireView())
         viewModel.checkVersion()
+//        val dialog = PasswordBottomSheetDialog()
+//        dialog.show(childFragmentManager, "SplashFragment")
     }
 
     override fun initDataBinding() {

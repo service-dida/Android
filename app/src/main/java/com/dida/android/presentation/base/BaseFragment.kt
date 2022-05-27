@@ -13,7 +13,8 @@ import com.dida.android.util.LoadingDialog
 
 abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : Fragment(layoutId) {
 
-    lateinit var binding: T
+    private var _binding: T? = null
+    val binding get()= requireNotNull(_binding)
 
     /**
      * setContentView로 호출할 Layout의 리소스 Id.
@@ -56,7 +57,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
+        _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         return binding.root
     }
 
@@ -67,9 +68,9 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         initAfterBinding()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.

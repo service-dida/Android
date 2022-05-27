@@ -14,7 +14,8 @@ import com.dida.android.util.LoadingDialog
 
 abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : DialogFragment(layoutId) {
 
-    lateinit var binding: T
+    private var _binding: T? = null
+    val binding get()= requireNotNull(_binding)
 
     /**
      * setContentView로 호출할 Layout의 리소스 Id.
@@ -57,7 +58,7 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
+        _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return view
@@ -82,10 +83,11 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
+
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.

@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1955" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/activity_nav_host.xml" value="0.1875" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/dialog_bottom_sheet_password.xml" value="0.1875" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/dialog_loading.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_nav_host.xml" value="0.28229166666666666" />
