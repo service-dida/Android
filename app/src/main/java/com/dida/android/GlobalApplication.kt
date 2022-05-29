@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import retrofit2.Retrofit
 
@@ -27,7 +28,7 @@ class GlobalApplication :Application(){
         editor = sSharedPreferences.edit()
 
         // Kakao SDK 초기화
-//        KakaoSdk.init(this, "5820a967bb81030d649333f17f04f062")
+        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
         // kakao hash key 추출
 //        Log.d("getKeyHash", "" + getKeyHash(this))
 

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views
+package com.dida.android.presentation.views.login
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.viewmodel.NicknameViewModel
+import com.dida.android.presentation.viewmodel.login.NicknameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

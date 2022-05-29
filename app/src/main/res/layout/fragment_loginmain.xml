@@ -7,21 +7,23 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.viewmodel.login.NicknameViewModel" />
+            type="com.dida.android.presentation.viewmodel.login.LoginMainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/nickname_edit"
+
+        <Button
+            android:id="@+id/kakao_login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
-        </EditText>
-
+            android:text="임시 카카오 로그인버튼"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
