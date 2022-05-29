@@ -9,6 +9,9 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 32
 
@@ -20,6 +23,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        /* Hide Key (Must In Local.Properties)*/
+        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties["kakao_native_app_key"]
+
+        manifestPlaceholders = [KAKAO_NATIVE_APP_KEY_FOR_MANIFEST: properties.getProperty('kakao_native_app_key_for_manifest')]
     }
 
     buildTypes {
@@ -91,4 +99,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.1"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.4.1"
+
+    // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.8.4"
 }
