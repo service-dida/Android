@@ -1,7 +1,6 @@
 package com.dida.android.data.interceptor
 
 import com.dida.android.GlobalApplication
-import com.dida.android.GlobalApplication.Companion.sSharedPreferences
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -19,7 +18,7 @@ class BearerInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var Baseresponse = chain.request()
         if(Baseresponse.method == "HTTP 403 "){
-            var accessToken = sSharedPreferences.getString("X-ACCESS-TOKEN", null)
+            var accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
 //            var refreshToken = RunnerBeApplication.sSharedPreferences.getString("refresh-token", null)
 
 //            val response = Retrofit.Builder()

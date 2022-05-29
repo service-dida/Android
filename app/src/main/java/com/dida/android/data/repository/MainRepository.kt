@@ -5,4 +5,6 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val mainAPIService: MainAPIService){
     suspend fun checkVersion() = mainAPIService.checkVersion()
+
+    fun loginAPIServer(idToken : String) = mainAPIService.loginAPIServer(idToken = idToken)
 }

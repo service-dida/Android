@@ -1,7 +1,9 @@
 package com.dida.android.presentation.views.login
 
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.base.BaseFragment
@@ -13,6 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewModel>(R.layout.fragment_nickname) {
 
+    private val TAG = "LoginMainFragment"
+
     override val layoutResourceId: Int
         get() = R.layout.fragment_loginmain // get() : 커스텀 접근자, 코틀린 문법
 
@@ -23,18 +27,33 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initDataBinding() {
+        viewModel.kakaoLoginSuccessLiveData.observe(viewLifecycleOwner){
+            when(it){
+                -1 ->{
+                    Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show()
+                }
+                0 ->{
+                    Toast.makeText(requireContext(),"회원가입이 필요합니다.",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment2())
+                }
+                1 ->{
+                    Toast.makeText(requireContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {
         binding.kakaoLoginButton.setOnClickListener {
-            //TODO : 해당 코드를 Viewmodel로 옮기기
             val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                // 로그인 실패
                 if (error != null) {
-                    // 로그인 실패
-                    Toast.makeText(requireContext(), "로그인 실패", Toast.LENGTH_SHORT).show()
-                } else if (token != null) {
-                    //로그인 성공
-                    Toast.makeText(requireContext(), "로그인 성공 \n${token.accessToken}", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "kakaoLogin 실패 ${error.message}")
+                }
+                //로그인 성공
+                else if (token != null) {
+                    Log.d(TAG, "kakaoLogin 성공 ${token.accessToken} ")
+                    viewModel.loginAPIServer(token.accessToken)
                 }
             }
 
