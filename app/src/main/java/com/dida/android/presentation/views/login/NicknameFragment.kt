@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -19,6 +20,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel>(R.layout.fragment_nickname) {
 
+    private val TAG = "NicknameFragment"
+
     override val layoutResourceId: Int
         get() = R.layout.fragment_nickname // get() : 커스텀 접근자, 코틀린 문법
 
@@ -30,6 +33,13 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     }
 
     override fun initDataBinding() {
+        viewModel.nickNameSuccessLiveData.observe(this) {
+            if (!it) {
+                Log.d(TAG, "사용가능한 닉네임")
+            } else {
+                Log.d(TAG, "중복된 닉네임")
+            }
+        }
     }
 
     override fun initAfterBinding() {
@@ -55,7 +65,8 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                     Log.d("lifecycle_scope", searchText.toString())
 
                     // nickname check api
-//                    viewModel.getBookamrk(searchFor)
+                    val request = binding.nicknameEdit.text.toString()
+                    viewModel.nicknameAPIServer(request)
                 }
             }
         })

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.dida.android.data.MySharedPreferences
 import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility.getKeyHash
 import dagger.hilt.android.HiltAndroidApp
 import retrofit2.Retrofit
 
