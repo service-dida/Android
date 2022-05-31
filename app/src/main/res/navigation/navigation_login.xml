@@ -10,6 +10,8 @@
         android:label="LoginMainFragment" >
         <action
             android:id="@+id/action_loginMainFragment_to_nicknameFragment2"
+            app:popUpTo="@id/navigation_login"
+            app:popUpToInclusive="true"
             app:destination="@id/nicknameFragment" />
     </fragment>
     <fragment
