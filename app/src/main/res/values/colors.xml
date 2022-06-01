@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+
+    <color name="text_color">$FFFFFF</color>
+    <color name="status_bar">#F1F1F1</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#121212</color>
+
+    <color name="notice_red">#E8625B</color>
+    <color name="notice_green">#73BF90</color>
+
+    <color name="brand_lemon">#FBF89B</color>
+    <color name="brand_lignt_lemon">#FDFBC4</color>
+    <color name="brand_ivory">#FFFFE8</color>
+
+    <color name="surface1">#000000eb</color>
+    <color name="surface2">#000000e3</color>
+    <color name="surface3">#000000db</color>
+    <color name="surface4">#000000d6</color>
+    <color name="surface5">#000000cc</color>
+    <color name="surface6">#000000b3</color>
+
 </resources>

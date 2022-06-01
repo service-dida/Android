@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/ic_kakao_login_button.xml" value="0.1955" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/activity_nav_host.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/fragment_loginmain.xml" value="0.1875" />
