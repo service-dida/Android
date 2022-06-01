@@ -2,7 +2,7 @@
 <resources>
 
     <color name="text_color">#FFFFFF</color>
-    <color name="status_bar">#F1F1F1</color>
+    <color name="status_bar">#121212</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#121212</color>
 
