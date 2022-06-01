@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.dida.android.presentation.viewmodel.login.LoginMainViewModel" />
@@ -15,16 +15,33 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
-
-        <Button
-            android:id="@+id/kakao_login_button"
+        <TextView
+            android:id="@+id/login_description_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="임시 카카오 로그인버튼"
+            android:layout_marginBottom="16dp"
+            android:background="@color/black"
+            android:text="@string/login_description"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/kakao_login_button"
+            app:layout_constraintEnd_toEndOf="@+id/kakao_login_button"
+            app:layout_constraintStart_toStartOf="@+id/kakao_login_button" />
+
+        <!--버튼 이미지 파일 변경해야함-->
+        <ImageButton
+            android:id="@+id/kakao_login_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="68dp"
+            android:src="@drawable/kakao_login_button"
+            android:background="@color/black"
+            android:contentDescription="@string/login_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

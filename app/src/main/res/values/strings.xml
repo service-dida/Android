@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">DIDA</string>
     <string name="prefs_key">dida_prefs</string>
+
+    <!--로그인 화면-->
+    <string name="login_description">빠르게 로그인하기</string>
+
     <!--비밀번호 다이어로그-->
     <string name="dialog_title1">비밀번호 설정</string>
     <string name="dialog_title2">비밀번호 확인</string>
