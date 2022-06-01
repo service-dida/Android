@@ -1,4 +1,4 @@
-package com.dida.android.presentation.viewmodel
+package com.dida.android.presentation.viewmodel.nav
 
 import com.dida.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

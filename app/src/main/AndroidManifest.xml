@@ -13,7 +13,7 @@
         android:name=".GlobalApplication"
         android:theme="@style/Theme.DIDA">
         <activity
-            android:name=".presentation.views.NavHostActivity"
+            android:name=".presentation.views.nav.NavHostActivity"
             android:exported="true">
         </activity>
 
