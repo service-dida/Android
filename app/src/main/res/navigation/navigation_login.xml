@@ -9,7 +9,7 @@
         android:name="com.dida.android.presentation.views.login.LoginMainFragment"
         android:label="LoginMainFragment" >
         <action
-            android:id="@+id/action_loginMainFragment_to_nicknameFragment2"
+            android:id="@+id/action_loginMainFragment_to_nicknameFragment"
             app:popUpTo="@id/navigation_login"
             app:popUpToInclusive="true"
             app:destination="@id/nicknameFragment" />
@@ -17,5 +17,9 @@
     <fragment
         android:id="@+id/nicknameFragment"
         android:name="com.dida.android.presentation.views.login.NicknameFragment"
-        android:label="NicknameFragment" />
+        android:label="NicknameFragment">
+        <argument
+            android:name="email"
+            app:argType="string"/>
+    </fragment>
 </navigation>

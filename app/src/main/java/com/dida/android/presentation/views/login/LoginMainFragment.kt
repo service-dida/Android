@@ -3,6 +3,8 @@ package com.dida.android.presentation.views.login
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
@@ -21,9 +23,10 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         get() = R.layout.fragment_loginmain // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel : LoginMainViewModel by viewModels()
-
+    lateinit var navController: NavController
 
     override fun initStartView() {
+        navController = Navigation.findNavController(requireView())
     }
 
     override fun initDataBinding() {
@@ -34,7 +37,10 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                 }
                 0 ->{
                     Toast.makeText(requireContext(),"회원가입이 필요합니다.",Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment2())
+                    viewModel.kakaoEmailSuccessLiveData.observe(this){ item ->
+                        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(item)
+                        navController.navigate(action)
+                    }
                 }
                 1 ->{
                     Toast.makeText(requireContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show()

@@ -18,8 +18,5 @@ interface MainAPIService {
     fun loginAPIServer(@Body idToken : String): Call<LoginResponseModel>
 
     @POST("/user/nickname")
-    fun nicknameAPIServer(@Body nickName: String): Call<NicknameResponseModel>
-
-//    @POST("/user/nickname")
-//    suspend fun nicknameAPIServer(@Body nickName: String): Response<NicknameResponseModel>
+    suspend fun nicknameAPIServer(@Body nickName: String): Response<NicknameResponseModel>
 }
