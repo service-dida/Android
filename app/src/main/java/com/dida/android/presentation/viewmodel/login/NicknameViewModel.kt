@@ -26,48 +26,16 @@ class NicknameViewModel @Inject constructor(private val mainRepository: MainRepo
     val nickNameSuccessLiveData: LiveData<Boolean>
         get() = _nickNameSuccessLiveData
 
-    fun nicknameAPIServer(nickName: String) {
-        try {
-            mainRepository.nicknamePIServer(nickName).enqueue(object : Callback<NicknameResponseModel> {
-                override fun onResponse(
-                    call: Call<NicknameResponseModel>,
-                    response: Response<NicknameResponseModel>,
-                ) {
-                    when {
-                        response.isSuccessful -> {
-                            response.body()?.let {
-                                _nickNameSuccessLiveData.postValue(it.used)
-                            }
-                        }
-                        else -> {
-                            _nickNameSuccessLiveData.postValue(true)
-                        }
-                    }
+    suspend fun nicknameAPIServer(nickName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainRepository.nicknamePIServer(nickName).let {
+                if(it.isSuccessful){
+                    _nickNameSuccessLiveData.postValue(it.body()!!.used)
                 }
-                override fun onFailure(call: Call<NicknameResponseModel>, t: Throwable) {
+                else{
                     _nickNameSuccessLiveData.postValue(true)
                 }
-            })
-        }catch (e : Exception){
-            //TODO : 네트워크 에러 처리
-            Log.d(TAG, "onFailure: 네트워크 에러")
-            _nickNameSuccessLiveData.postValue(true)
+            }
         }
-
     }
-
-//    fun nicknameAPIServer(nickName: String) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            mainRepository.nicknamePIServer(nickName).let {
-//                if(it.isSuccessful){
-//                    _nickNameSuccessLiveData.postValue(it.body()?.used ?: true)
-//                }
-//                else{
-//                    _nickNameSuccessLiveData.postValue(true)
-//                }
-//            }
-//        }
-//    }
-
-
 }

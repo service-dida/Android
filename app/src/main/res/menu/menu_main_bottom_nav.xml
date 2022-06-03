@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/defiFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Defi"/>
+
+    <item
+        android:id="@+id/addFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Add"/>
+
+    <item
+        android:id="@+id/snsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="SNS"/>
+
+    <item
+        android:id="@+id/myPageFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="My"/>
+
+</menu>

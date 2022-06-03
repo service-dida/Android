@@ -3,11 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/homeFragment">
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.dida.android.presentation.views.SplashFragment"
-        android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash">
+        android:label="SplashFragment">
     </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.dida.android.presentation.views.nav.home.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/defiFragment"
+        android:name="com.dida.android.presentation.views.nav.defi.DefiFragment"
+        android:label="DefiFragment" />
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.dida.android.presentation.views.nav.add.AddFragment"
+        android:label="AddFragment" />
+    <fragment
+        android:id="@+id/snsFragment"
+        android:name="com.dida.android.presentation.views.nav.sns.SNSFragment"
+        android:label="SNSFragment" />
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.dida.android.presentation.views.nav.mypage.MyPageFragment"
+        android:label="MyPageFragment" />
 </navigation>

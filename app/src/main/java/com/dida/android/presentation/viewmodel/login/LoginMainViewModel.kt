@@ -29,6 +29,10 @@ class LoginMainViewModel @Inject constructor(private val mainRepository: MainRep
     val kakaoLoginSuccessLiveData: LiveData<Int>
         get() = _kakaoLoginSuccessLiveData
 
+    private val _kakaoEmailSuccessLiveData = MutableLiveData<String>()
+    val kakaoEmailSuccessLiveData: LiveData<String>
+        get() = _kakaoEmailSuccessLiveData
+
     fun loginAPIServer(idToken: String) {
         try {
             mainRepository.loginAPIServer(idToken).enqueue(object : Callback<LoginResponseModel> {
@@ -40,6 +44,7 @@ class LoginMainViewModel @Inject constructor(private val mainRepository: MainRep
                         response.isSuccessful -> {
                             response.body()?.let {
                                 if(it.refreshToken.isEmpty()){
+                                    _kakaoEmailSuccessLiveData.postValue(it.accessToken)
                                     _kakaoLoginSuccessLiveData.postValue(0)
                                 }else{
                                     GlobalApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)

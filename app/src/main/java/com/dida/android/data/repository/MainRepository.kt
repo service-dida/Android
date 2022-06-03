@@ -11,9 +11,7 @@ class MainRepository @Inject constructor(private val mainAPIService: MainAPIServ
 
     fun loginAPIServer(idToken : String) = mainAPIService.loginAPIServer(idToken = idToken)
 
-    fun nicknamePIServer(nickName : String) = mainAPIService.nicknameAPIServer(nickName = nickName)
-
-//    suspend fun nicknamePIServer(nickName : String): Response<NicknameResponseModel> {
-//        return mainAPIService.nicknameAPIServer(nickName)
-//    }
+    suspend fun nicknamePIServer(nickName : String): Response<NicknameResponseModel> {
+        return mainAPIService.nicknameAPIServer(nickName)
+    }
 }

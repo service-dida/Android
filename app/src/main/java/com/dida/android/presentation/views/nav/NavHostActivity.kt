@@ -1,13 +1,14 @@
-package com.dida.android.presentation.views
+package com.dida.android.presentation.views.nav
 
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
-import com.dida.android.presentation.viewmodel.NavHostViewModel
+import com.dida.android.presentation.viewmodel.nav.NavHostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +36,8 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
-        navController = navHostFragment.findNavController()
+
+        binding.bottomNavi.setupWithNavController(navController)
 
 //        navController.addOnDestinationChangedListener { _, destination, _ ->
 //            when (destination.id) {

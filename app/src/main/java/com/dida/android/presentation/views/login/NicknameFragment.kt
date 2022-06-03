@@ -1,13 +1,17 @@
 package com.dida.android.presentation.views.login
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
 import com.dida.android.presentation.base.BaseFragment
@@ -28,28 +32,53 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     override val viewModel : NicknameViewModel by viewModels()
     lateinit var navController: NavController
 
+    lateinit var email: String
+    var nextCheck = false
+
     override fun initStartView() {
         navController = Navigation.findNavController(requireView())
+        val args: NicknameFragmentArgs by navArgs()
+        email = args.email
     }
 
     override fun initDataBinding() {
         viewModel.nickNameSuccessLiveData.observe(this) {
             if (!it) {
                 Log.d(TAG, "사용가능한 닉네임")
+                nextCheck = true
+                binding.okBtn.let { item ->
+                    item.setBackgroundResource(R.drawable.okbtn_success_custom)
+                    item.setTextColor(Color.parseColor("#121212"))
+                }
+                binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_success)
+                binding.nicknameCheckTxt.text = "사용 가능한 닉네임 입니다."
+                binding.nicknameCheckTxt.let { item ->
+                    item.text = "사용 가능한 닉네임 입니다."
+                    item.setTextColor(Color.parseColor("#7ED29B"))
+                }
             } else {
+                nextCheck = false
                 Log.d(TAG, "중복된 닉네임")
+                binding.okBtn.let { item ->
+                    item.setBackgroundResource(R.drawable.okbtn_fail_custom)
+                    item.setTextColor(Color.parseColor("#4dededed"))
+                }
+                binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
+                binding.nicknameCheckTxt.let { item ->
+                    item.text = "중복된 닉네임 입니다."
+                    item.setTextColor(Color.parseColor("#E8625B"))
+                }
             }
         }
     }
 
     override fun initAfterBinding() {
-        binding.nicknameEdit.addTextChangedListener(object : TextWatcher {
+        binding.nickNameEdit.addTextChangedListener(object : TextWatcher {
             private var searchFor = ""
             var job: Job? = null
 
             override fun afterTextChanged(s: Editable?) = Unit
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val searchText = s.toString().trim()
                 if (searchText == searchFor)
@@ -58,15 +87,26 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 job?.cancel()
                 searchFor = searchText
                 job = lifecycleScope.launch {
-                    delay(500)  //debounce timeOut <- 현재 0.5초
+                    delay(500)  //debounce timeOut
                     if (searchText != searchFor)
                         return@launch
 
-                    Log.d("lifecycle_scope", searchText.toString())
-
-                    // nickname check api
-                    val request = binding.nicknameEdit.text.toString()
-                    viewModel.nicknameAPIServer(request)
+                    if(s.isEmpty() || s.length > 8){
+                        nextCheck = false
+                        Log.d(TAG, "중복된 닉네임")
+                        binding.okBtn.let { item ->
+                            item.setBackgroundResource(R.drawable.okbtn_fail_custom)
+                            item.setTextColor(Color.parseColor("#4dededed"))
+                        }
+                        binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
+                        binding.nicknameCheckTxt.let { item ->
+                            item.text = "닉네임은 8글자 이하입니다."
+                            item.setTextColor(Color.parseColor("#E8625B"))
+                        }
+                    }
+                    else{
+                        viewModel.nicknameAPIServer(searchFor)
+                    }
                 }
             }
         })
