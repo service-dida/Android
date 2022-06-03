@@ -15,7 +15,7 @@ interface MainAPIService {
     suspend fun checkVersion(): Response<AppVersionResponse>
 
     @POST("/kakao/login")
-    fun loginAPIServer(@Body idToken : String): Call<LoginResponseModel>
+    suspend fun loginAPIServer(@Body idToken : String): Response<LoginResponseModel>
 
     @POST("/user/nickname")
     suspend fun nicknameAPIServer(@Body nickName: String): Response<NicknameResponseModel>

@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -48,13 +49,13 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 nextCheck = true
                 binding.okBtn.let { item ->
                     item.setBackgroundResource(R.drawable.okbtn_success_custom)
-                    item.setTextColor(Color.parseColor("#121212"))
+                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainblack))
                 }
                 binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_success)
                 binding.nicknameCheckTxt.text = "사용 가능한 닉네임 입니다."
                 binding.nicknameCheckTxt.let { item ->
                     item.text = "사용 가능한 닉네임 입니다."
-                    item.setTextColor(Color.parseColor("#7ED29B"))
+                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.notice_green))
                 }
             } else {
                 nextCheck = false
@@ -62,11 +63,12 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 binding.okBtn.let { item ->
                     item.setBackgroundResource(R.drawable.okbtn_fail_custom)
                     item.setTextColor(Color.parseColor("#4dededed"))
+                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
                 }
                 binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
                 binding.nicknameCheckTxt.let { item ->
                     item.text = "중복된 닉네임 입니다."
-                    item.setTextColor(Color.parseColor("#E8625B"))
+                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.notice_red))
                 }
             }
         }
@@ -96,12 +98,12 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                         Log.d(TAG, "중복된 닉네임")
                         binding.okBtn.let { item ->
                             item.setBackgroundResource(R.drawable.okbtn_fail_custom)
-                            item.setTextColor(Color.parseColor("#4dededed"))
+                            item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
                         }
                         binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
                         binding.nicknameCheckTxt.let { item ->
                             item.text = "닉네임은 8글자 이하입니다."
-                            item.setTextColor(Color.parseColor("#E8625B"))
+                            item.setTextColor(ContextCompat.getColor(requireContext(),R.color.notice_red))
                         }
                     }
                     else{

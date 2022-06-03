@@ -3,6 +3,7 @@ package com.dida.android.presentation.views.login
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.dida.android.presentation.viewmodel.login.LoginMainViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewModel>(R.layout.fragment_nickname) {
@@ -59,7 +61,9 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                 //로그인 성공
                 else if (token != null) {
                     Log.d(TAG, "kakaoLogin 성공 ${token.accessToken} ")
-                    viewModel.loginAPIServer(token.accessToken)
+                    lifecycleScope.launch {
+                        viewModel.loginAPIServer(token.accessToken)
+                    }
                 }
             }
 

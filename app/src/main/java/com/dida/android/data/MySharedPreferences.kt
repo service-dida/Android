@@ -9,7 +9,7 @@ class MySharedPreferences(context: Context) {
     private val prefs : SharedPreferences =
         context.getSharedPreferences(context.getString(R.string.prefs_key),MODE_PRIVATE)
 
-    fun setAccessToken(accessToken: String, refreshToken: String) {
+    fun setAccessToken(accessToken: String?, refreshToken: String?) {
         var editor = prefs.edit()
         editor.putString("X-ACCESS-TOKEN", accessToken)
         editor.putString("refresh-token", refreshToken)
