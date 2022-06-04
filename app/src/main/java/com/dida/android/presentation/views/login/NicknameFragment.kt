@@ -62,7 +62,6 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 Log.d(TAG, "중복된 닉네임")
                 binding.okBtn.let { item ->
                     item.setBackgroundResource(R.drawable.okbtn_fail_custom)
-                    item.setTextColor(Color.parseColor("#4dededed"))
                     item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
                 }
                 binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
