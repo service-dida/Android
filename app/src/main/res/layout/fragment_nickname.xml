@@ -67,7 +67,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/pretendard_black"
-            android:textColor="@color/notice"
+            android:textColor="@color/notice_red"
             android:textSize="14dp">
         </TextView>
 

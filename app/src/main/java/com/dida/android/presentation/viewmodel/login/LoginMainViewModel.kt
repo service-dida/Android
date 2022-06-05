@@ -1,16 +1,14 @@
 package com.dida.android.presentation.viewmodel.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.dida.android.GlobalApplication
 import com.dida.android.data.repository.MainRepository
-import com.dida.android.domain.model.login.LoginResponseModel
 import com.dida.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,43 +31,25 @@ class LoginMainViewModel @Inject constructor(private val mainRepository: MainRep
     val kakaoEmailSuccessLiveData: LiveData<String>
         get() = _kakaoEmailSuccessLiveData
 
-    fun loginAPIServer(idToken: String) {
-        try {
-            mainRepository.loginAPIServer(idToken).enqueue(object : Callback<LoginResponseModel> {
-                override fun onResponse(
-                    call: Call<LoginResponseModel>,
-                    response: Response<LoginResponseModel>
-                ) {
-                    when {
-                        response.isSuccessful -> {
-                            response.body()?.let {
-                                if(it.refreshToken.isEmpty()){
-                                    _kakaoEmailSuccessLiveData.postValue(it.accessToken)
-                                    _kakaoLoginSuccessLiveData.postValue(0)
-                                }else{
-                                    GlobalApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
-                                    _kakaoLoginSuccessLiveData.postValue(1)
-                                }
-                            }
-                        }
-                        else -> {
-                            _kakaoLoginSuccessLiveData.postValue(-1)
-                            GlobalApplication.mySharedPreferences.removeAccessToken()
-                        }
+    suspend fun loginAPIServer(idToken: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainRepository.loginAPIServer(idToken).let {
+                if(it.isSuccessful){
+                    if(it.body()?.refreshToken.isNullOrEmpty()){
+                        _kakaoEmailSuccessLiveData.postValue(it.body()?.accessToken)
+                        _kakaoLoginSuccessLiveData.postValue(0)
+                    }else{
+                        GlobalApplication.mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
+                        _kakaoLoginSuccessLiveData.postValue(1)
                     }
                 }
-
-                override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {
-                    //TODO : 네트워크 에러 처리
-                    Log.d(TAG, "onFailure: 네트워크 에러")
+                else{
                     _kakaoLoginSuccessLiveData.postValue(-1)
+                    GlobalApplication.mySharedPreferences.removeAccessToken()
                 }
-            })
-        }catch (e : Exception){
-            //TODO : 네트워크 에러 처리
-            Log.d(TAG, "onFailure: 네트워크 에러")
-            _kakaoLoginSuccessLiveData.postValue(-1)
+            }
         }
+
 
     }
 }
