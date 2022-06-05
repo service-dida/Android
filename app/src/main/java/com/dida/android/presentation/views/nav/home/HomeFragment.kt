@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views.nav.home
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
