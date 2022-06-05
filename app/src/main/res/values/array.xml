@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mypage_spinner_list">
+        <item>가격 낮은 순</item>
+        <item>가격 높은 순</item>
+        <item>최신 순</item>
+        <item>오래된 순</item>
+    </string-array>
+
+</resources>

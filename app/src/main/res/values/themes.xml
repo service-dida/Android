@@ -26,6 +26,7 @@
     <style name="AppTheme.Actionbar" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:tint">#ffffff</item>
     </style>
+
     <!--Toolbar 메뉴 색상 변경을 위해 추가-->
     <style name="AppTheme.OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:tint">#ffffff</item>

@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views.nav.mypage
 
 import android.content.Intent
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import com.dida.android.GlobalApplication
 import com.dida.android.R
@@ -24,6 +25,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     override fun initStartView() {
         //loginCheck()
         initToolbar()
+        initSpinner()
     }
 
     override fun initDataBinding() {
@@ -54,6 +56,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                 }
             }
             true
+        }
+    }
+
+    private fun initSpinner(){
+        ArrayAdapter.createFromResource(requireContext(),R.array.mypage_spinner_list, R.layout.item_mypage_nft_type_spinner)
+            .also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinner.adapter = adapter
         }
     }
 }
