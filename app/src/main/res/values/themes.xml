@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="toolbarNavigationButtonStyle">@style/AppTheme.Actionbar</item>
+        <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
     </style>
 
     <style name="Theme.DIDA.BottomDialogAboveKeyboard" parent="Theme.Design.Light.BottomSheetDialog">
@@ -19,4 +21,14 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
+
+    <!--Toolbar 뒤로가기 색상 변경을 위해 추가-->
+    <style name="AppTheme.Actionbar" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:tint">#ffffff</item>
+    </style>
+    <!--Toolbar 메뉴 색상 변경을 위해 추가-->
+    <style name="AppTheme.OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">#ffffff</item>
+    </style>
+
 </resources>
