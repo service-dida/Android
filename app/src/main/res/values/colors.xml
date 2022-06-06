@@ -21,13 +21,13 @@
     <color name="surface4">#000000d6</color>
     <color name="surface5">#00000000</color>
     <color name="surface6">#4dededed</color>
-<<<<<<< HEAD
-    <color name="bandlemon">#FBF89B</color>
-    <color name="notice">#E8625B</color>
-    <color name="noticegreen">#7ED29B</color>
-    
-=======
+<!--<<<<<<< HEAD-->
+<!--    <color name="bandlemon">#FBF89B</color>-->
+<!--    <color name="notice">#E8625B</color>-->
+<!--    <color name="noticegreen">#7ED29B</color>-->
+<!--    -->
+<!--=======-->
 
 
->>>>>>> 45814192c8996603382a4195bf915481ba217e06
+<!--&gt;>>>>>> 45814192c8996603382a4195bf915481ba217e06-->
 </resources>
