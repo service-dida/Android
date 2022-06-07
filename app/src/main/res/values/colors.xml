@@ -7,6 +7,8 @@
     <color name="status_bar">#121212</color>
     <color name="white">#FFFFFFFF</color>
     <color name="mainblack">#121212</color>
+    <color name="mypage_info_gray_text">#AFAFAF</color>
+    <color name="price_gray_text">#C5C5CF</color>
 
     <color name="notice_red">#E8625B</color>
     <color name="notice_green">#73BF90</color>
@@ -15,12 +17,14 @@
     <color name="brand_lignt_lemon">#FDFBC4</color>
     <color name="brand_ivory">#FFFFE8</color>
 
-    <color name="surface1">#000000eb</color>
+    <color name="surface1">#252525</color>
     <color name="surface2">#1cededed</color>
     <color name="surface3">#000000db</color>
     <color name="surface4">#000000d6</color>
     <color name="surface5">#00000000</color>
     <color name="surface6">#4dededed</color>
+
+    <color name="view_line">#575757</color>
 
 
 </resources>
