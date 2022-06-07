@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainblack">
+        android:background="@color/mainblack"
+        android:paddingBottom="10dp">
 
         <Toolbar
             android:id="@+id/toolbar"
@@ -23,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +34,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circleImageView"
@@ -109,7 +112,7 @@
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
                             android:text="NFT"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/mypage_info_gray_text"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -141,7 +144,7 @@
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
                             android:text="팔로워"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/mypage_info_gray_text"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -173,7 +176,7 @@
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
                             android:text="팔로잉"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/mypage_info_gray_text"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -184,8 +187,8 @@
                         android:orientation="vertical"></LinearLayout>
                 </LinearLayout>
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
@@ -198,7 +201,6 @@
                         android:id="@+id/spinner"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="22dp"
                         android:background="@drawable/mypage_nft_type_spinner"
                         android:popupBackground="@color/white"
@@ -210,20 +212,35 @@
 
                     <ImageButton
                         android:id="@+id/imageButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginRight="16dp"
                         android:background="@drawable/surface1_square"
                         android:padding="12dp"
                         android:src="@drawable/fetch_nft_type1"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinner"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/spinner" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!--TODO : NFT아이템 비율 맞춰야함-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:stateListAnimator="@layout/holder_mypage_nft"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                    tools:itemCount="8"
+                    tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:listitem="@layout/holder_mypage_nft"
+                    tools:spanCount="2" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

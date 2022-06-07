@@ -3,12 +3,16 @@ package com.dida.android.presentation.views.nav.mypage
 import android.content.Intent
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.GlobalApplication
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
+import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
+import com.dida.android.presentation.adapter.MyPageRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.mypage.MyPageViewModel
 import com.dida.android.presentation.views.login.LoginActivity
+import com.dida.android.util.GridSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +30,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         //loginCheck()
         initToolbar()
         initSpinner()
+        initRecyclerView()
     }
 
     override fun initDataBinding() {
@@ -60,10 +65,26 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     }
 
     private fun initSpinner(){
-        ArrayAdapter.createFromResource(requireContext(),R.array.mypage_spinner_list, R.layout.item_mypage_nft_type_spinner)
+        ArrayAdapter.createFromResource(requireContext(),R.array.mypage_spinner_list, R.layout.holder_mypage_nft_type_spinner)
             .also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinner.adapter = adapter
+        }
+    }
+
+    private fun initRecyclerView(){
+        val list = mutableListOf(
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65)
+        )
+
+        binding.recyclerView.apply {
+            adapter = MyPageRecyclerViewAdapter(list)
+            layoutManager = GridLayoutManager(requireContext(),2)
+            addItemDecoration(GridSpacing(30,30))
         }
     }
 }
