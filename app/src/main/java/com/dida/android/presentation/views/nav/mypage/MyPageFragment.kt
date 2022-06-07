@@ -3,6 +3,8 @@ package com.dida.android.presentation.views.nav.mypage
 import android.content.Intent
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.GlobalApplication
 import com.dida.android.R
@@ -12,6 +14,7 @@ import com.dida.android.presentation.adapter.MyPageRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.mypage.MyPageViewModel
 import com.dida.android.presentation.views.login.LoginActivity
+import com.dida.android.presentation.views.login.LoginMainFragmentDirections
 import com.dida.android.util.GridSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,7 +57,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.action_wallet ->{
-
+                    val directions = MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
+                    findNavController().navigate(directions)
                 }
                 R.id.action_example1 ->{
 

@@ -30,5 +30,15 @@
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.dida.android.presentation.views.nav.mypage.MyPageFragment"
-        android:label="MyPageFragment" />
+        android:label="MyPageFragment" >
+        <action
+            android:id="@+id/action_myPageFragment_to_walletFragment"
+            app:destination="@id/walletFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.dida.android.presentation.views.nav.mypage.WalletFragment"
+        android:label="WalletFragment" />
 </navigation>
