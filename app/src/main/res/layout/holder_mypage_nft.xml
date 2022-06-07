@@ -26,12 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
+                android:adjustViewBounds="true"
                 app:image_from_url="@{holderModel.image_url}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="1"
                 tools:srcCompat="@drawable/nft_example_image" />
 
             <TextView
