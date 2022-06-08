@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.GlobalApplication
 import com.dida.android.data.repository.MainRepository
+import com.dida.android.domain.model.login.CreateUserRequestModel
 import com.dida.android.domain.model.login.LoginResponseModel
 import com.dida.android.domain.model.login.NicknameResponseModel
 import com.dida.android.presentation.base.BaseViewModel
@@ -26,14 +27,32 @@ class NicknameViewModel @Inject constructor(private val mainRepository: MainRepo
     val nickNameSuccessLiveData: LiveData<Boolean>
         get() = _nickNameSuccessLiveData
 
-    suspend fun nicknameAPIServer(nickName: String) {
+    fun nicknameAPIServer(nickName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.nicknamePIServer(nickName).let {
+            mainRepository.nicknameAPIServer(nickName).let {
                 if(it.isSuccessful){
                     _nickNameSuccessLiveData.postValue(it.body()!!.used)
                 }
                 else{
                     _nickNameSuccessLiveData.postValue(true)
+                }
+            }
+        }
+    }
+
+    private val _createUserSuccessLiveData = MutableLiveData<Boolean>()
+    val createUserSuccessLiveData: LiveData<Boolean>
+        get() = _createUserSuccessLiveData
+
+    fun createUserAPIServer(request: CreateUserRequestModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainRepository.createUserAPIServer(request).let {
+                if(it.isSuccessful){
+                    GlobalApplication.mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
+                    _createUserSuccessLiveData.postValue(true)
+                }
+                else{
+                    _nickNameSuccessLiveData.postValue(false)
                 }
             }
         }

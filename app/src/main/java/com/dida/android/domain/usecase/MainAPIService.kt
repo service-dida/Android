@@ -1,5 +1,6 @@
 package com.dida.android.domain.usecase
 
+import com.dida.android.domain.model.login.CreateUserRequestModel
 import com.dida.android.domain.model.login.LoginResponseModel
 import com.dida.android.domain.model.login.NicknameResponseModel
 import com.dida.android.domain.model.splash.AppVersionResponse
@@ -19,4 +20,7 @@ interface MainAPIService {
 
     @POST("/user/nickname")
     suspend fun nicknameAPIServer(@Body nickName: String): Response<NicknameResponseModel>
+
+    @POST("/new/user")
+    suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): Response<LoginResponseModel>
 }
