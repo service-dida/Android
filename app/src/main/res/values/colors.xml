@@ -7,7 +7,8 @@
     <color name="status_bar">#121212</color>
     <color name="white">#FFFFFFFF</color>
     <color name="mainblack">#121212</color>
-    <color name="text_gray">#AFAFAF</color>
+    <color name="mypage_info_gray_text">#AFAFAF</color>
+    <color name="price_gray_text">#C5C5CF</color>
 
     <color name="notice_red">#E8625B</color>
     <color name="notice_green">#73BF90</color>
