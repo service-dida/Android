@@ -2,7 +2,9 @@ package com.dida.android.presentation.views.nav.mypage
 
 import android.content.Intent
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.GlobalApplication
 import com.dida.android.R
@@ -27,7 +29,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
 
     override fun initStartView() {
-        //loginCheck()
         initToolbar()
         initSpinner()
         initRecyclerView()
@@ -41,14 +42,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     }
 
-    private fun loginCheck(){
-        val accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
-        if(accessToken.isNullOrEmpty()){
-            val loginIntent = Intent(activity, LoginActivity::class.java)
-            startActivity(loginIntent)
-        }
-    }
-
     private fun initToolbar(){
         binding.toolbar.inflateMenu(R.menu.menu_mypage_toolbar)
         binding.toolbar.setOnMenuItemClickListener {
@@ -56,8 +49,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                 R.id.action_wallet ->{
 
                 }
-                R.id.action_example1 ->{
-
+                R.id.action_logout ->{
+                    GlobalApplication.mySharedPreferences.removeAccessToken()
+                    Toast.makeText(requireContext(), "로그아웃하였습니다.", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
                 }
             }
             true

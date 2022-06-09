@@ -11,8 +11,8 @@
         tools:ignore="AppCompatResource" />
 
     <item
-        android:id="@+id/action_example1"
+        android:id="@+id/action_logout"
         android:showAsAction="never"
-        android:title="메뉴1"
+        android:title="임시 로그아웃"
         tools:ignore="AppCompatResource" />
 </menu>
