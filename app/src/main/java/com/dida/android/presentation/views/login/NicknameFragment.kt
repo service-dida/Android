@@ -1,11 +1,13 @@
 package com.dida.android.presentation.views.login
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,8 +17,10 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
+import com.dida.android.domain.model.login.CreateUserRequestModel
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.login.NicknameViewModel
+import com.dida.android.presentation.views.nav.NavHostActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -71,6 +75,17 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 }
             }
         }
+
+        viewModel.createUserSuccessLiveData.observe(this) {
+            if (it) {
+                var intent = Intent(requireActivity(), NavHostActivity::class.java)
+                requireActivity().finish()
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(requireContext(), "사용할 수 없는 닉네임 입니다.", Toast.LENGTH_SHORT)
+            }
+        }
     }
 
     override fun initAfterBinding() {
@@ -111,5 +126,12 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 }
             }
         })
+
+        binding.okBtn.setOnClickListener {
+            if(nextCheck){
+                val request = CreateUserRequestModel(email, binding.nickNameEdit.text.toString())
+                viewModel.createUserAPIServer(request)
+            }
+        }
     }
 }

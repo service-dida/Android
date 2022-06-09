@@ -1,5 +1,7 @@
 package com.dida.android.data.repository
 
+import com.dida.android.domain.model.login.CreateUserRequestModel
+import com.dida.android.domain.model.login.LoginResponseModel
 import com.dida.android.domain.model.login.NicknameResponseModel
 import com.dida.android.domain.usecase.MainAPIService
 import com.dida.android.presentation.viewmodel.login.NicknameViewModel
@@ -11,7 +13,11 @@ class MainRepository @Inject constructor(private val mainAPIService: MainAPIServ
 
     suspend fun loginAPIServer(idToken : String) = mainAPIService.loginAPIServer(idToken = idToken)
 
-    suspend fun nicknamePIServer(nickName : String): Response<NicknameResponseModel> {
+    suspend fun nicknameAPIServer(nickName : String): Response<NicknameResponseModel> {
         return mainAPIService.nicknameAPIServer(nickName)
+    }
+
+    suspend fun createUserAPIServer(request: CreateUserRequestModel): Response<LoginResponseModel> {
+        return mainAPIService.createuserAPIServer(request)
     }
 }
