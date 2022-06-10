@@ -79,11 +79,11 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
         viewModel.createUserSuccessLiveData.observe(this) {
             if (it) {
                 var intent = Intent(requireActivity(), NavHostActivity::class.java)
-                requireActivity().finish()
-                startActivity(intent)
+                activity?.setResult(9001,intent)
+                Toast.makeText(requireContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(requireContext(), "사용할 수 없는 닉네임 입니다.", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "사용할 수 없는 닉네임 입니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }

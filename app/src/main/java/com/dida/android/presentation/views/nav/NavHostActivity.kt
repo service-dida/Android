@@ -1,14 +1,19 @@
 package com.dida.android.presentation.views.nav
 
+import android.content.Intent
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.dida.android.GlobalApplication
 import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
 import com.dida.android.presentation.viewmodel.nav.NavHostViewModel
+import com.dida.android.presentation.views.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +44,27 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
         binding.bottomNavi.setupWithNavController(navController)
 
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if(destination.id ==R.id.myPageFragment){
+                loginCheck()
+            }
+        }
+    }
+    private fun loginCheck() {
+        val accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
+        if (accessToken.isNullOrEmpty()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            registerForActivityResult.launch(intent)
+        }
+    }
+
+    val registerForActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == 0) {
+            navController.popBackStack()
+        }
+    }
+
+}
 //        navController.addOnDestinationChangedListener { _, destination, _ ->
 //            when (destination.id) {
 //                R.id.mainFragment -> showBottomNav()
@@ -48,9 +74,8 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 //                else -> hideBottomNav()
 //            }
 //        }
-//        binding.bottomNavi.setupWithNavController(navController)
-    }
 
+//        binding.bottomNavi.setupWithNavController(navController)
 //    private fun showBottomNav() {
 //        binding.bottomNavi.visibility = View.VISIBLE
 //    }
@@ -58,4 +83,3 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 //    private fun hideBottomNav() {
 //        binding.bottomNavi.visibility = View.GONE
 //    }
-}

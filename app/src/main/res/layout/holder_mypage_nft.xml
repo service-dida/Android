@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="holderModel"
             type="com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel" />

@@ -1,16 +1,17 @@
 package com.dida.android.presentation.views.login
 
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.login.LoginMainViewModel
+import com.dida.android.presentation.views.nav.NavHostActivity
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +47,9 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                 }
                 1 ->{
                     Toast.makeText(requireContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show()
+                    var intent = Intent(requireActivity(), NavHostActivity::class.java)
+                    activity?.setResult(9001,intent)
+                    activity?.finish()
                 }
             }
         }

@@ -2,13 +2,10 @@
 <resources>
 
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 
-    <color name="text_color">#FFFFFF</color>
     <color name="status_bar">#121212</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="mainblack">#121212</color>
-    <color name="mypage_info_gray_text">#AFAFAF</color>
-    <color name="price_gray_text">#C5C5CF</color>
 
     <color name="notice_red">#E8625B</color>
     <color name="notice_green">#73BF90</color>
@@ -23,15 +20,13 @@
     <color name="surface4">#000000d6</color>
     <color name="surface5">#00000000</color>
     <color name="surface6">#4dededed</color>
-<!--<<<<<<< HEAD-->
-<!--    <color name="bandlemon">#FBF89B</color>-->
-<!--    <color name="notice">#E8625B</color>-->
-<!--    <color name="noticegreen">#7ED29B</color>-->
-<!--    -->
-<!--=======-->
 
+    <!--텍스트 색상-->
+    <color name="mypage_info_gray_text">#AFAFAF</color>
+    <color name="price_gray_text">#C5C5CF</color>
+    <color name="wallet_address_text">#AAAAAA</color>
+
+    <!--선 색상-->
     <color name="view_line">#575757</color>
 
-
-<!--&gt;>>>>>> 45814192c8996603382a4195bf915481ba217e06-->
 </resources>
