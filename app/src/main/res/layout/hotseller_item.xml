@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="126dp"
+    android:layout_height="174dp"
+    android:background="@drawable/hotseller_custom"
+    android:id="@+id/hots_main"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="14dp">
+
+    <ImageView
+        android:id="@+id/seller_img"
+        android:layout_width="match_parent"
+        android:layout_height="126dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/nft_example_image"
+        android:scaleType="centerCrop"
+        android:background="@drawable/hots_custom">
+    </ImageView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hots_contents_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/surface1_back"
+        android:paddingBottom="16dp"
+        android:paddingTop="32dp">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textSize="14dp"
+            android:text="name here"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_regular">
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/user_img"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        app:layout_constraintBottom_toTopOf="@id/hots_contents_main"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/hots_contents_main"
+        android:src="@drawable/nft_example_image"
+        android:background="@drawable/hotseller_userimg_custom"
+        android:adjustViewBounds="true">
+    </ImageView>
+</androidx.constraintlayout.widget.ConstraintLayout>

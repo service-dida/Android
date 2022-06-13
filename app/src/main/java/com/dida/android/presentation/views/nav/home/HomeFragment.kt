@@ -1,34 +1,248 @@
 package com.dida.android.presentation.views.nav.home
 
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.dida.android.R
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.databinding.FragmentHomeBinding
-import com.dida.android.databinding.FragmentNicknameBinding
+import com.dida.android.domain.model.nav.home.Collection
+import com.dida.android.domain.model.nav.home.HotSeller
+import com.dida.android.domain.model.nav.home.Hots
+import com.dida.android.domain.model.nav.home.SoldOut
+import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
+import com.dida.android.presentation.adapter.MyPageRecyclerViewAdapter
+import com.dida.android.presentation.adapter.home.CollectionAdapter
+import com.dida.android.presentation.adapter.home.HotSellerAdapter
+import com.dida.android.presentation.adapter.home.HotsAdapter
+import com.dida.android.presentation.adapter.home.SoldOutAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
+import com.dida.android.util.GridSpacing
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.android.R.layout.fragment_home) {
 
     private val TAG = "HomeFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_home
+        get() = com.dida.android.R.layout.fragment_home
 
     override val viewModel : HomeViewModel by viewModels()
+    lateinit var navController: NavController
+
+    private val hotsAdapter: HotsAdapter = HotsAdapter()
+    private val hotSellerAdapter: HotSellerAdapter = HotSellerAdapter()
+    private val soldOutAdapter: SoldOutAdapter = SoldOutAdapter()
+    private val collectionAdapter: CollectionAdapter = CollectionAdapter()
 
 
     override fun initStartView() {
+        navController = Navigation.findNavController(requireView())
 
+        binding.hotsRecycler.run {
+            adapter = hotsAdapter
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.HORIZONTAL
+            }
+            setHasFixedSize(true)
+        }
+
+        binding.hotSellerRecycler.run {
+            adapter = hotSellerAdapter
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.HORIZONTAL
+            }
+            setHasFixedSize(true)
+        }
+
+        binding.soldoutRecycler.run {
+            adapter = soldOutAdapter
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.VERTICAL
+            }
+            setHasFixedSize(true)
+        }
+
+        val list = mutableListOf(
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+        )
+        binding.recentnftRecycler.apply {
+            adapter = MyPageRecyclerViewAdapter(list)
+            layoutManager = GridLayoutManager(requireContext(),2)
+            addItemDecoration(GridSpacing(30,30))
+        }
+
+        binding.collectionRecycler.run {
+            adapter = collectionAdapter
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.VERTICAL
+            }
+            setHasFixedSize(true)
+        }
+
+        val tabLayout: TabLayout = binding.tabLayout
+        tabLayout.addTab(tabLayout.newTab().setText("Hot Seller"))
+        tabLayout.addTab(tabLayout.newTab().setText("Sold Out"))
+        tabLayout.addTab(tabLayout.newTab().setText("최신 NFT"))
+        tabLayout.addTab(tabLayout.newTab().setText("컬렉션"))
+
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> binding.homeScroll.scrollTo(0, binding.hotSellerRecycler.top)
+                    1 -> binding.homeScroll.scrollTo(0, binding.soldoutTxt.top)
+                    2 -> binding.homeScroll.scrollTo(0, binding.recentnftTxt.top)
+                    3 -> binding.homeScroll.scrollTo(0, binding.collectionTxt.top)
+                }
+                binding.appBarLayout.setExpanded(false)
+//                Log.d(TAG, "scrollY "+binding.homeScroll.scrollY.toString())
+//                Log.d(TAG, "scrollY "+binding.homeScroll.y.toString())
+//                Log.d(TAG, "hot scrollY "+binding.hotSellerRecycler.top.toString())
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) = Unit
+            override fun onTabReselected(tab: TabLayout.Tab) = Unit
+        })
+
+        binding.soldoutTxt.text = "Sold Out \uD83D\uDC8E"
+        binding.hotitemTxt.text = "HOT Item \uD83D\uDD25"
+        binding.recentnftTxt.text = "최신 NFT \uD83C\uDF40"
+        binding.collectionTxt.text = "활발한 활동 \uD83C\uDF55"
     }
 
     override fun initDataBinding() {
+        // test
+        val item = Hots(com.dida.android.R.drawable.nft_example_image.toString(), "NFT name here", 3.2, 1.65)
+        for(i in 0..5){
+            hotsAdapter.addItem(item)
+        }
+        hotsAdapter.notifyDataSetChanged()
 
+        val item2 = HotSeller(com.dida.android.R.drawable.nft_example_image.toString(), com.dida.android.R.drawable.nft_example_image.toString(), "name here")
+        for(i in 0..5){
+            hotSellerAdapter.addItem(item2)
+        }
+        hotSellerAdapter.notifyDataSetChanged()
+
+        val item3 = SoldOut(com.dida.android.R.drawable.nft_example_image.toString(), "NFT name here", com.dida.android.R.drawable.nft_example_image.toString(), "user name here", 325.91)
+        for(i in 0..3){
+            soldOutAdapter.addItem(item3)
+        }
+        soldOutAdapter.notifyDataSetChanged()
+
+//        @SerializedName("userImg") var userImg: String,
+//        @SerializedName("userName") var userName: String,
+//        @SerializedName("userDetail") var userDetail: String,
+//        @SerializedName("follow") var follow: Boolean
+        val item4 = Collection(com.dida.android.R.drawable.nft_example_image.toString(), "user name here", "12 작품", false)
+        val item5 = Collection(com.dida.android.R.drawable.nft_example_image.toString(), "user name here", "12 작품", true)
+        val item6 = Collection(com.dida.android.R.drawable.nft_example_image.toString(), "user name here", "12 작품", false)
+        collectionAdapter.addItem(item4)
+        collectionAdapter.addItem(item5)
+        collectionAdapter.addItem(item6)
+        collectionAdapter.notifyDataSetChanged()
     }
 
     override fun initAfterBinding() {
+        // move detail
+        hotsAdapter.nextItemClickListener(object : HotsAdapter.OnItemClickEventListener {
+            override fun onItemClick(a_view: View?, a_position: Int) {
+//                navController.navigate(R.id.action_scrapFragment_to_detailFragment)
+//                val args = scrapAdapter.getItem(a_position).company_id
+//                val date = scrapAdapter.getItem(a_position).date
+//                val action = ScrapFragmentDirections.actionScrapFragmentToDetailFragment(args!!, date)
+//                navController.navigateUp()
+//                navController.navigate(action)
+            }
+        })
+
+        // move detail
+        hotSellerAdapter.nextItemClickListener(object : HotSellerAdapter.OnItemClickEventListener {
+            override fun onItemClick(a_view: View?, a_position: Int) {
+            }
+        })
+
+        // move detail
+        soldOutAdapter.nextItemClickListener(object : SoldOutAdapter.OnItemClickEventListener {
+            override fun onItemClick(a_view: View?, a_position: Int) {
+            }
+        })
+
+        // move detail
+        collectionAdapter.nextItemClickListener(object : CollectionAdapter.OnItemClickEventListener {
+            override fun onItemClick(a_view: View?, a_position: Int) {
+            }
+        })
+
+
+        binding.homeScroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY) {
+//                scrollObserver(scrollY)
+                Log.d(TAG, binding.hotSellerRecycler.height.toString())
+                Log.d(TAG, binding.recentnftRecycler.height.toString())
+                Log.d(TAG, "scrollY $scrollY")
+            }
+
+            // 스크롤 위로
+            if (scrollY + 5 < oldScrollY) {
+//                scrollObserver(scrollY)
+                Log.d(TAG, binding.hotSellerRecycler.height.toString())
+                Log.d(TAG, binding.recentnftRecycler.height.toString())
+                Log.d(TAG, "scrollY $scrollY")
+            }
+        }
+
+        binding.hotSellerRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(-1)) {
+//                    Toast.makeText(requireContext(), "hotSellerRecycler Last", Toast.LENGTH_SHORT).show()
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+                }
+            }
+        })
+
+        binding.soldoutRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+//                    Toast.makeText(requireContext(), "soldoutRecycler Last", Toast.LENGTH_SHORT).show()
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+                }
+            }
+        })
+
+        binding.recentnftRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+//                    Toast.makeText(requireContext(), "recentnftRecycler Last", Toast.LENGTH_SHORT).show()
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+                }
+            }
+        })
+
+        binding.collectionRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+//                    Toast.makeText(requireContext(), "collectionRecycler Last", Toast.LENGTH_SHORT).show()
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+                }
+            }
+        })
 
     }
 }

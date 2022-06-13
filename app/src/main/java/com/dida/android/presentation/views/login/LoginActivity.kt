@@ -39,5 +39,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.login_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
+
+        // test
+        startActivity(Intent(this, NavHostActivity::class.java))
     }
 }

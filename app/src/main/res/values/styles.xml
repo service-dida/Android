@@ -1,0 +1,25 @@
+<resources>
+<!--    <style name="AppTheme" parent="Theme.AppCompat.DayNight">-->
+<!--        <item name="colorPrimary">@color/black</item>-->
+<!--        <item name="colorPrimaryDark">@color/white</item>-->
+<!--        <item name="colorAccent">@color/black</item>-->
+<!--        <item name="android:windowLightStatusBar">true</item>-->
+<!--        <item name="android:colorControlActivated">@color/black</item>-->
+<!--        <item name="android:textCursorDrawable">@color/main</item>-->
+<!--    </style>-->
+
+<!--    <style name="AppTheme.NoActionBar">-->
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+<!--    </style>-->
+
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+<!--    <style name="AppTheme.Splash">-->
+<!--        <item name="android:statusBarColor">@color/main</item>-->
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+<!--    </style>-->
+</resources>

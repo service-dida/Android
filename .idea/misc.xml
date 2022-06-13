@@ -46,14 +46,33 @@
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/item_mypage_nft_type_spinner.xml" value="0.1875" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/menu/menu_mypage_toolbar.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable-v24/hots_custom.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable-v24/hots_heart_custom.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable-v24/hotseller_custom.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable-v24/tab_backgroud.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/collect_follow_custom.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/collect_follow_ok_custom.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/collection_custom.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/hotseller_userimg_custom.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/soldout_click.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/soldout_not_click.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/soldout_price_custom.xml" value="0.1645" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_nav_host.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/collection_item.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.13055555555555556" />
         <entry key="app/src/main/res/layout/fragment_add.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_defi.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_nickname.xml" value="0.27794871794871795" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_wallet.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/hots_item.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/hotseller_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/soldout_item.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/menu_home_toolbar.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/menu_mypage_toolbar.xml" value="0.28229166666666666" />
       </map>
     </option>
   </component>
