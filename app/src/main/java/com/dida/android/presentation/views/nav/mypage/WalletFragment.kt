@@ -58,6 +58,10 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
             WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,true),
             WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,false),
             WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,true),
+            WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,false),
+            WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,true),
+            WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,false),
+            WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,true),
             WalletNFTHistoryHolderModel("","user name here","NFT name here",1.65,false)
         )
 
