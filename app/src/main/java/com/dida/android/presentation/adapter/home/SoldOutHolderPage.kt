@@ -42,8 +42,15 @@ class SoldOutHolderPage internal constructor(
 //            .fitCenter()
 //            .into(hots_img)
         // image sample
-        user_img.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.nft_example_image))
-        nft_img.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.nft_example_image))
+        Glide.with(context)
+            .load(R.drawable.nft_example_image)
+            .transform(CenterCrop(), RoundedCorners(200))
+            .into(user_img)
+
+        Glide.with(context)
+            .load(R.drawable.nft_example_image)
+            .transform(CenterCrop(), RoundedCorners(50))
+            .into(nft_img)
 
 //        hotsContentsMain.setOnClickListener { a_view ->
 //            val position = absoluteAdapterPosition

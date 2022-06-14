@@ -37,9 +37,16 @@ class HotSellerHolderPage internal constructor(
 //            .fitCenter()
 //            .into(hots_img)
         // image sample
-        user_img.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.nft_example_image))
+        Glide.with(context)
+            .load(R.drawable.nft_example_image)
+            .transform(CenterCrop(), RoundedCorners(200))
+            .into(user_img)
 
-        seller_img.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.nft_example_image))
+        // rounded
+        Glide.with(context)
+            .load(R.drawable.nft_example_image)
+            .transform(CenterCrop(), RoundedCorners(50))
+            .into(seller_img)
 
 //        hotsContentsMain.setOnClickListener { a_view ->
 //            val position = absoluteAdapterPosition

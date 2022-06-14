@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.dida.android.R
 import com.dida.android.domain.model.nav.home.Collection
 import com.dida.android.domain.model.nav.home.HotSeller
@@ -48,12 +49,15 @@ class CollectionHolderPage internal constructor(
         }
 
         // image
+        Glide.with(context)
+            .load(R.drawable.nft_example_image)
+            .transform(CenterCrop(), RoundedCorners(200))
+            .into(user_img)
 //        Glide.with(context)
 //            .load(data.nftImg)
 //            .fitCenter()
 //            .into(hots_img)
         // image sample
-        user_img.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.nft_example_image))
 
 //        hotsContentsMain.setOnClickListener { a_view ->
 //            val position = absoluteAdapterPosition
