@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="126dp"
     android:layout_height="174dp"
-    android:background="@drawable/hotseller_custom"
     android:id="@+id/hots_main"
     android:layout_marginTop="20dp"
     android:layout_marginRight="14dp">
@@ -13,18 +13,18 @@
         android:id="@+id/seller_img"
         android:layout_width="match_parent"
         android:layout_height="126dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/nft_example_image"
+        android:background="@drawable/hots_custom"
         android:scaleType="centerCrop"
-        android:background="@drawable/hots_custom">
-    </ImageView>
+        android:src="@drawable/nft_example_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"></ImageView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/hots_contents_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/surface1_back"
+        android:background="@drawable/hotseller_name_custom"
         android:paddingBottom="16dp"
         android:paddingTop="32dp">
 

@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/surface2_back"
+        android:background="@drawable/hot_name_custom"
         android:padding="16dp">
 
         <TextView

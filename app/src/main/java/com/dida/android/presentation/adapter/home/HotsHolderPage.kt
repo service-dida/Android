@@ -36,13 +36,11 @@ class HotsHolderPage internal constructor(
         hots_name.text = data.nftName
         hots_coin_txt.text = data.price.toString()+" dida"
 
-        // image
-//        Glide.with(context)
-//            .load(data.nftImg)
-//            .fitCenter()
-//            .into(hots_img)
-        // image sample
-        hotsImg.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.nft_example_image))
+        // rounded
+        Glide.with(context)
+            .load(R.drawable.nft_example_image)
+            .transform(CenterCrop(), RoundedCorners(50))
+            .into(hotsImg)
 
         if(data.heartCount == 0.0){
             heart_main.visibility = View.GONE
