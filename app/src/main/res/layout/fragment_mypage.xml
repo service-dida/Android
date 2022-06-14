@@ -184,7 +184,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"></LinearLayout>
+                        android:orientation="vertical" />
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -203,12 +203,13 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="22dp"
                         android:background="@drawable/mypage_nft_type_spinner"
-                        android:popupBackground="@color/white"
-                        android:textSize="14sp"
+                        android:popupBackground="@drawable/surface1_square"
+                        android:textSize="14dp"
+                        android:theme="@style/SpinnerTheme"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageButton"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></Spinner>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
                         android:id="@+id/imageButton"

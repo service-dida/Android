@@ -34,5 +34,6 @@
 
     <!--선 색상-->
     <color name="view_line">#575757</color>
+    <color name="spinner_devide_line">#66ffffff</color>
 
 </resources>

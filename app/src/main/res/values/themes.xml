@@ -32,4 +32,24 @@
         <item name="android:tint">#ffffff</item>
     </style>
 
+
+    <style name="SpinnerTheme" parent="Theme.DIDA">
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
+        <item name="android:dropDownListViewStyle">@style/Spinner.DivideStyle</item>
+    </style>
+
+    <style name="SpinnerItem.DropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:checkMark">@null</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="Spinner.DivideStyle" parent="android:style/Widget.ListView.DropDown">
+        <item name="android:divider">@color/spinner_devide_line</item> <!-- divider 색 -->
+        <item name="android:dividerHeight">1dp</item> <!-- divider 높이 -->
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+    </style>
+
+
 </resources>

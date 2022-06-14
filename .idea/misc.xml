@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1955" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/background_spinner_item.xml" value="0.1515" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/collect_follow_ok_custom.xml" value="0.1515" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/copy_icon.xml" value="0.1515" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/empty_heart.xml" value="0.1895" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/fetch_nft_type1.xml" value="0.1895" />
@@ -23,6 +25,7 @@
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/nickname_edit_custom.xml" value="0.1955" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/okbtn_fail_custom.xml" value="0.1955" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/okbtn_success_custom.xml" value="0.1955" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/spinner_item_custom.xml" value="0.1515" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/surface1_square.xml" value="0.1895" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/drawable/svgviewer_output__5___2_.xml" value="0.18" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/activity_login.xml" value="0.2" />
@@ -41,6 +44,7 @@
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/fragment_wallet.xml" value="0.22" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/holder_mypage_nft.xml" value="0.2643805309734513" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/holder_mypage_nft_type_spinner.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/holder_mypage_nft_type_spinner_item.xml" value="0.1875" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/holder_wallet_card.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/holder_wallet_nft_history.xml" value="0.67" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/hots_item.xml" value="0.36614583333333334" />
@@ -49,6 +53,8 @@
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/layout/soldout_item.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/app/src/main/res/menu/menu_mypage_toolbar.xml" value="0.1875" />
+        <entry key="..\:/Users/tmdgh/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.1875" />
+        <entry key="..\:/Users/tmdgh/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable-v24/hots_custom.xml" value="0.175" />
         <entry key="app/src/main/res/drawable-v24/hots_heart_custom.xml" value="0.175" />
         <entry key="app/src/main/res/drawable-v24/hotseller_custom.xml" value="0.1645" />
