@@ -69,7 +69,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textColor="@color/white"
-        android:background="@drawable/collect_follow_custom"
+        android:background="@drawable/custom_collect_follow"
         android:fontFamily="@font/pretendard_regular">
     </TextView>
 

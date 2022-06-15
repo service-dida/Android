@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.domain.model.nav.home.Collection
-import com.dida.android.domain.model.nav.home.Hots
-import com.dida.android.domain.model.nav.home.SoldOut
 
 class CollectionAdapter() :
     RecyclerView.Adapter<CollectionHolderPage>(){
@@ -29,7 +27,7 @@ class CollectionAdapter() :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionHolderPage {
         val context: Context = parent.context
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.collection_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.holder_collection, parent, false)
         return CollectionHolderPage(view, context, nItemClickListener!!)
     }
 

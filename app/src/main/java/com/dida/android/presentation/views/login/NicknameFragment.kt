@@ -1,16 +1,12 @@
 package com.dida.android.presentation.views.login
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -52,7 +48,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 Log.d(TAG, "사용가능한 닉네임")
                 nextCheck = true
                 binding.okBtn.let { item ->
-                    item.setBackgroundResource(R.drawable.okbtn_success_custom)
+                    item.setBackgroundResource(R.drawable.custom_okbtn_success)
                     item.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainblack))
                 }
                 binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_success)

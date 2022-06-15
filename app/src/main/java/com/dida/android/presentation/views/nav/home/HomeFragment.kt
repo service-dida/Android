@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.domain.model.nav.home.Collection
 import com.dida.android.domain.model.nav.home.HotSeller
@@ -177,6 +178,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
         // move detail
         soldOutAdapter.nextItemClickListener(object : SoldOutAdapter.OnItemClickEventListener {
             override fun onItemClick(a_view: View?, a_position: Int) {
+                navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
             }
         })
 
@@ -185,24 +187,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
             override fun onItemClick(a_view: View?, a_position: Int) {
             }
         })
-
-
-        binding.homeScroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY > oldScrollY) {
-//                scrollObserver(scrollY)
-                Log.d(TAG, binding.hotSellerRecycler.height.toString())
-                Log.d(TAG, binding.recentnftRecycler.height.toString())
-                Log.d(TAG, "scrollY $scrollY")
-            }
-
-            // 스크롤 위로
-            if (scrollY + 5 < oldScrollY) {
-//                scrollObserver(scrollY)
-                Log.d(TAG, binding.hotSellerRecycler.height.toString())
-                Log.d(TAG, binding.recentnftRecycler.height.toString())
-                Log.d(TAG, "scrollY $scrollY")
-            }
-        }
 
         binding.hotSellerRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

@@ -46,7 +46,7 @@
             android:id="@+id/nick_name_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/nickname_edit_custom"
+            android:background="@drawable/custom_nickname_edit"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:drawablePadding="14dp"

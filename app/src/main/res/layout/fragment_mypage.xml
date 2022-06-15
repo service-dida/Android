@@ -16,7 +16,7 @@
         android:background="@color/mainblack"
         android:paddingBottom="10dp">
 
-        <Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

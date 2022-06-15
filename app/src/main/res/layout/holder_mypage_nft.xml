@@ -22,11 +22,9 @@
 
             <ImageView
                 android:id="@+id/nft_ImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="172dp"
+                android:layout_height="172dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintWidth_percent="1"
-                app:layout_constraintHeight_percent="1"
                 android:adjustViewBounds="true"
                 app:image_from_url="@{holderModel.image_url}"
                 app:layout_constraintEnd_toEndOf="parent"

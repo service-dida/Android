@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="8dp"
+    android:id="@+id/soldout_main">
 
     <ImageView
         android:id="@+id/nft_img"
@@ -69,7 +70,7 @@
         app:layout_constraintTop_toTopOf="@id/nft_contents"
         app:layout_constraintBottom_toBottomOf="@id/nft_contents"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/soldout_price_custom"
+        android:background="@drawable/custom_soldout_price"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingLeft="12dp"

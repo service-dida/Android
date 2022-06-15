@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.domain.model.nav.home.HotSeller
-import com.dida.android.domain.model.nav.home.Hots
 
 class HotSellerAdapter() :
     RecyclerView.Adapter<HotSellerHolderPage>(){
@@ -28,7 +27,7 @@ class HotSellerAdapter() :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotSellerHolderPage {
         val context: Context = parent.context
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.hotseller_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.holder_hotseller, parent, false)
         return HotSellerHolderPage(view, context, nItemClickListener!!)
     }
 

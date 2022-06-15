@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.home
+package com.dida.android.presentation.adapter.detailnft
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.domain.model.nav.home.SoldOut
+import com.dida.android.domain.model.nav.detailnft.Comments
 
-class SoldOutAdapter() :
-    RecyclerView.Adapter<SoldOutHolderPage>(){
-    var datas = ArrayList<SoldOut>()
+class CommentsAdapter() :
+    RecyclerView.Adapter<CommentsHolderPage>(){
+    var datas = ArrayList<Comments>()
 
-    private val itemList = ArrayList<SoldOut>()
+    private val itemList = ArrayList<Comments>()
 
     interface OnItemClickEventListener {
         fun onItemClick(a_view: View?, a_position: Int)
@@ -24,16 +24,16 @@ class SoldOutAdapter() :
         nItemClickListener = a_listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoldOutHolderPage {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentsHolderPage {
         val context: Context = parent.context
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.holder_soldout, parent, false)
-        return SoldOutHolderPage(view, context, nItemClickListener!!)
+            LayoutInflater.from(context).inflate(R.layout.holder_comments, parent, false)
+        return CommentsHolderPage(view, context, nItemClickListener!!)
     }
 
-    override fun onBindViewHolder(holder: SoldOutHolderPage, position: Int) {
-        if (holder is SoldOutHolderPage) {
-            val viewHolder: SoldOutHolderPage = holder as SoldOutHolderPage
+    override fun onBindViewHolder(holder: CommentsHolderPage, position: Int) {
+        if (holder is CommentsHolderPage) {
+            val viewHolder: CommentsHolderPage = holder as CommentsHolderPage
             viewHolder.onBind(itemList[position])
         }
     }
@@ -42,11 +42,11 @@ class SoldOutAdapter() :
         return itemList.size
     }
 
-    fun addItem(item: SoldOut) {
+    fun addItem(item: Comments) {
         itemList.add(item)
     }
 
-    fun getItem(position: Int): SoldOut {
+    fun getItem(position: Int): Comments {
         return itemList[position]
     }
 

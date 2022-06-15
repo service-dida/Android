@@ -27,7 +27,7 @@ class HotsAdapter() :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotsHolderPage {
         val context: Context = parent.context
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.hots_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.holder_hots, parent, false)
         return HotsHolderPage(view, context, nItemClickListener!!)
     }
 

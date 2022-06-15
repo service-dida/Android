@@ -4,19 +4,13 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.dida.android.R
 import com.dida.android.domain.model.nav.home.Collection
-import com.dida.android.domain.model.nav.home.HotSeller
-import com.dida.android.domain.model.nav.home.Hots
-import com.dida.android.domain.model.nav.home.SoldOut
 
 
 class CollectionHolderPage internal constructor(
@@ -38,12 +32,12 @@ class CollectionHolderPage internal constructor(
         user_detail.text = data.userDetail
 
         if(!data.follow){
-            follow_btn.setBackgroundResource(R.drawable.collect_follow_custom)
+            follow_btn.setBackgroundResource(R.drawable.custom_collect_follow)
             follow_btn.setTextColor(ContextCompat.getColor(context,R.color.white))
             follow_btn.text = "팔로우"
         }
         else{
-            follow_btn.setBackgroundResource(R.drawable.collect_follow_ok_custom)
+            follow_btn.setBackgroundResource(R.drawable.custom_collect_follow_ok)
             follow_btn.setTextColor(ContextCompat.getColor(context,R.color.black))
             follow_btn.text = "팔로잉"
         }

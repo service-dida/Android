@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.nav
 
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -49,6 +50,14 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                 loginCheck()
             }
         }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.detailNftFragment -> hideBottomNav()
+            }
+        }
+
+        binding.bottomNavi.setupWithNavController(navController)
     }
     private fun loginCheck() {
         val accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
@@ -64,22 +73,12 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         }
     }
 
-}
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.mainFragment -> showBottomNav()
-//                R.id.bookmarkFragment -> showBottomNav()
-//                R.id.messageFragment -> showBottomNav()
-//                R.id.mypageFragment -> showBottomNav()
-//                else -> hideBottomNav()
-//            }
-//        }
+    private fun showBottomNav() {
+        binding.bottomNavi.visibility = View.VISIBLE
+    }
 
-//        binding.bottomNavi.setupWithNavController(navController)
-//    private fun showBottomNav() {
-//        binding.bottomNavi.visibility = View.VISIBLE
-//    }
-//
-//    private fun hideBottomNav() {
-//        binding.bottomNavi.visibility = View.GONE
-//    }
+    private fun hideBottomNav() {
+        binding.bottomNavi.visibility = View.GONE
+    }
+
+}

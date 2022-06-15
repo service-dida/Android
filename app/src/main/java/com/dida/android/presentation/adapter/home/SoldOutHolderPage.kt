@@ -52,12 +52,12 @@ class SoldOutHolderPage internal constructor(
             .transform(CenterCrop(), RoundedCorners(50))
             .into(nft_img)
 
-//        hotsContentsMain.setOnClickListener { a_view ->
-//            val position = absoluteAdapterPosition
-//            if (position != RecyclerView.NO_POSITION) {
-//                n_itemClickListener!!.onItemClick(a_view, position)
-//            }
-//        }
+        itemView.setOnClickListener(View.OnClickListener { a_view ->
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                n_itemClickListener.onItemClick(a_view, position)
+            }
+        })
     }
 
     init {
