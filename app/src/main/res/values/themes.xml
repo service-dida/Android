@@ -32,7 +32,7 @@
         <item name="android:tint">#ffffff</item>
     </style>
 
-
+    <!--Spinner 테마 변경을 위해 추가-->
     <style name="SpinnerTheme" parent="Theme.DIDA">
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
         <item name="android:dropDownListViewStyle">@style/Spinner.DivideStyle</item>
