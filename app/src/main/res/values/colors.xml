@@ -15,16 +15,11 @@
     <color name="brand_ivory">#FFFFE8</color>
 
     <color name="surface1">#252525</color>
-    <color name="surface1_back">#252525</color>
-    <color name="surface2">#1cededed</color>
-    <color name="surface2_back">#2c2c2c</color>
-    <color name="surface3">#000000db</color>
-    <color name="surface3_back">#333333</color>
-    <color name="surface4">#000000d6</color>
-    <color name="surface5">#00000000</color>
-    <color name="surface6">#4dededed</color>
-    <color name="surface6_back">#595959</color>
-    <color name="text_surface6">#595959</color>
+    <color name="surface2">#2c2c2c</color>
+    <color name="surface3">#333333</color>
+    <color name="surface4">#383838</color>
+    <color name="surface5">#414141</color>
+    <color name="surface6">#595959</color>
 
     <!--텍스트 색상-->
     <color name="mypage_info_gray_text">#AFAFAF</color>

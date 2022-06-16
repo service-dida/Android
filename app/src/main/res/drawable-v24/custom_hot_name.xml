@@ -5,7 +5,7 @@
             <corners
                 android:bottomLeftRadius="14dp"
                 android:bottomRightRadius="14dp"/>
-            <solid android:color="@color/surface2_back"/>
+            <solid android:color="@color/surface2"/>
         </shape>
     </item>
 </selector>

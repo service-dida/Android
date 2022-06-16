@@ -93,7 +93,7 @@
             android:text="가입완료"
             android:textColor="@color/surface6"
             android:textSize="16dp"
-            android:background="@drawable/okbtn_fail_custom">
+            android:background="@drawable/custom_okbtn_fail_custom">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
