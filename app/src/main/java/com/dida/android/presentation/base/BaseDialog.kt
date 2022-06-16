@@ -30,6 +30,7 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
 
     /**
      * 레이아웃을 띄운 직후 호출.
+     * 뷰모델 초기화
      * 뷰나 액티비티의 속성 등을 초기화.
      * ex) 리사이클러뷰, 툴바, 드로어뷰..
      */
@@ -59,6 +60,7 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
         savedInstanceState: Bundle?
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
+        binding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return view

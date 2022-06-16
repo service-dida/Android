@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -29,6 +28,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     /**
      * 레이아웃을 띄운 직후 호출.
+     * 뷰모델 초기화
      * 뷰나 액티비티의 속성 등을 초기화.
      * ex) 리사이클러뷰, 툴바, 드로어뷰..
      */
@@ -58,6 +58,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         savedInstanceState: Bundle?
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 

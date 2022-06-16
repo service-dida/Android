@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views.nav.mypage
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,8 +22,8 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
 
     override val viewModel : WalletViewModel by viewModels()
 
-
     override fun initStartView() {
+        binding.viewModel = viewModel
         initToolbar()
         initRecyclerView()
     }
@@ -32,7 +33,9 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     }
 
     override fun initAfterBinding() {
-
+        binding.nftHistoryAllBtn.setOnClickListener(nftHistoryTypeClickListener)
+        binding.nftHistoryBuyBtn.setOnClickListener(nftHistoryTypeClickListener)
+        binding.nftHistorySellBtn.setOnClickListener(nftHistoryTypeClickListener)
     }
 
     private fun initToolbar(){
@@ -59,6 +62,20 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
         binding.nftHistoryRecyclerView.apply {
             adapter = WalletNFTHistoryRecyclerViewAdapter(list)
             layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private val nftHistoryTypeClickListener : View.OnClickListener = View.OnClickListener{
+        when(it.id){
+            R.id.nft_history_all_btn ->{
+                viewModel.changeNFTHistoryFocusType(0)
+            }
+            R.id.nft_history_buy_btn ->{
+                viewModel.changeNFTHistoryFocusType(1)
+            }
+            R.id.nft_history_sell_btn->{
+                viewModel.changeNFTHistoryFocusType(2)
+            }
         }
     }
 }

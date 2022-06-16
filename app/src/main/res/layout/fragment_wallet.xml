@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="vm"
+            name="viewModel"
             type="com.dida.android.presentation.viewmodel.nav.home.WalletViewModel" />
     </data>
 
@@ -111,6 +110,7 @@
                     android:text="NFT 거래 내역"
                     android:textColor="@color/white"
                     android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -128,13 +128,14 @@
 
 
                     <TextView
+                        android:id="@+id/nft_history_all_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="전체"
-                        android:textColor="@color/brand_lemon"
+                        android:textColor="@{viewModel.NFTHistoryFocusLiveData==0? @color/brand_lemon : @color/white}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -145,13 +146,14 @@
                         app:srcCompat="@drawable/ic_wallet_dot" />
 
                     <TextView
+                        android:id="@+id/nft_history_buy_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="구매"
-                        android:textColor="@color/white"
+                        android:textColor="@{viewModel.NFTHistoryFocusLiveData==1? @color/brand_lemon : @color/white}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -162,13 +164,14 @@
                         app:srcCompat="@drawable/ic_wallet_dot" />
 
                     <TextView
+                        android:id="@+id/nft_history_sell_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="판매"
-                        android:textColor="@color/white"
+                        android:textColor="@{viewModel.NFTHistoryFocusLiveData==2? @color/brand_lemon : @color/white}"
                         android:textSize="13dp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

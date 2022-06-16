@@ -26,6 +26,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     /**
      * 레이아웃을 띄운 직후 호출.
+     * 뷰모델 초기화
      * 뷰나 액티비티의 속성 등을 초기화.
      * ex) 리사이클러뷰, 툴바, 드로어뷰..
      */
@@ -52,6 +53,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutResourceId)
+        binding.lifecycleOwner = this
 
         initStartView()
         initDataBinding()
