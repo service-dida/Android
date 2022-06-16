@@ -1,8 +1,6 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.graphics.Color
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,7 +9,7 @@ import com.dida.android.GlobalApplication
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
-import com.dida.android.presentation.adapter.MyPageRecyclerViewAdapter
+import com.dida.android.presentation.adapter.mypage.MyPageRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.mypage.MyPageViewModel
 

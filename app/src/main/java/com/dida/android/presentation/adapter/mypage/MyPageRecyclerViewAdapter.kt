@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter
+package com.dida.android.presentation.adapter.mypage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
