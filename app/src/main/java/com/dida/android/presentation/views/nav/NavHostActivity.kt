@@ -43,8 +43,6 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding.bottomNavi.setupWithNavController(navController)
-
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if(destination.id ==R.id.myPageFragment){
                 loginCheck()
