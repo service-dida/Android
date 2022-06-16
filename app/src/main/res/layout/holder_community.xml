@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/surface1_back"
+        android:background="@color/surface1"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="20dp">

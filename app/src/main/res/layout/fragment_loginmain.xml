@@ -37,7 +37,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="68dp"
-            android:src="@drawable/kakao_login_button"
+            android:src="@drawable/custom_kakao_login_button"
             android:background="@color/mainblack"
             android:contentDescription="@string/login_description"
             app:layout_constraintBottom_toBottomOf="parent"

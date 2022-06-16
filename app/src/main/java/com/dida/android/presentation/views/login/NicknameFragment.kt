@@ -61,7 +61,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 nextCheck = false
                 Log.d(TAG, "중복된 닉네임")
                 binding.okBtn.let { item ->
-                    item.setBackgroundResource(R.drawable.okbtn_fail_custom)
+                    item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
                     item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
                 }
                 binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
@@ -107,7 +107,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                         nextCheck = false
                         Log.d(TAG, "중복된 닉네임")
                         binding.okBtn.let { item ->
-                            item.setBackgroundResource(R.drawable.okbtn_fail_custom)
+                            item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
                             item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
                         }
                         binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)

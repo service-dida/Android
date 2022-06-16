@@ -7,7 +7,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
     android:padding="10dp"
-    android:background="@drawable/soldout_not_click">
+    android:background="@drawable/custom_soldout_not_click">
 
     <ImageView
         android:id="@+id/user_img"

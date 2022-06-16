@@ -1,8 +1,6 @@
 package com.dida.android.presentation.views.nav.home
 
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -16,7 +14,7 @@ import com.dida.android.domain.model.nav.home.HotSeller
 import com.dida.android.domain.model.nav.home.Hots
 import com.dida.android.domain.model.nav.home.SoldOut
 import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
-import com.dida.android.presentation.adapter.MyPageRecyclerViewAdapter
+import com.dida.android.presentation.adapter.mypage.MyPageRecyclerViewAdapter
 import com.dida.android.presentation.adapter.home.CollectionAdapter
 import com.dida.android.presentation.adapter.home.HotSellerAdapter
 import com.dida.android.presentation.adapter.home.HotsAdapter
@@ -26,7 +24,6 @@ import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
 import com.dida.android.util.GridSpacing
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.AndroidEntryPoint
 
 

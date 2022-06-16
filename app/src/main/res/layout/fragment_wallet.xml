@@ -77,7 +77,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            app:srcCompat="@drawable/copy_icon" />
+                            app:srcCompat="@drawable/ic_copy" />
                     </LinearLayout>
 
                     <!--TODO : 임시로 해둔겁니다! RecyclerView로 교체해야함-->
