@@ -185,45 +185,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
             }
         })
 
-        binding.hotSellerRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(-1)) {
-//                    Toast.makeText(requireContext(), "hotSellerRecycler Last", Toast.LENGTH_SHORT).show()
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
-                }
-            }
-        })
-
-        binding.soldoutRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        fun onScrollListener(direction : Int , index : Int) = object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-//                    Toast.makeText(requireContext(), "soldoutRecycler Last", Toast.LENGTH_SHORT).show()
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(index))
                 }
             }
-        })
+        }
 
-        binding.recentnftRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-//                    Toast.makeText(requireContext(), "recentnftRecycler Last", Toast.LENGTH_SHORT).show()
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
-                }
-            }
-        })
-
-        binding.collectionRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-//                    Toast.makeText(requireContext(), "collectionRecycler Last", Toast.LENGTH_SHORT).show()
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
-                }
-            }
-        })
+        binding.hotSellerRecycler.addOnScrollListener(onScrollListener(-1,0))
+        binding.soldoutRecycler.addOnScrollListener(onScrollListener(1,1))
+        binding.recentnftRecycler.addOnScrollListener(onScrollListener(1,2))
+        binding.collectionRecycler.addOnScrollListener(onScrollListener(1,3))
 
     }
 }
