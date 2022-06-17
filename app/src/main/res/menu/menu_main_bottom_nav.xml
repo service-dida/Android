@@ -20,15 +20,15 @@
         android:title="Add"/>
 
     <item
-        android:id="@+id/snsFragment"
+        android:id="@+id/communityFragment"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_background"
-        android:title="SNS"/>
+        android:title="Community"/>
 
     <item
         android:id="@+id/myPageFragment"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_background"
-        android:title="My"/>
+        android:title="MyPage"/>
 
 </menu>

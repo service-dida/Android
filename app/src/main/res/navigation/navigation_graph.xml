@@ -30,9 +30,9 @@
         android:name="com.dida.android.presentation.views.nav.add.AddFragment"
         android:label="AddFragment" />
     <fragment
-        android:id="@+id/snsFragment"
-        android:name="com.dida.android.presentation.views.nav.sns.SNSFragment"
-        android:label="SNSFragment" />
+        android:id="@+id/communityFragment"
+        android:name="com.dida.android.presentation.views.nav.community.CommunityFragment"
+        android:label="CommunityFragment" />
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.dida.android.presentation.views.nav.mypage.MyPageFragment"

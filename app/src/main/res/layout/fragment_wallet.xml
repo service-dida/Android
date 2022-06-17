@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="vm"
             type="com.dida.android.presentation.viewmodel.nav.home.WalletViewModel" />
     </data>
 
@@ -135,7 +135,7 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="전체"
-                        android:textColor="@{viewModel.NFTHistoryFocusLiveData==0? @color/brand_lemon : @color/white}"
+                        android:textColor="@{vm.NFTHistoryFocusLiveData==0? @color/brand_lemon : @color/white}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -153,7 +153,7 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="구매"
-                        android:textColor="@{viewModel.NFTHistoryFocusLiveData==1? @color/brand_lemon : @color/white}"
+                        android:textColor="@{vm.NFTHistoryFocusLiveData==1? @color/brand_lemon : @color/white}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -171,7 +171,7 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="판매"
-                        android:textColor="@{viewModel.NFTHistoryFocusLiveData==2? @color/brand_lemon : @color/white}"
+                        android:textColor="@{vm.NFTHistoryFocusLiveData==2? @color/brand_lemon : @color/white}"
                         android:textSize="13dp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,7 @@
     <color name="price_gray_text">#C5C5CF</color>
     <color name="wallet_address_text">#AAAAAA</color>
     <color name="hots_coin_txt">#C5C5CF</color>
+    <color name="text_c5c5cf">#C5C5CF</color>
 
     <!--선 색상-->
     <color name="view_line">#575757</color>

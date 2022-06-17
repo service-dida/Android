@@ -23,7 +23,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     override val viewModel : WalletViewModel by viewModels()
 
     override fun initStartView() {
-        binding.viewModel = viewModel
+        binding.vm = viewModel
         initToolbar()
         initRecyclerView()
     }
