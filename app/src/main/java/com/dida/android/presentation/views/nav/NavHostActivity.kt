@@ -43,20 +43,16 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if(destination.id ==R.id.myPageFragment){
-                loginCheck()
-            }
-        }
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.detailNftFragment -> hideBottomNav()
+                R.id.myPageFragment -> loginCheck()
             }
         }
 
         binding.bottomNavi.setupWithNavController(navController)
     }
+
     private fun loginCheck() {
         val accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
         if (accessToken.isNullOrEmpty()) {
@@ -65,11 +61,12 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         }
     }
 
-    private val registerForActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == 0) {
-            navController.popBackStack()
+    private val registerForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == 0) {
+                navController.popBackStack()
+            }
         }
-    }
 
     private fun showBottomNav() {
         binding.bottomNavi.visibility = View.VISIBLE
