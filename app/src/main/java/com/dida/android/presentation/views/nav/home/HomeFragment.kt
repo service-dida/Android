@@ -14,11 +14,11 @@ import com.dida.android.domain.model.nav.home.HotSeller
 import com.dida.android.domain.model.nav.home.Hots
 import com.dida.android.domain.model.nav.home.SoldOut
 import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
-import com.dida.android.presentation.adapter.mypage.MyPageRecyclerViewAdapter
 import com.dida.android.presentation.adapter.home.CollectionAdapter
 import com.dida.android.presentation.adapter.home.HotSellerAdapter
 import com.dida.android.presentation.adapter.home.HotsAdapter
 import com.dida.android.presentation.adapter.home.SoldOutAdapter
+import com.dida.android.presentation.adapter.mypage.MyPageRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
 import com.dida.android.util.GridSpacing

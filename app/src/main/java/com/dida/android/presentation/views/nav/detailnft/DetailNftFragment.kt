@@ -5,12 +5,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.android.domain.model.nav.detailnft.Comments
 import com.dida.android.domain.model.nav.detailnft.Community
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
-import com.dida.android.presentation.adapter.home.SoldOutAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.detailnft.DetailNftViewModel
 import dagger.hilt.android.AndroidEntryPoint

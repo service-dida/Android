@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation

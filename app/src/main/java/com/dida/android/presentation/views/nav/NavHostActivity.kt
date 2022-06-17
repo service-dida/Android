@@ -1,13 +1,11 @@
 package com.dida.android.presentation.views.nav
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dida.android.GlobalApplication
 import com.dida.android.R

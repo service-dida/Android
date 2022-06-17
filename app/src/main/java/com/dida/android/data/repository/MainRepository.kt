@@ -4,7 +4,6 @@ import com.dida.android.domain.model.login.CreateUserRequestModel
 import com.dida.android.domain.model.login.LoginResponseModel
 import com.dida.android.domain.model.login.NicknameResponseModel
 import com.dida.android.domain.usecase.MainAPIService
-import com.dida.android.presentation.viewmodel.login.NicknameViewModel
 import retrofit2.Response
 import javax.inject.Inject
 
