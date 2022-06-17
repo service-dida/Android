@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.domain.model.nav.detailnft.Comments
 import com.dida.android.domain.model.nav.detailnft.Community
 
 class CommunityAdapter() :

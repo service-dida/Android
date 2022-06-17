@@ -3,7 +3,6 @@ package com.dida.android.presentation.base
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.dida.android.util.LoadingDialog
