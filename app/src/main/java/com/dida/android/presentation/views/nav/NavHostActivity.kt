@@ -1,13 +1,11 @@
 package com.dida.android.presentation.views.nav
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dida.android.GlobalApplication
 import com.dida.android.R
@@ -43,20 +41,16 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if(destination.id ==R.id.myPageFragment){
-                loginCheck()
-            }
-        }
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.detailNftFragment -> hideBottomNav()
+                R.id.myPageFragment -> loginCheck()
             }
         }
 
         binding.bottomNavi.setupWithNavController(navController)
     }
+
     private fun loginCheck() {
         val accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
         if (accessToken.isNullOrEmpty()) {
@@ -65,11 +59,12 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         }
     }
 
-    private val registerForActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == 0) {
-            navController.popBackStack()
+    private val registerForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == 0) {
+                navController.popBackStack()
+            }
         }
-    }
 
     private fun showBottomNav() {
         binding.bottomNavi.visibility = View.VISIBLE
