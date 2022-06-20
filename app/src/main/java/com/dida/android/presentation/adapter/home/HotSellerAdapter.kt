@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
+import com.dida.android.databinding.HolderHotsBinding
+import com.dida.android.databinding.HolderHotsellerBinding
 import com.dida.android.domain.model.nav.home.HotSeller
+import com.dida.android.domain.model.nav.home.Hots
 
 class HotSellerAdapter() :
-    RecyclerView.Adapter<HotSellerHolderPage>(){
-    var datas = ArrayList<HotSeller>()
-
+    RecyclerView.Adapter<HotSellerAdapter.ViewHolder>(){
     private val itemList = ArrayList<HotSeller>()
 
     interface OnItemClickEventListener {
@@ -24,38 +25,27 @@ class HotSellerAdapter() :
         nItemClickListener = a_listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotSellerHolderPage {
-        val context: Context = parent.context
-        val view: View =
-            LayoutInflater.from(context).inflate(R.layout.holder_hotseller, parent, false)
-        return HotSellerHolderPage(view, context, nItemClickListener!!)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val viewDataBinding = HolderHotsellerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(viewDataBinding)
     }
 
-    override fun onBindViewHolder(holder: HotSellerHolderPage, position: Int) {
-        if (holder is HotSellerHolderPage) {
-            val viewHolder: HotSellerHolderPage = holder as HotSellerHolderPage
-            viewHolder.onBind(itemList[position])
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val holderModel = itemList[position]
+        holder.bind(holderModel)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
 
+    inner class ViewHolder(val viewDataBinding: HolderHotsellerBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
+        fun bind(holderModel: HotSeller) {
+            viewDataBinding.holderModel = holderModel
+        }
+    }
+
     fun addItem(item: HotSeller) {
         itemList.add(item)
-    }
-
-    fun getItem(position: Int): HotSeller {
-        return itemList[position]
-    }
-
-    fun deleteItem(position: Int) {
-        itemList.removeAt(position)
-    }
-
-    fun clear() {
-        itemList.clear()
-        this.notifyDataSetChanged()
     }
 }
