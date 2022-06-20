@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.viewmodel.nav.add.AddViewModel" />
+            type="com.dida.android.presentation.viewmodel.nav.detailnft.DetailNftViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

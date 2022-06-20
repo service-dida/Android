@@ -13,4 +13,8 @@ class Community(
     @SerializedName("didaImg") var didaImg: String,
     @SerializedName("didaPrice") var didaPrice: Double,
     @SerializedName("Comments") var Comments: List<Comments>
-)
+){
+    fun priceFormatter(): String{
+        return "$didaPrice dida"
+    }
+}

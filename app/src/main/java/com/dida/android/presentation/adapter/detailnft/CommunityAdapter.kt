@@ -1,16 +1,22 @@
 package com.dida.android.presentation.adapter.detailnft
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
+import com.dida.android.databinding.HolderCommentsBinding
+import com.dida.android.databinding.HolderCommunityBinding
+import com.dida.android.domain.model.nav.detailnft.Comments
 import com.dida.android.domain.model.nav.detailnft.Community
 
 class CommunityAdapter() :
-    RecyclerView.Adapter<CommunityHolderPage>(){
+    RecyclerView.Adapter<CommunityAdapter.ViewHolder>(){
     var datas = ArrayList<Community>()
+    val adapter = CommentsAdapter()
 
     private val itemList = ArrayList<Community>()
 
@@ -24,38 +30,32 @@ class CommunityAdapter() :
         nItemClickListener = a_listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommunityHolderPage {
-        val context: Context = parent.context
-        val view: View =
-            LayoutInflater.from(context).inflate(R.layout.holder_community, parent, false)
-        return CommunityHolderPage(view, context, nItemClickListener!!)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val viewDataBinding = HolderCommunityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(viewDataBinding)
     }
 
-    override fun onBindViewHolder(holder: CommunityHolderPage, position: Int) {
-        if (holder is CommunityHolderPage) {
-            val viewHolder: CommunityHolderPage = holder as CommunityHolderPage
-            viewHolder.onBind(itemList[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val holderModel = itemList[position]
+        itemList[position].Comments.forEach { item ->
+            adapter.addItem(item)
         }
+        holder.bind(holderModel)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
 
+    inner class ViewHolder(val viewDataBinding: HolderCommunityBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
+        fun bind(holderModel: Community) {
+            viewDataBinding.holderModel = holderModel
+            viewDataBinding.commentRecycler.adapter = adapter
+            viewDataBinding.executePendingBindings()
+        }
+    }
+
     fun addItem(item: Community) {
         itemList.add(item)
-    }
-
-    fun getItem(position: Int): Community {
-        return itemList[position]
-    }
-
-    fun deleteItem(position: Int) {
-        itemList.removeAt(position)
-    }
-
-    fun clear() {
-        itemList.clear()
-        this.notifyDataSetChanged()
     }
 }

@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
+import com.dida.android.databinding.HolderHotsellerBinding
+import com.dida.android.databinding.HolderSoldoutBinding
+import com.dida.android.domain.model.nav.home.HotSeller
 import com.dida.android.domain.model.nav.home.SoldOut
 
 class SoldOutAdapter() :
-    RecyclerView.Adapter<SoldOutHolderPage>(){
+    RecyclerView.Adapter<SoldOutAdapter.ViewHolder>(){
     var datas = ArrayList<SoldOut>()
 
     private val itemList = ArrayList<SoldOut>()
@@ -24,38 +27,27 @@ class SoldOutAdapter() :
         nItemClickListener = a_listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoldOutHolderPage {
-        val context: Context = parent.context
-        val view: View =
-            LayoutInflater.from(context).inflate(R.layout.holder_soldout, parent, false)
-        return SoldOutHolderPage(view, context, nItemClickListener!!)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val viewDataBinding = HolderSoldoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(viewDataBinding)
     }
 
-    override fun onBindViewHolder(holder: SoldOutHolderPage, position: Int) {
-        if (holder is SoldOutHolderPage) {
-            val viewHolder: SoldOutHolderPage = holder as SoldOutHolderPage
-            viewHolder.onBind(itemList[position])
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val holderModel = itemList[position]
+        holder.bind(holderModel)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
 
+    inner class ViewHolder(val viewDataBinding: HolderSoldoutBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
+        fun bind(holderModel: SoldOut) {
+            viewDataBinding.holderModel = holderModel
+        }
+    }
+
     fun addItem(item: SoldOut) {
         itemList.add(item)
-    }
-
-    fun getItem(position: Int): SoldOut {
-        return itemList[position]
-    }
-
-    fun deleteItem(position: Int) {
-        itemList.removeAt(position)
-    }
-
-    fun clear() {
-        itemList.clear()
-        this.notifyDataSetChanged()
     }
 }

@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
+import com.dida.android.databinding.HolderHotsBinding
+import com.dida.android.databinding.HolderMypageNftBinding
 import com.dida.android.domain.model.nav.home.Hots
+import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
 
 class HotsAdapter() :
-    RecyclerView.Adapter<HotsHolderPage>(){
-    var datas = ArrayList<Hots>()
+    RecyclerView.Adapter<HotsAdapter.ViewHolder>(){
 
     private val itemList = ArrayList<Hots>()
 
@@ -24,38 +26,27 @@ class HotsAdapter() :
         nItemClickListener = a_listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotsHolderPage {
-        val context: Context = parent.context
-        val view: View =
-            LayoutInflater.from(context).inflate(R.layout.holder_hots, parent, false)
-        return HotsHolderPage(view, context, nItemClickListener!!)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val viewDataBinding = HolderHotsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(viewDataBinding)
     }
 
-    override fun onBindViewHolder(holder: HotsHolderPage, position: Int) {
-        if (holder is HotsHolderPage) {
-            val viewHolder: HotsHolderPage = holder as HotsHolderPage
-            viewHolder.onBind(itemList[position])
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val holderModel = itemList[position]
+        holder.bind(holderModel)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
 
+    inner class ViewHolder(val viewDataBinding: HolderHotsBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
+        fun bind(holderModel: Hots) {
+            viewDataBinding.holderModel = holderModel
+        }
+    }
+
     fun addItem(item: Hots) {
         itemList.add(item)
-    }
-
-    fun getItem(position: Int): Hots {
-        return itemList[position]
-    }
-
-    fun deleteItem(position: Int) {
-        itemList.removeAt(position)
-    }
-
-    fun clear() {
-        itemList.clear()
-        this.notifyDataSetChanged()
     }
 }
