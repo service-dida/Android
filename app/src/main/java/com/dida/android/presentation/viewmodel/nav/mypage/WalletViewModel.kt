@@ -1,4 +1,4 @@
-package com.dida.android.presentation.viewmodel.nav.home
+package com.dida.android.presentation.viewmodel.nav.mypage
 
 import android.util.Log
 import androidx.lifecycle.LiveData
