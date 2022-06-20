@@ -18,7 +18,7 @@ class SoldOutAdapter() :
     private val itemList = ArrayList<SoldOut>()
 
     interface OnItemClickEventListener {
-        fun onItemClick(a_view: View?, a_position: Int)
+        fun onItemClick(a_position: Int)
     }
 
     private var nItemClickListener: OnItemClickEventListener? = null
@@ -35,6 +35,9 @@ class SoldOutAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val holderModel = itemList[position]
         holder.bind(holderModel)
+        holder.itemView.setOnClickListener {
+            nItemClickListener!!.onItemClick(position)
+        }
     }
 
     override fun getItemCount(): Int {

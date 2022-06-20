@@ -47,7 +47,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
     override fun initStartView() {
         binding.vm = viewModel
         navController = Navigation.findNavController(requireView())
-        navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
 
         binding.hotsRecycler.run {
             adapter = hotsAdapter
@@ -153,10 +152,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
 
     override fun initAfterBinding() {
         // move detail
-//        collectionAdapter.nextItemClickListener(object : CollectionAdapter.OnItemClickEventListener {
-//            override fun onItemClick(a_view: View?, a_position: Int) {
-//            }
-//        })
+        soldOutAdapter.nextItemClickListener(object : SoldOutAdapter.OnItemClickEventListener {
+            override fun onItemClick(a_position: Int) {
+                navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
+            }
+        })
 
         fun onScrollListener(direction : Int , index : Int) = object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
