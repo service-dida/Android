@@ -33,7 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
     private val TAG = "HomeFragment"
 
     override val layoutResourceId: Int
-        get() = com.dida.android.R.layout.fragment_home
+        get() = R.layout.fragment_home
 
     override val viewModel : HomeViewModel by viewModels()
     lateinit var navController: NavController
@@ -45,7 +45,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
 
 
     override fun initStartView() {
+        binding.vm = viewModel
         navController = Navigation.findNavController(requireView())
+        navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
 
         binding.hotsRecycler.run {
             adapter = hotsAdapter
@@ -122,31 +124,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
 
     override fun initDataBinding() {
         // test
-        val item = Hots(com.dida.android.R.drawable.nft_example_image.toString(), "NFT name here", 3.2, 1.65)
+        val item = Hots("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here", 3.2, 1.65)
         for(i in 0..5){
             hotsAdapter.addItem(item)
         }
         hotsAdapter.notifyDataSetChanged()
 
-        val item2 = HotSeller(com.dida.android.R.drawable.nft_example_image.toString(), com.dida.android.R.drawable.nft_example_image.toString(), "name here")
+        val item2 = HotSeller("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "name here")
         for(i in 0..5){
             hotSellerAdapter.addItem(item2)
         }
         hotSellerAdapter.notifyDataSetChanged()
 
-        val item3 = SoldOut(com.dida.android.R.drawable.nft_example_image.toString(), "NFT name here", com.dida.android.R.drawable.nft_example_image.toString(), "user name here", 325.91)
+        val item3 = SoldOut("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "user name here", 325.91)
         for(i in 0..3){
             soldOutAdapter.addItem(item3)
         }
         soldOutAdapter.notifyDataSetChanged()
 
-//        @SerializedName("userImg") var userImg: String,
-//        @SerializedName("userName") var userName: String,
-//        @SerializedName("userDetail") var userDetail: String,
-//        @SerializedName("follow") var follow: Boolean
-        val item4 = Collection(com.dida.android.R.drawable.nft_example_image.toString(), "user name here", "12 작품", false)
-        val item5 = Collection(com.dida.android.R.drawable.nft_example_image.toString(), "user name here", "12 작품", true)
-        val item6 = Collection(com.dida.android.R.drawable.nft_example_image.toString(), "user name here", "12 작품", false)
+        val item4 = Collection("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "user name here", "12 작품", false)
+        val item5 = Collection("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "user name here", "12 작품", true)
+        val item6 = Collection("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "user name here", "12 작품", false)
         collectionAdapter.addItem(item4)
         collectionAdapter.addItem(item5)
         collectionAdapter.addItem(item6)
@@ -155,35 +153,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
 
     override fun initAfterBinding() {
         // move detail
-        hotsAdapter.nextItemClickListener(object : HotsAdapter.OnItemClickEventListener {
-            override fun onItemClick(a_view: View?, a_position: Int) {
-//                navController.navigate(R.id.action_scrapFragment_to_detailFragment)
-//                val args = scrapAdapter.getItem(a_position).company_id
-//                val date = scrapAdapter.getItem(a_position).date
-//                val action = ScrapFragmentDirections.actionScrapFragmentToDetailFragment(args!!, date)
-//                navController.navigateUp()
-//                navController.navigate(action)
-            }
-        })
-
-        // move detail
-        hotSellerAdapter.nextItemClickListener(object : HotSellerAdapter.OnItemClickEventListener {
-            override fun onItemClick(a_view: View?, a_position: Int) {
-            }
-        })
-
-        // move detail
-        soldOutAdapter.nextItemClickListener(object : SoldOutAdapter.OnItemClickEventListener {
-            override fun onItemClick(a_view: View?, a_position: Int) {
-                navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
-            }
-        })
-
-        // move detail
-        collectionAdapter.nextItemClickListener(object : CollectionAdapter.OnItemClickEventListener {
-            override fun onItemClick(a_view: View?, a_position: Int) {
-            }
-        })
+//        collectionAdapter.nextItemClickListener(object : CollectionAdapter.OnItemClickEventListener {
+//            override fun onItemClick(a_view: View?, a_position: Int) {
+//            }
+//        })
 
         fun onScrollListener(direction : Int , index : Int) = object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

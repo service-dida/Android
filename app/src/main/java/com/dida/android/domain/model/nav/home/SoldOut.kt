@@ -8,4 +8,8 @@ class SoldOut(
     @SerializedName("userImg") var userImg: String,
     @SerializedName("userName") var userName: String,
     @SerializedName("price") var price: Double
-)
+){
+    fun priceFormat() : String{
+        return price.toString()
+    }
+}

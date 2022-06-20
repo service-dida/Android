@@ -26,7 +26,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     override val viewModel : MyPageViewModel by viewModels()
 
-
     override fun initStartView() {
         initToolbar()
         initSpinner()

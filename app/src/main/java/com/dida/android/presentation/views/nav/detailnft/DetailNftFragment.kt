@@ -28,6 +28,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
 
     override fun initStartView() {
+        binding.vm = viewModel
         communityAdapter = CommunityAdapter()
         navController = Navigation.findNavController(requireView())
 
@@ -41,13 +42,15 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     override fun initDataBinding() {
-        val item1 = Comments("test", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ")
-        val item2 = Comments("test", "NFT 가 너무 이쁘네요~~~!")
+        val item1 = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ")
+        val item2 = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~!")
         val commentsList = ArrayList<Comments>()
         commentsList.add(item1)
         commentsList.add(item2)
-        val item3 = Community("test", "test", false, "test", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
-            "test", "NFT name here", "test", 1.65, commentsList
+        val item3 = Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
+            "test", false, "test", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
+            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here",
+            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65, commentsList
         )
         val communityList = ArrayList<Community>()
         communityList.add(item3)
