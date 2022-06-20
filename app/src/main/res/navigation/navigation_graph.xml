@@ -41,6 +41,9 @@
             app:destination="@id/walletFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_myPageFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment" />
     </fragment>
     <fragment
         android:id="@+id/walletFragment"

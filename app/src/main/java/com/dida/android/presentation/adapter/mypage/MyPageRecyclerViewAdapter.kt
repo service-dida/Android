@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.databinding.HolderMypageNftBinding
 import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
 
-class MyPageRecyclerViewAdapter(private val modelList: List<MyPageNFTHolderModel>): RecyclerView.Adapter<MyPageRecyclerViewAdapter.ViewHolder>() {
+class MyPageRecyclerViewAdapter(private val modelList: List<MyPageNFTHolderModel>,private val clickUnit: (nftId: Long) ->Unit): RecyclerView.Adapter<MyPageRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding = HolderMypageNftBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,6 +26,10 @@ class MyPageRecyclerViewAdapter(private val modelList: List<MyPageNFTHolderModel
         fun bind(holderModel: MyPageNFTHolderModel) {
             viewDataBinding.holderModel = holderModel
 
+            itemView.setOnClickListener {
+                //TODO : API나오면 NFT ID값으로 변경하기
+                clickUnit(20L)
+            }
         }
     }
 }

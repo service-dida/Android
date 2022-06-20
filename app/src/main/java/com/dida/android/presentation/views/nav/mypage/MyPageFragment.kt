@@ -77,9 +77,13 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         )
 
         binding.recyclerView.apply {
-            adapter = MyPageRecyclerViewAdapter(list)
+            adapter = MyPageRecyclerViewAdapter(list,::showDetailPage)
             layoutManager = GridLayoutManager(requireContext(),2)
             addItemDecoration(GridSpacing(30,30))
         }
+    }
+
+    private fun showDetailPage(nftId : Long){
+        findNavController().navigate(R.id.action_myPageFragment_to_detailNftFragment)
     }
 }

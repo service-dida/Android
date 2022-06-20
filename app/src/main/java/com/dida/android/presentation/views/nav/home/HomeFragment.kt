@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,7 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
             MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
         )
         binding.recentnftRecycler.apply {
-            adapter = MyPageRecyclerViewAdapter(list)
+            adapter = MyPageRecyclerViewAdapter(list,::showDetailPage)
             layoutManager = GridLayoutManager(requireContext(),2)
             addItemDecoration(GridSpacing(30,30))
         }
@@ -172,5 +173,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
         binding.recentnftRecycler.addOnScrollListener(onScrollListener(1,2))
         binding.collectionRecycler.addOnScrollListener(onScrollListener(1,3))
 
+    }
+
+    private fun showDetailPage(nftId : Long){
+        findNavController().navigate(R.id.action_homeFragment_to_detailNftFragment)
     }
 }
