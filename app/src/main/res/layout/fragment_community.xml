@@ -128,7 +128,7 @@
                     tools:listitem="@layout/holder_community" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/s"
+                    android:id="@+id/community_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
