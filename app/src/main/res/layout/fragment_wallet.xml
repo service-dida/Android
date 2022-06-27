@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.dida.android.presentation.viewmodel.nav.mypage.WalletViewModel" />
@@ -79,17 +80,19 @@
                             app:srcCompat="@drawable/ic_copy" />
                     </LinearLayout>
 
-                    <!--TODO : 임시로 해둔겁니다! RecyclerView로 교체해야함-->
-                    <ImageView
-                        android:id="@+id/my_wallet_recyclerView"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/wallet_card_recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
                         android:layout_marginTop="14dp"
                         android:orientation="horizontal"
-                        android:src="@drawable/wallet_card"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                        tools:itemCount="4"
+                        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/holder_wallet_card" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
