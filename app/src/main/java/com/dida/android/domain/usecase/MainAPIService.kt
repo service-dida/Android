@@ -3,6 +3,7 @@ package com.dida.android.domain.usecase
 import com.dida.android.domain.model.login.CreateUserRequestModel
 import com.dida.android.domain.model.login.LoginResponseModel
 import com.dida.android.domain.model.login.NicknameResponseModel
+import com.dida.android.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.android.domain.model.splash.AppVersionResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -21,4 +22,7 @@ interface MainAPIService {
 
     @POST("/new/user")
     suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): Response<LoginResponseModel>
+
+    @GET("/user")
+    suspend fun getUserProfile() : Response<UserProfileResponseModel>
 }

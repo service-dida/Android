@@ -27,13 +27,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     override val viewModel : MyPageViewModel by viewModels()
 
     override fun initStartView() {
+        binding.vm = viewModel
         initToolbar()
         initSpinner()
         initRecyclerView()
     }
 
     override fun initDataBinding() {
-
+        viewModel.getUserProfile()
     }
 
     override fun initAfterBinding() {
@@ -45,6 +46,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.action_wallet ->{
+                    //TODO : 지갑 생성 여부 확인하기
                     val directions = MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
                     findNavController().navigate(directions)
                 }

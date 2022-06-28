@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="vm"
             type="com.dida.android.presentation.viewmodel.nav.mypage.MyPageViewModel" />
@@ -38,15 +37,18 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
+                <!--TODO : 프로필 없을 시 기본 사진 추가-->
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circleImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_marginTop="9dp"
-                    android:src="@drawable/ic_launcher_background"
+                    android:scaleType="centerCrop"
+                    app:image_from_url="@{vm.profileUrlLiveData}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_launcher_background" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -54,19 +56,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="user name"
+                    android:text="@{vm.nicknameLiveData}"
                     android:textColor="@color/white"
                     android:textSize="24dp"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView"
                     app:layout_constraintStart_toStartOf="@+id/circleImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+                    tools:text="user name" />
 
+                <!--TODO : 자기소개 없을 시 기본 말 추가-->
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="자기소개는 여기에 들어갑니다"
+                    android:text='@{vm.descriptionLiveData}'
+                    tools:text="자기소개는 여기에 들어갑니다"
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView"
@@ -101,7 +106,8 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="000"
+                            android:text="@{vm.cardCntLiveData.toString()}"
+                            tools:text="000"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
 
@@ -133,7 +139,8 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="000"
+                            android:text="@{vm.followerCntLiveData.toString()}"
+                            tools:text="000"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
 
@@ -165,7 +172,8 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="000"
+                            android:text="@{vm.followingCntLiveData.toString()}"
+                            tools:text="000"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
 
