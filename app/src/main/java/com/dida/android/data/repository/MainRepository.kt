@@ -19,4 +19,8 @@ class MainRepository @Inject constructor(private val mainAPIService: MainAPIServ
     suspend fun createUserAPIServer(request: CreateUserRequestModel): Response<LoginResponseModel> {
         return mainAPIService.createuserAPIServer(request)
     }
+
+    suspend fun refreshTokenAPIServer(request: String): Response<LoginResponseModel> {
+        return mainAPIService.refreshtokenAPIServer(request)
+    }
 }

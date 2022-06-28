@@ -3,6 +3,7 @@ package com.dida.android.di
 import androidx.databinding.ktx.BuildConfig
 import com.dida.android.data.interceptor.BearerInterceptor
 import com.dida.android.data.interceptor.XAccessTokenInterceptor
+import com.dida.android.data.repository.MainRepository
 import com.dida.android.domain.usecase.MainAPIService
 import com.dida.android.util.GlobalConstant.Companion.BASE_URL
 import dagger.Module
@@ -26,12 +27,15 @@ object NetworkModule {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+
+            .addInterceptor(BearerInterceptor())
             .build()
     } else {
         OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
+            // Interceptor
             .addInterceptor(BearerInterceptor())
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
