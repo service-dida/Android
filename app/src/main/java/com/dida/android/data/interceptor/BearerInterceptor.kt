@@ -29,7 +29,9 @@ class BearerInterceptor: Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var accessToken = ""
-        if(chain.request().method == "HTTP 400 "){
+        val request = chain.request()
+        val response = chain.proceed(request)
+        if(response.code in 400..405){
             accessToken = runBlocking {
                 //토큰 갱신 api 호출
                 val request = GlobalApplication.mySharedPreferences.getRefreshToken()
