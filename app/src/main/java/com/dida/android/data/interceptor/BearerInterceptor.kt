@@ -1,9 +1,21 @@
 package com.dida.android.data.interceptor
 
+import android.util.Log
 import com.dida.android.GlobalApplication
+import com.dida.android.data.MySharedPreferences
+import com.dida.android.data.repository.MainRepository
+import com.dida.android.domain.model.login.LoginResponseModel
+import com.dida.android.domain.usecase.MainAPIService
+import com.dida.android.util.GlobalConstant.Companion.BASE_URL
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import okhttp3.Interceptor
 import okhttp3.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import javax.inject.Inject
+import kotlin.reflect.KParameter
 
 /*
    * bearer 토큰 필요한 api 사용시 accessToken유효한지 검사
@@ -16,34 +28,37 @@ class BearerInterceptor: Interceptor {
     //todo 조건 분기로 인터셉터 구조 변경
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        var Baseresponse = chain.request()
-        if(Baseresponse.method == "HTTP 403 "){
-            var accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
-//            var refreshToken = RunnerBeApplication.sSharedPreferences.getString("refresh-token", null)
+        var accessToken = ""
+        val request = chain.request()
+        val response = chain.proceed(request)
+        if(response.code in 400..405){
+            accessToken = runBlocking {
+                //토큰 갱신 api 호출
+                val request = GlobalApplication.mySharedPreferences.getRefreshToken()
+                val response = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(MainAPIService::class.java)
+                    .refreshtokenAPIServer(request!!)
 
-//            val response = Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build()
-//                .create(RefreshAPI::class.java)
+                GlobalApplication.mySharedPreferences
+                    .setAccessToken(response.body()!!.accessToken, response.body()!!.refreshToken)
+                response.body()?.accessToken?: "Empty Token"
+            }
 
-//            val request = PostRefreshRequest(accessToken!!, refreshToken!!)
-//            val result = response.postRefresh(request)
-//
-//            val editor = MyApplication.editor
-//            editor.putString("X-ACCESS-TOKEN", result.blockingGet().accessToken)
-//            editor.putString("refresh-token", result.blockingGet().refreshToken)
-//            editor.commit()
-//
-//            accessToken = result.blockingGet().accessToken
-            val newRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer ${accessToken}")
+            val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
                 .build()
             return chain.proceed(newRequest)
         }
         else{
-            val response = chain.request()
-            return chain.proceed(chain.request())
+            accessToken = runBlocking {
+                GlobalApplication.mySharedPreferences.getAccessToken()!!
+            }
         }
+
+        val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
+            .build()
+        return chain.proceed(newRequest)
     }
 }

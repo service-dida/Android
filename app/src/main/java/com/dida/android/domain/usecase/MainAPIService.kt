@@ -8,6 +8,7 @@ import com.dida.android.domain.model.splash.AppVersionResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface MainAPIService {
@@ -25,4 +26,8 @@ interface MainAPIService {
 
     @GET("/user")
     suspend fun getUserProfile() : Response<UserProfileResponseModel>
+
+    @POST("/login/refresh")
+    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Response<LoginResponseModel>
+
 }

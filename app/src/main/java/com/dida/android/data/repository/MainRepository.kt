@@ -21,7 +21,11 @@ class MainRepository @Inject constructor(private val mainAPIService: MainAPIServ
         return mainAPIService.createuserAPIServer(request)
     }
 
-    suspend fun getUserProfile() : Response<UserProfileResponseModel>{
+    suspend fun getUserProfile() : Response<UserProfileResponseModel> {
         return mainAPIService.getUserProfile()
+    }
+
+    suspend fun refreshTokenAPIServer(request: String): Response<LoginResponseModel> {
+        return mainAPIService.refreshtokenAPIServer(request)
     }
 }

@@ -1,8 +1,10 @@
 package com.dida.android.presentation.views
 
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.dida.android.GlobalApplication.Companion.editor
 import com.dida.android.R
 import com.dida.android.databinding.FragmentSplashBinding
 import com.dida.android.presentation.base.BaseFragment
