@@ -44,7 +44,9 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     override fun initDataBinding() {
         val item1 = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ")
         val item2 = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~!")
+        val item = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트")
         val commentsList = ArrayList<Comments>()
+        commentsList.add(item)
         commentsList.add(item1)
         commentsList.add(item2)
         val item3 = Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
