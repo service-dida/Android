@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.GlobalApplication
 import com.dida.android.data.repository.MainRepository
+import com.dida.android.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +46,10 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
     val profileUrlLiveData: LiveData<String>
         get() = _profileUrlLiveData
 
+    private val _userCardsLiveData = MutableLiveData<List<UserCardsResponseModel>>()
+    val userCardsLiveData: LiveData<List<UserCardsResponseModel>>
+        get() = _userCardsLiveData
+
     fun getUserProfile(){
         viewModelScope.launch(Dispatchers.IO) {
             mainRepository.getUserProfile().let {
@@ -60,6 +65,24 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
                         _getWalletLiveData.postValue(userProfileResponseModel.getWallet)
                         _nicknameLiveData.postValue(userProfileResponseModel.nickname)
                         _profileUrlLiveData.postValue(userProfileResponseModel.profileUrl)
+                    }
+                }
+                else{
+                    Log.d(TAG, "error: ${it.code()}")
+                }
+            }
+        }
+    }
+
+    fun getUserCards(){
+        viewModelScope.launch(Dispatchers.IO) {
+            mainRepository.getUserCards().let {
+                if(it.isSuccessful){
+                    Log.d(TAG, "getUserCards: ${it.body()}")
+
+                    val userCardsList = it.body()
+                    if (userCardsList.isNullOrEmpty().not()) {
+                        _userCardsLiveData.postValue(it.body())
                     }
                 }
                 else{

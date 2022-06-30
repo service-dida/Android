@@ -3,6 +3,7 @@ package com.dida.android.data.repository
 import com.dida.android.domain.model.login.CreateUserRequestModel
 import com.dida.android.domain.model.login.LoginResponseModel
 import com.dida.android.domain.model.login.NicknameResponseModel
+import com.dida.android.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.android.domain.usecase.MainAPIService
 import retrofit2.Response
@@ -23,6 +24,10 @@ class MainRepository @Inject constructor(private val mainAPIService: MainAPIServ
 
     suspend fun getUserProfile() : Response<UserProfileResponseModel> {
         return mainAPIService.getUserProfile()
+    }
+
+    suspend fun getUserCards() : Response<List<UserCardsResponseModel>>{
+        return mainAPIService.getUserCards()
     }
 
     suspend fun refreshTokenAPIServer(request: String): Response<LoginResponseModel> {
