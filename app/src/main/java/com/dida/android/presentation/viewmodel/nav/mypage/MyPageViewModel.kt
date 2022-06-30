@@ -83,6 +83,15 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
                     val userCardsList = it.body()
                     if (userCardsList.isNullOrEmpty().not()) {
                         _userCardsLiveData.postValue(it.body())
+                    }else{
+                        //TODO : 잠시 테스트를 위해 임시 데이터를 넣어놨습니다.(추후에 삭제하기)
+                        val exampleList = mutableListOf(
+                            UserCardsResponseModel(0, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65),
+                            UserCardsResponseModel(1, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65),
+                            UserCardsResponseModel(2, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65),
+                            UserCardsResponseModel(3, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65)
+                        )
+                        _userCardsLiveData.postValue(exampleList)
                     }
                 }
                 else{

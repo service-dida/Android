@@ -77,40 +77,9 @@ class MyPageFragment :
     }
 
     private fun initRecyclerView(list: List<UserCardsResponseModel>) {
-        val exampleList = mutableListOf(
-            UserCardsResponseModel(
-                0,
-                "user name here",
-                "NFT name here",
-                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-                1.65
-            ),
-            UserCardsResponseModel(
-                1,
-                "user name here",
-                "NFT name here",
-                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-                1.65
-            ),
-            UserCardsResponseModel(
-                2,
-                "user name here",
-                "NFT name here",
-                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-                1.65
-            ),
-            UserCardsResponseModel(
-                3,
-                "user name here",
-                "NFT name here",
-                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-                1.65
-            )
-        )
-
         binding.recyclerView.apply {
             //TODO : 테스트 끝나면 exampleList -> list 로 변경
-            adapter = MyPageUserCardsRecyclerViewAdapter(exampleList, ::showDetailPage)
+            adapter = MyPageUserCardsRecyclerViewAdapter(list, ::showDetailPage)
             layoutManager = GridLayoutManager(requireContext(), 2)
             addItemDecoration(GridSpacing(30, 30))
         }
