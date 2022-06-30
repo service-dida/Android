@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views.nav.home
 
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,12 +13,12 @@ import com.dida.android.domain.model.nav.home.Collection
 import com.dida.android.domain.model.nav.home.HotSeller
 import com.dida.android.domain.model.nav.home.Hots
 import com.dida.android.domain.model.nav.home.SoldOut
-import com.dida.android.domain.model.nav.mypage.MyPageNFTHolderModel
+import com.dida.android.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.presentation.adapter.home.CollectionAdapter
 import com.dida.android.presentation.adapter.home.HotSellerAdapter
 import com.dida.android.presentation.adapter.home.HotsAdapter
 import com.dida.android.presentation.adapter.home.SoldOutAdapter
-import com.dida.android.presentation.adapter.mypage.MyPageRecyclerViewAdapter
+import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
 import com.dida.android.util.GridSpacing
@@ -74,13 +73,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
         }
 
         val list = mutableListOf(
-            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
-            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
-            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
-            MyPageNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here",1.65),
+            UserCardsResponseModel(0,"user name here","NFT name here","https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",1.65),
+            UserCardsResponseModel(1,"user name here","NFT name here","https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",1.65),
+            UserCardsResponseModel(2,"user name here","NFT name here","https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",1.65),
+            UserCardsResponseModel(3,"user name here","NFT name here","https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",1.65),
         )
         binding.recentnftRecycler.apply {
-            adapter = MyPageRecyclerViewAdapter(list,::showDetailPage)
+            adapter = MyPageUserCardsRecyclerViewAdapter(list,::showDetailPage)
             layoutManager = GridLayoutManager(requireContext(),2)
             addItemDecoration(GridSpacing(30,30))
         }

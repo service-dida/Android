@@ -27,8 +27,7 @@ object NetworkModule {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-
-            .addInterceptor(BearerInterceptor())
+            //.addInterceptor(BearerInterceptor())
             .build()
     } else {
         OkHttpClient.Builder()
@@ -36,7 +35,7 @@ object NetworkModule {
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
             // Interceptor
-            .addInterceptor(BearerInterceptor())
+            //.addInterceptor(BearerInterceptor())
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .build()
