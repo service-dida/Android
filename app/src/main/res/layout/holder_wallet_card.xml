@@ -10,11 +10,12 @@
             type="com.dida.android.domain.model.nav.mypage.WalletCardHolderModel" />
     </data>
 
+    <!--TODO : 데이터모델에 따라 타입명 바꿔야함 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="298dp"
         android:layout_height="158dp"
         android:layout_marginRight="12dp"
-        android:background="@drawable/slice_1">
+        android:background='@{holderModel.type=="KLAY"?@drawable/slice_1 : @drawable/slice_2}'>
 
 
         <TextView
