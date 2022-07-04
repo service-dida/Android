@@ -4,31 +4,29 @@
     <item
         android:id="@+id/homeFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Home"/>
+        android:icon="@drawable/ic_home"
+        android:title="홈"/>
 
     <item
         android:id="@+id/defiFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Defi"/>
+        android:icon="@drawable/ic_defi"
+        android:title="디파이"/>
 
     <item
         android:id="@+id/addFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Add"/>
+        android:title=""/>
 
     <item
         android:id="@+id/communityFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Community"/>
+        android:icon="@drawable/ic_community"
+        android:title="커뮤니티"/>
 
     <item
         android:id="@+id/myPageFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="MyPage"/>
+        android:icon="@drawable/ic_mypage"
+        android:title="마이페이지"/>
 
 </menu>
