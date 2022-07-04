@@ -44,7 +44,13 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.detailNftFragment -> hideBottomNav()
-                //R.id.myPageFragment -> loginCheck()
+                R.id.myPageFragment -> {
+                    loginCheck()
+                    showBottomNav()
+                }
+                else ->{
+                    showBottomNav()
+                }
             }
         }
 
@@ -68,10 +74,14 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
     private fun showBottomNav() {
         binding.bottomNavi.visibility = View.VISIBLE
+        binding.bottomNaviAddBtn.visibility = View.VISIBLE
+        binding.bottomNaviAddBackground.visibility = View.VISIBLE
     }
 
     private fun hideBottomNav() {
         binding.bottomNavi.visibility = View.GONE
+        binding.bottomNaviAddBtn.visibility =View.GONE
+        binding.bottomNaviAddBackground.visibility=View.GONE
     }
 
 }
