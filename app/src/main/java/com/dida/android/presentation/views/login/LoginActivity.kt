@@ -24,9 +24,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun initStartView() {
         initNavController()
-
-        // test
-        startActivity(Intent(this, NavHostActivity::class.java))
     }
 
     override fun initDataBinding() {
