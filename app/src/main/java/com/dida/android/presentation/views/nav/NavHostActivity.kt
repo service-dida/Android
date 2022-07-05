@@ -53,7 +53,6 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                 }
             }
         }
-
         binding.bottomNavi.setupWithNavController(navController)
     }
 

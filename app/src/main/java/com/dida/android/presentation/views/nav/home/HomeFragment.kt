@@ -1,5 +1,7 @@
 package com.dida.android.presentation.views.nav.home
 
+import android.util.Log
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -158,19 +160,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
             }
         })
 
-        fun onScrollListener(direction : Int , index : Int) = object : RecyclerView.OnScrollListener() {
+        fun onScrollListener( directionStart : Int, directionEnd : Int , index : Int) = object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(directionEnd) and !recyclerView.canScrollVertically(directionStart)) {
                     binding.tabLayout.selectTab(binding.tabLayout.getTabAt(index))
                 }
             }
         }
 
-        binding.hotSellerRecycler.addOnScrollListener(onScrollListener(-1,0))
-        binding.soldoutRecycler.addOnScrollListener(onScrollListener(1,1))
-        binding.recentnftRecycler.addOnScrollListener(onScrollListener(1,2))
-        binding.collectionRecycler.addOnScrollListener(onScrollListener(1,3))
+        binding.hotSellerRecycler.addOnScrollListener(onScrollListener(-1,-1 ,0))
+        binding.hotSellerRecycler.addOnScrollListener(onScrollListener(1,-1 ,0))
+        binding.homeScroll.setOnScrollChangeListener { v, _, scrollY, _, _ ->
+            if(scrollY<30){
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+            }
+        }
+        binding.soldoutRecycler.addOnScrollListener(onScrollListener(-1 ,1,1))
+        binding.recentnftRecycler.addOnScrollListener(onScrollListener(-1 ,1,2))
+        binding.collectionRecycler.addOnScrollListener(onScrollListener(-1 ,  1,3))
 
     }
 
