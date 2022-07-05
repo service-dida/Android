@@ -54,6 +54,14 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             }
         }
         binding.bottomNavi.setupWithNavController(navController)
+
+        // 중복터치 막기!!
+        binding.bottomNavi.setOnItemReselectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.homeFragment -> {}
+                R.id.myPageFragment -> {}
+            }
+        }
     }
 
     private fun loginCheck() {
