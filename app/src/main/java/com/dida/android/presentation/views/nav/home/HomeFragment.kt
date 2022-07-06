@@ -1,6 +1,8 @@
 package com.dida.android.presentation.views.nav.home
 
+import android.graphics.Color
 import android.util.Log
+import android.widget.LinearLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -50,6 +52,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
         binding.vm = viewModel
         navController = Navigation.findNavController(requireView())
 
+//        initMediator() // NEW
+
         binding.hotsRecycler.run {
             adapter = hotsAdapter
             layoutManager = LinearLayoutManager(context).apply {
@@ -80,6 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
             UserCardsResponseModel(2,"user name here","NFT name here","https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",1.65),
             UserCardsResponseModel(3,"user name here","NFT name here","https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",1.65),
         )
+
         binding.recentnftRecycler.apply {
             adapter = MyPageUserCardsRecyclerViewAdapter(list,::showDetailPage)
             layoutManager = GridLayoutManager(requireContext(),2)
@@ -100,22 +105,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
         tabLayout.addTab(tabLayout.newTab().setText("최신 NFT"))
         tabLayout.addTab(tabLayout.newTab().setText("컬렉션"))
 
-        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                when (tab.position) {
-                    0 -> binding.homeScroll.scrollTo(0, binding.hotSellerRecycler.top)
-                    1 -> binding.homeScroll.scrollTo(0, binding.soldoutTxt.top)
-                    2 -> binding.homeScroll.scrollTo(0, binding.recentnftTxt.top)
-                    3 -> binding.homeScroll.scrollTo(0, binding.collectionTxt.top)
-                }
-                binding.appBarLayout.setExpanded(false)
-//                Log.d(TAG, "scrollY "+binding.homeScroll.scrollY.toString())
-//                Log.d(TAG, "scrollY "+binding.homeScroll.y.toString())
-//                Log.d(TAG, "hot scrollY "+binding.hotSellerRecycler.top.toString())
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab) = Unit
-            override fun onTabReselected(tab: TabLayout.Tab) = Unit
-        })
+        val tabStrip = binding.tabLayout.getChildAt(0) as LinearLayout
+        for (i in 0 until tabStrip.childCount) {
+            tabStrip.getChildAt(i).setOnTouchListener { _, _ ->
+                moveScroll(i)
+                true }
+        }
 
         binding.soldoutTxt.text = "Sold Out \uD83D\uDC8E"
         binding.hotitemTxt.text = "HOT Item \uD83D\uDD25"
@@ -160,29 +155,53 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
             }
         })
 
-        fun onScrollListener( directionStart : Int, directionEnd : Int , index : Int) = object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(directionEnd) and !recyclerView.canScrollVertically(directionStart)) {
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(index))
-                }
-            }
-        }
-
-        binding.hotSellerRecycler.addOnScrollListener(onScrollListener(-1,-1 ,0))
-        binding.hotSellerRecycler.addOnScrollListener(onScrollListener(1,-1 ,0))
         binding.homeScroll.setOnScrollChangeListener { v, _, scrollY, _, _ ->
-            if(scrollY<30){
+            Log.d("scroll_response", scrollY.toString())
+            // soldout
+            if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY &&
+                    scrollY < binding.soldoutMore.y) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+            }
+            // recent
+            else if(binding.soldoutMore.y <= scrollY &&
+                scrollY < binding.recentMore.y) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+            }
+            // collection
+            else if(binding.recentMore.y <= scrollY) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+            }
+            // hot seller
+            else{
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
             }
         }
-        binding.soldoutRecycler.addOnScrollListener(onScrollListener(-1 ,1,1))
-        binding.recentnftRecycler.addOnScrollListener(onScrollListener(-1 ,1,2))
-        binding.collectionRecycler.addOnScrollListener(onScrollListener(-1 ,  1,3))
 
     }
 
     private fun showDetailPage(nftId : Long){
         findNavController().navigate(R.id.action_homeFragment_to_detailNftFragment)
+    }
+
+    private fun moveScroll(tabId: Int) {
+        when(tabId) {
+            0 -> {
+                binding.homeScroll.scrollTo(0, binding.hotSellerRecycler.top)
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+            }
+            1 -> {
+                binding.homeScroll.scrollTo(0, binding.soldoutTxt.top)
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+            }
+            2 -> {
+                binding.homeScroll.scrollTo(0, binding.recentnftTxt.top)
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+            }
+            3 -> {
+                binding.homeScroll.scrollTo(0, binding.collectionTxt.top)
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+            }
+        }
+        binding.appBarLayout.setExpanded(false)
     }
 }
