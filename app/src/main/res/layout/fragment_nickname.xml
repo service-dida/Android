@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="당신의 이름은?"
-            android:fontFamily="@font/pretendard_black"
+            android:fontFamily="@font/pretendard_bold"
             android:textColor="@color/white"
             android:textSize="28dp">
         </TextView>
