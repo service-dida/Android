@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -14,7 +13,6 @@ import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewA
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.mypage.MyPageViewModel
 import com.dida.android.util.ConvertDpToPx
-
 import com.dida.android.util.GridSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
