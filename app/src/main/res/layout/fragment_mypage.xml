@@ -54,11 +54,11 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="19dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@{vm.nicknameLiveData}"
                     android:textColor="@color/white"
-                    android:textSize="24dp"
+                    android:textSize="22dp"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView"
                     app:layout_constraintStart_toStartOf="@+id/circleImageView"
                     app:layout_constraintTop_toBottomOf="@+id/circleImageView"
@@ -73,7 +73,7 @@
                     android:text='@{vm.descriptionLiveData}'
                     tools:text="자기소개는 여기에 들어갑니다"
                     android:textColor="@color/white"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView"
                     app:layout_constraintStart_toStartOf="@+id/circleImageView"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -82,7 +82,7 @@
                     android:id="@+id/linearLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -95,9 +95,10 @@
                         android:orientation="vertical"></LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -107,9 +108,9 @@
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
                             android:text="@{vm.cardCntLiveData.toString()}"
-                            tools:text="000"
                             android:textColor="@color/white"
-                            android:textSize="18dp" />
+                            android:textSize="16dp"
+                            tools:text="000" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -119,18 +120,21 @@
                             android:gravity="center"
                             android:text="NFT"
                             android:textColor="@color/mypage_info_gray_text"
-                            android:textSize="14dp" />
+                            android:textSize="13dp" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@color/view_line" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -140,9 +144,9 @@
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
                             android:text="@{vm.followerCntLiveData.toString()}"
-                            tools:text="000"
                             android:textColor="@color/white"
-                            android:textSize="18dp" />
+                            android:textSize="16dp"
+                            tools:text="000" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -152,18 +156,21 @@
                             android:gravity="center"
                             android:text="팔로워"
                             android:textColor="@color/mypage_info_gray_text"
-                            android:textSize="14dp" />
+                            android:textSize="13dp" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@color/view_line" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -173,9 +180,9 @@
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
                             android:text="@{vm.followingCntLiveData.toString()}"
-                            tools:text="000"
                             android:textColor="@color/white"
-                            android:textSize="18dp" />
+                            android:textSize="16dp"
+                            tools:text="000" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -185,7 +192,7 @@
                             android:gravity="center"
                             android:text="팔로잉"
                             android:textColor="@color/mypage_info_gray_text"
-                            android:textSize="14dp" />
+                            android:textSize="13dp" />
                     </LinearLayout>
 
                     <LinearLayout

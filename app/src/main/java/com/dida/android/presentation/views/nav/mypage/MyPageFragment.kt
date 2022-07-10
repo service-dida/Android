@@ -13,7 +13,7 @@ import com.dida.android.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.mypage.MyPageViewModel
-
+import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,14 +35,19 @@ class MyPageFragment :
     }
 
     override fun initDataBinding() {
-        viewModel.getUserProfile()
-        viewModel.getUserCards()
-    }
 
+    }
+    
     override fun initAfterBinding() {
         viewModel.userCardsLiveData.observe(viewLifecycleOwner) {
             initRecyclerView(it)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getUserProfile()
+        viewModel.getUserCards()
     }
 
     private fun initToolbar() {
@@ -81,11 +86,13 @@ class MyPageFragment :
             //TODO : 테스트 끝나면 exampleList -> list 로 변경
             adapter = MyPageUserCardsRecyclerViewAdapter(list, ::showDetailPage)
             layoutManager = GridLayoutManager(requireContext(), 2)
-            addItemDecoration(GridSpacing(30, 30))
+            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
+            addItemDecoration(GridSpacing(px, px))
         }
     }
 
     private fun showDetailPage(nftId: Long) {
         findNavController().navigate(R.id.action_myPageFragment_to_detailNftFragment)
     }
+
 }
