@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views.nav.mypage
 
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -34,14 +35,19 @@ class MyPageFragment :
     }
 
     override fun initDataBinding() {
-        viewModel.getUserProfile()
-        viewModel.getUserCards()
-    }
 
+    }
+    
     override fun initAfterBinding() {
         viewModel.userCardsLiveData.observe(viewLifecycleOwner) {
             initRecyclerView(it)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getUserProfile()
+        viewModel.getUserCards()
     }
 
     private fun initToolbar() {
@@ -88,4 +94,5 @@ class MyPageFragment :
     private fun showDetailPage(nftId: Long) {
         findNavController().navigate(R.id.action_myPageFragment_to_detailNftFragment)
     }
+
 }
