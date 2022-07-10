@@ -84,7 +84,7 @@
                         android:id="@+id/wallet_card_recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="14dp"
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
