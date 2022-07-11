@@ -8,6 +8,7 @@ import com.dida.android.GlobalApplication
 import com.dida.android.data.repository.MainRepository
 import com.dida.android.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.android.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,8 +47,8 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
     val profileUrlLiveData: LiveData<String>
         get() = _profileUrlLiveData
 
-    private val _userCardsLiveData = MutableLiveData<List<UserCardsResponseModel>>()
-    val userCardsLiveData: LiveData<List<UserCardsResponseModel>>
+    private val _userCardsLiveData = SingleLiveEvent<List<UserCardsResponseModel>>()
+    val userCardsLiveData: SingleLiveEvent<List<UserCardsResponseModel>>
         get() = _userCardsLiveData
 
     fun getUserProfile(){

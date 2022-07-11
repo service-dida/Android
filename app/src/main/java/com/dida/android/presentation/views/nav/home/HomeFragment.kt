@@ -25,6 +25,7 @@ import com.dida.android.presentation.adapter.home.SoldOutAdapter
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
+import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -88,7 +89,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
         binding.recentnftRecycler.apply {
             adapter = MyPageUserCardsRecyclerViewAdapter(list,::showDetailPage)
             layoutManager = GridLayoutManager(requireContext(),2)
-            addItemDecoration(GridSpacing(30,30))
+            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
+            addItemDecoration(GridSpacing(px, px))
         }
 
         binding.collectionRecycler.run {
