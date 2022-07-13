@@ -35,6 +35,18 @@ object BindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("nft_img_rounded")
+    fun bindNftImgRounded(imageView: ImageView, imageURL: String?) {
+        Log.d(TAG, "bindImageFromURL: ${imageURL}")
+        if (imageURL.isNullOrEmpty().not()) {
+            Glide.with(imageView.context)
+                .load(imageURL)
+                .transform(CenterCrop(), RoundedCorners(30))
+                .into(imageView)
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("image_from_url_circle")
     fun bindImageFromURLCircle(imageView: ImageView, imageURL: String?) {
         Log.d(TAG, "bindImageFromURL: ${imageURL}")

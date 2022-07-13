@@ -80,13 +80,16 @@
             app:layout_constraintBottom_toTopOf="@id/hots_contents_main"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="16dp"
-            android:padding="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:background="@drawable/custom_hots_heart">
 
             <ImageView
                 android:id="@+id/heart_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/ic_hots_heart"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
