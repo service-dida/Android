@@ -3,6 +3,7 @@ package com.dida.android.presentation.views.nav.home
 import android.graphics.Color
 import android.util.Log
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.android.GlobalApplication
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.domain.model.nav.home.Collection
@@ -25,6 +27,7 @@ import com.dida.android.presentation.adapter.home.SoldOutAdapter
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
+import com.dida.android.presentation.views.nav.mypage.MyPageFragmentDirections
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.google.android.material.tabs.TabLayout
@@ -52,8 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
     override fun initStartView() {
         binding.vm = viewModel
         navController = Navigation.findNavController(requireView())
-
-//        initMediator() // NEW
+        initToolbar()
 
         binding.hotsRecycler.run {
             adapter = hotsAdapter
@@ -178,7 +180,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
             }
         }
+    }
 
+    private fun initToolbar() {
+        binding.homeToolbar.inflateMenu(R.menu.menu_home_toolbar)
+        binding.homeToolbar.title = "DIDA"
+        binding.homeToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_alarm -> {
+                }
+                R.id.action_search -> {
+                }
+            }
+            true
+        }
     }
 
     private fun showDetailPage(nftId : Long){

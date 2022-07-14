@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/nft_img"
-            android:layout_width="79dp"
-            android:layout_height="79dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -78,18 +78,15 @@
             app:layout_constraintBottom_toBottomOf="@id/nft_contents"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/custom_soldout_price"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/soldout_img"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/ic_soldout">
             </ImageView>
 
@@ -101,7 +98,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/soldout_img"
                 android:text="@{holderModel.priceFormat}"
-                android:textSize="15dp"
+                android:textSize="14dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/pretendard_bold"
                 android:layout_marginLeft="8dp">

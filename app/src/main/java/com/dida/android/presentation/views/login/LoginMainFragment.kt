@@ -32,9 +32,8 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         navController = Navigation.findNavController(requireView())
 
         // test
-//        var intent = Intent(requireActivity(), NavHostActivity::class.java)
-//        activity?.setResult(9001,intent)
-//        activity?.finish()
+//        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment("test")
+//        navController.navigate(action)
     }
 
     override fun initDataBinding() {

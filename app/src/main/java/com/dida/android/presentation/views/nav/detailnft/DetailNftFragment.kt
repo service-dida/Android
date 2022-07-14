@@ -1,10 +1,14 @@
 package com.dida.android.presentation.views.nav.detailnft
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.android.domain.model.nav.detailnft.Comments
 import com.dida.android.domain.model.nav.detailnft.Community
@@ -29,6 +33,8 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
     override fun initStartView() {
         binding.vm = viewModel
+        initToolbar()
+
         communityAdapter = CommunityAdapter()
         navController = Navigation.findNavController(requireView())
 
@@ -62,14 +68,36 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     override fun initAfterBinding() {
-        binding.backBtn.setOnClickListener {
-            navController.popBackStack()
-        }
+//        binding.backBtn.setOnClickListener {
+//            navController.popBackStack()
+//        }
 
         // move detail
         communityAdapter.nextItemClickListener(object : CommunityAdapter.OnItemClickEventListener {
             override fun onItemClick(a_view: View?, a_position: Int) {
             }
         })
+    }
+
+    private fun initToolbar() {
+        with(binding.toolbar) {
+            // 우측 메뉴
+            this.inflateMenu(R.menu.menu_detailnft_toolbar)
+            this.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_heart -> {
+                    }
+                    R.id.action_more -> {
+                    }
+                }
+                true
+            }
+
+            // 뒤로가기 버튼
+            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationOnClickListener {
+                navController.popBackStack()
+            }
+        }
     }
 }

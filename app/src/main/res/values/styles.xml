@@ -15,7 +15,16 @@
 
     <style name="tab_text" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">16dp</item>
-        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <!-- ToolBar -->
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">24dp</item>
+        <item name="actionMenuTextColor">@color/white</item>
     </style>
 
 <!--    <style name="AppTheme.Splash">-->

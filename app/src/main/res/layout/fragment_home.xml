@@ -28,7 +28,7 @@
                 android:background="@android:color/transparent"
                 android:fitsSystemWindows="true"
                 app:expandedTitleTextAppearance="@android:color/transparent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -76,49 +76,53 @@
                     app:contentInsetStart="0dp"
                     app:layout_collapseMode="pin"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/title_txt"
-                            android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/home_toolbar"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            android:textColor="@color/white"
-                            android:textSize="24dp"
-                            android:fontFamily="@font/pretendard_bold"
-                            android:text="DIDA">
-                        </TextView>
+                            app:titleTextAppearance="@style/ToolBarStyle"
+                            app:layout_constraintTop_toTopOf="parent">
+                        </androidx.appcompat.widget.Toolbar>
 
-                        <ImageView
-                            android:id="@+id/alarm_btn"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/search_btn"
-                            android:src="@drawable/ic_alarm"
-                            android:scaleType="centerCrop"
-                            android:layout_marginRight="16dp">
-                        </ImageView>
+<!--                        <TextView-->
+<!--                            android:id="@+id/title_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="24dp"-->
+<!--                            android:fontFamily="@font/pretendard_bold"-->
+<!--                            android:text="DIDA">-->
+<!--                        </TextView>-->
 
-                        <ImageView
-                            android:id="@+id/search_btn"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            android:src="@drawable/ic_search">
-                        </ImageView>
+<!--                        <ImageView-->
+<!--                            android:id="@+id/alarm_btn"-->
+<!--                            android:layout_width="32dp"-->
+<!--                            android:layout_height="32dp"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:layout_constraintRight_toLeftOf="@id/search_btn"-->
+<!--                            android:src="@drawable/ic_alarm"-->
+<!--                            android:scaleType="centerCrop"-->
+<!--                            android:layout_marginRight="16dp">-->
+<!--                        </ImageView>-->
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/search_btn"-->
+<!--                            android:layout_width="32dp"-->
+<!--                            android:layout_height="32dp"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:layout_constraintRight_toRightOf="parent"-->
+<!--                            android:src="@drawable/ic_search">-->
+<!--                        </ImageView>-->
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </androidx.appcompat.widget.Toolbar>
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <com.google.android.material.tabs.TabLayout
@@ -131,6 +135,11 @@
                 app:tabTextColor="@color/surface6"
                 android:background="@color/mainblack">
             </com.google.android.material.tabs.TabLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/surface4"
+                android:layout_height="1dp">
+            </View>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
@@ -187,10 +196,7 @@
                     android:id="@+id/day7_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
+                    android:padding="12dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@id/soldout_txt2"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -206,10 +212,7 @@
                     android:id="@+id/day30_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
+                    android:padding="12dp"
                     app:layout_constraintTop_toTopOf="@id/day7_btn"
                     app:layout_constraintBottom_toBottomOf="@id/day7_btn"
                     app:layout_constraintLeft_toRightOf="@id/day7_btn"
@@ -225,10 +228,7 @@
                     android:id="@+id/day180_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
+                    android:padding="12dp"
                     app:layout_constraintTop_toTopOf="@id/day7_btn"
                     app:layout_constraintBottom_toBottomOf="@id/day7_btn"
                     app:layout_constraintLeft_toRightOf="@id/day30_btn"
@@ -244,10 +244,7 @@
                     android:id="@+id/day165_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
+                    android:padding="12dp"
                     app:layout_constraintTop_toTopOf="@id/day7_btn"
                     app:layout_constraintBottom_toBottomOf="@id/day7_btn"
                     app:layout_constraintLeft_toRightOf="@id/day180_btn"

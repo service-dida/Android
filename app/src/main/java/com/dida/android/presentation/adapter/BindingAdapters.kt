@@ -41,7 +41,7 @@ object BindingAdapters {
         if (imageURL.isNullOrEmpty().not()) {
             Glide.with(imageView.context)
                 .load(imageURL)
-                .transform(CenterCrop(), RoundedCorners(30))
+                .transform(CenterCrop(), RoundedCorners(40))
                 .into(imageView)
         }
     }
