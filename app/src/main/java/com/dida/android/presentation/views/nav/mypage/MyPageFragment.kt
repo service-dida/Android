@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -59,7 +58,7 @@ class MyPageFragment :
                     val directions = MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
                     findNavController().navigate(directions)
                 }
-                R.id.action_logout -> {
+                R.id.action_setting -> {
                     GlobalApplication.mySharedPreferences.removeAccessToken()
                     Toast.makeText(requireContext(), "로그아웃하였습니다.", Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
