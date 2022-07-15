@@ -102,7 +102,7 @@
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/surface1"
+                android:background="@color/line_surface1"
                 app:layout_constraintTop_toBottomOf="@id/contents_txt"
                 android:layout_marginTop="32dp">
             </View>

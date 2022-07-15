@@ -15,6 +15,7 @@
     <color name="brand_ivory">#FFFFE8</color>
 
     <color name="surface1">#252525</color>
+    <color name="line_surface1">#80dadada</color>
     <color name="surface2">#2c2c2c</color>
     <color name="surface3">#333333</color>
     <color name="surface4">#383838</color>

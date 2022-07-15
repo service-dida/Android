@@ -1,9 +1,13 @@
 package com.dida.android.presentation.views.nav.home
 
-import android.graphics.Color
+import android.animation.ObjectAnimator
+import android.graphics.Rect
 import android.util.Log
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.ScrollView
+import androidx.core.animation.doOnEnd
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -11,8 +15,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.GlobalApplication
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.domain.model.nav.home.Collection
@@ -27,12 +29,12 @@ import com.dida.android.presentation.adapter.home.SoldOutAdapter
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
-import com.dida.android.presentation.views.nav.mypage.MyPageFragmentDirections
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
+import com.dida.android.util.SmoothScroll
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.abs
 
 
 @AndroidEntryPoint
@@ -168,11 +170,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
             }
             // recent
             else if(binding.soldoutMore.y <= scrollY &&
-                scrollY < binding.recentMore.y) {
+                scrollY < binding.recentnftRecycler.y+100) {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
             }
             // collection
-            else if(binding.recentMore.y <= scrollY) {
+            else if(binding.recentnftRecycler.y+100 <= scrollY) {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
             }
             // hot seller
@@ -201,24 +203,65 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.a
     }
 
     private fun moveScroll(tabId: Int) {
-        when(tabId) {
-            0 -> {
-                binding.homeScroll.scrollTo(0, binding.hotSellerRecycler.top)
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+        with(binding.homeScroll) {
+            when(tabId) {
+                0 -> {
+//                    binding.homeScroll.smoothScrollToView(binding.hotSellerRecycler.top - 100, 3000)
+                    binding.homeScroll.smoothScrollToView(binding.hotSellerRecycler, 100, 1800)
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+                }
+                1 -> {
+                    binding.homeScroll.smoothScrollToView(binding.soldoutTxt, 50, 1800)
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+                }
+                2 -> {
+                    binding.homeScroll.smoothScrollToView(binding.recentnftTxt, 50, 1800)
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+                }
+                3 -> {
+                    binding.homeScroll.smoothScrollToView(binding.collectionTxt, 0, 1800)
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+                }
             }
-            1 -> {
-                binding.homeScroll.scrollTo(0, binding.soldoutTxt.top)
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
-            }
-            2 -> {
-                binding.homeScroll.scrollTo(0, binding.recentnftTxt.top)
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
-            }
-            3 -> {
-                binding.homeScroll.scrollTo(0, binding.collectionTxt.top)
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
-            }
+            binding.appBarLayout.setExpanded(false)
         }
-        binding.appBarLayout.setExpanded(false)
+
+    }
+
+    private fun NestedScrollView.computeDistanceToView(view: View): Int {
+        return abs(calculateRectOnScreen(this).top - (this.scrollY + calculateRectOnScreen(view).top))
+    }
+
+    private fun calculateRectOnScreen(view: View): Rect {
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)
+        return Rect(
+            location[0],
+            location[1],
+            location[0] + view.measuredWidth,
+            location[1] + view.measuredHeight
+        )
+    }
+
+    private fun NestedScrollView.smoothScrollToView(
+        view: View,
+        marginTop: Int = 0,
+        maxDuration: Long = 500L,
+        onEnd: () -> Unit = {}
+    ) {
+        if (this.getChildAt(0).height <= this.height) { // 스크롤의 의미가 없다.
+            onEnd()
+            return
+        }
+        val y = computeDistanceToView(view) - marginTop
+        val ratio = abs(y - this.scrollY) / (this.getChildAt(0).height - this.height).toFloat()
+        ObjectAnimator.ofInt(this, "scrollY", y).apply {
+            duration = (maxDuration * ratio).toLong()
+            interpolator = AccelerateDecelerateInterpolator()
+            doOnEnd {
+                onEnd()
+            }
+            start()
+        }
     }
 }
