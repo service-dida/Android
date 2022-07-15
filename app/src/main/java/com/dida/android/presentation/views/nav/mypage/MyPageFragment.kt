@@ -1,6 +1,9 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.util.Log
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -35,19 +38,13 @@ class MyPageFragment :
     }
 
     override fun initDataBinding() {
-
+        initUserInfo()
     }
     
     override fun initAfterBinding() {
         viewModel.userCardsLiveData.observe(viewLifecycleOwner) {
             initRecyclerView(it)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.getUserProfile()
-        viewModel.getUserCards()
     }
 
     private fun initToolbar() {
@@ -59,7 +56,7 @@ class MyPageFragment :
                     val directions = MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
                     findNavController().navigate(directions)
                 }
-                R.id.action_logout -> {
+                R.id.action_setting -> {
                     GlobalApplication.mySharedPreferences.removeAccessToken()
                     Toast.makeText(requireContext(), "로그아웃하였습니다.", Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
@@ -79,6 +76,11 @@ class MyPageFragment :
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spinner.adapter = adapter
             }
+    }
+
+    private fun initUserInfo(){
+        viewModel.getUserProfile()
+        viewModel.getUserCards()
     }
 
     private fun initRecyclerView(list: List<UserCardsResponseModel>) {
