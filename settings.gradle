@@ -25,4 +25,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "DIDA"
-include ':app'
+include ':presentation'
+include ':data'
+include ':domain'
