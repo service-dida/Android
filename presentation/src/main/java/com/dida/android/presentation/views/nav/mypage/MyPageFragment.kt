@@ -7,12 +7,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.dida.data.DataApplication
+import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

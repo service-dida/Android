@@ -6,11 +6,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentWalletBinding
-import com.dida.domain.model.nav.mypage.WalletCardHolderModel
-import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapter
 import com.dida.android.presentation.adapter.mypage.WalletNFTHistoryRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.domain.model.nav.mypage.WalletCardHolderModel
+import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

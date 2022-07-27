@@ -3,7 +3,7 @@ package com.dida.data.interceptor
 import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
-import kotlinx.coroutines.*
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Retrofit

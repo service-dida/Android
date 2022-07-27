@@ -3,10 +3,10 @@ package com.dida.android.presentation.views.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.data.repository.MainRepository
+import com.dida.domain.model.login.CreateUserRequestModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

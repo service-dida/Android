@@ -16,11 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
-import com.dida.domain.model.nav.home.Collection
-import com.dida.domain.model.nav.home.HotSeller
-import com.dida.domain.model.nav.home.Hots
-import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.presentation.adapter.home.CollectionAdapter
 import com.dida.android.presentation.adapter.home.HotSellerAdapter
 import com.dida.android.presentation.adapter.home.HotsAdapter
@@ -29,6 +24,11 @@ import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewA
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
+import com.dida.domain.model.nav.home.Collection
+import com.dida.domain.model.nav.home.HotSeller
+import com.dida.domain.model.nav.home.Hots
+import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs

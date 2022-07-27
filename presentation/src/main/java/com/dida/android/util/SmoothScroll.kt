@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator
 import android.graphics.Rect
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.ScrollView
 import androidx.core.animation.doOnEnd
 import androidx.core.widget.NestedScrollView
 import kotlin.math.abs

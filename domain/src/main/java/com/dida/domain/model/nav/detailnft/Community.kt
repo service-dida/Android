@@ -1,6 +1,5 @@
 package com.dida.domain.model.nav.detailnft
 
-import com.dida.domain.model.nav.detailnft.Comments
 import com.google.gson.annotations.SerializedName
 
 class Community(

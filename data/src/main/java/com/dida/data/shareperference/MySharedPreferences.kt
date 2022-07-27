@@ -3,7 +3,7 @@ package com.dida.data.shareperference
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.example.data.R
+import com.dida.data.R
 
 class MySharedPreferences(context: Context) {
     private val prefs : SharedPreferences =

@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import com.dida.data.shareperference.MySharedPreferences
-import dagger.hilt.android.HiltAndroidApp
 
 class DataApplication :Application(){
     // 코틀린의 전역변수 문법
