@@ -2,10 +2,13 @@ package com.dida.data
 
 import android.app.Application
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.dida.data.shareperference.MySharedPreferences
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
 
-class DataApplication(val context: Application){
+class DataApplication :Application(){
     // 코틀린의 전역변수 문법
     companion object {
         // 만들어져있는 SharedPreferences 를 사용해야합니다. 재생성하지 않도록 유념해주세요
@@ -13,7 +16,11 @@ class DataApplication(val context: Application){
         lateinit var editor: SharedPreferences.Editor
     }
 
-    fun getPreference() {
-        mySharedPreferences = MySharedPreferences(context)
+    override fun onCreate() {
+        super.onCreate()
+        // 다크모드 비활성화
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        mySharedPreferences = MySharedPreferences(applicationContext)
     }
 }

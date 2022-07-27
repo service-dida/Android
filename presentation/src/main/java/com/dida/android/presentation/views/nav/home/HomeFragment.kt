@@ -35,7 +35,7 @@ import kotlin.math.abs
 
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.android.R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
 
     private val TAG = "HomeFragment"
 
