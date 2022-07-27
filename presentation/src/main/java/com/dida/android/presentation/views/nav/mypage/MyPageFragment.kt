@@ -9,6 +9,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.di.PresentationApplication.Companion.mySharedPreferences
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.dida.data.DataApplication
@@ -52,7 +53,7 @@ class MyPageFragment :
                     findNavController().navigate(directions)
                 }
                 R.id.action_setting -> {
-                    DataApplication.mySharedPreferences.removeAccessToken()
+                    mySharedPreferences.removeAccessToken()
                     Toast.makeText(requireContext(), "로그아웃하였습니다.", Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }
