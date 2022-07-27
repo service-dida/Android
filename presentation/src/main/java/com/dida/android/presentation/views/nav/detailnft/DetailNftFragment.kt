@@ -11,7 +11,6 @@ import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.viewmodel.nav.detailnft.DetailNftViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 

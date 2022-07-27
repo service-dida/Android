@@ -1,10 +1,10 @@
-package com.dida.android.presentation.viewmodel.nav.mypage
+package com.dida.android.presentation.views.nav.mypage
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dida.android.data.repository.MainRepository
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

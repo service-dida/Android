@@ -1,9 +1,9 @@
 package com.dida.data.di
 
+import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
 import com.dida.data.interceptor.XAccessTokenInterceptor
-import com.example.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

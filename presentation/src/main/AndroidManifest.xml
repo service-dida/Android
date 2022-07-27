@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".GlobalApplication"
+        android:name=".presentation.di.PresentationApplication"
         android:theme="@style/Theme.DIDA">
         <activity
             android:name=".presentation.views.nav.NavHostActivity"

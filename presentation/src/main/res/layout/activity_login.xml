@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.viewmodel.login.LoginViewModel" />
+            type="com.dida.android.presentation.views.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

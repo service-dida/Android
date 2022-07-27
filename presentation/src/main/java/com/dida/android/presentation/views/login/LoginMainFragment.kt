@@ -10,7 +10,6 @@ import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.viewmodel.login.LoginMainViewModel
 import com.dida.android.presentation.views.nav.NavHostActivity
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient

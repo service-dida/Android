@@ -1,10 +1,11 @@
-package com.dida.android.presentation.viewmodel.login
+package com.dida.android.presentation.views.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.dida.android.data.repository.MainRepository
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.data.DataApplication
+import com.dida.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,13 +39,13 @@ class LoginMainViewModel @Inject constructor(private val mainRepository: MainRep
                         _kakaoEmailSuccessLiveData.postValue(it.body()?.accessToken)
                         _kakaoLoginSuccessLiveData.postValue(0)
                     }else{
-                        GlobalApplication.mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
+                        DataApplication.mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
                         _kakaoLoginSuccessLiveData.postValue(1)
                     }
                 }
                 else{
                     _kakaoLoginSuccessLiveData.postValue(-1)
-                    GlobalApplication.mySharedPreferences.removeAccessToken()
+                    DataApplication.mySharedPreferences.removeAccessToken()
                 }
             }
         }

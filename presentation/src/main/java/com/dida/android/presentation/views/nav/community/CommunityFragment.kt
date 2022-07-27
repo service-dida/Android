@@ -12,7 +12,6 @@ import com.dida.android.presentation.adapter.community.ActiveNFTRecyclerViewAdap
 import com.dida.android.presentation.adapter.community.ReservationNFTRecyclerViewAdapter
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.viewmodel.nav.community.CommunityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

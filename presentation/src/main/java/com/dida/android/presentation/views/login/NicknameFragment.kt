@@ -15,7 +15,6 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.viewmodel.login.NicknameViewModel
 import com.dida.android.presentation.views.nav.NavHostActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job

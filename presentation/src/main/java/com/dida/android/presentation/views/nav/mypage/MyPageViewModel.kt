@@ -1,13 +1,13 @@
-package com.dida.android.presentation.viewmodel.nav.mypage
+package com.dida.android.presentation.views.nav.mypage
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.dida.android.data.repository.MainRepository
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.SingleLiveEvent
+import com.dida.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

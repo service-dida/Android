@@ -27,7 +27,6 @@ import com.dida.android.presentation.adapter.home.HotsAdapter
 import com.dida.android.presentation.adapter.home.SoldOutAdapter
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.viewmodel.nav.home.HomeViewModel
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.google.android.material.tabs.TabLayout

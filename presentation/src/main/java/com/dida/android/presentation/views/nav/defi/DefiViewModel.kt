@@ -1,7 +1,7 @@
-package com.dida.android.presentation.viewmodel.nav.defi
+package com.dida.android.presentation.views.nav.defi
 
-import com.dida.android.data.repository.MainRepository
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.viewmodel.nav.home.HomeViewModel" />
+            type="com.dida.android.presentation.views.nav.home.HomeViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

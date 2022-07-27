@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.dida.android.presentation.viewmodel.nav.mypage.WalletViewModel" />
+            type="com.dida.android.presentation.views.nav.mypage.WalletViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

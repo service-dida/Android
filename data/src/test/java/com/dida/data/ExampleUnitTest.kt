@@ -1,4 +1,4 @@
-package com.example.domain
+package com.dida.data
 
 import org.junit.Test
 

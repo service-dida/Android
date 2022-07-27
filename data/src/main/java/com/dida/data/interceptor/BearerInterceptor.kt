@@ -1,6 +1,6 @@
 package com.dida.data.interceptor
 
-import com.dida.data.GlobalApplication
+import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
 import kotlinx.coroutines.*
@@ -27,7 +27,7 @@ class BearerInterceptor: Interceptor {
         if(response.code in 400..405){
             accessToken = runBlocking {
                 //토큰 갱신 api 호출
-                val request = GlobalApplication.mySharedPreferences.getRefreshToken()
+                val request = DataApplication.mySharedPreferences.getRefreshToken()
                 val response = Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -35,7 +35,7 @@ class BearerInterceptor: Interceptor {
                     .create(MainAPIService::class.java)
                     .refreshtokenAPIServer(request!!)
 
-                GlobalApplication.mySharedPreferences
+                DataApplication.mySharedPreferences
                     .setAccessToken(response.body()!!.accessToken, response.body()!!.refreshToken)
                 response.body()?.accessToken?: "Empty Token"
             }
@@ -46,7 +46,7 @@ class BearerInterceptor: Interceptor {
         }
         else{
             accessToken = runBlocking {
-                GlobalApplication.mySharedPreferences.getAccessToken()!!
+                DataApplication.mySharedPreferences.getAccessToken()!!
             }
         }
 

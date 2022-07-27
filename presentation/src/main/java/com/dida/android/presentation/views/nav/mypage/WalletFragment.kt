@@ -11,7 +11,6 @@ import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapter
 import com.dida.android.presentation.adapter.mypage.WalletNFTHistoryRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.viewmodel.nav.mypage.WalletViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

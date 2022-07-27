@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views.nav
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -10,8 +11,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
-import com.dida.android.presentation.viewmodel.nav.NavHostViewModel
+import com.dida.android.presentation.di.PresentationApplication.Companion.mySharedPreferences
 import com.dida.android.presentation.views.login.LoginActivity
+import com.dida.data.DataApplication
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +29,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
     override fun initStartView() {
         initNavController()
+        loginCheck()
     }
 
     override fun initDataBinding() {
@@ -64,7 +67,8 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
     }
 
     private fun loginCheck() {
-        val accessToken = GlobalApplication.mySharedPreferences.getAccessToken()
+        val accessToken = mySharedPreferences.getAccessToken()
+        Log.d("jwt_check!!!", accessToken.toString())
         if (accessToken.isNullOrEmpty()) {
             val intent = Intent(this, LoginActivity::class.java)
             registerForActivityResult.launch(intent)
