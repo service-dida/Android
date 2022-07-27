@@ -1,5 +1,6 @@
 package com.dida.data.di
 
+import android.util.Log
 import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
@@ -21,21 +22,24 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
+        Log.d("haha", "provideOkHttpClient: 1")
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             //.addInterceptor(BearerInterceptor())
             .build()
     } else {
+        Log.d("haha", "provideOkHttpClient: 2")
         OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
             // Interceptor
             //.addInterceptor(BearerInterceptor())
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 
