@@ -28,7 +28,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
     override fun initStartView() {
         initNavController()
-        loginCheck()
+//        loginCheck()
     }
 
     override fun initDataBinding() {
