@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="holderModel"
+            type="com.dida.domain.model.nav.mypage.UserCardsResponseModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/surface1"
+        app:cardCornerRadius="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/surface1">
+
+            <ImageView
+                android:id="@+id/nft_ImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:image_from_url="@{holderModel.imgUrl}"
+                app:layout_constraintDimensionRatio="1/1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/nft_example_image" />
+
+            <TextView
+                android:id="@+id/user_name_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{holderModel.userName}"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nft_ImageView"
+                tools:text="user name here" />
+
+            <TextView
+                android:id="@+id/nft_name_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{holderModel.cardName}"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/user_name_textview"
+                app:layout_constraintTop_toBottomOf="@+id/user_name_textview"
+                tools:text="NFT name here" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/dida_icon_imageview"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintStart_toStartOf="@+id/nft_name_textview"
+                app:layout_constraintTop_toBottomOf="@+id/nft_name_textview" />
+
+            <TextView
+                android:id="@+id/price_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{holderModel.priceFormat()}"
+                android:textColor="@color/price_gray_text"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/dida_icon_imageview"
+                app:layout_constraintStart_toEndOf="@+id/dida_icon_imageview"
+                app:layout_constraintTop_toTopOf="@+id/dida_icon_imageview"
+                tools:text="1.65 dida" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/surface1"
+                android:src="@drawable/ic_empty_heart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dida_icon_imageview" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

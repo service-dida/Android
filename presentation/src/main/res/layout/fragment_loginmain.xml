@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.dida.android.presentation.views.login.LoginMainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainblack">
+
+        <TextView
+            android:id="@+id/login_description_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@color/mainblack"
+            android:text="@string/login_description"
+            android:textSize="14dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/kakao_login_button"
+            app:layout_constraintEnd_toEndOf="@+id/kakao_login_button"
+            app:layout_constraintStart_toStartOf="@+id/kakao_login_button" />
+
+        <!--버튼 이미지 파일 변경해야함-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/kakao_login_button"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="68dp"
+            android:background="@drawable/custom_kakaologin"
+            android:contentDescription="@string/login_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/kakao_logo_1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textSize="15dp"
+                    android:textColor="#191919"
+                    android:text="카카오톡으로 시작하기"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
