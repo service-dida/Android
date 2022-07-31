@@ -106,7 +106,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         tabLayout.addTab(tabLayout.newTab().setText("Hot Seller"))
         tabLayout.addTab(tabLayout.newTab().setText("Sold Out"))
         tabLayout.addTab(tabLayout.newTab().setText("최신 NFT"))
-        tabLayout.addTab(tabLayout.newTab().setText("컬렉션"))
+        tabLayout.addTab(tabLayout.newTab().setText("활동"))
 
         val tabStrip = binding.tabLayout.getChildAt(0) as LinearLayout
         for (i in 0 until tabStrip.childCount) {
