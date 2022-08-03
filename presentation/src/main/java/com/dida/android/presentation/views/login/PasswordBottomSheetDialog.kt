@@ -7,33 +7,45 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import com.dida.android.R
 import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PasswordBottomSheetDialog :
     BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordBottomSheetViewModel>() {
 
     private val TAG = "PasswordBottomSheetDialog"
-
-    private lateinit var passwordCallbackListener: PasswordCallbackListener
 
     override val layoutResourceId: Int
         get() = R.layout.dialog_password
 
     override val viewModel: PasswordBottomSheetViewModel by viewModels()
 
+    //콜백 리스너
+    private lateinit var passwordCallbackListener: PasswordCallbackListener
+    interface PasswordCallbackListener {
+        fun callbackPassword(password: String)
+    }
+    fun setPasswordCallbackListener(passwordCallbackListener: PasswordCallbackListener) {
+        this.passwordCallbackListener = passwordCallbackListener
+    }
+
     override fun initStartView() {
-        //binding.vm = viewModel
+        binding.vm = viewModel
         dialogFullScreen()
     }
 
     override fun initDataBinding() {
-
+        viewModel.completeLiveData.observe(viewLifecycleOwner){
+            Toast.makeText(context,viewModel.stackToString(),Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun initAfterBinding() {
@@ -49,15 +61,8 @@ class PasswordBottomSheetDialog :
         binding.dialogPaymentKeypad9.setOnClickListener(numberClickLister)
         binding.dialogPaymentKeypadBack.setOnClickListener {
             buttonVibrator()
+            viewModel.removeStack()
         }
-    }
-
-    interface PasswordCallbackListener {
-        fun callbackPassword(password: String)
-    }
-
-    fun setPasswordCallbackListener(passwordCallbackListener: PasswordCallbackListener) {
-        this.passwordCallbackListener = passwordCallbackListener
     }
 
     private fun dialogFullScreen() {
@@ -78,14 +83,15 @@ class PasswordBottomSheetDialog :
         }
     }
 
-    private val numberClickLister : View.OnClickListener = View.OnClickListener {
+    private val numberClickLister: View.OnClickListener = View.OnClickListener {
         buttonVibrator()
+        viewModel.addStack((it as TextView).text.toString().toInt())
     }
 
-    private fun buttonVibrator(){
+    private fun buttonVibrator() {
         val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(50,50));
+            vibrator.vibrate(VibrationEffect.createOneShot(50, 50));
         } else {
             vibrator.vibrate(1000);
         }
