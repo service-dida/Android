@@ -1,7 +1,6 @@
 package com.dida.android.presentation.di
 
 import android.app.Application
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.dida.android.BuildConfig

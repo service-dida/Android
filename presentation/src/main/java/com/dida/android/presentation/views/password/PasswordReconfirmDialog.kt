@@ -8,11 +8,9 @@ import android.os.Vibrator
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import com.dida.android.R
-import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.databinding.DialogPasswordReconfirmBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior

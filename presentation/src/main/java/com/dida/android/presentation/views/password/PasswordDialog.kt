@@ -3,11 +3,8 @@ package com.dida.android.presentation.views.password
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.provider.Settings.Global.putString
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -44,9 +41,9 @@ class PasswordDialog :
                 PasswordReconfirmDialog.PasswordCallbackListener {
                 override fun callbackPassword(passwordReconfirm: String) {
                     if(viewModel.stackToString().equals(passwordReconfirm)){
-                        Toast.makeText(requireContext(), "패스워드 같음", Toast.LENGTH_SHORT).show()
+                        //TODO : 지갑 생성 API 호출
                     }else{
-                        Toast.makeText(requireContext(), "패스워드 다름", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
                     }
                     viewModel.clearStack()
                 }
