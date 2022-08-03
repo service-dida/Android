@@ -1,10 +1,13 @@
-package com.dida.android.presentation.views.login
+package com.dida.android.presentation.views.password
 
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings.Global.putString
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -18,24 +21,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PasswordBottomSheetDialog :
-    BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordBottomSheetViewModel>() {
+class PasswordDialog :
+    BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
-    private val TAG = "PasswordBottomSheetDialog"
+    private val TAG = "PasswordDialog"
 
     override val layoutResourceId: Int
         get() = R.layout.dialog_password
 
-    override val viewModel: PasswordBottomSheetViewModel by viewModels()
-
-    //콜백 리스너
-    private lateinit var passwordCallbackListener: PasswordCallbackListener
-    interface PasswordCallbackListener {
-        fun callbackPassword(password: String)
-    }
-    fun setPasswordCallbackListener(passwordCallbackListener: PasswordCallbackListener) {
-        this.passwordCallbackListener = passwordCallbackListener
-    }
+    override val viewModel: PasswordViewModel by viewModels()
 
     override fun initStartView() {
         binding.vm = viewModel
@@ -44,7 +38,19 @@ class PasswordBottomSheetDialog :
 
     override fun initDataBinding() {
         viewModel.completeLiveData.observe(viewLifecycleOwner){
-            Toast.makeText(context,viewModel.stackToString(),Toast.LENGTH_SHORT).show()
+            val dialog = PasswordReconfirmDialog()
+            dialog.show(childFragmentManager, "PasswordDialog")
+            dialog.setPasswordCallbackListener(object :
+                PasswordReconfirmDialog.PasswordCallbackListener {
+                override fun callbackPassword(passwordReconfirm: String) {
+                    if(viewModel.stackToString().equals(passwordReconfirm)){
+                        Toast.makeText(requireContext(), "패스워드 같음", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(requireContext(), "패스워드 다름", Toast.LENGTH_SHORT).show()
+                    }
+                    viewModel.clearStack()
+                }
+            })
         }
     }
 

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.login
+package com.dida.android.presentation.views.password
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class PasswordBottomSheetViewModel @Inject constructor(private val mainRepository: MainRepository) : BaseViewModel() {
+class PasswordViewModel @Inject constructor(private val mainRepository: MainRepository) : BaseViewModel() {
 
     private val passwordStack = Stack<Int>()
 
@@ -19,13 +19,18 @@ class PasswordBottomSheetViewModel @Inject constructor(private val mainRepositor
     private val getWalletValue: Stack<Int>
         get() = getWalletLiveData.value!!
 
-    private val _completeLiveData = MutableLiveData<Boolean>(false)
+    private val _completeLiveData = MutableLiveData<Boolean>()
     val completeLiveData: LiveData<Boolean>
         get() = _completeLiveData
 
+    fun clearStack(){
+        val stack = getWalletValue
+        stack.clear()
+        _getWalletLiveData.postValue(stack)
+    }
+
     fun addStack(num : Int){
         val stack = getWalletValue
-
         if(stack.size<7){
             stack.push(num)
             _getWalletLiveData.postValue(stack)
@@ -35,6 +40,7 @@ class PasswordBottomSheetViewModel @Inject constructor(private val mainRepositor
             _completeLiveData.postValue(true)
         }
     }
+
     fun removeStack(){
         if(!getWalletValue.isEmpty()){
             val stack = getWalletValue

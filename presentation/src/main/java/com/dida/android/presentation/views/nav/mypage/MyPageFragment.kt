@@ -9,7 +9,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.login.PasswordBottomSheetDialog
+import com.dida.android.presentation.views.password.PasswordDialog
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.dida.data.DataApplication.Companion.mySharedPreferences
@@ -53,13 +53,8 @@ class MyPageFragment :
                         findNavController().navigate(directions)
                     }else{
                         Toast.makeText(requireContext(), "지갑생성이 필요합니다.", Toast.LENGTH_SHORT).show()
-                        val dialog = PasswordBottomSheetDialog()
+                        val dialog = PasswordDialog()
                         dialog.show(childFragmentManager, "MyPageFragment")
-                        dialog.setPasswordCallbackListener(object : PasswordBottomSheetDialog.PasswordCallbackListener{
-                            override fun callbackPassword(password: String) {
-                                //TODO : 비밀번호 콜백 함수 작성
-                            }
-                        })
                     }
                 }
                 R.id.action_setting -> {
