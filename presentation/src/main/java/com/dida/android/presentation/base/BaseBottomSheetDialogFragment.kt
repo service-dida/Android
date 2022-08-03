@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.dida.android.R
 import com.dida.android.util.LoadingDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding>: BottomSheetDialogFragment() {
+abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewModel>: BottomSheetDialogFragment() {
 
     private var _binding: T? = null
     val binding get()= requireNotNull(_binding)
@@ -32,7 +31,7 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding>: BottomSheetDia
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.Theme_DIDA_BottomDialogAboveKeyboard)
+        setStyle(STYLE_NORMAL, com.dida.android.R.style.Theme_DIDA_BottomDialogAboveKeyboard)
     }
 
     override fun onCreateView(

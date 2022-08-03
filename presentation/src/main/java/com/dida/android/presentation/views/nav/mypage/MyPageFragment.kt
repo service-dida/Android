@@ -9,6 +9,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.password.PasswordDialog
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.dida.data.DataApplication.Companion.mySharedPreferences
@@ -47,14 +48,21 @@ class MyPageFragment :
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_wallet -> {
-                    //TODO : 지갑 생성 여부 확인하기
-                    val directions = MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
-                    findNavController().navigate(directions)
+                    if(viewModel.getWalletValue){
+                        val directions = MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
+                        findNavController().navigate(directions)
+                    }else{
+                        Toast.makeText(requireContext(), "지갑생성이 필요합니다.", Toast.LENGTH_SHORT).show()
+                        val dialog = PasswordDialog()
+                        dialog.show(childFragmentManager, "MyPageFragment")
+                    }
                 }
                 R.id.action_setting -> {
                     mySharedPreferences.removeAccessToken()
                     Toast.makeText(requireContext(), "로그아웃하였습니다.", Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
+
+
                 }
             }
             true
