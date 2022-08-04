@@ -1,5 +1,6 @@
 package com.dida.data.api
 
+import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -33,4 +34,7 @@ interface MainAPIService {
 
     @GET("/user/cards")
     suspend fun getUserCards() : Response<List<UserCardsResponseModel>>
+
+    @GET("/auth/mail")
+    suspend fun getSendEmail() : Response<SendEmailResponse>
 }

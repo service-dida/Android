@@ -1,6 +1,7 @@
 package com.dida.data.repository
 
 import com.dida.data.api.MainAPIService
+import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -32,5 +33,9 @@ class MainRepository @Inject constructor(private val mainAPIService: MainAPIServ
 
     suspend fun refreshTokenAPIServer(request: String): Response<LoginResponseModel> {
         return mainAPIService.refreshtokenAPIServer(request)
+    }
+
+    suspend fun sendEmailAPIServer(): Response<SendEmailResponse> {
+        return mainAPIService.getSendEmail()
     }
 }
