@@ -51,7 +51,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
 
         viewModel.errorLiveData.observe(this) {
             Toast.makeText(context, "네트워크 상황이 안좋습니다.", Toast.LENGTH_SHORT).let {
-                viewModel.getSendEmail()
+//                viewModel.getSendEmail()
             }
         }
     }
@@ -109,6 +109,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
         binding.okBtn.let { item ->
             item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
             item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
+        }
+        Toast.makeText(context, "시간이 초과되어 다시 인증번호 전송을 합니다.", Toast.LENGTH_SHORT).let {
+            viewModel.getSendEmail()
         }
     }
 
