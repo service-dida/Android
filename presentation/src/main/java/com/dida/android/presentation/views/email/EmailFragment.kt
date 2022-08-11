@@ -6,6 +6,7 @@ import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +15,7 @@ import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentEmailBinding
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,7 +25,7 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layout.fragment_email) {
+class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layout.fragment_email) {
 
     private val TAG = "EmailFragment"
 
@@ -55,6 +57,13 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
         viewModel.errorLiveData.observe(this) {
             Toast.makeText(context, "네트워크 상황이 안좋습니다.", Toast.LENGTH_SHORT).let {
 //                viewModel.getSendEmail()
+            }
+        }
+
+        viewModel.createWalletLiveData.observe(this) {
+            if(it) {
+                navController.previousBackStackEntry?.savedStateHandle?.set("WalletCheck", true)
+                navController.popBackStack()
             }
         }
     }
@@ -103,6 +112,11 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
 
         binding.okBtn.setOnClickListener {
             if(nextCheck) {
+                val passwordDialog = PasswordDialog {
+                    viewModel.postCreateWallet(it, it)
+                }
+                passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+
             }
         }
     }
@@ -149,7 +163,6 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
                 }
             }
         }
-
         // timer 실행
         timer.schedule(timerTask, 0, 300)
     }

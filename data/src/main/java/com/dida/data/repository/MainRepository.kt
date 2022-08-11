@@ -4,6 +4,7 @@ import com.dida.data.api.MainAPIService
 import com.dida.data.mapper.mapperMainResponseToMain
 import com.dida.data.mapper.mapperSendEmailResponseToRandomNum
 import com.dida.data.mapper.mapperSoldOutResponseToSoldOut
+import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.data.model.main.GetMainResponse
 import com.dida.domain.model.login.CreateUserRequestModel
@@ -78,6 +79,20 @@ class MainRepository @Inject constructor(
 
         if(response.isSuccessful && response.body() != null) {
             result = mapperSoldOutResponseToSoldOut(response.body()!!)
+        }
+        return result
+    }
+
+    override suspend fun postCreateWalletAPI(
+        password: String,
+        passwordCheck: String,
+    ): Boolean {
+        var result = false
+        val request = PostCreateWalletRequest(password, passwordCheck)
+        val response = mainAPIService.postCreateWallet(request)
+
+        if(response.isSuccessful) {
+            result = true
         }
         return result
     }

@@ -1,5 +1,6 @@
 package com.dida.data.api
 
+import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
@@ -42,4 +43,7 @@ interface MainAPIService {
 
     @GET("/main/{term}")
     suspend fun getSoldOut(@Path("term") term: Int) : Response<List<GetSoldOutResponse>>
+
+    @POST("/user/wallet")
+    suspend fun postCreateWallet(@Body request: PostCreateWalletRequest) : Response<Unit>
 }

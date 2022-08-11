@@ -32,4 +32,6 @@ interface MainUsecase {
     suspend fun getMainAPI() : Home?
 
     suspend fun getSoldOutAPI(term: Int) : List<SoldOut>?
+
+    suspend fun postCreateWalletAPI(password: String, passwordCheck: String) : Boolean
 }

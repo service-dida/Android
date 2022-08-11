@@ -27,7 +27,16 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.dida.android.presentation.views.nav.add.AddFragment"
-        android:label="AddFragment" />
+        android:label="AddFragment" >
+        <argument
+            android:name="walletCheck"
+            app:argType="boolean"
+            app:nullable="true"/>
+
+        <action
+            android:id="@+id/action_addFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.dida.android.presentation.views.nav.community.CommunityFragment"
@@ -36,6 +45,10 @@
         android:id="@+id/myPageFragment"
         android:name="com.dida.android.presentation.views.nav.mypage.MyPageFragment"
         android:label="MyPageFragment" >
+        <argument
+            android:name="addArgs"
+            app:argType="boolean"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_myPageFragment_to_walletFragment"
             app:destination="@id/walletFragment"
@@ -44,6 +57,12 @@
         <action
             android:id="@+id/action_myPageFragment_to_detailNftFragment"
             app:destination="@id/detailNftFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
     <fragment
         android:id="@+id/walletFragment"
@@ -54,4 +73,9 @@
         android:id="@+id/detailNftFragment"
         android:name="com.dida.android.presentation.views.nav.detailnft.DetailNftFragment"
         android:label="DetailNftFragment" />
+
+    <fragment
+        android:id="@+id/emailFragment"
+        android:name="com.dida.android.presentation.views.email.EmailFragment"
+        android:label="EmailFragment" />
 </navigation>

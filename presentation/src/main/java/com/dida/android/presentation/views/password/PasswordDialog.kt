@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PasswordDialog :
+class PasswordDialog(val password: (String) -> Unit) :
     BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
     private val TAG = "PasswordDialog"
@@ -40,8 +40,10 @@ class PasswordDialog :
             dialog.setPasswordCallbackListener(object :
                 PasswordReconfirmDialog.PasswordCallbackListener {
                 override fun callbackPassword(passwordReconfirm: String) {
-                    if(viewModel.stackToString().equals(passwordReconfirm)){
+                    if(viewModel.stackToString() == passwordReconfirm){
                         //TODO : 지갑 생성 API 호출
+                        password(viewModel.stackToString())
+                        dismiss()
                     }else{
                         Toast.makeText(requireContext(), "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
                     }

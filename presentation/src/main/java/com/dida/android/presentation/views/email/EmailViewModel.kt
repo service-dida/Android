@@ -39,4 +39,21 @@ class EmailViewModel @Inject constructor(
             }
         }
     }
+
+    private val _createWalletLiveData = MutableLiveData<Boolean>()
+    val createWalletLiveData: LiveData<Boolean>
+        get() = _createWalletLiveData
+
+    fun postCreateWallet(password: String, passwordCheck: String) {
+        viewModelScope.launch {
+            mainUsecase.postCreateWalletAPI(password, passwordCheck).let {
+                if(it) {
+                    _createWalletLiveData.postValue(it)
+                }
+                else {
+                    _errorLiveData.postValue(true)
+                }
+            }
+        }
+    }
 }
