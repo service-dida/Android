@@ -1,6 +1,8 @@
 package com.dida.data.api
 
 import com.dida.data.model.createwallet.SendEmailResponse
+import com.dida.data.model.main.GetMainResponse
+import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -8,10 +10,7 @@ import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface MainAPIService {
     @GET("/app/version")
@@ -37,4 +36,10 @@ interface MainAPIService {
 
     @GET("/auth/mail")
     suspend fun getSendEmail() : Response<SendEmailResponse>
+
+    @GET("/main")
+    suspend fun getMain() : Response<GetMainResponse>
+
+    @GET("/main/{term}")
+    suspend fun getSoldOut(@Path("term") term: Int) : Response<List<GetSoldOutResponse>>
 }

@@ -23,7 +23,7 @@ class NicknameViewModel @Inject constructor(private val mainRepository: MainRepo
 
     fun nicknameAPIServer(nickName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.nicknameAPIServer(nickName).let {
+            mainRepository.nicknameAPI(nickName).let {
                 if(it.isSuccessful){
                     _nickNameSuccessLiveData.postValue(it.body()!!.used)
                 }
@@ -40,7 +40,7 @@ class NicknameViewModel @Inject constructor(private val mainRepository: MainRepo
 
     fun createUserAPIServer(request: CreateUserRequestModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.createUserAPIServer(request).let {
+            mainRepository.createuserAPI(request).let {
                 if(it.isSuccessful){
                     DataApplication.mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
                     _createUserSuccessLiveData.postValue(true)

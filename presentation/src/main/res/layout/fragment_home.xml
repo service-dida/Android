@@ -202,9 +202,9 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:text="일주일 이내"
                     android:textSize="16dp"
-                    android:background="@drawable/custom_soldout_not_click"
+                    android:textColor="@{vm.termLiveData==7? @color/mainblack : @color/white}"
+                    android:background="@{vm.termLiveData==7? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
                     android:fontFamily="@font/pretendard_bold"
-                    android:textColor="@color/white"
                     android:layout_marginLeft="16dp">
                 </TextView>
 
@@ -219,9 +219,9 @@
                     android:layout_marginLeft="12dp"
                     android:text="1개월"
                     android:textSize="16dp"
-                    android:background="@drawable/custom_soldout_not_click"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:textColor="@color/white">
+                    android:textColor="@{vm.termLiveData==30? @color/mainblack : @color/white}"
+                    android:background="@{vm.termLiveData==30? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
                 <TextView
@@ -235,13 +235,13 @@
                     android:layout_marginLeft="12dp"
                     android:text="6개월"
                     android:textSize="16dp"
-                    android:background="@drawable/custom_soldout_not_click"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:textColor="@color/white">
+                    android:textColor="@{vm.termLiveData==60? @color/mainblack : @color/white}"
+                    android:background="@{vm.termLiveData==60? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
                 <TextView
-                    android:id="@+id/day165_btn"
+                    android:id="@+id/day365_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
@@ -251,9 +251,9 @@
                     android:layout_marginLeft="12dp"
                     android:text="올 한해"
                     android:textSize="16dp"
-                    android:background="@drawable/custom_soldout_not_click"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:textColor="@color/white">
+                    android:textColor="@{vm.termLiveData==365? @color/mainblack : @color/white}"
+                    android:background="@{vm.termLiveData==365? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
                 <androidx.recyclerview.widget.RecyclerView

@@ -33,7 +33,7 @@ class LoginMainViewModel @Inject constructor(private val mainRepository: MainRep
 
     suspend fun loginAPIServer(idToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.loginAPIServer(idToken).let {
+            mainRepository.loginAPI(idToken).let {
                 if(it.isSuccessful){
                     if(it.body()?.refreshToken.isNullOrEmpty()){
                         _kakaoEmailSuccessLiveData.postValue(it.body()?.accessToken)

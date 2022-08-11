@@ -15,12 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.android.R.layout.fragment_detail_nft) {
+class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(R.layout.fragment_detail_nft) {
 
     private val TAG = "DetailNftFragment"
 
     override val layoutResourceId: Int
-        get() = com.dida.android.R.layout.fragment_detail_nft
+        get() = R.layout.fragment_detail_nft
 
     override val viewModel : DetailNftViewModel by viewModels()
     lateinit var navController: NavController

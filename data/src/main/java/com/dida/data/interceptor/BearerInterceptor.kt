@@ -24,7 +24,7 @@ class BearerInterceptor: Interceptor {
         var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
-        if(response.code in 400..405){
+        if(response.code == 400){
             accessToken = runBlocking {
                 //토큰 갱신 api 호출
                 val request = DataApplication.mySharedPreferences.getRefreshToken()
@@ -44,14 +44,6 @@ class BearerInterceptor: Interceptor {
                 .build()
             return chain.proceed(newRequest)
         }
-        else{
-            accessToken = runBlocking {
-                DataApplication.mySharedPreferences.getAccessToken()!!
-            }
-        }
-
-        val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
-            .build()
-        return chain.proceed(newRequest)
+        return response
     }
 }

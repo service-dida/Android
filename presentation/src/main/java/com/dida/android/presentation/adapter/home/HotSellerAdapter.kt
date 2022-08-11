@@ -41,7 +41,9 @@ class HotSellerAdapter() :
         }
     }
 
-    fun addItem(item: HotSeller) {
-        itemList.add(item)
+    fun addAll(items: List<HotSeller>) {
+        itemList.clear()
+        itemList.addAll(items)
+        this.notifyDataSetChanged()
     }
 }

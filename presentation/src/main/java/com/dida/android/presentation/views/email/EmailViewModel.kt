@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import com.dida.data.repository.MainRepository
+import com.dida.domain.usecase.MainUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EmailViewModel @Inject constructor(
-    private val mainRepository: MainRepository
+    private val mainUsecase: MainUsecase
     ) :
     BaseViewModel() {
     private val TAG = "EmailViewModel"
@@ -28,9 +29,9 @@ class EmailViewModel @Inject constructor(
 
     fun getSendEmail() {
         viewModelScope.launch {
-            mainRepository.sendEmailAPIServer().let {
-                if(it.isSuccessful){
-                    _sendEmailLiveData.postValue(it.body()?.random ?: null)
+            mainUsecase.getSendEmailAPI().let {
+                if(it != null) {
+                    _sendEmailLiveData.postValue(it.random)
                 }
                 else{
                     _errorLiveData.postValue(true)

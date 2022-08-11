@@ -4,6 +4,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
@@ -96,7 +97,7 @@ class MyPageFragment :
         }
     }
 
-    private fun showDetailPage(nftId: Long) {
+    private fun showDetailPage(nftId: Int) {
         findNavController().navigate(R.id.action_myPageFragment_to_detailNftFragment)
     }
 

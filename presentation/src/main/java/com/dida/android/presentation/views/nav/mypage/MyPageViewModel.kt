@@ -52,7 +52,7 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
 
     fun getUserProfile(){
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.getUserProfile().let {
+            mainRepository.getUserProfileAPI().let {
                 if(it.isSuccessful){
                     Log.d(TAG, "getUserProfile: ${it.body()}")
 
@@ -76,7 +76,7 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
 
     fun getUserCards(){
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.getUserCards().let {
+            mainRepository.getUserCardsAPI().let {
                 if(it.isSuccessful){
                     Log.d(TAG, "getUserCards: ${it.body()}")
 
@@ -86,10 +86,10 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
                     }else{
                         //TODO : 잠시 테스트를 위해 임시 데이터를 넣어놨습니다.(추후에 삭제하기)
                         val exampleList = mutableListOf(
-                            UserCardsResponseModel(0, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65),
-                            UserCardsResponseModel(1, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65),
-                            UserCardsResponseModel(2, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65),
-                            UserCardsResponseModel(3, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65)
+                            UserCardsResponseModel(0, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
+                            UserCardsResponseModel(1, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
+                            UserCardsResponseModel(2, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
+                            UserCardsResponseModel(3, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65")
                         )
                         _userCardsLiveData.postValue(exampleList)
                     }

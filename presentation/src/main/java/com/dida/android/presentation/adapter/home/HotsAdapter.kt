@@ -42,7 +42,9 @@ class HotsAdapter() :
         }
     }
 
-    fun addItem(item: Hots) {
-        itemList.add(item)
+    fun addAll(items: List<Hots>) {
+        itemList.clear()
+        itemList.addAll(items)
+        this.notifyDataSetChanged()
     }
 }

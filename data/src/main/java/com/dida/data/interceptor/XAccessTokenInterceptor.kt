@@ -13,14 +13,11 @@ class XAccessTokenInterceptor : Interceptor {
 
         val jwtToken : String? = mySharedPreferences.getAccessToken()
 
-        //val refreshToken: String? = GlobalApplication.mySharedPreferences.getRefreshToken()
-
         if (jwtToken != null) {
             builder.addHeader("Authorization", jwtToken)
-            /*if(refreshToken != null){
-                builder.addHeader("Authorization", "Bearer "+jwtToken)
-                builder.addHeader("refresh-token", refreshToken!!)
-            }*/
+        }
+        else {
+            builder.addHeader("Authorization", "")
         }
         return chain.proceed(builder.build())
     }

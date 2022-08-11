@@ -41,7 +41,9 @@ class CollectionAdapter() :
         }
     }
 
-    fun addItem(item: Collection) {
-        itemList.add(item)
+    fun addAll(items: List<Collection>) {
+        itemList.clear()
+        itemList.addAll(items)
+        this.notifyDataSetChanged()
     }
 }

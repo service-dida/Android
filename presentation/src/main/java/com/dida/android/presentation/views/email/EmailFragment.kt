@@ -1,5 +1,8 @@
 package com.dida.android.presentation.views.email
 
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
@@ -129,6 +132,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
                 }
 
                 if(second<10) {
+                    // 1
                     lifecycleScope.launch(Dispatchers.Main) {
                         binding.timeTxt.text = "0$minute:0$second"
                     }

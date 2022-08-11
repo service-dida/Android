@@ -45,7 +45,9 @@ class SoldOutAdapter() :
         }
     }
 
-    fun addItem(item: SoldOut) {
-        itemList.add(item)
+    fun addAll(items: List<SoldOut>) {
+        itemList.clear()
+        itemList.addAll(items)
+        this.notifyDataSetChanged()
     }
 }

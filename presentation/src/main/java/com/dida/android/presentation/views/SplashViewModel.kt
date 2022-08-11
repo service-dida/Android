@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(private val mainRepository: MainReposi
 
     fun checkVersion(){
         viewModelScope.launch {
-            val version = mainRepository.checkVersion()
+            val version = mainRepository.checkVersionAPI()
             if(version.isSuccessful){
                 Log.d(TAG, "checkVersion: ${version.body().toString()}")
                 _appVersion.postValue(version.body())
