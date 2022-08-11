@@ -106,6 +106,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         }
 
         binding.okBtn.setOnClickListener {
+            timer.cancel()
             if(nextCheck) {
                 val passwordDialog = PasswordDialog {
                     viewModel.postCreateWallet(it, it)
@@ -152,8 +153,8 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                 }
 
                 if(minute < 0){
-                    timeOver()
                     timer.cancel()
+                    timeOver()
                 }
             }
         }
