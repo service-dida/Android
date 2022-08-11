@@ -50,6 +50,9 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                     loginCheck()
                     showBottomNav()
                 }
+                R.id.addFragment -> {
+                    loginCheck()
+                }
                 else ->{
                     showBottomNav()
                 }
@@ -58,25 +61,23 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         binding.bottomNavi.setupWithNavController(navController)
 
         // ADD 버튼 클릭
+        binding.bottomNavi.menu.getItem(2).isEnabled = false
         binding.bottomNaviAddBtn.setOnClickListener {
-            supportFragmentManager
-                .beginTransaction().add(R.id.nav_host_fragment_container, AddFragment())
-                .commit()
+            navController.navigate(R.id.addFragment)
         }
-
 
         // 중복터치 막기!!
         binding.bottomNavi.setOnItemReselectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.homeFragment -> {}
                 R.id.myPageFragment -> {}
+                R.id.addFragment -> {}
             }
         }
     }
 
     private fun loginCheck() {
         val accessToken = mySharedPreferences.getAccessToken()
-        Log.d("jwt_check!!!", accessToken.toString())
         if (accessToken.isNullOrEmpty()) {
             val intent = Intent(this, LoginActivity::class.java)
             registerForActivityResult.launch(intent)

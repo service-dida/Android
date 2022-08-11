@@ -43,9 +43,6 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         navController = Navigation.findNavController(requireView())
 
         viewModel.getSendEmail()
-
-        // ui test용
-//        timeCheck()
     }
 
     override fun initDataBinding() {
@@ -55,9 +52,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         }
 
         viewModel.errorLiveData.observe(this) {
-            Toast.makeText(context, "네트워크 상황이 안좋습니다.", Toast.LENGTH_SHORT).let {
-//                viewModel.getSendEmail()
-            }
+            Toast.makeText(context, "네트워크 상황이 안좋습니다.", Toast.LENGTH_SHORT)
         }
 
         viewModel.createWalletLiveData.observe(this) {
@@ -116,7 +111,6 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                     viewModel.postCreateWallet(it, it)
                 }
                 passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
-
             }
         }
     }

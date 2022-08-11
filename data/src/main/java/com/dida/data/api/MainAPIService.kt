@@ -1,5 +1,6 @@
 package com.dida.data.api
 
+import com.dida.data.model.createwallet.GetWalletExistsResponse
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.data.model.main.GetMainResponse
@@ -46,4 +47,7 @@ interface MainAPIService {
 
     @POST("/user/wallet")
     suspend fun postCreateWallet(@Body request: PostCreateWalletRequest) : Response<Unit>
+
+    @GET("/user/wallet")
+    suspend fun getWalletExists() : Response<GetWalletExistsResponse>
 }

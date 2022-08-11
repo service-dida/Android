@@ -96,4 +96,14 @@ class MainRepository @Inject constructor(
         }
         return result
     }
+
+    override suspend fun getWalletExistsAPI(): Boolean {
+        val response = mainAPIService.getWalletExists()
+        var result = false
+
+        if(response.isSuccessful && response.body() != null) {
+            result = response.body()!!.existed
+        }
+        return result
+    }
 }

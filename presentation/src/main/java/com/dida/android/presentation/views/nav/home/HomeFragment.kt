@@ -2,7 +2,6 @@ package com.dida.android.presentation.views.nav.home
 
 import android.animation.ObjectAnimator
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
@@ -18,15 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
-import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
-import com.dida.domain.model.nav.home.Collection
-import com.dida.domain.model.nav.home.HotSeller
-import com.dida.domain.model.nav.home.Hots
-import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -47,12 +40,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val hotSellerAdapter: HotSellerAdapter = HotSellerAdapter()
     private val soldOutAdapter: SoldOutAdapter = SoldOutAdapter()
     private val collectionAdapter: CollectionAdapter = CollectionAdapter()
+
     private val recentNftAdapter: RecentNftAdapter = RecentNftAdapter(
         clickUnit = { nftId ->
             showDetailPage(nftId)
         }
     )
-
 
     override fun initStartView() {
         binding.vm = viewModel
@@ -154,7 +147,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         })
 
         binding.homeScroll.setOnScrollChangeListener { v, _, scrollY, _, _ ->
-            Log.d("scroll_response", scrollY.toString())
             // soldout
             if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY &&
                     scrollY < binding.soldoutMore.y) {
