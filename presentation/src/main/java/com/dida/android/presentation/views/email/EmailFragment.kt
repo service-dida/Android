@@ -2,11 +2,11 @@ package com.dida.android.presentation.views.email
 
 import android.os.Handler
 import android.os.Looper
-import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,7 +32,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     override val layoutResourceId: Int
         get() = R.layout.fragment_email // get() : 커스텀 접근자, 코틀린 문법
 
-    val timer = Timer()
+    var timer = Timer()
 
     override val viewModel : EmailViewModel by viewModels()
     lateinit var navController: NavController
@@ -41,8 +41,10 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
 
     override fun initStartView() {
         navController = Navigation.findNavController(requireView())
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
         viewModel.getSendEmail()
+//        timeCheck()
     }
 
     override fun initDataBinding() {
@@ -52,7 +54,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         }
 
         viewModel.errorLiveData.observe(this) {
-            Toast.makeText(context, "네트워크 상황이 안좋습니다.", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "네트워크 상황이 안좋습니다.", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.createWalletLiveData.observe(this) {
@@ -101,8 +103,8 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         })
 
         binding.resentBtn.setOnClickListener {
-            timer.cancel()
-            timeCheck()
+            timeOver()
+            viewModel.getSendEmail()
         }
 
         binding.okBtn.setOnClickListener {
@@ -117,19 +119,37 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     }
 
     private fun timeOver() {
+        timer.cancel()
         nextCheck = false
-        binding.okBtn.let { item ->
-            item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
-            item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
-        }
-        Toast.makeText(context, "시간이 초과되어 다시 인증번호 전송을 합니다.", Toast.LENGTH_SHORT).let {
+        val handler = Handler(Looper.getMainLooper())
+        handler.post {
+            binding.okBtn.let { item ->
+                item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
+                item.setTextColor(ContextCompat.getColor(requireContext(), R.color.surface6))
+            }
+            Toast.makeText(requireContext(), "시간이 초과되어 다시 인증번호 전송을 합니다.", Toast.LENGTH_LONG).show()
             viewModel.getSendEmail()
+        }
+    }
+
+    fun timeToString(minute: Int, second: Int) {
+        val handler = Handler(Looper.getMainLooper())
+        if(second>=10) {
+            handler.post {
+                binding.timeTxt.text = "0$minute:$second"
+            }
+        }
+        else {
+            handler.post {
+                binding.timeTxt.text = "0$minute:0$second"
+            }
         }
     }
 
     private fun timeCheck() {
         var minute = 4
         var second = 60
+        timer = Timer()
 
         val timerTask: TimerTask = object : TimerTask() {
             override fun run() {
@@ -140,25 +160,14 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                     minute -= 1
                 }
 
-                if(second<10) {
-                    // 1
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        binding.timeTxt.text = "0$minute:0$second"
-                    }
-                }
-                else {
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        binding.timeTxt.text = "0$minute:$second"
-                    }
-                }
-
-                if(minute < 0){
+                timeToString(minute, second)
+                if(minute < 4){
                     timer.cancel()
                     timeOver()
                 }
             }
         }
         // timer 실행
-        timer.schedule(timerTask, 0, 300)
+        timer.schedule(timerTask, 0, 1000)
     }
 }

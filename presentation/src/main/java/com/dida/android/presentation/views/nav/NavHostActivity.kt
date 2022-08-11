@@ -51,7 +51,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                     showBottomNav()
                 }
                 R.id.addFragment -> {
-                    loginCheck()
+//                    loginCheck()
                 }
                 else ->{
                     showBottomNav()

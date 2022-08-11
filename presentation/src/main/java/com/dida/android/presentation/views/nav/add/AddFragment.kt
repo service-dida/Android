@@ -34,7 +34,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("WalletCheck")
             ?.observe(viewLifecycleOwner) {
                 if(!it) {
-                    Toast.makeText(requireContext(), "지갑을 생성해야 NFT를 만들 수 있습니다.", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "지갑을 생성해야 NFT를 만들 수 있습니다.", Toast.LENGTH_SHORT).show()
                     navController.popBackStack()
                 }
             }
@@ -54,7 +54,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
 
         viewModel.errorLiveData.observe(this) {
-            Toast.makeText(requireContext(), "네트워크 상태가 좋지 않습니다!", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), "네트워크 상태가 좋지 않습니다!", Toast.LENGTH_SHORT).show()
             navController.popBackStack()
         }
     }
