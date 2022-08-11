@@ -30,8 +30,7 @@
         android:label="AddFragment" >
         <argument
             android:name="walletCheck"
-            app:argType="boolean"
-            app:nullable="true"/>
+            app:argType="boolean"/>
 
         <action
             android:id="@+id/action_addFragment_to_myPageFragment"
@@ -47,8 +46,7 @@
         android:label="MyPageFragment" >
         <argument
             android:name="addArgs"
-            app:argType="boolean"
-            app:nullable="true"/>
+            app:argType="boolean"/>
         <action
             android:id="@+id/action_myPageFragment_to_walletFragment"
             app:destination="@id/walletFragment"

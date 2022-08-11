@@ -12,6 +12,7 @@ import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
 import com.dida.android.presentation.views.login.LoginActivity
+import com.dida.android.presentation.views.nav.add.AddFragment
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,6 +56,14 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             }
         }
         binding.bottomNavi.setupWithNavController(navController)
+
+        // ADD 버튼 클릭
+        binding.bottomNaviAddBtn.setOnClickListener {
+            supportFragmentManager
+                .beginTransaction().add(R.id.nav_host_fragment_container, AddFragment())
+                .commit()
+        }
+
 
         // 중복터치 막기!!
         binding.bottomNavi.setOnItemReselectedListener { menuItem ->
