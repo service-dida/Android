@@ -1,5 +1,6 @@
 package com.dida.data.repository
 
+import android.util.Log
 import com.dida.data.api.MainAPIService
 import com.dida.data.mapper.mapperMainResponseToMain
 import com.dida.data.mapper.mapperSendEmailResponseToRandomNum
@@ -97,9 +98,10 @@ class MainRepository @Inject constructor(
         return result
     }
 
-    override suspend fun getWalletExistsAPI(): Boolean {
+    override suspend fun getWalletExistsAPI(): Boolean? {
         val response = mainAPIService.getWalletExists()
-        var result = false
+        var result: Boolean? = null
+        Log.e("response1234", response.toString())
 
         if(response.isSuccessful && response.body() != null) {
             result = response.body()!!.existed

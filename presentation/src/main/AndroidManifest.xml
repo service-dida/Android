@@ -14,7 +14,8 @@
         android:theme="@style/Theme.DIDA">
         <activity
             android:name=".presentation.views.nav.NavHostActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
 <!--            바로 메인 이동 테스트-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
