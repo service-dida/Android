@@ -30,6 +30,14 @@ class AddViewModel @Inject constructor(
     val nftImageLiveData: LiveData<String>
         get() = _nftImageLiveData
 
+    private val _titleLengthLiveData = MutableLiveData<Int>(0)
+    val titleLengthLiveData: LiveData<Int>
+        get() = _titleLengthLiveData
+
+    private val _descriptionLengthLiveData = MutableLiveData<Int>(0)
+    val descriptionLengthLiveData: LiveData<Int>
+        get() = _descriptionLengthLiveData
+
     fun getWalletExists() {
         viewModelScope.launch {
             mainUsecase.getWalletExistsAPI().let {
@@ -45,5 +53,13 @@ class AddViewModel @Inject constructor(
 
     fun setNFTImage(uri: Uri?){
         _nftImageLiveData.postValue(uri.toString())
+    }
+
+    fun setTitleLength(length : Int){
+        _titleLengthLiveData.postValue(length)
+    }
+
+    fun setDescriptionLength(length : Int){
+        _descriptionLengthLiveData.postValue(length)
     }
 }

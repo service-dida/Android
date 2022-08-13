@@ -3,21 +3,20 @@ package com.dida.android.presentation.views.nav.add
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.ImageView
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.nav.mypage.MyPageFragmentDirections
-import com.dida.data.DataApplication
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +55,8 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         // User의 지갑이 있는지 체크
         initRegisterForActivityResult()
         viewModel.getWalletExists()
+        textLengthCheckListener(binding.titleEditText)
+        textLengthCheckListener(binding.descriptionEditText)
     }
 
     override fun initDataBinding() {
@@ -120,7 +121,18 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
     }
     
-    private fun textLengthCheck(){
-        //TODO : 제목하고 설명 글자색 체크하기
+    private fun textLengthCheckListener(editText : EditText){
+        editText.addTextChangedListener (object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val length = editText.length()
+                if(editText==binding.titleEditText){
+                    viewModel.setTitleLength(length)
+                }else if(editText==binding.descriptionEditText){
+                    viewModel.setDescriptionLength(length)
+                }
+            }
+        })
     }
 }
