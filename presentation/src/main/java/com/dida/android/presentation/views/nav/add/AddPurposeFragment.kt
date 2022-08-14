@@ -100,7 +100,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
     private fun getImageToGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.setType("image/*")
+        intent.type = "image/*"
         resultLauncher.launch(intent)
     }
 
