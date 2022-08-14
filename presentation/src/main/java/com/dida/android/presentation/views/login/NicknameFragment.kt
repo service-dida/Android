@@ -33,41 +33,23 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     lateinit var navController: NavController
 
     lateinit var email: String
-    var nextCheck = false
 
     override fun initStartView() {
         navController = Navigation.findNavController(requireView())
         val args: NicknameFragmentArgs by navArgs()
         email = args.email
+
+        viewModel.setNicknameVerify(0)
     }
 
     override fun initDataBinding() {
         viewModel.nickNameSuccessLiveData.observe(this) {
-            if (!it) {
-                Log.d(TAG, "사용가능한 닉네임")
-                nextCheck = true
-                binding.okBtn.let { item ->
-                    item.setBackgroundResource(R.drawable.custom_okbtn_success)
-                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainblack))
-                }
-                binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_success)
-                binding.nicknameCheckTxt.text = "사용 가능한 닉네임 입니다."
-                binding.nicknameCheckTxt.let { item ->
-                    item.text = "사용 가능한 닉네임 입니다."
-                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.notice_green))
-                }
+            if (it) {
+                // 닉네임 사용중
+                viewModel.setNicknameVerify(2)
             } else {
-                nextCheck = false
-                Log.d(TAG, "중복된 닉네임")
-                binding.okBtn.let { item ->
-                    item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
-                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
-                }
-                binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
-                binding.nicknameCheckTxt.let { item ->
-                    item.text = "중복된 닉네임 입니다."
-                    item.setTextColor(ContextCompat.getColor(requireContext(),R.color.notice_red))
-                }
+                // 닉네임 사용가능
+                viewModel.setNicknameVerify(3)
             }
         }
 
@@ -78,7 +60,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                 Toast.makeText(requireContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(requireContext(), "사용할 수 없는 닉네임 입니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "통신상태가 원활하지 않습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -103,19 +85,11 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                         return@launch
 
                     if(s.isEmpty() || s.length > 8){
-                        nextCheck = false
-                        Log.d(TAG, "중복된 닉네임")
-                        binding.okBtn.let { item ->
-                            item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
-                            item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
-                        }
-                        binding.nicknameCheck.setImageResource(R.drawable.ic_nickname_fail)
-                        binding.nicknameCheckTxt.let { item ->
-                            item.text = "닉네임은 8글자 이하입니다."
-                            item.setTextColor(ContextCompat.getColor(requireContext(),R.color.notice_red))
-                        }
+                        // 8글자를 초과한 경우
+                        viewModel.setNicknameVerify(1)
                     }
                     else{
+                        viewModel.setNicknameVerify(0)
                         viewModel.nicknameAPIServer(searchFor)
                     }
                 }
@@ -123,7 +97,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
         })
 
         binding.okBtn.setOnClickListener {
-            if(nextCheck){
+            if(viewModel.nickNameSuccessLiveData.value == true){
                 val request = CreateUserRequestModel(email, binding.nickNameEdit.text.toString())
                 viewModel.createUserAPIServer(request)
             }

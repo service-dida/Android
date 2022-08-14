@@ -16,18 +16,19 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
+import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fragment_add) {
+class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeViewModel>(R.layout.fragment_add_purpose) {
 
     private val TAG = "AddFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_add
+        get() = R.layout.fragment_add_purpose
 
-    override val viewModel: AddViewModel by viewModels()
+    override val viewModel: AddPurposeViewModel by viewModels()
 
     val navController: NavController by lazy {
         Navigation.findNavController(requireView())

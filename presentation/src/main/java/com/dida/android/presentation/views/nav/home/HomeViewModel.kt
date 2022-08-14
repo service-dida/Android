@@ -10,6 +10,7 @@ import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.usecase.MainUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel

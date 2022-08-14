@@ -53,8 +53,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initToolbar()
 
         // main 화면 불러오는 함수
-        viewModel.getMain()
-        viewModel.getSoldOut(7)
+        viewModel.getMain().run {
+            viewModel.getSoldOut(7)
+            showLoadingDialog()
+        }
 
         binding.hotsRecycler.run {
             adapter = hotsAdapter
@@ -124,11 +126,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         viewModel.soldoutLiveData.observe(this) {
             soldOutAdapter.addAll(it)
+            dismissLoadingDialog()
         }
 
         viewModel.errorLiveData.observe(this) {
+            dismissLoadingDialog()
             Toast.makeText(requireContext(), "네트워크 상태가 안좋습니다.", Toast.LENGTH_SHORT).show().let {
                 viewModel.getMain()
+                showLoadingDialog()
             }
         }
     }

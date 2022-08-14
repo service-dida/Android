@@ -85,9 +85,9 @@
             android:padding="18dp"
             android:text="확인"
             android:fontFamily="@font/pretendard_bold"
-            android:textColor="@color/surface6"
+            android:textColor="@{vm.verifyCheck ? @color/mainblack : @color/surface6}"
             android:textSize="16dp"
-            android:background="@drawable/custom_okbtn_fail_custom">
+            android:background="@{vm.verifyCheck ? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

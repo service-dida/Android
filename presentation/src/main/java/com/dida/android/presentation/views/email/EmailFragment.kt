@@ -37,12 +37,12 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     override val viewModel : EmailViewModel by viewModels()
     lateinit var navController: NavController
     var emailCheck: String = ""
-    var nextCheck = false
 
     override fun initStartView() {
         navController = Navigation.findNavController(requireView())
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
+        viewModel.setVerify(false)
         viewModel.getSendEmail()
 //        timeCheck()
     }
@@ -85,18 +85,11 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                         return@launch
 
                     if(s.isEmpty() || s.length > 8){
-                        nextCheck = false
-                        binding.okBtn.let { item ->
-                            item.setBackgroundResource(R.drawable.custom_okbtn_fail_custom)
-                            item.setTextColor(ContextCompat.getColor(requireContext(),R.color.surface6))
-                        }
+                        viewModel.setVerify(false)
                     }
                     else if(emailCheck == binding.emailCheck.text.toString()){
-                        nextCheck = true
-                        binding.okBtn.let { item ->
-                            item.setBackgroundResource(R.drawable.custom_okbtn_success)
-                            item.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainblack))
-                        }
+                        viewModel.setVerify(true)
+
                     }
                 }
             }
@@ -109,7 +102,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
 
         binding.okBtn.setOnClickListener {
             timer.cancel()
-            if(nextCheck) {
+            if(viewModel.verifyCheck.value == true) {
                 val passwordDialog = PasswordDialog {
                     viewModel.postCreateWallet(it, it)
                 }
@@ -120,7 +113,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
 
     private fun timeOver() {
         timer.cancel()
-        nextCheck = false
+        viewModel.setVerify(false)
         val handler = Handler(Looper.getMainLooper())
         handler.post {
             binding.okBtn.let { item ->

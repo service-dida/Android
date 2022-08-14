@@ -11,6 +11,7 @@ import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 

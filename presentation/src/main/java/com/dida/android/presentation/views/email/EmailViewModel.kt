@@ -56,4 +56,11 @@ class EmailViewModel @Inject constructor(
             }
         }
     }
+    
+    private val _verifyCheck = MutableLiveData<Boolean>()
+    val verifyCheck: LiveData<Boolean> = _verifyCheck
+    
+    fun setVerify(status: Boolean){
+        _verifyCheck.postValue(status)
+    }
 }

@@ -3,6 +3,7 @@ package com.dida.android.presentation.base
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.dida.android.util.LoadingDialog
@@ -47,7 +48,9 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     private var isSetBackButtonValid = false
 
-    lateinit var mLoadingDialog: LoadingDialog
+    private val mLoadingDialog: LoadingDialog by lazy {
+        LoadingDialog(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +69,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.
-    fun showLoadingDialog(context: Context) {
-        mLoadingDialog = LoadingDialog(context)
+    fun showLoadingDialog() {
         mLoadingDialog.show()
     }
     // 띄워 놓은 로딩 다이얼로그를 없앰.

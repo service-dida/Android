@@ -6,8 +6,6 @@ import com.dida.data.mapper.mapperMainResponseToMain
 import com.dida.data.mapper.mapperSendEmailResponseToRandomNum
 import com.dida.data.mapper.mapperSoldOutResponseToSoldOut
 import com.dida.data.model.createwallet.PostCreateWalletRequest
-import com.dida.data.model.createwallet.SendEmailResponse
-import com.dida.data.model.main.GetMainResponse
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -18,7 +16,6 @@ import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.usecase.MainUsecase
-import okhttp3.internal.notify
 import retrofit2.Response
 import javax.inject.Inject
 

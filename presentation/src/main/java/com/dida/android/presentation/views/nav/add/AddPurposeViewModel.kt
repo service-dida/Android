@@ -13,7 +13,7 @@ import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
-class AddViewModel @Inject constructor(
+class AddPurposeViewModel @Inject constructor(
     private val mainUsecase: MainUsecase) : BaseViewModel() {
 
     private val TAG = "AddViewModel"
