@@ -32,6 +32,13 @@
         <action
             android:id="@+id/action_addFragment_to_emailFragment"
             app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/action_addFragment_to_addPurposeFragment"
+            app:destination="@id/addPurposeFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+
+
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -67,4 +74,20 @@
         android:id="@+id/emailFragment"
         android:name="com.dida.android.presentation.views.email.EmailFragment"
         android:label="EmailFragment" />
+    <fragment
+        android:id="@+id/addPurposeFragment"
+        android:name="com.dida.android.presentation.views.nav.add.AddPurposeFragment"
+        android:label="AddPurposeFragment"
+        >
+        <argument
+            android:name="imgURL"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

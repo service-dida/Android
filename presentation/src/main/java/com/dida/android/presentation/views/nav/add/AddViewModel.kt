@@ -26,7 +26,7 @@ class AddViewModel @Inject constructor(
     val errorLiveData: LiveData<Boolean>
         get() = _errorLiveData
 
-    private val _nftImageLiveData = MutableLiveData<String>()
+    private val _nftImageLiveData = MutableLiveData<String>("")
     val nftImageLiveData: LiveData<String>
         get() = _nftImageLiveData
 

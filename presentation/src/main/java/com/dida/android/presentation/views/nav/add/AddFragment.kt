@@ -34,6 +34,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
+    private var isSelected = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /*
@@ -51,6 +53,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     override fun initStartView() {
         binding.vm = viewModel
+        initToolbar()
         // User의 지갑이 있는지 체크
         initRegisterForActivityResult()
         viewModel.getWalletExists()
@@ -65,7 +68,9 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 Toast.makeText(requireContext(), "지갑을 생성해야 합니다!", Toast.LENGTH_SHORT).show()
                 navController.navigate(R.id.action_addFragment_to_emailFragment)
             } else {
-                getImageToGallery()
+                if(!isSelected){
+                    getImageToGallery()
+                }
             }
         }
 
@@ -77,7 +82,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     override fun initAfterBinding() {
         viewModel.nftImageLiveData.observe(viewLifecycleOwner) {
-            initToolbar()
+
         }
     }
 
@@ -113,7 +118,17 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.add_next_step -> {
-                    //TODO : 다음단계로 넘어가기
+                    if(binding.titleEditText.length()==0 || binding.descriptionEditText.length()==0){
+                        Toast.makeText(requireContext(),"제목과 설명을 모두 입력해주세요.",Toast.LENGTH_SHORT).show()
+                    }else{
+                        isSelected = true
+                        //사진,제목, 설명 이동
+                        val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                            viewModel.nftImageLiveData.value.toString(),
+                            binding.titleEditText.text.toString(),
+                            binding.descriptionEditText.text.toString())
+                        navController.navigate(action)
+                    }
                 }
             }
             true
