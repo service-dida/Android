@@ -32,6 +32,12 @@
         <action
             android:id="@+id/action_addFragment_to_emailFragment"
             app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/action_addFragment_to_addPurposeFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" >
+        </action>
+
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -67,4 +73,5 @@
         android:id="@+id/emailFragment"
         android:name="com.dida.android.presentation.views.email.EmailFragment"
         android:label="EmailFragment" />
+
 </navigation>

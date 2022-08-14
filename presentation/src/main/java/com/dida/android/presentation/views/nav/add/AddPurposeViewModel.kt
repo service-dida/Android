@@ -13,14 +13,10 @@ import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
-class AddViewModel @Inject constructor(
+class AddPurposeViewModel @Inject constructor(
     private val mainUsecase: MainUsecase) : BaseViewModel() {
 
-    private val TAG = "AddViewModel"
-
-    private val _walletExistsLiveData = MutableLiveData<Boolean>()
-    val walletExistsLiveData: LiveData<Boolean>
-        get() = _walletExistsLiveData
+    private val TAG = "AddPurposeViewModel"
 
     private val _errorLiveData = MutableLiveData<Boolean>()
     val errorLiveData: LiveData<Boolean>
@@ -38,28 +34,4 @@ class AddViewModel @Inject constructor(
     val descriptionLengthLiveData: LiveData<Int>
         get() = _descriptionLengthLiveData
 
-    fun getWalletExists() {
-        viewModelScope.launch {
-            mainUsecase.getWalletExistsAPI().let {
-                if(it != null) {
-                    _walletExistsLiveData.postValue(it)
-                }
-                else{
-                    _errorLiveData.postValue(true)
-                }
-            }
-        }
-    }
-
-    fun setNFTImage(uri: Uri?){
-        _nftImageLiveData.postValue(uri.toString())
-    }
-
-    fun setTitleLength(length : Int){
-        _titleLengthLiveData.postValue(length)
-    }
-
-    fun setDescriptionLength(length : Int){
-        _descriptionLengthLiveData.postValue(length)
-    }
 }

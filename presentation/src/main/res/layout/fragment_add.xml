@@ -10,180 +10,198 @@
             type="com.dida.android.presentation.views.nav.add.AddViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mainblack">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="NFT 생성"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/mainblack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/NFT_add_ImageView"
+                    android:layout_width="162dp"
+                    android:layout_height="162dp"
+                    android:layout_marginStart="99dp"
+                    android:layout_marginEnd="99dp"
+                    android:layout_marginTop="12dp"
+                    app:image_from_url="@{vm.nftImageLiveData}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
                 <TextView
+                    android:id="@+id/NFT_title_Textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="NFT 생성"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:textSize="20dp"
-                    android:textColor="@color/white"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="작품명"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/NFT_add_ImageView" />
 
-            </androidx.appcompat.widget.Toolbar>
-
-            <ImageView
-                android:id="@+id/NFT_add_ImageView"
-                android:layout_width="162dp"
-                android:layout_height="162dp"
-                android:layout_marginStart="99dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="99dp"
-                app:image_from_url="@{vm.nftImageLiveData}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/NFT_title_Textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="작품명"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/NFT_add_ImageView" />
-
-            <TextView
-                android:id="@+id/NFT_title_length_Textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:textColor="@color/surface6"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/NFT_title_Textview"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/NFT_add_ImageView"
-                android:text='@{vm.titleLengthLiveData.toString()+"/20"}'/>
+                <TextView
+                    android:id="@+id/NFT_title_length_Textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text='@{vm.titleLengthLiveData.toString()+"/20"}'
+                    android:textColor="@color/surface6"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/NFT_title_Textview"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/NFT_add_ImageView" />
                 tools:text="0/20" />
 
-            <LinearLayout
-                android:id="@+id/title_LinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_noradius_surface1_square"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/NFT_title_Textview">
-
-                <View
+                <LinearLayout
+                    android:id="@+id/title_LinearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/surface5" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_noradius_surface1_square"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/NFT_title_Textview">
 
-                <EditText
-                    android:id="@+id/title_EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/surface5" />
+
+                    <EditText
+                        android:id="@+id/title_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginLeft="16dp"
+                        android:background="@null"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:hint="매력적인 제목을 지어보세요."
+                        android:maxLength="20"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/surface6"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/surface5" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/NFT_description_Textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:maxLength="20"
-                    android:background="@null"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:hint="매력적인 제목을 지어보세요."
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="설명"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/surface6"
-                    android:textSize="14dp" />
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title_LinearLayout" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/surface5" />
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/NFT_description_Textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="설명"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_LinearLayout" />
-
-            <TextView
-                android:id="@+id/NFT_description_length_Textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text='@{vm.descriptionLengthLiveData.toString()+"/300"}'
-                android:textColor="@color/surface6"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/NFT_description_Textview"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_LinearLayout"
-                tools:text="0/300" />
-
-            <LinearLayout
-                android:id="@+id/description_LinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_noradius_surface1_square"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="61dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/NFT_description_length_Textview">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/surface5" />
-
-                <EditText
-                    android:id="@+id/description_EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="296dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@null"
+                <TextView
+                    android:id="@+id/NFT_description_length_Textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:gravity="top"
-                    android:maxLength="300"
-                    android:maxLines="30"
-                    android:hint="당신의 NFT를 소개하세요."
-                    android:inputType="textMultiLine"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/surface6"
-                    android:textSize="14dp" />
+                    android:text='@{vm.descriptionLengthLiveData.toString()+"/300"}'
+                    android:textColor="@color/surface6"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/NFT_description_Textview"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title_LinearLayout"
+                    tools:text="0/300" />
 
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                <LinearLayout
+                    android:id="@+id/description_LinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="61dp"
+                    android:background="@drawable/custom_noradius_surface1_square"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/NFT_description_length_Textview">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/surface5" />
+
+                    <EditText
+                        android:id="@+id/description_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="296dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@null"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:gravity="top"
+                        android:hint="당신의 NFT를 소개하세요."
+                        android:inputType="textMultiLine"
+                        android:maxLength="300"
+                        android:maxLines="30"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/surface6"
+                        android:textSize="14dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/surface5" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
