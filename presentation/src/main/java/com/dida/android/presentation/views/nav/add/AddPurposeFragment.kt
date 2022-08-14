@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views.nav.add
 
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -8,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.password.PasswordReconfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,6 +35,16 @@ class AddPurposeFragment :
     }
 
     override fun initAfterBinding() {
+        binding.type1Button.setOnClickListener {
+            viewModel.changePurposeType(1)
+            val dialog = AddNftBottomSheet(::type1)
+            dialog.show(childFragmentManager, "AddPurposeFragment")
+        }
+        binding.type2Button.setOnClickListener {
+            viewModel.changePurposeType(2)
+            val dialog = AddNftPriceBottomSheet(::type2)
+            dialog.show(childFragmentManager, "AddPurposeFragment")
+        }
     }
 
     private fun initToolbar() {
@@ -40,5 +52,14 @@ class AddPurposeFragment :
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+    //소장용
+    private fun type1(int : Int){
+
+    }
+    //판매용
+    private fun type2(string : String){
+
     }
 }

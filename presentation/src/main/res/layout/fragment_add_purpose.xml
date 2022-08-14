@@ -54,30 +54,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/type1_Button"
                 android:layout_width="108dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/custom_surface3_square"
+                android:background="@{vm.puposeTypeLiveData==1?@drawable/custom_okbtn_success:@drawable/custom_surface3_square}"
                 android:gravity="center"
                 android:text="소장용"
-                android:textColor="@color/white"
+                android:textColor="@{vm.puposeTypeLiveData==1?@color/black:@color/white}"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="@+id/Textview"
-                app:layout_constraintTop_toBottomOf="@+id/Textview" />
+                app:layout_constraintTop_toBottomOf="@+id/Textview"
+                tools:background="@drawable/custom_surface3_square" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/type2_Button"
                 android:layout_width="108dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/custom_surface3_square"
+                android:background="@{vm.puposeTypeLiveData==2?@drawable/custom_okbtn_success:@drawable/custom_surface3_square}"
                 android:gravity="center"
                 android:text="판매용"
-                android:textColor="@color/white"
+                android:textColor="@{vm.puposeTypeLiveData==2?@color/black:@color/white}"
+                tools:background="@drawable/custom_surface3_square"
                 android:textSize="16dp"
-                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintStart_toEndOf="@+id/type1_Button"
                 app:layout_constraintTop_toBottomOf="@+id/Textview" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,7 +92,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5">
+                app:layout_constraintTop_toBottomOf="@+id/type1_Button">
 
                 <ImageView
                     android:id="@+id/imageView4"
