@@ -15,18 +15,18 @@ import javax.inject.Inject
 @HiltViewModel
 class EmailViewModel @Inject constructor(
     private val mainUsecase: MainUsecase
-    ) :
-    BaseViewModel() {
+    ) : BaseViewModel() {
     private val TAG = "EmailViewModel"
-
-    private val _sendEmailLiveData = MutableLiveData<String>()
-    val sendEmailLiveData: LiveData<String>
-        get() = _sendEmailLiveData
 
     private val _errorLiveData = MutableLiveData<Boolean>()
     val errorLiveData: LiveData<Boolean>
         get() = _errorLiveData
 
+    private val _sendEmailLiveData = MutableLiveData<String>()
+    val sendEmailLiveData: LiveData<String>
+        get() = _sendEmailLiveData
+
+    // 비밀번호 받아오기
     fun getSendEmail() {
         viewModelScope.launch {
             mainUsecase.getSendEmailAPI().let {
@@ -37,6 +37,19 @@ class EmailViewModel @Inject constructor(
                     _errorLiveData.postValue(true)
                 }
             }
+        }
+    }
+
+    // 비밀번호 체크
+    private val _verifyCheck = MutableLiveData<Boolean>(false)
+    val verifyCheck: LiveData<Boolean> = _verifyCheck
+
+    fun verifyNumberCheck(number: String){
+        if(number == _sendEmailLiveData.value) {
+            _verifyCheck.postValue(true)
+        }
+        else{
+            _verifyCheck.postValue(false)
         }
     }
 
@@ -55,12 +68,5 @@ class EmailViewModel @Inject constructor(
                 }
             }
         }
-    }
-    
-    private val _verifyCheck = MutableLiveData<Boolean>()
-    val verifyCheck: LiveData<Boolean> = _verifyCheck
-    
-    fun setVerify(status: Boolean){
-        _verifyCheck.postValue(status)
     }
 }

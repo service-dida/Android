@@ -29,7 +29,6 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
     override fun initStartView() {
         initNavController()
-//        loginCheck()
     }
 
     override fun initDataBinding() {
@@ -51,7 +50,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                     showBottomNav()
                 }
                 R.id.addFragment -> {
-//                    loginCheck()
+                    loginCheck()
                 }
                 else ->{
                     showBottomNav()
@@ -102,5 +101,4 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         binding.bottomNaviAddBtn.visibility =View.GONE
         binding.bottomNaviAddBackground.visibility=View.GONE
     }
-
 }

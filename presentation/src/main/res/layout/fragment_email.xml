@@ -41,6 +41,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:hint="6자리 숫자"
             android:maxLength="10"
+            android:text="@={vm.verifyNumber}"
             android:textColorHint="@color/surface6"
             android:textColor="@color/white"
             android:layout_marginTop="16dp"

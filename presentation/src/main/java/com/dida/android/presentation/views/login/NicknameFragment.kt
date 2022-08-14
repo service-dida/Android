@@ -38,8 +38,6 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
         navController = Navigation.findNavController(requireView())
         val args: NicknameFragmentArgs by navArgs()
         email = args.email
-
-        viewModel.setNicknameVerify(0)
     }
 
     override fun initDataBinding() {

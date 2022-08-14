@@ -38,16 +38,18 @@ class MyPageFragment :
         binding.vm = viewModel
         initToolbar()
         initSpinner()
+        initUserInfo()
+        showLoadingDialog()
     }
 
     override fun initDataBinding() {
-        initUserInfo()
+        viewModel.userCardsLiveData.observe(viewLifecycleOwner) {
+            initRecyclerView(it)
+            dismissLoadingDialog()
+        }
     }
     
     override fun initAfterBinding() {
-        viewModel.userCardsLiveData.observe(viewLifecycleOwner) {
-            initRecyclerView(it)
-        }
     }
 
     private fun initToolbar() {

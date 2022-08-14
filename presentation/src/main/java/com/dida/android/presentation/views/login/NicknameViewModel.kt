@@ -24,7 +24,7 @@ class NicknameViewModel @Inject constructor(private val mainRepository: MainRepo
     2 -> 닉네임이 중복될 경우
     3 -> 닉네임을 사용할 수 있을 경우
     * */
-    private val _nickNameCheck = MutableLiveData<String>()
+    private val _nickNameCheck = MutableLiveData<String>("")
     val nickNameCheck: LiveData<String> = _nickNameCheck
 
     fun setNicknameVerify(type: Int){
@@ -34,7 +34,6 @@ class NicknameViewModel @Inject constructor(private val mainRepository: MainRepo
             3 -> _nickNameCheck.postValue("사용 가능한 닉네임 입니다.")
             else -> _nickNameCheck.postValue("")
         }
-
     }
 
     private val _nickNameSuccessLiveData = MutableLiveData<Boolean>()

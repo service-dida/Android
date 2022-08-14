@@ -37,6 +37,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
 
     override fun initDataBinding() {
         viewModel.kakaoLoginSuccessLiveData.observe(viewLifecycleOwner){
+            dismissLoadingDialog()
             when(it){
                 -1 ->{
                     Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show()
@@ -70,6 +71,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                     Log.d(TAG, "kakaoLogin 성공 ${token.accessToken} ")
                     lifecycleScope.launch {
                         viewModel.loginAPIServer(token.accessToken)
+                        showLoadingDialog()
                     }
                 }
             }

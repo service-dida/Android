@@ -54,11 +54,12 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     override fun initStartView() {
         binding.vm = viewModel
         initToolbar()
-        // User의 지갑이 있는지 체크
         initRegisterForActivityResult()
-        viewModel.getWalletExists()
         textLengthCheckListener(binding.titleEditText)
         textLengthCheckListener(binding.descriptionEditText)
+
+//        // User의 지갑이 있는지 체크
+        viewModel.getWalletExists()
     }
 
     override fun initDataBinding() {

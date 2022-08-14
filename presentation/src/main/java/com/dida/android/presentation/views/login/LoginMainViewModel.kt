@@ -49,7 +49,5 @@ class LoginMainViewModel @Inject constructor(private val mainRepository: MainRep
                 }
             }
         }
-
-
     }
 }
