@@ -123,7 +123,11 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     }else{
                         isSelected = true
                         //사진,제목, 설명 이동
-
+                        val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                            viewModel.nftImageLiveData.value.toString(),
+                            binding.titleEditText.text.toString(),
+                            binding.descriptionEditText.text.toString())
+                        navController.navigate(action)
                     }
                 }
             }

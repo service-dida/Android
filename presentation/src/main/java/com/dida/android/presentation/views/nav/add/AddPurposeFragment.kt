@@ -3,6 +3,8 @@ package com.dida.android.presentation.views.nav.add
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
@@ -19,12 +21,11 @@ class AddPurposeFragment :
 
     override val viewModel: AddPurposeViewModel by viewModels()
 
-    val navController: NavController by lazy {
-        Navigation.findNavController(requireView())
-    }
+    val args: AddPurposeFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.vm = viewModel
+        viewModel.initNFTInfo(args.imgURL,args.title,args.description)
         initToolbar()
     }
 
@@ -37,7 +38,7 @@ class AddPurposeFragment :
     private fun initToolbar() {
         binding.toolbar.setNavigationIcon(R.drawable.ic_back)
         binding.toolbar.setNavigationOnClickListener {
-            navController.popBackStack()
+            findNavController().popBackStack()
         }
     }
 }

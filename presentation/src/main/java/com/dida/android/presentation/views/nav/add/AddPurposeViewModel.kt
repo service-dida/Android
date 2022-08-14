@@ -26,12 +26,17 @@ class AddPurposeViewModel @Inject constructor(
     val nftImageLiveData: LiveData<String>
         get() = _nftImageLiveData
 
-    private val _titleLengthLiveData = MutableLiveData<Int>(0)
-    val titleLengthLiveData: LiveData<Int>
-        get() = _titleLengthLiveData
+    private val _titleLiveData = MutableLiveData<String>()
+    val titleLiveData: LiveData<String>
+        get() = _titleLiveData
 
-    private val _descriptionLengthLiveData = MutableLiveData<Int>(0)
-    val descriptionLengthLiveData: LiveData<Int>
-        get() = _descriptionLengthLiveData
+    private val _descriptionLiveData = MutableLiveData<String>()
+    val descriptionLiveData: LiveData<String>
+        get() = _descriptionLiveData
 
+    fun initNFTInfo(imgUrl : String, title : String, description : String) {
+        _nftImageLiveData.postValue(imgUrl)
+        _titleLiveData.postValue(title)
+        _descriptionLiveData.postValue(description)
+    }
 }
