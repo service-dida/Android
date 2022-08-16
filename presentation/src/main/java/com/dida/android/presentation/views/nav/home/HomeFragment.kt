@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.animation.doOnEnd
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -18,10 +19,12 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.util.ConvertDpToPx
-import com.dida.android.util.GridSpacing
+import com.dida.android.util.*
+import com.dida.domain.model.nav.home.Hots
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 
@@ -53,10 +56,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initToolbar()
 
         // main 화면 불러오는 함수
-        viewModel.getMain().run {
-            viewModel.getSoldOut(7)
-            showLoadingDialog()
-        }
+        viewModel.getMain()
+        viewModel.getSoldOut(7)
+        startShimmerHome()
 
         binding.hotsRecycler.run {
             adapter = hotsAdapter
@@ -122,18 +124,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             hotSellerAdapter.addAll(it.getHotSellers)
             recentNftAdapter.addAll(it.getRecentCards)
             collectionAdapter.addAll(it.getHotUsers)
+            stopShimmerHome()
         }
 
         viewModel.soldoutLiveData.observe(this) {
             soldOutAdapter.addAll(it)
-            dismissLoadingDialog()
         }
 
         viewModel.errorLiveData.observe(this) {
-            dismissLoadingDialog()
+//            dismissLoadingDialog()
             Toast.makeText(requireContext(), "네트워크 상태가 안좋습니다.", Toast.LENGTH_SHORT).show().let {
                 viewModel.getMain()
-                showLoadingDialog()
+                viewModel.getSoldOut(7)
+//                showLoadingDialog()
             }
         }
     }
@@ -268,5 +271,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 viewModel.getSoldOut(365)
             }
         }
+    }
+
+    private fun startShimmerHome() {
+        startShimmer(binding.hotsShimmer, binding.hotsRecycler)
+        startShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
+        startShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
+        startShimmer(binding.collectionShimmer, binding.collectionRecycler)
+        startShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
+    }
+
+    private fun stopShimmerHome() {
+        stopShimmer(binding.hotsShimmer, binding.hotsRecycler)
+        stopShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
+        stopShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
+        stopShimmer(binding.collectionShimmer, binding.collectionRecycler)
+        stopShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
     }
 }
