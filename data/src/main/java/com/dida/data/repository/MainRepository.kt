@@ -5,6 +5,7 @@ import com.dida.data.api.MainAPIService
 import com.dida.data.mapper.mapperMainResponseToMain
 import com.dida.data.mapper.mapperSendEmailResponseToRandomNum
 import com.dida.data.mapper.mapperSoldOutResponseToSoldOut
+import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
@@ -102,6 +103,17 @@ class MainRepository @Inject constructor(
 
         if(response.isSuccessful && response.body() != null) {
             result = response.body()!!.existed
+        }
+        return result
+    }
+
+    override suspend fun getCheckPasswordAPI(password: String): Int {
+        val request = PostCheckPasswordRequest(password)
+        val response = mainAPIService.postCheckPassword(request)
+        var result = 0
+
+        if(response.isSuccessful && response.body() != null) {
+            result = if(response.body()!!.flag) 1 else 2
         }
         return result
     }

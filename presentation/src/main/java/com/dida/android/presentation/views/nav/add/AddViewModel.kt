@@ -62,4 +62,25 @@ class AddViewModel @Inject constructor(
     fun setDescriptionLength(length : Int){
         _descriptionLengthLiveData.postValue(length)
     }
+
+    private val _checkPasswordLiveData = MutableLiveData<Boolean>()
+    val checkPasswordLiveData: LiveData<Boolean>
+        get() = _checkPasswordLiveData
+
+    /*
+     0 -> 네트워크 오류
+     1 -> 비밀번호 맞음
+     2 -> 비밀번호 틀림
+    */
+    fun checkPassword(password: String) {
+        viewModelScope.launch {
+            mainUsecase.getCheckPasswordAPI(password).let {
+                when(it) {
+                    1 -> _checkPasswordLiveData.postValue(true)
+                    2 -> _checkPasswordLiveData.postValue(false)
+                    else -> _errorLiveData.postValue(true)
+                }
+            }
+        }
+    }
 }

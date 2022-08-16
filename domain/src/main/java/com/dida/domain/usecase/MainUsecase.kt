@@ -36,4 +36,6 @@ interface MainUsecase {
     suspend fun postCreateWalletAPI(password: String, passwordCheck: String) : Boolean
 
     suspend fun getWalletExistsAPI() : Boolean?
+
+    suspend fun getCheckPasswordAPI(password: String) : Int
 }

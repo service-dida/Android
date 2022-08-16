@@ -80,7 +80,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         binding.okBtn.setOnClickListener {
             timer.cancel()
             if(viewModel.verifyCheck.value == true) {
-                val passwordDialog = PasswordDialog {
+                val passwordDialog = PasswordDialog(false) {
                     viewModel.postCreateWallet(it, it)
                     showLoadingDialog()
                 }

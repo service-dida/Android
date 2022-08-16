@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PasswordDialog(val password: (String) -> Unit) :
+class PasswordDialog(val walletCheck: Boolean, val password: (String) -> Unit) :
     BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
     private val TAG = "PasswordDialog"
@@ -35,21 +35,28 @@ class PasswordDialog(val password: (String) -> Unit) :
 
     override fun initDataBinding() {
         viewModel.completeLiveData.observe(viewLifecycleOwner){
-            val dialog = PasswordReconfirmDialog()
-            dialog.show(childFragmentManager, "PasswordDialog")
-            dialog.setPasswordCallbackListener(object :
-                PasswordReconfirmDialog.PasswordCallbackListener {
-                override fun callbackPassword(passwordReconfirm: String) {
-                    if(viewModel.stackToString() == passwordReconfirm){
-                        //TODO : 지갑 생성 API 호출
-                        password(viewModel.stackToString())
-                        dismiss()
-                    }else{
-                        Toast.makeText(requireContext(), "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
+            // 지갑이 이미 있는 경우
+            if(walletCheck) {
+
+            }
+            // 지갑을 처음 만드는 경우
+            else {
+                val dialog = PasswordReconfirmDialog()
+                dialog.show(childFragmentManager, "PasswordDialog")
+                dialog.setPasswordCallbackListener(object :
+                    PasswordReconfirmDialog.PasswordCallbackListener {
+                    override fun callbackPassword(passwordReconfirm: String) {
+                        if(viewModel.stackToString() == passwordReconfirm){
+                            //TODO : 지갑 생성 API 호출
+                            password(viewModel.stackToString())
+                            dismiss()
+                        }else{
+                            Toast.makeText(requireContext(), "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        viewModel.clearStack()
                     }
-                    viewModel.clearStack()
-                }
-            })
+                })
+            }
         }
     }
 

@@ -1,8 +1,6 @@
 package com.dida.data.api
 
-import com.dida.data.model.createwallet.GetWalletExistsResponse
-import com.dida.data.model.createwallet.PostCreateWalletRequest
-import com.dida.data.model.createwallet.SendEmailResponse
+import com.dida.data.model.createwallet.*
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.domain.model.login.CreateUserRequestModel
@@ -51,4 +49,7 @@ interface MainAPIService {
 
     @GET("/user/wallet")
     suspend fun getWalletExists() : Response<GetWalletExistsResponse>
+
+    @POST("/user/wallet/pwd/check")
+    suspend fun postCheckPassword(request: PostCheckPasswordRequest) : Response<PostCheckPasswordResponse>
 }

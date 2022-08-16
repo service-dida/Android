@@ -35,7 +35,6 @@ class PasswordViewModel @Inject constructor(private val mainRepository: MainRepo
             stack.push(num)
             _getWalletLiveData.postValue(stack)
         }
-
         if(stack.size==6){
             _completeLiveData.postValue(true)
         }

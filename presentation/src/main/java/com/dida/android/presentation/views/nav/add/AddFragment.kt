@@ -16,6 +16,7 @@ import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,13 +43,15 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         Email Fragment 에서 완료를 했을 경우에는 현재화면에서 NFT 생성
         아닐 경우에는 Toast 메세지를 띄우고 뒤로 가기
         * */
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("WalletCheck")
-            ?.observe(viewLifecycleOwner) {
-                if (!it) {
-                    Toast.makeText(requireContext(), "지갑을 생성해야 NFT를 만들 수 있습니다.", Toast.LENGTH_SHORT).show()
-                    navController.popBackStack()
-                }
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("WalletCheck")?.observe(viewLifecycleOwner) {
+            if (!it) {
+                Toast.makeText(requireContext(), "지갑을 생성해야 NFT를 만들 수 있습니다.", Toast.LENGTH_SHORT).show()
+                navController.popBackStack()
             }
+            else {
+                getImageToGallery()
+            }
+        }
     }
 
     override fun initStartView() {
@@ -58,20 +61,42 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         textLengthCheckListener(binding.titleEditText)
         textLengthCheckListener(binding.descriptionEditText)
 
-//        // User의 지갑이 있는지 체크
+        // User의 지갑이 있는지 체크
         viewModel.getWalletExists()
+        showLoadingDialog()
     }
 
     override fun initDataBinding() {
         viewModel.walletExistsLiveData.observe(this) {
+            dismissLoadingDialog()
             // 지갑이 없는 경우 지갑 생성
             if (!it) {
                 Toast.makeText(requireContext(), "지갑을 생성해야 합니다!", Toast.LENGTH_SHORT).show()
                 navController.navigate(R.id.action_addFragment_to_emailFragment)
-            } else {
+            }
+            else {
                 if(!isSelected){
-                    getImageToGallery()
+                    val passwordDialog = PasswordDialog(true) { password ->
+                        viewModel.checkPassword(password)
+                        showLoadingDialog()
+                    }
+                    passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                 }
+            }
+        }
+
+        viewModel.checkPasswordLiveData.observe(this) {
+            dismissLoadingDialog()
+            if(it) {
+                getImageToGallery()
+            }
+            else {
+                Toast.makeText(requireContext(), "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show()
+                val passwordDialog = PasswordDialog(true) { password ->
+                    viewModel.checkPassword(password)
+                    showLoadingDialog()
+                }
+                passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
             }
         }
 
