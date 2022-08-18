@@ -83,7 +83,6 @@
             app:layout_constraintRight_toRightOf="@id/nick_name_edit">
         </ImageView>
 
-
         <TextView
             android:id="@+id/ok_btn"
             android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import com.dida.data.mapper.mapperSendEmailResponseToRandomNum
 import com.dida.data.mapper.mapperSoldOutResponseToSoldOut
 import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
+import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -116,5 +117,16 @@ class MainRepository @Inject constructor(
             result = if(response.body()!!.flag) 1 else 2
         }
         return result
+    }
+
+    override suspend fun postChangePasswordAPI(beofrePassword: String, afterPassword: String): Boolean {
+        val request = PostPasswordChangeRequest(nowPwd = beofrePassword, changePwd = afterPassword)
+        val response = mainAPIService.postPasswordChange(request)
+        return response.isSuccessful && response.body() == "200"
+    }
+
+    override suspend fun postTempPasswordAPI(): Boolean {
+        val response = mainAPIService.postTempPassword()
+        return response.isSuccessful && response.body() == "200"
     }
 }

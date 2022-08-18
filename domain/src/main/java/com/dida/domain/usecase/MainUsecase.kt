@@ -38,4 +38,8 @@ interface MainUsecase {
     suspend fun getWalletExistsAPI() : Boolean?
 
     suspend fun getCheckPasswordAPI(password: String) : Int
+
+    suspend fun postChangePasswordAPI(beofrePassword: String, afterPassword: String) : Boolean
+
+    suspend fun postTempPasswordAPI() : Boolean
 }

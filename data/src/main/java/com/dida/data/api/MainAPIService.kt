@@ -3,6 +3,7 @@ package com.dida.data.api
 import com.dida.data.model.createwallet.*
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
+import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -52,4 +53,10 @@ interface MainAPIService {
 
     @POST("/user/wallet/pwd/check")
     suspend fun postCheckPassword(request: PostCheckPasswordRequest) : Response<PostCheckPasswordResponse>
+
+    @POST("/user/wallet/pwd")
+    suspend fun postPasswordChange(request: PostPasswordChangeRequest) : Response<String>
+
+    @POST("/user/wallet/pwd")
+    suspend fun postTempPassword() : Response<String>
 }
