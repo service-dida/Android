@@ -4,14 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.data.repository.MainRepository
 import com.dida.domain.State
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.usecase.MainUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,7 +51,10 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             mainUsecase.getSoldOutAPI(term).let {
                 when(it.state) {
-                    State.SUCCESS -> { _soldoutLiveData.postValue(it.data as List<SoldOut>) }
+                    State.SUCCESS -> {
+                        _soldoutLiveData.postValue(it.data as List<SoldOut>)
+                        _termLiveData.postValue(term)
+                    }
                     State.FAIL -> { _errorLiveData.postValue(it.data.toString()) }
                     State.NETWORK_ERROR -> { _errorLiveData.postValue(it.data.toString()) }
                 }

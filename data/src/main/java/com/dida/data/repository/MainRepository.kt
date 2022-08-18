@@ -64,13 +64,6 @@ class MainRepository @Inject constructor(
     }
 
     override suspend fun getMainAPI(): BaseResponse {
-//        var result: Home? = null
-//        val response = mainAPIService.getMain()
-//
-//        if(response.isSuccessful && response.body() != null) {
-//            result = mapperMainResponseToMain(response.body()!!)
-//        }
-//        return result
         val response = mainAPIService.getMain()
 
         return if(response.isSuccessful && response.body() != null) {
@@ -81,13 +74,6 @@ class MainRepository @Inject constructor(
     }
 
     override suspend fun getSoldOutAPI(term: Int): BaseResponse {
-//        var result: List<SoldOut> = emptyList()
-//        val response = mainAPIService.getSoldOut(term)
-//
-//        if(response.isSuccessful && response.body() != null) {
-//            result = mapperSoldOutResponseToSoldOut(response.body()!!)
-//        }
-//        return result
         val response = mainAPIService.getSoldOut(term)
 
         return if(response.isSuccessful && response.body() != null) {
