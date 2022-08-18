@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.repository.MainRepository
+import com.dida.domain.State
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.usecase.MainUsecase
@@ -20,8 +21,8 @@ class HomeViewModel @Inject constructor(
 
     private val TAG = "HomeViewModel"
 
-    private val _errorLiveData = MutableLiveData<Boolean>()
-    val errorLiveData: LiveData<Boolean>
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
         get() = _errorLiveData
 
     private val _mainLiveData = MutableLiveData<Home>()
@@ -39,11 +40,10 @@ class HomeViewModel @Inject constructor(
     fun getMain() {
         viewModelScope.launch {
             mainUsecase.getMainAPI().let {
-                if(it != null) {
-                    _mainLiveData.postValue(it)
-                }
-                else{
-                    _errorLiveData.postValue(true)
+                when(it.state) {
+                    State.SUCCESS -> { _mainLiveData.postValue(it.data as Home) }
+                    State.FAIL -> { _errorLiveData.postValue(it.data.toString()) }
+                    State.NETWORK_ERROR -> { _errorLiveData.postValue(it.data.toString()) }
                 }
             }
         }
@@ -52,12 +52,10 @@ class HomeViewModel @Inject constructor(
     fun getSoldOut(term: Int) {
         viewModelScope.launch {
             mainUsecase.getSoldOutAPI(term).let {
-                if(it != null) {
-                    _soldoutLiveData.postValue(it)
-                    _termLiveData.postValue(term)
-                }
-                else{
-                    _errorLiveData.postValue(true)
+                when(it.state) {
+                    State.SUCCESS -> { _soldoutLiveData.postValue(it.data as List<SoldOut>) }
+                    State.FAIL -> { _errorLiveData.postValue(it.data.toString()) }
+                    State.NETWORK_ERROR -> { _errorLiveData.postValue(it.data.toString()) }
                 }
             }
         }

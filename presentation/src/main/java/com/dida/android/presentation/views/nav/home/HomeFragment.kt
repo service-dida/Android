@@ -132,11 +132,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
 
         viewModel.errorLiveData.observe(this) {
-//            dismissLoadingDialog()
-            Toast.makeText(requireContext(), "네트워크 상태가 안좋습니다.", Toast.LENGTH_SHORT).show().let {
+            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show().let {
                 viewModel.getMain()
                 viewModel.getSoldOut(7)
-//                showLoadingDialog()
+                startShimmerHome()
             }
         }
     }

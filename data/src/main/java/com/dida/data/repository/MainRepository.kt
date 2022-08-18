@@ -2,12 +2,12 @@ package com.dida.data.repository
 
 import android.util.Log
 import com.dida.data.api.MainAPIService
-import com.dida.data.mapper.mapperMainResponseToMain
-import com.dida.data.mapper.mapperSendEmailResponseToRandomNum
-import com.dida.data.mapper.mapperSoldOutResponseToSoldOut
+import com.dida.data.mapper.*
 import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
+import com.dida.domain.BaseResponse
+import com.dida.domain.State
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -63,24 +63,38 @@ class MainRepository @Inject constructor(
         return result
     }
 
-    override suspend fun getMainAPI(): Home? {
-        var result: Home? = null
+    override suspend fun getMainAPI(): BaseResponse {
+//        var result: Home? = null
+//        val response = mainAPIService.getMain()
+//
+//        if(response.isSuccessful && response.body() != null) {
+//            result = mapperMainResponseToMain(response.body()!!)
+//        }
+//        return result
         val response = mainAPIService.getMain()
 
-        if(response.isSuccessful && response.body() != null) {
-            result = mapperMainResponseToMain(response.body()!!)
+        return if(response.isSuccessful && response.body() != null) {
+            BaseResponse(State.SUCCESS, mapperMainResponseToMain(response.body()!!))
+        } else {
+            BaseResponse(State.NETWORK_ERROR, response.errorBody())
         }
-        return result
     }
 
-    override suspend fun getSoldOutAPI(term: Int): List<SoldOut>? {
-        var result: List<SoldOut> = emptyList()
+    override suspend fun getSoldOutAPI(term: Int): BaseResponse {
+//        var result: List<SoldOut> = emptyList()
+//        val response = mainAPIService.getSoldOut(term)
+//
+//        if(response.isSuccessful && response.body() != null) {
+//            result = mapperSoldOutResponseToSoldOut(response.body()!!)
+//        }
+//        return result
         val response = mainAPIService.getSoldOut(term)
 
-        if(response.isSuccessful && response.body() != null) {
-            result = mapperSoldOutResponseToSoldOut(response.body()!!)
+        return if(response.isSuccessful && response.body() != null) {
+            BaseResponse(State.SUCCESS, mapperSoldOutResponseToSoldOut(response.body()!!))
+        } else {
+            BaseResponse(State.NETWORK_ERROR, response.errorBody())
         }
-        return result
     }
 
     override suspend fun postCreateWalletAPI(
@@ -127,6 +141,7 @@ class MainRepository @Inject constructor(
 
     override suspend fun postTempPasswordAPI(): Boolean {
         val response = mainAPIService.postTempPassword()
+
         return response.isSuccessful && response.body() == "200"
     }
 }

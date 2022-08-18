@@ -1,5 +1,6 @@
 package com.dida.domain.usecase
 
+import com.dida.domain.BaseResponse
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -29,10 +30,6 @@ interface MainUsecase {
 
     suspend fun getSendEmailAPI() : RandomNumber?
 
-    suspend fun getMainAPI() : Home?
-
-    suspend fun getSoldOutAPI(term: Int) : List<SoldOut>?
-
     suspend fun postCreateWalletAPI(password: String, passwordCheck: String) : Boolean
 
     suspend fun getWalletExistsAPI() : Boolean?
@@ -42,4 +39,8 @@ interface MainUsecase {
     suspend fun postChangePasswordAPI(beofrePassword: String, afterPassword: String) : Boolean
 
     suspend fun postTempPasswordAPI() : Boolean
+
+    suspend fun getMainAPI() : BaseResponse
+
+    suspend fun getSoldOutAPI(term: Int) : BaseResponse
 }
