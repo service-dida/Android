@@ -58,7 +58,7 @@ class NicknameViewModel @Inject constructor(private val mainRepository: MainRepo
 
     fun createUserAPIServer(request: CreateUserRequestModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.createuserAPI(request).let {
+            mainRepository.createUserAPI(request).let {
                 if(it.isSuccessful){
                     DataApplication.mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
                     _createUserSuccessLiveData.postValue(true)

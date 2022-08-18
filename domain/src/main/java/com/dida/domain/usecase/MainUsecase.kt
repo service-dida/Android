@@ -20,11 +20,11 @@ interface MainUsecase {
 
     suspend fun nicknameAPI(nickName: String): Response<NicknameResponseModel>
 
-    suspend fun createuserAPI(request: CreateUserRequestModel): Response<LoginResponseModel>
+    suspend fun createUserAPI(request: CreateUserRequestModel): Response<LoginResponseModel>
 
     suspend fun getUserProfileAPI() : Response<UserProfileResponseModel>
 
-    suspend fun refreshtokenAPI(request: String): Response<LoginResponseModel>
+    suspend fun refreshTokenAPI(request: String): Response<LoginResponseModel>
 
     suspend fun getUserCardsAPI() : Response<List<UserCardsResponseModel>>
 
@@ -36,9 +36,9 @@ interface MainUsecase {
 
     suspend fun getCheckPasswordAPI(password: String) : Int
 
-    suspend fun postChangePasswordAPI(beofrePassword: String, afterPassword: String) : Boolean
+    suspend fun postChangePasswordAPI(beforePassword: String, afterPassword: String) : Boolean
 
-    suspend fun postTempPasswordAPI() : Boolean
+    suspend fun getTempPasswordAPI() : Boolean
 
     suspend fun getMainAPI() : BaseResponse
 

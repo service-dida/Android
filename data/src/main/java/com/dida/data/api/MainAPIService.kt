@@ -57,6 +57,6 @@ interface MainAPIService {
     @POST("/user/wallet/pwd")
     suspend fun postPasswordChange(request: PostPasswordChangeRequest) : Response<String>
 
-    @POST("/user/wallet/pwd")
-    suspend fun postTempPassword() : Response<String>
+    @GET("/user/wallet/pwd")
+    suspend fun getTempPassword() : Response<String>
 }

@@ -12,8 +12,6 @@ import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.createwallet.RandomNumber
-import com.dida.domain.model.nav.home.Home
-import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
@@ -37,7 +35,7 @@ class MainRepository @Inject constructor(
         return mainAPIService.nicknameAPIServer(nickName)
     }
 
-    override suspend fun createuserAPI(request: CreateUserRequestModel): Response<LoginResponseModel> {
+    override suspend fun createUserAPI(request: CreateUserRequestModel): Response<LoginResponseModel> {
         return mainAPIService.createuserAPIServer(request)
     }
 
@@ -45,7 +43,7 @@ class MainRepository @Inject constructor(
         return mainAPIService.getUserProfile()
     }
 
-    override suspend fun refreshtokenAPI(request: String): Response<LoginResponseModel> {
+    override suspend fun refreshTokenAPI(request: String): Response<LoginResponseModel> {
         return mainAPIService.refreshtokenAPIServer(request)
     }
 
@@ -65,6 +63,7 @@ class MainRepository @Inject constructor(
 
     override suspend fun getMainAPI(): BaseResponse {
         val response = mainAPIService.getMain()
+        Log.d("error_response!!!", response.toString())
 
         return if(response.isSuccessful && response.body() != null) {
             BaseResponse(State.SUCCESS, mapperMainResponseToMain(response.body()!!))
@@ -100,7 +99,6 @@ class MainRepository @Inject constructor(
     override suspend fun getWalletExistsAPI(): Boolean? {
         val response = mainAPIService.getWalletExists()
         var result: Boolean? = null
-        Log.e("response1234", response.toString())
 
         if(response.isSuccessful && response.body() != null) {
             result = response.body()!!.existed
@@ -119,14 +117,14 @@ class MainRepository @Inject constructor(
         return result
     }
 
-    override suspend fun postChangePasswordAPI(beofrePassword: String, afterPassword: String): Boolean {
-        val request = PostPasswordChangeRequest(nowPwd = beofrePassword, changePwd = afterPassword)
+    override suspend fun postChangePasswordAPI(beforePassword: String, afterPassword: String): Boolean {
+        val request = PostPasswordChangeRequest(nowPwd = beforePassword, changePwd = afterPassword)
         val response = mainAPIService.postPasswordChange(request)
         return response.isSuccessful && response.body() == "200"
     }
 
-    override suspend fun postTempPasswordAPI(): Boolean {
-        val response = mainAPIService.postTempPassword()
+    override suspend fun getTempPasswordAPI(): Boolean {
+        val response = mainAPIService.getTempPassword()
 
         return response.isSuccessful && response.body() == "200"
     }
