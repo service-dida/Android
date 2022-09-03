@@ -67,11 +67,9 @@ class MainRepository @Inject constructor(
         val response = mainAPIService.getMain()
 
         return if(response.isSuccessful && response.body() != null) {
-            try {
-                BaseResponse(State.SUCCESS, mapperMainResponseToMain(response.body()!!))
-            } catch (e: Exception) {
-                BaseResponse(State.FAIL, (response.body() as ErrorResponse).message)
-            }
+            BaseResponse(State.SUCCESS, mapperMainResponseToMain(response.body()!!))
+        } else if(response.code() == 400) {
+            BaseResponse(State.FAIL, (response.body() as ErrorResponse).message)
         } else {
             BaseResponse(State.NETWORK_ERROR, "네트워크 통신 에러 입니다.")
         }
@@ -81,11 +79,9 @@ class MainRepository @Inject constructor(
         val response = mainAPIService.getSoldOut(term)
 
         return if(response.isSuccessful && response.body() != null) {
-            try {
-                BaseResponse(State.SUCCESS, mapperSoldOutResponseToSoldOut(response.body()!!))
-            } catch (e: Exception) {
-                BaseResponse(State.FAIL, response.body() as ErrorResponse)
-            }
+            BaseResponse(State.SUCCESS, mapperSoldOutResponseToSoldOut(response.body()!!))
+        } else if(response.code() == 400) {
+            BaseResponse(State.FAIL, (response.body() as ErrorResponse).message)
         } else {
             BaseResponse(State.NETWORK_ERROR, "네트워크 통신 에러 입니다.")
         }
