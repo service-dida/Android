@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.domain.ErrorResponse
 import com.dida.domain.State
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut

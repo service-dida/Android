@@ -7,6 +7,7 @@ import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.BaseResponse
+import com.dida.domain.ErrorResponse
 import com.dida.domain.State
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
@@ -17,6 +18,7 @@ import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.usecase.MainUsecase
 import retrofit2.Response
+import java.lang.Exception
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -63,12 +65,15 @@ class MainRepository @Inject constructor(
 
     override suspend fun getMainAPI(): BaseResponse {
         val response = mainAPIService.getMain()
-        Log.d("error_response!!!", response.toString())
 
         return if(response.isSuccessful && response.body() != null) {
-            BaseResponse(State.SUCCESS, mapperMainResponseToMain(response.body()!!))
+            try {
+                BaseResponse(State.SUCCESS, mapperMainResponseToMain(response.body()!!))
+            } catch (e: Exception) {
+                BaseResponse(State.FAIL, (response.body() as ErrorResponse).message)
+            }
         } else {
-            BaseResponse(State.NETWORK_ERROR, response.errorBody())
+            BaseResponse(State.NETWORK_ERROR, "네트워크 통신 에러 입니다.")
         }
     }
 
@@ -76,9 +81,13 @@ class MainRepository @Inject constructor(
         val response = mainAPIService.getSoldOut(term)
 
         return if(response.isSuccessful && response.body() != null) {
-            BaseResponse(State.SUCCESS, mapperSoldOutResponseToSoldOut(response.body()!!))
+            try {
+                BaseResponse(State.SUCCESS, mapperSoldOutResponseToSoldOut(response.body()!!))
+            } catch (e: Exception) {
+                BaseResponse(State.FAIL, response.body() as ErrorResponse)
+            }
         } else {
-            BaseResponse(State.NETWORK_ERROR, response.errorBody())
+            BaseResponse(State.NETWORK_ERROR, "네트워크 통신 에러 입니다.")
         }
     }
 
