@@ -14,6 +14,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.mypage.MyPageUserCardsRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.util.AppLog
 import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import com.dida.data.DataApplication.Companion.mySharedPreferences
@@ -44,6 +45,7 @@ class MyPageFragment :
 
     override fun initDataBinding() {
         viewModel.userCardsLiveData.observe(viewLifecycleOwner) {
+
             initRecyclerView(it)
             dismissLoadingDialog()
         }

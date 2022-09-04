@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.nav.home
 
 import android.animation.ObjectAnimator
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
