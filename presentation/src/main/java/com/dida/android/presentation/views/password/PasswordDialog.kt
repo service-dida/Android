@@ -1,10 +1,7 @@
 package com.dida.android.presentation.views.password
 
-import android.content.Context
 import android.graphics.Color
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -72,7 +69,7 @@ class PasswordDialog(val walletCheck: Boolean, val password: (String) -> Unit) :
         binding.dialogPaymentKeypad8.setOnClickListener(numberClickLister)
         binding.dialogPaymentKeypad9.setOnClickListener(numberClickLister)
         binding.dialogPaymentKeypadBack.setOnClickListener {
-            buttonVibrator()
+            it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
             viewModel.removeStack()
         }
     }
@@ -96,16 +93,8 @@ class PasswordDialog(val walletCheck: Boolean, val password: (String) -> Unit) :
     }
 
     private val numberClickLister: View.OnClickListener = View.OnClickListener {
-        buttonVibrator()
+        it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
         viewModel.addStack((it as TextView).text.toString().toInt())
     }
 
-    private fun buttonVibrator() {
-        val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(50, 50));
-        } else {
-            vibrator.vibrate(1000);
-        }
-    }
 }
