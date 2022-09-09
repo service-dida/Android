@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.SingleLiveEvent
-import com.dida.data.repository.MainRepository
+import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor(private val mainRepository: MainRepository) : BaseViewModel() {
+class MyPageViewModel @Inject constructor(private val mainRepositoryImpl: MainRepositoryImpl) : BaseViewModel() {
 
     private val TAG = "MyPageViewModel"
 
@@ -52,7 +52,7 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
 
     fun getUserProfile(){
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.getUserProfileAPI().let {
+            mainRepositoryImpl.getUserProfileAPI().let {
                 if(it.isSuccessful){
                     Log.d(TAG, "getUserProfile: ${it.body()}")
 
@@ -76,7 +76,7 @@ class MyPageViewModel @Inject constructor(private val mainRepository: MainReposi
 
     fun getUserCards(){
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.getUserCardsAPI().let {
+            mainRepositoryImpl.getUserCardsAPI().let {
                 if(it.isSuccessful){
                     Log.d(TAG, "getUserCards: ${it.body()}")
 

@@ -1,7 +1,7 @@
 package com.dida.data.di
 
 import com.dida.data.api.MainAPIService
-import com.dida.data.repository.MainRepository
+import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.usecase.MainUsecase
 import dagger.Module
 import dagger.Provides
@@ -17,6 +17,6 @@ class RepositoryModule {
     fun provideMainRepository(
         mainAPIService: MainAPIService
     ): MainUsecase {
-        return MainRepository(mainAPIService)
+        return MainRepositoryImpl(mainAPIService)
     }
 }

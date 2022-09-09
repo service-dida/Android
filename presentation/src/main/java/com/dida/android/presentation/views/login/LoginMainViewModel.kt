@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.mySharedPreferences
-import com.dida.data.repository.MainRepository
+import com.dida.data.repository.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginMainViewModel @Inject constructor(private val mainRepository: MainRepository) :
+class LoginMainViewModel @Inject constructor(private val mainRepositoryImpl: MainRepositoryImpl) :
     BaseViewModel() {
 
     private val TAG = "LoginMainViewModel"
@@ -33,7 +33,7 @@ class LoginMainViewModel @Inject constructor(private val mainRepository: MainRep
 
     suspend fun loginAPIServer(idToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.loginAPI(idToken).let {
+            mainRepositoryImpl.loginAPI(idToken).let {
                 if(it.isSuccessful){
                     if(it.body()?.refreshToken.isNullOrEmpty()){
                         _kakaoEmailSuccessLiveData.postValue(it.body()?.accessToken)

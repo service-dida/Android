@@ -21,7 +21,7 @@ import retrofit2.Response
 import java.lang.Exception
 import javax.inject.Inject
 
-class MainRepository @Inject constructor(
+class MainRepositoryImpl @Inject constructor(
     private val mainAPIService: MainAPIService
     ): MainUsecase{
 

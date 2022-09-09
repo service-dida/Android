@@ -5,14 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.data.repository.MainRepository
+import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.splash.AppVersionResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(private val mainRepository: MainRepository) : BaseViewModel() {
+class SplashViewModel @Inject constructor(private val mainRepositoryImpl: MainRepositoryImpl) : BaseViewModel() {
 
     private val TAG = "SplashViewModel"
 
@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(private val mainRepository: MainReposi
 
     fun checkVersion(){
         viewModelScope.launch {
-            val version = mainRepository.checkVersionAPI()
+            val version = mainRepositoryImpl.checkVersionAPI()
             if(version.isSuccessful){
                 Log.d(TAG, "checkVersion: ${version.body().toString()}")
                 _appVersion.postValue(version.body())
