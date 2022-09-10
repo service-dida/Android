@@ -38,8 +38,8 @@ class BearerInterceptor: Interceptor {
                     .refreshtokenAPIServer(request!!)
 
                 DataApplication.mySharedPreferences
-                    .setAccessToken(response.body()!!.accessToken, response.body()!!.refreshToken)
-                response.body()?.accessToken?: "Empty Token"
+                    .setAccessToken(response?.accessToken, response?.refreshToken)
+                response?.accessToken?: "Empty Token"
             }
 
             val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
