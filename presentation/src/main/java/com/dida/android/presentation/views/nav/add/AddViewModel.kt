@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
 import com.dida.domain.usecase.MainUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,35 +19,28 @@ class AddViewModel @Inject constructor(
     private val TAG = "AddViewModel"
 
     private val _walletExistsLiveData = MutableLiveData<Boolean>()
-    val walletExistsLiveData: LiveData<Boolean>
-        get() = _walletExistsLiveData
+    val walletExistsLiveData: LiveData<Boolean> = _walletExistsLiveData
 
-    private val _errorLiveData = MutableLiveData<Boolean>()
-    val errorLiveData: LiveData<Boolean>
-        get() = _errorLiveData
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String> = _errorLiveData
 
-    private val _nftImageLiveData = MutableLiveData<String>("")
-    val nftImageLiveData: LiveData<String>
-        get() = _nftImageLiveData
+    private val _nftImageLiveData = MutableLiveData("")
+    val nftImageLiveData: LiveData<String> = _nftImageLiveData
 
-    private val _titleLengthLiveData = MutableLiveData<Int>(0)
-    val titleLengthLiveData: LiveData<Int>
-        get() = _titleLengthLiveData
+    private val _titleLengthLiveData = MutableLiveData(0)
+    val titleLengthLiveData: LiveData<Int> = _titleLengthLiveData
 
-    private val _descriptionLengthLiveData = MutableLiveData<Int>(0)
-    val descriptionLengthLiveData: LiveData<Int>
-        get() = _descriptionLengthLiveData
+    private val _descriptionLengthLiveData = MutableLiveData(0)
+    val descriptionLengthLiveData: LiveData<Int> = _descriptionLengthLiveData
 
     fun getWalletExists() {
         viewModelScope.launch {
-            mainUsecase.getWalletExistsAPI().let {
-                if(it != null) {
+            mainUsecase.getWalletExistsAPI()
+                .onSuccess {
                     _walletExistsLiveData.postValue(it)
+                }.onError {
+                    _errorLiveData.postValue(it.message)
                 }
-                else{
-                    _errorLiveData.postValue(true)
-                }
-            }
         }
     }
 
@@ -65,20 +60,14 @@ class AddViewModel @Inject constructor(
     val checkPasswordLiveData: LiveData<Boolean>
         get() = _checkPasswordLiveData
 
-    /*
-     0 -> 네트워크 오류
-     1 -> 비밀번호 맞음
-     2 -> 비밀번호 틀림
-    */
     fun checkPassword(password: String) {
         viewModelScope.launch {
-            mainUsecase.getCheckPasswordAPI(password).let {
-                when(it) {
-                    1 -> _checkPasswordLiveData.postValue(true)
-                    2 -> _checkPasswordLiveData.postValue(false)
-                    else -> _errorLiveData.postValue(true)
+            mainUsecase.getCheckPasswordAPI(password)
+                .onSuccess {
+                    _checkPasswordLiveData.postValue(it)
+                }.onError {
+                    _errorLiveData.postValue(it.message)
                 }
-            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.dida.domain.usecase
 
 import com.dida.domain.BaseResponse
+import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -16,31 +17,31 @@ import retrofit2.Response
 interface MainUsecase {
     suspend fun checkVersionAPI(): Response<AppVersionResponse>
 
-    suspend fun loginAPI(idToken : String): Response<LoginResponseModel>
+    suspend fun loginAPI(idToken : String): NetworkResult<LoginResponseModel>
 
-    suspend fun nicknameAPI(nickName: String): Response<NicknameResponseModel>
+    suspend fun nicknameAPI(nickName: String): NetworkResult<NicknameResponseModel>
 
-    suspend fun createUserAPI(request: CreateUserRequestModel): Response<LoginResponseModel>
+    suspend fun createUserAPI(request: CreateUserRequestModel): NetworkResult<LoginResponseModel>
 
-    suspend fun getUserProfileAPI() : Response<UserProfileResponseModel>
+    suspend fun getUserProfileAPI() : NetworkResult<UserProfileResponseModel>
 
-    suspend fun refreshTokenAPI(request: String): Response<LoginResponseModel>
+    suspend fun refreshTokenAPI(request: String): NetworkResult<LoginResponseModel>
 
-    suspend fun getUserCardsAPI() : Response<List<UserCardsResponseModel>>
+    suspend fun getUserCardsAPI() : NetworkResult<List<UserCardsResponseModel>>
 
-    suspend fun getSendEmailAPI() : RandomNumber?
+    suspend fun getSendEmailAPI() : NetworkResult<String>
 
-    suspend fun postCreateWalletAPI(password: String, passwordCheck: String) : Boolean
+    suspend fun postCreateWalletAPI(password: String, passwordCheck: String) : NetworkResult<Unit>
 
-    suspend fun getWalletExistsAPI() : Boolean?
+    suspend fun getWalletExistsAPI() : NetworkResult<Boolean>
 
-    suspend fun getCheckPasswordAPI(password: String) : Int
+    suspend fun getCheckPasswordAPI(password: String) : NetworkResult<Boolean>
 
-    suspend fun postChangePasswordAPI(beforePassword: String, afterPassword: String) : Boolean
+    suspend fun postChangePasswordAPI(beforePassword: String, afterPassword: String) : NetworkResult<Unit>
 
-    suspend fun getTempPasswordAPI() : Boolean
+    suspend fun getTempPasswordAPI() : NetworkResult<Unit>
 
-    suspend fun getMainAPI() : BaseResponse
+    suspend fun getMainAPI() : NetworkResult<Home>
 
-    suspend fun getSoldOutAPI(term: Int) : BaseResponse
+    suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 }

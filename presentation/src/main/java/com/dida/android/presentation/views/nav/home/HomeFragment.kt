@@ -55,68 +55,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.vm = viewModel
         navController = Navigation.findNavController(requireView())
         initToolbar()
+        initAdapter()
 
         // main 화면 불러오는 함수
         viewModel.getMain()
         viewModel.getSoldOut(7)
         startShimmerHome()
-
-        binding.hotsRecycler.run {
-            adapter = hotsAdapter
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
-            setHasFixedSize(true)
-        }
-
-        binding.hotSellerRecycler.run {
-            adapter = hotSellerAdapter
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
-            setHasFixedSize(true)
-        }
-
-        binding.soldoutRecycler.run {
-            adapter = soldOutAdapter
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
-            setHasFixedSize(true)
-        }
-
-        binding.recentnftRecycler.apply {
-            adapter = recentNftAdapter
-            layoutManager = GridLayoutManager(requireContext(),2)
-            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
-            addItemDecoration(GridSpacing(px, px))
-        }
-
-        binding.collectionRecycler.run {
-            adapter = collectionAdapter
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
-            setHasFixedSize(true)
-        }
-
-        val tabLayout: TabLayout = binding.tabLayout
-        tabLayout.addTab(tabLayout.newTab().setText("Hot Seller"))
-        tabLayout.addTab(tabLayout.newTab().setText("Sold Out"))
-        tabLayout.addTab(tabLayout.newTab().setText("최신 NFT"))
-        tabLayout.addTab(tabLayout.newTab().setText("활동"))
-
-        val tabStrip = binding.tabLayout.getChildAt(0) as LinearLayout
-        for (i in 0 until tabStrip.childCount) {
-            tabStrip.getChildAt(i).setOnTouchListener { _, _ ->
-                moveScroll(i)
-                true }
-        }
-
-        binding.soldoutTxt.text = "Sold Out \uD83D\uDC8E"
-        binding.hotitemTxt.text = "HOT Item \uD83D\uDD25"
-        binding.recentnftTxt.text = "최신 NFT \uD83C\uDF40"
-        binding.collectionTxt.text = "활발한 활동 \uD83C\uDF55"
     }
 
     override fun initDataBinding() {
@@ -133,7 +77,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
 
         viewModel.errorLiveData.observe(this) {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show().let {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show().let {
                 viewModel.getMain()
                 viewModel.getSoldOut(7)
                 startShimmerHome()
@@ -172,6 +116,52 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             // hot seller
             else{
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+            }
+        }
+    }
+
+    private fun initAdapter() {
+        binding.hotitemTxt.text = "HOT Item \uD83D\uDD25"
+        binding.hotsRecycler.run {
+            adapter = hotsAdapter
+            setHasFixedSize(true)
+        }
+
+        binding.hotSellerRecycler.run {
+            adapter = hotSellerAdapter
+            setHasFixedSize(true)
+        }
+
+        binding.soldoutTxt.text = "Sold Out \uD83D\uDC8E"
+        binding.soldoutRecycler.run {
+            adapter = soldOutAdapter
+            setHasFixedSize(true)
+        }
+
+        binding.recentnftTxt.text = "최신 NFT \uD83C\uDF40"
+        binding.recentnftRecycler.apply {
+            adapter = recentNftAdapter
+            layoutManager = GridLayoutManager(requireContext(),2)
+            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
+            addItemDecoration(GridSpacing(px, px))
+        }
+
+        binding.collectionTxt.text = "활발한 활동 \uD83C\uDF55"
+        binding.collectionRecycler.run {
+            adapter = collectionAdapter
+            setHasFixedSize(true)
+        }
+
+        with(binding.tabLayout) {
+            addTab(this.newTab().setText("Hot Seller"))
+            addTab(this.newTab().setText("Sold Out"))
+            addTab(this.newTab().setText("최신 NFT"))
+            addTab(this.newTab().setText("활동"))
+
+            for (i in 0 until (this.getChildAt(0) as LinearLayout).childCount) {
+                (this.getChildAt(0) as LinearLayout).getChildAt(i).setOnTouchListener { _, _ ->
+                    moveScroll(i)
+                    true }
             }
         }
     }

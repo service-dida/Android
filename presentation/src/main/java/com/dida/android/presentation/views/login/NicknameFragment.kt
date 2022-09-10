@@ -41,6 +41,10 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     }
 
     override fun initDataBinding() {
+        viewModel.errorLiveDate.observe(this) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
         viewModel.nickNameSuccessLiveData.observe(this) {
             if (it) {
                 // 닉네임 사용중

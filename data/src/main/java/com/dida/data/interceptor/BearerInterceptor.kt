@@ -26,7 +26,7 @@ class BearerInterceptor: Interceptor {
         val request = chain.request()
         val response = chain.proceed(request)
         Log.d("response!!!", response.code.toString())
-        if(response.code == 400 || response.code == 100){
+        if(response.code == 400){
             accessToken = runBlocking {
                 //토큰 갱신 api 호출
                 val request = DataApplication.mySharedPreferences.getRefreshToken()

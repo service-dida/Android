@@ -45,9 +45,12 @@ class MyPageFragment :
 
     override fun initDataBinding() {
         viewModel.userCardsLiveData.observe(viewLifecycleOwner) {
-
             initRecyclerView(it)
             dismissLoadingDialog()
+        }
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT)
         }
     }
     

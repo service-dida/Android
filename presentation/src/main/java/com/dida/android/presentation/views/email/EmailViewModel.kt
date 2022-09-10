@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
 import com.dida.domain.usecase.MainUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,9 +17,8 @@ class EmailViewModel @Inject constructor(
     ) : BaseViewModel() {
     private val TAG = "EmailViewModel"
 
-    private val _errorLiveData = MutableLiveData<Boolean>()
-    val errorLiveData: LiveData<Boolean>
-        get() = _errorLiveData
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String> = _errorLiveData
 
     private val _sendEmailLiveData = MutableLiveData<String>()
     val sendEmailLiveData: LiveData<String>
@@ -26,14 +27,12 @@ class EmailViewModel @Inject constructor(
     // 비밀번호 받아오기
     fun getSendEmail() {
         viewModelScope.launch {
-            mainUsecase.getSendEmailAPI().let {
-                if(it != null) {
-                    _sendEmailLiveData.postValue(it.random)
+            mainUsecase.getSendEmailAPI()
+                .onSuccess {
+                    _sendEmailLiveData.postValue(it)
+                }.onError {
+                    _errorLiveData.postValue(it.message)
                 }
-                else{
-                    _errorLiveData.postValue(true)
-                }
-            }
         }
     }
 
@@ -56,14 +55,12 @@ class EmailViewModel @Inject constructor(
 
     fun postCreateWallet(password: String, passwordCheck: String) {
         viewModelScope.launch {
-            mainUsecase.postCreateWalletAPI(password, passwordCheck).let {
-                if(it) {
-                    _createWalletLiveData.postValue(it)
+            mainUsecase.postCreateWalletAPI(password, passwordCheck)
+                .onSuccess {
+                    _createWalletLiveData.postValue(true)
+                }.onError {
+                    _errorLiveData.postValue(it.message)
                 }
-                else {
-                    _errorLiveData.postValue(true)
-                }
-            }
         }
     }
 }

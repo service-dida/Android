@@ -19,44 +19,44 @@ interface MainAPIService {
     suspend fun checkVersion(): Response<AppVersionResponse>
 
     @POST("/kakao/login")
-    suspend fun loginAPIServer(@Body idToken : String): Response<LoginResponseModel>
+    suspend fun loginAPIServer(@Body idToken : String): LoginResponseModel
 
     @POST("/user/nickname")
-    suspend fun nicknameAPIServer(@Body nickName: String): Response<NicknameResponseModel>
+    suspend fun nicknameAPIServer(@Body nickName: String): NicknameResponseModel
 
     @POST("/new/user")
-    suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): Response<LoginResponseModel>
+    suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): LoginResponseModel
 
     @GET("/user")
-    suspend fun getUserProfile() : Response<UserProfileResponseModel>
+    suspend fun getUserProfile() : UserProfileResponseModel
 
     @POST("/login/refresh")
-    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Response<LoginResponseModel>
+    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): LoginResponseModel
 
     @GET("/user/cards")
-    suspend fun getUserCards() : Response<List<UserCardsResponseModel>>
+    suspend fun getUserCards() : List<UserCardsResponseModel>
 
     @GET("/auth/mail")
-    suspend fun getSendEmail() : Response<SendEmailResponse>
+    suspend fun getSendEmail() : SendEmailResponse
 
     @GET("/main")
-    suspend fun getMain() : Response<GetMainResponse>
+    suspend fun getMain() : GetMainResponse
 
     @GET("/main/{term}")
-    suspend fun getSoldOut(@Path("term") term: Int) : Response<List<GetSoldOutResponse>>
+    suspend fun getSoldOut(@Path("term") term: Int) : List<GetSoldOutResponse>
 
     @POST("/user/wallet")
-    suspend fun postCreateWallet(@Body request: PostCreateWalletRequest) : Response<Unit>
+    suspend fun postCreateWallet(@Body request: PostCreateWalletRequest)
 
     @GET("/user/wallet")
-    suspend fun getWalletExists() : Response<GetWalletExistsResponse>
+    suspend fun getWalletExists() : GetWalletExistsResponse
 
     @POST("/user/wallet/pwd/check")
-    suspend fun postCheckPassword(request: PostCheckPasswordRequest) : Response<PostCheckPasswordResponse>
+    suspend fun postCheckPassword(request: PostCheckPasswordRequest) : PostCheckPasswordResponse
 
     @POST("/user/wallet/pwd")
-    suspend fun postPasswordChange(request: PostPasswordChangeRequest) : Response<String>
+    suspend fun postPasswordChange(request: PostPasswordChangeRequest)
 
     @GET("/user/wallet/pwd")
-    suspend fun getTempPassword() : Response<String>
+    suspend fun getTempPassword()
 }

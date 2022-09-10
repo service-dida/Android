@@ -36,6 +36,10 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initDataBinding() {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
         viewModel.kakaoLoginSuccessLiveData.observe(viewLifecycleOwner){
             dismissLoadingDialog()
             when(it){

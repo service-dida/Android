@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import com.dida.data.repository.MainRepositoryImpl
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,30 +26,31 @@ class LoginMainViewModel @Inject constructor(private val mainRepositoryImpl: Mai
      * 1 : 로그인 성공
      */
     private val _kakaoLoginSuccessLiveData = MutableLiveData<Int>()
-    val kakaoLoginSuccessLiveData: LiveData<Int>
-        get() = _kakaoLoginSuccessLiveData
+    val kakaoLoginSuccessLiveData: LiveData<Int> = _kakaoLoginSuccessLiveData
 
     private val _kakaoEmailSuccessLiveData = MutableLiveData<String>()
-    val kakaoEmailSuccessLiveData: LiveData<String>
-        get() = _kakaoEmailSuccessLiveData
+    val kakaoEmailSuccessLiveData: LiveData<String> = _kakaoEmailSuccessLiveData
+
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String> = _errorLiveData
 
     suspend fun loginAPIServer(idToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepositoryImpl.loginAPI(idToken).let {
-                if(it.isSuccessful){
-                    if(it.body()?.refreshToken.isNullOrEmpty()){
-                        _kakaoEmailSuccessLiveData.postValue(it.body()?.accessToken)
+            mainRepositoryImpl.loginAPI(idToken)
+                .onSuccess {
+                    if(it.refreshToken.isNullOrEmpty()) {
+                        _kakaoEmailSuccessLiveData.postValue(it?.accessToken)
                         _kakaoLoginSuccessLiveData.postValue(0)
-                    }else{
-                        mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
+                    }
+                    else {
+                        mySharedPreferences.setAccessToken(it?.accessToken, it?.refreshToken)
                         _kakaoLoginSuccessLiveData.postValue(1)
                     }
-                }
-                else{
+                }.onError {
                     _kakaoLoginSuccessLiveData.postValue(-1)
+                    _errorLiveData.postValue(it.message)
                     mySharedPreferences.removeAccessToken()
                 }
-            }
         }
     }
 }

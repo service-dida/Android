@@ -7,6 +7,8 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.login.CreateUserRequestModel
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,8 +25,11 @@ class NicknameViewModel @Inject constructor(private val mainRepositoryImpl: Main
     2 -> 닉네임이 중복될 경우
     3 -> 닉네임을 사용할 수 있을 경우
     */
-    private val _nickNameCheck = MutableLiveData<String>("")
+    private val _nickNameCheck = MutableLiveData("")
     val nickNameCheck: LiveData<String> = _nickNameCheck
+
+    private val _errorLiveDate = MutableLiveData("")
+    val errorLiveDate: LiveData<String> = _errorLiveDate
 
     fun setNicknameVerify(type: Int){
         when(type) {
@@ -41,14 +46,13 @@ class NicknameViewModel @Inject constructor(private val mainRepositoryImpl: Main
 
     fun nicknameAPIServer(nickName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepositoryImpl.nicknameAPI(nickName).let {
-                if(it.isSuccessful){
-                    _nickNameSuccessLiveData.postValue(it.body()!!.used)
-                }
-                else{
+            mainRepositoryImpl.nicknameAPI(nickName)
+                .onSuccess {
+                    _nickNameSuccessLiveData.postValue(it.used)
+                }.onError {
                     _nickNameSuccessLiveData.postValue(true)
+                    _errorLiveDate.postValue(it.message)
                 }
-            }
         }
     }
 
@@ -58,15 +62,13 @@ class NicknameViewModel @Inject constructor(private val mainRepositoryImpl: Main
 
     fun createUserAPIServer(request: CreateUserRequestModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepositoryImpl.createUserAPI(request).let {
-                if(it.isSuccessful){
-                    DataApplication.mySharedPreferences.setAccessToken(it.body()?.accessToken, it.body()?.refreshToken)
+            mainRepositoryImpl.createUserAPI(request)
+                .onSuccess {
+                    DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
                     _createUserSuccessLiveData.postValue(true)
+                }.onError {
+                    _errorLiveDate.postValue(it.message)
                 }
-                else{
-                    _nickNameSuccessLiveData.postValue(false)
-                }
-            }
         }
     }
 }

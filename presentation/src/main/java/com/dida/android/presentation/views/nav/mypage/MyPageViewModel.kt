@@ -8,6 +8,8 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.SingleLiveEvent
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +19,9 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(private val mainRepositoryImpl: MainRepositoryImpl) : BaseViewModel() {
 
     private val TAG = "MyPageViewModel"
+
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String> = _errorLiveData
 
     private val _cardCntLiveData = MutableLiveData<Int>()
     val cardCntLiveData: LiveData<Int>
@@ -52,52 +57,37 @@ class MyPageViewModel @Inject constructor(private val mainRepositoryImpl: MainRe
 
     fun getUserProfile(){
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepositoryImpl.getUserProfileAPI().let {
-                if(it.isSuccessful){
-                    Log.d(TAG, "getUserProfile: ${it.body()}")
-
-                    val userProfileResponseModel = it.body()
-                    if (userProfileResponseModel != null) {
-                        _cardCntLiveData.postValue(userProfileResponseModel.cardCnt)
-                        _descriptionLiveData.postValue(userProfileResponseModel.description)
-                        _followerCntLiveData.postValue(userProfileResponseModel.followerCnt)
-                        _followingCntLiveData.postValue(userProfileResponseModel.followingCnt)
-                        _getWalletLiveData.postValue(userProfileResponseModel.getWallet)
-                        _nicknameLiveData.postValue(userProfileResponseModel.nickname)
-                        _profileUrlLiveData.postValue(userProfileResponseModel.profileUrl)
-                    }
+            mainRepositoryImpl.getUserProfileAPI()
+                .onSuccess {
+                    _cardCntLiveData.postValue(it.cardCnt)
+                    _descriptionLiveData.postValue(it.description)
+                    _followerCntLiveData.postValue(it.followerCnt)
+                    _followingCntLiveData.postValue(it.followingCnt)
+                    _getWalletLiveData.postValue(it.getWallet)
+                    _nicknameLiveData.postValue(it.nickname)
+                    _profileUrlLiveData.postValue(it.profileUrl)
+                }.onError {
+                    _errorLiveData.postValue(it.message)
                 }
-                else{
-                    Log.d(TAG, "error: ${it.code()}")
-                }
-            }
         }
     }
 
     fun getUserCards(){
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepositoryImpl.getUserCardsAPI().let {
-                if(it.isSuccessful){
-                    Log.d(TAG, "getUserCards: ${it.body()}")
-
-                    val userCardsList = it.body()
-                    if (userCardsList.isNullOrEmpty().not()) {
-                        _userCardsLiveData.postValue(it.body())
-                    }else{
-                        //TODO : 잠시 테스트를 위해 임시 데이터를 넣어놨습니다.(추후에 삭제하기)
-                        val exampleList = mutableListOf(
-                            UserCardsResponseModel(0, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
-                            UserCardsResponseModel(1, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
-                            UserCardsResponseModel(2, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
-                            UserCardsResponseModel(3, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65")
-                        )
-                        _userCardsLiveData.postValue(exampleList)
-                    }
+            mainRepositoryImpl.getUserCardsAPI()
+                .onSuccess {
+                    _userCardsLiveData.postValue(it)
+                }.onError {
+                    //TODO : 잠시 테스트를 위해 임시 데이터를 넣어놨습니다.(추후에 삭제하기)
+                    val exampleList = mutableListOf(
+                        UserCardsResponseModel(0, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
+                        UserCardsResponseModel(1, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
+                        UserCardsResponseModel(2, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
+                        UserCardsResponseModel(3, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65")
+                    )
+                    _userCardsLiveData.postValue(exampleList)
+                    _errorLiveData.postValue(it.message)
                 }
-                else{
-                    Log.d(TAG, "error: ${it.code()}")
-                }
-            }
         }
     }
 }

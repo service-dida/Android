@@ -96,4 +96,10 @@ dependencies {
 
     //Circle ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // moshi
+    implementation("com.squareup.moshi:moshi:1.9.3")
+    // for code-gen
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.3")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
 }

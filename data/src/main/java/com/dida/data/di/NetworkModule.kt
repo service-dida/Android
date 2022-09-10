@@ -5,6 +5,7 @@ import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
 import com.dida.data.interceptor.BearerInterceptor
+import com.dida.data.interceptor.ErrorResponseInterceptor
 import com.dida.data.interceptor.XAccessTokenInterceptor
 import dagger.Module
 import dagger.Provides
@@ -30,6 +31,7 @@ object NetworkModule {
             .addInterceptor(loggingInterceptor)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
 //            .addInterceptor(BearerInterceptor())
+            .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .build()
     } else {
         Log.d("haha", "provideOkHttpClient: 2")
@@ -40,6 +42,7 @@ object NetworkModule {
             // Interceptor
 //            .addInterceptor(BearerInterceptor())
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+            .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
