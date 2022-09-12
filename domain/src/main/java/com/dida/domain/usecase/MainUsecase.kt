@@ -11,6 +11,7 @@ import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 
@@ -41,7 +42,7 @@ interface MainUsecase {
 
     suspend fun getTempPasswordAPI() : NetworkResult<Unit>
 
-    suspend fun getMainAPI() : NetworkResult<Home>
+    suspend fun getMainAPI() : NetworkResult<Flow<Home>>
 
-    suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
+    suspend fun getSoldOutAPI(term: Int) : NetworkResult<Flow<List<SoldOut>>>
 }

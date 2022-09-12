@@ -21,6 +21,10 @@ import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.usecase.MainUsecase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import java.lang.Exception
 import javax.inject.Inject
@@ -61,12 +65,18 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getSendEmail().random }
     }
 
-    override suspend fun getMainAPI(): NetworkResult<Home> {
-        return handleApi { mapperMainResponseToMain(mainAPIService.getMain()) }
+    override suspend fun getMainAPI(): NetworkResult<Flow<Home>> {
+        return handleApi {
+            flow {
+                emit(mapperMainResponseToMain(mainAPIService.getMain()) )
+            }.flowOn(Dispatchers.IO) }
     }
 
-    override suspend fun getSoldOutAPI(term: Int): NetworkResult<List<SoldOut>> {
-        return handleApi { mapperSoldOutResponseToSoldOut(mainAPIService.getSoldOut(term)) }
+    override suspend fun getSoldOutAPI(term: Int): NetworkResult<Flow<List<SoldOut>>> {
+        return handleApi {
+            flow {
+                emit(mapperSoldOutResponseToSoldOut(mainAPIService.getSoldOut(term)))
+            }.flowOn(Dispatchers.IO) }
     }
 
     override suspend fun postCreateWalletAPI(

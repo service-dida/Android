@@ -55,6 +55,7 @@
                         android:id="@+id/hots_shimmer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        startLoading="@{vm.homeStateFlow}"
                         app:layout_constraintTop_toBottomOf="@id/hotitem_txt">
 
                         <LinearLayout
@@ -79,6 +80,8 @@
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
                         android:orientation="horizontal"
+                        hotsItem="@{vm.homeStateFlow}"
+                        endLoading="@{vm.homeStateFlow}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/holder_hots">
                     </androidx.recyclerview.widget.RecyclerView>
@@ -150,6 +153,7 @@
                     android:id="@+id/hots_seller_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    startLoading="@{vm.homeStateFlow}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/soldout_txt">
 
@@ -174,6 +178,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:orientation="horizontal"
+                    hotSellerItem="@{vm.homeStateFlow}"
+                    endLoading="@{vm.homeStateFlow}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -215,8 +221,8 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:text="일주일 이내"
                     android:textSize="16dp"
-                    android:textColor="@{vm.termLiveData==7? @color/mainblack : @color/white}"
-                    android:background="@{vm.termLiveData==7? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:textColor="@{vm.termStateFlow==7? @color/mainblack : @color/white}"
+                    android:background="@{vm.termStateFlow==7? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
                     android:fontFamily="@font/pretendard_bold"
                     android:layout_marginLeft="16dp">
                 </TextView>
@@ -232,8 +238,8 @@
                     android:layout_marginLeft="12dp"
                     android:text="1개월"
                     android:textSize="16dp"
-                    android:textColor="@{vm.termLiveData==30? @color/mainblack : @color/white}"
-                    android:background="@{vm.termLiveData==30? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:textColor="@{vm.termStateFlow==30? @color/mainblack : @color/white}"
+                    android:background="@{vm.termStateFlow==30? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
                     android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
@@ -248,8 +254,8 @@
                     android:layout_marginLeft="12dp"
                     android:text="6개월"
                     android:textSize="16dp"
-                    android:textColor="@{vm.termLiveData==60? @color/mainblack : @color/white}"
-                    android:background="@{vm.termLiveData==60? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:textColor="@{vm.termStateFlow==60? @color/mainblack : @color/white}"
+                    android:background="@{vm.termStateFlow==60? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
                     android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
@@ -264,8 +270,8 @@
                     android:layout_marginLeft="12dp"
                     android:text="올 한해"
                     android:textSize="16dp"
-                    android:textColor="@{vm.termLiveData==365? @color/mainblack : @color/white}"
-                    android:background="@{vm.termLiveData==365? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:textColor="@{vm.termStateFlow==365? @color/mainblack : @color/white}"
+                    android:background="@{vm.termStateFlow==365? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
                     android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
@@ -273,6 +279,7 @@
                     android:id="@+id/soldout_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    startLoading="@{vm.soldoutStateFlow}"
                     app:layout_constraintTop_toBottomOf="@id/day7_btn"
                     app:layout_constraintBottom_toTopOf="@id/soldout_more">
 
@@ -297,6 +304,8 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
+                    soldoutItem="@{vm.soldoutStateFlow}"
+                    endLoading="@{vm.soldoutStateFlow}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -346,6 +355,7 @@
                     android:id="@+id/recentnft_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    startLoading="@{vm.homeStateFlow}"
                     app:layout_constraintTop_toBottomOf="@id/recentnft_txt"
                     app:layout_constraintBottom_toTopOf="@id/recent_more">
                     <LinearLayout
@@ -395,7 +405,9 @@
                     app:layout_constraintBottom_toTopOf="@id/recent_more"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginRight="16dp"
+                    endLoading="@{vm.homeStateFlow}"
+                    recentNftItem="@{vm.homeStateFlow}">
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
@@ -458,6 +470,7 @@
                     android:id="@+id/collection_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    startLoading="@{vm.homeStateFlow}"
                     app:layout_constraintTop_toBottomOf="@id/collection_txt2"
                     app:layout_constraintBottom_toTopOf="@id/collection_more">
 
@@ -481,6 +494,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:orientation="vertical"
+                    collectionsItem="@{vm.homeStateFlow}"
+                    endLoading="@{vm.homeStateFlow}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 

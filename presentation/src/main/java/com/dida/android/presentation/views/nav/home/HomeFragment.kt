@@ -2,12 +2,12 @@ package com.dida.android.presentation.views.nav.home
 
 import android.animation.ObjectAnimator
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,17 +15,14 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.base.UiState
 import com.dida.android.util.*
-import com.dida.domain.model.nav.home.Hots
-import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 import kotlin.math.abs
 
 
@@ -73,24 +70,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         // main 화면 불러오는 함수
         viewModel.getMain()
         viewModel.getSoldOut(7)
-        startShimmerHome()
     }
 
     override fun initDataBinding() {
-        viewModel.mainLiveData.observe(this) {
-            hotsAdapter.submitList(it.getHotItems)
-            hotSellerAdapter.submitList(it.getHotSellers)
-            recentNftAdapter.submitList(it.getRecentCards)
-            collectionAdapter.submitList(it.getHotUsers)
-            stopShimmerHome()
-        }
-
-        viewModel.soldoutLiveData.observe(this) {
-            soldOutAdapter.submitList(it)
-        }
-
-        viewModel.errorLiveData.observe(this) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launchWhenStarted {
+            viewModel.errorStateFlow.collect {
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT)
+            }
         }
     }
 
@@ -240,19 +226,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
     }
 
-    private fun startShimmerHome() {
-        startShimmer(binding.hotsShimmer, binding.hotsRecycler)
-        startShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
-        startShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
-        startShimmer(binding.collectionShimmer, binding.collectionRecycler)
-        startShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
-    }
-
-    private fun stopShimmerHome() {
-        stopShimmer(binding.hotsShimmer, binding.hotsRecycler)
-        stopShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
-        stopShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
-        stopShimmer(binding.collectionShimmer, binding.collectionRecycler)
-        stopShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
-    }
+//    private fun startShimmerHome() {
+//        startShimmer(binding.hotsShimmer, binding.hotsRecycler)
+//        startShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
+//        startShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
+//        startShimmer(binding.collectionShimmer, binding.collectionRecycler)
+//        startShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
+//    }
+//
+//    private fun stopShimmerHome() {
+//        stopShimmer(binding.hotsShimmer, binding.hotsRecycler)
+//        stopShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
+//        stopShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
+//        stopShimmer(binding.collectionShimmer, binding.collectionRecycler)
+//        stopShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
+//    }
 }
