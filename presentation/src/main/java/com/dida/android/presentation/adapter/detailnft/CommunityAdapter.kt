@@ -3,53 +3,52 @@ package com.dida.android.presentation.adapter.detailnft
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.android.R
 import com.dida.android.databinding.HolderCommunityBinding
 import com.dida.domain.model.nav.detailnft.Community
 
-class CommunityAdapter() :
-    RecyclerView.Adapter<CommunityAdapter.ViewHolder>(){
-    var datas = ArrayList<Community>()
-    val adapter = CommentsAdapter()
+class CommunityAdapter() : ListAdapter<Community, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
 
-    private val itemList = ArrayList<Community>()
-
-    interface OnItemClickEventListener {
-        fun onItemClick(a_view: View?, a_position: Int)
-    }
-
-    private var nItemClickListener: OnItemClickEventListener? = null
-
-    fun nextItemClickListener(a_listener: OnItemClickEventListener) {
-        nItemClickListener = a_listener
-    }
+    init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding = HolderCommunityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.holder_community,
+            parent,
+            false
+        )
+        /*viewDataBinding.root.setOnClickListener {
+            onClick.invoke(viewDataBinding.holderModel!!.cardId)
+        }*/
         return ViewHolder(viewDataBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val holderModel = itemList[position]
-        itemList[position].Comments.forEach { item ->
-            adapter.addItem(item)
-        }
-        holder.bind(holderModel)
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    class ViewHolder(private val binding: HolderCommunityBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    inner class ViewHolder(val viewDataBinding: HolderCommunityBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
-        fun bind(holderModel: Community) {
-            viewDataBinding.holderModel = holderModel
-            viewDataBinding.commentRecycler.adapter = adapter
-            viewDataBinding.executePendingBindings()
+        fun bind(item: Community) {
+            binding.holderModel = item
+            val adapter = CommentsAdapter()
+            adapter.submitList(item.Comments)
+            binding.commentRecycler.adapter = adapter
+            binding.executePendingBindings()
         }
     }
 
-    fun addItem(item: Community) {
-        itemList.add(item)
+    internal object CommuityDiffCallback : DiffUtil.ItemCallback<Community>() {
+        override fun areItemsTheSame(oldItem: Community, newItem: Community) =
+            oldItem == newItem
+
+        override fun areContentsTheSame(oldItem: Community, newItem: Community) =
+            oldItem.equals(newItem)
     }
 }

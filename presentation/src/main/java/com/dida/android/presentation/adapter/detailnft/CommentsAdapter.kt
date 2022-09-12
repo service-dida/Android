@@ -3,47 +3,48 @@ package com.dida.android.presentation.adapter.detailnft
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.android.R
 import com.dida.android.databinding.HolderCommentsBinding
+import com.dida.android.databinding.HolderCommunityBinding
 import com.dida.domain.model.nav.detailnft.Comments
+import com.dida.domain.model.nav.detailnft.Community
 
-class CommentsAdapter() :
-    RecyclerView.Adapter<CommentsAdapter.ViewHolder>(){
-    var datas = ArrayList<Comments>()
+class CommentsAdapter() : ListAdapter<Comments, CommentsAdapter.ViewHolder>(CommentsDiffCallback){
 
-    private val itemList = ArrayList<Comments>()
-
-    interface OnItemClickEventListener {
-        fun onItemClick(a_view: View?, a_position: Int)
-    }
-
-    private var nItemClickListener: OnItemClickEventListener? = null
-
-    fun nextItemClickListener(a_listener: OnItemClickEventListener) {
-        nItemClickListener = a_listener
-    }
+    init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding = HolderCommentsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val viewDataBinding: HolderCommentsBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.holder_comments,
+            parent,
+            false
+        )
         return ViewHolder(viewDataBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val holderModel = itemList[position]
-        holder.bind(holderModel)
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    class ViewHolder(private val binding: HolderCommentsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    inner class ViewHolder(val viewDataBinding: HolderCommentsBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
-        fun bind(holderModel: Comments) {
-            viewDataBinding.holderModel = holderModel
+        fun bind(item: Comments) {
+            binding.holderModel = item
+            binding.executePendingBindings()
         }
     }
 
-    fun addItem(item: Comments) {
-        itemList.add(item)
+    internal object CommentsDiffCallback : DiffUtil.ItemCallback<Comments>() {
+        override fun areItemsTheSame(oldItem: Comments, newItem: Comments) =
+            oldItem == newItem
+
+        override fun areContentsTheSame(oldItem: Comments, newItem: Comments) =
+            oldItem.equals(newItem)
     }
 }

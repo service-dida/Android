@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views.nav.community
 
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentCommunityBinding
 import com.dida.android.presentation.adapter.community.ActiveNFTRecyclerViewAdapter
@@ -23,6 +22,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         get() = R.layout.fragment_community
 
     override val viewModel : CommunityViewModel by viewModels()
+    private val activeNFTRecyclerViewAdapter = ActiveNFTRecyclerViewAdapter()
+    private val reservationNFTRecyclerViewAdapter = ReservationNFTRecyclerViewAdapter()
 
 
     override fun initStartView() {
@@ -58,12 +59,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             ReservationNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here","23:00")
         )
 
-        binding.reservationRecyclerView.apply {
-            adapter = ReservationNFTRecyclerViewAdapter(Reservationlist)
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
-        }
+        reservationNFTRecyclerViewAdapter.submitList(Reservationlist)
+        binding.reservationRecyclerView.adapter = reservationNFTRecyclerViewAdapter
 
         val ActiveNFTList = mutableListOf(
             ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2"),
@@ -71,36 +68,25 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2")
         )
 
-        binding.activeCommunityRecyclerView.apply {
-            adapter = ActiveNFTRecyclerViewAdapter(ActiveNFTList)
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
-        }
+        activeNFTRecyclerViewAdapter.submitList(ActiveNFTList)
+        binding.activeCommunityRecyclerView.adapter = activeNFTRecyclerViewAdapter
 
         val commentList = mutableListOf(
             Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ"),
             Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ")
         )
 
-        binding.communityRecyclerView.apply {
-            adapter = CommunityAdapter()
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
+        val test = CommunityAdapter()
+        val testList = ArrayList<Community>()
+        for(i in 0..3) {
+            testList.add(Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
+                "test", false, "test", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
+                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here",
+                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65, commentList
+            ))
         }
-        val adapter = binding.communityRecyclerView.adapter as CommunityAdapter
-        adapter.addItem(Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-            "test", false, "test", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
-            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here",
-            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65, commentList
-        ))
-        adapter.addItem(Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-            "test", false, "test", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
-            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here",
-            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65, commentList
-        ))
-        adapter.notifyDataSetChanged()
-
+        
+        test.submitList(testList)
+        binding.communityRecyclerView.adapter = test
     }
 }

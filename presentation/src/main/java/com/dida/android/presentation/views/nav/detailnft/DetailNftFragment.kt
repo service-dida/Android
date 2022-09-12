@@ -34,13 +34,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         communityAdapter = CommunityAdapter()
         navController = Navigation.findNavController(requireView())
 
-        binding.communityRecycler.run {
-            adapter = communityAdapter
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
-            setHasFixedSize(true)
-        }
+        binding.communityRecycler.adapter = communityAdapter
     }
 
     override fun initDataBinding() {
@@ -59,20 +53,13 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         val communityList = ArrayList<Community>()
         communityList.add(item3)
 
-        communityAdapter.addItem(item3)
-        communityAdapter.notifyDataSetChanged()
+        communityAdapter.submitList(communityList)
     }
 
     override fun initAfterBinding() {
 //        binding.backBtn.setOnClickListener {
 //            navController.popBackStack()
 //        }
-
-        // move detail
-        communityAdapter.nextItemClickListener(object : CommunityAdapter.OnItemClickEventListener {
-            override fun onItemClick(a_view: View?, a_position: Int) {
-            }
-        })
     }
 
     private fun initToolbar() {
