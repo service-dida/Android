@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -47,7 +48,7 @@
                         android:textColor="@color/white"
                         android:textSize="20dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:text="">
+                        android:text="@string/home_hotitem">
                     </TextView>
 
                     <com.facebook.shimmer.ShimmerFrameLayout
@@ -78,7 +79,8 @@
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
                         android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/holder_hots">
                     </androidx.recyclerview.widget.RecyclerView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,6 +107,8 @@
 
                         <androidx.appcompat.widget.Toolbar
                             android:id="@+id/home_toolbar"
+                            app:title="@string/app_name"
+                            app:menu="@menu/menu_home_toolbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:titleTextAppearance="@style/ToolBarStyle"
@@ -182,7 +186,7 @@
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:fontFamily="@font/pretendard_bold"
-                    android:text=""
+                    android:text="@string/home_soldout"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="46dp">
                 </TextView>
@@ -333,7 +337,7 @@
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:fontFamily="@font/pretendard_bold"
-                    android:text=""
+                    android:text="@string/home_recentnft"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="24dp">
                 </TextView>
@@ -431,7 +435,7 @@
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:fontFamily="@font/pretendard_bold"
-                    android:text=""
+                    android:text="@string/home_collection"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="46dp">
                 </TextView>

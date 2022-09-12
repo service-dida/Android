@@ -2,52 +2,52 @@ package com.dida.android.presentation.adapter.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.android.R
+import com.dida.android.databinding.HolderMypageUserCardsBinding
 import com.dida.android.databinding.HolderSoldoutBinding
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 
-class SoldOutAdapter() :
-    RecyclerView.Adapter<SoldOutAdapter.ViewHolder>(){
-    var datas = ArrayList<SoldOut>()
+class SoldOutAdapter(
+    private val onClick: (nftId: Long) ->Unit
+): ListAdapter<SoldOut, SoldOutAdapter.ViewHolder>(SoldOutItemDiffCallback) {
 
-    private val itemList = ArrayList<SoldOut>()
-
-    interface OnItemClickEventListener {
-        fun onItemClick(a_position: Int)
-    }
-
-    private var nItemClickListener: OnItemClickEventListener? = null
-
-    fun nextItemClickListener(a_listener: OnItemClickEventListener) {
-        nItemClickListener = a_listener
-    }
+    init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding = HolderSoldoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val viewDataBinding: HolderSoldoutBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.holder_soldout,
+            parent,
+            false
+        )
+        viewDataBinding.root.setOnClickListener {
+            onClick.invoke(viewDataBinding.holderModel!!.nftId)
+        }
         return ViewHolder(viewDataBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val holderModel = itemList[position]
-        holder.bind(holderModel)
-        holder.itemView.setOnClickListener {
-            nItemClickListener!!.onItemClick(position)
+        holder.bind(getItem(position))
+    }
+
+    class ViewHolder(private val binding: HolderSoldoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: SoldOut) {
+            binding.holderModel = item
+            binding.executePendingBindings()
         }
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    internal object SoldOutItemDiffCallback : DiffUtil.ItemCallback<SoldOut>() {
+        override fun areItemsTheSame(oldItem: SoldOut, newItem: SoldOut) =
+            oldItem == newItem
 
-    inner class ViewHolder(val viewDataBinding: HolderSoldoutBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
-        fun bind(holderModel: SoldOut) {
-            viewDataBinding.holderModel = holderModel
-        }
-    }
-
-    fun addAll(items: List<SoldOut>) {
-        itemList.clear()
-        itemList.addAll(items)
-        this.notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: SoldOut, newItem: SoldOut) =
+            oldItem.equals(newItem)
     }
 }

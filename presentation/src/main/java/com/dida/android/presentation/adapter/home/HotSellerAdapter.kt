@@ -3,47 +3,52 @@ package com.dida.android.presentation.adapter.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.android.R
+import com.dida.android.databinding.HolderHotsBinding
 import com.dida.android.databinding.HolderHotsellerBinding
 import com.dida.domain.model.nav.home.HotSeller
+import com.dida.domain.model.nav.home.Hots
 
-class HotSellerAdapter() :
-    RecyclerView.Adapter<HotSellerAdapter.ViewHolder>(){
-    private val itemList = ArrayList<HotSeller>()
+class HotSellerAdapter(
+    private val onClick: (userId: Int) ->Unit
+) : ListAdapter<HotSeller, HotSellerAdapter.ViewHolder>(HotSellerItemDiffCallback){
 
-    interface OnItemClickEventListener {
-        fun onItemClick(a_view: View?, a_position: Int)
-    }
-
-    private var nItemClickListener: OnItemClickEventListener? = null
-
-    fun nextItemClickListener(a_listener: OnItemClickEventListener) {
-        nItemClickListener = a_listener
-    }
+    init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding = HolderHotsellerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val viewDataBinding: HolderHotsellerBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.holder_hotseller,
+            parent,
+            false
+        )
+        viewDataBinding.root.setOnClickListener {
+            onClick.invoke(viewDataBinding.holderModel!!.userId)
+        }
         return ViewHolder(viewDataBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val holderModel = itemList[position]
-        holder.bind(holderModel)
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
-
-    inner class ViewHolder(val viewDataBinding: HolderHotsellerBinding): RecyclerView.ViewHolder(viewDataBinding.root) {
-        fun bind(holderModel: HotSeller) {
-            viewDataBinding.holderModel = holderModel
+    class ViewHolder(private val binding: HolderHotsellerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: HotSeller) {
+            binding.holderModel = item
+            binding.executePendingBindings()
         }
     }
 
-    fun addAll(items: List<HotSeller>) {
-        itemList.clear()
-        itemList.addAll(items)
-        this.notifyDataSetChanged()
+    internal object HotSellerItemDiffCallback : DiffUtil.ItemCallback<HotSeller>() {
+        override fun areItemsTheSame(oldItem: HotSeller, newItem: HotSeller) =
+            oldItem == newItem
+
+        override fun areContentsTheSame(oldItem: HotSeller, newItem: HotSeller) =
+            oldItem.equals(newItem)
     }
 }

@@ -40,14 +40,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     override val viewModel : HomeViewModel by viewModels()
     lateinit var navController: NavController
 
-    private val hotsAdapter: HotsAdapter = HotsAdapter()
-    private val hotSellerAdapter: HotSellerAdapter = HotSellerAdapter()
-    private val soldOutAdapter: SoldOutAdapter = SoldOutAdapter()
-    private val collectionAdapter: CollectionAdapter = CollectionAdapter()
+    private val hotsAdapter: HotsAdapter = HotsAdapter(
+        onClick = { cardId ->
+        }
+    )
+    private val hotSellerAdapter: HotSellerAdapter = HotSellerAdapter(
+        onClick = { userId ->
+        }
+    )
+    private val soldOutAdapter: SoldOutAdapter = SoldOutAdapter(
+        onClick = { nftId ->
+            navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
+        }
+    )
+    private val collectionAdapter: CollectionAdapter = CollectionAdapter(
+        onClick = { userId ->
+        }
+    )
 
     private val recentNftAdapter: RecentNftAdapter = RecentNftAdapter(
-        clickUnit = { nftId ->
-            showDetailPage(nftId)
+        onClick = { cardId ->
+            showDetailPage(cardId)
         }
     )
 
@@ -65,23 +78,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun initDataBinding() {
         viewModel.mainLiveData.observe(this) {
-            hotsAdapter.addAll(it.getHotItems)
-            hotSellerAdapter.addAll(it.getHotSellers)
-            recentNftAdapter.addAll(it.getRecentCards)
-            collectionAdapter.addAll(it.getHotUsers)
+            hotsAdapter.submitList(it.getHotItems)
+            hotSellerAdapter.submitList(it.getHotSellers)
+            recentNftAdapter.submitList(it.getRecentCards)
+            collectionAdapter.submitList(it.getHotUsers)
             stopShimmerHome()
         }
 
         viewModel.soldoutLiveData.observe(this) {
-            soldOutAdapter.addAll(it)
+            soldOutAdapter.submitList(it)
         }
 
         viewModel.errorLiveData.observe(this) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show().let {
-                viewModel.getMain()
-                viewModel.getSoldOut(7)
-                startShimmerHome()
-            }
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -91,14 +100,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.day180Btn.setOnClickListener(termClickListener)
         binding.day365Btn.setOnClickListener(termClickListener)
 
-        // move detail
-        soldOutAdapter.nextItemClickListener(object : SoldOutAdapter.OnItemClickEventListener {
-            override fun onItemClick(a_position: Int) {
-                navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
-            }
-        })
-
-        binding.homeScroll.setOnScrollChangeListener { v, _, scrollY, _, _ ->
+        binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             // soldout
             if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY &&
                     scrollY < binding.soldoutMore.y) {
@@ -121,24 +123,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun initAdapter() {
-        binding.hotitemTxt.text = "HOT Item \uD83D\uDD25"
-        binding.hotsRecycler.run {
-            adapter = hotsAdapter
-            setHasFixedSize(true)
-        }
+        binding.hotsRecycler.adapter = hotsAdapter
+        binding.hotSellerRecycler.adapter = hotSellerAdapter
+        binding.soldoutRecycler.adapter = soldOutAdapter
+        binding.collectionRecycler.adapter = collectionAdapter
 
-        binding.hotSellerRecycler.run {
-            adapter = hotSellerAdapter
-            setHasFixedSize(true)
-        }
-
-        binding.soldoutTxt.text = "Sold Out \uD83D\uDC8E"
-        binding.soldoutRecycler.run {
-            adapter = soldOutAdapter
-            setHasFixedSize(true)
-        }
-
-        binding.recentnftTxt.text = "최신 NFT \uD83C\uDF40"
         binding.recentnftRecycler.apply {
             adapter = recentNftAdapter
             layoutManager = GridLayoutManager(requireContext(),2)
@@ -146,17 +135,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             addItemDecoration(GridSpacing(px, px))
         }
 
-        binding.collectionTxt.text = "활발한 활동 \uD83C\uDF55"
-        binding.collectionRecycler.run {
-            adapter = collectionAdapter
-            setHasFixedSize(true)
-        }
-
         with(binding.tabLayout) {
-            addTab(this.newTab().setText("Hot Seller"))
-            addTab(this.newTab().setText("Sold Out"))
-            addTab(this.newTab().setText("최신 NFT"))
-            addTab(this.newTab().setText("활동"))
+            addTab(this.newTab().setText(R.string.home_hotitem_tab))
+            addTab(this.newTab().setText(R.string.home_soldout_tab))
+            addTab(this.newTab().setText(R.string.home_recentnft_tab))
+            addTab(this.newTab().setText(R.string.home_collection_tab))
 
             for (i in 0 until (this.getChildAt(0) as LinearLayout).childCount) {
                 (this.getChildAt(0) as LinearLayout).getChildAt(i).setOnTouchListener { _, _ ->
@@ -167,8 +150,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     private fun initToolbar() {
-        binding.homeToolbar.inflateMenu(R.menu.menu_home_toolbar)
-        binding.homeToolbar.title = "DIDA"
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_alarm -> {
@@ -188,20 +169,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         with(binding.homeScroll) {
             when(tabId) {
                 0 -> {
-                    this.smoothScrollToView(binding.hotSellerRecycler, 100, 1800)
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+                    this.smoothScrollToView(binding.hotSellerRecycler, 100, 1000)
                 }
                 1 -> {
-                    this.smoothScrollToView(binding.soldoutTxt, 50, 1800)
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+                    this.smoothScrollToView(binding.soldoutTxt, 50, 1000)
                 }
                 2 -> {
-                    this.smoothScrollToView(binding.recentnftTxt, 50, 1800)
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+                    this.smoothScrollToView(binding.recentnftTxt, 50, 1000)
                 }
                 3 -> {
-                    this.smoothScrollToView(binding.collectionTxt, 0, 1800)
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+                    this.smoothScrollToView(binding.collectionTxt, 0, 1000)
                 }
             }
             binding.appBarLayout.setExpanded(false)
@@ -227,7 +204,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun NestedScrollView.smoothScrollToView(
         view: View,
         marginTop: Int = 0,
-        maxDuration: Long = 500L,
+        maxDuration: Long = 100L,
         onEnd: () -> Unit = {}
     ) {
         if (this.getChildAt(0).height <= this.height) { // 스크롤의 의미가 없다.

@@ -6,12 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.ErrorResponse
 import com.dida.domain.State
+import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.home.Home
+import com.dida.domain.model.nav.home.HotSeller
+import com.dida.domain.model.nav.home.Hots
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.MainUsecase
+import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
