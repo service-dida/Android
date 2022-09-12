@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.nav.home
 
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.presentation.adapter.home.*
@@ -21,6 +22,13 @@ fun ShimmerFrameLayout.startLoading(uiState: UiState<*>) {
 @BindingAdapter("endLoading")
 fun RecyclerView.endLoading(uiState: UiState<*>) {
     visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
+}
+
+@BindingAdapter("toastMessage")
+fun View.bindToast(throwable: Throwable?) {
+    throwable?.message?.let { errorMessage ->
+        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+    }
 }
 
 @BindingAdapter("hotsItem")

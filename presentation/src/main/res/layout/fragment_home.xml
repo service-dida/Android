@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.dida.android.presentation.base.UiStateKt" />
         <variable
             name="vm"
             type="com.dida.android.presentation.views.nav.home.HomeViewModel" />
     </data>
 
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mainblack"
-        android:id="@+id/main">
+        android:id="@+id/main"
+        app:toastMessage="@{UiStateKt.throwableOrNull(vm.homeStateFlow)}">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
@@ -144,6 +147,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:fillViewport="true"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -304,6 +308,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
+                    app:toastMessage="@{UiStateKt.throwableOrNull(vm.soldoutStateFlow)}"
                     soldoutItem="@{vm.soldoutStateFlow}"
                     endLoading="@{vm.soldoutStateFlow}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">

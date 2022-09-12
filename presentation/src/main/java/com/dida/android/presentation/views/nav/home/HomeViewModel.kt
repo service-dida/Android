@@ -32,23 +32,18 @@ class HomeViewModel @Inject constructor(
     private val _termStateFlow: MutableStateFlow<Int> = MutableStateFlow(7)
     val termStateFlow: StateFlow<Int> = _termStateFlow
 
-    private val _errorStateFlow: MutableStateFlow<Throwable> = MutableStateFlow(Throwable())
-    val errorStateFlow: StateFlow<Throwable> = _errorStateFlow
-
     fun getMain() {
         viewModelScope.launch {
             mainUsecase.getMainAPI()
                 .onSuccess {
                     it.catch { e ->
                         _homeStateFlow.value = UiState.Error(e)
-                        _errorStateFlow.value = e
                     }
                     it.collect { data ->
                         _homeStateFlow.value = UiState.Success(data)
                     }
                 }.onError {
                     _homeStateFlow.value = UiState.Error(it)
-                    _errorStateFlow.value = it
                 }
         }
     }
@@ -59,7 +54,6 @@ class HomeViewModel @Inject constructor(
                 .onSuccess {
                     it.catch { e ->
                         _soldoutStateFlow.value = UiState.Error(e)
-                        _errorStateFlow.value = e
                     }
                     it.collect { data ->
                         _soldoutStateFlow.value = UiState.Success(data)
@@ -67,7 +61,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }.onError {
                     _soldoutStateFlow.value = UiState.Error(it)
-                    _errorStateFlow.value = it
                 }
         }
     }

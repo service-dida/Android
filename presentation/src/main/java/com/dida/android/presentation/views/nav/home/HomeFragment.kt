@@ -73,11 +73,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorStateFlow.collect {
-                Toast.makeText(context, it.message, Toast.LENGTH_SHORT)
-            }
-        }
     }
 
     override fun initAfterBinding() {
@@ -225,20 +220,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             }
         }
     }
-
-//    private fun startShimmerHome() {
-//        startShimmer(binding.hotsShimmer, binding.hotsRecycler)
-//        startShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
-//        startShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
-//        startShimmer(binding.collectionShimmer, binding.collectionRecycler)
-//        startShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
-//    }
-//
-//    private fun stopShimmerHome() {
-//        stopShimmer(binding.hotsShimmer, binding.hotsRecycler)
-//        stopShimmer(binding.hotsSellerShimmer, binding.hotSellerRecycler)
-//        stopShimmer(binding.soldoutShimmer, binding.soldoutRecycler)
-//        stopShimmer(binding.collectionShimmer, binding.collectionRecycler)
-//        stopShimmer(binding.recentnftShimmer, binding.recentnftRecycler)
-//    }
 }
