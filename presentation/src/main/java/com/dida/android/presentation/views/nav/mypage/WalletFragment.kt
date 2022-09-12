@@ -24,6 +24,9 @@ class WalletFragment :
 
     override val viewModel: WalletViewModel by viewModels()
 
+    private val walletCardRecyclerViewAdapter = WalletCardRecyclerViewAdapter()
+    private val walletNFTHistoryRecyclerViewAdapter = WalletNFTHistoryRecyclerViewAdapter()
+
     override fun initStartView() {
         binding.vm = viewModel
         initToolbar()
@@ -60,22 +63,16 @@ class WalletFragment :
             WalletNFTHistoryHolderModel("", "user name here", "NFT name here", 1.65, true),
             WalletNFTHistoryHolderModel("", "user name here", "NFT name here", 1.65, false)
         )
+        walletNFTHistoryRecyclerViewAdapter.submitList(list)
+        binding.nftHistoryRecyclerView.adapter = walletNFTHistoryRecyclerViewAdapter
 
-        binding.nftHistoryRecyclerView.apply {
-            adapter = WalletNFTHistoryRecyclerViewAdapter(list)
-            layoutManager = LinearLayoutManager(requireContext())
-        }
 
         val WalletCardHolderModelList = mutableListOf(
             WalletCardHolderModel("20.09865", "KLAY"),
             WalletCardHolderModel("20.09865", "DIDA")
         )
-        binding.walletCardRecyclerView.apply {
-            adapter = WalletCardRecyclerViewAdapter(WalletCardHolderModelList)
-            val mLayoutManager = LinearLayoutManager(requireContext())
-            mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            layoutManager = mLayoutManager
-        }
+        walletCardRecyclerViewAdapter.submitList(WalletCardHolderModelList)
+        binding.walletCardRecyclerView.adapter = walletCardRecyclerViewAdapter
     }
 
     private val nftHistoryTypeClickListener: View.OnClickListener = View.OnClickListener {

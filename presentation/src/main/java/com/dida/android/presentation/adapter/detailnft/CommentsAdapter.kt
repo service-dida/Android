@@ -13,7 +13,8 @@ import com.dida.android.databinding.HolderCommunityBinding
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 
-class CommentsAdapter() : ListAdapter<Comments, CommentsAdapter.ViewHolder>(CommentsDiffCallback){
+class CommentsAdapter(
+) : ListAdapter<Comments, CommentsAdapter.ViewHolder>(CommentsDiffCallback){
 
     init { setHasStableIds(true) }
 
