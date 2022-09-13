@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.dida.android.presentation.base.UiStateKt" />
         <variable
             name="vm"
             type="com.dida.android.presentation.views.nav.home.HomeViewModel" />
@@ -16,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/mainblack"
         android:id="@+id/main"
-        app:toastMessage="@{UiStateKt.throwableOrNull(vm.homeStateFlow)}">
+        app:toastMessage="@{vm.errorEvent}">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
@@ -308,7 +307,6 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
-                    app:toastMessage="@{UiStateKt.throwableOrNull(vm.soldoutStateFlow)}"
                     soldoutItem="@{vm.soldoutStateFlow}"
                     endLoading="@{vm.soldoutStateFlow}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">

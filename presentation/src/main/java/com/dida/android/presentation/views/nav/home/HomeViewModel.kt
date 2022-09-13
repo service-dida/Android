@@ -5,12 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
+import com.dida.android.presentation.base.successOrNull
+import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.home.Home
+import com.dida.domain.model.nav.home.HotSeller
+import com.dida.domain.model.nav.home.Hots
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.MainUsecase
+import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -34,16 +41,16 @@ class HomeViewModel @Inject constructor(
 
     fun getMain() {
         viewModelScope.launch {
-            mainUsecase.getMainAPI()
+           mainUsecase.getMainAPI()
                 .onSuccess {
                     it.catch { e ->
-                        _homeStateFlow.value = UiState.Error(e)
+                        catchError(e)
                     }
                     it.collect { data ->
                         _homeStateFlow.value = UiState.Success(data)
                     }
-                }.onError {
-                    _homeStateFlow.value = UiState.Error(it)
+                }.onError { e ->
+                   catchError(e)
                 }
         }
     }
@@ -53,14 +60,14 @@ class HomeViewModel @Inject constructor(
             mainUsecase.getSoldOutAPI(term)
                 .onSuccess {
                     it.catch { e ->
-                        _soldoutStateFlow.value = UiState.Error(e)
+                        catchError(e)
                     }
                     it.collect { data ->
                         _soldoutStateFlow.value = UiState.Success(data)
                         _termStateFlow.value = term
                     }
-                }.onError {
-                    _soldoutStateFlow.value = UiState.Error(it)
+                }.onError { e ->
+                    catchError(e)
                 }
         }
     }
