@@ -1,8 +1,6 @@
 package com.dida.domain.usecase
 
-import com.dida.domain.BaseResponse
 import com.dida.domain.NetworkResult
-import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.createwallet.RandomNumber
@@ -22,7 +20,7 @@ interface MainUsecase {
 
     suspend fun nicknameAPI(nickName: String): NetworkResult<NicknameResponseModel>
 
-    suspend fun createUserAPI(request: CreateUserRequestModel): NetworkResult<LoginResponseModel>
+    suspend fun createUserAPI(email: String, nickName: String): NetworkResult<LoginResponseModel>
 
     suspend fun getUserProfileAPI() : NetworkResult<UserProfileResponseModel>
 
@@ -30,7 +28,7 @@ interface MainUsecase {
 
     suspend fun getUserCardsAPI() : NetworkResult<List<UserCardsResponseModel>>
 
-    suspend fun getSendEmailAPI() : NetworkResult<String>
+    suspend fun getSendEmailAPI() : NetworkResult<RandomNumber>
 
     suspend fun postCreateWalletAPI(password: String, passwordCheck: String) : NetworkResult<Unit>
 

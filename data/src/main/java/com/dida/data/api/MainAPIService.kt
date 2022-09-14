@@ -4,13 +4,12 @@ import com.dida.data.model.createwallet.*
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
-import com.dida.domain.model.login.CreateUserRequestModel
+import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 

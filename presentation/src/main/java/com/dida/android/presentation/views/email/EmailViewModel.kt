@@ -29,7 +29,7 @@ class EmailViewModel @Inject constructor(
         viewModelScope.launch {
             mainUsecase.getSendEmailAPI()
                 .onSuccess {
-                    _sendEmailLiveData.postValue(it)
+                    _sendEmailLiveData.postValue(it.random)
                 }.onError {
                     _errorLiveData.postValue(it.message)
                 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.data.repository.MainRepositoryImpl
-import com.dida.domain.model.login.CreateUserRequestModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -60,9 +59,9 @@ class NicknameViewModel @Inject constructor(private val mainRepositoryImpl: Main
     val createUserSuccessLiveData: LiveData<Boolean>
         get() = _createUserSuccessLiveData
 
-    fun createUserAPIServer(request: CreateUserRequestModel) {
+    fun createUserAPIServer(email: String, nickName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepositoryImpl.createUserAPI(request)
+            mainRepositoryImpl.createUserAPI(email, nickName)
                 .onSuccess {
                     DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
                     _createUserSuccessLiveData.postValue(true)

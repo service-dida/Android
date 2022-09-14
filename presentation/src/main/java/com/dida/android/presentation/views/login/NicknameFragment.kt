@@ -3,9 +3,7 @@ package com.dida.android.presentation.views.login
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -15,7 +13,6 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.NavHostActivity
-import com.dida.domain.model.login.CreateUserRequestModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -100,8 +97,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
 
         binding.okBtn.setOnClickListener {
             if(viewModel.nickNameSuccessLiveData.value == true){
-                val request = CreateUserRequestModel(email, binding.nickNameEdit.text.toString())
-                viewModel.createUserAPIServer(request)
+                viewModel.createUserAPIServer(email, binding.nickNameEdit.text.toString())
             }
         }
     }

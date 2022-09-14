@@ -48,8 +48,8 @@ private fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? 
 
 private fun createErrorException(url: String?, httpCode: Int, errorResponse: ErrorResponseImpl?): Exception? =
     when (httpCode) {
-        400, 403 -> BadRequestException(Throwable(errorResponse?.message), url)
-        401 -> InvalidKakaoAccessTokenException(Throwable(errorResponse?.message), url)
+//        400, 403 -> BadRequestException(Throwable(errorResponse?.message), url)
+        400, 401, 403 -> InvalidKakaoAccessTokenException(Throwable(errorResponse?.message), url)
         402 -> AccountNotFoundException(Throwable(errorResponse?.message), url)
         404 -> ServerNotFoundException(Throwable(errorResponse?.message), url)
         500 -> InternalServerErrorException(Throwable(errorResponse?.message), url)

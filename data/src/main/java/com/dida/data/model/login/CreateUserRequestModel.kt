@@ -1,4 +1,4 @@
-package com.dida.domain.model.login
+package com.dida.data.model.login
 
 import com.google.gson.annotations.SerializedName
 

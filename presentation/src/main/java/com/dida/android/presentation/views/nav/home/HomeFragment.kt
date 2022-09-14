@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views.nav.home
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -83,13 +84,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             // soldout
-            if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY &&
-                    scrollY < binding.soldoutMore.y) {
+            if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY && scrollY < binding.soldoutMore.y) {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
             }
             // recent
-            else if(binding.soldoutMore.y <= scrollY &&
-                scrollY < binding.recentnftRecycler.y+100) {
+            else if(binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y+100) {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
             }
             // collection
@@ -103,6 +102,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
         binding.hotsRecycler.adapter = hotsAdapter
         binding.hotSellerRecycler.adapter = hotSellerAdapter
@@ -125,7 +125,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             for (i in 0 until (this.getChildAt(0) as LinearLayout).childCount) {
                 (this.getChildAt(0) as LinearLayout).getChildAt(i).setOnTouchListener { _, _ ->
                     moveScroll(i)
-                    true }
+                    true
+                }
             }
         }
     }
@@ -133,10 +134,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun initToolbar() {
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_alarm -> {
-                }
-                R.id.action_search -> {
-                }
+                R.id.action_alarm -> {}
+                R.id.action_search -> {}
             }
             true
         }
@@ -149,58 +148,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun moveScroll(tabId: Int) {
         with(binding.homeScroll) {
             when(tabId) {
-                0 -> {
-                    this.smoothScrollToView(binding.hotSellerRecycler, 100, 1000)
-                }
-                1 -> {
-                    this.smoothScrollToView(binding.soldoutTxt, 50, 1000)
-                }
-                2 -> {
-                    this.smoothScrollToView(binding.recentnftTxt, 50, 1000)
-                }
-                3 -> {
-                    this.smoothScrollToView(binding.collectionTxt, 0, 1000)
-                }
+                0 -> { smoothScrollToView(binding.hotSellerRecycler, 100, 1000) }
+                1 -> { smoothScrollToView(binding.soldoutTxt, 50, 1000) }
+                2 -> { smoothScrollToView(binding.recentnftTxt, 50, 1000) }
+                3 -> { smoothScrollToView(binding.collectionTxt, 0, 1000) }
             }
             binding.appBarLayout.setExpanded(false)
-        }
-
-    }
-
-    private fun NestedScrollView.computeDistanceToView(view: View): Int {
-        return abs(calculateRectOnScreen(this).top - (this.scrollY + calculateRectOnScreen(view).top))
-    }
-
-    private fun calculateRectOnScreen(view: View): Rect {
-        val location = IntArray(2)
-        view.getLocationOnScreen(location)
-        return Rect(
-            location[0],
-            location[1],
-            location[0] + view.measuredWidth,
-            location[1] + view.measuredHeight
-        )
-    }
-
-    private fun NestedScrollView.smoothScrollToView(
-        view: View,
-        marginTop: Int = 0,
-        maxDuration: Long = 100L,
-        onEnd: () -> Unit = {}
-    ) {
-        if (this.getChildAt(0).height <= this.height) { // 스크롤의 의미가 없다.
-            onEnd()
-            return
-        }
-        val y = computeDistanceToView(view) - marginTop
-        val ratio = abs(y - this.scrollY) / (this.getChildAt(0).height - this.height).toFloat()
-        ObjectAnimator.ofInt(this, "scrollY", y).apply {
-            duration = (maxDuration * ratio).toLong()
-            interpolator = AccelerateDecelerateInterpolator()
-            doOnEnd {
-                onEnd()
-            }
-            start()
         }
     }
 
