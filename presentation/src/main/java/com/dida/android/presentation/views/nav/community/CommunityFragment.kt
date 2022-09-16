@@ -1,17 +1,24 @@
 package com.dida.android.presentation.views.nav.community
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentCommunityBinding
 import com.dida.android.presentation.adapter.community.ActiveNFTRecyclerViewAdapter
 import com.dida.android.presentation.adapter.community.ReservationNFTRecyclerViewAdapter
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewModel>(R.layout.fragment_community) {
@@ -22,6 +29,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         get() = R.layout.fragment_community
 
     override val viewModel : CommunityViewModel by viewModels()
+    private val navController: NavController by lazy { findNavController() }
     private val activeNFTRecyclerViewAdapter = ActiveNFTRecyclerViewAdapter()
     private val reservationNFTRecyclerViewAdapter = ReservationNFTRecyclerViewAdapter()
 
@@ -33,11 +41,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     override fun initDataBinding() {
-
+        lifecycleScope.launchWhenStarted {
+            viewModel.navigationEvent.collect {
+                when(it) {
+                    is CommunityNavigationAction.NavigateToDetail -> { checkNavigationDesination(R.id.action_communityFragment_to_communityDetailFragment) }
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun initToolbar(){
@@ -51,6 +64,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             true
         }
     }
+
+    private fun checkNavigationDesination(toNav: Any) {
+        if (navController.currentDestination?.id == R.id.communityFragment) {
+            when(toNav) {
+                is NavDirections -> navController.navigate(toNav)
+                is Int -> navController.navigate(toNav)
+            }
+        }
+    }
+
 
     private fun initRecyclerView(){
         val Reservationlist = mutableListOf(
@@ -76,7 +99,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ")
         )
 
-        val test = CommunityAdapter()
+        val test = CommunityAdapter(viewModel)
         val testList = ArrayList<Community>()
         for(i in 0..3) {
             testList.add(Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",

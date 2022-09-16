@@ -1,34 +1,27 @@
 package com.dida.android.presentation.views.nav.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
-import com.dida.android.presentation.base.successOrNull
-import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.home.Home
-import com.dida.domain.model.nav.home.HotSeller
-import com.dida.domain.model.nav.home.Hots
 import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.MainUsecase
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val mainUsecase: MainUsecase
-    ) : BaseViewModel() {
+    ) : BaseViewModel(), HomeActionHandler {
 
     private val TAG = "HomeViewModel"
+
+    private val _navigationEvent: MutableSharedFlow<HomeNavigationAction> = MutableSharedFlow<HomeNavigationAction>()
+    val navigationEvent: SharedFlow<HomeNavigationAction> = _navigationEvent
 
     private val _homeStateFlow: MutableStateFlow<UiState<Home>> = MutableStateFlow(UiState.Loading)
     val homeStateFlow: StateFlow<UiState<Home>> = _homeStateFlow
@@ -48,6 +41,7 @@ class HomeViewModel @Inject constructor(
                     }
                     it.collect { data ->
                         _homeStateFlow.value = UiState.Success(data)
+                        onSoldOutDayClicked(_termStateFlow.value)
                     }
                 }.onError { e ->
                    catchError(e)
@@ -55,7 +49,37 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getSoldOut(term: Int) {
+    override fun onHotItemClicked(cardId: Long) {
+        viewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToHotItem(cardId))
+        }
+    }
+
+    override fun onHotSellerItemClicked(userId: Int) {
+        viewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToHotSeller(userId))
+        }
+    }
+
+    override fun onRecentNftItemClicked(nftId: Int) {
+        viewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
+        }
+    }
+
+    override fun onSoldOutItemClicked(cardId: Long) {
+        viewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToSoldOut(cardId))
+        }
+    }
+
+    override fun onCollectionItemClicked(userId: Int) {
+        viewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToCollection(userId))
+        }
+    }
+
+    override fun onSoldOutDayClicked(term: Int) {
         viewModelScope.launch {
             mainUsecase.getSoldOutAPI(term)
                 .onSuccess {

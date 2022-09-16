@@ -37,13 +37,24 @@
             app:destination="@id/addPurposeFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
-
-
     </fragment>
+
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.dida.android.presentation.views.nav.community.CommunityFragment"
-        android:label="CommunityFragment" />
+        android:label="CommunityFragment" >
+        <action
+            android:id="@+id/action_communityFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityDetailFragment"
+        android:name="com.dida.android.presentation.views.detailcommunity.DetailCommunityFragment"
+        android:label="DetailCommunityFragment"/>
+
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.dida.android.presentation.views.nav.mypage.MyPageFragment"

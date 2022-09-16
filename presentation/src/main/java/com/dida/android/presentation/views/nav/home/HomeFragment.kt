@@ -1,30 +1,21 @@
 package com.dida.android.presentation.views.nav.home
 
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.graphics.Rect
-import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
+import android.os.Build
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.core.animation.doOnEnd
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.base.UiState
 import com.dida.android.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlin.math.abs
 
 
 @AndroidEntryPoint
@@ -36,81 +27,65 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         get() = R.layout.fragment_home
 
     override val viewModel : HomeViewModel by viewModels()
-    lateinit var navController: NavController
-
-    private val hotsAdapter: HotsAdapter = HotsAdapter(
-        onClick = { cardId ->
-        }
-    )
-    private val hotSellerAdapter: HotSellerAdapter = HotSellerAdapter(
-        onClick = { userId ->
-        }
-    )
-    private val soldOutAdapter: SoldOutAdapter = SoldOutAdapter(
-        onClick = { nftId ->
-            navController.navigate(R.id.action_homeFragment_to_detailNftFragment)
-        }
-    )
-    private val collectionAdapter: CollectionAdapter = CollectionAdapter(
-        onClick = { userId ->
-        }
-    )
-
-    private val recentNftAdapter: RecentNftAdapter = RecentNftAdapter(
-        onClick = { cardId ->
-            showDetailPage(cardId)
-        }
-    )
+    private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
         binding.vm = viewModel
-        navController = Navigation.findNavController(requireView())
+
         initToolbar()
         initAdapter()
 
         // main 화면 불러오는 함수
         viewModel.getMain()
-        viewModel.getSoldOut(7)
     }
 
     override fun initDataBinding() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.navigationEvent.collect {
+                when(it) {
+                    is HomeNavigationAction.NavigateToHotItem -> { checkNavigationDesination(R.id.action_homeFragment_to_detailNftFragment) }
+                    is HomeNavigationAction.NavigateToHotSeller -> { }
+                    is HomeNavigationAction.NavigateToSoldOut -> { checkNavigationDesination(R.id.action_homeFragment_to_detailNftFragment) }
+                    is HomeNavigationAction.NavigateToRecentNftItem -> { checkNavigationDesination(R.id.action_homeFragment_to_detailNftFragment) }
+                    is HomeNavigationAction.NavigateToCollection -> {}
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {
-        binding.day7Btn.setOnClickListener(termClickListener)
-        binding.day30Btn.setOnClickListener(termClickListener)
-        binding.day180Btn.setOnClickListener(termClickListener)
-        binding.day365Btn.setOnClickListener(termClickListener)
 
-        binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            // soldout
-            if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY && scrollY < binding.soldoutMore.y) {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
-            }
-            // recent
-            else if(binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y+100) {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
-            }
-            // collection
-            else if(binding.recentnftRecycler.y+100 <= scrollY) {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
-            }
-            // hot seller
-            else{
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                // soldout
+                if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY && scrollY < binding.soldoutMore.y) {
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+                }
+                // recent
+                else if(binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y+100) {
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+                }
+                // collection
+                else if(binding.recentnftRecycler.y+100 <= scrollY) {
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+                }
+                // hot seller
+                else{
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+                }
             }
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
-        binding.hotsRecycler.adapter = hotsAdapter
-        binding.hotSellerRecycler.adapter = hotSellerAdapter
-        binding.soldoutRecycler.adapter = soldOutAdapter
-        binding.collectionRecycler.adapter = collectionAdapter
+        binding.hotsRecycler.adapter = HotsAdapter(viewModel)
+        binding.hotSellerRecycler.adapter = HotSellerAdapter(viewModel)
+        binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
+        binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
 
         binding.recentnftRecycler.apply {
-            adapter = recentNftAdapter
+            adapter = RecentNftAdapter(viewModel)
             layoutManager = GridLayoutManager(requireContext(),2)
             val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
             addItemDecoration(GridSpacing(px, px))
@@ -141,8 +116,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
     }
 
-    private fun showDetailPage(nftId : Int){
-        findNavController().navigate(R.id.action_homeFragment_to_detailNftFragment)
+    private fun checkNavigationDesination(toNav: Any) {
+        if (navController.currentDestination?.id == R.id.homeFragment) {
+            when(toNav) {
+                is NavDirections -> navController.navigate(toNav)
+                is Int -> navController.navigate(toNav)
+            }
+        }
     }
 
     private fun moveScroll(tabId: Int) {
@@ -154,23 +134,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 3 -> { smoothScrollToView(binding.collectionTxt, 0, 1000) }
             }
             binding.appBarLayout.setExpanded(false)
-        }
-    }
-
-    private val termClickListener: View.OnClickListener = View.OnClickListener {
-        when (it.id) {
-            R.id.day7_btn -> {
-                viewModel.getSoldOut(7)
-            }
-            R.id.day30_btn -> {
-                viewModel.getSoldOut(30)
-            }
-            R.id.day180_btn -> {
-                viewModel.getSoldOut(60)
-            }
-            R.id.day365_btn -> {
-                viewModel.getSoldOut(365)
-            }
         }
     }
 }

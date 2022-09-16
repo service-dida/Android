@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.databinding.HolderMypageUserCardsBinding
 import com.dida.android.databinding.HolderSoldoutBinding
+import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 
 class SoldOutAdapter(
-    private val onClick: (nftId: Long) ->Unit
+    private val eventListener: HomeActionHandler
 ): ListAdapter<SoldOut, SoldOutAdapter.ViewHolder>(SoldOutItemDiffCallback) {
 
     init { setHasStableIds(true) }
@@ -26,7 +27,7 @@ class SoldOutAdapter(
             false
         )
         viewDataBinding.root.setOnClickListener {
-            onClick.invoke(viewDataBinding.holderModel!!.nftId)
+            eventListener.onSoldOutItemClicked(viewDataBinding.holderModel!!.nftId)
         }
         return ViewHolder(viewDataBinding)
     }

@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.databinding.HolderHotsBinding
 import com.dida.android.databinding.HolderHotsellerBinding
+import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.domain.model.nav.home.HotSeller
 import com.dida.domain.model.nav.home.Hots
 
 class HotSellerAdapter(
-    private val onClick: (userId: Int) ->Unit
+    private val eventListener: HomeActionHandler
 ) : ListAdapter<HotSeller, HotSellerAdapter.ViewHolder>(HotSellerItemDiffCallback){
 
     init { setHasStableIds(true) }
@@ -27,7 +28,7 @@ class HotSellerAdapter(
             false
         )
         viewDataBinding.root.setOnClickListener {
-            onClick.invoke(viewDataBinding.holderModel!!.userId)
+            eventListener.onHotSellerItemClicked(viewDataBinding.holderModel!!.userId)
         }
         return ViewHolder(viewDataBinding)
     }

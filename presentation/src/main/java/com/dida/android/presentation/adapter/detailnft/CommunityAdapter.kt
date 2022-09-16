@@ -1,6 +1,7 @@
 package com.dida.android.presentation.adapter.detailnft
 
 import android.view.LayoutInflater
+import android.view.OrientationEventListener
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,9 +10,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.databinding.HolderCommunityBinding
+import com.dida.android.presentation.views.nav.community.CommunityActionHandler
 import com.dida.domain.model.nav.detailnft.Community
 
-class CommunityAdapter() : ListAdapter<Community, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
+class CommunityAdapter(
+    private val eventListener: CommunityActionHandler
+) : ListAdapter<Community, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
 
     init { setHasStableIds(true) }
 
@@ -22,9 +26,10 @@ class CommunityAdapter() : ListAdapter<Community, CommunityAdapter.ViewHolder>(C
             parent,
             false
         )
-        /*viewDataBinding.root.setOnClickListener {
-            onClick.invoke(viewDataBinding.holderModel!!.cardId)
-        }*/
+        viewDataBinding.root.setOnClickListener {
+//            eventListener.onCommunityItemClicked(viewDataBinding.holderModel!!.contentDetail)
+            eventListener.onCommunityItemClicked(0)
+        }
         return ViewHolder(viewDataBinding)
     }
 

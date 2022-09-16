@@ -32,4 +32,14 @@
 <!--        <item name="windowActionBar">false</item>-->
 <!--        <item name="windowNoTitle">true</item>-->
 <!--    </style>-->
+
+    <!-- 게시글 상세 에딧텍스트 -->
+    <style name="Widget.AppCompat.EditText.DetailCommunity.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:gravity">left</item>
+        <item name="android:hint">@string/detail_community_edit_hint</item>
+        <item name="android:textColorHint">@color/surface6</item>
+        <item name="android:textSize">14dp</item>
+        <item name="fontFamily">@@font/pretendard_regular</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>
