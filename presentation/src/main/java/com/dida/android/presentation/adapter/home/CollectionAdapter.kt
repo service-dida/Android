@@ -11,12 +11,13 @@ import com.dida.android.R
 import com.dida.android.databinding.HolderCollectionBinding
 import com.dida.android.databinding.HolderHotsBinding
 import com.dida.android.databinding.HolderHotsellerBinding
+import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.home.HotSeller
 import com.dida.domain.model.nav.home.Hots
 
 class CollectionAdapter(
-    private val onClick: (userId: Int) ->Unit
+    private val eventListener: HomeActionHandler
 ) : ListAdapter<Collection, CollectionAdapter.ViewHolder>(CollectionItemDiffCallback){
 
     init { setHasStableIds(true) }
@@ -29,7 +30,7 @@ class CollectionAdapter(
             false
         )
         viewDataBinding.root.setOnClickListener {
-            onClick.invoke(viewDataBinding.holderModel!!.userId)
+            eventListener.onCollectionItemClicked(viewDataBinding.holderModel!!.userId)
         }
         return ViewHolder(viewDataBinding)
     }

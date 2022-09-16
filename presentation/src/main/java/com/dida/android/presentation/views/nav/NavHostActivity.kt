@@ -49,9 +49,10 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                     loginCheck()
                     showBottomNav()
                 }
-                R.id.addFragment -> {
-                    loginCheck()
-                }
+                R.id.addFragment -> loginCheck()
+
+                R.id.communityDetailFragment -> hideBottomNav()
+
                 else ->{
                     showBottomNav()
                 }
@@ -71,6 +72,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                 R.id.homeFragment -> {}
                 R.id.myPageFragment -> {}
                 R.id.addFragment -> {}
+                R.id.communityFragment -> {}
             }
         }
     }

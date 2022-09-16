@@ -1,6 +1,7 @@
 package com.dida.android.presentation.adapter.community
 
 import android.view.LayoutInflater
+import android.view.OrientationEventListener
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,7 @@ import com.dida.android.R
 import com.dida.android.databinding.HolderActiveNftBinding
 import com.dida.android.databinding.HolderHotsBinding
 import com.dida.android.presentation.adapter.home.HotsAdapter
+import com.dida.android.presentation.views.nav.community.CommunityActionHandler
 import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 import com.dida.domain.model.nav.home.Hots
 
@@ -26,7 +28,7 @@ class ActiveNFTRecyclerViewAdapter(
             false
         )
 //        viewDataBinding.root.setOnClickListener {
-//            onClick.invoke(viewDataBinding.holderModel!!.cardId)
+//            eventListener.onCommunityItemClicked(viewDataBinding.holderModel!!.)
 //        }
         return ViewHolder(viewDataBinding)
     }
