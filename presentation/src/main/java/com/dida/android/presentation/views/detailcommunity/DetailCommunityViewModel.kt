@@ -11,5 +11,4 @@ class DetailCommunityViewModel @Inject constructor(
 ) : BaseViewModel() {
     private val TAG = "DetailCommunityViewModel"
 
-
 }

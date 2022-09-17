@@ -9,6 +9,7 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.dida.android.util.LoadingDialog
 
 abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : DialogFragment(layoutId) {
@@ -37,8 +38,8 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
 
     /**
      * 두번째로 호출.
-     * 데이터 바인딩 및 rxjava 설정.
-     * ex) rxjava observe, databinding observe..
+     * 데이터 바인딩 및 Coroutine 설정.
+     * ex) lifecyelScope.launch{}, lifecycleScope.launchWhenStarted{] ..
      */
     abstract fun initDataBinding()
 

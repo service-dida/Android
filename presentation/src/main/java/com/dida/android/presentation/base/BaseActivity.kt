@@ -34,8 +34,8 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     /**
      * 두번째로 호출.
-     * 데이터 바인딩 및 rxjava 설정.
-     * ex) rxjava observe, databinding observe..
+     * 데이터 바인딩 및 Coroutine 설정.
+     * ex) lifecyelScope.launch{}, lifecycleScope.launchWhenStarted{] ..
      */
     abstract fun initDataBinding()
 

@@ -31,12 +31,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun initStartView() {
         binding.vm = viewModel
-
         initToolbar()
         initAdapter()
 
         // main 화면 불러오는 함수
         viewModel.getMain()
+
+        // test
+        navController.navigate(R.id.action_homeFragment_to_emailFragment)
     }
 
     override fun initDataBinding() {

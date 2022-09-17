@@ -29,10 +29,9 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     abstract val viewModel: R
 
     /**
-     * 레이아웃을 띄운 직후 호출.
-     * 뷰모델 초기화
-     * 뷰나 액티비티의 속성 등을 초기화.
-     * ex) 리사이클러뷰, 툴바, 드로어뷰..
+     * 두번째로 호출.
+     * 데이터 바인딩 및 Coroutine 설정.
+     * ex) lifecyelScope.launch{}, lifecycleScope.launchWhenStarted{] ..
      */
     abstract fun initStartView()
 
