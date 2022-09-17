@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.login
+package com.dida.android.presentation.views.nickname
 
 import android.content.Intent
 import android.text.Editable
@@ -33,7 +33,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
 
     override fun initStartView() {
         navController = Navigation.findNavController(requireView())
-        val args: NicknameFragmentArgs by navArgs()
+        val args: com.dida.android.presentation.views.login.NicknameFragmentArgs by navArgs()
         email = args.email
     }
 

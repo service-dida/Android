@@ -14,6 +14,7 @@ import com.dida.android.presentation.views.nav.NavHostActivity
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -36,28 +37,30 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initDataBinding() {
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launchWhenStarted {
+            viewModel.errorEvent.collect {
+                Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
+            }
         }
 
-        viewModel.kakaoLoginSuccessLiveData.observe(viewLifecycleOwner){
-            dismissLoadingDialog()
-            when(it){
-                -1 ->{
-                    Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show()
-                }
-                0 ->{
-                    Toast.makeText(requireContext(),"회원가입이 필요합니다.",Toast.LENGTH_SHORT).show()
-                    viewModel.kakaoEmailSuccessLiveData.observe(this){ item ->
-                        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(item)
+        lifecycleScope.launchWhenStarted {
+            viewModel.navigationEvent.collect {
+                dismissLoadingDialog()
+                when(it){
+                    is LoginNavigationAction.NavigateToLoginFail -> {
+                        Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show()
+                    }
+                    is LoginNavigationAction.NavigateToNickname -> {
+                        Toast.makeText(requireContext(),"회원가입이 필요합니다.",Toast.LENGTH_SHORT).show()
+                        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email)
                         navController.navigate(action)
                     }
-                }
-                1 ->{
-                    Toast.makeText(requireContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show()
-                    var intent = Intent(requireActivity(), NavHostActivity::class.java)
-                    activity?.setResult(9001,intent)
-                    activity?.finish()
+                    is LoginNavigationAction.NavigateToHome -> {
+                        Toast.makeText(requireContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show()
+                        var intent = Intent(requireActivity(), NavHostActivity::class.java)
+                        activity?.setResult(9001,intent)
+                        activity?.finish()
+                    }
                 }
             }
         }
@@ -73,10 +76,8 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                 //로그인 성공
                 else if (token != null) {
                     Log.d(TAG, "kakaoLogin 성공 ${token.accessToken} ")
-                    lifecycleScope.launch {
-                        viewModel.loginAPIServer(token.accessToken)
-                        showLoadingDialog()
-                    }
+                    viewModel.loginAPIServer(token.accessToken)
+                    showLoadingDialog()
                 }
             }
 

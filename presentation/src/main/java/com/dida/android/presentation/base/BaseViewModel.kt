@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.plus
 
 abstract class BaseViewModel : ViewModel() {
+
     private val _errorEvent: MutableStateFlow<Throwable?> = MutableStateFlow(null)
     val errorEvent: StateFlow<Throwable?> = _errorEvent
 

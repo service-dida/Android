@@ -1,11 +1,6 @@
 package com.dida.android.presentation.views.email
 
-import android.os.Handler
-import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -18,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
-
 
 @AndroidEntryPoint
 class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layout.fragment_email) {
@@ -43,6 +37,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     }
 
     override fun initDataBinding() {
+
         lifecycleScope.launchWhenStarted {
             viewModel.sendEmailStateFlow.collect {
                 dismissLoadingDialog()

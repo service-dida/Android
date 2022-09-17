@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.login
+package com.dida.android.presentation.views.nickname
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -4,12 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,36 +24,29 @@ class LoginMainViewModel @Inject constructor(private val mainRepositoryImpl: Mai
 
     private val TAG = "LoginMainViewModel"
 
+    private val _navigationEvent: MutableSharedFlow<LoginNavigationAction> = MutableSharedFlow<LoginNavigationAction>()
+    val navigationEvent: SharedFlow<LoginNavigationAction> = _navigationEvent
 
-    /** 카카오 로그인 결과 LiveData
-     * -1 : 로그인 실패
-     * 0 : 회원가입 필요
-     * 1 : 로그인 성공
-     */
-    private val _kakaoLoginSuccessLiveData = MutableLiveData<Int>()
-    val kakaoLoginSuccessLiveData: LiveData<Int> = _kakaoLoginSuccessLiveData
+    /** 카카오 로그인 결과
+     * refreshToken ->
+     * null : 닉네임 입력(처음 회원가입한 유저로 닉네임 입력)
+     * notNull : 홈화면 이동(이미 추가회원가입 완료 유저)
+     **/
 
-    private val _kakaoEmailSuccessLiveData = MutableLiveData<String>()
-    val kakaoEmailSuccessLiveData: LiveData<String> = _kakaoEmailSuccessLiveData
-
-    private val _errorLiveData = MutableLiveData<String>()
-    val errorLiveData: LiveData<String> = _errorLiveData
-
-    suspend fun loginAPIServer(idToken: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun loginAPIServer(idToken: String) {
+        baseViewModelScope.launch {
             mainRepositoryImpl.loginAPI(idToken)
                 .onSuccess {
                     if(it.refreshToken.isNullOrEmpty()) {
-                        _kakaoEmailSuccessLiveData.postValue(it?.accessToken)
-                        _kakaoLoginSuccessLiveData.postValue(0)
+                        _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.accessToken!!))
                     }
                     else {
-                        mySharedPreferences.setAccessToken(it?.accessToken, it?.refreshToken)
-                        _kakaoLoginSuccessLiveData.postValue(1)
+                        mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
+                        _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
                     }
-                }.onError {
-                    _kakaoLoginSuccessLiveData.postValue(-1)
-                    _errorLiveData.postValue(it.message)
+                }.onError { e ->
+                    catchError(e)
+                    _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
                     mySharedPreferences.removeAccessToken()
                 }
         }
