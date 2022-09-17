@@ -50,9 +50,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                     showBottomNav()
                 }
                 R.id.addFragment -> loginCheck()
-
                 R.id.communityDetailFragment -> hideBottomNav()
-
                 else ->{
                     showBottomNav()
                 }
