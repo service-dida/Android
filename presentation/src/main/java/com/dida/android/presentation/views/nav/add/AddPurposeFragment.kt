@@ -1,15 +1,12 @@
 package com.dida.android.presentation.views.nav.add
 
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.password.PasswordReconfirmDialog
+import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

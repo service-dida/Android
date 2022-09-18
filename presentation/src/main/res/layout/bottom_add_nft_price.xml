@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.add.AddNftPriceViewModel" />
+            type="com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceViewModel" />
     </data>
 
     <FrameLayout
@@ -60,6 +60,7 @@
                     android:textSize="14dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:maxLines="1"
+                    android:text="@={vm.userInputStateFlow}"
                     android:textColorHint="@color/surface6"
                     android:inputType="numberDecimal"
                     android:digits="0123456789.">
@@ -89,10 +90,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="24dp"
                 android:text="NFT 생성하기"
+                android:onClick="@{() -> vm.onOkBtnClicked()}"
                 android:fontFamily="@font/pretendard_bold"
                 android:textSize="16dp"
-                android:textColor="@{vm.okBtnStateLiveData? @color/mainblack : @color/surface6}"
-                android:background="@{vm.okBtnStateLiveData? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
+                android:textColor="@{vm.okBtnStateStateFlow? @color/mainblack : @color/surface6}"
+                android:background="@{vm.okBtnStateStateFlow? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
