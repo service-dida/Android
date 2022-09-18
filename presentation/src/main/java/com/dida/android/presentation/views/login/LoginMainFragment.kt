@@ -29,6 +29,10 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     lateinit var navController: NavController
 
     override fun initStartView() {
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
         navController = Navigation.findNavController(requireView())
 
         // test

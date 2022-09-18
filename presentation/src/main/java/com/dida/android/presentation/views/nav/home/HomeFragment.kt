@@ -31,19 +31,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
         initToolbar()
         initAdapter()
 
         // main 화면 불러오는 함수
         viewModel.getMain()
-
-        // test
-        navController.navigate(R.id.action_homeFragment_to_emailFragment)
     }
 
     override fun initDataBinding() {
-
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
