@@ -21,7 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNftBottomSheet(val itemClick: (Int) -> Unit) :
+class AddNftBottomSheet(val itemClick: () -> Unit) :
     BaseBottomSheetDialogFragment<BottomAddNftBinding, AddNftViewModel>() {
 
     private val TAG = "AddNftBottomSheet"
@@ -40,7 +40,7 @@ class AddNftBottomSheet(val itemClick: (Int) -> Unit) :
 
     override fun initAfterBinding() {
         binding.okBtn.setOnClickListener {
-            itemClick(0)
+            itemClick()
         }
     }
 }

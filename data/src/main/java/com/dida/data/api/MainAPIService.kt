@@ -51,10 +51,10 @@ interface MainAPIService {
     suspend fun getWalletExists() : GetWalletExistsResponse
 
     @POST("/user/wallet/pwd/check")
-    suspend fun postCheckPassword(request: PostCheckPasswordRequest) : PostCheckPasswordResponse
+    suspend fun postCheckPassword(@Body request: PostCheckPasswordRequest) : PostCheckPasswordResponse
 
     @POST("/user/wallet/pwd")
-    suspend fun postPasswordChange(request: PostPasswordChangeRequest)
+    suspend fun postPasswordChange(@Body request: PostPasswordChangeRequest)
 
     @GET("/user/wallet/pwd")
     suspend fun getTempPassword()

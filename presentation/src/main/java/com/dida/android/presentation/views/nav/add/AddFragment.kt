@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.nav.add
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.android.util.AppLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,8 +64,10 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         textLengthCheckListener(binding.descriptionEditText)
 
         // User의 지갑이 있는지 체크
-        viewModel.getWalletExists()
-        showLoadingDialog()
+        //viewModel.getWalletExists()
+        //showLoadingDialog()
+        getImageToGallery()
+
     }
 
     override fun initDataBinding() {
@@ -129,7 +133,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     }
 
     private fun getImageToGallery() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         resultLauncher.launch(intent)
     }

@@ -5,16 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.android.util.AppLog
+import com.dida.data.di.NetworkModule
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.MainUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class AddViewModel @Inject constructor(
-    private val mainUsecase: MainUsecase) : BaseViewModel() {
+class AddViewModel @Inject constructor(private val mainUsecase: MainUsecase) : BaseViewModel() {
 
     private val TAG = "AddViewModel"
 
