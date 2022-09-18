@@ -4,6 +4,7 @@ import android.database.Cursor
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.AppLog
@@ -77,7 +78,24 @@ class AddPurposeViewModel @Inject constructor(private val klaytnUsecase: KlaytnU
                         catchError(e)
                     }
                     it.collect { data ->
-                        //UiState.Success(data)
+                        AppLog.d(data.toString())
+                        uploadMetaData(data.uri)
+                    }
+                }.onError { e ->
+                    catchError(e)
+                }
+        }
+    }
+
+    fun uploadMetaData(url : String){
+        viewModelScope.launch {
+            klaytnUsecase.uploadMetaData(titleLiveData.value.toString(),descriptionLiveData.value.toString(),url)
+                .onSuccess {
+                    it.catch { e ->
+                        catchError(e)
+                    }
+                    it.collect { data ->
+                        AppLog.d(data.toString())
                     }
                 }.onError { e ->
                     catchError(e)

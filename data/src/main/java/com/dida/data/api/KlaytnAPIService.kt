@@ -1,16 +1,23 @@
 package com.dida.data.api
 
 import com.dida.data.model.klaytn.AssetResponse
+import com.dida.data.model.klaytn.MetaDataRequest
+import com.dida.data.model.klaytn.MetaDataResponse
 import okhttp3.MultipartBody
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.Url
+import retrofit2.http.*
 
 interface KlaytnAPIService {
 
     @Multipart
     @POST
     suspend fun uploadAsset(@Part file: MultipartBody.Part,
-                            @Url url: String): AssetResponse
+                            @Url url: String = "https://metadata-api.klaytnapi.com/v1/metadata/asset"): AssetResponse
+
+
+    @POST
+    suspend fun uploadMetaData(
+        @Body metadata: MetaDataRequest,
+        @Url url: String = "https://metadata-api.klaytnapi.com/v1/metadata",
+        @Header("Content-Type") contentType: String = "application/json"
+    ): MetaDataResponse
 }
