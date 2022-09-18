@@ -1,6 +1,7 @@
 package com.dida.data.api
 
 import com.dida.data.model.createwallet.*
+import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
@@ -58,4 +59,7 @@ interface MainAPIService {
 
     @GET("/user/wallet/pwd")
     suspend fun getTempPassword()
+
+    @POST("/card")
+    suspend fun mintNFT(@Body request: NFTMintRequest)
 }

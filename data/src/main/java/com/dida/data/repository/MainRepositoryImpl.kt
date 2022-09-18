@@ -5,6 +5,7 @@ import com.dida.data.api.handleApi
 import com.dida.data.mapper.*
 import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
+import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
 import com.dida.data.model.login.CreateUserRequestModel
@@ -74,6 +75,11 @@ class MainRepositoryImpl @Inject constructor(
             flow {
                 emit( mainAPIService.getSoldOut(term).toDomain() )
             }.flowOn(Dispatchers.IO) }
+    }
+
+    override suspend fun mintNFT(name: String, description: String, image: String): NetworkResult<Unit> {
+        val request = NFTMintRequest(name,description,image)
+        return handleApi { mainAPIService.mintNFT(request) }
     }
 
     override suspend fun postCreateWalletAPI(

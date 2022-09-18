@@ -48,4 +48,6 @@ interface  MainUsecase {
     suspend fun getMainAPI() : NetworkResult<Flow<Home>>
 
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<Flow<List<SoldOut>>>
+
+    suspend fun mintNFT(name : String, description : String, image : String) : NetworkResult<Unit>
 }

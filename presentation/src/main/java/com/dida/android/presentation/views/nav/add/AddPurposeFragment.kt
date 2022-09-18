@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.password.PasswordDialog
 import com.dida.android.util.AppLog
 import com.dida.android.util.BitmapImageToCache
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,24 +47,23 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
         binding.type1Button.setOnClickListener {
             viewModel.changePurposeType(1)
             val dialog = AddNftBottomSheet(){
-                val currentImageUri = Uri.parse(viewModel.nftImageLiveData.value.toString())
-
-                try {
-                    currentImageUri?.let {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
-                            val imagePath: String = getPath(currentImageUri)!!
-                            val imageFileName = imagePath.split("/").last()
-
-                            viewModel.uploadAsset(imageFileName, imagePath)
-
+                val passwordDialog = PasswordDialog(true) { password ->
+                    //TODO : 비밀번호 맞는지 체크하기
+                    val currentImageUri = Uri.parse(viewModel.nftImageLiveData.value.toString())
+                    try {
+                        currentImageUri?.let {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                val imagePath: String = getPath(currentImageUri)!!
+                                viewModel.uploadAsset(imagePath)
+                            }else{
+                                //TODO :버전낮은거 처리하기
+                            }
                         }
+                    }catch (e : Exception){
+
                     }
-                }catch (e : Exception){
-
                 }
-
-
+                passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
             }
             dialog.show(childFragmentManager, "AddPurposeFragment")
         }

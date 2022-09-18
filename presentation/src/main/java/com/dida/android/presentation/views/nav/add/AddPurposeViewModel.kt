@@ -11,7 +11,10 @@ import com.dida.android.util.AppLog
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.KlaytnUsecase
+import com.dida.domain.usecase.MainUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -24,7 +27,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class AddPurposeViewModel @Inject constructor(private val klaytnUsecase: KlaytnUsecase) : BaseViewModel() {
+class AddPurposeViewModel @Inject constructor(private val mainUsecase: MainUsecase, private val klaytnUsecase: KlaytnUsecase) : BaseViewModel() {
 
     private val TAG = "AddPurposeViewModel"
 
@@ -44,6 +47,9 @@ class AddPurposeViewModel @Inject constructor(private val klaytnUsecase: KlaytnU
     val descriptionLiveData: LiveData<String>
         get() = _descriptionLiveData
 
+    private val _mintNFTEvent = MutableStateFlow<Boolean>(false)
+    val mintNFTEvent: StateFlow<Boolean> = _mintNFTEvent
+
     /**
      * 소장용 : 1
      * 판매용 : 2
@@ -62,7 +68,7 @@ class AddPurposeViewModel @Inject constructor(private val klaytnUsecase: KlaytnU
         _puposeTypeLiveData.postValue(type)
     }
 
-    fun uploadAsset(imageFileName :  String, imagePath : String){
+    fun uploadAsset(imagePath : String){
         val file = File(imagePath)
 
         val requestFile = file.asRequestBody(
@@ -87,14 +93,15 @@ class AddPurposeViewModel @Inject constructor(private val klaytnUsecase: KlaytnU
         }
     }
 
-    fun uploadMetaData(url : String){
+    fun uploadMetaData(uri : String){
         viewModelScope.launch {
-            klaytnUsecase.uploadMetaData(titleLiveData.value.toString(),descriptionLiveData.value.toString(),url)
+            klaytnUsecase.uploadMetaData(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
                 .onSuccess {
                     it.catch { e ->
                         catchError(e)
                     }
                     it.collect { data ->
+                        mintNFT(data.uri)
                         AppLog.d(data.toString())
                     }
                 }.onError { e ->
@@ -102,4 +109,18 @@ class AddPurposeViewModel @Inject constructor(private val klaytnUsecase: KlaytnU
                 }
         }
     }
+
+    fun mintNFT(uri : String){
+        viewModelScope.launch {
+            mainUsecase.mintNFT(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
+                .onSuccess {
+                    //TODO : 만들어졌을때의 화면 이동 구현하기
+                    _mintNFTEvent.value = true
+                }.onError { e ->
+                    catchError(e)
+                }
+        }
+    }
+
+
 }
