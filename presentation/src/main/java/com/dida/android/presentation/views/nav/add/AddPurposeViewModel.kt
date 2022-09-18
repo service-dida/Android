@@ -1,10 +1,7 @@
 package com.dida.android.presentation.views.nav.add
 
-import android.database.Cursor
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.AppLog
@@ -20,7 +17,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
@@ -85,24 +81,7 @@ class AddPurposeViewModel @Inject constructor(private val mainUsecase: MainUseca
                     }
                     it.collect { data ->
                         AppLog.d(data.toString())
-                        uploadMetaData(data.uri)
-                    }
-                }.onError { e ->
-                    catchError(e)
-                }
-        }
-    }
-
-    fun uploadMetaData(uri : String){
-        viewModelScope.launch {
-            klaytnUsecase.uploadMetaData(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
-                .onSuccess {
-                    it.catch { e ->
-                        catchError(e)
-                    }
-                    it.collect { data ->
                         mintNFT(data.uri)
-                        AppLog.d(data.toString())
                     }
                 }.onError { e ->
                     catchError(e)
@@ -121,6 +100,4 @@ class AddPurposeViewModel @Inject constructor(private val mainUsecase: MainUseca
                 }
         }
     }
-
-
 }

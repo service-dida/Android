@@ -4,10 +4,8 @@ import com.dida.data.model.createwallet.GetWalletExistsResponse
 import com.dida.data.model.createwallet.PostCheckPasswordResponse
 import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.data.model.klaytn.AssetResponse
-import com.dida.data.model.klaytn.MetaDataResponse
 import com.dida.data.model.main.*
 import com.dida.domain.model.klaytn.Asset
-import com.dida.domain.model.klaytn.MetaData
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
@@ -37,14 +35,6 @@ fun AssetResponse.toDomain() : Asset {
     return Asset(
         contentType = contentType,
         filename = filename,
-        uri = uri
-    )
-}
-
-fun MetaDataResponse.toDomain() : MetaData {
-    return MetaData(
-        filename = filename,
-        contentType = contentType,
         uri = uri
     )
 }

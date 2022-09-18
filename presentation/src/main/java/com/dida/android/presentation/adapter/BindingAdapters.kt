@@ -13,7 +13,6 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("image_from_url")
     fun bindImageFromURL(imageView: ImageView, imageURL: String?) {
-        Log.d(TAG, "bindImageFromURL haha: ${imageURL}")
         if (imageURL.isNullOrEmpty().not()) {
             Glide.with(imageView.context)
                 .load(imageURL)
