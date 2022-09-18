@@ -13,6 +13,12 @@
     <string name="home_recentnft_tab">최신 NFT</string>
     <string name="home_collection_tab">활동</string>
 
+    <!--닉네임 화면-->
+    <string name="nickname_main_yourname">당신의 이름은?</string>
+    <string name="nickname_main_text">닉네임</string>
+    <string name="nickname_edit_hint">8글자 이하의 한글</string>
+    <string name="nickname_ok_btn">가입 완료</string>
+
 
     <!--로그인 화면-->
     <string name="login_description">빠르게 로그인하기</string>
