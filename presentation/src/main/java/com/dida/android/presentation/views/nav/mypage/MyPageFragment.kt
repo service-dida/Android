@@ -31,9 +31,7 @@ class MyPageFragment :
         get() = R.layout.fragment_mypage
 
     override val viewModel: MyPageViewModel by viewModels()
-    val navController: NavController by lazy {
-        Navigation.findNavController(requireView())
-    }
+    val navController: NavController by lazy { Navigation.findNavController(requireView()) }
 
     override fun initStartView() {
         binding.vm = viewModel

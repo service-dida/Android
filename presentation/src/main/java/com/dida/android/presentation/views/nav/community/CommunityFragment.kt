@@ -35,7 +35,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
         initToolbar()
         initRecyclerView()
     }

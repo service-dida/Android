@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
     val termStateFlow: StateFlow<Int> = _termStateFlow
 
     fun getMain() {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
            mainUsecase.getMainAPI()
                 .onSuccess {
                     it.catch { e ->
@@ -50,37 +50,37 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun onHotItemClicked(cardId: Long) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToHotItem(cardId))
         }
     }
 
     override fun onHotSellerItemClicked(userId: Int) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToHotSeller(userId))
         }
     }
 
     override fun onRecentNftItemClicked(nftId: Int) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
 
     override fun onSoldOutItemClicked(cardId: Long) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToSoldOut(cardId))
         }
     }
 
     override fun onCollectionItemClicked(userId: Int) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToCollection(userId))
         }
     }
 
     override fun onSoldOutDayClicked(term: Int) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             mainUsecase.getSoldOutAPI(term)
                 .onSuccess {
                     it.catch { e ->

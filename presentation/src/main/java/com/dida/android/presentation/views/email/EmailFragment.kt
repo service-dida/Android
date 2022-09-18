@@ -1,28 +1,18 @@
 package com.dida.android.presentation.views.email
 
-import android.os.Handler
-import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentEmailBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
-
 
 @AndroidEntryPoint
 class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layout.fragment_email) {
@@ -35,51 +25,46 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     var timer = Timer()
 
     override val viewModel : EmailViewModel by viewModels()
-    val navController: NavController by lazy {
-        Navigation.findNavController(requireView())
-    }
+    val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
         viewModel.getSendEmail()
         showLoadingDialog()
     }
 
     override fun initDataBinding() {
-        viewModel.sendEmailLiveData.observe(this) {
-            dismissLoadingDialog()
-            timeCheck()
-        }
 
-        viewModel.errorLiveData.observe(this) {
-            dismissLoadingDialog()
-            Toast.makeText(context, "네트워크 상황이 안좋습니다.", Toast.LENGTH_SHORT).show()
-        }
-
-        viewModel.createWalletLiveData.observe(this) {
-            if(it) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.sendEmailStateFlow.collect {
                 dismissLoadingDialog()
-                navController.previousBackStackEntry?.savedStateHandle?.set("WalletCheck", true)
-                navController.popBackStack()
+                timeCheck()
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.createWalletEvent.collect { result ->
+                if(result) {
+                    dismissLoadingDialog()
+                    navController.previousBackStackEntry?.savedStateHandle?.set("WalletCheck", true)
+                    navController.popBackStack()
+                }
             }
         }
     }
 
     override fun initAfterBinding() {
-        binding.emailCheck.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) = Unit
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                viewModel.verifyNumberCheck(binding.emailCheck.text.toString())
-            }
-        })
-
         binding.resentBtn.setOnClickListener {
             timeOver()
         }
 
         binding.okBtn.setOnClickListener {
             timer.cancel()
-            if(viewModel.verifyCheck.value == true) {
+            if(viewModel.verifyCheck.value) {
+                // 지갑이 없으므로 false로 넘겨줘야 한다.
                 val passwordDialog = PasswordDialog(false) {
                     viewModel.postCreateWallet(it, it)
                     showLoadingDialog()
@@ -91,26 +76,10 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
 
     private fun timeOver() {
         timer.cancel()
-        val handler = Handler(Looper.getMainLooper())
-        handler.post {
-            viewModel.verifyNumberCheck("")
+        lifecycleScope.launch {
             Toast.makeText(requireContext(), "시간이 초과되어 다시 인증번호 전송을 합니다.", Toast.LENGTH_LONG).show()
             viewModel.getSendEmail()
             showLoadingDialog()
-        }
-    }
-
-    fun timeToString(minute: Int, second: Int) {
-        val handler = Handler(Looper.getMainLooper())
-        if(second>=10) {
-            handler.post {
-                binding.timeTxt.text = "0$minute:$second"
-            }
-        }
-        else {
-            handler.post {
-                binding.timeTxt.text = "0$minute:0$second"
-            }
         }
     }
 
@@ -127,8 +96,9 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                     second = 60
                     minute -= 1
                 }
-
-                timeToString(minute, second)
+                lifecycleScope.launch {
+                    viewModel.timeToString(minute, second)
+                }
                 if(minute < 0){
                     timer.cancel()
                     timeOver()
