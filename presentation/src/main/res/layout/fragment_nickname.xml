@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.login.NicknameViewModel" />
+            type="com.dida.android.presentation.views.nickname.NicknameViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,6 +52,7 @@
             android:textSize="14dp"
             android:fontFamily="@font/pretendard_regular"
             android:hint="8글자 이하의 한글"
+            android:text="@={vm.userInputStateFlow}"
             android:textColorHint="@color/surface6"
             android:textColor="@color/white"
             android:layout_marginTop="10dp"
@@ -67,8 +68,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/pretendard_regular"
-            android:textColor="@{vm.nickNameSuccessLiveData ? @color/notice_green : @color/notice_red}"
-            android:text="@{vm.nickNameCheck}"
+            android:textColor="@{vm.nickNameCheckEvent ? @color/notice_red : @color/notice_green}"
+            android:text="@{vm.nickNameCheckStateFlow}"
             android:textSize="14dp">
         </TextView>
 
@@ -77,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="18dp"
-            android:src="@{vm.nickNameSuccessLiveData ? @drawable/ic_nickname_success : @drawable/ic_nickname_fail}"
+            android:src="@{vm.nickNameCheckEvent ? @drawable/ic_nickname_fail : @drawable/ic_nickname_success}"
             app:layout_constraintTop_toTopOf="@id/nick_name_edit"
             app:layout_constraintBottom_toBottomOf="@id/nick_name_edit"
             app:layout_constraintRight_toRightOf="@id/nick_name_edit">
@@ -93,9 +94,10 @@
             android:padding="18dp"
             android:text="가입완료"
             android:fontFamily="@font/pretendard_bold"
-            android:textColor="@{vm.nickNameSuccessLiveData ? @color/mainblack : @color/surface6}"
+            android:onClick="@{() -> vm.onCreateItemClicked()}"
+            android:textColor="@{vm.nickNameCheckEvent ? @color/surface6 : @color/mainblack}"
             android:textSize="16dp"
-            android:background="@{vm.nickNameSuccessLiveData ? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
+            android:background="@{vm.nickNameCheckEvent ? @drawable/custom_okbtn_fail_custom : @drawable/custom_okbtn_success}">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

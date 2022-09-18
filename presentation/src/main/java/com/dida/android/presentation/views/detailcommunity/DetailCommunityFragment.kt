@@ -30,7 +30,10 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
         initToolbar()
         initAdapter()
     }
