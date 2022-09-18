@@ -68,22 +68,19 @@ class AddPurposeViewModel @Inject constructor(private val klaytnUsecase: KlaytnU
             "image/*".toMediaTypeOrNull()
         )
 
-        val requestBody = MultipartBody.Part.createFormData("file=@", file.name, requestFile)
+        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
         viewModelScope.launch {
             klaytnUsecase.uploadAsset(requestBody)
                 .onSuccess {
                     it.catch { e ->
                         catchError(e)
-                        AppLog.d("haha : $e")
                     }
                     it.collect { data ->
-                        AppLog.d("haha : $data")
                         //UiState.Success(data)
                     }
                 }.onError { e ->
                     catchError(e)
-                    AppLog.d("haha : $e")
                 }
         }
     }
