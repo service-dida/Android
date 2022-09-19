@@ -1,9 +1,6 @@
 package com.dida.android.presentation.views.nav.add.addnftprice
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -18,11 +15,11 @@ class AddNftPriceViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<AddNftPriceNavigationAction> = MutableSharedFlow<AddNftPriceNavigationAction>()
     val navigationEvent: SharedFlow<AddNftPriceNavigationAction> = _navigationEvent
 
-    private val _okBtnStateStateFlow: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
-    val okBtnStateStateFlow: StateFlow<Boolean> = _okBtnStateStateFlow
+    private val _okBtnState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val okBtnState: StateFlow<Boolean> = _okBtnState
 
     override fun onOkBtnClicked() {
-        if(_okBtnStateStateFlow.value) {
+        if(_okBtnState.value) {
             baseViewModelScope.launch {
                 _navigationEvent.emit(AddNftPriceNavigationAction.NavigateToDismiss)
             }
@@ -34,8 +31,8 @@ class AddNftPriceViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             userInputStateFlow.debounce(100).collect {
-                if(it.isEmpty()) { _okBtnStateStateFlow.value = false }
-                else { _okBtnStateStateFlow.value = true }
+                if(it.isEmpty()) { _okBtnState.value = false }
+                else { _okBtnState.value = true }
             }
         }
     }

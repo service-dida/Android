@@ -93,8 +93,8 @@
                 android:onClick="@{() -> vm.onOkBtnClicked()}"
                 android:fontFamily="@font/pretendard_bold"
                 android:textSize="16dp"
-                android:textColor="@{vm.okBtnStateStateFlow? @color/mainblack : @color/surface6}"
-                android:background="@{vm.okBtnStateStateFlow? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
+                android:textColor="@{vm.okBtnState? @color/mainblack : @color/surface6}"
+                android:background="@{vm.okBtnState? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
