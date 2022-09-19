@@ -9,11 +9,16 @@ import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 
-interface MainUsecase {
+interface  MainUsecase {
+
     suspend fun checkVersionAPI(): Response<AppVersionResponse>
 
     suspend fun loginAPI(idToken : String): NetworkResult<LoginResponseModel>
@@ -43,4 +48,6 @@ interface MainUsecase {
     suspend fun getMainAPI() : NetworkResult<Flow<Home>>
 
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<Flow<List<SoldOut>>>
+
+    suspend fun mintNFT(name : String, description : String, image : String) : NetworkResult<Unit>
 }

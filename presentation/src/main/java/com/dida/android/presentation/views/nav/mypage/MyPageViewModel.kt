@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.android.util.AppLog
 import com.dida.android.util.SingleLiveEvent
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
@@ -76,6 +77,7 @@ class MyPageViewModel @Inject constructor(private val mainRepositoryImpl: MainRe
         viewModelScope.launch(Dispatchers.IO) {
             mainRepositoryImpl.getUserCardsAPI()
                 .onSuccess {
+                    AppLog.d(it.toString())
                     _userCardsLiveData.postValue(it)
                 }.onError {
                     //TODO : 잠시 테스트를 위해 임시 데이터를 넣어놨습니다.(추후에 삭제하기)
