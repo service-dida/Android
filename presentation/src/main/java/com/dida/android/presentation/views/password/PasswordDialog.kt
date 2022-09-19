@@ -34,25 +34,23 @@ class PasswordDialog(val walletCheck: Boolean, val password: (String) -> Unit) :
         viewModel.completeLiveData.observe(viewLifecycleOwner){
             // 지갑이 이미 있는 경우
             if(walletCheck) {
-
+                password(viewModel.stackToString())
+                dismiss()
             }
             // 지갑을 처음 만드는 경우
             else {
-                val dialog = PasswordReconfirmDialog()
-                dialog.show(childFragmentManager, "PasswordDialog")
-                dialog.setPasswordCallbackListener(object :
-                    PasswordReconfirmDialog.PasswordCallbackListener {
-                    override fun callbackPassword(passwordReconfirm: String) {
-                        if(viewModel.stackToString() == passwordReconfirm){
-                            //TODO : 지갑 생성 API 호출
-                            password(viewModel.stackToString())
-                            dismiss()
-                        }else{
-                            Toast.makeText(requireContext(), "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
-                        }
-                        viewModel.clearStack()
+                val dialog = PasswordReconfirmDialog(){ password ->
+                    if(viewModel.stackToString() == password){
+                        //TODO : 지갑 생성 API 호출
+                        password(viewModel.stackToString())
+                        dismiss()
+                    }else{
+                        Toast.makeText(requireContext(), "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
+                        dismiss()
                     }
-                })
+                    viewModel.clearStack()
+                }
+                dialog.show(childFragmentManager, "PasswordDialog")
             }
         }
     }
@@ -96,5 +94,4 @@ class PasswordDialog(val walletCheck: Boolean, val password: (String) -> Unit) :
         it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
         viewModel.addStack((it as TextView).text.toString().toInt())
     }
-
 }

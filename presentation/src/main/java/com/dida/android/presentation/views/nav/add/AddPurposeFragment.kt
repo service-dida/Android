@@ -1,16 +1,19 @@
 package com.dida.android.presentation.views.nav.add
 
-import android.widget.Toast
+import android.annotation.SuppressLint
+import android.database.Cursor
+import android.net.Uri
+import android.os.Build
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.password.PasswordReconfirmDialog
+import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
+import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeViewModel>(R.layout.fragment_add_purpose) {
@@ -36,12 +39,32 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     override fun initAfterBinding() {
         binding.type1Button.setOnClickListener {
             viewModel.changePurposeType(1)
-            val dialog = AddNftBottomSheet(::type1)
+            val dialog = AddNftBottomSheet(){
+                val passwordDialog = PasswordDialog(true) { password ->
+                    //TODO : 비밀번호 맞는지 체크하기
+                    val currentImageUri = Uri.parse(viewModel.nftImageLiveData.value.toString())
+                    try {
+                        currentImageUri?.let {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                val imagePath: String = getPath(currentImageUri)!!
+                                viewModel.uploadAsset(imagePath)
+                            }else{
+                                //TODO :버전낮은거 처리하기
+                            }
+                        }
+                    }catch (e : Exception){
+
+                    }
+                }
+                passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+            }
             dialog.show(childFragmentManager, "AddPurposeFragment")
         }
         binding.type2Button.setOnClickListener {
             viewModel.changePurposeType(2)
-            val dialog = AddNftPriceBottomSheet(::type2)
+            val dialog = AddNftPriceBottomSheet(){
+
+            }
             dialog.show(childFragmentManager, "AddPurposeFragment")
         }
     }
@@ -53,12 +76,12 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
         }
     }
 
-    //소장용
-    private fun type1(int : Int){
-
-    }
-    //판매용
-    private fun type2(string : String){
-
+    @SuppressLint("Range")
+    private fun getPath(uri: Uri): String {
+        val cursor: Cursor? = requireContext().contentResolver.query(uri, null, null, null, null )
+        cursor?.moveToNext()
+        val path: String? = cursor?.getString(cursor.getColumnIndex("_data"))
+        cursor?.close()
+        return path?:""
     }
 }

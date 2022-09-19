@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views.nickname
 
 import androidx.lifecycle.viewModelScope
+import com.dida.android.R
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import com.dida.data.DataApplication

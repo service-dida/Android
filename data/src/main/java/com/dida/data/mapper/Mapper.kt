@@ -3,7 +3,9 @@ package com.dida.data.mapper
 import com.dida.data.model.createwallet.GetWalletExistsResponse
 import com.dida.data.model.createwallet.PostCheckPasswordResponse
 import com.dida.data.model.createwallet.SendEmailResponse
+import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
+import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
@@ -29,12 +31,19 @@ fun List<GetSoldOutResponse>.toDomain(): List<SoldOut> {
     ) }
 }
 
+fun AssetResponse.toDomain() : Asset {
+    return Asset(
+        contentType = contentType,
+        filename = filename,
+        uri = uri
+    )
+}
+
 fun SendEmailResponse.toDomain(): RandomNumber { return RandomNumber( random = random ) }
 
 fun PostCheckPasswordResponse.toDomain(): Boolean { return flag }
 
 fun GetWalletExistsResponse.toDomain(): Boolean { return existed }
-
 
 @JvmName("toDomainHotItemResponse")
 fun List<HotItemResponse>.toDomain(): List<Hots> {
@@ -78,3 +87,5 @@ fun List<HotUserResponse>.toDomain(): List<Collection> {
         follow = it.followed
     ) }
 }
+
+

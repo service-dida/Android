@@ -31,6 +31,10 @@ class LoginMainViewModel @Inject constructor(private val mainRepositoryImpl: Mai
      * refreshToken ->
      * null : 닉네임 입력(처음 회원가입한 유저로 닉네임 입력)
      * notNull : 홈화면 이동(이미 추가회원가입 완료 유저)
+     *
+     * accessToken ->
+     * 추가 회원가입 진행시(email) : email 정보
+     * 추가 회원가입 이미 진행 : Token
      **/
 
     fun loginAPIServer(idToken: String) {

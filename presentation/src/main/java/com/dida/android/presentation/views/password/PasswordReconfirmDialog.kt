@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -17,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PasswordReconfirmDialog :
+class PasswordReconfirmDialog(val password : (String)->Unit) :
     BaseBottomSheetDialogFragment<DialogPasswordReconfirmBinding, PasswordReconfirmViewModel>() {
 
     private val TAG = "PasswordReconfirmDialog"
@@ -25,14 +26,6 @@ class PasswordReconfirmDialog :
     override val layoutResourceId: Int
         get() = R.layout.dialog_password_reconfirm
 
-    //콜백 리스너
-    private lateinit var passwordCallbackListener: PasswordCallbackListener
-    interface PasswordCallbackListener {
-        fun callbackPassword(passwordReconfirm: String)
-    }
-    fun setPasswordCallbackListener(passwordCallbackListener: PasswordCallbackListener) {
-        this.passwordCallbackListener = passwordCallbackListener
-    }
     override val viewModel: PasswordReconfirmViewModel by viewModels()
 
     override fun initStartView() {
@@ -42,7 +35,7 @@ class PasswordReconfirmDialog :
 
     override fun initDataBinding() {
         viewModel.completeLiveData.observe(viewLifecycleOwner){
-            passwordCallbackListener.callbackPassword(viewModel.stackToString())
+            password(viewModel.stackToString())
             dismiss()
         }
     }
@@ -59,7 +52,7 @@ class PasswordReconfirmDialog :
         binding.dialogPaymentKeypad8.setOnClickListener(numberClickLister)
         binding.dialogPaymentKeypad9.setOnClickListener(numberClickLister)
         binding.dialogPaymentKeypadBack.setOnClickListener {
-            buttonVibrator()
+            it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
             viewModel.removeStack()
         }
     }
@@ -83,16 +76,7 @@ class PasswordReconfirmDialog :
     }
 
     private val numberClickLister: View.OnClickListener = View.OnClickListener {
-        buttonVibrator()
+        it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
         viewModel.addStack((it as TextView).text.toString().toInt())
-    }
-
-    private fun buttonVibrator() {
-        val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(50, 50));
-        } else {
-            vibrator.vibrate(1000);
-        }
     }
 }
