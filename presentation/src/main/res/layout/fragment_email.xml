@@ -41,7 +41,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:hint="6자리 숫자"
             android:maxLength="6"
-            android:text="@={vm.userInputStateFlow}"
+            android:text="@={vm.userInputState}"
             android:textColorHint="@color/surface6"
             android:textColor="@color/white"
             android:layout_marginTop="16dp"
@@ -56,7 +56,7 @@
             app:layout_constraintTop_toTopOf="@id/email_check"
             app:layout_constraintBottom_toBottomOf="@id/email_check"
             app:layout_constraintRight_toRightOf="@id/email_check"
-            android:text="@{vm.timeStateFlow}"
+            android:text="@{vm.timeState}"
             android:textColor="@color/white"
             android:textSize="14dp"
             android:fontFamily="@font/pretendard_regular"
@@ -86,9 +86,9 @@
             android:padding="18dp"
             android:text="확인"
             android:fontFamily="@font/pretendard_bold"
-            android:textColor="@{vm.verifyCheck ? @color/mainblack : @color/surface6}"
+            android:textColor="@{vm.verifyCheckState ? @color/mainblack : @color/surface6}"
             android:textSize="16dp"
-            android:background="@{vm.verifyCheck ? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
+            android:background="@{vm.verifyCheckState ? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

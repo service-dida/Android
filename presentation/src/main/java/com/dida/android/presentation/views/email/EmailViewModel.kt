@@ -1,10 +1,5 @@
 package com.dida.android.presentation.views.email
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -20,14 +15,14 @@ class EmailViewModel @Inject constructor(
     ) : BaseViewModel() {
     private val TAG = "EmailViewModel"
 
-    private val _sendEmailStateFlow: MutableStateFlow<String?> = MutableStateFlow<String?>(null)
-    val sendEmailStateFlow: StateFlow<String?> = _sendEmailStateFlow
+    private val _sendEmailState: MutableStateFlow<String?> = MutableStateFlow<String?>(null)
+    val sendEmailState: StateFlow<String?> = _sendEmailState
 
-    val userInputStateFlow: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val userInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
     init {
         baseViewModelScope.launch {
-            userInputStateFlow.debounce(100).collect {
+            userInputState.debounce(100).collect {
                 verifyNumberCheck(it)
             }
         }
@@ -38,8 +33,8 @@ class EmailViewModel @Inject constructor(
         baseViewModelScope.launch {
             mainUsecase.getSendEmailAPI()
                 .onSuccess {
-                    _verifyCheck.value = false
-                    _sendEmailStateFlow.value = it.random
+                    _verifyCheckState.value = false
+                    _sendEmailState.value = it.random
                 }.onError { e ->
                     catchError(e)
                 }
@@ -47,36 +42,36 @@ class EmailViewModel @Inject constructor(
     }
 
     // 비밀번호 체크
-    private val _verifyCheck = MutableStateFlow<Boolean>(false)
-    val verifyCheck: StateFlow<Boolean> = _verifyCheck
+    private val _verifyCheckState = MutableStateFlow<Boolean>(false)
+    val verifyCheckState: StateFlow<Boolean> = _verifyCheckState
 
     fun verifyNumberCheck(number: String){
-        if(number == _sendEmailStateFlow.value) { _verifyCheck.value = true }
-        else { _verifyCheck.value = false }
+        if(number == _sendEmailState.value) { _verifyCheckState.value = true }
+        else { _verifyCheckState.value = false }
     }
 
-    private val _createWalletEvent = MutableStateFlow<Boolean>(false)
-    val createWalletEvent: StateFlow<Boolean> = _createWalletEvent
+    private val _createWalletState = MutableStateFlow<Boolean>(false)
+    val createWalletState: StateFlow<Boolean> = _createWalletState
 
     fun postCreateWallet(password: String, passwordCheck: String) {
         baseViewModelScope.launch {
             mainUsecase.postCreateWalletAPI(password, passwordCheck)
                 .onSuccess {
-                    _createWalletEvent.value = true
+                    _createWalletState.value = true
                 }.onError { e ->
                     catchError(e)
                 }
         }
     }
 
-    var timeStateFlow: MutableStateFlow<String> = MutableStateFlow<String>("")
+    var timeState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
     fun timeToString(minute: Int, second: Int) {
         if(second>=10) {
-            timeStateFlow.value = "0$minute:$second"
+            timeState.value = "0$minute:$second"
         }
         else {
-            timeStateFlow.value = "0$minute:0$second"
+            timeState.value = "0$minute:0$second"
         }
     }
 }

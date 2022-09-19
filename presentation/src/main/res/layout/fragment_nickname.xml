@@ -52,7 +52,7 @@
             android:textSize="14dp"
             android:fontFamily="@font/pretendard_regular"
             android:hint="@string/nickname_edit_hint"
-            android:text="@={vm.userInputStateFlow}"
+            android:text="@={vm.userInputState}"
             android:textColorHint="@color/surface6"
             android:textColor="@color/white"
             android:layout_marginTop="10dp"
@@ -68,8 +68,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/pretendard_regular"
-            android:textColor="@{vm.nickNameCheckEvent ? @color/notice_red : @color/notice_green}"
-            android:text="@{vm.nickNameCheckStateFlow}"
+            android:textColor="@{vm.nickNameCheckState ? @color/notice_red : @color/notice_green}"
+            android:text="@{vm.nickNameCheckTextState}"
             android:textSize="14dp">
         </TextView>
 
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="18dp"
-            android:src="@{vm.nickNameCheckEvent ? @drawable/ic_nickname_fail : @drawable/ic_nickname_success}"
+            android:src="@{vm.nickNameCheckState ? @drawable/ic_nickname_fail : @drawable/ic_nickname_success}"
             app:layout_constraintTop_toTopOf="@id/nick_name_edit"
             app:layout_constraintBottom_toBottomOf="@id/nick_name_edit"
             app:layout_constraintRight_toRightOf="@id/nick_name_edit">
@@ -95,9 +95,9 @@
             android:text="@string/nickname_ok_btn"
             android:fontFamily="@font/pretendard_bold"
             android:onClick="@{() -> vm.onCreateItemClicked()}"
-            android:textColor="@{vm.nickNameCheckEvent ? @color/surface6 : @color/mainblack}"
+            android:textColor="@{vm.nickNameCheckState ? @color/surface6 : @color/mainblack}"
             android:textSize="16dp"
-            android:background="@{vm.nickNameCheckEvent ? @drawable/custom_okbtn_fail_custom : @drawable/custom_okbtn_success}">
+            android:background="@{vm.nickNameCheckState ? @drawable/custom_okbtn_fail_custom : @drawable/custom_okbtn_success}">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views.nav.home
 
-import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
 import com.dida.domain.model.nav.home.Home
@@ -23,14 +22,14 @@ class HomeViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<HomeNavigationAction> = MutableSharedFlow<HomeNavigationAction>()
     val navigationEvent: SharedFlow<HomeNavigationAction> = _navigationEvent
 
-    private val _homeStateFlow: MutableStateFlow<UiState<Home>> = MutableStateFlow(UiState.Loading)
-    val homeStateFlow: StateFlow<UiState<Home>> = _homeStateFlow
+    private val _homeState: MutableStateFlow<UiState<Home>> = MutableStateFlow(UiState.Loading)
+    val homeState: StateFlow<UiState<Home>> = _homeState
 
-    private val _soldoutStateFlow: MutableStateFlow<UiState<List<SoldOut>>> = MutableStateFlow(UiState.Loading)
-    val soldoutStateFlow: StateFlow<UiState<List<SoldOut>>> = _soldoutStateFlow
+    private val _soldoutState: MutableStateFlow<UiState<List<SoldOut>>> = MutableStateFlow(UiState.Loading)
+    val soldoutState: StateFlow<UiState<List<SoldOut>>> = _soldoutState
 
-    private val _termStateFlow: MutableStateFlow<Int> = MutableStateFlow(7)
-    val termStateFlow: StateFlow<Int> = _termStateFlow
+    private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
+    val termState: StateFlow<Int> = _termState
 
     fun getMain() {
         baseViewModelScope.launch {
@@ -40,8 +39,8 @@ class HomeViewModel @Inject constructor(
                         catchError(e)
                     }
                     it.collect { data ->
-                        _homeStateFlow.value = UiState.Success(data)
-                        onSoldOutDayClicked(_termStateFlow.value)
+                        _homeState.value = UiState.Success(data)
+                        onSoldOutDayClicked(_termState.value)
                     }
                 }.onError { e ->
                    catchError(e)
@@ -87,8 +86,8 @@ class HomeViewModel @Inject constructor(
                         catchError(e)
                     }
                     it.collect { data ->
-                        _soldoutStateFlow.value = UiState.Success(data)
-                        _termStateFlow.value = term
+                        _soldoutState.value = UiState.Success(data)
+                        _termState.value = term
                     }
                 }.onError { e ->
                     catchError(e)

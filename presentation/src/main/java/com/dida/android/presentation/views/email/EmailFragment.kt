@@ -39,14 +39,14 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     override fun initDataBinding() {
 
         lifecycleScope.launchWhenStarted {
-            viewModel.sendEmailStateFlow.collect {
+            viewModel.sendEmailState.collect {
                 dismissLoadingDialog()
                 timeCheck()
             }
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.createWalletEvent.collect { result ->
+            viewModel.createWalletState.collect { result ->
                 if(result) {
                     dismissLoadingDialog()
                     navController.previousBackStackEntry?.savedStateHandle?.set("WalletCheck", true)
@@ -63,7 +63,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
 
         binding.okBtn.setOnClickListener {
             timer.cancel()
-            if(viewModel.verifyCheck.value) {
+            if(viewModel.verifyCheckState.value) {
                 // 지갑이 없으므로 false로 넘겨줘야 한다.
                 val passwordDialog = PasswordDialog(false) {
                     viewModel.postCreateWallet(it, it)
