@@ -75,7 +75,7 @@
 
     <fragment
         android:id="@+id/walletFragment"
-        android:name="com.dida.android.presentation.views.nav.mypage.WalletFragment"
+        android:name="com.dida.android.presentation.views.wallet.WalletFragment"
         android:label="WalletFragment" />
 
     <fragment

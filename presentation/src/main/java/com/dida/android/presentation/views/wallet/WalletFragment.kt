@@ -1,9 +1,8 @@
-package com.dida.android.presentation.views.nav.mypage
+package com.dida.android.presentation.views.wallet
 
-import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentWalletBinding
 import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapter
@@ -12,6 +11,7 @@ import com.dida.android.presentation.base.BaseFragment
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class WalletFragment :
@@ -35,27 +35,30 @@ class WalletFragment :
         }
         exception = viewModel.errorEvent
         initToolbar()
-        initRecyclerView()
+        initAdapter()
     }
 
     override fun initDataBinding() {
-
+        lifecycleScope.launchWhenStarted {
+            viewModel.navigationEvent.collect {
+                when(it) {
+                    is WalletNavigationAction.NavigateToBack -> navController.popBackStack()
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {
-        binding.nftHistoryAllBtn.setOnClickListener(nftHistoryTypeClickListener)
-        binding.nftHistoryBuyBtn.setOnClickListener(nftHistoryTypeClickListener)
-        binding.nftHistorySellBtn.setOnClickListener(nftHistoryTypeClickListener)
     }
 
     private fun initToolbar() {
         binding.toolbar.apply {
             setNavigationIcon(R.drawable.ic_baseline_close_24)
-            setNavigationOnClickListener { navController.popBackStack() }
+            setNavigationOnClickListener { viewModel.onBack() }
         }
     }
 
-    private fun initRecyclerView() {
+    private fun initAdapter() {
         val list = mutableListOf(
             WalletNFTHistoryHolderModel("", "user name here", "NFT name here", 1.65, true),
             WalletNFTHistoryHolderModel("", "user name here", "NFT name here", 1.65, false),
@@ -72,25 +75,12 @@ class WalletFragment :
         binding.nftHistoryRecyclerView.adapter = walletNFTHistoryRecyclerViewAdapter
 
 
-        val WalletCardHolderModelList = mutableListOf(
+        val walletCardHolderModelList = mutableListOf(
             WalletCardHolderModel("20.09865", "KLAY"),
             WalletCardHolderModel("20.09865", "DIDA")
         )
-        walletCardRecyclerViewAdapter.submitList(WalletCardHolderModelList)
+        walletCardRecyclerViewAdapter.submitList(walletCardHolderModelList)
         binding.walletCardRecyclerView.adapter = walletCardRecyclerViewAdapter
     }
 
-    private val nftHistoryTypeClickListener: View.OnClickListener = View.OnClickListener {
-        when (it.id) {
-            R.id.nft_history_all_btn -> {
-                viewModel.changeNFTHistoryFocusType(0)
-            }
-            R.id.nft_history_buy_btn -> {
-                viewModel.changeNFTHistoryFocusType(1)
-            }
-            R.id.nft_history_sell_btn -> {
-                viewModel.changeNFTHistoryFocusType(2)
-            }
-        }
-    }
 }
