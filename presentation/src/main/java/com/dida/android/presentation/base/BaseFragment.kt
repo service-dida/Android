@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.dida.android.util.LoadingDialog
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
 
 abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : Fragment(layoutId) {
 
@@ -51,9 +55,15 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     private var isSetBackButtonValid = false
 
-    private val mLoadingDialog: LoadingDialog by lazy {
-        LoadingDialog(requireContext())
-    }
+    /**
+     * Loading Dialog 관련해서 사용할 변수
+     */
+    private val mLoadingDialog: LoadingDialog by lazy { LoadingDialog(requireContext()) }
+
+    /**
+     * Exception을 처리할 SharedFlow
+    */
+    protected var exception: SharedFlow<Throwable>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,9 +77,23 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+            exception?.collect { exception ->
+                showToastMessage(exception)
+            }
+        }
         initStartView()
         initDataBinding()
         initAfterBinding()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launchWhenStarted {
+            viewModel.errorEvent.collect { e ->
+                showToastMessage(e)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -86,6 +110,13 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     fun dismissLoadingDialog() {
         if (mLoadingDialog.isShowing) {
             mLoadingDialog.dismiss()
+        }
+    }
+
+    // Toast Message 관련 함수
+    fun showToastMessage(e: Throwable?) {
+        e?.let {
+            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
         }
     }
 }

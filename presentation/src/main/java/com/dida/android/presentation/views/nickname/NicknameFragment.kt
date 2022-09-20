@@ -27,6 +27,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
+        exception = viewModel.errorEvent
         val args: NicknameFragmentArgs by navArgs()
         viewModel.emailState.value = args.email
     }

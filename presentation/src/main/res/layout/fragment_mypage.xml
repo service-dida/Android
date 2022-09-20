@@ -44,7 +44,7 @@
                     android:layout_height="90dp"
                     android:layout_marginTop="9dp"
                     android:scaleType="centerCrop"
-                    app:image_from_url="@{vm.profileUrlLiveData}"
+                    userProfile="@{vm.myPageState}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="@{vm.nicknameLiveData}"
+                    userNickname="@{vm.myPageState}"
                     android:textColor="@color/white"
                     android:textSize="22dp"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView"
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text='@{vm.descriptionLiveData}'
+                    userDescription="@{vm.descriptionState}"
                     tools:text="자기소개는 여기에 들어갑니다"
                     android:textColor="@color/white"
                     android:textSize="14dp"
@@ -107,7 +107,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="@{vm.cardCntLiveData.toString()}"
+                            userNftCount="@{vm.myPageState}"
                             android:textColor="@color/white"
                             android:textSize="16dp"
                             tools:text="000" />
@@ -143,7 +143,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="@{vm.followerCntLiveData.toString()}"
+                            userFollwerCount="@{vm.myPageState}"
                             android:textColor="@color/white"
                             android:textSize="16dp"
                             tools:text="000" />
@@ -179,7 +179,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="@{vm.followingCntLiveData.toString()}"
+                            userFollwingCount="@{vm.myPageState}"
                             android:textColor="@color/white"
                             android:textSize="16dp"
                             tools:text="000" />
@@ -241,7 +241,7 @@
 
                 <!--TODO : NFT아이템 비율 맞춰야함-->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/rv_userNft"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -253,6 +253,7 @@
                     tools:itemCount="8"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:listitem="@layout/holder_mypage_user_cards"
+                    recentNftItem="@{vm.myPageState}"
                     tools:spanCount="2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

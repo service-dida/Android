@@ -35,6 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
+        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
 
@@ -89,7 +90,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         binding.recentnftRecycler.apply {
             adapter = RecentNftAdapter(viewModel)
-            layoutManager = GridLayoutManager(requireContext(),2)
             val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
             addItemDecoration(GridSpacing(px, px))
         }

@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.mypage.WalletViewModel" />
+            type="com.dida.android.presentation.views.wallet.WalletViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -138,7 +138,8 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="전체"
-                        android:textColor="@{vm.NFTHistoryFocusLiveData==0? @color/brand_lemon : @color/surface6}"
+                        android:onClick="@{() -> vm.onNftHistoryClicked(0)}"
+                        android:textColor="@{vm.nftTypeState==0? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -156,7 +157,8 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="구매"
-                        android:textColor="@{vm.NFTHistoryFocusLiveData==1? @color/brand_lemon : @color/surface6}"
+                        android:onClick="@{() -> vm.onNftHistoryClicked(1)}"
+                        android:textColor="@{vm.nftTypeState==1? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -174,7 +176,8 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="판매"
-                        android:textColor="@{vm.NFTHistoryFocusLiveData==2? @color/brand_lemon : @color/surface6}"
+                        android:onClick="@{() -> vm.onNftHistoryClicked(2)}"
+                        android:textColor="@{vm.nftTypeState==2? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

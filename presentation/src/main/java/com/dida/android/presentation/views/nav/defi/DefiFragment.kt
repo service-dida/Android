@@ -18,7 +18,11 @@ class DefiFragment : BaseFragment<FragmentDefiBinding, DefiViewModel>(R.layout.f
 
 
     override fun initStartView() {
-
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+        exception = viewModel.errorEvent
     }
 
     override fun initDataBinding() {

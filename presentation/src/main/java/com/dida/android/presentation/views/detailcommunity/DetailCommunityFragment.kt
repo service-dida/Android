@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.detailcommunity
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentCommunityBinding
@@ -16,6 +17,7 @@ import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(R.layout.fragment_detail_community) {
@@ -34,12 +36,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
+        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
     }
 
     override fun initDataBinding() {
-
     }
 
     override fun initAfterBinding() {

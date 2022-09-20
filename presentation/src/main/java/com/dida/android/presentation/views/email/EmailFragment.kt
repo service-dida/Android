@@ -32,12 +32,12 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
+        exception = viewModel.errorEvent
         viewModel.getSendEmail()
         showLoadingDialog()
     }
 
     override fun initDataBinding() {
-
         lifecycleScope.launchWhenStarted {
             viewModel.sendEmailState.collect {
                 dismissLoadingDialog()
