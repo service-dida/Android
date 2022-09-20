@@ -1,95 +1,111 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.android.presentation.base.UiState
+import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.android.util.AppLog
 import com.dida.android.util.SingleLiveEvent
+import com.dida.data.DataApplication
 import com.dida.data.repository.MainRepositoryImpl
+import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor(private val mainRepositoryImpl: MainRepositoryImpl) : BaseViewModel() {
+class MyPageViewModel @Inject constructor(
+    private val mainRepositoryImpl: MainRepositoryImpl,
+    private val homeActionHandler: HomeActionHandler
+) : BaseViewModel(), MypageActionHandler {
 
     private val TAG = "MyPageViewModel"
 
-    private val _errorLiveData = MutableLiveData<String>()
-    val errorLiveData: LiveData<String> = _errorLiveData
+    private val _myPageState: MutableStateFlow<UiState<MypageUiModel>> = MutableStateFlow(UiState.Loading)
+    val myPageState: StateFlow<UiState<MypageUiModel>> = _myPageState
 
-    private val _cardCntLiveData = MutableLiveData<Int>()
-    val cardCntLiveData: LiveData<Int>
-        get() = _cardCntLiveData
+    private val _navigationEvent: MutableSharedFlow<MypageNavigationAction> = MutableSharedFlow<MypageNavigationAction>()
+    val navigationEvent: SharedFlow<MypageNavigationAction> = _navigationEvent
 
-    private val _descriptionLiveData = MutableLiveData<String>()
-    val descriptionLiveData: LiveData<String>
-        get() = _descriptionLiveData
+    private val _hasWalletState = MutableStateFlow<Boolean>(false)
+    val hasWalletState: StateFlow<Boolean> = _hasWalletState
 
-    private val _followerCntLiveData = MutableLiveData<Int>()
-    val followerCntLiveData: LiveData<Int>
-        get() = _followerCntLiveData
+    private val _hasMyNftState: MutableStateFlow<List<UserCardsResponseModel>> = MutableStateFlow<List<UserCardsResponseModel>>(emptyList())
+    val hasMyNftState: StateFlow<List<UserCardsResponseModel>> = _hasMyNftState
 
-    private val _followingCntLiveData = MutableLiveData<Int>()
-    val followingCntLiveData: LiveData<Int>
-        get() = _followingCntLiveData
+    fun initMyPageState() {
+        getUserProfile()
+        getUserCards()
+    }
 
-    private val _getWalletLiveData = MutableLiveData<Boolean>()
-    val getWalletValue: Boolean
-        get() = _getWalletLiveData.value?: false
-
-    private val _nicknameLiveData = MutableLiveData<String>()
-    val nicknameLiveData: LiveData<String>
-        get() = _nicknameLiveData
-
-    private val _profileUrlLiveData = MutableLiveData<String>()
-    val profileUrlLiveData: LiveData<String>
-        get() = _profileUrlLiveData
-
-    private val _userCardsLiveData = SingleLiveEvent<List<UserCardsResponseModel>>()
-    val userCardsLiveData: SingleLiveEvent<List<UserCardsResponseModel>>
-        get() = _userCardsLiveData
-
-    fun getUserProfile(){
-        viewModelScope.launch(Dispatchers.IO) {
+    private fun getUserProfile(){
+        baseViewModelScope.launch {
             mainRepositoryImpl.getUserProfileAPI()
                 .onSuccess {
-                    _cardCntLiveData.postValue(it.cardCnt)
-                    _descriptionLiveData.postValue(it.description)
-                    _followerCntLiveData.postValue(it.followerCnt)
-                    _followingCntLiveData.postValue(it.followingCnt)
-                    _getWalletLiveData.postValue(it.getWallet)
-                    _nicknameLiveData.postValue(it.nickname)
-                    _profileUrlLiveData.postValue(it.profileUrl)
-                }.onError {
-                    _errorLiveData.postValue(it.message)
+                    _myPageState.value = UiState.Success(
+                        MypageUiModel(
+                            cardCnt = it.cardCnt,
+                            description = it.description,
+                            followerCnt = it.followerCnt,
+                            followingCnt = it.followingCnt,
+                            getWallet = it.getWallet,
+                            nickname = it.nickname,
+                            profileUrl = it.profileUrl
+                        )
+                    )
+                }.onError { e ->
+                    catchError(e)
                 }
         }
     }
 
-    fun getUserCards(){
-        viewModelScope.launch(Dispatchers.IO) {
+    private fun getUserCards(){
+        baseViewModelScope.launch {
             mainRepositoryImpl.getUserCardsAPI()
                 .onSuccess {
                     AppLog.d(it.toString())
-                    _userCardsLiveData.postValue(it)
-                }.onError {
-                    //TODO : 잠시 테스트를 위해 임시 데이터를 넣어놨습니다.(추후에 삭제하기)
-                    val exampleList = mutableListOf(
-                        UserCardsResponseModel(0, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
-                        UserCardsResponseModel(1, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
-                        UserCardsResponseModel(2, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65"),
-                        UserCardsResponseModel(3, "user name here", "NFT name here", "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "1.65")
-                    )
-                    _userCardsLiveData.postValue(exampleList)
-                    _errorLiveData.postValue(it.message)
+                    _hasMyNftState.value = it
+                }.onError { e ->
+                    catchError(e)
                 }
         }
     }
+
+    override fun onWalletClicked() {
+        baseViewModelScope.launch {
+            if(hasWalletState.value) {
+                _navigationEvent.emit(MypageNavigationAction.NavigateToWallet)
+            } else {
+                _navigationEvent.emit(MypageNavigationAction.NavigateToEmail)
+            }
+        }
+    }
+
+    override fun onSettingClicked() {
+        baseViewModelScope.launch {
+            DataApplication.mySharedPreferences.removeAccessToken()
+            _navigationEvent.emit(MypageNavigationAction.NavigateToHome)
+        }
+    }
+
+    override fun onNftItemClicked(nftId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft)
+        }
+    }
 }
+
+data class MypageUiModel(
+    val cardCnt: Int = 0,
+    val description: String = "",
+    val followerCnt: Int = 0,
+    val followingCnt: Int = 0,
+    val getWallet: Boolean = false,
+    val nickname: String = "",
+    val profileUrl: String = ""
+)

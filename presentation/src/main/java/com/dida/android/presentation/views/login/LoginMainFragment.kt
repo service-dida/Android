@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.base.BaseFragment
@@ -26,14 +27,14 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         get() = R.layout.fragment_loginmain // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel : LoginMainViewModel by viewModels()
-    lateinit var navController: NavController
+    private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        navController = Navigation.findNavController(requireView())
+        exception = viewModel.errorEvent
 
         // test
 //        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment("test")
@@ -41,12 +42,6 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorEvent.collect {
-                Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
-            }
-        }
-
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 dismissLoadingDialog()

@@ -30,7 +30,11 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
     }

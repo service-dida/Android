@@ -26,9 +26,14 @@ class WalletFragment :
 
     private val walletCardRecyclerViewAdapter = WalletCardRecyclerViewAdapter()
     private val walletNFTHistoryRecyclerViewAdapter = WalletNFTHistoryRecyclerViewAdapter()
+    private val navController by lazy { findNavController() }
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+        exception = viewModel.errorEvent
         initToolbar()
         initRecyclerView()
     }
@@ -44,9 +49,9 @@ class WalletFragment :
     }
 
     private fun initToolbar() {
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_close_24)
-        binding.toolbar.setNavigationOnClickListener { view ->
-            findNavController().popBackStack()
+        binding.toolbar.apply {
+            setNavigationIcon(R.drawable.ic_baseline_close_24)
+            setNavigationOnClickListener { navController.popBackStack() }
         }
     }
 

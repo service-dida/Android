@@ -414,7 +414,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     endLoading="@{vm.homeState}"
-                    recentNftItem="@{vm.homeState}">
+                    recentNftItem="@{vm.homeState}"
+                    tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:listitem="@layout/holder_mypage_user_cards">
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView

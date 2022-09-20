@@ -28,7 +28,11 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     val args: AddPurposeFragmentArgs by navArgs()
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+        exception = viewModel.errorEvent
         viewModel.initNFTInfo(args.imgURL,args.title,args.description)
         initToolbar()
     }
