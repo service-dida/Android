@@ -11,6 +11,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.DialogFragmentNavigator
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.dida.android.util.LoadingDialog
 import kotlinx.coroutines.flow.SharedFlow
@@ -117,6 +119,16 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     fun showToastMessage(e: Throwable?) {
         e?.let {
             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+        }
+    }
+
+    // navigation 중복체크 관리 <- checkNavigation 대신 사용할것
+    fun Fragment.navigate(directions: NavDirections) {
+        val controller = findNavController()
+        val currentDestination = (controller.currentDestination as? FragmentNavigator.Destination)?.className
+            ?: (controller.currentDestination as? DialogFragmentNavigator.Destination)?.className
+        if (currentDestination == this.javaClass.name) {
+            controller.navigate(directions)
         }
     }
 }
