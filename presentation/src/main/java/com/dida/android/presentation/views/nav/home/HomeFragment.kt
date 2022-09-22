@@ -47,10 +47,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
-                    is HomeNavigationAction.NavigateToHotItem -> { checkNavigationDesination(R.id.action_homeFragment_to_detailNftFragment) }
+                    is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
                     is HomeNavigationAction.NavigateToHotSeller -> {  }
-                    is HomeNavigationAction.NavigateToSoldOut -> { checkNavigationDesination(R.id.action_homeFragment_to_detailNftFragment) }
-                    is HomeNavigationAction.NavigateToRecentNftItem -> { checkNavigationDesination(R.id.action_homeFragment_to_detailNftFragment) }
+                    is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                    is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
                     is HomeNavigationAction.NavigateToCollection -> {  }
                 }
             }
@@ -116,15 +116,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 R.id.action_search -> {}
             }
             true
-        }
-    }
-
-    private fun checkNavigationDesination(toNav: Any) {
-        if (navController.currentDestination?.id == R.id.homeFragment) {
-            when(toNav) {
-                is NavDirections -> navController.navigate(toNav)
-                is Int -> navController.navigate(toNav)
-            }
         }
     }
 
