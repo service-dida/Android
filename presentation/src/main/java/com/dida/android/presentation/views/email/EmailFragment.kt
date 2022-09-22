@@ -77,7 +77,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     private fun timeOver() {
         timer.cancel()
         lifecycleScope.launch {
-            Toast.makeText(requireContext(), "시간이 초과되어 다시 인증번호 전송을 합니다.", Toast.LENGTH_LONG).show()
+            toastMessage("시간이 초과되어 다시 인증번호 전송을 합니다.")
             viewModel.getSendEmail()
             showLoadingDialog()
         }

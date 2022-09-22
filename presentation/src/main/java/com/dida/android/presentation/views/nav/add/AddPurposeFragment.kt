@@ -25,7 +25,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     override val viewModel: AddPurposeViewModel by viewModels()
 
-    val args: AddPurposeFragmentArgs by navArgs()
+    private val args: AddPurposeFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {

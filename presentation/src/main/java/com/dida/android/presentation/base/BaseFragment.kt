@@ -122,6 +122,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         }
     }
 
+    // Toast Message 관련 함수
+    fun toastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+    }
+
     // navigation 중복체크 관리 <- checkNavigation 대신 사용할것
     fun Fragment.navigate(directions: NavDirections) {
         val controller = findNavController()

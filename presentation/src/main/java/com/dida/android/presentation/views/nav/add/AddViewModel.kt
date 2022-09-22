@@ -5,18 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.util.AppLog
-import com.dida.data.di.NetworkModule
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.MainUsecase
+import com.dida.domain.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class AddViewModel @Inject constructor(private val mainUsecase: MainUsecase) : BaseViewModel() {
+class AddViewModel @Inject constructor(
+    private val mainRepository: MainRepository
+) : BaseViewModel() {
 
     private val TAG = "AddViewModel"
 
@@ -37,7 +36,7 @@ class AddViewModel @Inject constructor(private val mainUsecase: MainUsecase) : B
 
     fun getWalletExists() {
         viewModelScope.launch {
-            mainUsecase.getWalletExistsAPI()
+            mainRepository.getWalletExistsAPI()
                 .onSuccess {
                     _walletExistsLiveData.postValue(it)
                 }.onError {
@@ -64,7 +63,7 @@ class AddViewModel @Inject constructor(private val mainUsecase: MainUsecase) : B
 
     fun checkPassword(password: String) {
         viewModelScope.launch {
-            mainUsecase.getCheckPasswordAPI(password)
+            mainRepository.getCheckPasswordAPI(password)
                 .onSuccess {
                     _checkPasswordLiveData.postValue(it)
                 }.onError {

@@ -4,7 +4,9 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.MainUsecase
+import com.dida.domain.repository.MainRepository
+import com.dida.domain.usecase.CreateUserAPI
+import com.dida.domain.usecase.NicknameCheckAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NicknameViewModel @Inject constructor(
-    private val mainUsecase: MainUsecase
+    private val createUserAPI: CreateUserAPI,
+    private val nicknameCheckAPI: NicknameCheckAPI,
 ) : BaseViewModel(), NicknameActionHandler {
 
     private val TAG = "NicknameViewModel"
@@ -26,15 +29,9 @@ class NicknameViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             userInputState.debounce(500).collect {
-                if(it.isEmpty()) {
-                    setNicknameVerify(0)
-                }
-                else if(it.length > 8) {
-                    setNicknameVerify(1)
-                }
-                else {
-                    nicknameAPIServer(it)
-                }
+                if(it.isEmpty()) { setNicknameVerify(0) }
+                else if(it.length > 8) { setNicknameVerify(1) }
+                else { nicknameAPIServer(it) }
             }
         }
     }
@@ -66,15 +63,11 @@ class NicknameViewModel @Inject constructor(
 
     private fun nicknameAPIServer(nickName: String) {
         baseViewModelScope.launch {
-            mainUsecase.nicknameAPI(nickName)
+            nicknameCheckAPI(nickName)
                 .onSuccess {
                     _nickNameCheckState.value = it.used
-                    if(it.used) {
-                        setNicknameVerify(2)
-                    }
-                    else {
-                        setNicknameVerify(3)
-                    }
+                    if(it.used) { setNicknameVerify(2) }
+                    else { setNicknameVerify(3) }
                 }.onError { e ->
                     setNicknameVerify(0)
                     _nickNameCheckState.value = true
@@ -85,13 +78,11 @@ class NicknameViewModel @Inject constructor(
 
     private fun createUserAPIServer(email: String, nickName: String) {
         baseViewModelScope.launch {
-            mainUsecase.createUserAPI(email, nickName)
+            createUserAPI(email, nickName)
                 .onSuccess {
                     DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
-                    _navigationEvent.emit(NicknameNavigationAction.NavigateToHome)
-                }.onError { e ->
-                    catchError(e)
-                }
+                    _navigationEvent.emit(NicknameNavigationAction.NavigateToHome) }
+                .onError { e -> catchError(e) }
         }
     }
 

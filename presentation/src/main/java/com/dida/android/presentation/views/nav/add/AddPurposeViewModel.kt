@@ -7,8 +7,8 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.AppLog
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.KlaytnUsecase
-import com.dida.domain.usecase.MainUsecase
+import com.dida.domain.repository.KlaytnRepository
+import com.dida.domain.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,13 +23,12 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class AddPurposeViewModel @Inject constructor(private val mainUsecase: MainUsecase, private val klaytnUsecase: KlaytnUsecase) : BaseViewModel() {
+class AddPurposeViewModel @Inject constructor(
+    private val mainRepository: MainRepository,
+    private val klaytnRepository: KlaytnRepository
+) : BaseViewModel() {
 
     private val TAG = "AddPurposeViewModel"
-
-    private val _errorLiveData = MutableLiveData<Boolean>()
-    val errorLiveData: LiveData<Boolean>
-        get() = _errorLiveData
 
     private val _nftImageLiveData = MutableLiveData<String>()
     val nftImageLiveData: LiveData<String>
@@ -74,7 +73,7 @@ class AddPurposeViewModel @Inject constructor(private val mainUsecase: MainUseca
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
         viewModelScope.launch {
-            klaytnUsecase.uploadAsset(requestBody)
+            klaytnRepository.uploadAsset(requestBody)
                 .onSuccess {
                     it.catch { e ->
                         catchError(e)
@@ -91,7 +90,7 @@ class AddPurposeViewModel @Inject constructor(private val mainUsecase: MainUseca
 
     fun mintNFT(uri : String){
         viewModelScope.launch {
-            mainUsecase.mintNFT(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
+            mainRepository.mintNFT(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
                 .onSuccess {
                     //TODO : 만들어졌을때의 화면 이동 구현하기
                     _mintNFTEvent.value = true

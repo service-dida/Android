@@ -47,12 +47,10 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         * */
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("WalletCheck")?.observe(viewLifecycleOwner) {
             if (!it) {
-                Toast.makeText(requireContext(), "지갑을 생성해야 NFT를 만들 수 있습니다.", Toast.LENGTH_SHORT).show()
+                toastMessage("지갑을 생성해야 NFT를 만들 수 있습니다.")
                 navController.popBackStack()
             }
-            else {
-                getImageToGallery()
-            }
+            else { getImageToGallery() }
         }
     }
 
@@ -68,8 +66,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         textLengthCheckListener(binding.descriptionEditText)
 
         // User의 지갑이 있는지 체크
-        //viewModel.getWalletExists()
-        //showLoadingDialog()
+        viewModel.getWalletExists()
+        showLoadingDialog()
         getImageToGallery()
 
     }
@@ -153,7 +151,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             when (it.itemId) {
                 R.id.add_next_step -> {
                     if(binding.titleEditText.length()==0 || binding.descriptionEditText.length()==0){
-                        Toast.makeText(requireContext(),"제목과 설명을 모두 입력해주세요.",Toast.LENGTH_SHORT).show()
+                        toastMessage("제목과 설명을 모두 입력해주세요.")
                     }else{
                         isSelected = true
                         //사진,제목, 설명 이동
@@ -161,7 +159,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                             viewModel.nftImageLiveData.value.toString(),
                             binding.titleEditText.text.toString(),
                             binding.descriptionEditText.text.toString())
-                        navController.navigate(action)
+                        navigate(action)
                     }
                 }
             }
@@ -177,7 +175,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 val length = editText.length()
                 if(editText==binding.titleEditText){
                     viewModel.setTitleLength(length)
-                }else if(editText==binding.descriptionEditText){
+                } else if(editText==binding.descriptionEditText){
                     viewModel.setDescriptionLength(length)
                 }
             }

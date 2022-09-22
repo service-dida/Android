@@ -17,7 +17,7 @@ import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.model.nav.mypage.UserProfileResponseModel
 import com.dida.domain.model.splash.AppVersionResponse
-import com.dida.domain.usecase.MainUsecase
+import com.dida.domain.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -28,7 +28,7 @@ import javax.inject.Named
 
 class MainRepositoryImpl @Inject constructor(
     @Named("Main") private val mainAPIService: MainAPIService
-    ): MainUsecase {
+): MainRepository {
 
     override suspend fun checkVersionAPI(): Response<AppVersionResponse> {
         return mainAPIService.checkVersion()

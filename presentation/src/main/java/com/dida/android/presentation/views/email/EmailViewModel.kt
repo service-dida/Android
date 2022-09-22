@@ -3,7 +3,9 @@ package com.dida.android.presentation.views.email
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.MainUsecase
+import com.dida.domain.repository.MainRepository
+import com.dida.domain.usecase.CreateWalletAPI
+import com.dida.domain.usecase.SendEmailAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -11,7 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EmailViewModel @Inject constructor(
-    private val mainUsecase: MainUsecase
+    private val sendEmailAPI: SendEmailAPI,
+    private val createWalletAPI: CreateWalletAPI,
+    private val mainRepository: MainRepository
     ) : BaseViewModel() {
     private val TAG = "EmailViewModel"
 
@@ -31,13 +35,11 @@ class EmailViewModel @Inject constructor(
     // 비밀번호 받아오기
     fun getSendEmail() {
         baseViewModelScope.launch {
-            mainUsecase.getSendEmailAPI()
+            sendEmailAPI()
                 .onSuccess {
                     _verifyCheckState.value = false
-                    _sendEmailState.value = it.random
-                }.onError { e ->
-                    catchError(e)
-                }
+                    _sendEmailState.value = it.random }
+                .onError { e -> catchError(e) }
         }
     }
 
@@ -55,23 +57,16 @@ class EmailViewModel @Inject constructor(
 
     fun postCreateWallet(password: String, passwordCheck: String) {
         baseViewModelScope.launch {
-            mainUsecase.postCreateWalletAPI(password, passwordCheck)
-                .onSuccess {
-                    _createWalletState.value = true
-                }.onError { e ->
-                    catchError(e)
-                }
+            createWalletAPI(password, passwordCheck)
+                .onSuccess { _createWalletState.value = true }
+                .onError { e -> catchError(e) }
         }
     }
 
     var timeState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
     fun timeToString(minute: Int, second: Int) {
-        if(second>=10) {
-            timeState.value = "0$minute:$second"
-        }
-        else {
-            timeState.value = "0$minute:0$second"
-        }
+        if(second>=10) { timeState.value = "0$minute:$second" }
+        else { timeState.value = "0$minute:0$second" }
     }
 }

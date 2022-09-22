@@ -1,4 +1,4 @@
-package com.dida.domain.usecase
+package com.dida.domain.repository
 
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 
-interface  MainUsecase {
+interface  MainRepository {
 
     suspend fun checkVersionAPI(): Response<AppVersionResponse>
 
