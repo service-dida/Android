@@ -48,7 +48,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
-                    is CommunityNavigationAction.NavigateToDetail -> { checkNavigationDesination(R.id.action_communityFragment_to_communityDetailFragment) }
+                    is CommunityNavigationAction.NavigateToDetail -> { navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment()) }
                 }
             }
         }
@@ -66,15 +66,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                 }
             }
             true
-        }
-    }
-
-    private fun checkNavigationDesination(toNav: Any) {
-        if (navController.currentDestination?.id == R.id.communityFragment) {
-            when(toNav) {
-                is NavDirections -> navController.navigate(toNav)
-                is Int -> navController.navigate(toNav)
-            }
         }
     }
 

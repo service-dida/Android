@@ -4,8 +4,8 @@ import com.dida.data.api.KlaytnAPIService
 import com.dida.data.api.MainAPIService
 import com.dida.data.repository.KlaytnRepositoryImpl
 import com.dida.data.repository.MainRepositoryImpl
-import com.dida.domain.usecase.KlaytnUsecase
-import com.dida.domain.usecase.MainUsecase
+import com.dida.domain.repository.KlaytnRepository
+import com.dida.domain.repository.MainRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ class RepositoryModule {
     @Singleton
     fun provideMainRepository(
         @Named("Main") mainAPIService: MainAPIService
-    ): MainUsecase {
+    ): MainRepository {
         return MainRepositoryImpl(mainAPIService)
     }
 
@@ -28,7 +28,7 @@ class RepositoryModule {
     @Singleton
     fun provideKlaytnRepository(
         @Named("Klaytn") klaytnAPIService: KlaytnAPIService
-    ): KlaytnUsecase {
+    ): KlaytnRepository {
         return KlaytnRepositoryImpl(klaytnAPIService)
     }
 }

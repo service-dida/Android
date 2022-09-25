@@ -6,7 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DefiViewModel @Inject constructor(private val mainRepositoryImpl: MainRepositoryImpl) : BaseViewModel() {
+class DefiViewModel @Inject constructor(
+    private val mainRepositoryImpl: MainRepositoryImpl
+) : BaseViewModel() {
 
     private val TAG = "DefiViewModel"
 

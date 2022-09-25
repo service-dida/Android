@@ -5,7 +5,7 @@ import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.klaytn.Asset
-import com.dida.domain.usecase.KlaytnUsecase
+import com.dida.domain.repository.KlaytnRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +15,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class KlaytnRepositoryImpl @Inject constructor(@Named("Klaytn") private val klaytnAPIService: KlaytnAPIService) :  KlaytnUsecase {
+class KlaytnRepositoryImpl @Inject constructor(
+    @Named("Klaytn") private val klaytnAPIService: KlaytnAPIService
+) : KlaytnRepository {
 
     override suspend fun uploadAsset(file: MultipartBody.Part): NetworkResult<Flow<Asset>> {
         return handleApi {

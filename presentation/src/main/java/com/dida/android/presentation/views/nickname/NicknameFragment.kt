@@ -35,7 +35,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             viewModel.errorEvent.collect {
-                Toast.makeText(requireContext(), it?.message, Toast.LENGTH_SHORT).show()
+                showToastMessage(it)
             }
         }
 
@@ -45,7 +45,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                     is NicknameNavigationAction.NavigateToHome -> {
                         var intent = Intent(requireActivity(), NavHostActivity::class.java)
                         activity?.let { activity ->
-                            Toast.makeText(requireContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                            toastMessage("회원가입에 성공하였습니다.")
                             activity.setResult(9001,intent)
                             activity.finish()
                         }

@@ -6,7 +6,8 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.MainUsecase
+import com.dida.domain.usecase.HomeAPI
+import com.dida.domain.usecase.SoldOutAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val mainUsecase: MainUsecase
+    private val homeAPI: HomeAPI,
+    private val soldOutAPI: SoldOutAPI
     ) : BaseViewModel(), HomeActionHandler {
 
     private val TAG = "HomeViewModel"
@@ -33,18 +35,27 @@ class HomeViewModel @Inject constructor(
 
     fun getMain() {
         baseViewModelScope.launch {
-           mainUsecase.getMainAPI()
-                .onSuccess {
-                    it.catch { e ->
-                        catchError(e)
-                    }
+           homeAPI()
+               .onSuccess {
+                    it.catch { e -> catchError(e) }
                     it.collect { data ->
                         _homeState.value = UiState.Success(data)
                         onSoldOutDayClicked(_termState.value)
-                    }
-                }.onError { e ->
-                   catchError(e)
-                }
+                    } }
+               .onError { e -> catchError(e) }
+        }
+    }
+
+    override fun onSoldOutDayClicked(term: Int) {
+        baseViewModelScope.launch {
+            soldOutAPI(term)
+                .onSuccess {
+                    it.catch { e -> catchError(e) }
+                    it.collect { data ->
+                        _soldoutState.value = UiState.Success(data)
+                        _termState.value = term
+                    } }
+                .onError { e -> catchError(e) }
         }
     }
 
@@ -75,23 +86,6 @@ class HomeViewModel @Inject constructor(
     override fun onCollectionItemClicked(userId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToCollection(userId))
-        }
-    }
-
-    override fun onSoldOutDayClicked(term: Int) {
-        baseViewModelScope.launch {
-            mainUsecase.getSoldOutAPI(term)
-                .onSuccess {
-                    it.catch { e ->
-                        catchError(e)
-                    }
-                    it.collect { data ->
-                        _soldoutState.value = UiState.Success(data)
-                        _termState.value = term
-                    }
-                }.onError { e ->
-                    catchError(e)
-                }
         }
     }
 }

@@ -35,10 +35,6 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-
-        // test
-//        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment("test")
-//        navController.navigate(action)
     }
 
     override fun initDataBinding() {
@@ -46,17 +42,17 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
             viewModel.navigationEvent.collect {
                 dismissLoadingDialog()
                 when(it){
-                    is LoginNavigationAction.NavigateToLoginFail -> {
-                        Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show()
-                    }
+                    is LoginNavigationAction.NavigateToLoginFail -> { Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show() }
                     is LoginNavigationAction.NavigateToNickname -> {
-                        Toast.makeText(requireContext(),"회원가입이 필요합니다.",Toast.LENGTH_SHORT).show()
+                        toastMessage("회원가입이 필요합니다.")
+
                         val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email)
-                        navController.navigate(action)
+                        navigate(action)
                     }
                     is LoginNavigationAction.NavigateToHome -> {
-                        Toast.makeText(requireContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show()
-                        var intent = Intent(requireActivity(), NavHostActivity::class.java)
+                        toastMessage("로그인에 성공하였습니다.")
+
+                        val intent = Intent(requireActivity(), NavHostActivity::class.java)
                         activity?.setResult(9001,intent)
                         activity?.finish()
                     }
