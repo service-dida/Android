@@ -41,12 +41,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             viewModel.navigationEvent.collect {
                 when(it) {
                     is MypageNavigationAction.NavigateToHome -> {
-                        Toast.makeText(requireContext(), "로그아웃 하였습니다.", Toast.LENGTH_SHORT).show()
+                        toastMessage("로그아웃 하였습니다.")
                         navController.popBackStack()
                     }
-                    is MypageNavigationAction.NavigateToEmail -> checkNavigationDesination(R.id.action_myPageFragment_to_emailFragment)
-                    is MypageNavigationAction.NavigateToWallet -> checkNavigationDesination(R.id.action_myPageFragment_to_emailFragment)
-                    is MypageNavigationAction.NavigateToDetailNft -> checkNavigationDesination(R.id.action_myPageFragment_to_detailNftFragment)
+                    is MypageNavigationAction.NavigateToEmail -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment())
+                    is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment())
+                    is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment())
                 }
             }
         }
@@ -91,15 +91,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             adapter = UserNftAdapter(viewModel)
             val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
             addItemDecoration(GridSpacing(px, px))
-        }
-    }
-
-    private fun checkNavigationDesination(toNav: Any) {
-        if (navController.currentDestination?.id == R.id.myPageFragment) {
-            when(toNav) {
-                is NavDirections -> navController.navigate(toNav)
-                is Int -> navController.navigate(toNav)
-            }
         }
     }
 }

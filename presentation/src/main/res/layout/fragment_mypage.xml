@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
-                    userDescription="@{vm.descriptionState}"
+                    userDescription="@{vm.myPageState}"
                     tools:text="자기소개는 여기에 들어갑니다"
                     android:textColor="@color/white"
                     android:textSize="14dp"
@@ -253,7 +253,7 @@
                     tools:itemCount="8"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:listitem="@layout/holder_mypage_user_cards"
-                    recentNftItem="@{vm.myPageState}"
+                    userNftItem="@{vm.hasMyNftState}"
                     tools:spanCount="2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
