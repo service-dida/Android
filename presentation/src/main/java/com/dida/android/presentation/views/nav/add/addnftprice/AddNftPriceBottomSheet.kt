@@ -14,8 +14,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddNftPriceBottomSheet(val price: (String) -> Unit) :
-    BaseBottomSheetDialogFragment<BottomAddNftPriceBinding, AddNftPriceViewModel>() {
+class AddNftPriceBottomSheet(
+    val price: (String) -> Unit
+) : BaseBottomSheetDialogFragment<BottomAddNftPriceBinding, AddNftPriceViewModel>() {
 
     private val TAG = "AddNftPriceBottomSheet"
 

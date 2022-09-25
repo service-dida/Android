@@ -8,13 +8,17 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.repository.MainRepository
+import com.dida.domain.usecase.CheckPasswordAPI
+import com.dida.domain.usecase.CreateUserAPI
+import com.dida.domain.usecase.WalletExistedAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
-    private val mainRepository: MainRepository
+    private val walletExistedAPI: WalletExistedAPI,
+    private val checkPasswordAPI: CheckPasswordAPI,
 ) : BaseViewModel() {
 
     private val TAG = "AddViewModel"
@@ -36,7 +40,7 @@ class AddViewModel @Inject constructor(
 
     fun getWalletExists() {
         viewModelScope.launch {
-            mainRepository.getWalletExistsAPI()
+            walletExistedAPI()
                 .onSuccess {
                     _walletExistsLiveData.postValue(it)
                 }.onError {
@@ -63,7 +67,7 @@ class AddViewModel @Inject constructor(
 
     fun checkPassword(password: String) {
         viewModelScope.launch {
-            mainRepository.getCheckPasswordAPI(password)
+            checkPasswordAPI(password)
                 .onSuccess {
                     _checkPasswordLiveData.postValue(it)
                 }.onError {
