@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.lifecycleScope
 import com.dida.android.util.LoadingDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
 
 abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewModel>: BottomSheetDialogFragment() {
 
@@ -29,6 +33,8 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
 
     lateinit var mLoadingDialog: LoadingDialog
 
+    protected var exception: SharedFlow<Throwable>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, com.dida.android.R.style.Theme_DIDA_BottomDialogAboveKeyboard)
@@ -47,6 +53,11 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+            exception?.collect { exception ->
+                showToastMessage(exception)
+            }
+        }
         settingBottomSheetDialog()
         initStartView()
         initDataBinding()
@@ -78,5 +89,17 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
                 }
             })
         }
+    }
+
+    // Toast Message 관련 함수
+    fun showToastMessage(e: Throwable?) {
+        e?.let {
+            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+        }
+    }
+
+    // Toast Message 관련 함수
+    fun toastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
     }
 }

@@ -9,13 +9,16 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class PasswordViewModel @Inject constructor(private val mainRepositoryImpl: MainRepositoryImpl) : BaseViewModel() {
+class PasswordViewModel @Inject constructor(
+    private val mainRepositoryImpl: MainRepositoryImpl
+) : BaseViewModel() {
 
     private val passwordStack = Stack<Int>()
 
     private val _getWalletLiveData = MutableLiveData<Stack<Int>>(passwordStack)
     val getWalletLiveData: LiveData<Stack<Int>>
         get() = _getWalletLiveData
+
     private val getWalletValue: Stack<Int>
         get() = getWalletLiveData.value!!
 
