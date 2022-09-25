@@ -14,8 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginMainViewModel @Inject constructor(
     private val loginAPI: LoginAPI
-) :
-    BaseViewModel() {
+) : BaseViewModel(), LoginMainActionHandler {
 
     private val TAG = "LoginMainViewModel"
 
@@ -48,6 +47,12 @@ class LoginMainViewModel @Inject constructor(
                     _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
                     mySharedPreferences.removeAccessToken()
                 }
+        }
+    }
+
+    override fun onKakaoLoginClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(LoginNavigationAction.NavigateToLogin)
         }
     }
 }

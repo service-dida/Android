@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
@@ -16,7 +15,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewModel>(R.layout.fragment_loginmain) {
@@ -56,38 +54,40 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                         activity?.setResult(9001,intent)
                         activity?.finish()
                     }
+                    is LoginNavigationAction.NavigateToLogin -> kakaoLogin()
                 }
             }
         }
     }
 
     override fun initAfterBinding() {
-        binding.kakaoLoginButton.setOnClickListener {
-            val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-                // 로그인 실패
-                if (error != null) {
-                    Log.d(TAG, "kakaoLogin 실패 ${error.message}")
-                }
-                //로그인 성공
-                else if (token != null) {
-                    Log.d(TAG, "kakaoLogin 성공 ${token.accessToken} ")
-                    viewModel.loginAPIServer(token.accessToken)
-                    showLoadingDialog()
-                }
-            }
+    }
 
-            // 카카오톡 설치여부 확인
-            if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
-                UserApiClient.instance.loginWithKakaoTalk(
-                    requireContext(),
-                    callback = kakaoCallback
-                )
-            } else {
-                UserApiClient.instance.loginWithKakaoAccount(
-                    requireContext(),
-                    callback = kakaoCallback
-                )
+    private fun kakaoLogin() {
+        val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            // 로그인 실패
+            if (error != null) {
+                Log.d(TAG, "kakaoLogin 실패 ${error.message}")
             }
+            //로그인 성공
+            else if (token != null) {
+                Log.d(TAG, "kakaoLogin 성공 ${token.accessToken} ")
+                viewModel.loginAPIServer(token.accessToken)
+                showLoadingDialog()
+            }
+        }
+
+        // 카카오톡 설치여부 확인
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+            UserApiClient.instance.loginWithKakaoTalk(
+                requireContext(),
+                callback = kakaoCallback
+            )
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(
+                requireContext(),
+                callback = kakaoCallback
+            )
         }
     }
 }
