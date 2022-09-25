@@ -14,8 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EmailViewModel @Inject constructor(
     private val sendEmailAPI: SendEmailAPI,
-    private val createWalletAPI: CreateWalletAPI,
-    private val mainRepository: MainRepository
+    private val createWalletAPI: CreateWalletAPI
     ) : BaseViewModel() {
     private val TAG = "EmailViewModel"
 
