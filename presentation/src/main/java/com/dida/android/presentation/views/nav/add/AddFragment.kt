@@ -77,7 +77,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             dismissLoadingDialog()
             // 지갑이 없는 경우 지갑 생성
             if (!it) {
-                Toast.makeText(requireContext(), "지갑을 생성해야 합니다!", Toast.LENGTH_SHORT).show()
+                toastMessage("지갑을 생성해야 합니다!")
                 navController.navigate(R.id.action_addFragment_to_emailFragment)
             }
             else {
@@ -97,7 +97,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 getImageToGallery()
             }
             else {
-                Toast.makeText(requireContext(), "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show()
+                toastMessage("비밀번호가 틀렸습니다.")
                 val passwordDialog = PasswordDialog(true) { password ->
                     viewModel.checkPassword(password)
                     showLoadingDialog()
@@ -107,7 +107,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         }
 
         viewModel.errorLiveData.observe(this) {
-            Toast.makeText(requireContext(), "네트워크 상태가 좋지 않습니다!", Toast.LENGTH_SHORT).show()
+            toastMessage("네트워크 상태가 좋지 않습니다!")
             navController.popBackStack()
         }
     }
