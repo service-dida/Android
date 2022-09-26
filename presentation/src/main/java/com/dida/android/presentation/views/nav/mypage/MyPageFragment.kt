@@ -58,7 +58,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     private fun initMyPage() {
         viewModel.initMyPageState()
         initToolbar()
-        initAdapter()
         initSpinner()
     }
 
@@ -83,14 +82,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinner.adapter = adapter
-        }
-    }
-
-    private fun initAdapter() {
-        binding.rvUserNft.apply {
-            adapter = UserNftAdapter(viewModel)
-            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
-            addItemDecoration(GridSpacing(px, px))
         }
     }
 }

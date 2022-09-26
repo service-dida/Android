@@ -2,6 +2,8 @@ package com.dida.android.presentation.views.nav.home
 
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
+import com.dida.android.presentation.base.successOrNull
+import com.dida.domain.flatMap
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.onError
@@ -35,14 +37,13 @@ class HomeViewModel @Inject constructor(
 
     fun getMain() {
         baseViewModelScope.launch {
-           homeAPI()
+            homeAPI()
                .onSuccess {
-                    it.catch { e -> catchError(e) }
                     it.collect { data ->
                         _homeState.value = UiState.Success(data)
                         onSoldOutDayClicked(_termState.value)
                     } }
-               .onError { e -> catchError(e) }
+               .onError { e -> catchError(e)  }
         }
     }
 
@@ -50,7 +51,6 @@ class HomeViewModel @Inject constructor(
         baseViewModelScope.launch {
             soldOutAPI(term)
                 .onSuccess {
-                    it.catch { e -> catchError(e) }
                     it.collect { data ->
                         _soldoutState.value = UiState.Success(data)
                         _termState.value = term

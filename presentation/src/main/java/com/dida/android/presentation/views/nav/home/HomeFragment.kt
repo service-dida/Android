@@ -17,6 +17,7 @@ import com.dida.android.presentation.base.UiState
 import com.dida.android.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -87,12 +88,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.hotSellerRecycler.adapter = HotSellerAdapter(viewModel)
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
-
-        binding.recentnftRecycler.apply {
-            adapter = RecentNftAdapter(viewModel)
-            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
-            addItemDecoration(GridSpacing(px, px))
-        }
+        binding.recentnftRecycler.adapter = RecentNftAdapter(viewModel)
 
         with(binding.tabLayout) {
             addTab(this.newTab().setText(R.string.home_hotitem_tab))

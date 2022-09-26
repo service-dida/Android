@@ -24,13 +24,6 @@ fun RecyclerView.endLoading(uiState: UiState<*>) {
     visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
 }
 
-@BindingAdapter("toastMessage")
-fun View.bindToast(throwable: Throwable?) {
-    throwable?.message?.let { errorMessage ->
-        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-    }
-}
-
 @BindingAdapter("hotsItem")
 fun RecyclerView.bindHotsItems(uiState: UiState<Home>) {
     val boundAdapter = this.adapter
