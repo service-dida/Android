@@ -244,7 +244,7 @@
                     android:id="@+id/rv_userNft"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="20dp"
                     android:stateListAnimator="@layout/holder_mypage_user_cards"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -253,7 +253,6 @@
                     tools:itemCount="8"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:listitem="@layout/holder_mypage_user_cards"
-                    android:padding="9dp"
                     userNftItem="@{vm.hasMyNftState}"
                     tools:spanCount="2" />
 
