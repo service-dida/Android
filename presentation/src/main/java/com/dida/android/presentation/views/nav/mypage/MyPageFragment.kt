@@ -7,8 +7,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
+import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.adapter.mypage.UserNftAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.ConvertDpToPx
@@ -59,6 +62,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         viewModel.initMyPageState()
         initToolbar()
         initSpinner()
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        binding.rvUserNft.apply {
+            adapter = RecentNftAdapter(viewModel)
+            layoutManager = GridLayoutManager(context, 2)
+        }
     }
 
     private fun initToolbar() {

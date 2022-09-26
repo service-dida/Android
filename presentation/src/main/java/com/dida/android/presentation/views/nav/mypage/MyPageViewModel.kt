@@ -5,6 +5,7 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.android.util.AppLog
+import com.dida.android.util.NftActionHandler
 import com.dida.android.util.SingleLiveEvent
 import com.dida.data.DataApplication
 import com.dida.data.repository.MainRepositoryImpl
@@ -24,7 +25,7 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     private val userProfileAPI: UserProfileAPI,
     private val userNftAPI: UserNftAPI,
-) : BaseViewModel(), MypageActionHandler {
+) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
     private val TAG = "MyPageViewModel"
 
@@ -88,9 +89,9 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onNftItemClicked(nftId: Long) {
+    override fun onNftItemClicked(nftId: Int) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId))
+            _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId.toLong()))
         }
     }
 }

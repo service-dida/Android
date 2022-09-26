@@ -19,12 +19,8 @@ class KlaytnRepositoryImpl @Inject constructor(
     @Named("Klaytn") private val klaytnAPIService: KlaytnAPIService
 ) : KlaytnRepository {
 
-    override suspend fun uploadAsset(file: MultipartBody.Part): NetworkResult<Flow<Asset>> {
-        return handleApi {
-            flow {
-                emit(klaytnAPIService.uploadAsset(file).toDomain())
-            }.flowOn(Dispatchers.IO)
-        }
+    override suspend fun uploadAsset(file: MultipartBody.Part): NetworkResult<Asset> {
+        return handleApi { klaytnAPIService.uploadAsset(file).toDomain() }
     }
 }
 

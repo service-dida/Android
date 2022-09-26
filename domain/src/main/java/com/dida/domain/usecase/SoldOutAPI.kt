@@ -23,7 +23,7 @@ import javax.inject.Named
 class SoldOutAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(term: Int) : NetworkResult<Flow<List<SoldOut>>> {
+    suspend operator fun invoke(term: Int) : NetworkResult<List<SoldOut>> {
         return repository.getSoldOutAPI(term)
     }
 }

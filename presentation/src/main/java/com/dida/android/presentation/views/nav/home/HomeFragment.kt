@@ -6,18 +6,16 @@ import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.base.UiState
 import com.dida.android.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -88,7 +86,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.hotSellerRecycler.adapter = HotSellerAdapter(viewModel)
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
-        binding.recentnftRecycler.adapter = RecentNftAdapter(viewModel)
+
+        binding.recentnftRecycler.apply {
+            adapter = RecentNftAdapter(viewModel)
+            layoutManager = GridLayoutManager(context, 2)
+        }
 
         with(binding.tabLayout) {
             addTab(this.newTab().setText(R.string.home_hotitem_tab))

@@ -75,13 +75,7 @@ class AddPurposeViewModel @Inject constructor(
         viewModelScope.launch {
             klaytnRepository.uploadAsset(requestBody)
                 .onSuccess {
-                    it.catch { e ->
-                        catchError(e)
-                    }
-                    it.collect { data ->
-                        AppLog.d(data.toString())
-                        mintNFT(data.uri)
-                    }
+                    mintNFT(it.uri)
                 }.onError { e ->
                     catchError(e)
                 }

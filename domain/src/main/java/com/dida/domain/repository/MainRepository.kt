@@ -45,9 +45,9 @@ interface  MainRepository {
 
     suspend fun getTempPasswordAPI() : NetworkResult<Unit>
 
-    suspend fun getMainAPI() : NetworkResult<Flow<Home>>
+    suspend fun getMainAPI() : NetworkResult<Home>
 
-    suspend fun getSoldOutAPI(term: Int) : NetworkResult<Flow<List<SoldOut>>>
+    suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 
     suspend fun mintNFT(name : String, description : String, image : String) : NetworkResult<Unit>
 }

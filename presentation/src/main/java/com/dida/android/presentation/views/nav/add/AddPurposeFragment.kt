@@ -74,9 +74,11 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     }
 
     private fun initToolbar() {
-        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+        binding.toolbar.apply {
+            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

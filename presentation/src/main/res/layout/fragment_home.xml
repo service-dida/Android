@@ -412,6 +412,7 @@
                     android:layout_margin="9dp"
                     endLoading="@{vm.homeState}"
                     recentNftItem="@{vm.homeState}"
+                    android:orientation="vertical"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:listitem="@layout/holder_mypage_user_cards">
                 </androidx.recyclerview.widget.RecyclerView>
