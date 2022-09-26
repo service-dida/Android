@@ -14,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mainblack"
-        android:id="@+id/main"
-        app:toastMessage="@{vm.errorEvent}">
+        android:id="@+id/main">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
@@ -410,11 +409,10 @@
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintTop_toBottomOf="@id/recentnft_txt"
                     app:layout_constraintBottom_toTopOf="@id/recent_more"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_margin="9dp"
                     endLoading="@{vm.homeState}"
                     recentNftItem="@{vm.homeState}"
+                    android:orientation="vertical"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:listitem="@layout/holder_mypage_user_cards">
                 </androidx.recyclerview.widget.RecyclerView>

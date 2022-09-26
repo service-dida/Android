@@ -63,18 +63,12 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getSendEmail().toDomain() }
     }
 
-    override suspend fun getMainAPI(): NetworkResult<Flow<Home>> {
-        return handleApi {
-            flow {
-                emit( mainAPIService.getMain().toDomain() )
-            }.flowOn(Dispatchers.IO) }
+    override suspend fun getMainAPI(): NetworkResult<Home> {
+        return handleApi { mainAPIService.getMain().toDomain() }
     }
 
-    override suspend fun getSoldOutAPI(term: Int): NetworkResult<Flow<List<SoldOut>>> {
-        return handleApi {
-            flow {
-                emit( mainAPIService.getSoldOut(term).toDomain() )
-            }.flowOn(Dispatchers.IO) }
+    override suspend fun getSoldOutAPI(term: Int): NetworkResult<List<SoldOut>> {
+        return handleApi { mainAPIService.getSoldOut(term).toDomain() }
     }
 
     override suspend fun mintNFT(name: String, description: String, image: String): NetworkResult<Unit> {

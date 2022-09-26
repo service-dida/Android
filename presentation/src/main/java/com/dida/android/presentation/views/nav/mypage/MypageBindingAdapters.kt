@@ -48,10 +48,10 @@ fun TextView.bindUserFollwerCount(uiState: UiState<MypageUiModel>) {
     this.text = uiState.successOrNull()?.followingCnt.toString()
 }
 
-@BindingAdapter("recentNftItem")
-fun RecyclerView.bindRecentNftItem(uiState: UiState<Home>) {
+@BindingAdapter("userNftItem")
+fun RecyclerView.bindRecentNftItem(userNftList: List<UserCardsResponseModel>) {
     val boundAdapter = this.adapter
     if (boundAdapter is RecentNftAdapter) {
-        boundAdapter.submitList(uiState.successOrNull()?.getRecentCards)
+        boundAdapter.submitList(userNftList)
     }
 }

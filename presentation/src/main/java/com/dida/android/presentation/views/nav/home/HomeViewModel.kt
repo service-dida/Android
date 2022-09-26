@@ -2,6 +2,9 @@ package com.dida.android.presentation.views.nav.home
 
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
+import com.dida.android.presentation.base.successOrNull
+import com.dida.android.util.NftActionHandler
+import com.dida.domain.flatMap
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.onError
@@ -17,7 +20,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val homeAPI: HomeAPI,
     private val soldOutAPI: SoldOutAPI
-    ) : BaseViewModel(), HomeActionHandler {
+    ) : BaseViewModel(), HomeActionHandler, NftActionHandler {
 
     private val TAG = "HomeViewModel"
 
@@ -35,14 +38,12 @@ class HomeViewModel @Inject constructor(
 
     fun getMain() {
         baseViewModelScope.launch {
-           homeAPI()
+            homeAPI()
                .onSuccess {
-                    it.catch { e -> catchError(e) }
-                    it.collect { data ->
-                        _homeState.value = UiState.Success(data)
-                        onSoldOutDayClicked(_termState.value)
-                    } }
-               .onError { e -> catchError(e) }
+                   _homeState.value = UiState.Success(it)
+                   onSoldOutDayClicked(_termState.value)
+               }
+               .onError { e -> catchError(e)  }
         }
     }
 
@@ -50,11 +51,9 @@ class HomeViewModel @Inject constructor(
         baseViewModelScope.launch {
             soldOutAPI(term)
                 .onSuccess {
-                    it.catch { e -> catchError(e) }
-                    it.collect { data ->
-                        _soldoutState.value = UiState.Success(data)
-                        _termState.value = term
-                    } }
+                    _soldoutState.value = UiState.Success(it)
+                    _termState.value = term
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -71,12 +70,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onRecentNftItemClicked(nftId: Int) {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
-        }
-    }
-
     override fun onSoldOutItemClicked(cardId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToSoldOut(cardId))
@@ -86,6 +79,12 @@ class HomeViewModel @Inject constructor(
     override fun onCollectionItemClicked(userId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToCollection(userId))
+        }
+    }
+
+    override fun onNftItemClicked(nftId: Int) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
 }

@@ -6,14 +6,13 @@ import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.base.UiState
 import com.dida.android.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -90,8 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         binding.recentnftRecycler.apply {
             adapter = RecentNftAdapter(viewModel)
-            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
-            addItemDecoration(GridSpacing(px, px))
+            layoutManager = GridLayoutManager(context, 2)
         }
 
         with(binding.tabLayout) {

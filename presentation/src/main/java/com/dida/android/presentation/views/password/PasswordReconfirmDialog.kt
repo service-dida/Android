@@ -18,8 +18,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PasswordReconfirmDialog(val password : (String)->Unit) :
-    BaseBottomSheetDialogFragment<DialogPasswordReconfirmBinding, PasswordReconfirmViewModel>() {
+class PasswordReconfirmDialog(
+    val password : (String)->Unit
+) : BaseBottomSheetDialogFragment<DialogPasswordReconfirmBinding, PasswordReconfirmViewModel>() {
 
     private val TAG = "PasswordReconfirmDialog"
 
@@ -29,7 +30,11 @@ class PasswordReconfirmDialog(val password : (String)->Unit) :
     override val viewModel: PasswordReconfirmViewModel by viewModels()
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+        exception = viewModel.errorEvent
         dialogFullScreen()
     }
 

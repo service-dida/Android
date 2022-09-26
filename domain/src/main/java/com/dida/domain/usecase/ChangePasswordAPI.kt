@@ -20,10 +20,10 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class SoldOutAPI @Inject constructor(
+class ChangePasswordAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(term: Int) : NetworkResult<List<SoldOut>> {
-        return repository.getSoldOutAPI(term)
+    suspend operator fun invoke(beforePassword: String, afterPassword: String) : NetworkResult<Unit> {
+        return repository.postChangePasswordAPI(beforePassword, afterPassword)
     }
 }

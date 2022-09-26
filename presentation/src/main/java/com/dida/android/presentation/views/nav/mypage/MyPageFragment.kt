@@ -7,8 +7,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
+import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.adapter.mypage.UserNftAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.ConvertDpToPx
@@ -41,12 +44,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             viewModel.navigationEvent.collect {
                 when(it) {
                     is MypageNavigationAction.NavigateToHome -> {
-                        Toast.makeText(requireContext(), "로그아웃 하였습니다.", Toast.LENGTH_SHORT).show()
+                        toastMessage("로그아웃 하였습니다.")
                         navController.popBackStack()
                     }
-                    is MypageNavigationAction.NavigateToEmail -> checkNavigationDesination(R.id.action_myPageFragment_to_emailFragment)
-                    is MypageNavigationAction.NavigateToWallet -> checkNavigationDesination(R.id.action_myPageFragment_to_emailFragment)
-                    is MypageNavigationAction.NavigateToDetailNft -> checkNavigationDesination(R.id.action_myPageFragment_to_detailNftFragment)
+                    is MypageNavigationAction.NavigateToEmail -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment())
+                    is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment())
+                    is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment())
                 }
             }
         }
@@ -58,8 +61,15 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     private fun initMyPage() {
         viewModel.initMyPageState()
         initToolbar()
-        initAdapter()
         initSpinner()
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        binding.rvUserNft.apply {
+            adapter = RecentNftAdapter(viewModel)
+            layoutManager = GridLayoutManager(context, 2)
+        }
     }
 
     private fun initToolbar() {
@@ -83,23 +93,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinner.adapter = adapter
-        }
-    }
-
-    private fun initAdapter() {
-        binding.rvUserNft.apply {
-            adapter = UserNftAdapter(viewModel)
-            val px = ConvertDpToPx().convertDPtoPX(requireContext(),14)
-            addItemDecoration(GridSpacing(px, px))
-        }
-    }
-
-    private fun checkNavigationDesination(toNav: Any) {
-        if (navController.currentDestination?.id == R.id.myPageFragment) {
-            when(toNav) {
-                is NavDirections -> navController.navigate(toNav)
-                is Int -> navController.navigate(toNav)
-            }
         }
     }
 }

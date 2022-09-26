@@ -21,8 +21,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNftBottomSheet(val itemClick: () -> Unit) :
-    BaseBottomSheetDialogFragment<BottomAddNftBinding, AddNftViewModel>() {
+class AddNftBottomSheet(
+    val itemClick: () -> Unit
+) : BaseBottomSheetDialogFragment<BottomAddNftBinding, AddNftViewModel>() {
 
     private val TAG = "AddNftBottomSheet"
 

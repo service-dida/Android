@@ -5,6 +5,7 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.android.util.AppLog
+import com.dida.android.util.NftActionHandler
 import com.dida.android.util.SingleLiveEvent
 import com.dida.data.DataApplication
 import com.dida.data.repository.MainRepositoryImpl
@@ -12,6 +13,8 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.UserNftAPI
+import com.dida.domain.usecase.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -20,9 +23,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl,
-    private val homeActionHandler: HomeActionHandler
-) : BaseViewModel(), MypageActionHandler {
+    private val userProfileAPI: UserProfileAPI,
+    private val userNftAPI: UserNftAPI,
+) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
     private val TAG = "MyPageViewModel"
 
@@ -45,7 +48,7 @@ class MyPageViewModel @Inject constructor(
 
     private fun getUserProfile(){
         baseViewModelScope.launch {
-            mainRepositoryImpl.getUserProfileAPI()
+            userProfileAPI()
                 .onSuccess {
                     _myPageState.value = UiState.Success(
                         MypageUiModel(
@@ -57,32 +60,25 @@ class MyPageViewModel @Inject constructor(
                             nickname = it.nickname,
                             profileUrl = it.profileUrl
                         )
-                    )
-                }.onError { e ->
-                    catchError(e)
-                }
+                    ) }
+                .onError { e -> catchError(e) }
         }
     }
 
     private fun getUserCards(){
         baseViewModelScope.launch {
-            mainRepositoryImpl.getUserCardsAPI()
+            userNftAPI()
                 .onSuccess {
                     AppLog.d(it.toString())
-                    _hasMyNftState.value = it
-                }.onError { e ->
-                    catchError(e)
-                }
+                    _hasMyNftState.value = it }
+                .onError { e -> catchError(e) }
         }
     }
 
     override fun onWalletClicked() {
         baseViewModelScope.launch {
-            if(hasWalletState.value) {
-                _navigationEvent.emit(MypageNavigationAction.NavigateToWallet)
-            } else {
-                _navigationEvent.emit(MypageNavigationAction.NavigateToEmail)
-            }
+            if(hasWalletState.value) { _navigationEvent.emit(MypageNavigationAction.NavigateToWallet) }
+            else { _navigationEvent.emit(MypageNavigationAction.NavigateToEmail) }
         }
     }
 
@@ -93,9 +89,9 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onNftItemClicked(nftId: Long) {
+    override fun onNftItemClicked(nftId: Int) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft)
+            _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId.toLong()))
         }
     }
 }

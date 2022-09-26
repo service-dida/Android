@@ -11,11 +11,12 @@ import com.dida.android.databinding.HolderHotsellerBinding
 import com.dida.android.databinding.HolderMypageUserCardsBinding
 import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.android.presentation.views.nav.mypage.MypageActionHandler
+import com.dida.android.util.NftActionHandler
 import com.dida.domain.model.nav.home.HotSeller
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 
 class UserNftAdapter(
-    private val eventListener: MypageActionHandler
+    private val eventListener: NftActionHandler
 ): ListAdapter<UserCardsResponseModel, UserNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
     init { setHasStableIds(true) }
@@ -28,7 +29,7 @@ class UserNftAdapter(
             false
         )
         viewDataBinding.root.setOnClickListener {
-            eventListener.onNftItemClicked(viewDataBinding.holderModel!!.cardId.toLong())
+            eventListener.onNftItemClicked(viewDataBinding.holderModel!!.cardId)
         }
         return ViewHolder(viewDataBinding)
     }

@@ -5,5 +5,5 @@ sealed class MypageNavigationAction {
     object NavigateToEmail: MypageNavigationAction()
     object NavigateToWallet : MypageNavigationAction()
     object NavigateToHome: MypageNavigationAction()
-    object NavigateToDetailNft : MypageNavigationAction()
+    class NavigateToDetailNft(nftId: Long) : MypageNavigationAction()
 }

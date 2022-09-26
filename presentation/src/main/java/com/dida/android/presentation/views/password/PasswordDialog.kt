@@ -15,8 +15,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PasswordDialog(val walletCheck: Boolean, val password: (String) -> Unit) :
-    BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
+class PasswordDialog(
+    private val walletCheck: Boolean,
+    val password: (String) -> Unit
+) : BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
     private val TAG = "PasswordDialog"
 
@@ -26,7 +28,11 @@ class PasswordDialog(val walletCheck: Boolean, val password: (String) -> Unit) :
     override val viewModel: PasswordViewModel by viewModels()
 
     override fun initStartView() {
-        binding.vm = viewModel
+        binding.apply {
+            this.vm = viewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+        exception = viewModel.errorEvent
         dialogFullScreen()
     }
 

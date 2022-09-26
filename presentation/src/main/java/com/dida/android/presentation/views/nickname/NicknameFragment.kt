@@ -11,6 +11,7 @@ import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.NavHostActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel>(R.layout.fragment_nickname) {
@@ -34,20 +35,22 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.errorEvent.collect {
-                showToastMessage(it)
+            launch {
+                viewModel.errorEvent.collect {
+                    showToastMessage(it)
+                }
             }
-        }
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
-                when(it) {
-                    is NicknameNavigationAction.NavigateToHome -> {
-                        var intent = Intent(requireActivity(), NavHostActivity::class.java)
-                        activity?.let { activity ->
-                            toastMessage("회원가입에 성공하였습니다.")
-                            activity.setResult(9001,intent)
-                            activity.finish()
+            launch {
+                viewModel.navigationEvent.collect {
+                    when(it) {
+                        is NicknameNavigationAction.NavigateToHome -> {
+                            var intent = Intent(requireActivity(), NavHostActivity::class.java)
+                            activity?.let { activity ->
+                                toastMessage("회원가입에 성공하였습니다.")
+                                activity.setResult(9001,intent)
+                                activity.finish()
+                            }
                         }
                     }
                 }
