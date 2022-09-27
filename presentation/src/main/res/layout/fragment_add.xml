@@ -57,7 +57,7 @@
                     android:layout_marginStart="99dp"
                     android:layout_marginEnd="99dp"
                     android:layout_marginTop="12dp"
-                    app:image_from_url="@{vm.nftImageLiveData}"
+                    app:image_from_url="@{vm.nftImageState}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -83,7 +83,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text='@{vm.titleLengthLiveData.toString()+"/20"}'
+                    android:text='@{vm.titleLengthState.toString()+"/20"}'
                     android:textColor="@color/surface6"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/NFT_title_Textview"
@@ -146,7 +146,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text='@{vm.descriptionLengthLiveData.toString()+"/300"}'
+                    android:text='@{vm.descriptionLengthState.toString()+"/300"}'
                     android:textColor="@color/surface6"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/NFT_description_Textview"
