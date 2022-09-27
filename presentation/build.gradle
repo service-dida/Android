@@ -112,6 +112,6 @@ dependencies {
     // skeleton Ui
     implementation "com.facebook.shimmer:shimmer:0.5.0"
 
-    // Request Fragment
+    // Fragment Result API
     implementation "androidx.fragment:fragment-ktx:1.3.0"
 }

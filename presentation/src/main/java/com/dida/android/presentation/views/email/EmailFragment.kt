@@ -1,6 +1,8 @@
 package com.dida.android.presentation.views.email
 
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -50,8 +52,16 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                 viewModel.createWalletState.collect { result ->
                     if(result) {
                         dismissLoadingDialog()
+                        /**
+                         * 방법1 navigationController로 데이터 전달
+                         * */
                         navController.previousBackStackEntry?.savedStateHandle?.set("WalletCheck", true)
                         navController.popBackStack()
+
+                        /**
+                         * 방법2 Fragment Result API
+                         * */
+//                        setFragmentResult("walletCheck", bundleOf("hasWallet" to true))
                     }
                 }
             }
