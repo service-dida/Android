@@ -39,18 +39,20 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.sendEmailState.collect {
-                dismissLoadingDialog()
-                timeCheck()
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            viewModel.createWalletState.collect { result ->
-                if(result) {
+            launch {
+                viewModel.sendEmailState.collect {
                     dismissLoadingDialog()
-                    navController.previousBackStackEntry?.savedStateHandle?.set("WalletCheck", true)
-                    navController.popBackStack()
+                    timeCheck()
+                }
+            }
+
+            launch {
+                viewModel.createWalletState.collect { result ->
+                    if(result) {
+                        dismissLoadingDialog()
+                        navController.previousBackStackEntry?.savedStateHandle?.set("WalletCheck", true)
+                        navController.popBackStack()
+                    }
                 }
             }
         }
