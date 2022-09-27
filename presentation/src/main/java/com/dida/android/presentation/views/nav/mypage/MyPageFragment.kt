@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views.nav.mypage
 
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -14,7 +13,6 @@ import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.adapter.mypage.UserNftAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.util.ConvertDpToPx
 import com.dida.android.util.GridSpacing
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
