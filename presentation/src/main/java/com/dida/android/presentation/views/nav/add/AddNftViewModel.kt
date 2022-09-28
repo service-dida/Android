@@ -6,6 +6,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddNftViewModel @Inject constructor() : BaseViewModel() {
-
     private val TAG = "AddNftViewModel"
 }

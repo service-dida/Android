@@ -2,24 +2,24 @@ package com.dida.android.presentation.views.nav.add
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
-import com.dida.android.util.AppLog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fragment_add) {
@@ -45,13 +45,29 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         Email Fragment 에서 완료를 했을 경우에는 현재화면에서 NFT 생성
         아닐 경우에는 Toast 메세지를 띄우고 뒤로 가기
         * */
+        /**
+         * 방법1 navigationController
+         * */
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("WalletCheck")?.observe(viewLifecycleOwner) {
             if (!it) {
                 toastMessage("지갑을 생성해야 NFT를 만들 수 있습니다.")
                 navController.popBackStack()
+            } else {
+                getImageToGallery()
             }
-            else { getImageToGallery() }
         }
+        /**
+         * 방법2 Fragment Result API
+         * */
+//        setFragmentResultListener("walletCheck") { _, bundle ->
+//            val result = bundle.getBoolean("hasWallet")
+//            if(!result) {
+//                toastMessage("지갑을 생성해야 NFT를 만들 수 있습니다.")
+//                navController.popBackStack()
+//            } else {
+//                getImageToGallery()
+//            }
+//        }
     }
 
     override fun initStartView() {
@@ -73,49 +89,52 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     }
 
     override fun initDataBinding() {
-        viewModel.walletExistsLiveData.observe(this) {
-            dismissLoadingDialog()
-            // 지갑이 없는 경우 지갑 생성
-            if (!it) {
-                toastMessage("지갑을 생성해야 합니다!")
-                navController.navigate(R.id.action_addFragment_to_emailFragment)
-            }
-            else {
-                if(!isSelected){
-                    val passwordDialog = PasswordDialog(true) { password ->
-                        viewModel.checkPassword(password)
-                        showLoadingDialog()
+        lifecycleScope.launchWhenStarted {
+            launch {
+                viewModel.walletExistsState.collect {
+                    dismissLoadingDialog()
+                    // 지갑이 없는 경우 지갑 생성
+                    if (!it) {
+                        toastMessage("지갑을 생성해야 합니다!")
+                        navController.navigate(R.id.action_addFragment_to_emailFragment)
                     }
-                    passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+                    else {
+                        if(!isSelected){
+                            val passwordDialog = PasswordDialog(true) { password ->
+                                viewModel.checkPassword(password)
+                                showLoadingDialog()
+                            }
+                            passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+                        }
+                    }
                 }
             }
-        }
 
-        viewModel.checkPasswordLiveData.observe(this) {
-            dismissLoadingDialog()
-            if(it) {
-                getImageToGallery()
-            }
-            else {
-                toastMessage("비밀번호가 틀렸습니다.")
-                val passwordDialog = PasswordDialog(true) { password ->
-                    viewModel.checkPassword(password)
-                    showLoadingDialog()
+            launch {
+                viewModel.checkPasswordState.collect {
+                    dismissLoadingDialog()
+                    if(it) {
+                        getImageToGallery()
+                    } else {
+                        toastMessage("비밀번호가 틀렸습니다.")
+                        val passwordDialog = PasswordDialog(true) { password ->
+                            viewModel.checkPassword(password)
+                            showLoadingDialog()
+                        }
+                        passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+                    }
                 }
-                passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
             }
-        }
 
-        viewModel.errorLiveData.observe(this) {
-            toastMessage("네트워크 상태가 좋지 않습니다!")
-            navController.popBackStack()
+            launch {
+                viewModel.nftImageState.collect {
+
+                }
+            }
         }
     }
 
     override fun initAfterBinding() {
-        viewModel.nftImageLiveData.observe(viewLifecycleOwner) {
-
-        }
     }
 
     private fun initRegisterForActivityResult() {
@@ -128,7 +147,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                         val uri = intent.data
                         viewModel.setNFTImage(uri)
                     }
-                }else{
+                } else{
                     navController.popBackStack()
                 }
             }
@@ -141,29 +160,30 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     }
 
     private fun initToolbar() {
-        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
-        binding.toolbar.setNavigationOnClickListener {
-            navController.popBackStack()
-        }
-
-        binding.toolbar.inflateMenu(R.menu.menu_add_toolbar)
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.add_next_step -> {
-                    if(binding.titleEditText.length()==0 || binding.descriptionEditText.length()==0){
-                        toastMessage("제목과 설명을 모두 입력해주세요.")
-                    }else{
-                        isSelected = true
-                        //사진,제목, 설명 이동
-                        val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                            viewModel.nftImageLiveData.value.toString(),
-                            binding.titleEditText.text.toString(),
-                            binding.descriptionEditText.text.toString())
-                        navigate(action)
+        binding.toolbar.apply {
+            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationOnClickListener {
+                navController.popBackStack()
+            }
+            this.inflateMenu(R.menu.menu_add_toolbar)
+            this.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.add_next_step -> {
+                        if(binding.titleEditText.length()==0 || binding.descriptionEditText.length()==0){
+                            toastMessage("제목과 설명을 모두 입력해주세요.")
+                        }else{
+                            isSelected = true
+                            //사진,제목, 설명 이동
+                            val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                                viewModel.nftImageState.value.toString(),
+                                binding.titleEditText.text.toString(),
+                                binding.descriptionEditText.text.toString())
+                            navigate(action)
+                        }
                     }
                 }
+                true
             }
-            true
         }
     }
     

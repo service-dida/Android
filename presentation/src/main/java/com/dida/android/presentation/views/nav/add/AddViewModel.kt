@@ -3,15 +3,14 @@ package com.dida.android.presentation.views.nav.add
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.repository.MainRepository
 import com.dida.domain.usecase.CheckPasswordAPI
-import com.dida.domain.usecase.CreateUserAPI
 import com.dida.domain.usecase.WalletExistedAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,55 +22,51 @@ class AddViewModel @Inject constructor(
 
     private val TAG = "AddViewModel"
 
-    private val _walletExistsLiveData = MutableLiveData<Boolean>()
-    val walletExistsLiveData: LiveData<Boolean> = _walletExistsLiveData
+    private val _walletExistsState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val walletExistsState: StateFlow<Boolean> = _walletExistsState
 
-    private val _errorLiveData = MutableLiveData<String>()
-    val errorLiveData: LiveData<String> = _errorLiveData
+    private val _nftImageState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val nftImageState: StateFlow<String> = _nftImageState
 
-    private val _nftImageLiveData = MutableLiveData("")
-    val nftImageLiveData: LiveData<String> = _nftImageLiveData
+    private val _titleLengthState: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
+    val titleLengthState: StateFlow<Int> = _titleLengthState
 
-    private val _titleLengthLiveData = MutableLiveData(0)
-    val titleLengthLiveData: LiveData<Int> = _titleLengthLiveData
-
-    private val _descriptionLengthLiveData = MutableLiveData(0)
-    val descriptionLengthLiveData: LiveData<Int> = _descriptionLengthLiveData
+    private val _descriptionLengthState: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
+    val descriptionLengthState: StateFlow<Int> = _descriptionLengthState
 
     fun getWalletExists() {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             walletExistedAPI()
                 .onSuccess {
-                    _walletExistsLiveData.postValue(it)
-                }.onError {
-                    _errorLiveData.postValue(it.message)
+                    _walletExistsState.value = it
+                }.onError { e ->
+                    catchError(e)
                 }
         }
     }
 
     fun setNFTImage(uri: Uri?){
-        _nftImageLiveData.postValue(uri.toString())
+        _nftImageState.value = uri.toString()
     }
 
     fun setTitleLength(length : Int){
-        _titleLengthLiveData.postValue(length)
+        _titleLengthState.value = length
     }
 
     fun setDescriptionLength(length : Int){
-        _descriptionLengthLiveData.postValue(length)
+        _descriptionLengthState.value = length
     }
 
-    private val _checkPasswordLiveData = MutableLiveData<Boolean>()
-    val checkPasswordLiveData: LiveData<Boolean>
-        get() = _checkPasswordLiveData
+    private val _checkPasswordState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val checkPasswordState: StateFlow<Boolean> = _checkPasswordState
 
     fun checkPassword(password: String) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             checkPasswordAPI(password)
                 .onSuccess {
-                    _checkPasswordLiveData.postValue(it)
-                }.onError {
-                    _errorLiveData.postValue(it.message)
+                    _checkPasswordState.value = it
+                }.onError { e ->
+                    catchError(e)
                 }
         }
     }

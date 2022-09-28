@@ -25,7 +25,6 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         get() = R.layout.fragment_loginmain // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel : LoginMainViewModel by viewModels()
-    private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
         binding.apply {

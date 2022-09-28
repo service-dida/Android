@@ -64,6 +64,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
             }
             dialog.show(childFragmentManager, "AddPurposeFragment")
         }
+
         binding.type2Button.setOnClickListener {
             viewModel.changePurposeType(2)
             val dialog = AddNftPriceBottomSheet(){
