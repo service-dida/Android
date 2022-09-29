@@ -84,8 +84,6 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         // User의 지갑이 있는지 체크
         viewModel.getWalletExists()
         showLoadingDialog()
-        getImageToGallery()
-
     }
 
     override fun initDataBinding() {
