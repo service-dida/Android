@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -41,33 +42,12 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*
-        Email Fragment 에서 완료를 했을 경우에는 현재화면에서 NFT 생성
-        아닐 경우에는 Toast 메세지를 띄우고 뒤로 가기
-        * */
-        /**
-         * 방법1 navigationController
-         * */
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("WalletCheck")?.observe(viewLifecycleOwner) {
-            if (!it) {
-                toastMessage("지갑을 생성해야 NFT를 만들 수 있습니다.")
-                navController.popBackStack()
-            } else {
-                getImageToGallery()
-            }
+
+        // 이메일에서 인증 완료후 돌아 왔을 때
+        setFragmentResultListener("walletCheck") { _, bundle ->
+            val result = bundle.getBoolean("hasWallet")
+            if(result) { getImageToGallery() }
         }
-        /**
-         * 방법2 Fragment Result API
-         * */
-//        setFragmentResultListener("walletCheck") { _, bundle ->
-//            val result = bundle.getBoolean("hasWallet")
-//            if(!result) {
-//                toastMessage("지갑을 생성해야 NFT를 만들 수 있습니다.")
-//                navController.popBackStack()
-//            } else {
-//                getImageToGallery()
-//            }
-//        }
     }
 
     override fun initStartView() {
@@ -110,9 +90,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             launch {
                 viewModel.checkPasswordState.collect {
                     dismissLoadingDialog()
-                    if(it) {
-                        getImageToGallery()
-                    } else {
+                    if(it) { getImageToGallery() }
+                    else {
                         toastMessage("비밀번호가 틀렸습니다.")
                         val passwordDialog = PasswordDialog(true) { password ->
                             viewModel.checkPassword(password)
