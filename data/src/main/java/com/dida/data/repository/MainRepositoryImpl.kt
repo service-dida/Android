@@ -9,6 +9,7 @@ import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
 import com.dida.data.model.login.CreateUserRequestModel
+import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.createwallet.RandomNumber
@@ -39,7 +40,8 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun nicknameAPI(nickName: String): NetworkResult<NicknameResponseModel> {
-        return handleApi { mainAPIService.nicknameAPIServer(nickName) }
+        val request = PostNicknameRequest(nickName)
+        return handleApi { mainAPIService.nicknameAPIServer(request) }
     }
 
     override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<LoginResponseModel> {

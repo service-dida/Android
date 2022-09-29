@@ -6,6 +6,7 @@ import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.data.model.login.CreateUserRequestModel
+import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
@@ -22,7 +23,7 @@ interface MainAPIService {
     suspend fun loginAPIServer(@Body idToken : String): LoginResponseModel
 
     @POST("/user/nickname")
-    suspend fun nicknameAPIServer(@Body nickName: String): NicknameResponseModel
+    suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): NicknameResponseModel
 
     @POST("/new/user")
     suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): LoginResponseModel
