@@ -1,4 +1,4 @@
-package com.dida.domain.usecase
+package com.dida.domain.usecase.main
 
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
@@ -20,10 +20,10 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class CheckVersionAPI @Inject constructor(
+class SoldOutAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(): Response<AppVersionResponse> {
-        return repository.checkVersionAPI()
+    suspend operator fun invoke(term: Int) : NetworkResult<List<SoldOut>> {
+        return repository.getSoldOutAPI(term)
     }
 }

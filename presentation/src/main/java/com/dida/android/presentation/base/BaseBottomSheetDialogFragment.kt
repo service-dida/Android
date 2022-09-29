@@ -34,6 +34,8 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
     lateinit var mLoadingDialog: LoadingDialog
 
     protected var exception: SharedFlow<Throwable>? = null
+    protected var toast: Toast? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,13 +95,13 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
 
     // Toast Message 관련 함수
     fun showToastMessage(e: Throwable?) {
-        e?.let {
-            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
-        }
+        toast?.cancel()
+        toast = Toast.makeText(activity, e?.message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수
     fun toastMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        toast?.cancel()
+        toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 }

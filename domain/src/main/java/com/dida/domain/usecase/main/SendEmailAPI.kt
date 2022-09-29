@@ -1,4 +1,4 @@
-package com.dida.domain.usecase
+package com.dida.domain.usecase.main
 
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
@@ -20,10 +20,10 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class ChangePasswordAPI @Inject constructor(
+class SendEmailAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(beforePassword: String, afterPassword: String) : NetworkResult<Unit> {
-        return repository.postChangePasswordAPI(beforePassword, afterPassword)
+    suspend operator fun invoke() : NetworkResult<RandomNumber> {
+        return repository.getSendEmailAPI()
     }
 }

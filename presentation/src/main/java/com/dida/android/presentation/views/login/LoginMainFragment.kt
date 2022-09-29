@@ -12,6 +12,7 @@ import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.NavHostActivity
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -66,11 +67,20 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             // 로그인 실패
             if (error != null) {
-                Log.d(TAG, "kakaoLogin 실패 ${error.message}")
+                when {
+                    error.toString() == AuthErrorCause.AccessDenied.toString() -> toastMessage("접근이 거부 됨(동의 취소)")
+                    error.toString() == AuthErrorCause.InvalidClient.toString() -> toastMessage("유효하지 않은 앱")
+                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> toastMessage("인증 수단이 유효하지 않아 인증할 수 없는 상태")
+                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> toastMessage("요청 파라미터 오류")
+                    error.toString() == AuthErrorCause.InvalidScope.toString() -> toastMessage("유효하지 않은 scope ID")
+                    error.toString() == AuthErrorCause.Misconfigured.toString() -> toastMessage("설정이 올바르지 않음(android key hash)")
+                    error.toString() == AuthErrorCause.ServerError.toString() -> toastMessage("서버 내부 에러")
+                    error.toString() == AuthErrorCause.Unauthorized.toString() -> toastMessage("앱이 요청 권한이 없음")
+                    else -> toastMessage("카카오톡의 미로그인")
+                }
             }
             //로그인 성공
             else if (token != null) {
-                Log.d(TAG, "kakaoLogin 성공 ${token.accessToken} ")
                 viewModel.loginAPIServer(token.accessToken)
                 showLoadingDialog()
             }
@@ -78,15 +88,9 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
 
         // 카카오톡 설치여부 확인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
-            UserApiClient.instance.loginWithKakaoTalk(
-                requireContext(),
-                callback = kakaoCallback
-            )
+            UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = kakaoCallback)
         } else {
-            UserApiClient.instance.loginWithKakaoAccount(
-                requireContext(),
-                callback = kakaoCallback
-            )
+            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)
         }
     }
 }

@@ -2,15 +2,13 @@ package com.dida.android.presentation.views.nav.home
 
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
-import com.dida.android.presentation.base.successOrNull
 import com.dida.android.util.NftActionHandler
-import com.dida.domain.flatMap
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.HomeAPI
-import com.dida.domain.usecase.SoldOutAPI
+import com.dida.domain.usecase.main.HomeAPI
+import com.dida.domain.usecase.main.SoldOutAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

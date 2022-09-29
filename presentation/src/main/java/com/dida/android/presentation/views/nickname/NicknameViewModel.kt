@@ -4,9 +4,8 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.repository.MainRepository
-import com.dida.domain.usecase.CreateUserAPI
-import com.dida.domain.usecase.NicknameCheckAPI
+import com.dida.domain.usecase.main.CreateUserAPI
+import com.dida.domain.usecase.main.NicknameCheckAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

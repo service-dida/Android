@@ -9,6 +9,8 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.repository.KlaytnRepository
 import com.dida.domain.repository.MainRepository
+import com.dida.domain.usecase.klaytn.UploadAssetUsecase
+import com.dida.domain.usecase.main.MintNftAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +26,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
-    private val klaytnRepository: KlaytnRepository
+    private val mintNftAPI: MintNftAPI,
+    private val uploadAssetUsecase: UploadAssetUsecase,
 ) : BaseViewModel() {
 
     private val TAG = "AddPurposeViewModel"
@@ -73,7 +75,7 @@ class AddPurposeViewModel @Inject constructor(
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
         viewModelScope.launch {
-            klaytnRepository.uploadAsset(requestBody)
+            uploadAssetUsecase(requestBody)
                 .onSuccess {
                     mintNFT(it.uri)
                 }.onError { e ->
@@ -84,7 +86,7 @@ class AddPurposeViewModel @Inject constructor(
 
     fun mintNFT(uri : String){
         viewModelScope.launch {
-            mainRepository.mintNFT(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
+            mintNftAPI(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
                 .onSuccess {
                     //TODO : 만들어졌을때의 화면 이동 구현하기
                     _mintNFTEvent.value = true

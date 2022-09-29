@@ -4,7 +4,7 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.LoginAPI
+import com.dida.domain.usecase.main.LoginAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

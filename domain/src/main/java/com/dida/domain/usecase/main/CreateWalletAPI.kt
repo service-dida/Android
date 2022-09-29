@@ -1,4 +1,4 @@
-package com.dida.domain.usecase
+package com.dida.domain.usecase.main
 
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
@@ -20,10 +20,10 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class TempPasswordAPI @Inject constructor(
+class CreateWalletAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke() : NetworkResult<Unit> {
-        return repository.getTempPasswordAPI()
+    suspend operator fun invoke(password: String, passwordCheck: String) : NetworkResult<Unit> {
+        return repository.postCreateWalletAPI(password, passwordCheck)
     }
 }

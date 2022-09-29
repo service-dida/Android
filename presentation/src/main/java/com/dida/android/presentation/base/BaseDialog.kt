@@ -52,6 +52,7 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
 
     private var isSetBackButtonValid = false
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

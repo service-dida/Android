@@ -1,4 +1,4 @@
-package com.dida.domain.usecase
+package com.dida.domain.usecase.main
 
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel

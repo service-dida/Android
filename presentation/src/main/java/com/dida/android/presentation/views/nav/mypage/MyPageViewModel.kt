@@ -1,22 +1,16 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
-import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.android.util.AppLog
 import com.dida.android.util.NftActionHandler
-import com.dida.android.util.SingleLiveEvent
 import com.dida.data.DataApplication
-import com.dida.data.repository.MainRepositoryImpl
-import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.UserNftAPI
-import com.dida.domain.usecase.UserProfileAPI
+import com.dida.domain.usecase.main.UserNftAPI
+import com.dida.domain.usecase.main.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

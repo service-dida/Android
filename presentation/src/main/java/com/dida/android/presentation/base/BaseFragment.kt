@@ -66,6 +66,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * Exception을 처리할 SharedFlow
     */
     protected var exception: SharedFlow<Throwable>? = null
+    protected var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,6 +99,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        toast?.cancel()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -117,14 +123,14 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     // Toast Message 관련 함수
     fun showToastMessage(e: Throwable?) {
-        e?.let {
-            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
-        }
+        toast?.cancel()
+        toast = Toast.makeText(activity, e?.message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수
     fun toastMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        toast?.cancel()
+        toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // navigation 중복체크 관리 <- checkNavigation 대신 사용할것

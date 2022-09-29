@@ -1,13 +1,11 @@
 package com.dida.android.presentation.views.nav.add
 
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.CheckPasswordAPI
-import com.dida.domain.usecase.WalletExistedAPI
+import com.dida.domain.usecase.main.CheckPasswordAPI
+import com.dida.domain.usecase.main.WalletExistedAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

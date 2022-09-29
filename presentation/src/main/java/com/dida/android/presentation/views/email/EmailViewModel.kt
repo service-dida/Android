@@ -3,9 +3,8 @@ package com.dida.android.presentation.views.email
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.repository.MainRepository
-import com.dida.domain.usecase.CreateWalletAPI
-import com.dida.domain.usecase.SendEmailAPI
+import com.dida.domain.usecase.main.CreateWalletAPI
+import com.dida.domain.usecase.main.SendEmailAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
