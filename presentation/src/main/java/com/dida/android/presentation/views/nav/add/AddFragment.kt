@@ -148,7 +148,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     R.id.add_next_step -> {
                         if(viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0){
                             toastMessage("제목과 설명을 모두 입력해주세요.")
-                        }else{
+                        } else{
                             isSelected = true
                             //사진,제목, 설명 이동
                             val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import com.dida.android.util.AppLog
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -12,10 +13,7 @@ import com.dida.domain.repository.MainRepository
 import com.dida.domain.usecase.klaytn.UploadAssetUsecase
 import com.dida.domain.usecase.main.MintNftAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -33,19 +31,16 @@ class AddPurposeViewModel @Inject constructor(
     private val TAG = "AddPurposeViewModel"
 
     private val _nftImageLiveData = MutableLiveData<String>()
-    val nftImageLiveData: LiveData<String>
-        get() = _nftImageLiveData
+    val nftImageLiveData: LiveData<String> = _nftImageLiveData
 
     private val _titleLiveData = MutableLiveData<String>()
-    val titleLiveData: LiveData<String>
-        get() = _titleLiveData
+    val titleLiveData: LiveData<String> = _titleLiveData
 
     private val _descriptionLiveData = MutableLiveData<String>()
-    val descriptionLiveData: LiveData<String>
-        get() = _descriptionLiveData
+    val descriptionLiveData: LiveData<String> = _descriptionLiveData
 
-    private val _mintNFTEvent = MutableStateFlow<Boolean>(false)
-    val mintNFTEvent: StateFlow<Boolean> = _mintNFTEvent
+    private val _successCreateNft: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val successCreateNft: SharedFlow<Boolean> = _successCreateNft
 
     /**
      * 소장용 : 1
@@ -67,32 +62,21 @@ class AddPurposeViewModel @Inject constructor(
 
     fun uploadAsset(imagePath : String){
         val file = File(imagePath)
-
-        val requestFile = file.asRequestBody(
-            "image/*".toMediaTypeOrNull()
-        )
-
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
         viewModelScope.launch {
             uploadAssetUsecase(requestBody)
-                .onSuccess {
-                    mintNFT(it.uri)
-                }.onError { e ->
-                    catchError(e)
-                }
+                .onSuccess { mintNFT(it.uri) }
+                .onError { e -> catchError(e) }
         }
     }
 
     fun mintNFT(uri : String){
         viewModelScope.launch {
             mintNftAPI(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
-                .onSuccess {
-                    //TODO : 만들어졌을때의 화면 이동 구현하기
-                    _mintNFTEvent.value = true
-                }.onError { e ->
-                    catchError(e)
-                }
+                .onSuccess { _successCreateNft.emit(true) }
+                .onError { e -> catchError(e) }
         }
     }
 }

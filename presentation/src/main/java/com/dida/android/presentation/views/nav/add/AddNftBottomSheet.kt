@@ -42,6 +42,7 @@ class AddNftBottomSheet(
     override fun initAfterBinding() {
         binding.okBtn.setOnClickListener {
             itemClick()
+            dismiss()
         }
     }
 }
