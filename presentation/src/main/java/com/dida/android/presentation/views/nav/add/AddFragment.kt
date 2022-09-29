@@ -95,8 +95,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     if (!it) {
                         toastMessage("지갑을 생성해야 합니다!")
                         navController.navigate(R.id.action_addFragment_to_emailFragment)
-                    }
-                    else {
+                    } else {
                         if(!isSelected){
                             val passwordDialog = PasswordDialog(true) { password ->
                                 viewModel.checkPassword(password)
