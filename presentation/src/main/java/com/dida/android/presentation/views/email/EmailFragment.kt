@@ -1,8 +1,5 @@
 package com.dida.android.presentation.views.email
 
-import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
