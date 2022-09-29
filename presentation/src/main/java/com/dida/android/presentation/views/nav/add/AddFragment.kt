@@ -58,8 +58,6 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         exception = viewModel.errorEvent
         initToolbar()
         initRegisterForActivityResult()
-        textLengthCheckListener(binding.titleEditText)
-        textLengthCheckListener(binding.descriptionEditText)
 
         // User의 지갑이 있는지 체크
         viewModel.getWalletExists()
@@ -145,15 +143,16 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.add_next_step -> {
-                        if(binding.titleEditText.length()==0 || binding.descriptionEditText.length()==0){
+                        if(viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0){
                             toastMessage("제목과 설명을 모두 입력해주세요.")
                         }else{
                             isSelected = true
                             //사진,제목, 설명 이동
                             val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                                viewModel.nftImageState.value.toString(),
-                                binding.titleEditText.text.toString(),
-                                binding.descriptionEditText.text.toString())
+                                viewModel.nftImageState.value,
+                                viewModel.titleTextState.value,
+                                viewModel.descriptionTextState.value
+                            )
                             navigate(action)
                         }
                     }
@@ -161,20 +160,5 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 true
             }
         }
-    }
-    
-    private fun textLengthCheckListener(editText : EditText){
-        editText.addTextChangedListener (object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {
-                val length = editText.length()
-                if(editText==binding.titleEditText){
-                    viewModel.setTitleLength(length)
-                } else if(editText==binding.descriptionEditText){
-                    viewModel.setDescriptionLength(length)
-                }
-            }
-        })
     }
 }
