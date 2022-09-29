@@ -69,10 +69,14 @@
             app:enterAnim="@anim/enter_from_right"/>
         <action
             android:id="@+id/action_myPageFragment_to_detailNftFragment"
-            app:destination="@id/detailNftFragment" />
+            app:destination="@id/detailNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
         <action
             android:id="@+id/action_myPageFragment_to_emailFragment"
-            app:destination="@id/emailFragment" />
+            app:destination="@id/emailFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment
@@ -82,8 +86,19 @@
 
     <fragment
         android:id="@+id/detailNftFragment"
-        android:name="com.dida.android.presentation.views.nav.detailnft.DetailNftFragment"
-        android:label="DetailNftFragment" />
+        android:name="com.dida.android.presentation.views.detailnft.DetailNftFragment"
+        android:label="DetailNftFragment" >
+        <action
+            android:id="@+id/action_detailNftFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_detailNftFragment_to_communityFragment"
+            app:destination="@id/communityFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+    </fragment>
 
     <fragment
         android:id="@+id/emailFragment"

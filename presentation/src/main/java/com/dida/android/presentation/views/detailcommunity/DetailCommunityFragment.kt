@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views.detailcommunity
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -51,6 +52,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private fun initToolbar(){
         binding.toolbar.apply {
             this.title = resources.getString(R.string.detail_community_title)
+            this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener {
                 navController.popBackStack()

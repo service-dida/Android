@@ -1,11 +1,10 @@
-package com.dida.android.presentation.views.nav.detailnft
+package com.dida.android.presentation.views.detailnft
 
-import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
@@ -14,6 +13,8 @@ import com.dida.android.presentation.views.nav.community.CommunityViewModel
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -25,7 +26,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         get() = R.layout.fragment_detail_nft
 
     override val viewModel : DetailNftViewModel by viewModels()
-    private val communityViewModel : CommunityViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
 
 
@@ -40,6 +40,16 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     override fun initDataBinding() {
+        lifecycleScope.launchWhenStarted {
+            launch {
+                viewModel.navigationEvent.collect {
+                    when(it) {
+                        is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
+                        is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment())
+                    }
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {
@@ -85,7 +95,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             )
         )
 
-        val testAdapter = CommunityAdapter(communityViewModel)
+        val testAdapter = CommunityAdapter(viewModel)
         testAdapter.submitList(test)
 
         binding.communityRecycler.adapter = testAdapter
