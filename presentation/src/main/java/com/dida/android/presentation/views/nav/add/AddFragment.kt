@@ -46,7 +46,10 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         // 이메일에서 인증 완료후 돌아 왔을 때
         setFragmentResultListener("walletCheck") { _, bundle ->
             val result = bundle.getBoolean("hasWallet")
-            if(result) { getImageToGallery() }
+            if(result) {
+                viewModel.createWallet()
+                getImageToGallery()
+            }
         }
     }
 
@@ -70,10 +73,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 viewModel.walletExistsState.collect {
                     dismissLoadingDialog()
                     // 지갑이 없는 경우 지갑 생성
-                    if (!it) {
-                        toastMessage("지갑을 생성해야 합니다!")
-                        navController.navigate(R.id.action_addFragment_to_emailFragment)
-                    } else {
+                    if (it) {
                         if(!isSelected){
                             val passwordDialog = PasswordDialog(true) { password ->
                                 viewModel.checkPassword(password)
@@ -81,6 +81,9 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                             }
                             passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                         }
+                    } else {
+                        toastMessage("지갑을 생성해야 합니다!")
+                        navController.navigate(R.id.action_addFragment_to_emailFragment)
                     }
                 }
             }

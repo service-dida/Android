@@ -19,7 +19,7 @@ class AddViewModel @Inject constructor(
 
     private val TAG = "AddViewModel"
 
-    private val _walletExistsState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    private val _walletExistsState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(true)
     val walletExistsState: StateFlow<Boolean> = _walletExistsState
 
     private val _nftImageState: MutableStateFlow<String> = MutableStateFlow<String>("")
@@ -44,6 +44,12 @@ class AddViewModel @Inject constructor(
                     descriptionLengthState.emit(it.length)
                 }
             }
+        }
+    }
+
+    fun createWallet() {
+        baseViewModelScope.launch {
+            _walletExistsState.value = true
         }
     }
 
