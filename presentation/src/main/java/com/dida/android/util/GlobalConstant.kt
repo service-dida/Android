@@ -1,5 +1,6 @@
 package com.dida.android.util
 
+@Deprecated("BaseUrl 레이어 이전")
 class GlobalConstant {
     // 코틀린의 전역변수 문법
     companion object {

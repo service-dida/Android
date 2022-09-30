@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+@Deprecated("Padding 으로 전환")
 class GridSpacing(
     val mSpacing : Int,
     val mTopSpacing : Int): RecyclerView.ItemDecoration() {
