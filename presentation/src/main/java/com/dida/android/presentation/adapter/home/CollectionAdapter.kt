@@ -50,9 +50,9 @@ class CollectionAdapter(
 
     internal object CollectionItemDiffCallback : DiffUtil.ItemCallback<Collection>() {
         override fun areItemsTheSame(oldItem: Collection, newItem: Collection) =
-            oldItem.userId == newItem.userId
+            oldItem == newItem
 
         override fun areContentsTheSame(oldItem: Collection, newItem: Collection) =
-            oldItem == newItem
+            oldItem.equals(newItem)
     }
 }

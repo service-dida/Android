@@ -24,6 +24,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     override val viewModel: MyPageViewModel by viewModels()
     val navController: NavController by lazy { findNavController() }
 
+    init {
+        lifecycleScope.launchWhenResumed {
+            viewModel.initMyPageState()
+        }
+    }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -53,7 +59,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     }
 
     private fun initMyPage() {
-        viewModel.initMyPageState()
         initToolbar()
         initSpinner()
         initAdapter()

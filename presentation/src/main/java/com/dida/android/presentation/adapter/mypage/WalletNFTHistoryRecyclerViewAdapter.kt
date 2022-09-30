@@ -45,6 +45,6 @@ class WalletNFTHistoryRecyclerViewAdapter(
             oldItem == newItem
 
         override fun areContentsTheSame(oldItem: WalletNFTHistoryHolderModel, newItem: WalletNFTHistoryHolderModel) =
-            oldItem == newItem
+            oldItem.equals(newItem)
     }
 }

@@ -5,6 +5,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
@@ -14,6 +16,7 @@ import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 fun ImageView.bindUserProfile(uiState: UiState<MypageUiModel>) {
     Glide.with(context)
         .load(uiState.successOrNull()?.profileUrl)
+        .transform(CenterCrop(), RoundedCorners(100))
         .into(this)
 }
 

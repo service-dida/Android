@@ -46,9 +46,9 @@ class SoldOutAdapter(
 
     internal object SoldOutItemDiffCallback : DiffUtil.ItemCallback<SoldOut>() {
         override fun areItemsTheSame(oldItem: SoldOut, newItem: SoldOut) =
-            oldItem.nftId == newItem.nftId
+            oldItem == newItem
 
         override fun areContentsTheSame(oldItem: SoldOut, newItem: SoldOut) =
-            oldItem == newItem
+            oldItem.equals(newItem)
     }
 }
