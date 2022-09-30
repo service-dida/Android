@@ -1,23 +1,15 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
-import com.dida.android.presentation.adapter.mypage.UserNftAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.util.GridSpacing
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

@@ -46,6 +46,6 @@ class WalletCardRecyclerViewAdapter(
             oldItem == newItem
 
         override fun areContentsTheSame(oldItem: WalletCardHolderModel, newItem: WalletCardHolderModel) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

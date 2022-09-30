@@ -54,6 +54,6 @@ class CommunityAdapter(
             oldItem == newItem
 
         override fun areContentsTheSame(oldItem: Community, newItem: Community) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

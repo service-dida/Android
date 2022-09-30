@@ -47,9 +47,9 @@ class RecentNftAdapter(
 
     internal object RecentNftItemDiffCallback : DiffUtil.ItemCallback<UserCardsResponseModel>() {
         override fun areItemsTheSame(oldItem: UserCardsResponseModel, newItem: UserCardsResponseModel) =
-            oldItem == newItem
+            oldItem.cardId == newItem.cardId
 
         override fun areContentsTheSame(oldItem: UserCardsResponseModel, newItem: UserCardsResponseModel) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

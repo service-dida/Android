@@ -46,6 +46,6 @@ class CommentsAdapter(
             oldItem == newItem
 
         override fun areContentsTheSame(oldItem: Comments, newItem: Comments) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }
