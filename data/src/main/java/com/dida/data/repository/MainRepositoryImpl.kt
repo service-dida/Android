@@ -87,7 +87,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getWalletExistsAPI(): NetworkResult<Boolean> {
-        return handleApi { mainAPIService.getWalletExists().toDomain() }
+        return handleApi { mainAPIService.getWalletExists().existed }
     }
 
     override suspend fun getCheckPasswordAPI(password: String): NetworkResult<Boolean> {

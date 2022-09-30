@@ -29,7 +29,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         get() = R.layout.fragment_community
 
     override val viewModel : CommunityViewModel by viewModels()
-    private val navController: NavController by lazy { findNavController() }
     private val activeNFTRecyclerViewAdapter = ActiveNFTRecyclerViewAdapter()
     private val reservationNFTRecyclerViewAdapter = ReservationNFTRecyclerViewAdapter()
 

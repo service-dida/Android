@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -41,33 +42,15 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*
-        Email Fragment 에서 완료를 했을 경우에는 현재화면에서 NFT 생성
-        아닐 경우에는 Toast 메세지를 띄우고 뒤로 가기
-        * */
-        /**
-         * 방법1 navigationController
-         * */
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("WalletCheck")?.observe(viewLifecycleOwner) {
-            if (!it) {
-                toastMessage("지갑을 생성해야 NFT를 만들 수 있습니다.")
-                navController.popBackStack()
-            } else {
+
+        // 이메일에서 인증 완료후 돌아 왔을 때
+        setFragmentResultListener("walletCheck") { _, bundle ->
+            val result = bundle.getBoolean("hasWallet")
+            if(result) {
+                viewModel.createWallet()
                 getImageToGallery()
             }
         }
-        /**
-         * 방법2 Fragment Result API
-         * */
-//        setFragmentResultListener("walletCheck") { _, bundle ->
-//            val result = bundle.getBoolean("hasWallet")
-//            if(!result) {
-//                toastMessage("지갑을 생성해야 NFT를 만들 수 있습니다.")
-//                navController.popBackStack()
-//            } else {
-//                getImageToGallery()
-//            }
-//        }
     }
 
     override fun initStartView() {
@@ -78,8 +61,6 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         exception = viewModel.errorEvent
         initToolbar()
         initRegisterForActivityResult()
-        textLengthCheckListener(binding.titleEditText)
-        textLengthCheckListener(binding.descriptionEditText)
 
         // User의 지갑이 있는지 체크
         viewModel.getWalletExists()
@@ -92,10 +73,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 viewModel.walletExistsState.collect {
                     dismissLoadingDialog()
                     // 지갑이 없는 경우 지갑 생성
-                    if (!it) {
-                        toastMessage("지갑을 생성해야 합니다!")
-                        navController.navigate(R.id.action_addFragment_to_emailFragment)
-                    } else {
+                    if (it) {
                         if(!isSelected){
                             val passwordDialog = PasswordDialog(true) { password ->
                                 viewModel.checkPassword(password)
@@ -103,6 +81,9 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                             }
                             passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                         }
+                    } else {
+                        toastMessage("지갑을 생성해야 합니다!")
+                        navController.navigate(R.id.action_addFragment_to_emailFragment)
                     }
                 }
             }
@@ -110,9 +91,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             launch {
                 viewModel.checkPasswordState.collect {
                     dismissLoadingDialog()
-                    if(it) {
-                        getImageToGallery()
-                    } else {
+                    if(it) { getImageToGallery() }
+                    else {
                         toastMessage("비밀번호가 틀렸습니다.")
                         val passwordDialog = PasswordDialog(true) { password ->
                             viewModel.checkPassword(password)
@@ -166,15 +146,16 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.add_next_step -> {
-                        if(binding.titleEditText.length()==0 || binding.descriptionEditText.length()==0){
+                        if(viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0){
                             toastMessage("제목과 설명을 모두 입력해주세요.")
-                        }else{
+                        } else{
                             isSelected = true
                             //사진,제목, 설명 이동
                             val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                                viewModel.nftImageState.value.toString(),
-                                binding.titleEditText.text.toString(),
-                                binding.descriptionEditText.text.toString())
+                                viewModel.nftImageState.value,
+                                viewModel.titleTextState.value,
+                                viewModel.descriptionTextState.value
+                            )
                             navigate(action)
                         }
                     }
@@ -182,20 +163,5 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 true
             }
         }
-    }
-    
-    private fun textLengthCheckListener(editText : EditText){
-        editText.addTextChangedListener (object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {
-                val length = editText.length()
-                if(editText==binding.titleEditText){
-                    viewModel.setTitleLength(length)
-                } else if(editText==binding.descriptionEditText){
-                    viewModel.setDescriptionLength(length)
-                }
-            }
-        })
     }
 }

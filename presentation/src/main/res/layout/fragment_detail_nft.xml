@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.detailnft.DetailNftViewModel" />
+            type="com.dida.android.presentation.views.detailnft.DetailNftViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -289,6 +289,7 @@
                     android:textSize="14dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:padding="12dp"
+                    android:onClick="@{() -> vm.onCommunityMoreClicked()}"
                     android:layout_marginRight="4dp">
                 </TextView>
 

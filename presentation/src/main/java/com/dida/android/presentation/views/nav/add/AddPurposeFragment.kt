@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
@@ -13,6 +14,7 @@ import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -38,12 +40,17 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     }
 
     override fun initDataBinding() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.successCreateNft.collect {
+                if(it) { navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()) }
+            }
+        }
     }
 
     override fun initAfterBinding() {
         binding.type1Button.setOnClickListener {
             viewModel.changePurposeType(1)
-            val dialog = AddNftBottomSheet(){
+            val dialog = AddNftBottomSheet{
                 val passwordDialog = PasswordDialog(true) { password ->
                     //TODO : 비밀번호 맞는지 체크하기
                     val currentImageUri = Uri.parse(viewModel.nftImageLiveData.value.toString())
@@ -63,6 +70,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
                 passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
             }
             dialog.show(childFragmentManager, "AddPurposeFragment")
+
         }
 
         binding.type2Button.setOnClickListener {

@@ -43,8 +43,6 @@ fun SendEmailResponse.toDomain(): RandomNumber { return RandomNumber( random = r
 
 fun PostCheckPasswordResponse.toDomain(): Boolean { return flag }
 
-fun GetWalletExistsResponse.toDomain(): Boolean { return existed }
-
 @JvmName("toDomainHotItemResponse")
 fun List<HotItemResponse>.toDomain(): List<Hots> {
     return map { Hots(

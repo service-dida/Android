@@ -27,7 +27,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         get() = R.layout.fragment_home
 
     override val viewModel : HomeViewModel by viewModels()
-    private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
         binding.apply {

@@ -1,19 +1,25 @@
-package com.dida.android.presentation.views.nav.detailnft
+package com.dida.android.presentation.views.detailnft
 
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
+import com.dida.android.presentation.views.nav.community.CommunityActionHandler
+import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailNftViewModel @Inject constructor(
     private val mainRepositoryImpl: MainRepositoryImpl
-) : BaseViewModel() {
+) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler {
 
     private val TAG = "DetailNftViewModel"
+
+    private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> = MutableSharedFlow<DetailNftNavigationAction>()
+    val navigationEvent: SharedFlow<DetailNftNavigationAction> = _navigationEvent
 
     private val _detailNftState: MutableStateFlow<UiState<Community>> = MutableStateFlow(UiState.Loading)
     val detailNftState: StateFlow<UiState<Community>> = _detailNftState
@@ -37,4 +43,15 @@ class DetailNftViewModel @Inject constructor(
 //        }
     }
 
+    override fun onCommunityMoreClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToCommunity)
+        }
+    }
+
+    override fun onCommunityItemClicked(communityId: Int) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToItemCommunity(communityId))
+        }
+    }
 }

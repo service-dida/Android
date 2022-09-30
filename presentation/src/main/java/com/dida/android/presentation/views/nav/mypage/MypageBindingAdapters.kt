@@ -1,20 +1,14 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
-import com.dida.domain.model.nav.home.*
-import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.UserCardsResponseModel
-import com.facebook.shimmer.ShimmerFrameLayout
 
 @BindingAdapter("userProfile")
 fun ImageView.bindUserProfile(uiState: UiState<MypageUiModel>) {
