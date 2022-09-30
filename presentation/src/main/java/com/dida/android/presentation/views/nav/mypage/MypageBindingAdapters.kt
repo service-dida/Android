@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views.nav.mypage
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
