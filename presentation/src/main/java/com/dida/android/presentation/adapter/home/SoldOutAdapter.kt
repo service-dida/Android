@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.databinding.HolderMypageUserCardsBinding
 import com.dida.android.databinding.HolderSoldoutBinding
 import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 
 class SoldOutAdapter(
     private val eventListener: HomeActionHandler

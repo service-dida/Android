@@ -15,14 +15,10 @@ import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
-import com.dida.domain.model.nav.mypage.UserProfileResponseModel
+import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.repository.MainRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Named
@@ -49,15 +45,15 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.createuserAPIServer(request) }
     }
 
-    override suspend fun getUserProfileAPI(): NetworkResult<UserProfileResponseModel> {
-        return handleApi { mainAPIService.getUserProfile() }
+    override suspend fun getUserProfileAPI(): NetworkResult<UserProfile> {
+        return handleApi { mainAPIService.getUserProfile().toDomain() }
     }
 
     override suspend fun refreshTokenAPI(request: String): NetworkResult<LoginResponseModel> {
         return handleApi { mainAPIService.refreshtokenAPIServer(request) }
     }
 
-    override suspend fun getUserCardsAPI(): NetworkResult<List<UserCardsResponseModel>> {
+    override suspend fun getUserCardsAPI(): NetworkResult<List<UserNft>> {
         return handleApi { mainAPIService.getUserCards() }
     }
 

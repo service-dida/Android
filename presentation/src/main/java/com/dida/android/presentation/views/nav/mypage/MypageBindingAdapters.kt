@@ -10,10 +10,11 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
+import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.nav.mypage.UserProfile
 
 @BindingAdapter("userProfile")
-fun ImageView.bindUserProfile(uiState: UiState<MypageUiModel>) {
+fun ImageView.bindUserProfile(uiState: UiState<UserProfile>) {
     Glide.with(context)
         .load(uiState.successOrNull()?.profileUrl)
         .transform(CenterCrop(), RoundedCorners(100))
@@ -21,32 +22,32 @@ fun ImageView.bindUserProfile(uiState: UiState<MypageUiModel>) {
 }
 
 @BindingAdapter("userNickname")
-fun TextView.bindUserNickname(uiState: UiState<MypageUiModel>) {
+fun TextView.bindUserNickname(uiState: UiState<UserProfile>) {
     this.text = uiState.successOrNull()?.nickname
 }
 
 @BindingAdapter("userDescription")
-fun TextView.bindUserDescription(uiState: UiState<MypageUiModel>) {
+fun TextView.bindUserDescription(uiState: UiState<UserProfile>) {
     this.text = uiState.successOrNull()?.description
 }
 
 @BindingAdapter("userNftCount")
-fun TextView.bindUserNftCount(uiState: UiState<MypageUiModel>) {
+fun TextView.bindUserNftCount(uiState: UiState<UserProfile>) {
     this.text = uiState.successOrNull()?.cardCnt.toString()
 }
 
 @BindingAdapter("userFollwingCount")
-fun TextView.bindUserFollwingCount(uiState: UiState<MypageUiModel>) {
+fun TextView.bindUserFollwingCount(uiState: UiState<UserProfile>) {
     this.text = uiState.successOrNull()?.followerCnt.toString()
 }
 
 @BindingAdapter("userFollwerCount")
-fun TextView.bindUserFollwerCount(uiState: UiState<MypageUiModel>) {
+fun TextView.bindUserFollwerCount(uiState: UiState<UserProfile>) {
     this.text = uiState.successOrNull()?.followingCnt.toString()
 }
 
 @BindingAdapter("userNftItem")
-fun RecyclerView.bindRecentNftItem(userNftList: List<UserCardsResponseModel>) {
+fun RecyclerView.bindRecentNftItem(userNftList: List<UserNft>) {
     val boundAdapter = this.adapter
     if (boundAdapter is RecentNftAdapter) {
         boundAdapter.submitList(userNftList)

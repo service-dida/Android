@@ -7,16 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.databinding.HolderHotsellerBinding
 import com.dida.android.databinding.HolderMypageUserCardsBinding
-import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.android.util.NftActionHandler
-import com.dida.domain.model.nav.home.HotSeller
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
+import com.dida.domain.model.nav.mypage.UserNft
 
 class RecentNftAdapter(
     private val eventListener: NftActionHandler
-): ListAdapter<UserCardsResponseModel, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
+): ListAdapter<UserNft, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
     init { setHasStableIds(true) }
 
@@ -39,17 +36,17 @@ class RecentNftAdapter(
 
     class ViewHolder(private val binding: HolderMypageUserCardsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserCardsResponseModel) {
+        fun bind(item: UserNft) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object RecentNftItemDiffCallback : DiffUtil.ItemCallback<UserCardsResponseModel>() {
-        override fun areItemsTheSame(oldItem: UserCardsResponseModel, newItem: UserCardsResponseModel) =
+    internal object RecentNftItemDiffCallback : DiffUtil.ItemCallback<UserNft>() {
+        override fun areItemsTheSame(oldItem: UserNft, newItem: UserNft) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: UserCardsResponseModel, newItem: UserCardsResponseModel) =
+        override fun areContentsTheSame(oldItem: UserNft, newItem: UserNft) =
             oldItem.equals(newItem)
     }
 }

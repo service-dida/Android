@@ -5,7 +5,8 @@ import com.dida.android.presentation.base.UiState
 import com.dida.android.util.AppLog
 import com.dida.android.util.NftActionHandler
 import com.dida.data.DataApplication
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
+import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.UserNftAPI
@@ -23,17 +24,17 @@ class MyPageViewModel @Inject constructor(
 
     private val TAG = "MyPageViewModel"
 
-    private val _myPageState: MutableStateFlow<UiState<MypageUiModel>> = MutableStateFlow(UiState.Loading)
-    val myPageState: StateFlow<UiState<MypageUiModel>> = _myPageState
-
     private val _navigationEvent: MutableSharedFlow<MypageNavigationAction> = MutableSharedFlow<MypageNavigationAction>()
     val navigationEvent: SharedFlow<MypageNavigationAction> = _navigationEvent
+
+    private val _myPageState: MutableStateFlow<UiState<UserProfile>> = MutableStateFlow(UiState.Loading)
+    val myPageState: StateFlow<UiState<UserProfile>> = _myPageState
 
     private val _hasWalletState = MutableStateFlow<Boolean>(false)
     val hasWalletState: StateFlow<Boolean> = _hasWalletState
 
-    private val _hasMyNftState: MutableStateFlow<List<UserCardsResponseModel>> = MutableStateFlow<List<UserCardsResponseModel>>(emptyList())
-    val hasMyNftState: StateFlow<List<UserCardsResponseModel>> = _hasMyNftState
+    private val _hasMyNftState: MutableStateFlow<List<UserNft>> = MutableStateFlow<List<UserNft>>(emptyList())
+    val hasMyNftState: StateFlow<List<UserNft>> = _hasMyNftState
 
     fun initMyPageState() {
         getUserProfile()
@@ -43,18 +44,7 @@ class MyPageViewModel @Inject constructor(
     private fun getUserProfile(){
         baseViewModelScope.launch {
             userProfileAPI()
-                .onSuccess {
-                    _myPageState.value = UiState.Success(
-                        MypageUiModel(
-                            cardCnt = it.cardCnt,
-                            description = it.description,
-                            followerCnt = it.followerCnt,
-                            followingCnt = it.followingCnt,
-                            getWallet = it.getWallet,
-                            nickname = it.nickname,
-                            profileUrl = it.profileUrl
-                        )
-                    ) }
+                .onSuccess { _myPageState.value = UiState.Success(it)}
                 .onError { e -> catchError(e) }
         }
     }
@@ -89,13 +79,3 @@ class MyPageViewModel @Inject constructor(
         }
     }
 }
-
-data class MypageUiModel(
-    val cardCnt: Int = 0,
-    val description: String = "",
-    val followerCnt: Int = 0,
-    val followingCnt: Int = 0,
-    val getWallet: Boolean = false,
-    val nickname: String = "",
-    val profileUrl: String = ""
-)

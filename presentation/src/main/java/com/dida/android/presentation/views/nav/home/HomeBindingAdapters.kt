@@ -1,17 +1,17 @@
 package com.dida.android.presentation.views.nav.home
 
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
 import com.dida.domain.model.nav.home.*
-import com.dida.domain.model.nav.home.Collection
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
 import com.facebook.shimmer.ShimmerFrameLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @BindingAdapter("startLoading")
@@ -20,7 +20,7 @@ fun ShimmerFrameLayout.startLoading(uiState: UiState<*>) {
 }
 
 @BindingAdapter("endLoading")
-fun RecyclerView.endLoading(uiState: UiState<*>) {
+fun View.endLoading(uiState: UiState<*>) {
     visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
 }
 
