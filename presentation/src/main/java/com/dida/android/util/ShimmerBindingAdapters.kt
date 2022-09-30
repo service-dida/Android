@@ -7,10 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
-import com.dida.android.presentation.base.successOrNull
-import com.dida.domain.model.nav.home.*
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +17,9 @@ import kotlinx.coroutines.launch
 
 @BindingAdapter("startLoading")
 fun ShimmerFrameLayout.startLoading(uiState: UiState<*>) {
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(7000)
+    }
     visibility = if (uiState is UiState.Loading) View.VISIBLE else View.GONE
 }
 
