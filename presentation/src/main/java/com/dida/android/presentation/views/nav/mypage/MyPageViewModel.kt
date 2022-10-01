@@ -68,7 +68,7 @@ class MyPageViewModel @Inject constructor(
     fun updateProfile(description : MultipartBody.Part, file : MultipartBody.Part){
         baseViewModelScope.launch {
             updateProfileAPI(description,file)
-                .onSuccess {  }
+                .onSuccess { getUserProfile() }
                 .onError { e -> catchError(e) }
         }
     }
