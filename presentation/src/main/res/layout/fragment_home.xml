@@ -82,7 +82,7 @@
                         android:overScrollMode="never"
                         android:orientation="horizontal"
                         hotsItem="@{vm.homeState}"
-                        endLoading="@{vm.homeState}"
+                        rv_endLoading="@{vm.homeState}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/holder_hots">
                     </androidx.recyclerview.widget.RecyclerView>
@@ -181,7 +181,7 @@
                     android:layout_marginRight="16dp"
                     android:orientation="horizontal"
                     hotSellerItem="@{vm.homeState}"
-                    endLoading="@{vm.homeState}"
+                    rv_endLoading="@{vm.homeState}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -311,7 +311,7 @@
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
                     soldoutItem="@{vm.soldoutState}"
-                    endLoading="@{vm.soldoutState}"
+                    rv_endLoading="@{vm.soldoutState}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -410,7 +410,7 @@
                     app:layout_constraintTop_toBottomOf="@id/recentnft_txt"
                     app:layout_constraintBottom_toTopOf="@id/recent_more"
                     android:layout_margin="9dp"
-                    endLoading="@{vm.homeState}"
+                    rv_endLoading="@{vm.homeState}"
                     recentNftItem="@{vm.homeState}"
                     android:orientation="vertical"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -502,7 +502,7 @@
                     android:layout_marginRight="16dp"
                     android:orientation="vertical"
                     collectionsItem="@{vm.homeState}"
-                    endLoading="@{vm.homeState}"
+                    rv_endLoading="@{vm.homeState}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 

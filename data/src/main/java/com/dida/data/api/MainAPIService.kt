@@ -6,11 +6,12 @@ import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.data.model.login.CreateUserRequestModel
+import com.dida.data.model.mypage.GetUserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
-import com.dida.domain.model.nav.mypage.UserProfileResponseModel
+import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -29,13 +30,13 @@ interface MainAPIService {
     suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): LoginResponseModel
 
     @GET("/user")
-    suspend fun getUserProfile() : UserProfileResponseModel
+    suspend fun getUserProfile() : GetUserProfileResponse
 
     @POST("/login/refresh")
     suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): LoginResponseModel
 
     @GET("/user/cards")
-    suspend fun getUserCards() : List<UserCardsResponseModel>
+    suspend fun getUserCards() : List<UserNft>
 
     @GET("/auth/mail")
     suspend fun getSendEmail() : SendEmailResponse

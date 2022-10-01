@@ -8,6 +8,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.widget.NestedScrollView
 import kotlin.math.abs
 
+@Deprecated("Home 에 View.Extenstion 으로 이전")
 class SmoothScroll {
     private fun NestedScrollView.computeDistanceToView(view: View): Int {
         return abs(calculateRectOnScreen(this).top - (this.scrollY + calculateRectOnScreen(view).top))

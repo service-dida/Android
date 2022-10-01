@@ -1,15 +1,16 @@
 package com.dida.data.mapper
 
-import com.dida.data.model.createwallet.GetWalletExistsResponse
 import com.dida.data.model.createwallet.PostCheckPasswordResponse
 import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
+import com.dida.data.model.mypage.GetUserProfileResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
+import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.nav.mypage.UserProfile
 
 fun GetMainResponse.toDomain() : Home {
     return Home(
@@ -65,8 +66,8 @@ fun List<HotSellerResponse>.toDomain(): List<HotSeller> {
 }
 
 @JvmName("toDomainRecentCardResponse")
-fun List<RecentCardResponse>.toDomain(): List<UserCardsResponseModel> {
-    return map { UserCardsResponseModel(
+fun List<RecentCardResponse>.toDomain(): List<UserNft> {
+    return map { UserNft(
         cardId = it.cardId,
         userName = it.userName,
         imgUrl = it.imgUrl,
@@ -84,6 +85,19 @@ fun List<HotUserResponse>.toDomain(): List<Collection> {
         userDetail = it.count+" 작품",
         follow = it.followed
     ) }
+}
+
+fun GetUserProfileResponse.toDomain(): UserProfile {
+    return UserProfile(
+        cardCnt = cardCnt,
+        description = description,
+        followerCnt = followerCnt,
+        followingCnt = followingCnt,
+        getWallet = getWallet,
+        nickname = nickname,
+        profileUrl = profileUrl,
+        userId = userId
+    )
 }
 
 

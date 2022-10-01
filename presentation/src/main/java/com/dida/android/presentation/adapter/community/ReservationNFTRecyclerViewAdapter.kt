@@ -53,6 +53,6 @@ class ReservationNFTRecyclerViewAdapter(
             oldItem == newItem
 
         override fun areContentsTheSame(oldItem: ReservationNFTHolderModel, newItem: ReservationNFTHolderModel) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

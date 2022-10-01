@@ -1,6 +1,6 @@
 package com.dida.domain.model.nav.mypage
 
-data class UserProfileResponseModel(
+data class UserProfile(
     val cardCnt: Int,
     val description: String,
     val followerCnt: Int,

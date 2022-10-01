@@ -75,6 +75,9 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        initStartView()
+        initDataBinding()
+        initAfterBinding()
         return binding.root
     }
 
@@ -85,9 +88,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 showToastMessage(exception)
             }
         }
-        initStartView()
-        initDataBinding()
-        initAfterBinding()
     }
 
     override fun onStart() {

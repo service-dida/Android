@@ -51,6 +51,6 @@ class ActiveNFTRecyclerViewAdapter(
             oldItem == newItem
 
         override fun areContentsTheSame(oldItem: ActiveNFTHolderModel, newItem: ActiveNFTHolderModel) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

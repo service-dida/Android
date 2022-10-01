@@ -1,35 +1,34 @@
 package com.dida.android.presentation.adapter.mypage
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
+import com.dida.android.databinding.HolderHotsBinding
 import com.dida.android.databinding.HolderHotsellerBinding
-import com.dida.android.databinding.HolderMypageUserCardsBinding
 import com.dida.android.presentation.views.nav.home.HomeActionHandler
-import com.dida.android.presentation.views.nav.mypage.MypageActionHandler
-import com.dida.android.util.NftActionHandler
 import com.dida.domain.model.nav.home.HotSeller
-import com.dida.domain.model.nav.mypage.UserCardsResponseModel
+import com.dida.domain.model.nav.home.Hots
 
-class UserNftAdapter(
-    private val eventListener: NftActionHandler
-): ListAdapter<UserCardsResponseModel, UserNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
+class MypageHeaderAdapter(
+    private val eventListener: HomeActionHandler
+) : ListAdapter<HotSeller, MypageHeaderAdapter.ViewHolder>(HotSellerItemDiffCallback){
 
     init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderMypageUserCardsBinding = DataBindingUtil.inflate(
+        val viewDataBinding: HolderHotsellerBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.holder_mypage_user_cards,
+            R.layout.holder_hotseller,
             parent,
             false
         )
         viewDataBinding.root.setOnClickListener {
-            eventListener.onNftItemClicked(viewDataBinding.holderModel!!.cardId)
+            eventListener.onHotSellerItemClicked(viewDataBinding.holderModel!!.userId)
         }
         return ViewHolder(viewDataBinding)
     }
@@ -38,19 +37,19 @@ class UserNftAdapter(
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: HolderMypageUserCardsBinding) :
+    class ViewHolder(private val binding: HolderHotsellerBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserCardsResponseModel) {
+        fun bind(item: HotSeller) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object RecentNftItemDiffCallback : DiffUtil.ItemCallback<UserCardsResponseModel>() {
-        override fun areItemsTheSame(oldItem: UserCardsResponseModel, newItem: UserCardsResponseModel) =
+    internal object HotSellerItemDiffCallback : DiffUtil.ItemCallback<HotSeller>() {
+        override fun areItemsTheSame(oldItem: HotSeller, newItem: HotSeller) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: UserCardsResponseModel, newItem: UserCardsResponseModel) =
+        override fun areContentsTheSame(oldItem: HotSeller, newItem: HotSeller) =
             oldItem.equals(newItem)
     }
 }
