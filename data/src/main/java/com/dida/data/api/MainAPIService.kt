@@ -13,6 +13,8 @@ import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.splash.AppVersionResponse
+import com.google.gson.annotations.SerializedName
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -65,6 +67,7 @@ interface MainAPIService {
     @POST("/card")
     suspend fun mintNFT(@Body request: NFTMintRequest)
 
+    @Multipart
     @PUT("/user")
-    suspend fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest)
+    suspend fun updateProfile(@Part description: MultipartBody.Part, @Part file: MultipartBody.Part)
 }

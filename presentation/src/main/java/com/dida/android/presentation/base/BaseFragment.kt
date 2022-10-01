@@ -96,6 +96,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         lifecycleScope.launchWhenStarted {
             viewModel.errorEvent.collect { e ->
                 showToastMessage(e)
+                Log.e("DIDA", "onStart: ${e}")
             }
         }
     }

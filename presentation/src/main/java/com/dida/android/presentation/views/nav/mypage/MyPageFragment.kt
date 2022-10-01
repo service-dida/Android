@@ -126,7 +126,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                         val file = UriToFile(uri!!,requireContext())
                         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
                         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                        viewModel.updateProfile("테스트 설명" , requestBody)
+                        
+                        //TODO : 이후에 설명도 입력한걸로 넣기
+                        val nicknamePart: MultipartBody.Part = MultipartBody.Part.createFormData("description", "테스트 설명")
+                        viewModel.updateProfile(nicknamePart , requestBody)
                     }
                 } else{
                     navController.popBackStack()

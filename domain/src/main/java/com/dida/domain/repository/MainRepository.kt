@@ -47,5 +47,5 @@ interface  MainRepository {
 
     suspend fun mintNFT(name : String, description : String, image : String) : NetworkResult<Unit>
 
-    suspend fun updateProfileAPI(description: String, file : MultipartBody.Part) : NetworkResult<Unit>
+    suspend fun updateProfileAPI(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit>
 }
