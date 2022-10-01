@@ -18,7 +18,7 @@ import com.dida.domain.model.nav.mypage.UserProfile
 fun ImageView.bindUserProfile(uiState: UiState<UserProfile>) {
     Glide.with(context)
         .load(uiState.successOrNull()?.profileUrl)
-        .transform(CenterCrop(), RoundedCorners(100))
+        .transform(CenterCrop(), RoundedCorners(1000))
         .into(this)
 }
 
