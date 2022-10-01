@@ -36,9 +36,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-
-        // main 화면 불러오는 함수
-        viewModel.getMain()
     }
 
     override fun initDataBinding() {

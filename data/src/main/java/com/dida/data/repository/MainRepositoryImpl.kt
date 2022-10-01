@@ -10,6 +10,8 @@ import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
 import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.domain.map
+import com.dida.domain.merge
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.createwallet.RandomNumber
@@ -19,6 +21,7 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.repository.MainRepository
+import com.dida.domain.zip
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Named
