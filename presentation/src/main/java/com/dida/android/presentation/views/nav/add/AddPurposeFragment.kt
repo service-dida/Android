@@ -1,9 +1,6 @@
 package com.dida.android.presentation.views.nav.add
 
-import android.annotation.SuppressLint
-import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController

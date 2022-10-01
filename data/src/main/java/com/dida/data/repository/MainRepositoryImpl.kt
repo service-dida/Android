@@ -7,7 +7,6 @@ import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.login.CreateUserRequestModel
-import com.dida.data.model.mypage.UpdateProfileRequest
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult

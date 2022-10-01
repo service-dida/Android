@@ -3,13 +3,11 @@ package com.dida.android.presentation.views.detailnft
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.nav.community.CommunityViewModel
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint

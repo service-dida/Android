@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.databinding.HolderCommentsBinding
 import com.dida.android.databinding.HolderWalletCardBinding
-import com.dida.android.presentation.adapter.detailnft.CommentsAdapter
-import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 
 class WalletCardRecyclerViewAdapter(

@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views.nickname
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs

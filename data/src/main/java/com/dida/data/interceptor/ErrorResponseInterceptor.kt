@@ -1,6 +1,5 @@
 package com.dida.data.interceptor
 
-import android.util.Log
 import com.dida.data.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -8,7 +7,6 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
-import kotlin.math.log
 
 class ErrorResponseInterceptor: Interceptor {
 

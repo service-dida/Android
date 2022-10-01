@@ -1,10 +1,7 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,16 +14,12 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.util.AppLog
 import com.dida.android.util.UriToFile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {

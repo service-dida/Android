@@ -1,7 +1,6 @@
 package com.dida.android.presentation.adapter.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -9,12 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.databinding.HolderCollectionBinding
-import com.dida.android.databinding.HolderHotsBinding
-import com.dida.android.databinding.HolderHotsellerBinding
 import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.domain.model.nav.home.Collection
-import com.dida.domain.model.nav.home.HotSeller
-import com.dida.domain.model.nav.home.Hots
 
 class CollectionAdapter(
     private val eventListener: HomeActionHandler

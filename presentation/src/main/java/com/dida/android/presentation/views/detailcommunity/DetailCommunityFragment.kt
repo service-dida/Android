@@ -1,24 +1,16 @@
 package com.dida.android.presentation.views.detailcommunity
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
-import com.dida.android.databinding.FragmentCommunityBinding
 import com.dida.android.databinding.FragmentDetailCommunityBinding
-import com.dida.android.presentation.adapter.community.ActiveNFTRecyclerViewAdapter
-import com.dida.android.presentation.adapter.community.ReservationNFTRecyclerViewAdapter
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.community.CommunityViewModel
-import com.dida.domain.model.nav.community.ActiveNFTHolderModel
-import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(R.layout.fragment_detail_community) {

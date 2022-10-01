@@ -2,11 +2,8 @@ package com.dida.data
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.dida.data.shareperference.MySharedPreferences
-import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.common.util.Utility
 
 class DataApplication :Application(){
     // 코틀린의 전역변수 문법

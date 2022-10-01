@@ -1,23 +1,9 @@
 package com.dida.android.presentation.views.nav.add
 
-import android.content.Context
-import android.graphics.Color
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import com.dida.android.R
 import com.dida.android.databinding.BottomAddNftBinding
-import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
-import com.dida.android.presentation.views.password.PasswordReconfirmDialog
-import com.dida.android.presentation.views.password.PasswordViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

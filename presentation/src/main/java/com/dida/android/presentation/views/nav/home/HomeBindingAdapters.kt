@@ -1,13 +1,12 @@
 package com.dida.android.presentation.views.nav.home
 
-import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
-import com.dida.domain.model.nav.home.*
-import com.facebook.shimmer.ShimmerFrameLayout
+import com.dida.domain.model.nav.home.Home
+import com.dida.domain.model.nav.home.SoldOut
 
 @BindingAdapter("hotsItem")
 fun RecyclerView.bindHotsItems(uiState: UiState<Home>) {

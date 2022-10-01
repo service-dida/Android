@@ -9,8 +9,6 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.lifecycleScope
-import com.dida.android.util.LoadingDialog
 
 abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : DialogFragment(layoutId) {
 

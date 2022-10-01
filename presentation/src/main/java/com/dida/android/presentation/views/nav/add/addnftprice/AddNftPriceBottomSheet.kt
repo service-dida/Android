@@ -1,17 +1,12 @@
 package com.dida.android.presentation.views.nav.add.addnftprice
 
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.BottomAddNftPriceBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddNftPriceBottomSheet(

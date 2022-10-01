@@ -1,9 +1,7 @@
 package com.dida.android.presentation.views.nav.community
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import com.dida.data.repository.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

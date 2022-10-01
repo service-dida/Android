@@ -9,11 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.databinding.HolderHotsBinding
 import com.dida.android.databinding.HolderReservationNftBinding
-import com.dida.android.presentation.adapter.home.HotsAdapter
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
-import com.dida.domain.model.nav.home.Hots
 
 class ReservationNFTRecyclerViewAdapter(
 ) : ListAdapter<ReservationNFTHolderModel, ReservationNFTRecyclerViewAdapter.ViewHolder>(ReservationNFTDiffCallback){

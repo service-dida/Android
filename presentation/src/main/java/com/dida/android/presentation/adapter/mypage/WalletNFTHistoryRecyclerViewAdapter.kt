@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.databinding.HolderWalletCardBinding
 import com.dida.android.databinding.HolderWalletNftHistoryBinding
-import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 
 class WalletNFTHistoryRecyclerViewAdapter(

@@ -3,11 +3,13 @@ package com.dida.android.presentation.views.detailnft
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.views.nav.community.CommunityActionHandler
-import com.dida.android.presentation.views.nav.home.HomeNavigationAction
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

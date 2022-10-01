@@ -1,12 +1,9 @@
 package com.dida.android.presentation.views.login
 
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.base.BaseFragment

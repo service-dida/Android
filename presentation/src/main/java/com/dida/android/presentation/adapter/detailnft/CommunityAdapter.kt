@@ -1,8 +1,6 @@
 package com.dida.android.presentation.adapter.detailnft
 
 import android.view.LayoutInflater
-import android.view.OrientationEventListener
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil

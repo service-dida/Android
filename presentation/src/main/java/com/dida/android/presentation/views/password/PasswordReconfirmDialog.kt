@@ -1,10 +1,6 @@
 package com.dida.android.presentation.views.password
 
-import android.content.Context
 import android.graphics.Color
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewGroup

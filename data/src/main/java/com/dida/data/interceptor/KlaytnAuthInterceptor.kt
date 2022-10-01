@@ -1,8 +1,8 @@
 package com.dida.data.interceptor
 
+import com.dida.data.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
-import com.dida.data.BuildConfig
 
 class KlaytnAuthInterceptor(): Interceptor {
 

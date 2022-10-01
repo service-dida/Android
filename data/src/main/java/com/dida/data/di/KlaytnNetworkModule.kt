@@ -3,7 +3,6 @@ package com.dida.data.di
 import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.KLAYTN_URL
 import com.dida.data.api.KlaytnAPIService
-import com.dida.data.api.MainAPIService
 import com.dida.data.interceptor.KlaytnAuthInterceptor
 import dagger.Module
 import dagger.Provides
