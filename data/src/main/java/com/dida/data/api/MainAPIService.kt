@@ -6,12 +6,12 @@ import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.data.model.login.CreateUserRequestModel
-import com.dida.data.model.mypage.GetUserProfileResponse
+import com.dida.data.model.mypage.UpdateProfileRequest
+import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -30,7 +30,7 @@ interface MainAPIService {
     suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): LoginResponseModel
 
     @GET("/user")
-    suspend fun getUserProfile() : GetUserProfileResponse
+    suspend fun getUserProfile() : UserProfileResponse
 
     @POST("/login/refresh")
     suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): LoginResponseModel
@@ -64,4 +64,7 @@ interface MainAPIService {
 
     @POST("/card")
     suspend fun mintNFT(@Body request: NFTMintRequest)
+
+    @PUT("/user")
+    suspend fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest)
 }

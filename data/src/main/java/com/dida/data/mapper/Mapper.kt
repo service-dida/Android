@@ -4,7 +4,7 @@ import com.dida.data.model.createwallet.PostCheckPasswordResponse
 import com.dida.data.model.createwallet.SendEmailResponse
 import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
-import com.dida.data.model.mypage.GetUserProfileResponse
+import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.home.*
@@ -87,7 +87,7 @@ fun List<HotUserResponse>.toDomain(): List<Collection> {
     ) }
 }
 
-fun GetUserProfileResponse.toDomain(): UserProfile {
+fun UserProfileResponse.toDomain(): UserProfile {
     return UserProfile(
         cardCnt = cardCnt,
         description = description,

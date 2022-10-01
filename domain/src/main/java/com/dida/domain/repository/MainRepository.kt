@@ -9,6 +9,7 @@ import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 
 
@@ -45,4 +46,6 @@ interface  MainRepository {
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 
     suspend fun mintNFT(name : String, description : String, image : String) : NetworkResult<Unit>
+
+    suspend fun updateProfileAPI(description: String, file : MultipartBody.Part) : NetworkResult<Unit>
 }

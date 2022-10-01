@@ -1,6 +1,13 @@
 package com.dida.android.presentation.views.nav.mypage
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -10,8 +17,16 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.util.AppLog
+import com.dida.android.util.UriToFile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
@@ -23,6 +38,9 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     override val viewModel: MyPageViewModel by viewModels()
     val navController: NavController by lazy { findNavController() }
+
+
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     init {
         lifecycleScope.launchWhenResumed {
@@ -37,6 +55,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         }
         exception = viewModel.errorEvent
         initMyPage()
+        initRegisterForActivityResult()
     }
 
     override fun initDataBinding() {
@@ -78,6 +97,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                 when (it.itemId) {
                     R.id.action_wallet -> viewModel.onWalletClicked()
                     R.id.action_setting -> viewModel.onSettingClicked()
+                    R.id.action_profileImg -> getImageToGallery()
                 }
                 true
             }
@@ -94,4 +114,30 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             binding.spinner.adapter = adapter
         }
     }
+
+
+    private fun initRegisterForActivityResult() {
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val intent = result.data
+                    if (intent != null) {
+                        val uri = intent.data
+                        val file = UriToFile(uri!!,requireContext())
+                        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                        viewModel.updateProfile("테스트 설명" , requestBody)
+                    }
+                } else{
+                    navController.popBackStack()
+                }
+            }
+    }
+
+    private fun getImageToGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        resultLauncher.launch(intent)
+    }
+
 }

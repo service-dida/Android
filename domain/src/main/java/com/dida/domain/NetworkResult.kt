@@ -16,6 +16,8 @@
 
 package com.dida.domain
 
+import android.util.Log
+
 /**
  * A generic class that holds a value with its loading status.
  * @param <T>

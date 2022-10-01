@@ -22,7 +22,6 @@ class ErrorResponseInterceptor: Interceptor {
 
             val requestUrl = request.url.toString()
             val errorResponse = responseBody?.string()?.let { createErrorResponse(it) }
-            Log.d("haha", "intercept: ${response.code}")
             val errorException = createErrorException(requestUrl, response.code, errorResponse)
             errorException?.let { throw it }
 

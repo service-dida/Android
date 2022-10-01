@@ -2,7 +2,7 @@ package com.dida.data.model.mypage
 
 import com.google.gson.annotations.SerializedName
 
-data class GetUserProfileResponse(
+data class UserProfileResponse(
     @SerializedName("cardCnt") val cardCnt: Int,
     @SerializedName("description") val description: String,
     @SerializedName("followerCnt") val followerCnt: Int,

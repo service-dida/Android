@@ -2,14 +2,15 @@ package com.dida.data.repository
 
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
-import com.dida.data.mapper.*
+import com.dida.data.mapper.toDomain
 import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.klaytn.NFTMintRequest
+import com.dida.data.model.login.CreateUserRequestModel
+import com.dida.data.model.mypage.UpdateProfileRequest
+import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
-import com.dida.data.model.login.CreateUserRequestModel
-import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.createwallet.RandomNumber
@@ -19,6 +20,7 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.repository.MainRepository
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Named
@@ -98,5 +100,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getTempPasswordAPI(): NetworkResult<Unit> {
         return handleApi { mainAPIService.getTempPassword() }
+    }
+
+    override suspend fun updateProfileAPI(description: String, file : MultipartBody.Part) : NetworkResult<Unit>{
+        val request = UpdateProfileRequest(description,file)
+        return handleApi { mainAPIService.updateProfile(request)}
     }
 }

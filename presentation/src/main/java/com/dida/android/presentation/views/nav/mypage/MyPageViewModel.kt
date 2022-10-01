@@ -9,17 +9,20 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.UpdateProfileAPI
 import com.dida.domain.usecase.main.UserNftAPI
 import com.dida.domain.usecase.main.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val userProfileAPI: UserProfileAPI,
     private val userNftAPI: UserNftAPI,
+    private val updateProfileAPI: UpdateProfileAPI
 ) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
     private val TAG = "MyPageViewModel"
@@ -55,6 +58,14 @@ class MyPageViewModel @Inject constructor(
                 .onSuccess {
                     AppLog.d(it.toString())
                     _hasMyNftState.value = it }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun updateProfile(description : String, file : MultipartBody.Part){
+        baseViewModelScope.launch {
+            updateProfileAPI(description,file)
+                .onSuccess {  }
                 .onError { e -> catchError(e) }
         }
     }

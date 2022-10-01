@@ -60,8 +60,7 @@ class AddPurposeViewModel @Inject constructor(
         _puposeTypeLiveData.postValue(type)
     }
 
-    fun uploadAsset(imagePath : String){
-        val file = File(imagePath)
+    fun uploadAsset(file : File){
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 

@@ -13,6 +13,7 @@ import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.android.util.UriToFile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -56,12 +57,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
                     val currentImageUri = Uri.parse(viewModel.nftImageLiveData.value.toString())
                     try {
                         currentImageUri?.let {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                val imagePath: String = getPath(currentImageUri)!!
-                                viewModel.uploadAsset(imagePath)
-                            }else{
-                                //TODO :버전낮은거 처리하기
-                            }
+                            viewModel.uploadAsset(UriToFile(currentImageUri,requireContext()))
                         }
                     }catch (e : Exception){
 
@@ -89,14 +85,5 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
                 findNavController().popBackStack()
             }
         }
-    }
-
-    @SuppressLint("Range")
-    private fun getPath(uri: Uri): String {
-        val cursor: Cursor? = requireContext().contentResolver.query(uri, null, null, null, null )
-        cursor?.moveToNext()
-        val path: String? = cursor?.getString(cursor.getColumnIndex("_data"))
-        cursor?.close()
-        return path?:""
     }
 }
