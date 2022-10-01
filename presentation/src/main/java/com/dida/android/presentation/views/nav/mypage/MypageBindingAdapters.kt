@@ -11,6 +11,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
+import com.dida.android.presentation.views.nav.home.bindRecentNftItem
+import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 
@@ -48,9 +50,9 @@ fun TextView.bindUserFollwerCount(uiState: UiState<UserProfile>) {
 }
 
 @BindingAdapter("userNftItem")
-fun RecyclerView.bindRecentNftItem(userNftList: List<UserNft>) {
+fun RecyclerView.bindRecentNftItem(uiState: UiState<List<UserNft>>) {
     val boundAdapter = this.adapter
     if (boundAdapter is RecentNftAdapter) {
-        boundAdapter.submitList(userNftList)
+        boundAdapter.submitList(uiState.successOrNull())
     }
 }

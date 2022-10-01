@@ -31,7 +31,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         }
         exception = viewModel.errorEvent
         initMyPage()
-        viewModel.initMyPageState()
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.getMypage()
+        }
     }
 
     override fun initDataBinding() {
