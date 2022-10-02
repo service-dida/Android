@@ -3,8 +3,10 @@ package com.dida.data.di
 import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
+import com.dida.data.interceptor.BearerInterceptor
 import com.dida.data.interceptor.ErrorResponseInterceptor
 import com.dida.data.interceptor.XAccessTokenInterceptor
+import com.dida.domain.usecase.main.RefreshTokenAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,22 +26,24 @@ object NetworkModule {
     @Singleton
     @Provides
     @Named("Main")
-    fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
+    fun provideOkHttpClient(
+//        refreshTokenAPI: RefreshTokenAPI
+    ) = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
-//            .addInterceptor(BearerInterceptor())
             .addInterceptor(ErrorResponseInterceptor()) // Error Response
+//            .addInterceptor(BearerInterceptor(refreshTokenAPI)) // Refresh Token
             .build()
     } else {
         OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
-//            .addInterceptor(BearerInterceptor())
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(ErrorResponseInterceptor()) // Error Response
+//            .addInterceptor(BearerInterceptor(refreshTokenAPI)) // Refresh Token
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
