@@ -27,7 +27,7 @@
         android:label="DefiFragment" />
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.dida.android.presentation.views.nav.add.AddFragment"
+        android:name="com.dida.android.presentation.views.nav.add.addmain.AddFragment"
         android:label="AddFragment" >
 
         <action
@@ -107,7 +107,7 @@
 
     <fragment
         android:id="@+id/addPurposeFragment"
-        android:name="com.dida.android.presentation.views.nav.add.AddPurposeFragment"
+        android:name="com.dida.android.presentation.views.nav.add.addpurpose.AddPurposeFragment"
         android:label="AddPurposeFragment">
         <argument
             android:name="imgURL"

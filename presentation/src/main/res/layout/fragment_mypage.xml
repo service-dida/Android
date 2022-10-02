@@ -259,7 +259,7 @@
                     android:id="@+id/user_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    startLoading="@{vm.myPageState}"
+                    startLoading="@{vm.hasMyNftState}"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="9dp">
 

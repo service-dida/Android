@@ -32,14 +32,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     override val viewModel: MyPageViewModel by viewModels()
     val navController: NavController by lazy { findNavController() }
 
-
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-
-    init {
-        lifecycleScope.launchWhenResumed {
-            viewModel.initMyPageState()
-        }
-    }
 
     override fun initStartView() {
         binding.apply {
@@ -49,6 +42,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         exception = viewModel.errorEvent
         initMyPage()
         initRegisterForActivityResult()
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.getMypage()
+        }
     }
 
     override fun initDataBinding() {
@@ -136,5 +133,4 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         intent.type = "image/*"
         resultLauncher.launch(intent)
     }
-
 }

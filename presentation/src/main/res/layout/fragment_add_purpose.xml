@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.add.AddPurposeViewModel" />
+            type="com.dida.android.presentation.views.nav.add.addpurpose.AddPurposeViewModel" />
     </data>
 
     <ScrollView
@@ -58,10 +58,11 @@
                 android:layout_width="108dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="24dp"
-                android:background="@{vm.puposeTypeLiveData==1?@drawable/custom_okbtn_success:@drawable/custom_surface3_square}"
+                android:background="@{vm.isSalesState==1? @drawable/custom_okbtn_success : @drawable/custom_surface3_square}"
                 android:gravity="center"
                 android:text="소장용"
-                android:textColor="@{vm.puposeTypeLiveData==1?@color/black:@color/white}"
+                android:onClick="@{() -> vm.onTypeNotSaleClicked()}"
+                android:textColor="@{vm.isSalesState==1 ? @color/black : @color/white}"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="@+id/Textview"
                 app:layout_constraintTop_toBottomOf="@+id/Textview"
@@ -73,10 +74,11 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
-                android:background="@{vm.puposeTypeLiveData==2?@drawable/custom_okbtn_success:@drawable/custom_surface3_square}"
+                android:background="@{vm.isSalesState == 2? @drawable/custom_okbtn_success : @drawable/custom_surface3_square}"
                 android:gravity="center"
                 android:text="판매용"
-                android:textColor="@{vm.puposeTypeLiveData==2?@color/black:@color/white}"
+                android:onClick="@{() -> vm.onTypeSaleClicked()}"
+                android:textColor="@{vm.isSalesState==2 ? @color/black : @color/white}"
                 tools:background="@drawable/custom_surface3_square"
                 android:textSize="16dp"
                 app:layout_constraintStart_toEndOf="@+id/type1_Button"
@@ -101,7 +103,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
                     android:scaleType="centerCrop"
-                    image_from_url_rounded="@{vm.nftImageLiveData}"
+                    image_from_url_rounded="@{vm.nftImageState}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -114,7 +116,7 @@
                     android:layout_marginTop="31dp"
                     android:textColor="@color/white"
                     android:textSize="18dp"
-                    android:text="@{vm.titleLiveData}"
+                    android:text="@{vm.titleState}"
                     app:layout_constraintStart_toEndOf="@+id/imageView4"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="NFT name here" />
@@ -153,7 +155,7 @@
                     android:fontFamily="@font/pretendard_light"
                     android:textColor="@color/surface6"
                     android:textSize="14dp"
-                    android:text="@{vm.descriptionLiveData}"
+                    android:text="@{vm.descriptionState}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/imageView4"

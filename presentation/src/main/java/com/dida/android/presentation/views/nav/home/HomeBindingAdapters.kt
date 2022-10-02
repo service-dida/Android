@@ -5,8 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
-import com.dida.domain.model.nav.home.Home
-import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.home.*
 
 @BindingAdapter("hotsItem")
 fun RecyclerView.bindHotsItems(uiState: UiState<Home>) {
