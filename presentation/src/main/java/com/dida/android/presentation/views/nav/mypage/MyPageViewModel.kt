@@ -50,7 +50,9 @@ class MyPageViewModel @Inject constructor(
     fun getMypage() {
         baseViewModelScope.launch {
             userProfileAPI()
-                .onSuccess { _myPageState.value = UiState.Success(it) }
+                .onSuccess {
+                    _myPageState.value = UiState.Success(it)
+                    _hasWalletState.value = it.getWallet}
                 .flatMap {
                     userNftAPI()
                         .onSuccess {
