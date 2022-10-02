@@ -3,10 +3,9 @@ package com.dida.android.presentation.views.nav.home
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
 import com.dida.android.util.NftActionHandler
+import com.dida.domain.*
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.onError
-import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HomeAPI
 import com.dida.domain.usecase.main.SoldOutAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,13 +33,14 @@ class HomeViewModel @Inject constructor(
     private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
     val termState: StateFlow<Int> = _termState
 
-    fun getMain() {
+    init {
         baseViewModelScope.launch {
             homeAPI()
-               .onSuccess {
-                   _homeState.value = UiState.Success(it)
-                   onSoldOutDayClicked(_termState.value)
-               }
+               .onSuccess { _homeState.value = UiState.Success(it) }
+                .flatMap {
+                    soldOutAPI(7)
+                        .onSuccess { _soldoutState.value = UiState.Success(it) }
+                        .onError { e -> catchError(e) } }
                .onError { e -> catchError(e)  }
         }
     }
@@ -50,8 +50,7 @@ class HomeViewModel @Inject constructor(
             soldOutAPI(term)
                 .onSuccess {
                     _soldoutState.value = UiState.Success(it)
-                    _termState.value = term
-                }
+                    _termState.value = term }
                 .onError { e -> catchError(e) }
         }
     }

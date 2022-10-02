@@ -5,6 +5,7 @@ import com.dida.android.presentation.base.UiState
 import com.dida.android.util.AppLog
 import com.dida.android.util.NftActionHandler
 import com.dida.data.DataApplication
+import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
@@ -33,29 +34,22 @@ class MyPageViewModel @Inject constructor(
     private val _hasWalletState = MutableStateFlow<Boolean>(false)
     val hasWalletState: StateFlow<Boolean> = _hasWalletState
 
-    private val _hasMyNftState: MutableStateFlow<List<UserNft>> = MutableStateFlow<List<UserNft>>(emptyList())
-    val hasMyNftState: StateFlow<List<UserNft>> = _hasMyNftState
+    private val _hasMyNftState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow(UiState.Loading)
+    val hasMyNftState: StateFlow<UiState<List<UserNft>>> = _hasMyNftState
 
-    fun initMyPageState() {
-        getUserProfile()
-        getUserCards()
-    }
-
-    private fun getUserProfile(){
+    fun getMypage() {
         baseViewModelScope.launch {
             userProfileAPI()
-                .onSuccess { _myPageState.value = UiState.Success(it)}
+                .onSuccess { _myPageState.value = UiState.Success(it) }
+                .flatMap {
+                    userNftAPI()
+                        .onSuccess {
+                            AppLog.d(it.toString())
+                            _hasMyNftState.value = UiState.Success(it) }
+                        .onError { e -> catchError(e) }
+                }
                 .onError { e -> catchError(e) }
-        }
-    }
 
-    private fun getUserCards(){
-        baseViewModelScope.launch {
-            userNftAPI()
-                .onSuccess {
-                    AppLog.d(it.toString())
-                    _hasMyNftState.value = it }
-                .onError { e -> catchError(e) }
         }
     }
 
