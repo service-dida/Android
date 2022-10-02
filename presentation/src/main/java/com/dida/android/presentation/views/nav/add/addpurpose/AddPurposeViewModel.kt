@@ -1,8 +1,5 @@
 package com.dida.android.presentation.views.nav.add.addpurpose
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -22,38 +19,50 @@ import javax.inject.Inject
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,
     private val uploadAssetUsecase: UploadAssetUsecase,
-) : BaseViewModel() {
+) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
 
-    private val _nftImageLiveData = MutableLiveData<String>()
-    val nftImageLiveData: LiveData<String> = _nftImageLiveData
+    private val _nftImageState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val nftImageState: StateFlow<String> = _nftImageState.asStateFlow()
 
-    private val _titleLiveData = MutableLiveData<String>()
-    val titleLiveData: LiveData<String> = _titleLiveData
+    private val _titleState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val titleState: StateFlow<String> = _titleState.asStateFlow()
 
-    private val _descriptionLiveData = MutableLiveData<String>()
-    val descriptionLiveData: LiveData<String> = _descriptionLiveData
-
-    private val _successCreateNft: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
-    val successCreateNft: SharedFlow<Boolean> = _successCreateNft
-
-    /**
-     * 소장용 : 1
-     * 판매용 : 2
-    * */
-    private val _puposeTypeLiveData = MutableLiveData<Int>(0)
-    val puposeTypeLiveData: LiveData<Int>
-        get() = _puposeTypeLiveData
+    private val _descriptionState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val descriptionState: StateFlow<String> = _descriptionState.asStateFlow()
 
     fun initNFTInfo(imgUrl : String, title : String, description : String) {
-        _nftImageLiveData.postValue(imgUrl)
-        _titleLiveData.postValue(title)
-        _descriptionLiveData.postValue(description)
+        baseViewModelScope.launch {
+            _nftImageState.value = imgUrl
+            _titleState.value = title
+            _descriptionState.value = description
+        }
     }
 
-    fun changePurposeType(type : Int){
-        _puposeTypeLiveData.postValue(type)
+    /**
+     * 0 -> 초기값
+     * 1 -> 소장용
+     * 2 -> 판매용
+     * */
+    private val _isSalesState: MutableStateFlow<Int> = MutableStateFlow(0)
+    val isSalesState: StateFlow<Int> = _isSalesState.asStateFlow()
+
+    private val _navigationEvent: MutableSharedFlow<AddPurposeNavigationAction> = MutableSharedFlow<AddPurposeNavigationAction>()
+    val navigationEvent: SharedFlow<AddPurposeNavigationAction> = _navigationEvent.asSharedFlow()
+
+    override fun onTypeNotSaleClicked() {
+        baseViewModelScope.launch {
+            _isSalesState.value = 1
+            _navigationEvent.emit(AddPurposeNavigationAction.NavigateToNotSaled)
+        }
+    }
+
+    override fun onTypeSaleClicked() {
+        baseViewModelScope.launch {
+            _isSalesState.value = 2
+            _navigationEvent.emit(AddPurposeNavigationAction.NavigateToSaled)
+        }
     }
 
     fun uploadAsset(imagePath : String){
@@ -61,17 +70,17 @@ class AddPurposeViewModel @Inject constructor(
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             uploadAssetUsecase(requestBody)
                 .onSuccess { mintNFT(it.uri) }
                 .onError { e -> catchError(e) }
         }
     }
 
-    fun mintNFT(uri : String){
-        viewModelScope.launch {
-            mintNftAPI(titleLiveData.value.toString(),descriptionLiveData.value.toString(),uri)
-                .onSuccess { _successCreateNft.emit(true) }
+    private fun mintNFT(uri : String){
+        baseViewModelScope.launch {
+            mintNftAPI(titleState.value, descriptionState.value, uri)
+                .onSuccess { _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage) }
                 .onError { e -> catchError(e) }
         }
     }
