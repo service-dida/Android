@@ -10,10 +10,7 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.TempPasswordAPI
-import com.dida.domain.usecase.main.UpdateProfileAPI
-import com.dida.domain.usecase.main.UserNftAPI
-import com.dida.domain.usecase.main.UserProfileAPI
+import com.dida.domain.usecase.main.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +25,8 @@ class MyPageViewModel @Inject constructor(
     private val userProfileAPI: UserProfileAPI,
     private val userNftAPI: UserNftAPI,
     private val updateProfileAPI: UpdateProfileAPI,
-    private val tempPasswordAPI: TempPasswordAPI
+    private val tempPasswordAPI: TempPasswordAPI,
+    private val changePasswordAPI: ChangePasswordAPI
 ) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
     private val TAG = "MyPageViewModel"
@@ -44,7 +42,8 @@ class MyPageViewModel @Inject constructor(
     private val _hasWalletState = MutableStateFlow<Boolean>(false)
     val hasWalletState: StateFlow<Boolean> = _hasWalletState
 
-    private val _hasMyNftState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow(UiState.Loading)
+    private val _hasMyNftState: MutableStateFlow<UiState<List<UserNft>>> =
+        MutableStateFlow(UiState.Loading)
     val hasMyNftState: StateFlow<UiState<List<UserNft>>> = _hasMyNftState
 
     fun getMypage() {
@@ -52,7 +51,8 @@ class MyPageViewModel @Inject constructor(
             userProfileAPI()
                 .onSuccess {
                     _myPageState.value = UiState.Success(it)
-                    _hasWalletState.value = it.getWallet}
+                    _hasWalletState.value = it.getWallet
+                }
                 .flatMap {
                     userNftAPI()
                         .onSuccess {
@@ -80,6 +80,21 @@ class MyPageViewModel @Inject constructor(
                     catchError(
                         Throwable(
                             message = "임시비밀번호 발급성공",
+                            cause = null
+                        )
+                    )
+                }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun changePassword(beforePassword: String, afterPassword: String) {
+        baseViewModelScope.launch {
+            changePasswordAPI(beforePassword, afterPassword)
+                .onSuccess {
+                    catchError(
+                        Throwable(
+                            message = "비밀번호 변경 성공",
                             cause = null
                         )
                     )
