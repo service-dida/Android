@@ -28,7 +28,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     override val viewModel: AddPurposeViewModel by viewModels()
 
-    private val args: com.dida.android.presentation.views.nav.add.AddPurposeFragmentArgs by navArgs()
+    private val args: AddPurposeFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {
@@ -43,7 +43,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             viewModel.successCreateNft.collect {
-                if(it) { navigate(com.dida.android.presentation.views.nav.add.AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()) }
+                if(it) { navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()) }
             }
         }
     }
