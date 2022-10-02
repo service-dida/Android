@@ -19,5 +19,11 @@
         android:icon="@drawable/ic_baseline_more_vert_24"
         android:title="프로필 사진 추가"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_temporary_password"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="임시비밀번호발급"
+        app:showAsAction="never"/>
 </menu>
 

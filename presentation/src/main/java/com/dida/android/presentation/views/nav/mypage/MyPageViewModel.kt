@@ -9,6 +9,7 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.TempPasswordAPI
 import com.dida.domain.usecase.main.UpdateProfileAPI
 import com.dida.domain.usecase.main.UserNftAPI
 import com.dida.domain.usecase.main.UserProfileAPI
@@ -25,21 +26,25 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     private val userProfileAPI: UserProfileAPI,
     private val userNftAPI: UserNftAPI,
-    private val updateProfileAPI: UpdateProfileAPI
+    private val updateProfileAPI: UpdateProfileAPI,
+    private val tempPasswordAPI: TempPasswordAPI
 ) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
     private val TAG = "MyPageViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<MypageNavigationAction> = MutableSharedFlow<MypageNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<MypageNavigationAction> =
+        MutableSharedFlow<MypageNavigationAction>()
     val navigationEvent: SharedFlow<MypageNavigationAction> = _navigationEvent
 
-    private val _myPageState: MutableStateFlow<UiState<UserProfile>> = MutableStateFlow(UiState.Loading)
+    private val _myPageState: MutableStateFlow<UiState<UserProfile>> =
+        MutableStateFlow(UiState.Loading)
     val myPageState: StateFlow<UiState<UserProfile>> = _myPageState
 
     private val _hasWalletState = MutableStateFlow<Boolean>(false)
     val hasWalletState: StateFlow<Boolean> = _hasWalletState
 
-    private val _hasMyNftState: MutableStateFlow<List<UserNft>> = MutableStateFlow<List<UserNft>>(emptyList())
+    private val _hasMyNftState: MutableStateFlow<List<UserNft>> =
+        MutableStateFlow<List<UserNft>>(emptyList())
     val hasMyNftState: StateFlow<List<UserNft>> = _hasMyNftState
 
     fun initMyPageState() {
@@ -47,36 +52,52 @@ class MyPageViewModel @Inject constructor(
         getUserCards()
     }
 
-    private fun getUserProfile(){
+    private fun getUserProfile() {
         baseViewModelScope.launch {
             userProfileAPI()
-                .onSuccess { _myPageState.value = UiState.Success(it)}
+                .onSuccess { _myPageState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
     }
 
-    private fun getUserCards(){
+    private fun getUserCards() {
         baseViewModelScope.launch {
             userNftAPI()
-                .onSuccess {
-                    AppLog.d(it.toString())
-                    _hasMyNftState.value = it }
+                .onSuccess { _hasMyNftState.value = it }
                 .onError { e -> catchError(e) }
         }
     }
 
-    fun updateProfile(description : MultipartBody.Part, file : MultipartBody.Part){
+    fun updateProfile(description: MultipartBody.Part, file: MultipartBody.Part) {
         baseViewModelScope.launch {
-            updateProfileAPI(description,file)
+            updateProfileAPI(description, file)
                 .onSuccess { getUserProfile() }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun tempPassword() {
+        baseViewModelScope.launch {
+            tempPasswordAPI()
+                .onSuccess {
+                    catchError(
+                        Throwable(
+                            message = "임시비밀번호 발급성공",
+                            cause = null
+                        )
+                    )
+                }
                 .onError { e -> catchError(e) }
         }
     }
 
     override fun onWalletClicked() {
         baseViewModelScope.launch {
-            if(hasWalletState.value) { _navigationEvent.emit(MypageNavigationAction.NavigateToWallet) }
-            else { _navigationEvent.emit(MypageNavigationAction.NavigateToEmail) }
+            if (hasWalletState.value) {
+                _navigationEvent.emit(MypageNavigationAction.NavigateToWallet)
+            } else {
+                _navigationEvent.emit(MypageNavigationAction.NavigateToEmail)
+            }
         }
     }
 

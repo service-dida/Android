@@ -91,6 +91,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     R.id.action_wallet -> viewModel.onWalletClicked()
                     R.id.action_setting -> viewModel.onSettingClicked()
                     R.id.action_profileImg -> getImageToGallery()
+                    R.id.action_temporary_password -> viewModel.tempPassword()
                 }
                 true
             }
