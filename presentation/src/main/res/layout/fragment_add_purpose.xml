@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.add.AddPurposeViewModel" />
+            type="com.dida.android.presentation.views.nav.add.addpurpose.AddPurposeViewModel" />
     </data>
 
     <ScrollView

@@ -1,12 +1,9 @@
-package com.dida.android.presentation.views.nav.add
+package com.dida.android.presentation.views.nav.add.addmain
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.setFragmentResultListener
@@ -151,11 +148,12 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                         } else{
                             isSelected = true
                             //사진,제목, 설명 이동
-                            val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                                viewModel.nftImageState.value,
-                                viewModel.titleTextState.value,
-                                viewModel.descriptionTextState.value
-                            )
+                            val action =
+                                AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                                    viewModel.nftImageState.value,
+                                    viewModel.titleTextState.value,
+                                    viewModel.descriptionTextState.value
+                                )
                             navigate(action)
                         }
                     }

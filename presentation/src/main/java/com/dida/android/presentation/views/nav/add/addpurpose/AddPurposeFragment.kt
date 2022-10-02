@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add
+package com.dida.android.presentation.views.nav.add.addpurpose
 
 import android.annotation.SuppressLint
 import android.database.Cursor
@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     override val viewModel: AddPurposeViewModel by viewModels()
 
-    private val args: AddPurposeFragmentArgs by navArgs()
+    private val args: com.dida.android.presentation.views.nav.add.AddPurposeFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {
@@ -42,7 +43,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             viewModel.successCreateNft.collect {
-                if(it) { navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()) }
+                if(it) { navigate(com.dida.android.presentation.views.nav.add.AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()) }
             }
         }
     }

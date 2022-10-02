@@ -1,15 +1,11 @@
-package com.dida.android.presentation.views.nav.add
+package com.dida.android.presentation.views.nav.add.addpurpose
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.views.nav.home.HomeNavigationAction
-import com.dida.android.util.AppLog
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.repository.KlaytnRepository
-import com.dida.domain.repository.MainRepository
 import com.dida.domain.usecase.klaytn.UploadAssetUsecase
 import com.dida.domain.usecase.main.MintNftAPI
 import dagger.hilt.android.lifecycle.HiltViewModel

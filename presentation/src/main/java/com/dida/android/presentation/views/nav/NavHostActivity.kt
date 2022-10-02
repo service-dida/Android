@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views.nav
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -12,7 +11,6 @@ import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
 import com.dida.android.presentation.views.login.LoginActivity
-import com.dida.android.presentation.views.nav.add.AddFragment
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
 
