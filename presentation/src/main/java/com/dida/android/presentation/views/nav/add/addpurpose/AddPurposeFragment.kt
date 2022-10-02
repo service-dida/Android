@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add
+package com.dida.android.presentation.views.nav.add.addpurpose
 
 import android.annotation.SuppressLint
 import android.database.Cursor
@@ -11,10 +11,12 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -41,45 +43,20 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.successCreateNft.collect {
-                if(it) { navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()) }
+            viewModel.navigationEvent.collect {
+                when(it) {
+                    is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
+                    is AddPurposeNavigationAction.NavigateToSaled -> isSaled()
+                    is AddPurposeNavigationAction.NavigateToMyPage -> {
+                        dismissLoadingDialog()
+                        navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
+                    }
+                }
             }
         }
     }
 
     override fun initAfterBinding() {
-        binding.type1Button.setOnClickListener {
-            viewModel.changePurposeType(1)
-            val dialog = AddNftBottomSheet{
-                val passwordDialog = PasswordDialog(true) { password ->
-                    //TODO : 비밀번호 맞는지 체크하기
-                    val currentImageUri = Uri.parse(viewModel.nftImageLiveData.value.toString())
-                    try {
-                        currentImageUri?.let {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                val imagePath: String = getPath(currentImageUri)!!
-                                viewModel.uploadAsset(imagePath)
-                            }else{
-                                //TODO :버전낮은거 처리하기
-                            }
-                        }
-                    }catch (e : Exception){
-
-                    }
-                }
-                passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
-            }
-            dialog.show(childFragmentManager, "AddPurposeFragment")
-
-        }
-
-        binding.type2Button.setOnClickListener {
-            viewModel.changePurposeType(2)
-            val dialog = AddNftPriceBottomSheet(){
-
-            }
-            dialog.show(childFragmentManager, "AddPurposeFragment")
-        }
     }
 
     private fun initToolbar() {
@@ -98,5 +75,35 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
         val path: String? = cursor?.getString(cursor.getColumnIndex("_data"))
         cursor?.close()
         return path?:""
+    }
+
+    private fun notSaled() {
+        val dialog = AddNftBottomSheet {
+            val passwordDialog = PasswordDialog(true) { password ->
+                //TODO : 비밀번호 맞는지 체크하기
+                val currentImageUri = Uri.parse(viewModel.nftImageState.value.toString())
+                try {
+                    currentImageUri?.let {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            val imagePath: String = getPath(currentImageUri)!!
+                            viewModel.uploadAsset(imagePath)
+                            showLoadingDialog()
+                        } else {
+                            //TODO :버전낮은거 처리하기
+                        }
+                    }
+                }catch (e : Exception){
+
+                }
+            }
+            passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+        }
+        dialog.show(childFragmentManager, "AddPurposeFragment")
+    }
+
+    private fun isSaled() {
+        val dialog = AddNftPriceBottomSheet {
+        }
+        dialog.show(childFragmentManager, "AddPurposeFragment")
     }
 }

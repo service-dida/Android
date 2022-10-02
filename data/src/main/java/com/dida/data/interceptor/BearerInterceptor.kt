@@ -4,12 +4,16 @@ import android.util.Log
 import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.RefreshTokenAPI
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import javax.inject.Inject
 
 /*
    * bearer 토큰 필요한 api 사용시 accessToken유효한지 검사
@@ -18,30 +22,28 @@ import java.io.IOException
    * 사용시 주석 풀고 사용하기
 */
 
-class BearerInterceptor: Interceptor {
+class BearerInterceptor @Inject constructor(
+    private val refeshTokenAPI: RefreshTokenAPI
+): Interceptor {
     //todo 조건 분기로 인터셉터 구조 변경
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
-        Log.d("response!!!", response.code.toString())
         if(response.code == 400){
-            accessToken = runBlocking {
+            runBlocking {
                 //토큰 갱신 api 호출
                 val request = DataApplication.mySharedPreferences.getRefreshToken()
-                val response = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(MainAPIService::class.java)
-                    .refreshtokenAPIServer(request!!)
-
-                DataApplication.mySharedPreferences
-                    .setAccessToken(response?.accessToken, response?.refreshToken)
-                response?.accessToken?: "Empty Token"
+                request?.let {
+                    refeshTokenAPI(request)
+                        .onSuccess { response ->
+                            DataApplication.mySharedPreferences
+                                .setAccessToken(response.accessToken, response.refreshToken)
+                            accessToken = response.accessToken!!
+                        }
+                }
             }
-
             val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
                 .build()
             return chain.proceed(newRequest)

@@ -16,6 +16,8 @@ object BindingAdapters {
         if (imageURL.isNullOrEmpty().not()) {
             Glide.with(imageView.context)
                 .load(imageURL)
+                .override(1024, 1024)
+                .transform(CenterCrop())
                 .into(imageView)
         }
     }
