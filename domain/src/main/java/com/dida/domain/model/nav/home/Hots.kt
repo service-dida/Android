@@ -1,16 +1,14 @@
 package com.dida.domain.model.nav.home
 
-import com.google.gson.annotations.SerializedName
-
-class Hots(
-    @SerializedName("cardId") val cardId: Int,
-    @SerializedName("nftImg") var nftImg: String,
-    @SerializedName("nftName") var nftName: String,
-    @SerializedName("heartCount") var heartCount: String,
-    @SerializedName("price") var price: String
+data class Hots(
+    val cardId: Int,
+    val nftImg: String,
+    val nftName: String,
+    val heartCount: String,
+    val price: String
 ){
     fun priceFormat() : String{
-        return price+" dida"
+        return "$price dida"
     }
 
     fun heartFormat(): String{

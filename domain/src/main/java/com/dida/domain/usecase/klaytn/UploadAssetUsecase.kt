@@ -6,7 +6,6 @@ import com.dida.domain.repository.KlaytnRepository
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-
 class UploadAssetUsecase @Inject constructor(
     private val repository: KlaytnRepository
 ){

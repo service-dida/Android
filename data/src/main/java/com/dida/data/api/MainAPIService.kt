@@ -18,7 +18,7 @@ import retrofit2.http.*
 
 interface MainAPIService {
     @GET("/app/version")
-    suspend fun checkVersion(): Response<AppVersionResponse>
+    suspend fun checkVersion(): AppVersionResponse
 
     @POST("/kakao/login")
     suspend fun loginAPIServer(@Body idToken : String): LoginResponseModel

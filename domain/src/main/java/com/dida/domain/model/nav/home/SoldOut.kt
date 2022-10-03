@@ -1,14 +1,12 @@
 package com.dida.domain.model.nav.home
 
-import com.google.gson.annotations.SerializedName
-
-class SoldOut(
-    @SerializedName("nftId") val nftId: Long,
-    @SerializedName("nftImg") var nftImg: String,
-    @SerializedName("nftName") var nftName: String,
-    @SerializedName("userImg") var userImg: String,
-    @SerializedName("userName") var userName: String,
-    @SerializedName("price") var price: String
+data class SoldOut(
+    val nftId: Long,
+    val nftImg: String,
+    val nftName: String,
+    val userImg: String,
+    val userName: String,
+    val price: String
 ){
     fun priceFormat() : String{
         return price

@@ -1,6 +1,6 @@
 package com.dida.domain.model.nav.mypage
 
-class WalletNFTHistoryHolderModel(
+data class WalletNFTHistoryHolderModel(
     val image_url: String,
     val user_name: String,
     val nft_name: String,
@@ -8,6 +8,6 @@ class WalletNFTHistoryHolderModel(
     val type : Boolean
 ){
     fun priceFormat() : String{
-        return price.toString()+" dida"
+        return "$price dida"
     }
 }

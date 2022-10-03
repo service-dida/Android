@@ -9,6 +9,6 @@ data class UserNft(
     val price : String
 ){
     fun priceFormat() : String{
-        return price+" dida"
+        return "$price dida"
     }
 }

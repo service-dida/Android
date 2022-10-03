@@ -28,8 +28,8 @@ class MainRepositoryImpl @Inject constructor(
     @Named("Main") private val mainAPIService: MainAPIService
 ): MainRepository {
 
-    override suspend fun checkVersionAPI(): Response<AppVersionResponse> {
-        return mainAPIService.checkVersion()
+    override suspend fun checkVersionAPI(): NetworkResult<AppVersionResponse> {
+        return handleApi { mainAPIService.checkVersion() }
     }
 
     override suspend fun loginAPI(idToken: String): NetworkResult<LoginResponseModel> {

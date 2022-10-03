@@ -10,12 +10,11 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
-import retrofit2.Response
 
 
 interface  MainRepository {
 
-    suspend fun checkVersionAPI(): Response<AppVersionResponse>
+    suspend fun checkVersionAPI(): NetworkResult<AppVersionResponse>
 
     suspend fun loginAPI(idToken : String): NetworkResult<LoginResponseModel>
 
