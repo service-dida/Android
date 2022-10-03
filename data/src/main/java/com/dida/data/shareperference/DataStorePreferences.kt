@@ -1,20 +1,15 @@
 package com.dida.data.shareperference
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.dida.data.R
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 class DataStorePreferences(val context: Context) {
 
-    private val Context.dataStore  by preferencesDataStore(name = "dataStore")
+    private val Context.dataStore  by preferencesDataStore(name = context.getString(R.string.prefs_key))
 
     // Token Variance
     private val accessTokenPreference = stringPreferencesKey("X-ACCESS-TOKEN")

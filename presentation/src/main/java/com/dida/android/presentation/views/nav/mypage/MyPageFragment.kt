@@ -30,7 +30,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         get() = R.layout.fragment_mypage
 
     override val viewModel: MyPageViewModel by viewModels()
-    val navController: NavController by lazy { findNavController() }
+    private val navController: NavController by lazy { findNavController() }
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
@@ -123,8 +123,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                         val nicknamePart: MultipartBody.Part = MultipartBody.Part.createFormData("description", "테스트 설명")
                         viewModel.updateProfile(nicknamePart , requestBody)
                     }
-                } else{
-                    navController.popBackStack()
                 }
             }
     }
