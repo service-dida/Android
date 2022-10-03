@@ -70,7 +70,6 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/ic_launcher_background"
                 app:layout_constraintStart_toStartOf="@+id/nft_name_textview"
                 app:layout_constraintTop_toBottomOf="@+id/nft_name_textview" />
 

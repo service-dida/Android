@@ -11,7 +11,6 @@ import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
 
-
 interface  MainRepository {
 
     suspend fun checkVersionAPI(): NetworkResult<AppVersionResponse>
