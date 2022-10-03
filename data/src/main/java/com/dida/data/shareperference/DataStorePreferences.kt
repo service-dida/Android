@@ -51,4 +51,18 @@ class DataStorePreferences(val context: Context) {
             preference[refreshTokenPreference] = ""
         }
     }
+
+    suspend fun setFcmToken(token: String?) {
+        token?.let {
+            context.dataStore.edit { preference ->
+                preference[fcmTokenPreference] = it
+            }
+        }
+    }
+
+    fun getFcmToken(): Flow<String?> {
+        return context.dataStore.data.map {
+            it[fcmTokenPreference]
+        }
+    }
 }
