@@ -2,7 +2,6 @@ package com.dida.android.presentation.views.login
 
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
-import com.dida.data.DataApplication.Companion.mySharedPreferences
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.LoginAPI

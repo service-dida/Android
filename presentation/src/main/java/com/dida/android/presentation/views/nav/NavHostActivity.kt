@@ -13,7 +13,6 @@ import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
 import com.dida.android.presentation.views.login.LoginActivity
 import com.dida.data.DataApplication.Companion.dataStorePreferences
-import com.dida.data.DataApplication.Companion.mySharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -48,15 +47,10 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.detailNftFragment -> hideBottomNav()
-                R.id.myPageFragment -> {
-                    loginCheck()
-                    showBottomNav()
-                }
+                R.id.myPageFragment -> loginCheck()
                 R.id.addFragment -> loginCheck()
                 R.id.communityDetailFragment -> hideBottomNav()
-                else ->{
-                    showBottomNav()
-                }
+                else -> showBottomNav()
             }
         }
         binding.bottomNavi.setupWithNavController(navController)
@@ -79,12 +73,6 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
     }
 
     private fun loginCheck() {
-//        val accessToken = mySharedPreferences.getAccessToken()
-//        if (accessToken.isNullOrEmpty()) {
-//            val intent = Intent(this, LoginActivity::class.java)
-//            registerForActivityResult.launch(intent)
-//        }
-
         runBlocking {
             if(dataStorePreferences.getAccessToken().isNullOrEmpty()) {
                 registerForActivityResult.launch(Intent(this@NavHostActivity, LoginActivity::class.java))

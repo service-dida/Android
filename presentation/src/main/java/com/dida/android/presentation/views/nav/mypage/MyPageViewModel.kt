@@ -115,7 +115,6 @@ class MyPageViewModel @Inject constructor(
 
     override fun onSettingClicked() {
         baseViewModelScope.launch {
-//            DataApplication.mySharedPreferences.removeAccessToken()
             DataApplication.dataStorePreferences.removeAccessToken()
             _navigationEvent.emit(MypageNavigationAction.NavigateToHome)
         }
