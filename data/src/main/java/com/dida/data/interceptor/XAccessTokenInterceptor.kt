@@ -1,6 +1,12 @@
 package com.dida.data.interceptor
 
+import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.data.DataApplication.Companion.mySharedPreferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -11,14 +17,15 @@ class XAccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
 
-        val jwtToken : String? = mySharedPreferences.getAccessToken()
+//        val jwtToken : String? = mySharedPreferences.getAccessToken()
+        var jwtToken = ""
+        runBlocking {
+            dataStorePreferences.getAccessToken()?.let {
+                jwtToken = it
+            }
+        }
 
-        if (jwtToken != null) {
-            builder.addHeader("Authorization", jwtToken)
-        }
-        else {
-            builder.addHeader("Authorization", "")
-        }
+        builder.addHeader("Authorization", jwtToken)
         return chain.proceed(builder.build())
     }
 }

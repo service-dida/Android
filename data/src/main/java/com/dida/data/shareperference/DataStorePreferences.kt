@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.dida.data.R
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class DataStorePreferences(val context: Context) {
@@ -33,14 +34,14 @@ class DataStorePreferences(val context: Context) {
         }
     }
 
-    fun getAccessToken(): Flow<String?> {
-        return context.dataStore.data.map {
+    suspend fun getAccessToken(): String? {
+        return context.dataStore.data.first().let {
             it[accessTokenPreference]
         }
     }
 
-    fun getRefreshToken(): Flow<String?> {
-        return context.dataStore.data.map {
+    suspend fun getRefreshToken(): String? {
+        return context.dataStore.data.first().let {
             it[refreshTokenPreference]
         }
     }
@@ -60,8 +61,8 @@ class DataStorePreferences(val context: Context) {
         }
     }
 
-    fun getFcmToken(): Flow<String?> {
-        return context.dataStore.data.map {
+    suspend fun getFcmToken(): String? {
+        return context.dataStore.data.first().let {
             it[fcmTokenPreference]
         }
     }

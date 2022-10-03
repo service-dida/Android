@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views.login
 
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -39,13 +40,15 @@ class LoginMainViewModel @Inject constructor(
                         _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.accessToken!!))
                     }
                     else {
-                        mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
+                        dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
+//                        mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
                         _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
                     } }
                 .onError { e ->
                     catchError(e)
                     _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
-                    mySharedPreferences.removeAccessToken()
+//                    mySharedPreferences.removeAccessToken()
+                    dataStorePreferences.removeAccessToken()
                 }
         }
     }

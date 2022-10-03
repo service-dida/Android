@@ -80,7 +80,8 @@ class NicknameViewModel @Inject constructor(
         baseViewModelScope.launch {
             createUserAPI(email, nickName)
                 .onSuccess {
-                    DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
+                    DataApplication.dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
+//                    DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
                     _navigationEvent.emit(NicknameNavigationAction.NavigateToHome) }
                 .onError { e -> catchError(e) }
         }

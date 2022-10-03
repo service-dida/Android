@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -11,8 +12,12 @@ import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
 import com.dida.android.presentation.views.login.LoginActivity
+import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.data.DataApplication.Companion.mySharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>() {
@@ -74,10 +79,16 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
     }
 
     private fun loginCheck() {
-        val accessToken = mySharedPreferences.getAccessToken()
-        if (accessToken.isNullOrEmpty()) {
-            val intent = Intent(this, LoginActivity::class.java)
-            registerForActivityResult.launch(intent)
+//        val accessToken = mySharedPreferences.getAccessToken()
+//        if (accessToken.isNullOrEmpty()) {
+//            val intent = Intent(this, LoginActivity::class.java)
+//            registerForActivityResult.launch(intent)
+//        }
+
+        runBlocking {
+            if(dataStorePreferences.getAccessToken().isNullOrEmpty()) {
+                registerForActivityResult.launch(Intent(this@NavHostActivity, LoginActivity::class.java))
+            }
         }
     }
 
