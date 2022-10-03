@@ -53,43 +53,8 @@ dependencies {
     // https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
-    // Glide Library For Image
-    implementation 'com.github.bumptech.glide:glide:4.13.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
-
-    //Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-
-    // https://github.com/ybq/Android-SpinKit
-    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
-
-    // life cycle scope
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
-    // viewmodel scope
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
-
-    // Testing Navigation
-    androidTestImplementation("androidx.navigation:navigation-testing:2.3.0")
-
     // Hilt
     def hilt_version = '2.40.5'
     implementation "com.google.dagger:hilt-android:2.40.5"
     kapt "com.google.dagger:hilt-compiler:2.40.5"
-
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
-
-    //Room
-    implementation "androidx.room:room-runtime:2.4.1"
-    kapt "androidx.room:room-compiler:2.4.1"
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.4.1"
-
-    // 카카오 로그인
-    implementation "com.kakao.sdk:v2-user:2.8.4"
-
-    //Circle ImageView
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
