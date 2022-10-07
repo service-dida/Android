@@ -5,6 +5,7 @@ import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
+import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
@@ -67,4 +68,7 @@ interface MainAPIService {
     @Multipart
     @PUT("/user")
     suspend fun updateProfile(@Part description: MultipartBody.Part, @Part file: MultipartBody.Part)
+
+    @POST
+    suspend fun postLike(@Body request: PostLikeRequest) : Unit
 }

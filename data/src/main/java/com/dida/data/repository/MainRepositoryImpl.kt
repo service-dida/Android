@@ -7,6 +7,7 @@ import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.login.CreateUserRequestModel
+import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
@@ -103,5 +104,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun updateProfileAPI(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit>{
         return handleApi { mainAPIService.updateProfile(description,file)}
+    }
+
+    override suspend fun postLikeAPI(cardId: Long): NetworkResult<Unit> {
+        val request = PostLikeRequest(cardId)
+        return handleApi { mainAPIService.postLike(request) }
     }
 }

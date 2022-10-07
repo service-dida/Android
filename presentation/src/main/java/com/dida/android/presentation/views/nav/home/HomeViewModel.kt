@@ -11,6 +11,7 @@ import com.dida.domain.model.nav.home.Hots
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.usecase.main.HomeAPI
+import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.SoldOutAPI
 import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeAPI: HomeAPI,
-    private val soldOutAPI: SoldOutAPI
+    private val soldOutAPI: SoldOutAPI,
+    private val postLikeAPI: PostLikeAPI
     ) : BaseViewModel(), HomeActionHandler, NftActionHandler {
 
     private val TAG = "HomeViewModel"
@@ -91,7 +93,9 @@ class HomeViewModel @Inject constructor(
 
     override fun onLikeBtnClicked(nftId: Int) {
         baseViewModelScope.launch {
-
+            postLikeAPI(nftId.toLong())
+                .onSuccess {  }
+                .onError { e -> catchError(e) }
         }
     }
 }
