@@ -88,12 +88,14 @@
                 tools:text="1.65 dida" />
 
             <ImageButton
+                android:id="@+id/like_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:background="@color/surface1"
+                android:backgroundTint="@{holderModel.liked ? @color/brand_lemon : @color/surface1}"
                 android:src="@drawable/ic_empty_heart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

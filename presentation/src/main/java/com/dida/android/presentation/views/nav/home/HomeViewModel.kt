@@ -88,4 +88,10 @@ class HomeViewModel @Inject constructor(
             _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
+
+    override fun onLikeBtnClicked(nftId: Int) {
+        baseViewModelScope.launch {
+
+        }
+    }
 }
