@@ -72,7 +72,8 @@ fun List<RecentCardResponse>.toDomain(): List<UserNft> {
         userName = it.userName,
         imgUrl = it.imgUrl,
         cardName = it.cardName,
-        price = it.price
+        price = it.price,
+        liked = it.liked
     ) }
 }
 

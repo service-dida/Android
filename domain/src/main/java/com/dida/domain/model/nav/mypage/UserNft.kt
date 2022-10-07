@@ -6,7 +6,8 @@ data class UserNft(
     val userName : String,
     val cardName : String,
     val imgUrl : String,
-    val price : String
+    val price : String,
+    val liked: Boolean
 ){
     fun priceFormat() : String {
         return price.toString()+" dida"
