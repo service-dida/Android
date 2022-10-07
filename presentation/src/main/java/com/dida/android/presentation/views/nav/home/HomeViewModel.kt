@@ -45,11 +45,10 @@ class HomeViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            homeAPI()
-                .onSuccess { _homeState.value = UiState.Success(it) }
-                .onError { e -> catchError(e) }
-                .flatMap { soldOutAPI(7) }
+            soldOutAPI.invoke(7)
                 .onSuccess { _soldoutState.value = UiState.Success(it) }
+                .flatMap { homeAPI() }
+                .onSuccess { _homeState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
     }
