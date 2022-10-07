@@ -5,15 +5,22 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.size
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.presentation.base.UiState
+import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerFrameLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @BindingAdapter("startLoading")
 fun ShimmerFrameLayout.startLoading(uiState: UiState<*>) {
     visibility = if (uiState is UiState.Loading) View.VISIBLE else View.GONE
+    this.startShimmer()
 }
 
 @BindingAdapter("rv_endLoading")
@@ -28,6 +35,9 @@ fun ConstraintLayout.endLoading(uiState: UiState<*>) {
 
 @BindingAdapter("linear_endLoading")
 fun LinearLayout.endLoading(uiState: UiState<*>) {
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(1000)
+    }
     visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
 }
 

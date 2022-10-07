@@ -26,7 +26,7 @@ private fun calculateRectOnScreen(view: View): Rect {
 internal fun NestedScrollView.smoothScrollToView(
     view: View,
     marginTop: Int = 0,
-    maxDuration: Long = 100L,
+    maxDuration: Long = 50L,
     onEnd: () -> Unit = {}
 ) {
     if (this.getChildAt(0).height <= this.height) { // 스크롤의 의미가 없다.

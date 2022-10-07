@@ -69,6 +69,6 @@ interface MainAPIService {
     @PUT("/user")
     suspend fun updateProfile(@Part description: MultipartBody.Part, @Part file: MultipartBody.Part)
 
-    @POST
+    @POST("/card/like")
     suspend fun postLike(@Body request: PostLikeRequest) : Unit
 }

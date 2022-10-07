@@ -18,18 +18,19 @@ class RecentNftAdapter(
     init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderMypageUserCardsBinding = DataBindingUtil.inflate(
+        val viewDataBinding: HolderMypageUserCardsBinding = DataBindingUtil.inflate<HolderMypageUserCardsBinding?>(
             LayoutInflater.from(parent.context),
             R.layout.holder_mypage_user_cards,
             parent,
             false
         )
-        viewDataBinding.root.setOnClickListener {
-            eventListener.onNftItemClicked(viewDataBinding.holderModel.cardId)
-        }
-        viewDataBinding.likeBtn.setOnClickListener {
-            eventListener.onLikeBtnClicked(viewDataBinding.holderModel.cardId)
-            viewDataBinding.holderModel.liked = !viewDataBinding.holderModel.liked
+        viewDataBinding.apply {
+            nftImageView.setOnClickListener {
+                eventListener.onNftItemClicked(holderModel!!.cardId)
+            }
+            likeBtn.setOnClickListener {
+                eventListener.onLikeBtnClicked(holderModel!!.cardId)
+            }
         }
         return ViewHolder(viewDataBinding)
     }
@@ -48,9 +49,9 @@ class RecentNftAdapter(
 
     internal object RecentNftItemDiffCallback : DiffUtil.ItemCallback<UserNft>() {
         override fun areItemsTheSame(oldItem: UserNft, newItem: UserNft) =
-            oldItem == newItem
+            oldItem.cardId == newItem.cardId && oldItem.liked == newItem.liked
 
         override fun areContentsTheSame(oldItem: UserNft, newItem: UserNft) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

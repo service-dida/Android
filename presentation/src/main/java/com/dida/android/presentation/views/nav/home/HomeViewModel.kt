@@ -54,6 +54,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun getHome() {
+        baseViewModelScope.launch {
+            homeAPI()
+                .onSuccess {
+                    _homeState.value = UiState.Success(it)
+                    _likedEvent.emit(true) }
+                .onError { e -> catchError(e) }
+        }
+    }
+
     override fun onSoldOutDayClicked(term: Int) {
         baseViewModelScope.launch {
             soldOutAPI(term)
@@ -98,7 +108,7 @@ class HomeViewModel @Inject constructor(
         baseViewModelScope.launch {
             _likedEvent.emit(false)
             postLikeAPI(nftId.toLong())
-                .onSuccess { _likedEvent.emit(true) }
+                .onSuccess { getHome() }
                 .onError { e -> catchError(e) }
         }
     }
