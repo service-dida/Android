@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
+import com.dida.android.NavigationGraphDirections
 import com.dida.android.util.LoadingDialog
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
@@ -66,7 +69,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * Exception을 처리할 SharedFlow
     */
     protected var exception: SharedFlow<Throwable>? = null
-    protected var toast: Toast? = null
+    private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -112,35 +115,47 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.
-    fun showLoadingDialog() {
+    protected fun showLoadingDialog() {
         mLoadingDialog.show()
     }
+
     // 띄워 놓은 로딩 다이얼로그를 없앰.
-    fun dismissLoadingDialog() {
+    protected fun dismissLoadingDialog() {
         if (mLoadingDialog.isShowing) {
             mLoadingDialog.dismiss()
         }
     }
 
     // Toast Message 관련 함수
-    fun showToastMessage(e: Throwable?) {
+    protected fun showToastMessage(e: Throwable?) {
         toast?.cancel()
         toast = Toast.makeText(activity, e?.message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수
-    fun toastMessage(message: String) {
+    protected fun toastMessage(message: String) {
         toast?.cancel()
         toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // navigation 중복체크 관리 <- checkNavigation 대신 사용할것
-    fun Fragment.navigate(directions: NavDirections) {
+    protected fun Fragment.navigate(directions: NavDirections) {
         val controller = findNavController()
         val currentDestination = (controller.currentDestination as? FragmentNavigator.Destination)?.className
             ?: (controller.currentDestination as? DialogFragmentNavigator.Destination)?.className
         if (currentDestination == this.javaClass.name) {
             controller.navigate(directions)
+        }
+    }
+
+    // Home 화면으로 이동
+    protected fun navigateToHomeFragment(navOptions: NavOptions? = null) {
+        val mainFragmentId = com.dida.android.R.id.homeFragment
+        if (findNavController().currentDestination?.id != mainFragmentId) {
+            val result = findNavController().popBackStack(mainFragmentId, false)
+            if (!result) {
+                findNavController().navigate(NavigationGraphDirections.actionMainFragment(), navOptions)
+            }
         }
     }
 }
