@@ -40,6 +40,9 @@ class HomeViewModel @Inject constructor(
     private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
     val termState: StateFlow<Int> = _termState.asStateFlow()
 
+    private val _likedEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val likedEvent: SharedFlow<Boolean> = _likedEvent.asSharedFlow()
+
     init {
         baseViewModelScope.launch {
             homeAPI()
@@ -93,8 +96,9 @@ class HomeViewModel @Inject constructor(
 
     override fun onLikeBtnClicked(nftId: Int) {
         baseViewModelScope.launch {
+            _likedEvent.emit(false)
             postLikeAPI(nftId.toLong())
-                .onSuccess {  }
+                .onSuccess { _likedEvent.emit(true) }
                 .onError { e -> catchError(e) }
         }
     }

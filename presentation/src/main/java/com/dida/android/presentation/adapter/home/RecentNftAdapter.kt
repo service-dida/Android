@@ -29,6 +29,7 @@ class RecentNftAdapter(
         }
         viewDataBinding.likeBtn.setOnClickListener {
             eventListener.onLikeBtnClicked(viewDataBinding.holderModel.cardId)
+            viewDataBinding.holderModel.liked = !viewDataBinding.holderModel.liked
         }
         return ViewHolder(viewDataBinding)
     }
