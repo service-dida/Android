@@ -275,7 +275,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginTop="7dp">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -286,13 +287,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                                 <include
                                     layout="@layout/skeleton_holder_mypage_user_cards"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -304,13 +305,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                                 <include
                                     layout="@layout/skeleton_holder_mypage_user_cards"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
