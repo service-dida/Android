@@ -1,4 +1,20 @@
 # DIDA
-DIDA
 
-2022.05.17(TUE) <- 베이스 세팅 완료 (Hilt, Jetpack Navigation)
+패키지구조 (Multimodule)
+- Data
+  - api
+  - di
+  - interceptor
+  - mapper
+  - model
+  - repository
+  - datastore
+- Domain
+  - model
+  - repository
+  - usecase
+- Presentation
+  - adapter
+  - base
+  - di
+  - views
