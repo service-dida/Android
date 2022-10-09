@@ -11,6 +11,7 @@ import com.dida.domain.model.nav.home.Hots
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.usecase.main.HomeAPI
+import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.SoldOutAPI
 import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeAPI: HomeAPI,
-    private val soldOutAPI: SoldOutAPI
+    private val soldOutAPI: SoldOutAPI,
+    private val postLikeAPI: PostLikeAPI
     ) : BaseViewModel(), HomeActionHandler, NftActionHandler {
 
     private val TAG = "HomeViewModel"
@@ -38,13 +40,25 @@ class HomeViewModel @Inject constructor(
     private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
     val termState: StateFlow<Int> = _termState.asStateFlow()
 
+    private val _likedEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val likedEvent: SharedFlow<Boolean> = _likedEvent.asSharedFlow()
+
     init {
         baseViewModelScope.launch {
-            homeAPI()
+            soldOutAPI.invoke(7)
+                .onSuccess { _soldoutState.value = UiState.Success(it) }
+                .flatMap { homeAPI() }
                 .onSuccess { _homeState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
-                .flatMap { soldOutAPI(7) }
-                .onSuccess { _soldoutState.value = UiState.Success(it) }
+        }
+    }
+
+    private fun getHome() {
+        baseViewModelScope.launch {
+            homeAPI()
+                .onSuccess {
+                    _homeState.value = UiState.Success(it)
+                    _likedEvent.emit(true) }
                 .onError { e -> catchError(e) }
         }
     }
@@ -86,6 +100,15 @@ class HomeViewModel @Inject constructor(
     override fun onNftItemClicked(nftId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
+        }
+    }
+
+    override fun onLikeBtnClicked(nftId: Int) {
+        baseViewModelScope.launch {
+            _likedEvent.emit(false)
+            postLikeAPI(nftId.toLong())
+                .onSuccess { getHome() }
+                .onError { e -> catchError(e) }
         }
     }
 }

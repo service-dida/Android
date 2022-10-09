@@ -29,7 +29,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:clipToPadding="false"
+            android:overScrollMode="never">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -259,7 +261,7 @@
                     android:id="@+id/user_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    startLoading="@{vm.hasMyNftState}"
+                    startLoading="@{vm.myPageState}"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="9dp">
 
@@ -273,7 +275,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginTop="7dp">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -284,13 +287,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                                 <include
                                     layout="@layout/skeleton_holder_mypage_user_cards"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -302,13 +305,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                                 <include
                                     layout="@layout/skeleton_holder_mypage_user_cards"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:layout_margin="14dp"/>
+                                    android:layout_margin="7dp"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

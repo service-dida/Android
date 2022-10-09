@@ -1,7 +1,11 @@
 package com.dida.android.presentation.views.nav.home
 
+import android.graphics.Color
+import android.media.Image
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.android.R
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull

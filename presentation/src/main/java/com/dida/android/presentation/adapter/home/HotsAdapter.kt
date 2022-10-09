@@ -45,9 +45,9 @@ class HotsAdapter(
 
     internal object HotsItemDiffCallback : DiffUtil.ItemCallback<Hots>() {
         override fun areItemsTheSame(oldItem: Hots, newItem: Hots) =
-            oldItem == newItem
+            oldItem.cardId == newItem.cardId
 
         override fun areContentsTheSame(oldItem: Hots, newItem: Hots) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

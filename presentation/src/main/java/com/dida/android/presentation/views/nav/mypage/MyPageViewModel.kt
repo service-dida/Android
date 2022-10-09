@@ -48,20 +48,20 @@ class MyPageViewModel @Inject constructor(
 
     fun getMypage() {
         baseViewModelScope.launch {
-            userProfileAPI()
+            userNftAPI()
                 .onSuccess {
-                    _myPageState.value = UiState.Success(it)
-                    _hasWalletState.value = it.getWallet
+                    AppLog.d(it.toString())
+                    _hasMyNftState.value = UiState.Success(it)
                 }
                 .flatMap {
-                    userNftAPI()
+                    userProfileAPI()
                         .onSuccess {
-                            AppLog.d(it.toString())
-                            _hasMyNftState.value = UiState.Success(it)
-                        }
+                            _myPageState.value = UiState.Success(it)
+                            _hasWalletState.value = it.getWallet }
                         .onError { e -> catchError(e) }
                 }
                 .onError { e -> catchError(e) }
+
         }
     }
 
@@ -123,6 +123,12 @@ class MyPageViewModel @Inject constructor(
     override fun onNftItemClicked(nftId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId.toLong()))
+        }
+    }
+
+    override fun onLikeBtnClicked(nftId: Int) {
+        baseViewModelScope.launch {
+
         }
     }
 }

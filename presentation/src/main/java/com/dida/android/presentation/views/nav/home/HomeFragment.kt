@@ -13,6 +13,7 @@ import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -37,13 +38,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
-                when(it) {
-                    is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
-                    is HomeNavigationAction.NavigateToHotSeller -> {  }
-                    is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
-                    is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
-                    is HomeNavigationAction.NavigateToCollection -> {  }
+            launch {
+                viewModel.navigationEvent.collect {
+                    when(it) {
+                        is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                        is HomeNavigationAction.NavigateToHotSeller -> {  }
+                        is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                        is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                        is HomeNavigationAction.NavigateToCollection -> {  }
+                    }
+                }
+            }
+
+            launch {
+                viewModel.likedEvent.collect {
+                    if(!it) { showLoadingDialog() }
+                    else { dismissLoadingDialog() }
                 }
             }
         }

@@ -2,12 +2,14 @@ package com.dida.android.presentation.views.nav
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.dida.android.NavigationGraphDirections
 import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
 import com.dida.android.presentation.base.BaseActivity
@@ -28,6 +30,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
+    var waitTime = 0L
 
     override fun initStartView() {
         initNavController()
@@ -100,5 +103,28 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         binding.bottomNavi.visibility = View.GONE
         binding.bottomNaviAddBtn.visibility =View.GONE
         binding.bottomNaviAddBackground.visibility=View.GONE
+    }
+
+    override fun onBackPressed() {
+        try {
+            if (onBackPressedDispatcher.hasEnabledCallbacks()) {
+                super.onBackPressed()
+            } else {
+                when (navController.currentDestination?.id) {
+                    R.id.homeFragment -> {
+                        if(System.currentTimeMillis()-waitTime >= 1500) {
+                            waitTime = System.currentTimeMillis()
+                            Toast.makeText(this,"뒤로가기 버튼을 \n한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show()
+                        } else {
+                            finishAffinity() // 액티비티 종료
+                        }
+                    }
+                    null -> super.onBackPressed()
+                    else -> navController.navigate(NavigationGraphDirections.actionMainFragment())
+                }
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

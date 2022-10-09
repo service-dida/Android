@@ -22,6 +22,8 @@
     <color name="surface5">#414141</color>
     <color name="surface6">#595959</color>
 
+    <color name="shimmer_color">#ffaaaaaa</color>
+
     <!--텍스트 색상-->
     <color name="mypage_info_gray_text">#AFAFAF</color>
     <color name="price_gray_text">#C5C5CF</color>

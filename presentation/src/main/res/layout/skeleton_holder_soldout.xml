@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:id="@+id/soldout_main"
         android:background="@drawable/custom_hots">
 
@@ -19,7 +21,7 @@
             android:id="@+id/nft_img"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             nft_img_rounded="@{holderModel.nftImg}">
@@ -31,7 +33,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/nft_img"
+            app:layout_constraintStart_toStartOf="@id/nft_img"
             android:layout_marginLeft="16dp">
 
             <TextView
@@ -39,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:text="@{holderModel.nftName}"
                 android:textSize="18dp"
                 android:textColor="@color/white"
@@ -62,7 +64,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/user_img"
                 app:layout_constraintBottom_toBottomOf="@id/user_img"
-                app:layout_constraintLeft_toRightOf="@id/user_img"
+                app:layout_constraintStart_toEndOf="@id/user_img"
                 android:text="@{holderModel.userName}"
                 android:textSize="14dp"
                 android:textColor="@color/hots_coin_txt"
