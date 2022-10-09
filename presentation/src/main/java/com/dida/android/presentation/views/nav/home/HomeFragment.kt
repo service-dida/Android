@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.nav.home
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">DIDA</string>
     <string name="prefs_key">dida_prefs</string>
+    <string name="app_version">0</string>
 
     <!--홈 화면-->
     <string name="home_hotitem">HOT Item \uD83D\uDD25</string>
