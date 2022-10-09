@@ -5,11 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.android.presentation.base.UiState
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckVersionAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,16 +24,13 @@ class SplashViewModel @Inject constructor(
 
     private val TAG = "SplashViewModel"
 
-    private val _appVersion = MutableLiveData<AppVersionResponse>()
-    val appVersion: LiveData<AppVersionResponse>
-        get() = _appVersion
+    private val _appVersion = MutableSharedFlow<AppVersionResponse>()
+    val appVersion: SharedFlow<AppVersionResponse> = _appVersion
 
     fun checkVersion(){
         viewModelScope.launch {
             versionAPI()
-                .onSuccess {
-                    Log.d(TAG, "checkVersion: ${it.version}")
-                    _appVersion.postValue(it) }
+                .onSuccess { _appVersion.emit(it) }
                 .onError { e -> catchError(e) }
         }
     }

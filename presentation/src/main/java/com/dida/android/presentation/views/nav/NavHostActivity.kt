@@ -49,6 +49,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
+                R.id.splashFragment -> hideBottomNav()
                 R.id.detailNftFragment -> hideBottomNav()
                 R.id.myPageFragment -> {
                     loginCheck()
