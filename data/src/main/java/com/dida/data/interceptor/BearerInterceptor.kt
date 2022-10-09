@@ -1,22 +1,11 @@
 package com.dida.data.interceptor
 
-import android.util.Log
 import com.dida.data.DataApplication
-import com.dida.data.api.ApiClient.BASE_URL
-import com.dida.data.api.MainAPIService
-import com.dida.data.shareperference.DataStorePreferences
-import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.RefreshTokenAPI
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import javax.inject.Inject
 
@@ -39,11 +28,9 @@ class BearerInterceptor @Inject constructor(
         if(response.code == 400){
             runBlocking {
                 //토큰 갱신 api 호출
-//                val request = DataApplication.mySharedPreferences.getRefreshToken()
                 DataApplication.dataStorePreferences.getRefreshToken()?.let {
                     refeshTokenAPI(it)
                         .onSuccess { response ->
-//                            DataApplication.mySharedPreferences.setAccessToken(response.accessToken, response.refreshToken)
                             response.accessToken?.let { token ->
                                 DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
                                 accessToken = token

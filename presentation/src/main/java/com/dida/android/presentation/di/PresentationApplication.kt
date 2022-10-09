@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.dida.android.BuildConfig
 import com.dida.data.DataApplication.Companion.dataStorePreferences
-import com.dida.data.DataApplication.Companion.mySharedPreferences
 import com.dida.data.shareperference.DataStorePreferences
-import com.dida.data.shareperference.MySharedPreferences
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility.getKeyHash
 import dagger.hilt.android.HiltAndroidApp
