@@ -24,13 +24,13 @@ class SplashViewModel @Inject constructor(
 
     private val TAG = "SplashViewModel"
 
-    private val _appVersion = MutableSharedFlow<UiState<AppVersionResponse>>()
-    val appVersion: SharedFlow<UiState<AppVersionResponse>> = _appVersion
+    private val _appVersion = MutableSharedFlow<AppVersionResponse>()
+    val appVersion: SharedFlow<AppVersionResponse> = _appVersion
 
     fun checkVersion(){
         viewModelScope.launch {
             versionAPI()
-                .onSuccess { _appVersion.emit(UiState.Success(it)) }
+                .onSuccess { _appVersion.emit(it) }
                 .onError { e -> catchError(e) }
         }
     }

@@ -22,12 +22,14 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
 
     override fun initStartView() {
         viewModel.checkVersion()
+        showLoadingDialog()
     }
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenResumed {
             viewModel.appVersion.collect {
-                if(it.successOrNull()?.version.toString() == getString(R.string.app_version)) {
+                dismissLoadingDialog()
+                if(it.version.toString() == getString(R.string.app_version)) {
                     delay(1000L)
                     navigate(SplashFragmentDirections.actionMainFragment())
                 }
