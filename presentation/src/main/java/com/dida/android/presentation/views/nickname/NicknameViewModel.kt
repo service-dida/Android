@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.nickname
 
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication
+import com.dida.data.shareperference.DataStorePreferences
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CreateUserAPI
@@ -79,7 +80,8 @@ class NicknameViewModel @Inject constructor(
         baseViewModelScope.launch {
             createUserAPI(email, nickName)
                 .onSuccess {
-                    DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
+                    DataApplication.dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
+//                    DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
                     _navigationEvent.emit(NicknameNavigationAction.NavigateToHome) }
                 .onError { e -> catchError(e) }
         }

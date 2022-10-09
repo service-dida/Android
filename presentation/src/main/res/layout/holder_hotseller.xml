@@ -21,6 +21,7 @@
             android:layout_height="126dp"
             android:background="@drawable/custom_hots"
             android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             app:image_from_url_rounded="@{holderModel.sellerBackground}"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp"></ImageView>
