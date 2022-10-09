@@ -6,13 +6,17 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 abstract class BaseViewModel : ViewModel() {
 
     private val _errorEvent: MutableSharedFlow<Throwable> = MutableSharedFlow()
-    val errorEvent: SharedFlow<Throwable> = _errorEvent
+    val errorEvent: SharedFlow<Throwable> = _errorEvent.asSharedFlow()
+
+    private val _loadingEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val loadingEvent: SharedFlow<Boolean> = _loadingEvent.asSharedFlow()
 
     private val errorHandler = CoroutineExceptionHandler { CoroutineContext, throwable ->
         viewModelScope.launch(CoroutineContext) {
@@ -23,6 +27,19 @@ abstract class BaseViewModel : ViewModel() {
     fun catchError(e: Throwable?) {
         viewModelScope.launch(errorHandler) {
             e?.let { _errorEvent.emit(it) }
+            dismissLoading()
+        }
+    }
+
+    fun showLoading() {
+        baseViewModelScope.launch {
+            _loadingEvent.emit(false)
+        }
+    }
+
+    fun dismissLoading() {
+        baseViewModelScope.launch {
+            _loadingEvent.emit(true)
         }
     }
 

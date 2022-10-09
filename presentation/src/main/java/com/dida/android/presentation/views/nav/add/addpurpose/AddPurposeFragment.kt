@@ -46,10 +46,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
                 when(it) {
                     is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
                     is AddPurposeNavigationAction.NavigateToSaled -> isSaled()
-                    is AddPurposeNavigationAction.NavigateToMyPage -> {
-                        dismissLoadingDialog()
-                        navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
-                    }
+                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
                 }
             }
         }
@@ -84,7 +81,6 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                             val imagePath: String = getPath(currentImageUri)!!
                             viewModel.uploadAsset(imagePath)
-                            showLoadingDialog()
                         } else {
                             //TODO :버전낮은거 처리하기
                         }

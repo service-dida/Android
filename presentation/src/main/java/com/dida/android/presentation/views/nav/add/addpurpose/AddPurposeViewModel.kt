@@ -71,8 +71,11 @@ class AddPurposeViewModel @Inject constructor(
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
         baseViewModelScope.launch {
+            showLoading()
             uploadAssetUsecase(requestBody)
-                .onSuccess { mintNFT(it.uri) }
+                .onSuccess {
+                    mintNFT(it.uri)
+                    dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }

@@ -37,9 +37,6 @@ class HomeViewModel @Inject constructor(
     private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
     val termState: StateFlow<Int> = _termState.asStateFlow()
 
-    private val _loadingEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
-    val loadingEvent: SharedFlow<Boolean> = _loadingEvent.asSharedFlow()
-
     init {
         baseViewModelScope.launch {
             soldOutAPI.invoke(7)
@@ -55,7 +52,7 @@ class HomeViewModel @Inject constructor(
             homeAPI()
                 .onSuccess {
                     _homeState.value = UiState.Success(it)
-                    _loadingEvent.emit(true) }
+                    dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }
@@ -72,7 +69,7 @@ class HomeViewModel @Inject constructor(
 
     override fun onUserFollowClicked(userId: Int) {
         baseViewModelScope.launch {
-            _loadingEvent.emit(false)
+            showLoading()
             postUserFollowAPI(userId.toLong())
                 .onSuccess { getHome() }
                 .onError { e -> catchError(e) }
@@ -111,7 +108,7 @@ class HomeViewModel @Inject constructor(
 
     override fun onLikeBtnClicked(nftId: Int) {
         baseViewModelScope.launch {
-            _loadingEvent.emit(false)
+            showLoading()
             postLikeAPI(nftId.toLong())
                 .onSuccess { getHome() }
                 .onError { e -> catchError(e) }

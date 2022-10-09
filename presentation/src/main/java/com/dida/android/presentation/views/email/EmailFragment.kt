@@ -35,14 +35,12 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         }
         exception = viewModel.errorEvent
         viewModel.getSendEmail()
-        showLoadingDialog()
     }
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.sendEmailState.collect {
-                    dismissLoadingDialog()
                     timeCheck()
                 }
             }
@@ -50,7 +48,6 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
             launch {
                 viewModel.createWalletState.collect { result ->
                     if(result) {
-                        dismissLoadingDialog()
                         setFragmentResult("walletCheck", bundleOf("hasWallet" to true))
                         navController.popBackStack()
                     }
@@ -70,7 +67,6 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                 // 지갑이 없으므로 false로 넘겨줘야 한다.
                 val passwordDialog = PasswordDialog(false) {
                     viewModel.postCreateWallet(it, it)
-                    showLoadingDialog()
                 }
                 passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
             }
@@ -82,7 +78,6 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         lifecycleScope.launch {
             toastMessage("시간이 초과되어 다시 인증번호 전송을 합니다.")
             viewModel.getSendEmail()
-            showLoadingDialog()
         }
     }
 

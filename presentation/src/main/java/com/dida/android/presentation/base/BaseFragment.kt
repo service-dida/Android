@@ -20,6 +20,7 @@ import com.dida.android.NavigationGraphDirections
 import com.dida.android.util.LoadingDialog
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : Fragment(layoutId) {
 
@@ -71,6 +72,30 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     protected var exception: SharedFlow<Throwable>? = null
     private var toast: Toast? = null
 
+    init {
+        lifecycleScope.launchWhenStarted {
+            launch {
+                exception?.collect { exception ->
+                    showToastMessage(exception)
+                }
+            }
+
+            launch {
+                viewModel.errorEvent.collect { e ->
+                    showToastMessage(e)
+                    Log.e("DIDA", "onStart: ${e}")
+                }
+            }
+
+            launch {
+                viewModel.loadingEvent.collect {
+                    if(!it) { showLoadingDialog() }
+                    else { dismissLoadingDialog() }
+                }
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,25 +107,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         initDataBinding()
         initAfterBinding()
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launchWhenStarted {
-            exception?.collect { exception ->
-                showToastMessage(exception)
-            }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorEvent.collect { e ->
-                showToastMessage(e)
-                Log.e("DIDA", "onStart: ${e}")
-            }
-        }
     }
 
     override fun onDestroy() {
@@ -115,12 +121,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.
-    protected fun showLoadingDialog() {
+    private fun showLoadingDialog() {
         mLoadingDialog.show()
     }
 
     // 띄워 놓은 로딩 다이얼로그를 없앰.
-    protected fun dismissLoadingDialog() {
+    private fun dismissLoadingDialog() {
         if (mLoadingDialog.isShowing) {
             mLoadingDialog.dismiss()
         }
