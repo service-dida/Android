@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views.nav.community
 
-import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
     private val mainRepositoryImpl: MainRepositoryImpl
-) : BaseViewModel(), CommunityActionHandler {
+) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "CommunityViewModel"
 
@@ -20,8 +19,14 @@ class CommunityViewModel @Inject constructor(
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
 
     override fun onCommunityItemClicked(communityId: Int) {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             _navigationEvent.emit(CommunityNavigationAction.NavigateToDetail(communityId))
+        }
+    }
+
+    override fun onCommunityWrtieClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
         }
     }
 }

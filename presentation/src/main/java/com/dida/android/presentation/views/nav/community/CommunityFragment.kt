@@ -43,6 +43,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             viewModel.navigationEvent.collect {
                 when(it) {
                     is CommunityNavigationAction.NavigateToDetail -> { navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment()) }
+                    is CommunityNavigationAction.NavigateToCommunityWrite -> {}
                 }
             }
         }

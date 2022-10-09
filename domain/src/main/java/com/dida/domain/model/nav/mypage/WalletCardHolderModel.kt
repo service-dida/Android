@@ -1,6 +1,6 @@
 package com.dida.domain.model.nav.mypage
 
-class WalletCardHolderModel(
+data class WalletCardHolderModel(
     val amount: String,
     val type : String
 )

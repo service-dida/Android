@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R

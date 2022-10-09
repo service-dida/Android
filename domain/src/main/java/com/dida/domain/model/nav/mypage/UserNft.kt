@@ -8,7 +8,7 @@ data class UserNft(
     val imgUrl : String,
     val price : String
 ){
-    fun priceFormat() : String{
-        return price+" dida"
+    fun priceFormat() : String {
+        return price.toString()+" dida"
     }
 }

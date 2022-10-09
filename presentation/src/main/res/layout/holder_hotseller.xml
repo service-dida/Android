@@ -13,7 +13,7 @@
         android:layout_height="174dp"
         android:id="@+id/hots_main"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="14dp">
+        android:layout_marginEnd="14dp">
 
         <ImageView
             android:id="@+id/seller_img"
@@ -24,7 +24,7 @@
             android:adjustViewBounds="true"
             app:image_from_url_rounded="@{holderModel.sellerBackground}"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"></ImageView>
+            tools:layout_editor_absoluteX="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hots_contents_main"

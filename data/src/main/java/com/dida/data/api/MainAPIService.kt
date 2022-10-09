@@ -13,12 +13,11 @@ import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
-import retrofit2.Response
 import retrofit2.http.*
 
 interface MainAPIService {
     @GET("/app/version")
-    suspend fun checkVersion(): Response<AppVersionResponse>
+    suspend fun checkVersion(): AppVersionResponse
 
     @POST("/kakao/login")
     suspend fun loginAPIServer(@Body idToken : String): LoginResponseModel
