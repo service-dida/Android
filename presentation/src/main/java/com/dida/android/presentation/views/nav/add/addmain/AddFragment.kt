@@ -62,20 +62,17 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
         // User의 지갑이 있는지 체크
         viewModel.getWalletExists()
-        showLoadingDialog()
     }
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.walletExistsState.collect {
-                    dismissLoadingDialog()
                     // 지갑이 없는 경우 지갑 생성
                     if (it) {
                         if(!isSelected){
                             val passwordDialog = PasswordDialog(true) { password ->
                                 viewModel.checkPassword(password)
-                                showLoadingDialog()
                             }
                             passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                         }
@@ -88,13 +85,11 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
             launch {
                 viewModel.checkPasswordState.collect {
-                    dismissLoadingDialog()
                     if(it) { getImageToGallery() }
                     else {
                         toastMessage("비밀번호가 틀렸습니다.")
                         val passwordDialog = PasswordDialog(true) { password ->
                             viewModel.checkPassword(password)
-                            showLoadingDialog()
                         }
                         passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                     }

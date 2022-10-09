@@ -55,8 +55,11 @@ class AddViewModel @Inject constructor(
 
     fun getWalletExists() {
         baseViewModelScope.launch {
+            showLoading()
             walletExistedAPI()
-                .onSuccess { _walletExistsState.value = it }
+                .onSuccess {
+                    _walletExistsState.value = it
+                    dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }
@@ -70,8 +73,11 @@ class AddViewModel @Inject constructor(
 
     fun checkPassword(password: String) {
         baseViewModelScope.launch {
+            showLoading()
             checkPasswordAPI(password)
-                .onSuccess { _checkPasswordState.emit(it) }
+                .onSuccess {
+                    _checkPasswordState.emit(it)
+                    dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }

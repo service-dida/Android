@@ -35,7 +35,6 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
-                dismissLoadingDialog()
                 when(it){
                     is LoginNavigationAction.NavigateToLoginFail -> { Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show() }
                     is LoginNavigationAction.NavigateToNickname -> {
@@ -79,7 +78,6 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
             //로그인 성공
             else if (token != null) {
                 viewModel.loginAPIServer(token.accessToken)
-                showLoadingDialog()
             }
         }
 

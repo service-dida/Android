@@ -2,10 +2,8 @@ package com.dida.android.presentation.views.nav.home
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
@@ -39,22 +37,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collect {
-                    when(it) {
-                        is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
-                        is HomeNavigationAction.NavigateToHotSeller -> {  }
-                        is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
-                        is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
-                        is HomeNavigationAction.NavigateToCollection -> {  }
-                    }
-                }
-            }
-
-            launch {
-                viewModel.likedEvent.collect {
-                    if(!it) { showLoadingDialog() }
-                    else { dismissLoadingDialog() }
+            viewModel.navigationEvent.collect {
+                when(it) {
+                    is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                    is HomeNavigationAction.NavigateToHotSeller -> {  }
+                    is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                    is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                    is HomeNavigationAction.NavigateToCollection -> {  }
                 }
             }
         }

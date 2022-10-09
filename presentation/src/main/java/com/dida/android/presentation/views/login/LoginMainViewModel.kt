@@ -33,6 +33,7 @@ class LoginMainViewModel @Inject constructor(
 
     fun loginAPIServer(idToken: String) {
         baseViewModelScope.launch {
+            showLoading()
             loginAPI(idToken)
                 .onSuccess {
                     if(it.refreshToken.isNullOrEmpty()) {
@@ -42,7 +43,8 @@ class LoginMainViewModel @Inject constructor(
                         dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
 //                        mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
                         _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
-                    } }
+                    }
+                    dismissLoading() }
                 .onError { e ->
                     catchError(e)
                     _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)

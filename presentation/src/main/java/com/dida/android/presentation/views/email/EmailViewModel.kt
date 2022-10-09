@@ -36,10 +36,12 @@ class EmailViewModel @Inject constructor(
     // 비밀번호 받아오기
     fun getSendEmail() {
         baseViewModelScope.launch {
+            showLoading()
             sendEmailAPI()
                 .onSuccess {
                     _verifyCheckState.value = false
-                    _sendEmailState.value = it.random }
+                    _sendEmailState.value = it.random
+                    dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }
@@ -58,8 +60,11 @@ class EmailViewModel @Inject constructor(
 
     fun postCreateWallet(password: String, passwordCheck: String) {
         baseViewModelScope.launch {
+            showLoading()
             createWalletAPI(password, passwordCheck)
-                .onSuccess { _createWalletState.value = true }
+                .onSuccess {
+                    _createWalletState.value = true
+                    dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }

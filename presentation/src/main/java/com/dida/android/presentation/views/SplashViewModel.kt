@@ -29,8 +29,11 @@ class SplashViewModel @Inject constructor(
 
     fun checkVersion(){
         viewModelScope.launch {
+            showLoading()
             versionAPI()
-                .onSuccess { _appVersion.emit(it) }
+                .onSuccess {
+                    _appVersion.emit(it)
+                    dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }
