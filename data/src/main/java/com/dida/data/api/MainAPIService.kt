@@ -6,6 +6,7 @@ import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.main.PostLikeRequest
+import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
@@ -71,4 +72,7 @@ interface MainAPIService {
 
     @POST("/card/like")
     suspend fun postLike(@Body request: PostLikeRequest) : Unit
+
+    @POST("/user/follow")
+    suspend fun postUserFollow(@Body request: PostUserFollowRequest): Unit
 }

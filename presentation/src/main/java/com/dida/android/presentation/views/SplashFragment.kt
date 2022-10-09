@@ -30,7 +30,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
             viewModel.appVersion.collect {
                 dismissLoadingDialog()
                 if(it.version.toString() == getString(R.string.app_version)) {
-                    delay(1000L)
+                    delay(500L)
                     navigate(SplashFragmentDirections.actionMainFragment())
                 }
             }

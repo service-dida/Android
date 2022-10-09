@@ -6,4 +6,5 @@ interface HomeActionHandler {
     fun onSoldOutItemClicked(cardId: Long)
     fun onCollectionItemClicked(userId: Int)
     fun onSoldOutDayClicked(day: Int)
+    fun onUserFollowClicked(userId: Int)
 }

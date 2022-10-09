@@ -4,16 +4,12 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.base.UiState
 import com.dida.android.util.NftActionHandler
 import com.dida.domain.*
-import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.home.Home
-import com.dida.domain.model.nav.home.HotSeller
-import com.dida.domain.model.nav.home.Hots
 import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.usecase.main.HomeAPI
 import com.dida.domain.usecase.main.PostLikeAPI
+import com.dida.domain.usecase.main.PostUserFollowAPI
 import com.dida.domain.usecase.main.SoldOutAPI
-import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,7 +19,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val homeAPI: HomeAPI,
     private val soldOutAPI: SoldOutAPI,
-    private val postLikeAPI: PostLikeAPI
+    private val postLikeAPI: PostLikeAPI,
+    private val postUserFollowAPI: PostUserFollowAPI,
     ) : BaseViewModel(), HomeActionHandler, NftActionHandler {
 
     private val TAG = "HomeViewModel"
@@ -40,8 +37,8 @@ class HomeViewModel @Inject constructor(
     private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
     val termState: StateFlow<Int> = _termState.asStateFlow()
 
-    private val _likedEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
-    val likedEvent: SharedFlow<Boolean> = _likedEvent.asSharedFlow()
+    private val _loadingEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val loadingEvent: SharedFlow<Boolean> = _loadingEvent.asSharedFlow()
 
     init {
         baseViewModelScope.launch {
@@ -58,7 +55,7 @@ class HomeViewModel @Inject constructor(
             homeAPI()
                 .onSuccess {
                     _homeState.value = UiState.Success(it)
-                    _likedEvent.emit(true) }
+                    _loadingEvent.emit(true) }
                 .onError { e -> catchError(e) }
         }
     }
@@ -69,6 +66,15 @@ class HomeViewModel @Inject constructor(
                 .onSuccess {
                     _soldoutState.value = UiState.Success(it)
                     _termState.value = term }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    override fun onUserFollowClicked(userId: Int) {
+        baseViewModelScope.launch {
+            _loadingEvent.emit(false)
+            postUserFollowAPI(userId.toLong())
+                .onSuccess { getHome() }
                 .onError { e -> catchError(e) }
         }
     }
@@ -105,7 +111,7 @@ class HomeViewModel @Inject constructor(
 
     override fun onLikeBtnClicked(nftId: Int) {
         baseViewModelScope.launch {
-            _likedEvent.emit(false)
+            _loadingEvent.emit(false)
             postLikeAPI(nftId.toLong())
                 .onSuccess { getHome() }
                 .onError { e -> catchError(e) }

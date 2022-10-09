@@ -48,4 +48,6 @@ interface  MainRepository {
     suspend fun updateProfileAPI(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit>
 
     suspend fun postLikeAPI(cardId: Long) : NetworkResult<Unit>
+
+    suspend fun postUserFollowAPI(userId: Long) : NetworkResult<Unit>
 }

@@ -8,6 +8,7 @@ import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.PostLikeRequest
+import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
@@ -109,5 +110,10 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postLikeAPI(cardId: Long): NetworkResult<Unit> {
         val request = PostLikeRequest(cardId)
         return handleApi { mainAPIService.postLike(request) }
+    }
+
+    override suspend fun postUserFollowAPI(userId: Long): NetworkResult<Unit> {
+        val request = PostUserFollowRequest(userId)
+        return handleApi { mainAPIService.postUserFollow(request) }
     }
 }
