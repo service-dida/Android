@@ -1,6 +1,7 @@
 package com.dida.data.interceptor
 
 import com.dida.data.DataApplication
+import com.dida.data.model.ErrorResponseImpl
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.RefreshTokenAPI
 import kotlinx.coroutines.runBlocking
@@ -8,6 +9,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Named
 
 /*
    * bearer 토큰 필요한 api 사용시 accessToken유효한지 검사
@@ -17,30 +19,32 @@ import javax.inject.Inject
 */
 
 class BearerInterceptor @Inject constructor(
-    private val refeshTokenAPI: RefreshTokenAPI
+//    @Named("Refresh") private val refreshTokenAPI: RefreshTokenAPI
 ): Interceptor {
     //todo 조건 분기로 인터셉터 구조 변경
+
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
-        if(response.code == 400){
-            runBlocking {
-                //토큰 갱신 api 호출
-                DataApplication.dataStorePreferences.getRefreshToken()?.let {
-                    refeshTokenAPI(it)
-                        .onSuccess { response ->
-                            response.accessToken?.let { token ->
-                                DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
-                                accessToken = token
-                            }
-                        }
-                }
-            }
-            val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
-                .build()
-            return chain.proceed(newRequest)
+        val result = response.body as ErrorResponseImpl
+        if(response.code == 400 && result.code == 102) {
+//            runBlocking {
+//                //토큰 갱신 api 호출
+//                DataApplication.dataStorePreferences.getRefreshToken()?.let {
+//                    refreshTokenAPI(it)
+//                        .onSuccess { response ->
+//                            response.accessToken?.let { token ->
+//                                DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
+//                                accessToken = token
+//                            }
+//                        }
+//                }
+//            }
+//            val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
+//                .build()
+//            return chain.proceed(newRequest)
         }
         return response
     }

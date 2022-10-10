@@ -2,9 +2,14 @@ package com.dida.data.di
 
 import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.BASE_URL
+import com.dida.data.api.KlaytnAPIService
 import com.dida.data.api.MainAPIService
+import com.dida.data.interceptor.BearerInterceptor
 import com.dida.data.interceptor.ErrorResponseInterceptor
 import com.dida.data.interceptor.XAccessTokenInterceptor
+import com.dida.data.repository.KlaytnRepositoryImpl
+import com.dida.domain.repository.KlaytnRepository
+import com.dida.domain.usecase.main.RefreshTokenAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -25,7 +31,7 @@ object NetworkModule {
     @Provides
     @Named("Main")
     fun provideOkHttpClient(
-//        refreshTokenAPI: RefreshTokenAPI
+        refreshTokenAPI: RefreshTokenAPI
     ) = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -61,5 +67,9 @@ object NetworkModule {
     fun provideMainAPIService(@Named("Main") retrofit: Retrofit) : MainAPIService =
         retrofit.create(MainAPIService::class.java)
 
-
+//    @Provides
+//    @Singleton
+//    fun provideBearerInterceptor(@Named("Refresh") refreshTokenAPI: RefreshTokenAPI): BearerInterceptor {
+//        return BearerInterceptor(refreshTokenAPI)
+//    }
 }

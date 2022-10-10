@@ -2,6 +2,7 @@ package com.dida.data.di
 
 import com.dida.data.api.KlaytnAPIService
 import com.dida.data.api.MainAPIService
+import com.dida.data.interceptor.BearerInterceptor
 import com.dida.data.repository.KlaytnRepositoryImpl
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.repository.KlaytnRepository

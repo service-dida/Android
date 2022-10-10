@@ -10,7 +10,6 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Named
 
-
 class KlaytnRepositoryImpl @Inject constructor(
     @Named("Klaytn") private val klaytnAPIService: KlaytnAPIService
 ) : KlaytnRepository {

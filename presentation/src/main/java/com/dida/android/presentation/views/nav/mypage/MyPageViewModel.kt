@@ -113,7 +113,7 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onSettingClicked() {
+    override fun onLogoutClicked() {
         baseViewModelScope.launch {
             DataApplication.dataStorePreferences.removeAccessToken()
             _navigationEvent.emit(MypageNavigationAction.NavigateToHome)
