@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            soldOutAPI.invoke(6)
+            soldOutAPI.invoke(7)
                 .onSuccess { _soldoutState.value = UiState.Success(it) }
                 .flatMap { homeAPI() }
                 .onSuccess { _homeState.value = UiState.Success(it) }

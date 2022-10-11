@@ -44,7 +44,6 @@ fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
         Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
             .adapter(ErrorResponseImpl::class.java).fromJson(responseBodyString)
     } catch (e: Exception) {
-        Log.d("response1234", "1111")
         null
     }
 
