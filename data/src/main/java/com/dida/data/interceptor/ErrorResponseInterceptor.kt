@@ -1,5 +1,6 @@
 package com.dida.data.interceptor
 
+import android.util.Log
 import com.dida.data.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -38,11 +39,12 @@ class ErrorResponseInterceptor: Interceptor {
     }
 }
 
-private fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
+fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
     try {
         Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
             .adapter(ErrorResponseImpl::class.java).fromJson(responseBodyString)
     } catch (e: Exception) {
+        Log.d("response1234", "1111")
         null
     }
 

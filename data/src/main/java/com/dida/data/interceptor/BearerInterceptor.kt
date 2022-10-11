@@ -1,5 +1,6 @@
 package com.dida.data.interceptor
 
+import android.util.Log
 import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
@@ -33,8 +34,8 @@ class BearerInterceptor : Interceptor {
         val request = chain.request()
         val response = chain.proceed(request)
         if(response.code == 400) {
-            val error = response.body as ErrorResponseImpl
-            if(error.code == 102) {
+            val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
+            if(errorResponse?.code == 102) {
                 runBlocking {
                     //토큰 갱신 api 호출
                     DataApplication.dataStorePreferences.getRefreshToken()?.let {
