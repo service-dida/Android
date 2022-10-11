@@ -15,6 +15,7 @@ import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.createwallet.RandomNumber
+import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
@@ -22,7 +23,6 @@ import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.repository.MainRepository
 import okhttp3.MultipartBody
-import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -115,5 +115,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postUserFollowAPI(userId: Long): NetworkResult<Unit> {
         val request = PostUserFollowRequest(userId)
         return handleApi { mainAPIService.postUserFollow(request) }
+    }
+
+    override suspend fun getDetailNFT(userId: Long): NetworkResult<DetailNFT> {
+        return handleApi { mainAPIService.getDetailNFT(userId.toString()).toDomain() }
     }
 }

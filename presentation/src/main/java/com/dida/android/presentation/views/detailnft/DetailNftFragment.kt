@@ -4,10 +4,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.nav.add.addpurpose.AddPurposeFragmentArgs
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     override val viewModel : DetailNftViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
 
+    private val args: DetailNftFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {
@@ -35,6 +38,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        viewModel.getDetailNft(args.cardId)
     }
 
     override fun initDataBinding() {

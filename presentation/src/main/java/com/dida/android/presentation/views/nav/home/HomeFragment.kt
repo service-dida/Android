@@ -39,10 +39,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
-                    is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                    is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId)) }
                     is HomeNavigationAction.NavigateToHotSeller -> {  }
-                    is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
-                    is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment()) }
+                    is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId)) }
+                    is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId.toLong())) }
                     is HomeNavigationAction.NavigateToCollection -> {  }
                 }
             }

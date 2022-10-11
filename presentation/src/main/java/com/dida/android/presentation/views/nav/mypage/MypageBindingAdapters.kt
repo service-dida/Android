@@ -10,8 +10,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.base.successOrNull
-import com.dida.android.presentation.views.nav.home.bindRecentNftItem
-import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 

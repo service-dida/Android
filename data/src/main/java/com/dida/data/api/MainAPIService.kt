@@ -1,6 +1,7 @@
 package com.dida.data.api
 
 import com.dida.data.model.createwallet.*
+import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.GetMainResponse
@@ -75,4 +76,7 @@ interface MainAPIService {
 
     @POST("/user/follow")
     suspend fun postUserFollow(@Body request: PostUserFollowRequest): Unit
+
+    @GET("/card/{cardId}")
+    suspend fun getDetailNFT(@Path("cardId")cardId : String) : GetDetailNFTResponse
 }
