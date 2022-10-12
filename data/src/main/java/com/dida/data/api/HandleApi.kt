@@ -19,6 +19,7 @@ internal inline fun <T> handleApi(transform: () -> T): NetworkResult<T> = try {
         is NotCorrectPasswordException -> NetworkResult.Error(HaveNotJwtTokenException(e.cause, e.url, 118))
         is NeedToWalletException -> NetworkResult.Error(HaveNotJwtTokenException(e.cause, e.url, 119))
         is InvalidPeriodException -> NetworkResult.Error(HaveNotJwtTokenException(e.cause, e.url, 120))
+        is EmptyDeviceTokenException -> NetworkResult.Error(EmptyDeviceTokenException(e.cause, e.url, 124))
         is InvalidLengthException -> NetworkResult.Error(HaveNotJwtTokenException(e.cause, e.url, 200))
         is ServerNotFoundException -> NetworkResult.Error(HaveNotJwtTokenException(e.cause, e.url, 404))
         is InternalServerErrorException -> NetworkResult.Error(HaveNotJwtTokenException(e.cause, e.url, 500))

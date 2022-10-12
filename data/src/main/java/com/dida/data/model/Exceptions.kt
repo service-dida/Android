@@ -6,10 +6,11 @@ import java.io.IOException
 class ServerNotFoundException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // status 404 서버 못참음
 class InternalServerErrorException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // status 500 서버 터짐
 
-
 class HaveNotJwtTokenException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // Jwt 토큰이 없습니다. 100
 class InvalidJwtTokenException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // Jwt가 유효하지 않습니다. 102
 class InvalidKakaoAccessTokenException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 카카오 ID 토큰이 유효하지 않습니다. 104
+
+class EmptyDeviceTokenException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // DEVICE TOKEN은 빈칸일 수 없습니다. 124
 
 class NotUseNicknameException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 사용할 수 없는 닉네임 109
 class AlreadyEmailException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 이미 사용중인 이메일 110

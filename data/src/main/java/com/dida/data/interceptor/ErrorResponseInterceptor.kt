@@ -60,6 +60,7 @@ private fun createErrorException(url: String?, httpCode: Int, errorResponse: Err
         118 -> NotCorrectPasswordException(Throwable(errorResponse.message), url, 118)
         119 -> NeedToWalletException(Throwable(errorResponse.message), url, 119)
         120 -> InvalidPeriodException(Throwable(errorResponse.message), url, 120)
+        124 -> EmptyDeviceTokenException(Throwable(errorResponse.message), url, 124)
         200 -> InvalidLengthException(Throwable(errorResponse.message), url, 200)
         404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
         500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
