@@ -5,6 +5,7 @@ import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
 import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
+import com.dida.data.model.device.PutDeviceTokenRequest
 import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.PostLikeRequest
@@ -115,5 +116,10 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postUserFollowAPI(userId: Long): NetworkResult<Unit> {
         val request = PostUserFollowRequest(userId)
         return handleApi { mainAPIService.postUserFollow(request) }
+    }
+
+    override suspend fun putDeviceTokenAPI(deviceToken: String): NetworkResult<Unit> {
+        val request = PutDeviceTokenRequest(deviceToken)
+        return handleApi { mainAPIService.putDeviceToken(request) }
     }
 }
