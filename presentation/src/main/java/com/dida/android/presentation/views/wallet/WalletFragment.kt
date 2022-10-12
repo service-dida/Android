@@ -3,15 +3,18 @@ package com.dida.android.presentation.views.wallet
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.android.R
 import com.dida.android.databinding.FragmentWalletBinding
 import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapter
 import com.dida.android.presentation.adapter.mypage.WalletNFTHistoryRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.util.SnapPagerScrollListener
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+
 
 @AndroidEntryPoint
 class WalletFragment :
@@ -77,10 +80,31 @@ class WalletFragment :
 
         val walletCardHolderModelList = mutableListOf(
             WalletCardHolderModel("20.09865", "KLAY"),
-            WalletCardHolderModel("20.09865", "DIDA")
+            WalletCardHolderModel("333.09865", "DIDA"),
+            WalletCardHolderModel("2000.09865", "KLAY"),
+            WalletCardHolderModel("100.09865", "KLAY"),
+            WalletCardHolderModel("500.09865", "DIDA"),
+        )
+
+        // PagerSnapHelper 추가
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.walletCardRecyclerView)
+
+        val listener = SnapPagerScrollListener(
+            snapHelper,
+            SnapPagerScrollListener.ON_SETTLED,
+            true,
+            object : SnapPagerScrollListener.OnChangeListener {
+                override fun onSnapped(position: Int) {
+                    //position 받아서 이벤트 처리
+                }
+            }
         )
         walletCardRecyclerViewAdapter.submitList(walletCardHolderModelList)
-        binding.walletCardRecyclerView.adapter = walletCardRecyclerViewAdapter
+        binding.walletCardRecyclerView.apply {
+            adapter = walletCardRecyclerViewAdapter
+            addOnScrollListener(listener)
+        }
     }
 
 }
