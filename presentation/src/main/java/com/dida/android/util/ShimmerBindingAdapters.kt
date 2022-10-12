@@ -35,9 +35,6 @@ fun ConstraintLayout.endLoading(uiState: UiState<*>) {
 
 @BindingAdapter("linear_endLoading")
 fun LinearLayout.endLoading(uiState: UiState<*>) {
-    CoroutineScope(Dispatchers.Main).launch {
-        delay(1000)
-    }
     visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
 }
 
