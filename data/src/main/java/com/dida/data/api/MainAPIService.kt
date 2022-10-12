@@ -77,6 +77,6 @@ interface MainAPIService {
     @POST("/user/follow")
     suspend fun postUserFollow(@Body request: PostUserFollowRequest): Unit
 
-    @POST("/device/token")
+    @PUT("/device/token")
     suspend fun putDeviceToken(@Body request: PutDeviceTokenRequest): Unit
 }
