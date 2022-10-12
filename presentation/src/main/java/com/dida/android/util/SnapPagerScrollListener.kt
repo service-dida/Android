@@ -5,6 +5,11 @@ import androidx.annotation.IntDef
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 
+fun RecyclerView.addSnapPagerScroll() {
+    // PagerSnapHelper 추가
+    val snapHelper = PagerSnapHelper()
+    snapHelper.attachToRecyclerView(this)
+}
 
 class SnapPagerScrollListener(
     snapHelper: PagerSnapHelper,
@@ -79,3 +84,4 @@ class SnapPagerScrollListener(
         snapPosition = RecyclerView.NO_POSITION
     }
 }
+

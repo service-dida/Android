@@ -10,6 +10,7 @@ import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapte
 import com.dida.android.presentation.adapter.mypage.WalletNFTHistoryRecyclerViewAdapter
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.SnapPagerScrollListener
+import com.dida.android.util.addSnapPagerScroll
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,12 +87,8 @@ class WalletFragment :
             WalletCardHolderModel("500.09865", "DIDA"),
         )
 
-        // PagerSnapHelper 추가
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(binding.walletCardRecyclerView)
-
         val listener = SnapPagerScrollListener(
-            snapHelper,
+            PagerSnapHelper(),
             SnapPagerScrollListener.ON_SETTLED,
             true,
             object : SnapPagerScrollListener.OnChangeListener {
@@ -100,9 +97,11 @@ class WalletFragment :
                 }
             }
         )
+
         walletCardRecyclerViewAdapter.submitList(walletCardHolderModelList)
         binding.walletCardRecyclerView.apply {
             adapter = walletCardRecyclerViewAdapter
+            addSnapPagerScroll()
             addOnScrollListener(listener)
         }
     }

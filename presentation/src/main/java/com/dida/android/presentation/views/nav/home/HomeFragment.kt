@@ -6,10 +6,13 @@ import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.util.SnapPagerScrollListener
+import com.dida.android.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -74,6 +77,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
+        binding.hotsRecycler.apply {
+            adapter = HotsAdapter(viewModel)
+            addSnapPagerScroll()
+        }
         binding.hotsRecycler.adapter = HotsAdapter(viewModel)
         binding.hotSellerRecycler.adapter = HotSellerAdapter(viewModel)
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
