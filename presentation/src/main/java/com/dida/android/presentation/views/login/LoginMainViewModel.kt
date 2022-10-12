@@ -41,14 +41,12 @@ class LoginMainViewModel @Inject constructor(
                     }
                     else {
                         dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
-//                        mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
                         _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
                     }
                     dismissLoading() }
                 .onError { e ->
                     catchError(e)
                     _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
-//                    mySharedPreferences.removeAccessToken()
                     dataStorePreferences.removeAccessToken()
                 }
         }
