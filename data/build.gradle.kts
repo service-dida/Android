@@ -42,17 +42,14 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("com.google.android.material:material:1.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(libs.androidx.core)
+    implementation(libs.junit.junit)
+    implementation(libs.androidx.test.junit)
 
     implementation(project(mapOf("path" to ":domain")))
 
     // GsonConverter & Retrofit2 & Okhttp3 For Network Connection
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.code.gson:gson:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -66,6 +63,8 @@ dependencies {
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:2.3.5")
 
     // https://github.com/ybq/Android-SpinKit
     implementation("com.github.ybq:Android-SpinKit:1.4.0")
@@ -73,10 +72,7 @@ dependencies {
     // life cycle scope
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0")
     // viewmodel scope
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
-
-    // Testing Navigation
-    androidTestImplementation("androidx.navigation:navigation-testing:2.3.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.40.5")
