@@ -2,6 +2,9 @@
 # Define the versions
 kotlin = "1.7.10"
 
+# Plugins
+safeargs = "2.3.5"
+
 # Domain
 kotlinStdlib = "1.7.10"
 inject = "1"
@@ -40,6 +43,10 @@ datastore = "1.0.0"
 
 firebaseBom = "30.4.1"
 firebaseMessage = "23.0.8"
+
+[plugins]
+hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "safeargs" }
 
 [libraries]
 # Define the libraries
@@ -114,6 +121,3 @@ room = ["androidx-room-runtime", "androidx-room"]
 moshi = ["converter-moshi", "moshi-moshi", "moshi-kotlin"]
 gson = ["gson-gson", "converter-gson"]
 datastore = ["datastore-preference", "datastore-core"]
-
-[plugins]
-kotlin = { id = "org.jetbrains.kotlin.android", version = "kotlin" }

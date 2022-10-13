@@ -13,4 +13,5 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.javax.inject)
     implementation(libs.kotlin.coroutine.core)
+    implementation(libs.squareup.okhttp)
 }
