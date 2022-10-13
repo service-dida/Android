@@ -42,30 +42,18 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core)
-    implementation(libs.junit.junit)
-    implementation(libs.androidx.test.junit)
 
     implementation(project(mapOf("path" to ":domain")))
 
+    implementation(libs.androidx.core)
+    implementation(libs.junit.junit)
+    implementation(libs.androidx.test.junit)
+    
+    // GsonConverter & Retrofit2 & Okhttp3 For Network Connection
     implementation(libs.bundles.gson)
     implementation(libs.squareup.retrofit2)
     implementation(libs.squareup.okhttp)
     implementation(libs.squareup.okhttp.interceptor)
-
-    // Glide Library For Image
-    implementation(libs.glide.glide)
-    annotationProcessor(libs.glide.compiler)
-
-    //Navigation
-    implementation(libs.bundles.androidx.navigation)
-    androidTestImplementation(libs.androidx.navigation.test)
-
-    // https://github.com/ybq/Android-SpinKit
-    implementation(libs.android.spinkit)
-
-    // life cycle scope
-    implementation(libs.bundles.lifecycle)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -73,17 +61,10 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlin.coroutine.core)
-    implementation(libs.kotlin.coroutine.android)
 
     //Room
     kapt(libs.androidx.room.compiler)
     implementation(libs.bundles.room)
-    
-    // 카카오 로그인
-    implementation(libs.kakao.sdk)
-
-    //Circle ImageView
-    implementation(libs.circle.imageview)
 
     // moshi
     implementation(libs.bundles.moshi)
