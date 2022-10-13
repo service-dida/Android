@@ -2,6 +2,10 @@
 # Define the versions
 kotlin = "1.7.10"
 
+# Domain
+kotlinStdlib = "1.7.10"
+inject = "1"
+
 # Data & Presentation
 androidCore = "1.7.0"
 appcompat = "1.4.2"
@@ -37,11 +41,12 @@ datastore = "1.0.0"
 firebaseBom = "30.4.1"
 firebaseMessage = "23.0.8"
 
-# Domain
-inject = "1"
-
 [libraries]
 # Define the libraries
+
+# Domain(Kotlin Module)
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinStdlib" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "inject" }
 
 # Data & Presentation(Android Module)
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidCore" }
