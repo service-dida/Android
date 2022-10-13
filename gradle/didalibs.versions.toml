@@ -14,7 +14,7 @@ navigation = "2.3.5"
 lifecycle = "2.5.1"
 coroutines = "1.5.2"
 room = "2.4.1"
-hilt = "2.43.2"
+hilt = "2.40.5"
 retrofit = "2.9.0"
 okhttp = "4.9.2"
 moshi = "1.9.3"
@@ -57,7 +57,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
 squareup-retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 squareup-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
@@ -85,7 +85,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 [bundles]
 # Define bundles/groups of libraries
 kotlinx-coroutine = ["kotlin-coroutine-core", "kotlin-coroutine-android"]
-androidx-navigation = ["androidx-navigation-fragment", "androidx-navigation-ui", "androidx-navigation-test"]
+androidx-navigation = ["androidx-navigation-fragment", "androidx-navigation-ui"]
 lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-runtime"]
 room = ["androidx-room-runtime", "androidx-room"]
 moshi = ["converter-moshi", "moshi-moshi", "moshi-kotlin"]
