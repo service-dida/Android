@@ -90,8 +90,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     // Coroutines
-    implementation(libs.kotlin.coroutine.core)
-    implementation(libs.kotlin.coroutine.android)
+    implementation(libs.bundles.kotlinx.coroutine)
 
     //Room
     kapt(libs.androidx.room.compiler)
@@ -104,10 +103,10 @@ dependencies {
     implementation(libs.circle.imageview)
 
     // skeleton Ui
-    implementation("com.facebook.shimmer:shimmer:0.5.0")
+    implementation(libs.facebook.shimmer)
 
     // Fragment Result API
-    implementation("androidx.fragment:fragment-ktx:1.3.0")
+    implementation(libs.androidx.fragment.request)
 
     // Preferences Data Store
     implementation(libs.bundles.datastore)

@@ -43,6 +43,7 @@ datastore = "1.0.0"
 
 firebaseBom = "30.4.1"
 firebaseMessage = "23.0.8"
+googleServices = "4.3.13"
 
 [plugins]
 hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
@@ -111,6 +112,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessage" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-service = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 
 [bundles]
 # Define bundles/groups of libraries
