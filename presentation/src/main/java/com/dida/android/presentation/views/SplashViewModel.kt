@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.base.UiState
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.onError
