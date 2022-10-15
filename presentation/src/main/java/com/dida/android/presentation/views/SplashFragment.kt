@@ -64,5 +64,4 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
                 AppLog.e("Fetching FCM registration token Success", token)
             })
     }
-
 }
