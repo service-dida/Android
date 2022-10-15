@@ -7,6 +7,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
+
+    id 'com.google.gms.google-services'
 }
 
 Properties properties = new Properties()
@@ -118,4 +120,9 @@ dependencies {
     // Preferences Data Store
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.datastore:datastore-core:1.0.0"
+
+    // Firebase Push
+    implementation platform('com.google.firebase:firebase-bom:30.4.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging:23.0.8'
 }

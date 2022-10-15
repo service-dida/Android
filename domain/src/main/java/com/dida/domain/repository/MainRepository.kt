@@ -50,4 +50,6 @@ interface  MainRepository {
     suspend fun postLikeAPI(cardId: Long) : NetworkResult<Unit>
 
     suspend fun postUserFollowAPI(userId: Long) : NetworkResult<Unit>
+
+    suspend fun putDeviceTokenAPI(deviceToken: String) : NetworkResult<Unit>
 }

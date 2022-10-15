@@ -84,6 +84,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
             launch {
                 viewModel.errorEvent.collect { e ->
+                    dismissLoadingDialog()
                     showToastMessage(e)
                     Log.e("DIDA", "onStart: ${e}")
                 }
