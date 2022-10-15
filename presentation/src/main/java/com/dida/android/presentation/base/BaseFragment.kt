@@ -1,5 +1,6 @@
 package com.dida.android.presentation.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
+import com.dida.android.presentation.views.login.LoginActivity
 import com.dida.android.util.LoadingDialog
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
@@ -91,6 +93,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 viewModel.loadingEvent.collect {
                     if(!it) { showLoadingDialog() }
                     else { dismissLoadingDialog() }
+                }
+            }
+
+            launch {
+                viewModel.needLoginEvent.collect {
+                    startActivity(Intent(requireActivity(), LoginActivity::class.java))
                 }
             }
         }
