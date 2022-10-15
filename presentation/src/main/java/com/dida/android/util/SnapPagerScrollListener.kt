@@ -47,7 +47,7 @@ class SnapPagerScrollListener(
     }
 
     private fun getSnapPosition(recyclerView: RecyclerView): Int {
-        val layoutManager: RecyclerView.LayoutManager = recyclerView.getLayoutManager()
+        val layoutManager: RecyclerView.LayoutManager = recyclerView.layoutManager
             ?: return RecyclerView.NO_POSITION
         val snapView: View =
             snapHelper.findSnapView(layoutManager) ?: return RecyclerView.NO_POSITION
