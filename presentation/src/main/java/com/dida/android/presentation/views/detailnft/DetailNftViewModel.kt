@@ -1,8 +1,8 @@
 package com.dida.android.presentation.views.detailnft
 
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.base.UiState
 import com.dida.android.presentation.views.nav.community.CommunityActionHandler
+import com.dida.android.util.UiState
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.lifecycle.HiltViewModel

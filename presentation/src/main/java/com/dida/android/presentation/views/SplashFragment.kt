@@ -7,7 +7,6 @@ import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentSplashBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.base.successOrNull
 import com.dida.android.util.AppLog
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
