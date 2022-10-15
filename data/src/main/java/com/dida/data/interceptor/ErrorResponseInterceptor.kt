@@ -1,5 +1,6 @@
 package com.dida.data.interceptor
 
+import android.util.Log
 import com.dida.data.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -38,7 +39,7 @@ class ErrorResponseInterceptor: Interceptor {
     }
 }
 
-private fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
+fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
     try {
         Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
             .adapter(ErrorResponseImpl::class.java).fromJson(responseBodyString)
@@ -47,11 +48,21 @@ private fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? 
     }
 
 private fun createErrorException(url: String?, httpCode: Int, errorResponse: ErrorResponseImpl?): Exception? =
-    when (httpCode) {
-//        400, 403 -> BadRequestException(Throwable(errorResponse?.message), url)
-        400, 401, 403 -> InvalidKakaoAccessTokenException(Throwable(errorResponse?.message), url)
-        402 -> AccountNotFoundException(Throwable(errorResponse?.message), url)
-        404 -> ServerNotFoundException(Throwable(errorResponse?.message), url)
-        500 -> InternalServerErrorException(Throwable(errorResponse?.message), url)
+    when(errorResponse?.code) {
+        100 -> HaveNotJwtTokenException(Throwable(errorResponse.message), url, 100)
+        102 -> InvalidJwtTokenException(Throwable(errorResponse.message), url, 102)
+        104 -> InvalidKakaoAccessTokenException(Throwable(errorResponse.message), url, 104)
+        109 -> NotUseNicknameException(Throwable(errorResponse.message), url, 109)
+        110 -> AlreadyEmailException(Throwable(errorResponse.message), url, 110)
+        111 -> InvalidUserException(Throwable(errorResponse.message), url, 111)
+        115 -> InvalidNftException(Throwable(errorResponse.message), url, 115)
+        117 -> AlreadyWalletException(Throwable(errorResponse.message), url, 117)
+        118 -> NotCorrectPasswordException(Throwable(errorResponse.message), url, 118)
+        119 -> NeedToWalletException(Throwable(errorResponse.message), url, 119)
+        120 -> InvalidPeriodException(Throwable(errorResponse.message), url, 120)
+        124 -> EmptyDeviceTokenException(Throwable(errorResponse.message), url, 124)
+        200 -> InvalidLengthException(Throwable(errorResponse.message), url, 200)
+        404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
+        500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
         else -> null
     }

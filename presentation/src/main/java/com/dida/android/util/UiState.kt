@@ -1,4 +1,4 @@
-package com.dida.android.presentation.base
+package com.dida.android.util
 
 sealed class UiState<out T> {
     object Loading: UiState<Nothing>()

@@ -17,8 +17,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
-import com.dida.android.presentation.base.UiState
-import com.dida.android.presentation.base.successOrNull
+import com.dida.android.util.UiState
+import com.dida.android.util.successOrNull
 import com.dida.domain.model.nav.detailnft.Community
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.mypage.UserProfile

@@ -1,8 +1,8 @@
 package com.dida.android.presentation.views.nav.home
 
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.base.UiState
 import com.dida.android.util.NftActionHandler
+import com.dida.android.util.UiState
 import com.dida.domain.*
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut

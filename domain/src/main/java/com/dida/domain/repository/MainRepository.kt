@@ -53,4 +53,6 @@ interface  MainRepository {
     suspend fun postUserFollowAPI(userId: Long) : NetworkResult<Unit>
 
     suspend fun getDetailNFT(userId: Long) : NetworkResult<DetailNFT>
+
+    suspend fun putDeviceTokenAPI(deviceToken: String) : NetworkResult<Unit>
 }

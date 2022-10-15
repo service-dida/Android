@@ -61,7 +61,7 @@ class PasswordReconfirmDialog(
     private fun dialogFullScreen() {
         if (dialog != null) {
             val bottomSheet: View =
-                dialog!!.findViewById(androidx.navigation.ui.R.id.design_bottom_sheet)
+                dialog!!.findViewById(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         }
 

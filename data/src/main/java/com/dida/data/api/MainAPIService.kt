@@ -2,6 +2,7 @@ package com.dida.data.api
 
 import com.dida.data.model.createwallet.*
 import com.dida.data.model.detail.GetDetailNFTResponse
+import com.dida.data.model.device.PutDeviceTokenRequest
 import com.dida.data.model.klaytn.NFTMintRequest
 import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.GetMainResponse
@@ -79,4 +80,8 @@ interface MainAPIService {
 
     @GET("/card/{cardId}")
     suspend fun getDetailNFT(@Path("cardId")cardId : String) : GetDetailNFTResponse
+
+    @PUT("/device/token")
+    suspend fun putDeviceToken(@Body request: PutDeviceTokenRequest): Unit
+
 }
