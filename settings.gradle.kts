@@ -6,10 +6,10 @@ pluginManagement {
     }
     resolutionStrategy {
         eachPlugin {
-            if( requested.id.id == 'dagger.hilt.android.plugin') {
+            if( requested.id.id == "dagger.hilt.android.plugin") {
                 useModule("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
             }
-            if( requested.id.id == 'androidx.navigation.safeargs.kotlin') {
+            if( requested.id.id == "androidx.navigation.safeargs.kotlin") {
                 useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2")
             }
         }
@@ -23,7 +23,7 @@ buildscript {
     }
     dependencies {
         // Add the dependency for the Google services Gradle plugin
-        classpath 'com.google.gms:google-services:4.3.13'
+        classpath("com.google.gms:google-services:4.3.13")
     }
 }
 dependencyResolutionManagement {
@@ -31,11 +31,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://jitpack.io" }
-        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
     }
 }
 rootProject.name = "DIDA"
-include ':presentation'
-include ':data'
-include ':domain'
+include(":presentation")
+include(":data")
+include(":domain")

@@ -47,9 +47,11 @@ class SplashViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             dataStorePreferences.getAccessToken()?.let {
-                deviceTokenAPI(token)
-                    .onSuccess { dataStorePreferences.setFcmToken(token) }
-                    .onError { e -> catchError(e) }
+                if(it != "") {
+                    deviceTokenAPI(token)
+                        .onSuccess { dataStorePreferences.setFcmToken(token) }
+                        .onError { e -> catchError(e) }
+                }
             }
             _navigateToHome.emit(true)
             dismissLoading()
