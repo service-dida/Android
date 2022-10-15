@@ -20,12 +20,16 @@ buildscript {
         // Make sure that you have the following two repositories
         google()  // Google's Maven repository
         mavenCentral()  // Maven Central repository
+        gradlePluginPortal()
     }
     dependencies {
         // Add the dependency for the Google services Gradle plugin
         classpath("com.google.gms:google-services:4.3.13")
     }
 }
+// version catalogs
+enableFeaturePreview("VERSION_CATALOGS")
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -33,6 +37,9 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
         maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
+    }
+    versionCatalogs {
+        create("libs") { from(files("gradle/didalibs.versions.toml")) }
     }
 }
 rootProject.name = "DIDA"

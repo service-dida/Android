@@ -10,7 +10,8 @@ java {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
-    implementation("javax.inject:javax.inject:1")
-    implementation("com.squareup.okhttp3:okhttp:3.8.1")
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.javax.inject)
+    implementation(libs.kotlin.coroutine.core)
+    implementation(libs.squareup.okhttp)
 }
