@@ -23,21 +23,21 @@ class WalletViewModel @Inject constructor(
     val navigationEvent: SharedFlow<WalletNavigationAction> = _navigationEvent
 
     private val _walletHistoryState: MutableStateFlow<List<WalletNFTHistoryHolderModel>> = MutableStateFlow<List<WalletNFTHistoryHolderModel>>(emptyList())
-    val walletHistoryState: StateFlow<List<WalletNFTHistoryHolderModel>> = _walletHistoryState
 
     private val _currentHistoryState: MutableStateFlow<List<WalletNFTHistoryHolderModel>> = MutableStateFlow<List<WalletNFTHistoryHolderModel>>(emptyList())
     val currentHistoryState: StateFlow<List<WalletNFTHistoryHolderModel>> = _currentHistoryState
 
     /** NFT 거래 내역 타입 LiveData
      * 0 : 전체
-     * 1 : 구매
-     * 2 : 판매
+     * 1 : 구매 <- type = true
+     * 2 : 판매 <- type = false
      */
     private val _nftTypeState: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
     val nftTypeState: StateFlow<Int> = _nftTypeState
 
     fun setNftHistory(request: List<WalletNFTHistoryHolderModel>) {
         _walletHistoryState.value = request
+        _currentHistoryState.value = request
     }
 
     override fun onNftHistoryClicked(type: Int) {
@@ -45,9 +45,8 @@ class WalletViewModel @Inject constructor(
         when(type) {
             0 -> { _currentHistoryState.value = _walletHistoryState.value }
             1 -> { _currentHistoryState.value = _walletHistoryState.value.filter { it.type } }
-            2 -> { _currentHistoryState.value = _walletHistoryState.value.filter { it.type } }
+            2 -> { _currentHistoryState.value = _walletHistoryState.value.filter { !it.type } }
         }
-
     }
 
     fun onBack() {
