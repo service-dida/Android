@@ -51,11 +51,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             when (destination.id) {
                 R.id.splashFragment -> hideBottomNav()
                 R.id.detailNftFragment -> hideBottomNav()
-                R.id.myPageFragment -> {
-                    loginCheck()
-                    showBottomNav()
-                }
-                R.id.addFragment -> loginCheck()
+                R.id.myPageFragment -> showBottomNav()
                 R.id.communityDetailFragment -> hideBottomNav()
                 else -> showBottomNav()
             }
@@ -75,14 +71,6 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                 R.id.myPageFragment -> {}
                 R.id.addFragment -> {}
                 R.id.communityFragment -> {}
-            }
-        }
-    }
-
-    private fun loginCheck() {
-        runBlocking {
-            if(dataStorePreferences.getAccessToken().isNullOrEmpty()) {
-                registerForActivityResult.launch(Intent(this@NavHostActivity, LoginActivity::class.java))
             }
         }
     }

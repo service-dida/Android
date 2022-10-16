@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
@@ -29,9 +30,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     override val viewModel: AddViewModel by viewModels()
 
-    val navController: NavController by lazy {
-        Navigation.findNavController(requireView())
-    }
+    private val navController: NavController by lazy { findNavController() }
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 

@@ -8,6 +8,7 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import javax.net.ssl.SSLHandshakeException
 
 class ErrorResponseInterceptor: Interceptor {
 
@@ -30,9 +31,9 @@ class ErrorResponseInterceptor: Interceptor {
              * Non-IOException subtypes thrown from interceptor never notify Callback
              * See https://github.com/square/okhttp/issues/5151
              */
-
             when(e) {
-                is IOException -> throw e
+                is IOException,
+                is SSLHandshakeException -> throw e
                 else -> throw IOException(e)
             }
         }
@@ -64,5 +65,11 @@ private fun createErrorException(url: String?, httpCode: Int, errorResponse: Err
         200 -> InvalidLengthException(Throwable(errorResponse.message), url, 200)
         404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
         500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
-        else -> null
+        else -> {
+            when(httpCode) {
+                404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
+                500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
+                else -> null
+            }
+        }
     }

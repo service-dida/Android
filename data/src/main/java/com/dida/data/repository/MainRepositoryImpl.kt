@@ -78,10 +78,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.mintNFT(request) }
     }
 
-    override suspend fun postCreateWalletAPI(
-        password: String,
-        passwordCheck: String,
-    ): NetworkResult<Unit> {
+    override suspend fun postCreateWalletAPI(password: String, passwordCheck: String, ): NetworkResult<Unit> {
         val request = PostCreateWalletRequest(password, passwordCheck)
         return handleApi { mainAPIService.postCreateWallet(request) }
     }
