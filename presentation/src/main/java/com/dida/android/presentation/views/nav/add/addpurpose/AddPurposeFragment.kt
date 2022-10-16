@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.android.util.AppLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -29,6 +31,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     override val viewModel: AddPurposeViewModel by viewModels()
 
     private val args: AddPurposeFragmentArgs by navArgs()
+    private val navController by lazy { findNavController() }
 
     override fun initStartView() {
         binding.apply {
@@ -56,9 +59,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(R.drawable.ic_back)
-            this.setNavigationOnClickListener {
-                findNavController().popBackStack()
-            }
+            this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
 
@@ -75,18 +76,20 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
         val dialog = AddNftBottomSheet {
             val passwordDialog = PasswordDialog(true) { password ->
                 //TODO : 비밀번호 맞는지 체크하기
-                val currentImageUri = Uri.parse(viewModel.nftImageState.value.toString())
-                try {
-                    currentImageUri?.let {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            val imagePath: String = getPath(currentImageUri)!!
-                            viewModel.uploadAsset(imagePath)
-                        } else {
-                            //TODO :버전낮은거 처리하기
+                val currentImageUri = Uri.parse(viewModel.nftImageState.value)
+                if(password != "") {
+                    try {
+                        currentImageUri?.let {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                val imagePath: String = getPath(currentImageUri)!!
+                                viewModel.uploadAsset(imagePath)
+                            } else {
+                                //TODO :버전낮은거 처리하기
+                            }
                         }
+                    } catch (e : Exception){
+                        AppLog.e("error_response", e.toString())
                     }
-                }catch (e : Exception){
-
                 }
             }
             passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)

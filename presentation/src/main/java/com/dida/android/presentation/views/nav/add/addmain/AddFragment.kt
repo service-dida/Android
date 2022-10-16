@@ -72,7 +72,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     if (it) {
                         if(!isSelected){
                             val passwordDialog = PasswordDialog(true) { password ->
-                                viewModel.checkPassword(password)
+                                if(password == "") {navController.popBackStack()}
+                                else { viewModel.checkPassword(password) }
                             }
                             passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                         }
@@ -89,7 +90,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     else {
                         toastMessage("비밀번호가 틀렸습니다.")
                         val passwordDialog = PasswordDialog(true) { password ->
-                            viewModel.checkPassword(password)
+                            if(password == "") {navController.popBackStack()}
+                            else { viewModel.checkPassword(password) }
                         }
                         passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                     }
