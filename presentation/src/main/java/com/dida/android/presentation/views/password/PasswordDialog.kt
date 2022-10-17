@@ -1,7 +1,10 @@
 package com.dida.android.presentation.views.password
 
+import android.app.Dialog
 import android.graphics.Color
+import android.os.Bundle
 import android.view.HapticFeedbackConstants
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -75,6 +78,19 @@ class PasswordDialog(
         binding.dialogPaymentKeypadBack.setOnClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
             viewModel.removeStack()
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.setOnKeyListener { _, keyCode, event ->
+            if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                //TODO: back key 이벤트 시 필요한 코드 추가
+                password.invoke("")
+                dismiss()
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
         }
     }
 

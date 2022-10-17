@@ -65,8 +65,9 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
             timer.cancel()
             if(viewModel.verifyCheckState.value) {
                 // 지갑이 없으므로 false로 넘겨줘야 한다.
-                val passwordDialog = PasswordDialog(false) {
-                    viewModel.postCreateWallet(it, it)
+                val passwordDialog = PasswordDialog(false) { password ->
+                    if(password == "") {navController.popBackStack()}
+                    else { viewModel.postCreateWallet(password, password) }
                 }
                 passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
             }

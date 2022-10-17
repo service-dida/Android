@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
@@ -29,9 +30,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     override val viewModel: AddViewModel by viewModels()
 
-    val navController: NavController by lazy {
-        Navigation.findNavController(requireView())
-    }
+    private val navController: NavController by lazy { findNavController() }
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
@@ -72,7 +71,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     if (it) {
                         if(!isSelected){
                             val passwordDialog = PasswordDialog(true) { password ->
-                                viewModel.checkPassword(password)
+                                if(password == "") {navController.popBackStack()}
+                                else { viewModel.checkPassword(password) }
                             }
                             passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                         }
@@ -89,7 +89,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     else {
                         toastMessage("비밀번호가 틀렸습니다.")
                         val passwordDialog = PasswordDialog(true) { password ->
-                            viewModel.checkPassword(password)
+                            if(password == "") {navController.popBackStack()}
+                            else { viewModel.checkPassword(password) }
                         }
                         passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
                     }
