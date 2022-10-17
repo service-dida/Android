@@ -13,8 +13,6 @@ import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 class WalletNFTHistoryRecyclerViewAdapter(
 ) : ListAdapter<WalletNFTHistoryHolderModel, WalletNFTHistoryRecyclerViewAdapter.ViewHolder>(WalletCardDiffCallback){
 
-    init { setHasStableIds(true) }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderWalletNftHistoryBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -40,9 +38,10 @@ class WalletNFTHistoryRecyclerViewAdapter(
 
     internal object WalletCardDiffCallback : DiffUtil.ItemCallback<WalletNFTHistoryHolderModel>() {
         override fun areItemsTheSame(oldItem: WalletNFTHistoryHolderModel, newItem: WalletNFTHistoryHolderModel) =
-            oldItem == newItem
+            oldItem.historyId == newItem.historyId
 
         override fun areContentsTheSame(oldItem: WalletNFTHistoryHolderModel, newItem: WalletNFTHistoryHolderModel) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
+
 }
