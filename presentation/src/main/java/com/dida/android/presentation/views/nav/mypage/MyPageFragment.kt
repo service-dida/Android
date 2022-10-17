@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
@@ -88,7 +87,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_wallet -> viewModel.onWalletClicked()
-                    R.id.action_setting -> viewModel.onSettingClicked()
+                    R.id.action_setting -> viewModel.onLogoutClicked()
                     R.id.action_profileImg -> getImageToGallery()
                     R.id.action_temporary_password -> viewModel.tempPassword()
                     R.id.action_change_password -> viewModel.changePassword("203057","000000")

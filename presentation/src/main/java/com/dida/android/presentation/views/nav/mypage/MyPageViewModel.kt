@@ -1,9 +1,9 @@
 package com.dida.android.presentation.views.nav.mypage
 
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.base.UiState
 import com.dida.android.util.AppLog
 import com.dida.android.util.NftActionHandler
+import com.dida.android.util.UiState
 import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.UserNft
@@ -113,7 +113,7 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onSettingClicked() {
+    override fun onLogoutClicked() {
         baseViewModelScope.launch {
             DataApplication.dataStorePreferences.removeAccessToken()
             _navigationEvent.emit(MypageNavigationAction.NavigateToHome)

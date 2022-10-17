@@ -11,6 +11,8 @@ interface KlaytnAPIService {
 
     @Multipart
     @POST
-    suspend fun uploadAsset(@Part file: MultipartBody.Part,
-                            @Url url: String = "https://metadata-api.klaytnapi.com/v1/metadata/asset"): AssetResponse
+    suspend fun uploadAsset(
+        @Part file: MultipartBody.Part,
+        @Url url: String = "https://metadata-api.klaytnapi.com/v1/metadata/asset"
+    ): AssetResponse
 }

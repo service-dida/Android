@@ -2,6 +2,9 @@ package com.dida.android.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dida.data.DataApplication
+import com.dida.data.model.HaveNotJwtTokenException
+import com.kakao.sdk.network.KakaoAgentInterceptor
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,9 +27,20 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
+    private val _needLoginEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val needLoginEvent: SharedFlow<Boolean> = _needLoginEvent
+
     fun catchError(e: Throwable?) {
         viewModelScope.launch(errorHandler) {
-            e?.let { _errorEvent.emit(it) }
+            e?.let {
+                when(it) {
+                    is HaveNotJwtTokenException -> {
+                        DataApplication.dataStorePreferences.removeAccessToken()
+                        _needLoginEvent.emit(true)
+                    }
+                    else -> _errorEvent.emit(it)
+                }
+            }
             dismissLoading()
         }
     }

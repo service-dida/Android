@@ -1,5 +1,7 @@
 package com.dida.android.presentation.base
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,7 +19,10 @@ import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
+import com.dida.android.presentation.views.login.LoginActivity
 import com.dida.android.util.LoadingDialog
+import com.dida.android.util.Scheme
+import com.dida.android.util.SchemeUtils
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -82,6 +87,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
             launch {
                 viewModel.errorEvent.collect { e ->
+                    dismissLoadingDialog()
                     showToastMessage(e)
                     Log.e("DIDA", "onStart: ${e}")
                 }
@@ -91,6 +97,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 viewModel.loadingEvent.collect {
                     if(!it) { showLoadingDialog() }
                     else { dismissLoadingDialog() }
+                }
+            }
+
+            launch {
+                viewModel.needLoginEvent.collect {
+                    startActivity(Intent(requireActivity(), LoginActivity::class.java))
                 }
             }
         }
@@ -163,6 +175,39 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 findNavController().navigate(NavigationGraphDirections.actionMainFragment(), navOptions)
             }
         }
+    }
+
+    // DeepLink Handler
+    protected fun handelDeepLinkInternal(deepLink: String, navOptions: NavOptions? = null): Boolean {
+        when (SchemeUtils.getAppScheme(deepLink)) {
+            is Scheme.Home,
+            is Scheme.Defi,
+            is Scheme.Add,
+            is Scheme.Community,
+            is Scheme.My,
+            is Scheme.DetailNft -> {
+                val uri = Uri.parse(deepLink)
+                if (findNavController().graph.hasDeepLink(uri)) {
+                    findNavController().navigate(uri, navOptions)
+                    return true
+                }
+            }
+            is Scheme.DetailCommunity -> {
+                val uri = Uri.parse(deepLink)
+                if (findNavController().graph.hasDeepLink(uri)) {
+                    findNavController().navigate(uri, navOptions)
+                    return true
+                }
+            }
+            else -> {
+                val uri = Uri.parse(deepLink)
+                if (findNavController().graph.hasDeepLink(uri)) {
+                    findNavController().navigate(uri, navOptions)
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
 
