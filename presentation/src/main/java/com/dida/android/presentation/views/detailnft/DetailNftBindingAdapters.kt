@@ -1,27 +1,19 @@
 package com.dida.android.presentation.views.detailnft
 
-import android.text.Layout
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.util.UiState
 import com.dida.android.util.successOrNull
-import com.dida.domain.model.nav.detailnft.Community
 import com.dida.domain.model.nav.detailnft.DetailNFT
-import com.dida.domain.model.nav.mypage.UserProfile
 
 @BindingAdapter("NftImgUrl")
 fun ImageView.bindImgUrl(uiState: UiState<DetailNFT>) {
