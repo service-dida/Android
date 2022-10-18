@@ -108,6 +108,9 @@
             app:destination="@id/communityFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <argument
+            android:name="cardId"
+            app:argType="long" />
     </fragment>
 
     <fragment

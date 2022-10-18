@@ -15,349 +15,319 @@
         android:background="@color/mainblack">
 
         <ScrollView
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/scrollView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:fillViewport="true"
             android:overScrollMode="never"
-            android:paddingBottom="100dp">
+            android:paddingBottom="100dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:id="@+id/detail_top"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    android:padding="8dp">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/back_btn"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/ic_back"-->
-<!--                        android:padding="7dp"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintLeft_toLeftOf="parent">-->
-<!--                    </ImageView>-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/more_btn"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/ic_more_menu"-->
-<!--                        android:padding="7dp"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintRight_toRightOf="parent">-->
-<!--                    </ImageView>-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/heart_btn"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/ic_heart"-->
-<!--                        android:padding="7dp"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintRight_toLeftOf="@id/more_btn"-->
-<!--                        android:layout_marginRight="4dp">-->
-<!--                    </ImageView>-->
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+                android:layout_height="wrap_content"
+                constraint_endLoading="@{vm.detailNftState}">
 
                 <androidx.appcompat.widget.Toolbar
+                    NftDetailToolbar="@{vm.detailNftState}"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleTextAppearance="@style/ToolBarStyle"
-                    app:layout_constraintTop_toTopOf="parent">
-                </androidx.appcompat.widget.Toolbar>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:titleTextAppearance="@style/ToolBarStyle"/>
 
                 <ImageView
                     android:id="@+id/nft_img"
+                    NftImgUrl="@{vm.detailNftState}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/nft_example_image">
-                </ImageView>
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    tools:src="@drawable/nft_example_image"/>
 
                 <TextView
                     android:id="@+id/nft_name_txt"
+                    NftTitle="@{vm.detailNftState}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/nft_img"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="NFT Name here"
-                    android:textSize="24dp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/pretendard_bold"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/pretendard_bold"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-                </TextView>
+                    android:paddingRight="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="24dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nft_img"
+                    tools:text="제목"/>
 
                 <TextView
                     android:id="@+id/nft_detail_txt"
+                    NftDescription="@{vm.detailNftState}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/nft_name_txt"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="내용입니다 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,  "
-                    android:textSize="14dp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/pretendard_regular"
                     android:layout_marginTop="12dp"
+                    android:fontFamily="@font/pretendard_regular"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-                </TextView>
+                    android:paddingRight="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nft_name_txt"
+                    tools:text="내용입니다 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,  "/>
 
                 <ImageView
                     android:id="@+id/user_img"
+                    NftProfileUrl="@{vm.detailNftState}"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
-                    app:layout_constraintTop_toBottomOf="@id/nft_detail_txt"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="24dp"
-                    android:src="@drawable/nft_example_image">
-                </ImageView>
+                    android:src="@drawable/nft_example_image"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nft_detail_txt"/>
 
                 <TextView
                     android:id="@+id/user_name_txt"
+                    NftNickName="@{vm.detailNftState}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/user_img"
+                    android:layout_marginLeft="12dp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
                     app:layout_constraintBottom_toBottomOf="@id/user_img"
                     app:layout_constraintLeft_toRightOf="@id/user_img"
-                    android:text="user name here"
-                    android:textSize="18dp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:layout_marginLeft="12dp">
-                </TextView>
+                    app:layout_constraintTop_toTopOf="@id/user_img"
+                    tools:text="user name here"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/whos_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/user_img"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/custom_detail_nft_whos"
+                    android:padding="12dp"
                     app:layout_constraintBottom_toBottomOf="@id/user_img"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginRight="16dp"
-                    android:padding="12dp"
-                    android:background="@drawable/custom_detail_nft_whos">
+                    app:layout_constraintTop_toTopOf="@id/user_img">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/ic_whos"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/whos_txt"
-                        android:src="@drawable/ic_whos"
-                        android:layout_marginLeft="8dp">
-                    </ImageView>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/whos_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:fontFamily="@font/pretendard_regular"
                         android:text="소유권 내역"
                         android:textColor="@color/white"
                         android:textSize="12dp"
-                        android:fontFamily="@font/pretendard_regular">
-                    </TextView>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:id="@+id/line1"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/user_img"
+                    android:layout_marginTop="40dp"
                     android:background="@color/surface1"
-                    android:layout_marginTop="40dp">
-                </View>
+                    app:layout_constraintTop_toBottomOf="@id/user_img"/>
 
                 <TextView
                     android:id="@+id/detail_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/line1"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginLeft="16dp"
-                    android:text="상세정보 📎"
-                    android:textSize="20dp"
-                    android:textColor="@color/white"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/pretendard_bold"
-                    android:layout_marginTop="24dp">
-                </TextView>
+                    android:text="상세정보 📎"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line1"/>
 
                 <TextView
                     android:id="@+id/user_link_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/detail_txt"
-                    app:layout_constraintLeft_toLeftOf="@id/detail_txt"
-                    android:text="컨트랙트 링크 주소"
-                    android:textSize="18dp"
-                    android:textColor="@color/white"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:layout_marginTop="16dp">
-                </TextView>
+                    android:text="컨트랙트 링크 주소"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    app:layout_constraintLeft_toLeftOf="@id/detail_txt"
+                    app:layout_constraintTop_toBottomOf="@id/detail_txt"/>
 
                 <TextView
                     android:id="@+id/user_link"
+                    NftContract="@{vm.detailNftState}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/user_link_txt"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textColor="@color/brand_lemon"
+                    android:textSize="18dp"
                     app:layout_constraintBottom_toBottomOf="@id/user_link_txt"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginRight="16dp"
-                    android:text="DEg251...127"
-                    android:textSize="18dp"
-                    android:textColor="@color/brand_lemon"
-                    android:fontFamily="@font/pretendard_bold">
-                </TextView>
+                    app:layout_constraintTop_toTopOf="@id/user_link_txt"
+                    tools:text="DEg251...127"/>
 
                 <TextView
                     android:id="@+id/user_token_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/user_link_txt"
-                    app:layout_constraintLeft_toLeftOf="@id/detail_txt"
-                    android:text="토큰 ID"
-                    android:textSize="18dp"
-                    android:textColor="@color/white"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:layout_marginTop="12dp">
-                </TextView>
+                    android:text="토큰 ID"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    app:layout_constraintLeft_toLeftOf="@id/detail_txt"
+                    app:layout_constraintTop_toBottomOf="@id/user_link_txt"/>
 
                 <TextView
                     android:id="@+id/user_token"
+                    NftTokenId="@{vm.detailNftState}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/user_token_txt"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textColor="@color/brand_lemon"
+                    android:textSize="18dp"
                     app:layout_constraintBottom_toBottomOf="@id/user_token_txt"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginRight="16dp"
-                    android:text="123"
-                    android:textSize="18dp"
-                    android:textColor="@color/brand_lemon"
-                    android:fontFamily="@font/pretendard_bold">
-                </TextView>
+                    app:layout_constraintTop_toTopOf="@id/user_token_txt"
+                    tools:text="Ox01"/>
 
                 <View
                     android:id="@+id/line2"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/user_token_txt"
+                    android:layout_marginTop="32dp"
                     android:background="@color/surface1"
-                    android:layout_marginTop="32dp">
-                </View>
+                    app:layout_constraintTop_toBottomOf="@id/user_token_txt"/>
 
                 <TextView
                     android:id="@+id/community_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/line2"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginLeft="16dp"
-                    android:text="커뮤니티 ✋"
-                    android:textSize="20dp"
-                    android:textColor="@color/white"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/pretendard_bold"
-                    android:layout_marginTop="24dp">
-                </TextView>
+                    android:text="커뮤니티 ✋"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line2"/>
 
                 <TextView
                     android:id="@+id/community_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/community_txt"
-                    app:layout_constraintBottom_toBottomOf="@id/community_txt"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginRight="4dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:onClick="@{() -> vm.onCommunityMoreClicked()}"
+                    android:padding="12dp"
                     android:text="더보기"
                     android:textColor="@color/hots_coin_txt"
                     android:textSize="14dp"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:padding="12dp"
-                    android:onClick="@{() -> vm.onCommunityMoreClicked()}"
-                    android:layout_marginRight="4dp">
-                </TextView>
+                    app:layout_constraintBottom_toBottomOf="@id/community_txt"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/community_txt"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/community_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/community_txt"
                     android:layout_marginTop="16dp"
                     android:clipToPadding="false"
                     android:fillViewport="true"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/holder_community">
-                </androidx.recyclerview.widget.RecyclerView>
+                    app:layout_constraintTop_toBottomOf="@id/community_txt"
+                    tools:listitem="@layout/holder_community"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/price_main"
+            NftPriceLayout="@{vm.detailNftState}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/surface3"
-            android:padding="16dp">
+            android:padding="16dp"
+            constraint_endLoading="@{vm.detailNftState}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
             <ImageView
                 android:id="@+id/price_img"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="14dp"
+                android:src="@drawable/ic_soldout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:src="@drawable/ic_soldout"
-                android:layout_marginLeft="14dp">
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <TextView
                 android:id="@+id/price_txt"
+                NftPrice="@{vm.detailNftState}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:textColor="@color/white"
+                android:textSize="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/price_img"
-                android:text="325.91"
-                android:textColor="@color/white"
-                android:fontFamily="@font/pretendard_bold"
-                android:textSize="22dp"
-                android:layout_marginLeft="8dp">
-            </TextView>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="325.91"/>
 
             <TextView
                 android:id="@+id/buy_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="구매하기"
-                android:textColor="@color/black"
+                android:background="@drawable/custom_buy"
                 android:fontFamily="@font/pretendard_bold"
-                app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="68dp"
+                android:paddingTop="16dp"
+                android:paddingRight="68dp"
+                android:paddingBottom="16dp"
+                android:text="구매하기"
+                NftDetailConfirmBtn="@{vm.detailNftState}"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textSize="18dp"
-                android:background="@drawable/custom_buy"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:paddingLeft="68dp"
-                android:paddingRight="68dp">
-            </TextView>
+                app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/user_shimmer"
+            startLoading="@{vm.detailNftState}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/price_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include layout="@layout/skeleton_detail_nft" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

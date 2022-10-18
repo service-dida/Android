@@ -2,15 +2,18 @@ package com.dida.data.mapper
 
 import com.dida.data.model.createwallet.PostCheckPasswordResponse
 import com.dida.data.model.createwallet.SendEmailResponse
+import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.createwallet.RandomNumber
+import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.google.gson.annotations.SerializedName
 
 fun GetMainResponse.toDomain() : Home {
     return Home(
@@ -101,4 +104,20 @@ fun UserProfileResponse.toDomain(): UserProfile {
     )
 }
 
+fun GetDetailNFTResponse.toDomain(): DetailNFT {
+    return DetailNFT(
+        cardId = cardId,
+        contracts = contracts,
+        description = description,
+        id = id,
+        imgUrl = imgUrl,
+        nickname = nickname,
+        price = price,
+        profileUrl = profileUrl,
+        title = title,
+        liked = liked,
+        type = type,
+        userId = userId
+    )
+}
 
