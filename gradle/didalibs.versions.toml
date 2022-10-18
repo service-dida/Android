@@ -45,6 +45,8 @@ firebaseBom = "30.4.1"
 firebaseMessage = "23.0.8"
 googleServices = "4.3.13"
 
+lottie = "3.4.0"
+
 [plugins]
 hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "safeargs" }
@@ -113,6 +115,8 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessage" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-service = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+
+android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 
 [bundles]
 # Define bundles/groups of libraries

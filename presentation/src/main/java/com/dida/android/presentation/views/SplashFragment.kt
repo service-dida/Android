@@ -31,7 +31,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
         lifecycleScope.launchWhenResumed {
             launch {
                 viewModel.appVersion.collect {
-                    if(it.version.toString() == getString(R.string.app_version)) { getToken() }
+                    if(it.toString() == getString(R.string.app_version)) { getToken() }
                 }
             }
 
