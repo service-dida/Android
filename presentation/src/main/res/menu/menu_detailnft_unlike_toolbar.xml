@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_heart"
-        android:icon="@drawable/ic_heart"
+        android:icon="@drawable/ic_empty_heart"
         android:title="하트"
         app:showAsAction="always"/>
 
