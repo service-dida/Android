@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 
-abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : DialogFragment(layoutId) {
+abstract class BaseDialog<T : ViewDataBinding>(layoutId: Int) : DialogFragment(layoutId) {
 
     private var _binding: T? = null
     val binding get()= requireNotNull(_binding)
@@ -20,11 +20,6 @@ abstract class BaseDialog<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int)
      * ex) R.layout.activity_main
      */
     abstract val layoutResourceId: Int
-
-    /**
-     * viewModel 로 쓰일 변수.
-     */
-    abstract val viewModel: R
 
     /**
      * 레이아웃을 띄운 직후 호출.
