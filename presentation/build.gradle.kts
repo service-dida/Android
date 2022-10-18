@@ -79,9 +79,6 @@ dependencies {
     implementation(libs.bundles.androidx.navigation)
     androidTestImplementation(libs.androidx.navigation.test)
 
-    // https://github.com/ybq/Android-SpinKit
-    implementation(libs.android.spinkit)
-
     // life cycle scope
     implementation(libs.bundles.lifecycle)
 
@@ -99,7 +96,7 @@ dependencies {
     // 카카오 로그인
     implementation(libs.kakao.sdk)
 
-    //Circle ImageView
+    // Circle ImageView
     implementation(libs.circle.imageview)
 
     // skeleton Ui
