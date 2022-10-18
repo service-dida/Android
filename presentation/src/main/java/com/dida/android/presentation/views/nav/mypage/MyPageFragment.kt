@@ -42,10 +42,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         exception = viewModel.errorEvent
         initMyPage()
         initRegisterForActivityResult()
-
-        lifecycleScope.launchWhenResumed {
-            viewModel.getMypage()
-        }
     }
 
     override fun initDataBinding() {
@@ -66,6 +62,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     }
     
     override fun initAfterBinding() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMypage()
     }
 
     private fun initMyPage() {

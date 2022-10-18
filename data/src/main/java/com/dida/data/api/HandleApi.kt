@@ -2,7 +2,6 @@ package com.dida.data.api
 
 import com.dida.data.model.*
 import com.dida.domain.NetworkResult
-import java.io.IOException
 
 internal inline fun <T> handleApi(transform: () -> T): NetworkResult<T> = try {
     NetworkResult.Success(transform.invoke())

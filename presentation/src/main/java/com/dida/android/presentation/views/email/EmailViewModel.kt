@@ -50,7 +50,7 @@ class EmailViewModel @Inject constructor(
     private val _verifyCheckState = MutableStateFlow<Boolean>(false)
     val verifyCheckState: StateFlow<Boolean> = _verifyCheckState
 
-    fun verifyNumberCheck(number: String){
+    private fun verifyNumberCheck(number: String){
         if(number == _sendEmailState.value) { _verifyCheckState.value = true }
         else { _verifyCheckState.value = false }
     }
