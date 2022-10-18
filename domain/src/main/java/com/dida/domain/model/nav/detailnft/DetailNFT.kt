@@ -10,6 +10,7 @@ data class DetailNFT(
     val price: String,
     val profileUrl: String,
     val title: String,
+    val liked : Boolean,
     val type: String,
     val userId: Int
 )

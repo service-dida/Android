@@ -12,6 +12,7 @@ data class GetDetailNFTResponse(
     @SerializedName("price") val price: String,
     @SerializedName("profileUrl") val profileUrl: String,
     @SerializedName("title") val title: String,
+    @SerializedName("liked") val liked: Boolean,
     @SerializedName("type") val type: String,
     @SerializedName("userId") val userId: Int
 )

@@ -9,6 +9,7 @@ import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.DetailNftAPI
+import com.dida.domain.usecase.main.PostLikeAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailNftViewModel @Inject constructor(
-    private val detailNftAPI: DetailNftAPI
+    private val detailNftAPI: DetailNftAPI,
+    private val postLikeAPI: PostLikeAPI
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler {
 
     private val TAG = "DetailNftViewModel"
@@ -41,7 +43,15 @@ class DetailNftViewModel @Inject constructor(
                     e -> catchError(e)
                 }
         }
+    }
 
+    fun postlikeNft(cardId : Long){
+        baseViewModelScope.launch {
+            showLoading()
+            postLikeAPI(cardId)
+                .onSuccess { getDetailNft(cardId) }
+                .onError { e -> catchError(e) }
+        }
     }
 
     override fun onCommunityMoreClicked() {

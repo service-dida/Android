@@ -9,7 +9,6 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.nav.add.addpurpose.AddPurposeFragmentArgs
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,10 +59,10 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     private fun initToolbar() {
         with(binding.toolbar) {
             // 우측 메뉴
-            this.inflateMenu(R.menu.menu_detailnft_toolbar)
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_heart -> {
+                        viewModel.postlikeNft(args.cardId)
                     }
                     R.id.action_more -> {
                     }

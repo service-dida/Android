@@ -115,6 +115,7 @@ fun GetDetailNFTResponse.toDomain(): DetailNFT {
         price = price,
         profileUrl = profileUrl,
         title = title,
+        liked = liked,
         type = type,
         userId = userId
     )

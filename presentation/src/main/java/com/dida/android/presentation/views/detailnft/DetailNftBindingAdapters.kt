@@ -5,12 +5,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.dida.android.R
 import com.dida.android.util.UiState
 import com.dida.android.util.successOrNull
 import com.dida.domain.model.nav.detailnft.DetailNFT
@@ -90,4 +92,15 @@ fun TextView.bindConfrimBtn(uiState: UiState<DetailNFT>){
         this.gravity = Gravity.CENTER_HORIZONTAL
         this.text ="판매요청 하기 "
     }
+}
+
+@BindingAdapter("NftDetailToolbar")
+fun Toolbar.bindToolbar(uiState: UiState<DetailNFT>){
+    this.menu.clear()
+    if(uiState.successOrNull()?.liked==true){
+        this.inflateMenu(R.menu.menu_detailnft_like_toolbar)
+    }else{
+        this.inflateMenu(R.menu.menu_detailnft_unlike_toolbar)
+    }
+
 }

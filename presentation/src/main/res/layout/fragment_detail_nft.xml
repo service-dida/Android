@@ -30,6 +30,7 @@
                 constraint_endLoading="@{vm.detailNftState}">
 
                 <androidx.appcompat.widget.Toolbar
+                    NftDetailToolbar="@{vm.detailNftState}"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
