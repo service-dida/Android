@@ -36,7 +36,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it){
-                    is LoginNavigationAction.NavigateToLoginFail -> { Toast.makeText(requireContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show() }
+                    is LoginNavigationAction.NavigateToLoginFail -> toastMessage("로그인에 실패하였습니다.")
                     is LoginNavigationAction.NavigateToNickname -> {
                         toastMessage("회원가입이 필요합니다.")
 

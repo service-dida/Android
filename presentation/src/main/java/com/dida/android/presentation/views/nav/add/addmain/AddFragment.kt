@@ -78,7 +78,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                         }
                     } else {
                         toastMessage("지갑을 생성해야 합니다!")
-                        navController.navigate(R.id.action_addFragment_to_emailFragment)
+                        navigate(AddFragmentDirections.actionAddFragmentToEmailFragment())
                     }
                 }
             }
@@ -132,9 +132,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(R.drawable.ic_back)
-            this.setNavigationOnClickListener {
-                navController.popBackStack()
-            }
+            this.setNavigationOnClickListener { navController.popBackStack() }
             this.inflateMenu(R.menu.menu_add_toolbar)
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -144,12 +142,11 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                         } else{
                             isSelected = true
                             //사진,제목, 설명 이동
-                            val action =
-                                AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                                    viewModel.nftImageState.value,
-                                    viewModel.titleTextState.value,
-                                    viewModel.descriptionTextState.value
-                                )
+                            val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                                viewModel.nftImageState.value,
+                                viewModel.titleTextState.value,
+                                viewModel.descriptionTextState.value
+                            )
                             navigate(action)
                         }
                     }

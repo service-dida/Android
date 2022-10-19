@@ -45,7 +45,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
                     is MypageNavigationAction.NavigateToHome -> {

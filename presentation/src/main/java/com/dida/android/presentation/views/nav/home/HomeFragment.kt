@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
                     is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId)) }

@@ -39,7 +39,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
                     is CommunityNavigationAction.NavigateToDetail -> { navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment()) }
