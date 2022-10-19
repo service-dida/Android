@@ -10,13 +10,24 @@ data class AlertModel(
     val noButtonTitle : String,
     val yesButtonTitle : String
 )
-class CommonAlertDialog(private val alertModel: AlertModel) : BaseDialog<DialogCommonAlertBinding>(layoutId = R.layout.dialog_common_alert) {
+class CommonAlertDialog(private val alertModel: AlertModel,
+                        private val clickNo: () -> Unit,
+                        private val clickYes: () -> Unit) : BaseDialog<DialogCommonAlertBinding>(layoutId = R.layout.dialog_common_alert) {
 
     override val layoutResourceId: Int
         get() = R.layout.dialog_common_alert
 
     override fun initStartView() {
         binding.alertModel = alertModel
+
+        binding.alertNoButton.setOnClickListener {
+            clickNo.invoke()
+            dismiss()
+        }
+        binding.alertYesButton.setOnClickListener { 
+            clickYes.invoke()
+            dismiss()
+        }
     }
 
     override fun initDataBinding() {}
