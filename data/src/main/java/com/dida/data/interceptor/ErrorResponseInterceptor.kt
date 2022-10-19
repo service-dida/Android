@@ -1,9 +1,7 @@
 package com.dida.data.interceptor
 
-import android.util.Log
 import com.dida.data.model.*
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -42,8 +40,7 @@ class ErrorResponseInterceptor: Interceptor {
 
 fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
     try {
-        Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-            .adapter(ErrorResponseImpl::class.java).fromJson(responseBodyString)
+        Gson().newBuilder().create().getAdapter(ErrorResponseImpl::class.java).fromJson(responseBodyString)
     } catch (e: Exception) {
         null
     }

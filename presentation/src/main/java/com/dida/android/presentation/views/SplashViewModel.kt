@@ -1,12 +1,8 @@
 package com.dida.android.presentation.views
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
-import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckVersionAPI
@@ -26,8 +22,8 @@ class SplashViewModel @Inject constructor(
 
     private val TAG = "SplashViewModel"
 
-    private val _appVersion = MutableSharedFlow<AppVersionResponse>()
-    val appVersion: SharedFlow<AppVersionResponse> = _appVersion
+    private val _appVersion = MutableStateFlow<Int>(0)
+    val appVersion: SharedFlow<Int> = _appVersion
 
     private val _navigateToHome = MutableSharedFlow<Boolean>()
     val navigateToHome: SharedFlow<Boolean> = _navigateToHome
@@ -37,7 +33,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             showLoading()
             versionAPI()
-                .onSuccess { _appVersion.emit(it) }
+                .onSuccess { _appVersion.emit(it.version) }
                 .onError { e -> catchError(e) }
         }
     }
