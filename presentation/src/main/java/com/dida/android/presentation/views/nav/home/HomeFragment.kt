@@ -11,6 +11,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.password.PasswordDialog2
 import com.dida.android.util.AlertModel
 import com.dida.android.util.CommonAlertDialog
 import com.dida.android.util.SnapPagerScrollListener
@@ -38,6 +39,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+
+        PasswordDialog2("title","description"){
+
+        }.show(childFragmentManager,"asd")
     }
 
     override fun initDataBinding() {

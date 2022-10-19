@@ -24,7 +24,8 @@
         <entry key="presentation/src/main/res/drawable/ic_hots_heart.xml" value="0.141" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/dialog_common_alert.xml" value="0.334375" />
-        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.22962962962962963" />
+        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/dialog_password2.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/fragment_add.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/fragment_add_purpose.xml" value="0.17291666666666666" />
         <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.1" />
@@ -32,6 +33,7 @@
         <entry key="presentation/src/main/res/layout/fragment_loginmain.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/fragment_mypage.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/fragment_nickname.xml" value="0.3578125" />
+        <entry key="presentation/src/main/res/layout/holder_mypage_user_cards.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/skeleton_detail_nft.xml" value="0.203125" />
         <entry key="presentation/src/main/res/layout/skeleton_holder_mypage_user_cards.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/skeleton_user_profile.xml" value="0.31979166666666664" />
