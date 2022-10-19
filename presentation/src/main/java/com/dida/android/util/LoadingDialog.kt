@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
+import com.airbnb.lottie.LottieAnimationView
 import com.dida.android.R
 
 class LoadingDialog constructor(context: Context) : Dialog(context){
@@ -16,6 +17,9 @@ class LoadingDialog constructor(context: Context) : Dialog(context){
         setCancelable(false)
         window!!.setBackgroundDrawable(ColorDrawable())
         window!!.setDimAmount(0.2f)
+
+        val lottieAnimationView = findViewById<LottieAnimationView>(R.id.progressBar)
+        lottieAnimationView.playAnimation()
     }
 
     override fun show() {

@@ -20,7 +20,6 @@ espresso = "3.4.0"
 constraintLayout = "2.1.3"
 recyclerView = "1.2.1"
 shimmer = "0.5.0"
-spinkit = "1.4.0"
 
 navigation = "2.3.5"
 fragmentResult = "1.3.0"
@@ -44,6 +43,8 @@ datastore = "1.0.0"
 firebaseBom = "30.4.1"
 firebaseMessage = "23.0.8"
 googleServices = "4.3.13"
+
+lottie = "3.4.0"
 
 [plugins]
 hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
@@ -104,8 +105,6 @@ datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "
 glide-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 
-android-spinkit = { module = "com.github.ybq:Android-SpinKit", version.ref = "spinkit" }
-
 gson-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "gson" }
 
@@ -113,6 +112,8 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessage" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-service = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+
+android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 
 [bundles]
 # Define bundles/groups of libraries
