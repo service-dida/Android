@@ -11,6 +11,8 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.util.AlertModel
+import com.dida.android.util.CommonAlertDialog
 import com.dida.android.util.SnapPagerScrollListener
 import com.dida.android.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint
