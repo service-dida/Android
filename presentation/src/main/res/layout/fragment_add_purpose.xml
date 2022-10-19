@@ -58,7 +58,7 @@
                 android:layout_width="108dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="24dp"
-                android:background="@{vm.isSalesState==1? @drawable/custom_okbtn_success : @drawable/custom_surface3_square}"
+                android:background="@{vm.isSalesState==1? @drawable/custom_okbtn_success : @drawable/custom_surface3_radius10}"
                 android:gravity="center"
                 android:text="소장용"
                 android:onClick="@{() -> vm.onTypeNotSaleClicked()}"
@@ -66,7 +66,7 @@
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="@+id/Textview"
                 app:layout_constraintTop_toBottomOf="@+id/Textview"
-                tools:background="@drawable/custom_surface3_square" />
+                tools:background="@drawable/custom_surface3_radius10" />
 
             <TextView
                 android:id="@+id/type2_Button"
@@ -74,12 +74,12 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
-                android:background="@{vm.isSalesState == 2? @drawable/custom_okbtn_success : @drawable/custom_surface3_square}"
+                android:background="@{vm.isSalesState == 2? @drawable/custom_okbtn_success : @drawable/custom_surface3_radius10}"
                 android:gravity="center"
                 android:text="판매용"
                 android:onClick="@{() -> vm.onTypeSaleClicked()}"
                 android:textColor="@{vm.isSalesState==2 ? @color/black : @color/white}"
-                tools:background="@drawable/custom_surface3_square"
+                tools:background="@drawable/custom_surface3_radius10"
                 android:textSize="16dp"
                 app:layout_constraintStart_toEndOf="@+id/type1_Button"
                 app:layout_constraintTop_toBottomOf="@+id/Textview" />
@@ -90,7 +90,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/custom_surface3_square"
+                android:background="@drawable/custom_surface3_radius10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
