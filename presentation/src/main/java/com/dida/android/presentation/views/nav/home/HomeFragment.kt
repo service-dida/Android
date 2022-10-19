@@ -38,8 +38,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-
-        CommonAlertDialog(AlertModel("1","2","3","4")).show(childFragmentManager,"asd")
     }
 
     override fun initDataBinding() {

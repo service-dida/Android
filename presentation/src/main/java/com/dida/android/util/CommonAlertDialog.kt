@@ -13,7 +13,7 @@ data class AlertModel(
 class CommonAlertDialog(private val alertModel: AlertModel) : BaseDialog<DialogCommonAlertBinding>(layoutId = R.layout.dialog_common_alert) {
 
     override val layoutResourceId: Int
-        get() = R.layout.dialog_password
+        get() = R.layout.dialog_common_alert
 
     override fun initStartView() {
         binding.alertModel = alertModel
