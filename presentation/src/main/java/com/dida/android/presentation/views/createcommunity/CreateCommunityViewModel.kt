@@ -9,6 +9,7 @@ import javax.inject.Inject
 class CreateCommunityViewModel @Inject constructor(
     private val mainRepositoryImpl: MainRepositoryImpl
 ) : BaseViewModel() {
+
     private val TAG = "CreateCommunityViewModel"
 
 }

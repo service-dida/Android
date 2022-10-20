@@ -21,16 +21,10 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
     private val TAG = "CreateCommunityFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_detail_community
+        get() = R.layout.fragment_create_community
 
     override val viewModel : CreateCommunityViewModel by viewModels()
     private val navController by lazy { findNavController() }
-
-    private val tabTitleArray = arrayOf(
-        getString(R.string.create_community_like_nft),
-        getString(R.string.create_community_my_nft)
-    )
-
 
     override fun initStartView() {
         binding.apply {
@@ -46,14 +40,15 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
     }
 
     override fun initAfterBinding() {
-
     }
 
     private fun initAdapter() {
+        val tabTitleArray = arrayOf(getString(R.string.create_community_like_nft), getString(R.string.create_community_my_nft))
+
         val viewPager = binding.viewpagerNft
         val tabLayout = binding.tabNft
 
-        viewPager.adapter = CreateCommunityNftPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
+        viewPager.adapter = CreateCommunityNftPagerAdapter(this@CreateCommunityFragment, lifecycle)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitleArray[position]
         }.attach()

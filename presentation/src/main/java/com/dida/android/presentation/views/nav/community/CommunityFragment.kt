@@ -8,6 +8,7 @@ import com.dida.android.presentation.adapter.community.ActiveNFTRecyclerViewAdap
 import com.dida.android.presentation.adapter.community.ReservationNFTRecyclerViewAdapter
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.presentation.views.nav.mypage.MyPageFragmentDirections
 import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import com.dida.domain.model.nav.detailnft.Comments
@@ -42,8 +43,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collect {
                 when(it) {
-                    is CommunityNavigationAction.NavigateToDetail -> { navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment()) }
-                    is CommunityNavigationAction.NavigateToCommunityWrite -> {}
+                    is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment())
+                    is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
                 }
             }
         }

@@ -61,6 +61,17 @@
             app:destination="@id/communityDetailFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_communityFragment_to_createCommunityFragment"
+            app:destination="@id/createCommunityFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/createCommunityFragment"
+        android:name="com.dida.android.presentation.views.createcommunity.CreateCommunityFragment"
+        android:label="CreateCommunityFragment" >
     </fragment>
 
     <fragment
@@ -111,6 +122,9 @@
         <argument
             android:name="cardId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_createCommunityFragment"
+            app:destination="@id/createCommunityFragment" />
     </fragment>
 
     <fragment

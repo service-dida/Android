@@ -258,6 +258,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_community_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/price_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_community_write"
+            android:backgroundTint="@color/brand_lemon"
+            android:onClick="@{() -> vm.onCommunityWrtieClicked()}"
+            android:padding="16dp" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/price_main"
             NftPriceLayout="@{vm.detailNftState}"
