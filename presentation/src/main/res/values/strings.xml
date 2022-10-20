@@ -37,4 +37,10 @@
     <!--게시글 상세-->
     <string name="detail_community_title">게시글</string>
     <string name="detail_community_edit_hint">댓글을 남겨보세요.</string>
+
+    <!--게시글 작성-->
+    <string name="create_community_title">게시글 작성</string>
+    <string name="create_community_select_nft_title">작성할 NFT 작품을 \n골라주세요</string>
+    <string name="create_community_like_nft">좋아요한 NFT</string>
+    <string name="create_community_my_nft">my NFT</string>
 </resources>
