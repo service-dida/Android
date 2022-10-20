@@ -1,7 +1,9 @@
 package com.dida.android.presentation.views.login
 
 import android.content.Intent
-import android.widget.Toast
+import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
@@ -12,7 +14,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewModel>(R.layout.fragment_loginmain) {
@@ -57,6 +58,19 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initAfterBinding() {
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.setOnKeyListener { _, keyCode, event ->
+            if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                //TODO: back key 이벤트 시 필요한 코드 추가
+                activity?.setResult(0, Intent(requireActivity(), NavHostActivity::class.java))
+                activity?.finish()
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
     }
 
     private fun kakaoLogin() {

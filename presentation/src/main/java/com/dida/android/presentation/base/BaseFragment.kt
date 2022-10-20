@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -101,9 +102,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-                viewModel.needLoginEvent.collect {
-                    startActivity(Intent(requireActivity(), LoginActivity::class.java))
-                }
+                viewModel.needLoginEvent.collect { loginCheck() }
             }
         }
     }
@@ -176,6 +175,17 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
         }
     }
+
+    // 미 로그인시 로그인 로직
+    private fun loginCheck() {
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        registerForActivityResult.launch(intent)
+    }
+
+    private val registerForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == 0) findNavController().popBackStack()
+        }
 
     // DeepLink Handler
     protected fun handelDeepLinkInternal(deepLink: String, navOptions: NavOptions? = null): Boolean {
