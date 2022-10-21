@@ -2,6 +2,8 @@ package com.dida.android.presentation.views.nav.add.addmain
 
 import android.net.Uri
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.data.model.HaveNotJwtTokenException
+import com.dida.data.model.NeedToWalletException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckPasswordAPI
@@ -19,8 +21,8 @@ class AddViewModel @Inject constructor(
 
     private val TAG = "AddViewModel"
 
-    private val _walletExistsState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(true)
-    val walletExistsState: StateFlow<Boolean> = _walletExistsState
+    private val _walletExistsState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val walletExistsState: SharedFlow<Boolean> = _walletExistsState
 
     private val _nftImageState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val nftImageState: StateFlow<String> = _nftImageState
@@ -49,7 +51,7 @@ class AddViewModel @Inject constructor(
 
     fun createWallet() {
         baseViewModelScope.launch {
-            _walletExistsState.value = true
+            _walletExistsState.emit(true)
         }
     }
 
@@ -57,10 +59,11 @@ class AddViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             walletExistedAPI()
-                .onSuccess {
-                    _walletExistsState.value = it
-                    dismissLoading() }
-                .onError { e -> catchError(e) }
+                .onSuccess { _walletExistsState.emit(it) }
+                .onError { e ->
+                    if(e is NeedToWalletException) _walletExistsState.emit(false)
+                    else catchError(e) }
+            dismissLoading()
         }
     }
 

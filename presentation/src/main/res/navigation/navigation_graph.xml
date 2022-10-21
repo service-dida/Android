@@ -61,12 +61,51 @@
             app:destination="@id/communityDetailFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_communityFragment_to_createCommunityFragment"
+            app:destination="@id/createCommunityFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/createCommunityFragment"
+        android:name="com.dida.android.presentation.views.createcommunity.CreateCommunityFragment"
+        android:label="CreateCommunityFragment" >
+        <action
+            android:id="@+id/action_createCommunityFragment_to_communityCommunityInputFragment"
+            app:destination="@id/communityCommunityInputFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createCommunityNftFragment"
+        android:name="com.dida.android.presentation.views.createcommunity.CreateCommunityNftFragment"
+        android:label="CreateCommunityNftFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityCommunityInputFragment"
+        android:name="com.dida.android.presentation.views.createcommunityinput.CreateCommunityInputFragment"
+        android:label="CreateCommunityInputFragment">
+        <argument
+            android:name="createState"
+            app:argType="boolean">
+        </argument>
+    </fragment>
+
 
     <fragment
         android:id="@+id/communityDetailFragment"
         android:name="com.dida.android.presentation.views.detailcommunity.DetailCommunityFragment"
-        android:label="DetailCommunityFragment"/>
+        android:label="DetailCommunityFragment">
+        <action
+            android:id="@+id/action_communityDetailFragment_to_communityCommunityInputFragment"
+            app:destination="@id/communityCommunityInputFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+    </fragment>
 
     <fragment
         android:id="@+id/myPageFragment"
@@ -111,6 +150,9 @@
         <argument
             android:name="cardId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_createCommunityFragment"
+            app:destination="@id/createCommunityFragment" />
     </fragment>
 
     <fragment
