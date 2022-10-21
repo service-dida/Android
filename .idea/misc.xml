@@ -26,10 +26,11 @@
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/dialog_common_alert.xml" value="0.334375" />
         <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.22962962962962963" />
-        <entry key="presentation/src/main/res/layout/fragment_add.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/fragment_add.xml" value="0.22" />
         <entry key="presentation/src/main/res/layout/fragment_add_purpose.xml" value="0.17291666666666666" />
         <entry key="presentation/src/main/res/layout/fragment_community.xml" value="0.15557595227168425" />
         <entry key="presentation/src/main/res/layout/fragment_create_community.xml" value="0.2642547607421875" />
+        <entry key="presentation/src/main/res/layout/fragment_create_community_input.xml" value="0.33" />
         <entry key="presentation/src/main/res/layout/fragment_create_community_nft.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/fragment_detail_community.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.1" />

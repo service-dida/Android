@@ -49,7 +49,6 @@
                 android:text="@{holderModel.nftName}"
                 android:textColor="@color/white"
                 android:textSize="16dp"
-                tools:text="NFT name here"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -85,7 +84,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/create_community_my_nft_select"
+            android:text="@string/create_community_input_select"
             android:textSize="14dp"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="@color/white"

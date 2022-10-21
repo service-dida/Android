@@ -15,15 +15,15 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class CreateCommunityNftFragment(
     val createNftState: Int
-) : BaseFragment<FragmentCreateCommunityNftBinding, CreateCommunityNftViewModel>(R.layout.fragment_create_community_nft) {
+) : BaseFragment<FragmentCreateCommunityNftBinding, CreateCommunityViewModel>(R.layout.fragment_create_community_nft) {
 
     private val TAG = "CreateCommunityNftFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_create_community_nft
 
-    override val viewModel : CreateCommunityNftViewModel by viewModels()
-    
+    override val viewModel : CreateCommunityViewModel by viewModels({ requireParentFragment() })
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -34,13 +34,6 @@ class CreateCommunityNftFragment(
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is CreateCommunityNavigationAction.NavigateToSelectNft -> {}
-                }
-            }
-        }
     }
 
     override fun initAfterBinding() {
