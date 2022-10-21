@@ -38,11 +38,8 @@ class DetailNftViewModel @Inject constructor(
             detailNftAPI(cardId)
                 .onSuccess {
                     _detailNftState.value = UiState.Success(it)
-                    dismissLoading()
-                }
-                .onError {
-                    e -> catchError(e)
-                }
+                    dismissLoading() }
+                .onError { e -> catchError(e) }
         }
     }
 

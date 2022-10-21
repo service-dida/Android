@@ -15,12 +15,18 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.android.R
 import com.dida.android.util.UiState
 import com.dida.android.util.successOrNull
+import com.dida.data.DataApplication
 import com.dida.domain.model.nav.detailnft.DetailNFT
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @BindingAdapter("NftImgUrl")
 fun ImageView.bindImgUrl(uiState: UiState<DetailNFT>) {
     Glide.with(context)
         .load(uiState.successOrNull()?.imgUrl)
+        .transform(CenterCrop())
         .into(this)
 }
 
@@ -67,10 +73,9 @@ fun TextView.bindTokenId(uiState: UiState<DetailNFT>) {
 fun TextView.bindPrice(uiState: UiState<DetailNFT>) {
     if(uiState.successOrNull()?.type == "NEED LOGIN"){
         this.text = "로그인이 필요합니다."
-    }else if(uiState.successOrNull()?.type =="NOT MINE"){
+    } else if(uiState.successOrNull()?.type =="NOT MINE"){
         this.isGone
-    }
-    else{
+    } else{
         this.text = uiState.successOrNull()?.price
     }
 }
@@ -82,24 +87,41 @@ fun ConstraintLayout.bindVisible(uiState: UiState<DetailNFT>){
     }
 }
 
+@BindingAdapter("LoginCheck")
+fun FloatingActionButton.bindVisible(uiState: UiState<DetailNFT>) {
+    if(uiState.successOrNull()?.type == "NEED LOGIN"){
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
+
 @BindingAdapter("NftDetailConfirmBtn")
 fun TextView.bindConfrimBtn(uiState: UiState<DetailNFT>){
-    if(uiState.successOrNull()?.type == "NOT MINE"){
+    if(uiState.successOrNull()?.type == "NEED LOGIN") {
+        this.visibility = View.GONE
+    } else if(uiState.successOrNull()?.type == "NOT MINE") {
         this.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         this.gravity = Gravity.CENTER_HORIZONTAL
         this.text ="판매요청 하기 "
+    } else {
+        if(uiState.successOrNull()?.price == "NOT SALE") {
+            this.visibility = View.GONE
+        } else {
+            this.visibility = View.VISIBLE
+        }
     }
 }
 
 @BindingAdapter("NftDetailToolbar")
 fun Toolbar.bindToolbar(uiState: UiState<DetailNFT>){
     this.menu.clear()
-    if(uiState.successOrNull()?.liked==true){
+    if(uiState.successOrNull()?.liked==true) {
         this.inflateMenu(R.menu.menu_detailnft_like_toolbar)
-    }else{
+    } else {
         this.inflateMenu(R.menu.menu_detailnft_unlike_toolbar)
     }
 
