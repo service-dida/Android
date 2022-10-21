@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.detailnft
 
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.views.nav.community.CommunityActionHandler
+import com.dida.android.presentation.views.nav.community.CommunityWriteActionHandler
 import com.dida.android.util.UiState
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.detailnft.Community
@@ -22,7 +23,7 @@ import javax.inject.Inject
 class DetailNftViewModel @Inject constructor(
     private val detailNftAPI: DetailNftAPI,
     private val postLikeAPI: PostLikeAPI
-) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler {
+) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
 
@@ -37,11 +38,8 @@ class DetailNftViewModel @Inject constructor(
             detailNftAPI(cardId)
                 .onSuccess {
                     _detailNftState.value = UiState.Success(it)
-                    dismissLoading()
-                }
-                .onError {
-                    e -> catchError(e)
-                }
+                    dismissLoading() }
+                .onError { e -> catchError(e) }
         }
     }
 
@@ -63,6 +61,12 @@ class DetailNftViewModel @Inject constructor(
     override fun onCommunityItemClicked(communityId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToItemCommunity(communityId))
+        }
+    }
+
+    override fun onCommunityWrtieClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToCreateCommunity)
         }
     }
 }

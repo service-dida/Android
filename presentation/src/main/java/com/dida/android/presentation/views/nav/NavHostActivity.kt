@@ -53,6 +53,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
                 R.id.detailNftFragment -> hideBottomNav()
                 R.id.myPageFragment -> showBottomNav()
                 R.id.communityDetailFragment -> hideBottomNav()
+                R.id.createCommunityFragment -> hideBottomNav()
                 else -> showBottomNav()
             }
         }
@@ -74,13 +75,6 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             }
         }
     }
-
-    private val registerForActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == 0) {
-                navController.popBackStack()
-            }
-        }
 
     private fun showBottomNav() {
         binding.bottomNavi.visibility = View.VISIBLE

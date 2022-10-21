@@ -41,13 +41,12 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collect {
-                    when(it) {
-                        is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
-                        is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment())
-                    }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.navigationEvent.collect {
+                when(it) {
+                    is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
+                    is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment())
+                    is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
                 }
             }
         }
@@ -61,9 +60,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             // 우측 메뉴
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_heart -> {
-                        viewModel.postlikeNft(args.cardId)
-                    }
+                    R.id.action_heart -> viewModel.postlikeNft(args.cardId)
                     R.id.action_more -> {
                     }
                 }
@@ -72,9 +69,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
             // 뒤로가기 버튼
             this.setNavigationIcon(R.drawable.ic_back)
-            this.setNavigationOnClickListener {
-                navController.popBackStack()
-            }
+            this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
 
