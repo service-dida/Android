@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="120dp"
-            android:src="@mipmap/ic_launcher">
+            android:src="@mipmap/ic_dida_logo_foreground">
         </ImageView>
 
         <TextView

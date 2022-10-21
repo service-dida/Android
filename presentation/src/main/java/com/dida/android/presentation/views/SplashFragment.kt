@@ -38,7 +38,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
             launch {
                 viewModel.navigateToHome.collect {
                     if(it) {
-                        delay(300L)
+                        delay(1000L)
                         navigate(SplashFragmentDirections.actionMainFragment())
                     }
                 }
