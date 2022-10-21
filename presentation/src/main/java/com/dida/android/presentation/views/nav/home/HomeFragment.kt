@@ -6,19 +6,14 @@ import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.password.PasswordDialog2
-import com.dida.android.util.AlertModel
-import com.dida.android.util.CommonAlertDialog
-import com.dida.android.util.SnapPagerScrollListener
+import com.dida.android.presentation.views.password.InputNumberDialog
+import com.dida.android.util.AppLog
 import com.dida.android.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -40,9 +35,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         initToolbar()
         initAdapter()
 
-        PasswordDialog2("title","description"){
-
-        }.show(childFragmentManager,"asd")
+        InputNumberDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){
+            AppLog.d("haha ${it}")
+        }.show(childFragmentManager,"HomeFragment")
     }
 
     override fun initDataBinding() {

@@ -8,7 +8,7 @@
         <variable name="subTitle" type="String" />
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.password.PasswordViewModel2" />
+            type="com.dida.android.presentation.views.password.InputNumberViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
             tools:text="mainTitle" />
 
         <LinearLayout
-            android:id="@+id/linearLayout4"
+            android:id="@+id/password_dial_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="77dp"
@@ -39,31 +39,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mainTitle_tv">
 
-            <ImageView
-                style="@style/Password_image_style"
-                tools:src="@drawable/ic_password_default" />
-
-            <ImageView
-                style="@style/Password_image_style"
-                tools:src="@drawable/ic_password_default" />
-
-            <ImageView
-                style="@style/Password_image_style"
-                tools:src="@drawable/ic_password_default" />
-
-            <ImageView
-                style="@style/Password_image_style"
-                tools:src="@drawable/ic_password_default" />
-
-            <ImageView
-                style="@style/Password_image_style"
-                tools:src="@drawable/ic_password_default" />
-
-            <ImageView
-                style="@style/Password_image_style"
-                tools:src="@drawable/ic_password_default" />
-
-
         </LinearLayout>
 
         <TextView
@@ -72,7 +47,7 @@
             android:layout_marginTop="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            app:layout_constraintTop_toBottomOf="@+id/password_dial_layout"
             android:text="@{subTitle}"
             tools:text="subTitle" />
 

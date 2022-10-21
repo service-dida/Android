@@ -24,6 +24,7 @@
         <entry key="presentation/src/main/res/drawable/ic_hots_heart.xml" value="0.141" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/dialog_common_alert.xml" value="0.334375" />
+        <entry key="presentation/src/main/res/layout/dialog_input_number.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/dialog_password2.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/fragment_add.xml" value="0.1" />
