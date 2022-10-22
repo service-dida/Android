@@ -3,61 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable/ic_dida_logo_background.xml" value="0.1885" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/dialog_password2.xml" value="0.18854211201368107" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_nav_host.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.13055555555555556" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.28229166666666666" />
-        <entry key="presentation/src/main/res/drawable-v24/custom_hots.xml" value="0.146" />
-        <entry key="presentation/src/main/res/drawable-v24/custom_hots_heart.xml" value="0.146" />
-        <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface1_radius12.xml" value="0.1835" />
-        <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface2_square.xml" value="0.1835" />
-        <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface3_radius10.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface3_square.xml" value="0.149" />
-        <entry key="presentation/src/main/res/drawable/custom_create_community_nft_select.xml" value="0.242" />
-        <entry key="presentation/src/main/res/drawable/custom_lemon_radius16.xml" value="0.146" />
-        <entry key="presentation/src/main/res/drawable/custom_surface1_radius12.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable/custom_surface1_square.xml" value="0.149" />
-        <entry key="presentation/src/main/res/drawable/custom_surface2_radius16.xml" value="0.1835" />
-        <entry key="presentation/src/main/res/drawable/custom_surface3_radius10.xml" value="0.1835" />
-        <entry key="presentation/src/main/res/drawable/ic_empty_heart.xml" value="0.146" />
-        <entry key="presentation/src/main/res/drawable/ic_fill_heart.xml" value="0.141" />
-        <entry key="presentation/src/main/res/drawable/ic_heart.xml" value="0.141" />
-        <entry key="presentation/src/main/res/drawable/ic_hots_heart.xml" value="0.141" />
-        <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.3578125" />
-        <entry key="presentation/src/main/res/layout/dialog_common_alert.xml" value="0.334375" />
-        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.22962962962962963" />
-        <entry key="presentation/src/main/res/layout/fragment_add.xml" value="0.22" />
-        <entry key="presentation/src/main/res/layout/fragment_add_purpose.xml" value="0.17291666666666666" />
-        <entry key="presentation/src/main/res/layout/fragment_community.xml" value="0.15557595227168425" />
-        <entry key="presentation/src/main/res/layout/fragment_create_community.xml" value="0.2642547607421875" />
-        <entry key="presentation/src/main/res/layout/fragment_create_community_input.xml" value="0.33" />
-        <entry key="presentation/src/main/res/layout/fragment_create_community_nft.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/fragment_detail_community.xml" value="0.1911231884057971" />
+        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.13355048859934854" />
+        <entry key="presentation/src/main/res/layout/dialog_password2.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.1" />
-        <entry key="presentation/src/main/res/layout/fragment_email.xml" value="0.3578125" />
-        <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.19927536231884058" />
-        <entry key="presentation/src/main/res/layout/fragment_loginmain.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/fragment_mypage.xml" value="0.1" />
-        <entry key="presentation/src/main/res/layout/fragment_nickname.xml" value="0.3578125" />
-        <entry key="presentation/src/main/res/layout/fragment_splash.xml" value="0.36354166666666665" />
-        <entry key="presentation/src/main/res/layout/holder_collection.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/holder_comments.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/holder_community.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/holder_create_community_nft.xml" value="0.33" />
-        <entry key="presentation/src/main/res/layout/holder_hots.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/holder_soldout.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/holder_wallet_card.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/holder_wallet_nft_history.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/skeleton_detail_nft.xml" value="0.203125" />
+        <entry key="presentation/src/main/res/layout/skeleton_holder_hots.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/skeleton_holder_mypage_user_cards.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/skeleton_user_profile.xml" value="0.31979166666666664" />
-        <entry key="presentation/src/main/res/menu/menu_detailnft_like_toolbar.xml" value="0.17291666666666666" />
-        <entry key="presentation/src/main/res/menu/menu_detailnft_toolbar.xml" value="0.17291666666666666" />
-        <entry key="presentation/src/main/res/menu/menu_detailnft_unlike_toolbar.xml" value="0.31979166666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

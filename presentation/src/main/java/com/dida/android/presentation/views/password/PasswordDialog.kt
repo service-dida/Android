@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views.password
 
-import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.HapticFeedbackConstants

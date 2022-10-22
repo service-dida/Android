@@ -14,6 +14,7 @@ import com.dida.android.presentation.views.password.InputNumberDialog
 import com.dida.android.util.AppLog
 import com.dida.android.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -34,10 +35,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-
-        InputNumberDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){
-            AppLog.d("haha ${it}")
-        }.show(childFragmentManager,"HomeFragment")
     }
 
     override fun initDataBinding() {

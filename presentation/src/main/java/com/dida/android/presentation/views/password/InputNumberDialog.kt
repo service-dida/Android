@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views.password
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class InputNumberDialog(
     private val size : Int,
     private val mainTitleStr : String,
     private val subTitleStr : String,
-    private val result: (String) -> Unit) : BaseBottomSheetDialogFragment<DialogInputNumberBinding, InputNumberViewModel>() {
+    private val result: (Boolean, String) -> Unit) : BaseBottomSheetDialogFragment<DialogInputNumberBinding, InputNumberViewModel>() {
 
     override val layoutResourceId: Int
         get() = R.layout.dialog_input_number
@@ -50,7 +51,7 @@ class InputNumberDialog(
 
         lifecycleScope.launchWhenStarted {
             viewModel.completeEvent.collect {
-                result.invoke(it)
+                result.invoke(true,it)
                 dismiss()
             }
         }
@@ -58,6 +59,10 @@ class InputNumberDialog(
 
     override fun initAfterBinding() {}
 
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        result.invoke(false,"")
+    }
     private fun dialogFullScreen() {
         if (dialog != null) {
             val bottomSheet: View =
