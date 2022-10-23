@@ -47,6 +47,7 @@
         <entry key="presentation/src/main/res/layout/holder_community.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_create_community_nft.xml" value="0.33" />
         <entry key="presentation/src/main/res/layout/holder_hots.xml" value="0.1911231884057971" />
+        <entry key="presentation/src/main/res/layout/holder_hotseller.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/holder_soldout.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_wallet_card.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_wallet_nft_history.xml" value="0.1911231884057971" />
