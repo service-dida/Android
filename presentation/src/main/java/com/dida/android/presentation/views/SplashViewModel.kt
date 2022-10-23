@@ -31,7 +31,6 @@ class SplashViewModel @Inject constructor(
 
     fun checkVersion() {
         viewModelScope.launch {
-            showLoading()
             versionAPI()
                 .onSuccess { _appVersion.emit(it.version) }
                 .onError { e -> catchError(e) }
@@ -40,7 +39,6 @@ class SplashViewModel @Inject constructor(
 
     fun setDeviceToken(token: String) {
         baseViewModelScope.launch {
-            showLoading()
             dataStorePreferences.getAccessToken()?.let {
                 if(it != "") {
                     deviceTokenAPI(token)
@@ -49,7 +47,6 @@ class SplashViewModel @Inject constructor(
                 }
             }
             _navigateToHome.emit(true)
-            dismissLoading()
         }
     }
 }
