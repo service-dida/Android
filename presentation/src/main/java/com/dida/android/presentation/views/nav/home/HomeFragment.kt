@@ -15,6 +15,9 @@ import com.dida.android.util.AppLog
 import com.dida.android.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.dida.android.util.addSnapPagerScroll
+import dagger.hilt.android.AndroidEntryPoint
+
 
 
 @AndroidEntryPoint
@@ -118,10 +121,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun moveScroll(tabId: Int) {
         with(binding.homeScroll) {
             when(tabId) {
-                0 -> { smoothScrollToView(binding.hotSellerRecycler, 100, 1000) }
-                1 -> { smoothScrollToView(binding.soldoutTxt, 50, 1000) }
-                2 -> { smoothScrollToView(binding.recentnftTxt, 50, 1000) }
-                3 -> { smoothScrollToView(binding.collectionTxt, 0, 1000) }
+                0 -> { smoothScrollToView(binding.hotSellerRecycler, 100, 750L) }
+                1 -> { smoothScrollToView(binding.soldoutTxt, 50, 750L) }
+                2 -> { smoothScrollToView(binding.recentnftTxt, 50, 750L) }
+                3 -> { smoothScrollToView(binding.collectionTxt, 0, 750L) }
             }
             binding.appBarLayout.setExpanded(false)
         }

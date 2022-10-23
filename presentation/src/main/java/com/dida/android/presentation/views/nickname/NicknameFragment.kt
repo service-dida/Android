@@ -9,7 +9,6 @@ import com.dida.android.databinding.FragmentNicknameBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.NavHostActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -47,7 +46,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                             var intent = Intent(requireActivity(), NavHostActivity::class.java)
                             activity?.let { activity ->
                                 toastMessage("회원가입에 성공하였습니다.")
-                                activity.setResult(9001,intent)
+                                activity.setResult(9001, intent)
                                 activity.finish()
                             }
                         }

@@ -5,13 +5,13 @@
         android:id="@+id/homeFragment"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="홈"/>
+        android:title="@string/bottom_home"/>
 
     <item
         android:id="@+id/defiFragment"
         android:enabled="true"
         android:icon="@drawable/ic_defi"
-        android:title="디파이"/>
+        android:title="@string/bottom_difi"/>
 
     <item
         android:id="@+id/addFragment"
@@ -21,12 +21,12 @@
         android:id="@+id/communityFragment"
         android:enabled="true"
         android:icon="@drawable/ic_community"
-        android:title="커뮤니티"/>
+        android:title="@string/bottom_community"/>
 
     <item
         android:id="@+id/myPageFragment"
         android:enabled="true"
         android:icon="@drawable/ic_mypage"
-        android:title="마이페이지"/>
+        android:title="@string/bottom_my"/>
 
 </menu>

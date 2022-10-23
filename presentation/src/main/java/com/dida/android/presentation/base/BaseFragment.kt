@@ -21,6 +21,7 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.views.login.LoginActivity
+import com.dida.android.util.CustomSnackBarView
 import com.dida.android.util.LoadingDialog
 import com.dida.android.util.Scheme
 import com.dida.android.util.SchemeUtils
@@ -89,7 +90,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             launch {
                 viewModel.errorEvent.collect { e ->
                     dismissLoadingDialog()
-                    showToastMessage(e)
+                    showSnackBar(e.message)
                     Log.e("DIDA", "onStart: ${e}")
                 }
             }
@@ -153,6 +154,13 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     protected fun toastMessage(message: String) {
         toast?.cancel()
         toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)?.apply { show() }
+    }
+
+    // Show SnackBar 관련 함수
+    protected fun showSnackBar(message: String?) {
+        message?.let {
+            CustomSnackBarView.make(requireView(), it)
+        }
     }
 
     // navigation 중복체크 관리 <- checkNavigation 대신 사용할것
