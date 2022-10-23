@@ -7,12 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.databinding.HolderCollectionBinding
 import com.dida.android.databinding.HolderCreateCommunityNftBinding
 import com.dida.android.presentation.views.createcommunity.CreateCommunityActionHandler
-import com.dida.android.presentation.views.nav.home.HomeActionHandler
 import com.dida.domain.model.nav.community.CreateCommunityNft
-import com.dida.domain.model.nav.home.Collection
 
 class CreateCommunityNftAdapter(
     private val eventListener: CreateCommunityActionHandler

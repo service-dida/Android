@@ -12,7 +12,6 @@ import com.dida.android.util.LoadingDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collect
 
 abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewModel>: BottomSheetDialogFragment() {
 
