@@ -1,18 +1,4 @@
 <resources>
-<!--    <style name="AppTheme" parent="Theme.AppCompat.DayNight">-->
-<!--        <item name="colorPrimary">@color/black</item>-->
-<!--        <item name="colorPrimaryDark">@color/white</item>-->
-<!--        <item name="colorAccent">@color/black</item>-->
-<!--        <item name="android:windowLightStatusBar">true</item>-->
-<!--        <item name="android:colorControlActivated">@color/black</item>-->
-<!--        <item name="android:textCursorDrawable">@color/main</item>-->
-<!--    </style>-->
-
-<!--    <style name="AppTheme.NoActionBar">-->
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
-<!--    </style>-->
-
     <style name="tab_text" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">16dp</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
@@ -27,11 +13,12 @@
         <item name="actionMenuTextColor">@color/white</item>
     </style>
 
-<!--    <style name="AppTheme.Splash">-->
-<!--        <item name="android:statusBarColor">@color/main</item>-->
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
-<!--    </style>-->
+    <!--Bottom Navigation Text -->
+    <style name="Widget.BottomNavigationView"
+        parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">12dp</item>
+    </style>
 
     <!-- 게시글 상세 에딧텍스트 -->
     <style name="Widget.AppCompat.EditText.DetailCommunity.EditText" parent="Widget.AppCompat.EditText">
