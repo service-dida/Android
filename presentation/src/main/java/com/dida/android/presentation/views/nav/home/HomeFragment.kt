@@ -10,14 +10,8 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.password.InputNumberDialog
-import com.dida.android.util.AppLog
 import com.dida.android.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import com.dida.android.util.addSnapPagerScroll
-import dagger.hilt.android.AndroidEntryPoint
-
 
 
 @AndroidEntryPoint
