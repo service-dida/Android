@@ -55,4 +55,6 @@ interface  MainRepository {
     suspend fun getDetailNFT(userId: Long) : NetworkResult<DetailNFT>
 
     suspend fun putDeviceTokenAPI(deviceToken: String) : NetworkResult<Unit>
+
+    suspend fun postSwapKlayToDida(password: String, klay: Double) : NetworkResult<Unit>
 }
