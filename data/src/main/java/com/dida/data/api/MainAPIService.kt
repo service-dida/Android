@@ -11,6 +11,7 @@ import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.swap.PostSwapKlayToDidaRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -83,5 +84,8 @@ interface MainAPIService {
 
     @PUT("/device/token")
     suspend fun putDeviceToken(@Body request: PutDeviceTokenRequest): Unit
+
+    @POST("/swap/1")
+    suspend fun postSwapKlayToDida(@Body request: PostSwapKlayToDidaRequest): Unit
 
 }
