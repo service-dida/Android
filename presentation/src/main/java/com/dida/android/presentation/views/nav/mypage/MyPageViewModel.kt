@@ -26,7 +26,8 @@ class MyPageViewModel @Inject constructor(
     private val userNftAPI: UserNftAPI,
     private val updateProfileAPI: UpdateProfileAPI,
     private val tempPasswordAPI: TempPasswordAPI,
-    private val changePasswordAPI: ChangePasswordAPI
+    private val changePasswordAPI: ChangePasswordAPI,
+    private val postLikeAPI: PostLikeAPI
 ) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
     private val TAG = "MyPageViewModel"
@@ -128,7 +129,12 @@ class MyPageViewModel @Inject constructor(
 
     override fun onLikeBtnClicked(nftId: Int) {
         baseViewModelScope.launch {
-
+            showLoading()
+            postLikeAPI(nftId.toLong())
+                .onSuccess {
+                    getMypage()
+                    dismissLoading()}
+                .onError { e -> catchError(e) }
         }
     }
 }
