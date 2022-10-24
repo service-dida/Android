@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.password.InputNumberDialog
+import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -68,7 +68,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     // 지갑이 없는 경우 지갑 생성
                     if (it) {
                         if(!isSelected){
-                            InputNumberDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){success, password ->
+                            PasswordDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){ success, password ->
                                 if(success){
                                     viewModel.checkPassword(password)
                                 }else{
@@ -88,7 +88,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     if(it) { getImageToGallery() }
                     else {
                         toastMessage("비밀번호가 틀렸습니다.")
-                        InputNumberDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){success, password ->
+                        PasswordDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){ success, password ->
                             if(success){
                                 viewModel.checkPassword(password)
                             }else{

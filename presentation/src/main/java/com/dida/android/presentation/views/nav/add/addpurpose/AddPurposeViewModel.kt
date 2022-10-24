@@ -72,7 +72,7 @@ class AddPurposeViewModel @Inject constructor(
     private val _checkPasswordState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
     val checkPasswordState: SharedFlow<Boolean> = _checkPasswordState
 
-    fun checkPassword(password: String) {
+    fun mintNFT(password: String) {
         baseViewModelScope.launch {
             showLoading()
             checkPasswordAPI(password)
@@ -89,7 +89,6 @@ class AddPurposeViewModel @Inject constructor(
 
                     uploadAssetAPI(requestBody)
                 }
-                .onSuccess {  }
                 .onError { e->catchError(e) }
                 .flatMap {
                     mintNftAPI(password,titleState.value,descriptionState.value,it.uri)

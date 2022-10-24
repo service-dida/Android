@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentEmailBinding
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.password.InputNumberDialog
+import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
@@ -63,7 +63,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         binding.okBtn.setOnClickListener {
             timer.cancel()
             if(viewModel.verifyCheckState.value) {
-                InputNumberDialog(6,"비밀번호 입력","6자리를 입력해주세요."){success, password ->
+                PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                     if(success){
                         viewModel.postCreateWallet(password, password)
                     }else{

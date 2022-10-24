@@ -11,23 +11,22 @@ import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
-import com.dida.android.databinding.DialogInputNumberBinding
+import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
-import com.dida.android.util.AppLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class InputNumberDialog(
+class PasswordDialog(
     private val size : Int,
     private val mainTitleStr : String,
     private val subTitleStr : String,
-    private val result: (Boolean, String) -> Unit) : BaseBottomSheetDialogFragment<DialogInputNumberBinding, InputNumberViewModel>() {
+    private val result: (Boolean, String) -> Unit) : BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
     override val layoutResourceId: Int
-        get() = R.layout.dialog_input_number
+        get() = R.layout.dialog_password
 
-    override val viewModel: InputNumberViewModel by viewModels()
+    override val viewModel: PasswordViewModel by viewModels()
 
     override fun initStartView() {
         binding.apply {

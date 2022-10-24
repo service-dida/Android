@@ -16,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class InputNumberViewModel @Inject constructor() : BaseViewModel() {
+class PasswordViewModel @Inject constructor() : BaseViewModel() {
 
     private val stack = Stack<Int>()
     private var stackSize = 0
