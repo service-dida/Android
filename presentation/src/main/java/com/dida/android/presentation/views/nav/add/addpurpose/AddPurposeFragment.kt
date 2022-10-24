@@ -3,9 +3,6 @@ package com.dida.android.presentation.views.nav.add.addpurpose
 import android.annotation.SuppressLint
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
-import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,10 +13,7 @@ import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.InputNumberDialog
-import com.dida.android.presentation.views.password.PasswordDialog
-import com.dida.android.util.AppLog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
