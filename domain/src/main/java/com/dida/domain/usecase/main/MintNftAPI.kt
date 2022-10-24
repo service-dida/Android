@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MintNftAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(name : String, description : String, image : String) : NetworkResult<Unit> {
-        return repository.mintNFT(name, description, image)
+    suspend operator fun invoke(payPwd: String, name : String, description : String, image : String) : NetworkResult<Unit> {
+        return repository.mintNFT(payPwd, name, description, image)
     }
 }

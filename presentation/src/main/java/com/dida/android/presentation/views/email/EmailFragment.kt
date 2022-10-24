@@ -10,9 +10,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentEmailBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.InputNumberDialog
-import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -71,7 +69,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
                     }else{
                         navController.popBackStack()
                     }
-                }.show(childFragmentManager,"AddFragment")
+                }.show(childFragmentManager,"EmailFragment")
             }
         }
     }

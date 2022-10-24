@@ -1,9 +1,12 @@
 package com.dida.android.presentation.views.nav.add.addpurpose
 
+import android.net.Uri
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.klaytn.UploadAssetUsecase
+import com.dida.domain.usecase.klaytn.UploadAssetAPI
+import com.dida.domain.usecase.main.CheckPasswordAPI
 import com.dida.domain.usecase.main.MintNftAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -18,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,
-    private val uploadAssetUsecase: UploadAssetUsecase,
+    private val uploadAssetAPI: UploadAssetAPI,
+    private val checkPasswordAPI: CheckPasswordAPI
 ) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
@@ -65,26 +69,35 @@ class AddPurposeViewModel @Inject constructor(
         }
     }
 
-    fun uploadAsset(imagePath : String){
-        val file = File(imagePath)
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+    private val _checkPasswordState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val checkPasswordState: SharedFlow<Boolean> = _checkPasswordState
 
+    fun checkPassword(password: String) {
         baseViewModelScope.launch {
             showLoading()
-            uploadAssetUsecase(requestBody)
+            checkPasswordAPI(password)
                 .onSuccess {
-                    mintNFT(it.uri)
-                    dismissLoading() }
+                    if(!it)
+                        _checkPasswordState.emit(false)
+                        dismissLoading()
+                    }
                 .onError { e -> catchError(e) }
-        }
-    }
+                .flatMap {
+                    val file = File(nftImageState.value)
+                    val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                    val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-    private fun mintNFT(uri : String){
-        baseViewModelScope.launch {
-            mintNftAPI(titleState.value, descriptionState.value, uri)
-                .onSuccess { _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage) }
-                .onError { e -> catchError(e) }
+                    uploadAssetAPI(requestBody)
+                }
+                .onSuccess {  }
+                .onError { e->catchError(e) }
+                .flatMap {
+                    mintNftAPI(password,titleState.value,descriptionState.value,it.uri)
+                }
+                .onSuccess {
+                    _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                }
+                .onError { e->catchError(e) }
         }
     }
 }

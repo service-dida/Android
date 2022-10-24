@@ -44,7 +44,7 @@ interface  MainRepository {
 
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 
-    suspend fun mintNFT(name : String, description : String, image : String) : NetworkResult<Unit>
+    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<Unit>
 
     suspend fun updateProfileAPI(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit>
 

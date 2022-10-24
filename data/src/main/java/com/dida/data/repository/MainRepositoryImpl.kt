@@ -73,8 +73,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getSoldOut(term).toDomain() }
     }
 
-    override suspend fun mintNFT(name: String, description: String, image: String): NetworkResult<Unit> {
-        val request = NFTMintRequest(name,description,image)
+    override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<Unit> {
+        val request = NFTMintRequest(payPwd, name,description,image)
         return handleApi { mainAPIService.mintNFT(request) }
     }
 
