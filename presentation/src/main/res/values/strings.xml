@@ -12,6 +12,11 @@
     <string name="follower_text">팔로워</string>
     <string name="following_text">팔로잉</string>
 
+    <string name="all_text">전체</string>
+    <string name="buy_text_short">구매</string>
+    <string name="sold_text_short">판매</string>
+
+
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
     <string name="bottom_difi">디파이</string>
@@ -45,7 +50,6 @@
     <string name="nickname_main_text">닉네임</string>
     <string name="nickname_edit_hint">8글자 이하의 한글</string>
     <string name="nickname_ok_btn">가입 완료</string>
-
 
     <!--로그인 화면-->
     <string name="login_description">빠르게 로그인하기</string>
@@ -92,7 +96,6 @@
     <string name="detail_community_title">게시글</string>
     <string name="detail_community_edit_hint">댓글을 남겨보세요.</string>
 
-
     <!--NFT 상세-->
     <string name="detail_nft_title">제목</string>
     <string name="detail_nft_who_text">소유권 내역</string>
@@ -100,8 +103,6 @@
     <string name="detail_nft_link_title">컨트랙트 링크 주소</string>
     <string name="detail_nft_token_title">토큰 ID</string>
     <string name="detail_nft_community_title">커뮤니티 ✋</string>
-
-
 
     <!--게시글 작성 & 수정-->
     <string name="create_community_title">게시글 작성</string>
@@ -120,4 +121,8 @@
     <string name="create_community_input_title">제목</string>
     <string name="create_community_input_description">내용</string>
     <string name="create_community_input_select">선택</string>
+
+    <!--지갑 화면-->
+    <string name="wallet_title_text">내 지갑</string>
+    <string name="wallet_deal_title_text">NFT 거래 내역</string>
 </resources>

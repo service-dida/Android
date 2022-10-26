@@ -47,8 +47,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:gravity="left"
-                        android:text="내 지갑"
+                        android:gravity="start"
+                        android:text="@string/wallet_title_text"
                         android:textColor="@color/white"
                         android:textSize="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/pretendard_regular"
-                            android:gravity="left"
+                            android:gravity="start"
                             android:text="18Tvda30t9mdGW9004191AFfdq"
                             android:textColor="@color/wallet_address_text"
                             android:textSize="14dp" />
@@ -78,7 +78,7 @@
                             android:id="@+id/imageView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             app:srcCompat="@drawable/ic_copy" />
                     </LinearLayout>
 
@@ -111,8 +111,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_bold"
-                    android:gravity="left"
-                    android:text="NFT 거래 내역"
+                    android:gravity="start"
+                    android:text="@string/wallet_deal_title_text"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -139,7 +139,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
-                        android:text="전체"
+                        android:text="@string/all_text"
                         android:onClick="@{() -> vm.onNftHistoryClicked(0)}"
                         android:textColor="@{vm.nftTypeState==0? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
@@ -158,7 +158,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
-                        android:text="구매"
+                        android:text="@string/buy_text_short"
                         android:onClick="@{() -> vm.onNftHistoryClicked(1)}"
                         android:textColor="@{vm.nftTypeState==1? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
@@ -177,7 +177,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
-                        android:text="판매"
+                        android:text="@string/sold_text_short"
                         android:onClick="@{() -> vm.onNftHistoryClicked(2)}"
                         android:textColor="@{vm.nftTypeState==2? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
@@ -189,7 +189,7 @@
             android:id="@+id/nft_history_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"

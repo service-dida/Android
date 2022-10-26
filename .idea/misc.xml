@@ -47,6 +47,7 @@
         <entry key="presentation/src/main/res/layout/fragment_mypage.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/fragment_nickname.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/fragment_splash.xml" value="0.36354166666666665" />
+        <entry key="presentation/src/main/res/layout/fragment_wallet.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/holder_collection.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_comments.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_community.xml" value="0.1911231884057971" />
