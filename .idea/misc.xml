@@ -37,6 +37,7 @@
         <entry key="presentation/src/main/res/layout/fragment_create_community.xml" value="0.2642547607421875" />
         <entry key="presentation/src/main/res/layout/fragment_create_community_input.xml" value="0.33" />
         <entry key="presentation/src/main/res/layout/fragment_create_community_nft.xml" value="0.1911231884057971" />
+        <entry key="presentation/src/main/res/layout/fragment_defi.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/fragment_detail_community.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.22" />
         <entry key="presentation/src/main/res/layout/fragment_email.xml" value="0.3578125" />
