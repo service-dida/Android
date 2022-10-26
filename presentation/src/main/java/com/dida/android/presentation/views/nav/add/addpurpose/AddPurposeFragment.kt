@@ -50,21 +50,6 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
                     }
                 }
             }
-
-            launch {
-                viewModel.checkPasswordState.collect{
-                    if(!it){
-                        toastMessage("비밀번호가 틀렸습니다.")
-                        PasswordDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){ success, password ->
-                            if(success){
-                                viewModel.mintNFT(password)
-                            }else{
-
-                            }
-                        }.show(childFragmentManager,"AddFragment")
-                    }
-                }
-            }
         }
     }
     override fun initAfterBinding() {}

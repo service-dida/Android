@@ -4,6 +4,8 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -15,18 +17,22 @@ import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PasswordDialog(
-    private val size : Int,
-    private val mainTitleStr : String,
-    private val subTitleStr : String,
-    private val result: (Boolean, String) -> Unit) : BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
+    private val size: Int,
+    private val mainTitleStr: String,
+    private val subTitleStr: String,
+    private val result: (Boolean, String) -> Unit
+) : BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
     override val layoutResourceId: Int
         get() = R.layout.dialog_password
 
     override val viewModel: PasswordViewModel by viewModels()
+
+    private val imageViewList: MutableList<ImageView> = mutableListOf()
 
     override fun initStartView() {
         binding.apply {
@@ -39,19 +45,28 @@ class PasswordDialog(
         viewModel.setStackSize(size)
         makePasswordDial()
         dialogFullScreen()
+
     }
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.stackSizeState.collect{
-                checkImageType(it)
+            launch {
+                viewModel.stackSizeState.collect {
+                    checkImageType(it)
+                }
             }
-        }
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.completeEvent.collect {
-                result.invoke(true,it)
-                dismiss()
+            launch {
+                viewModel.completeEvent.collect {
+                    result.invoke(true, it)
+                    dismiss()
+                }
+            }
+
+            launch {
+                viewModel.failEvent.collect {
+                    failAction(it)
+                }
             }
         }
     }
@@ -60,8 +75,9 @@ class PasswordDialog(
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        result.invoke(false,"")
+        result.invoke(false, "")
     }
+
     private fun dialogFullScreen() {
         if (dialog != null) {
             val bottomSheet: View =
@@ -79,27 +95,48 @@ class PasswordDialog(
         }
     }
 
-    private fun makePasswordDial(){
+    private fun makePasswordDial() {
         val layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,1f)
+            LinearLayout.LayoutParams.WRAP_CONTENT, 1f
+        )
 
-        for(i in 0 until size){
+        imageViewList.clear()
+        binding.passwordDialLayout.removeAllViews()
+
+        for (i in 0 until size) {
             val imageView = ImageView(context)
             imageView.setImageResource(R.drawable.ic_password_default)
-            imageView.layoutParams= layoutParams
+            imageView.layoutParams = layoutParams
             binding.passwordDialLayout.addView(imageView)
+            imageViewList.add(imageView)
         }
     }
 
-    private fun checkImageType(stackSize : Int){
-        for(i in 0 until size){
+    private fun checkImageType(stackSize: Int) {
+        for (i in 0 until size) {
             val imageView = binding.passwordDialLayout[i] as ImageView
-            if(i < stackSize){
+            if (i < stackSize) {
                 imageView.setImageResource(R.drawable.ic_password)
-            }else{
+            } else {
                 imageView.setImageResource(R.drawable.ic_password_default)
             }
+        }
+    }
+
+    private fun failAction(fail : Boolean){
+        if (fail) {
+            imageViewList.forEach {
+                it.setImageResource(R.drawable.ic_password_fail)
+            }
+            val animation =
+                AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
+            binding.passwordDialLayout.startAnimation(animation)
+            binding.subTitle = "비밀번호가 일치히지 않아요.\n" + "다시 입력해주세요."
+        } else {
+            makePasswordDial()
+            binding.passwordDialLayout.clearAnimation()
+            binding.subTitle = subTitleStr
         }
     }
 }

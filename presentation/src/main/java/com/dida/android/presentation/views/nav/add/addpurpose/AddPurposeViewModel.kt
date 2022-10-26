@@ -1,12 +1,10 @@
 package com.dida.android.presentation.views.nav.add.addpurpose
 
-import android.net.Uri
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.klaytn.UploadAssetAPI
-import com.dida.domain.usecase.main.CheckPasswordAPI
 import com.dida.domain.usecase.main.MintNftAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -21,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,
-    private val uploadAssetAPI: UploadAssetAPI,
-    private val checkPasswordAPI: CheckPasswordAPI
+    private val uploadAssetAPI: UploadAssetAPI
 ) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
@@ -69,32 +66,23 @@ class AddPurposeViewModel @Inject constructor(
         }
     }
 
-    private val _checkPasswordState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
-    val checkPasswordState: SharedFlow<Boolean> = _checkPasswordState
-
     fun mintNFT(password: String) {
         baseViewModelScope.launch {
             showLoading()
-            checkPasswordAPI(password)
-                .onSuccess {
-                    if(!it)
-                        _checkPasswordState.emit(false)
-                        dismissLoading()
-                    }
-                .onError { e -> catchError(e) }
-                .flatMap {
-                    val file = File(nftImageState.value)
-                    val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                    val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-                    uploadAssetAPI(requestBody)
-                }
+            val file = File(nftImageState.value)
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+           uploadAssetAPI(requestBody)
+               .onSuccess {  }
                 .onError { e->catchError(e) }
                 .flatMap {
                     mintNftAPI(password,titleState.value,descriptionState.value,it.uri)
                 }
                 .onSuccess {
                     _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                    dismissLoading()
                 }
                 .onError { e->catchError(e) }
         }

@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/layout/activity_nav_host.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.13055555555555556" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.28229166666666666" />
+        <entry key="presentation/src/main/res/drawable-hdpi/ic_password_fail.xml" value="0.1875" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots.xml" value="0.146" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots_heart.xml" value="0.146" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface1_radius12.xml" value="0.1835" />

@@ -70,7 +70,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                         if(!isSelected){
                             PasswordDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){ success, password ->
                                 if(success){
-                                    viewModel.checkPassword(password)
+                                    getImageToGallery()
                                 }else{
                                     navController.popBackStack()
                                 }
@@ -83,21 +83,6 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 }
             }
 
-            launch {
-                viewModel.checkPasswordState.collect {
-                    if(it) { getImageToGallery() }
-                    else {
-                        toastMessage("비밀번호가 틀렸습니다.")
-                        PasswordDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){ success, password ->
-                            if(success){
-                                viewModel.checkPassword(password)
-                            }else{
-                                navController.popBackStack()
-                            }
-                        }.show(childFragmentManager,"AddFragment")
-                    }
-                }
-            }
 
             launch {
                 viewModel.nftImageState.collect {
