@@ -77,7 +77,7 @@
             android:id="@+id/nickname_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="18dp"
+            android:layout_marginEnd="18dp"
             android:src="@{vm.nickNameCheckState ? @drawable/ic_nickname_fail : @drawable/ic_nickname_success}"
             app:layout_constraintTop_toTopOf="@id/nick_name_edit"
             app:layout_constraintBottom_toBottomOf="@id/nick_name_edit"

@@ -8,6 +8,10 @@
     <string name="buy_text">구매하기</string>
     <string name="ok_text">확인</string>
 
+    <string name="nft_text">더보기</string>
+    <string name="follower_text">팔로워</string>
+    <string name="following_text">팔로잉</string>
+
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
     <string name="bottom_difi">디파이</string>
