@@ -5,6 +5,7 @@
 
     <string name="more_text">더보기</string>
     <string name="buy_text">구매하기</string>
+    <string name="ok_text">확인</string>
 
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
@@ -35,6 +36,11 @@
 
     <!--로그인 화면-->
     <string name="login_description">빠르게 로그인하기</string>
+
+    <!--이메일 화면-->
+    <string name="email_main_text">이메일로 전송된 \n인증번호 6자리를 입력해주세요.</string>
+    <string name="email_check_hint">6자리 숫자</string>
+    <string name="email_validation_resend">인증번호 다시 보내기</string>
 
     <!--비밀번호 다이어로그-->
     <string name="dialog_title1">비밀번호 설정</string>
