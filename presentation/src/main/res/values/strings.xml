@@ -54,6 +54,10 @@
     <string name="not_sale_text">소장용</string>
     <string name="sale_text">판매용</string>
 
+    <string name="add_nft_bottom_title">언제든 마켓에 판매할 수 있어요!</string>
+    <string name="add_nft_bottom_sub_title">· 마이페이지 > NFT 상세 > 판매하기</string>
+    <string name="add_nft_bottom_ok_btn_text">NFT 생성하기</string>
+
     <!--이메일 화면-->
     <string name="email_main_text">이메일로 전송된 \n인증번호 6자리를 입력해주세요.</string>
     <string name="email_check_hint">6자리 숫자</string>
