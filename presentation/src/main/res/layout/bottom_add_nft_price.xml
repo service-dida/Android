@@ -25,7 +25,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="판매 가격은 얼마인가요?"
+                android:text="@string/add_nft_price_title"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:fontFamily="@font/pretendard_bold">
@@ -53,7 +53,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:textColor="@color/white"
-                    android:hint="가격을 입력하세요"
+                    android:hint="@string/add_nft_price_hint"
                     android:textSize="14dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:maxLines="1"
@@ -67,11 +67,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="dida"
+                    android:text="@string/price_dida"
                     android:textSize="14dp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/pretendard_regular"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginStart="10dp">
                 </TextView>
             </LinearLayout>
 
@@ -86,7 +86,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="24dp"
-                android:text="NFT 생성하기"
+                android:text="@string/add_nft_price_ok_btn_text"
                 android:onClick="@{() -> vm.onOkBtnClicked()}"
                 android:fontFamily="@font/pretendard_bold"
                 android:textSize="16dp"

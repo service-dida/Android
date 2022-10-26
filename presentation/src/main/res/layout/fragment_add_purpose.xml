@@ -16,7 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/pretendard_bold"
-                    android:text="NFT 생성"
+                    android:text="@string/add_nft_main_title"
                     android:textColor="@color/white"
                     android:textSize="20dp" />
 
@@ -47,7 +47,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="어떤 목적으로\n아래 NFT를 생성하나요?"
+                android:text="@string/add_purpose_top_text"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -60,7 +60,7 @@
                 android:layout_marginTop="24dp"
                 android:background="@{vm.isSalesState==1? @drawable/custom_okbtn_success : @drawable/custom_surface3_radius10}"
                 android:gravity="center"
-                android:text="소장용"
+                android:text="@string/not_sale_text"
                 android:onClick="@{() -> vm.onTypeNotSaleClicked()}"
                 android:textColor="@{vm.isSalesState==1 ? @color/black : @color/white}"
                 android:textSize="16dp"
@@ -76,7 +76,7 @@
                 android:layout_marginTop="24dp"
                 android:background="@{vm.isSalesState == 2? @drawable/custom_okbtn_success : @drawable/custom_surface3_radius10}"
                 android:gravity="center"
-                android:text="판매용"
+                android:text="@string/sale_text"
                 android:onClick="@{() -> vm.onTypeSaleClicked()}"
                 android:textColor="@{vm.isSalesState==2 ? @color/black : @color/white}"
                 tools:background="@drawable/custom_surface3_radius10"
