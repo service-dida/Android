@@ -4,17 +4,21 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
+import com.dida.android.util.AppLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -71,7 +75,15 @@ class PasswordDialog(
         }
     }
 
-    override fun initAfterBinding() {}
+    override fun initAfterBinding() {
+        binding.emailEt.setOnFocusChangeListener { view, b ->
+            if(b){
+                binding.tableLayout.visibility = View.GONE
+            }else{
+                binding.tableLayout.visibility = View.VISIBLE
+            }
+        }
+    }
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
