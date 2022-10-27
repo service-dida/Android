@@ -18,6 +18,7 @@ import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -66,7 +67,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.walletExistsState.collect {
+                viewModel.walletExistsState.collectLatest {
                     // 지갑이 없는 경우 지갑 생성
                     if (it) {
                         if(!isSelected){
@@ -84,7 +85,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             }
 
             launch {
-                viewModel.checkPasswordState.collect {
+                viewModel.checkPasswordState.collectLatest {
                     if(it) { getImageToGallery() }
                     else {
                         toastMessage("비밀번호가 틀렸습니다.")
@@ -98,7 +99,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             }
 
             launch {
-                viewModel.nftImageState.collect {
+                viewModel.nftImageState.collectLatest {
                 }
             }
         }

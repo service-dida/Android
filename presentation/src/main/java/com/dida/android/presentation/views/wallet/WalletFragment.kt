@@ -45,7 +45,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
+            viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is WalletNavigationAction.NavigateToBack -> navController.popBackStack()
                 }

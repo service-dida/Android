@@ -12,6 +12,7 @@ import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -40,7 +41,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.sendEmailState.collect {
+                viewModel.sendEmailState.collectLatest {
                     timeCheck()
                 }
             }
