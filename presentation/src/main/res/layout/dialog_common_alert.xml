@@ -7,68 +7,69 @@
     <data>
         <variable
             name="AlertModel"
-            type="com.dida.android.util.AlertModel" />
+            type="com.dida.android.presentation.base.AlertModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/custom_surface2_radius16"
-    android:padding="24dp">
-
-    <TextView
-        android:id="@+id/alert_title"
-        style="@style/TextView_bold_24_white"
-        android:layout_width="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@{AlertModel.title}"
-        tools:text="타이틀" />
-
-    <TextView
-        android:id="@+id/alert_description"
-        style="@style/TextView_regular_16_white"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alert_title"
-        android:text="@{AlertModel.description}"
-        tools:text="설명" />
-
-    <LinearLayout
-        android:layout_marginTop="32dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/alert_description"
-        tools:layout_editor_absoluteX="24dp">
+        android:background="@drawable/custom_surface2_radius16"
+        android:padding="24dp">
 
         <TextView
-            android:id="@+id/alert_no_button"
-            style="@style/Button_surface3_regular_16_white"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:text="@{AlertModel.noButtonTitle}"
-            app:layout_constraintTop_toBottomOf="@+id/alert_description"
-            tools:layout_editor_absoluteX="24dp"
-            tools:text="아니오" />
+            android:id="@+id/alert_title"
+            style="@style/TextView_bold_24_white"
+            android:layout_width="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{AlertModel.title}"
+            tools:text="타이틀" />
 
         <TextView
-            android:id="@+id/alert_yes_button"
-            style="@style/Button_lemon_regular_16_black"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"
-            android:text="@{AlertModel.yesButtonTitle}"
-            app:layout_constraintTop_toBottomOf="@+id/alert_description"
-            tools:layout_editor_absoluteX="24dp"
-            tools:text="네" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:id="@+id/alert_description"
+            style="@style/TextView_regular_16_white"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alert_title"
+            android:text="@{AlertModel.description}"
+            tools:text="설명" />
 
+        <LinearLayout
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/alert_description"
+            tools:layout_editor_absoluteX="24dp">
+
+            <TextView
+                android:id="@+id/alert_no_button"
+                style="@style/Button_surface3_regular_16_white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@{AlertModel.noButtonTitle}"
+                app:layout_constraintTop_toBottomOf="@+id/alert_description"
+                tools:layout_editor_absoluteX="24dp"
+                tools:text="아니오" />
+
+            <TextView
+                android:id="@+id/alert_yes_button"
+                style="@style/Button_lemon_regular_16_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@{AlertModel.yesButtonTitle}"
+                app:layout_constraintTop_toBottomOf="@+id/alert_description"
+                tools:layout_editor_absoluteX="24dp"
+                tools:text="네" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

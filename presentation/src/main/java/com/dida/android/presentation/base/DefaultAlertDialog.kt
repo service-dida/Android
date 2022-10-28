@@ -1,8 +1,7 @@
-package com.dida.android.util
+package com.dida.android.presentation.base
 
 import com.dida.android.R
 import com.dida.android.databinding.DialogCommonAlertBinding
-import com.dida.android.presentation.base.BaseDialog
 
 data class AlertModel(
     val title : String,
@@ -10,9 +9,12 @@ data class AlertModel(
     val noButtonTitle : String,
     val yesButtonTitle : String
 )
-class CommonAlertDialog(private val alertModel: AlertModel,
-                        private val clickNo: () -> Unit,
-                        private val clickYes: () -> Unit) : BaseDialog<DialogCommonAlertBinding>(layoutId = R.layout.dialog_common_alert) {
+
+class DefaultAlertDialog(
+    private val alertModel: AlertModel,
+    private val clickNo: () -> Unit,
+    private val clickYes: () -> Unit
+) : BaseDialog<DialogCommonAlertBinding>(layoutId = R.layout.dialog_common_alert) {
 
     override val layoutResourceId: Int
         get() = R.layout.dialog_common_alert
