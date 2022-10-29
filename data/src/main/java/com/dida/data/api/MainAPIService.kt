@@ -1,5 +1,6 @@
 package com.dida.data.api
 
+import com.dida.data.model.buynft.PostBuyNftRequest
 import com.dida.data.model.createwallet.*
 import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.device.PutDeviceTokenRequest
@@ -84,4 +85,6 @@ interface MainAPIService {
     @PUT("/device/token")
     suspend fun putDeviceToken(@Body request: PutDeviceTokenRequest): Unit
 
+    @POST("/market/card")
+    suspend fun postBuyNft(@Body request: PostBuyNftRequest): Unit
 }
