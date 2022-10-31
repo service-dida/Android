@@ -57,4 +57,6 @@ interface  MainRepository {
     suspend fun putDeviceTokenAPI(deviceToken: String) : NetworkResult<Unit>
 
     suspend fun postBuyNfyAPI(password: String, nftId: Long) : NetworkResult<Unit>
+
+    suspend fun postSwapKlayToDida(password: String, klay: Double) : NetworkResult<Unit>
 }

@@ -12,6 +12,7 @@ import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.swap.PostSwapKlayToDidaRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
@@ -128,5 +129,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postBuyNfyAPI(password: String, nftId: Long): NetworkResult<Unit> {
         val request = PostBuyNftRequest(buyPwd = password, marketId = nftId)
         return handleApi { mainAPIService.postBuyNft(request) }
+
+    override suspend fun postSwapKlayToDida(password: String, klay: Double): NetworkResult<Unit> {
+        val request = PostSwapKlayToDidaRequest(payPwd = password, klay = klay)
+        return handleApi { mainAPIService.postSwapKlayToDida(request) }
     }
 }
