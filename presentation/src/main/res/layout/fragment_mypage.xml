@@ -120,7 +120,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="NFT"
+                            android:text="@string/nft_text"
                             android:textColor="@color/mypage_info_gray_text"
                             android:textSize="13dp" />
                     </LinearLayout>
@@ -155,7 +155,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="팔로워"
+                            android:text="@string/follower_text"
                             android:textColor="@color/mypage_info_gray_text"
                             android:textSize="13dp" />
                     </LinearLayout>
@@ -190,7 +190,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="팔로잉"
+                            android:text="@string/following_text"
                             android:textColor="@color/mypage_info_gray_text"
                             android:textSize="13dp" />
                     </LinearLayout>

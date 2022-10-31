@@ -212,15 +212,6 @@
                 android:textColor="@color/surface6">
             </TextView>
 
-            <View
-                android:id="@+id/description_edit_top"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                app:layout_constraintTop_toBottomOf="@id/description_txt"
-                android:background="@color/surface5"
-                android:layout_marginTop="12dp">
-            </View>
-
             <EditText
                 android:id="@+id/description_edit"
                 android:layout_width="match_parent"
@@ -241,6 +232,15 @@
                 android:fontFamily="@font/pretendard_regular"
                 android:textSize="14dp">
             </EditText>
+
+            <View
+                android:id="@+id/description_edit_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/description_txt"
+                android:background="@color/surface5"
+                android:layout_marginTop="12dp">
+            </View>
 
             <View
                 android:id="@+id/description_edit_bottom"

@@ -2,6 +2,20 @@
     <string name="app_name">DIDA</string>
     <string name="prefs_key">dida_prefs</string>
     <string name="app_version">0</string>
+    <string name="price_dida">dida</string>
+
+    <string name="more_text">더보기</string>
+    <string name="buy_text">구매하기</string>
+    <string name="ok_text">확인</string>
+
+    <string name="nft_text">더보기</string>
+    <string name="follower_text">팔로워</string>
+    <string name="following_text">팔로잉</string>
+
+    <string name="all_text">전체</string>
+    <string name="buy_text_short">구매</string>
+    <string name="sold_text_short">판매</string>
+
 
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
@@ -15,10 +29,18 @@
     <string name="home_recentnft">최신 NFT \uD83C\uDF40</string>
     <string name="home_collection">활발한 활동 \uD83C\uDF55</string>
 
+    <string name="home_soldout_sub_title">기간 별 가장 비싸게 팔린 NFT</string>
+    <string name="home_collection_sub_title">일주일 간 발행한 Nft 수가 10개 이상인 유저</string>
+
     <string name="home_hotitem_tab">Hot Seller</string>
     <string name="home_soldout_tab">Sold Out</string>
     <string name="home_recentnft_tab">최신 NFT</string>
     <string name="home_collection_tab">활동</string>
+
+    <string name="home_soldout_period_7">일주일 이내</string>
+    <string name="home_soldout_period_30">1개월</string>
+    <string name="home_soldout_period_180">6개월</string>
+    <string name="home_soldout_period_365">올 한해</string>
 
     <string name="user_follow">팔로우</string>
     <string name="user_following">팔로잉</string>
@@ -29,9 +51,39 @@
     <string name="nickname_edit_hint">8글자 이하의 한글</string>
     <string name="nickname_ok_btn">가입 완료</string>
 
-
     <!--로그인 화면-->
     <string name="login_description">빠르게 로그인하기</string>
+    <string name="kakao_login">카카오톡으로 시작하기</string>
+
+    <!-- NFT 생성 화면-->
+    <string name="add_nft_main_title">NFT 생성</string>
+    <string name="add_nft_title_text">작품명</string>
+    <string name="add_nft_title_hint">매력적인 제목을 지어보세요.</string>
+    <string name="add_nft_description_text">설명</string>
+    <string name="add_nft_description_hint">당신의 NFT를 소개하세요.</string>
+
+    <string name="add_nft_price_title">판매 가격은 얼마인가요?</string>
+    <string name="add_nft_price_hint">가격을 입력하세요</string>
+    <string name="add_nft_price_ok_btn_text">NFT 생성하기</string>
+
+    <string name="add_purpose_top_text">어떤 목적으로\n아래 NFT를 생성하나요?</string>
+    <string name="not_sale_text">소장용</string>
+    <string name="sale_text">판매용</string>
+
+    <string name="add_nft_bottom_title">언제든 마켓에 판매할 수 있어요!</string>
+    <string name="add_nft_bottom_sub_title">· 마이페이지 > NFT 상세 > 판매하기</string>
+    <string name="add_nft_bottom_ok_btn_text">NFT 생성하기</string>
+
+    <!--커뮤니티 화면-->
+    <string name="community_reservation_title_text">오늘 곧 민팅될 NFT ⏰</string>
+    <string name="community_hot_title_text">시끌벅적 게시판 👀</string>
+    <string name="community_hot_sub_title_text">이야기가 활발한 NFT를 소개합니다</string>
+    <string name="community_recent_title_text">최신 게시물</string>
+
+    <!--이메일 화면-->
+    <string name="email_main_text">이메일로 전송된 \n인증번호 6자리를 입력해주세요.</string>
+    <string name="email_check_hint">6자리 숫자</string>
+    <string name="email_validation_resend">인증번호 다시 보내기</string>
 
     <!--비밀번호 다이어로그-->
     <string name="dialog_title1">비밀번호 설정</string>
@@ -43,6 +95,14 @@
     <!--게시글 상세-->
     <string name="detail_community_title">게시글</string>
     <string name="detail_community_edit_hint">댓글을 남겨보세요.</string>
+
+    <!--NFT 상세-->
+    <string name="detail_nft_title">제목</string>
+    <string name="detail_nft_who_text">소유권 내역</string>
+    <string name="detail_nft_detail_title">상세정보 📎</string>
+    <string name="detail_nft_link_title">컨트랙트 링크 주소</string>
+    <string name="detail_nft_token_title">토큰 ID</string>
+    <string name="detail_nft_community_title">커뮤니티 ✋</string>
 
     <!--게시글 작성 & 수정-->
     <string name="create_community_title">게시글 작성</string>
@@ -61,4 +121,8 @@
     <string name="create_community_input_title">제목</string>
     <string name="create_community_input_description">내용</string>
     <string name="create_community_input_select">선택</string>
+
+    <!--지갑 화면-->
+    <string name="wallet_title_text">내 지갑</string>
+    <string name="wallet_deal_title_text">NFT 거래 내역</string>
 </resources>
