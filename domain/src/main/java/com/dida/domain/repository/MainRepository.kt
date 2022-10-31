@@ -52,9 +52,11 @@ interface  MainRepository {
 
     suspend fun postUserFollowAPI(userId: Long) : NetworkResult<Unit>
 
-    suspend fun getDetailNFT(userId: Long) : NetworkResult<DetailNFT>
+    suspend fun getDetailNFT(cardId: Long) : NetworkResult<DetailNFT>
 
     suspend fun putDeviceTokenAPI(deviceToken: String) : NetworkResult<Unit>
+
+    suspend fun postBuyNfyAPI(password: String, nftId: Long) : NetworkResult<Unit>
 
     suspend fun postSwapKlayToDida(password: String, klay: Double) : NetworkResult<Unit>
 }

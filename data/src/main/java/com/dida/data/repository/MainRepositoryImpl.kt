@@ -3,6 +3,7 @@ package com.dida.data.repository
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
+import com.dida.data.model.buynft.PostBuyNftRequest
 import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.device.PutDeviceTokenRequest
@@ -107,23 +108,27 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postLikeAPI(cardId: Long): NetworkResult<Unit> {
-        val request = PostLikeRequest(cardId)
+        val request = PostLikeRequest(cardId = cardId)
         return handleApi { mainAPIService.postLike(request) }
     }
 
     override suspend fun postUserFollowAPI(userId: Long): NetworkResult<Unit> {
-        val request = PostUserFollowRequest(userId)
+        val request = PostUserFollowRequest(userId = userId)
         return handleApi { mainAPIService.postUserFollow(request) }
     }
 
-    override suspend fun getDetailNFT(userId: Long): NetworkResult<DetailNFT> {
-        return handleApi { mainAPIService.getDetailNFT(userId.toString()).toDomain() }
+    override suspend fun getDetailNFT(cardId: Long): NetworkResult<DetailNFT> {
+        return handleApi { mainAPIService.getDetailNFT(cardId = cardId.toString()).toDomain() }
 
     }
     override suspend fun putDeviceTokenAPI(deviceToken: String): NetworkResult<Unit> {
         val request = PutDeviceTokenRequest(deviceToken)
         return handleApi { mainAPIService.putDeviceToken(request) }
     }
+
+    override suspend fun postBuyNfyAPI(password: String, nftId: Long): NetworkResult<Unit> {
+        val request = PostBuyNftRequest(buyPwd = password, marketId = nftId)
+        return handleApi { mainAPIService.postBuyNft(request) }
 
     override suspend fun postSwapKlayToDida(password: String, klay: Double): NetworkResult<Unit> {
         val request = PostSwapKlayToDidaRequest(payPwd = password, klay = klay)

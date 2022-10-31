@@ -10,7 +10,7 @@ import javax.inject.Inject
 class DetailNftAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(userId : Long) : NetworkResult<DetailNFT> {
-        return repository.getDetailNFT(userId)
+    suspend operator fun invoke(cardId : Long) : NetworkResult<DetailNFT> {
+        return repository.getDetailNFT(cardId)
     }
 }
