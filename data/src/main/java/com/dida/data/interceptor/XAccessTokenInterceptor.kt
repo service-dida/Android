@@ -12,7 +12,6 @@ class XAccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
 
-//        val jwtToken : String? = mySharedPreferences.getAccessToken()
         var jwtToken = ""
         runBlocking {
             dataStorePreferences.getAccessToken()?.let {
