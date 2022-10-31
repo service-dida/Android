@@ -59,7 +59,10 @@ fun TextView.bindContract(uiState: UiState<DetailNFT>) {
         if (it.contracts.isNullOrEmpty()) {
             "empty"
         } else {
-            it.contracts
+            with(it.contracts!!) {
+                if(this.length > 6) this.substring(0 until 3) + "..." + this.substring(this.length-4 until this.length-1)
+                else this
+            }
         }
     }
 }
