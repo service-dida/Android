@@ -14,6 +14,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewModel>(R.layout.fragment_loginmain) {
@@ -35,7 +36,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
+            viewModel.navigationEvent.collectLatest {
                 when(it){
                     is LoginNavigationAction.NavigateToLoginFail -> toastMessage("로그인에 실패하였습니다.")
                     is LoginNavigationAction.NavigateToNickname -> {

@@ -18,6 +18,7 @@ import com.dida.android.presentation.views.password.PasswordDialog
 import com.dida.android.util.AppLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
@@ -45,7 +46,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
+            viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
                     is AddPurposeNavigationAction.NavigateToSaled -> isSaled()

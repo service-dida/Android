@@ -13,6 +13,7 @@ import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -42,7 +43,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
+            viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
                     is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment())

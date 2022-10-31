@@ -14,6 +14,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,13 +32,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
     override fun initDataBinding() {
         lifecycleScope.launchWhenResumed {
             launch {
-                viewModel.appVersion.collect {
+                viewModel.appVersion.collectLatest {
                     if(it.toString() == getString(R.string.app_version)) { getToken() }
                 }
             }
 
             launch {
-                viewModel.navigateToHome.collect {
+                viewModel.navigateToHome.collectLatest {
                     if(it) {
                         delay(1000L)
                         navigate(SplashFragmentDirections.actionMainFragment())

@@ -64,16 +64,4 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
         super.onDestroy()
         _binding = null
     }
-
-    // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
-    // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.
-    fun showLoadingDialog() {
-        mLoadingDialog.show()
-    }
-    // 띄워 놓은 로딩 다이얼로그를 없앰.
-    fun dismissLoadingDialog() {
-        if (mLoadingDialog.isShowing) {
-            mLoadingDialog.dismiss()
-        }
-    }
 }

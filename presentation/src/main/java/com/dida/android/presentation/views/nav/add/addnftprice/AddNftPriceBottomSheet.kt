@@ -7,6 +7,7 @@ import com.dida.android.databinding.BottomAddNftPriceBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class AddNftPriceBottomSheet(
@@ -30,7 +31,7 @@ class AddNftPriceBottomSheet(
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
+            viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is AddNftPriceNavigationAction.NavigateToDismiss -> {
                         // NFT 생성 API호출

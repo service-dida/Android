@@ -9,6 +9,7 @@ import com.dida.android.databinding.FragmentNicknameBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.NavHostActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -34,13 +35,13 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.errorEvent.collect {
+                viewModel.errorEvent.collectLatest {
                     showToastMessage(it)
                 }
             }
 
             launch {
-                viewModel.navigationEvent.collect {
+                viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is NicknameNavigationAction.NavigateToHome -> {
                             var intent = Intent(requireActivity(), NavHostActivity::class.java)

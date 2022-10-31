@@ -27,6 +27,7 @@ import com.dida.android.util.Scheme
 import com.dida.android.util.SchemeUtils
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : Fragment(layoutId) {
@@ -82,13 +83,13 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     init {
         lifecycleScope.launchWhenStarted {
             launch {
-                exception?.collect { exception ->
+                exception?.collectLatest { exception ->
                     showToastMessage(exception)
                 }
             }
 
             launch {
-                viewModel.errorEvent.collect { e ->
+                viewModel.errorEvent.collectLatest { e ->
                     dismissLoadingDialog()
                     showSnackBar(e.message)
                     Log.e("DIDA", "onStart: ${e}")
@@ -96,14 +97,14 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-                viewModel.loadingEvent.collect {
+                viewModel.loadingEvent.collectLatest {
                     if(!it) { showLoadingDialog() }
                     else { dismissLoadingDialog() }
                 }
             }
 
             launch {
-                viewModel.needLoginEvent.collect { loginCheck() }
+                viewModel.needLoginEvent.collectLatest { loginCheck() }
             }
         }
     }
