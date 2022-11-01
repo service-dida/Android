@@ -35,7 +35,6 @@ class BearerInterceptor : Interceptor {
         val response = chain.proceed(request)
         if(response.code == 400) {
             val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
-            Log.d("response!!", errorResponse.toString())
             if(errorResponse?.code == 102) {
                 runBlocking {
                     //토큰 갱신 api 호출
@@ -48,9 +47,10 @@ class BearerInterceptor : Interceptor {
 
                         refreshAPI(it)
                             .onSuccess { response ->
-                            response.accessToken?.let { token ->
-                                DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
-                                accessToken = token } }
+                                response.accessToken?.let { token ->
+                                    DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
+                                    accessToken = token
+                                } }
                             .onError { accessToken = "" }
                     }
                 }

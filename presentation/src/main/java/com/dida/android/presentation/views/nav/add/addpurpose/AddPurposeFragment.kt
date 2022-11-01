@@ -14,7 +14,7 @@ import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeViewModel>(R.layout.fragment_add_purpose) {
@@ -41,13 +41,11 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collect {
-                    when(it) {
-                        is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
-                        is AddPurposeNavigationAction.NavigateToSaled -> isSaled()
-                        is AddPurposeNavigationAction.NavigateToMyPage -> navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
-                    }
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
+                    is AddPurposeNavigationAction.NavigateToSaled -> isSaled()
+                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
                 }
             }
         }

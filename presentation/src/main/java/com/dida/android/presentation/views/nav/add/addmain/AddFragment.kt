@@ -16,6 +16,7 @@ import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -40,7 +41,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         // 이메일에서 인증 완료후 돌아 왔을 때
         setFragmentResultListener("walletCheck") { _, bundle ->
             val result = bundle.getBoolean("hasWallet")
-            if(result) {
+            if (result) {
                 viewModel.createWallet()
                 getImageToGallery()
             }
@@ -64,17 +65,17 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.walletExistsState.collect {
+                viewModel.walletExistsState.collectLatest {
                     // 지갑이 없는 경우 지갑 생성
                     if (it) {
-                        if(!isSelected){
-                            PasswordDialog(6,"비밀번호 설정","본인 확인 시 사용됩니다."){ success, password ->
-                                if(success){
+                        if (!isSelected) {
+                            PasswordDialog(6, "비밀번호 설정", "본인 확인 시 사용됩니다.") { success, password ->
+                                if (success) {
                                     getImageToGallery()
-                                }else{
+                                } else {
                                     navController.popBackStack()
                                 }
-                            }.show(childFragmentManager,"AddFragment")
+                            }.show(childFragmentManager, "AddFragment")
                         }
                     } else {
                         toastMessage("지갑을 생성해야 합니다!")
@@ -82,10 +83,8 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     }
                 }
             }
-
-
             launch {
-                viewModel.nftImageState.collect {
+                viewModel.nftImageState.collectLatest {
                 }
             }
         }

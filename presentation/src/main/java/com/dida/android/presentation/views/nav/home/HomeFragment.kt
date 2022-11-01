@@ -12,6 +12,7 @@ import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
@@ -36,7 +37,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collect {
+            viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId)) }
                     is HomeNavigationAction.NavigateToHotSeller -> {  }

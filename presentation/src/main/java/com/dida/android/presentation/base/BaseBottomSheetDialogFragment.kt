@@ -93,13 +93,13 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
     }
 
     // Toast Message 관련 함수
-    fun showToastMessage(e: Throwable?) {
+    private fun showToastMessage(e: Throwable?) {
         toast?.cancel()
         toast = Toast.makeText(activity, e?.message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수
-    fun toastMessage(message: String) {
+    private fun toastMessage(message: String) {
         toast?.cancel()
         toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)?.apply { show() }
     }

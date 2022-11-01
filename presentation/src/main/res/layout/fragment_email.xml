@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="이메일로 전송된 \n인증번호 6자리를 입력해주세요."
+            android:text="@string/email_main_text"
             android:textSize="20dp"
             android:textColor="@color/white"
             android:fontFamily="@font/pretendard_bold"
@@ -39,14 +40,15 @@
             android:padding="16dp"
             android:textSize="14dp"
             android:fontFamily="@font/pretendard_regular"
-            android:hint="6자리 숫자"
+            android:hint="@string/email_check_hint"
             android:maxLength="6"
             android:text="@={vm.userInputState}"
             android:textColorHint="@color/surface6"
             android:textColor="@color/white"
             android:layout_marginTop="16dp"
             android:maxLines="1"
-            app:layout_constraintTop_toBottomOf="@id/email_main">
+            app:layout_constraintTop_toBottomOf="@id/email_main"
+            tools:ignore="TextFields">
         </EditText>
 
         <TextView
@@ -60,7 +62,7 @@
             android:textColor="@color/white"
             android:textSize="14dp"
             android:fontFamily="@font/pretendard_regular"
-            android:layout_marginRight="16dp">
+            android:layout_marginEnd="16dp">
         </TextView>
 
         <TextView
@@ -69,7 +71,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/email_check"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="인증번호 다시 보내기"
+            android:text="@string/email_validation_resend"
             android:textSize="14dp"
             android:textColor="@color/white"
             android:fontFamily="@font/pretendard_regular"
@@ -84,7 +86,7 @@
             android:layout_marginBottom="40dp"
             android:gravity="center"
             android:padding="18dp"
-            android:text="확인"
+            android:text="@string/ok_text"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="@{vm.verifyCheckState ? @color/mainblack : @color/surface6}"
             android:textSize="16dp"

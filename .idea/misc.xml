@@ -7,57 +7,47 @@
         <entry key="app/src/main/res/layout/activity_nav_host.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.13055555555555556" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.28229166666666666" />
-        <entry key="presentation/src/main/res/drawable-hdpi/ic_password_fail.xml" value="0.1875" />
-        <entry key="presentation/src/main/res/drawable-mdpi/ic_send_brand_lemon.xml" value="0.2015" />
-        <entry key="presentation/src/main/res/drawable-v24/custom_clip.xml" value="0.2015" />
-        <entry key="presentation/src/main/res/drawable-v24/custom_comments.xml" value="0.2015" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots.xml" value="0.146" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots_heart.xml" value="0.146" />
-        <entry key="presentation/src/main/res/drawable-v24/custom_hotseller_name.xml" value="0.2015" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface1_radius12.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface2_square.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface3_radius10.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface3_square.xml" value="0.149" />
-        <entry key="presentation/src/main/res/drawable/custom_collect_follow_ok.xml" value="0.2015" />
-        <entry key="presentation/src/main/res/drawable/custom_collection.xml" value="0.2015" />
         <entry key="presentation/src/main/res/drawable/custom_create_community_nft_select.xml" value="0.242" />
-        <entry key="presentation/src/main/res/drawable/custom_detail_nft_whos.xml" value="0.2015" />
-        <entry key="presentation/src/main/res/drawable/custom_ic_send.xml" value="0.2015" />
         <entry key="presentation/src/main/res/drawable/custom_lemon_radius16.xml" value="0.146" />
-        <entry key="presentation/src/main/res/drawable/custom_nickname_edit.xml" value="0.2015" />
-        <entry key="presentation/src/main/res/drawable/custom_noradius_surface1_square.xml" value="0.2015" />
-        <entry key="presentation/src/main/res/drawable/custom_okbtn_success.xml" value="0.2015" />
-        <entry key="presentation/src/main/res/drawable/custom_soldout_price.xml" value="0.2015" />
         <entry key="presentation/src/main/res/drawable/custom_surface1_radius12.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable/custom_surface1_square.xml" value="0.149" />
         <entry key="presentation/src/main/res/drawable/custom_surface2_radius16.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable/custom_surface3_radius10.xml" value="0.1835" />
-        <entry key="presentation/src/main/res/drawable/ic_alert.xml" value="0.2015" />
         <entry key="presentation/src/main/res/drawable/ic_empty_heart.xml" value="0.146" />
         <entry key="presentation/src/main/res/drawable/ic_fill_heart.xml" value="0.141" />
         <entry key="presentation/src/main/res/drawable/ic_heart.xml" value="0.141" />
         <entry key="presentation/src/main/res/drawable/ic_hots_heart.xml" value="0.141" />
-        <entry key="presentation/src/main/res/drawable/ic_send.xml" value="0.2015" />
         <entry key="presentation/src/main/res/drawable/menu_selector_color.xml" value="0.242" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/activity_nav_host.xml" value="0.36354166666666665" />
+        <entry key="presentation/src/main/res/layout/bottom_add_nft.xml" value="0.36354166666666665" />
+        <entry key="presentation/src/main/res/layout/bottom_add_nft_price.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/dialog_common_alert.xml" value="0.334375" />
         <entry key="presentation/src/main/res/layout/dialog_loading.xml" value="0.1796875" />
-        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.22962962962962963" />
+        <entry key="presentation/src/main/res/layout/dialog_password_reconfirm.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/fragment_add.xml" value="0.22" />
         <entry key="presentation/src/main/res/layout/fragment_add_purpose.xml" value="0.17291666666666666" />
         <entry key="presentation/src/main/res/layout/fragment_community.xml" value="0.15557595227168425" />
         <entry key="presentation/src/main/res/layout/fragment_create_community.xml" value="0.2642547607421875" />
         <entry key="presentation/src/main/res/layout/fragment_create_community_input.xml" value="0.33" />
         <entry key="presentation/src/main/res/layout/fragment_create_community_nft.xml" value="0.1911231884057971" />
+        <entry key="presentation/src/main/res/layout/fragment_defi.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/fragment_detail_community.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.22" />
         <entry key="presentation/src/main/res/layout/fragment_email.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.19927536231884058" />
         <entry key="presentation/src/main/res/layout/fragment_loginmain.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/fragment_mypage.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/fragment_nickname.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/fragment_splash.xml" value="0.36354166666666665" />
+        <entry key="presentation/src/main/res/layout/fragment_wallet.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/holder_collection.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_comments.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_community.xml" value="0.1911231884057971" />
