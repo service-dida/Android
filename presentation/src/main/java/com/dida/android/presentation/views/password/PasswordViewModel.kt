@@ -35,11 +35,6 @@ class PasswordViewModel @Inject constructor(
     private val _stackSizeState = MutableStateFlow<Int>(0)
     val stackSizeState: StateFlow<Int> = _stackSizeState
 
-    fun clearStack() {
-        stack.clear()
-        //TODO : 잠깐 FLag줘서 빨간색으로 만들기
-    }
-
     fun addStack(num: Int) {
         if (stack.size < stackSize) {
             stack.push(num)

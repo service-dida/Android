@@ -126,9 +126,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.putDeviceToken(request) }
     }
 
-    override suspend fun postBuyNfyAPI(password: String, nftId: Long): NetworkResult<Unit> {
+    override suspend fun postBuyNftAPI(password: String, nftId: Long): NetworkResult<Unit> {
         val request = PostBuyNftRequest(buyPwd = password, marketId = nftId)
         return handleApi { mainAPIService.postBuyNft(request) }
+    }
 
     override suspend fun postSwapKlayToDida(password: String, klay: Double): NetworkResult<Unit> {
         val request = PostSwapKlayToDidaRequest(payPwd = password, klay = klay)

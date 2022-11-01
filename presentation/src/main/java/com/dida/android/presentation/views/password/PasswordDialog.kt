@@ -4,23 +4,19 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
-import com.dida.android.util.AppLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -61,14 +57,14 @@ class PasswordDialog(
             }
 
             launch {
-                viewModel.completeEvent.collect {
+                viewModel.completeEvent.collectLatest {
                     result.invoke(true, it)
                     dismiss()
                 }
             }
 
             launch {
-                viewModel.failEvent.collect {
+                viewModel.failEvent.collectLatest {
                     failAction(it)
                 }
             }
@@ -145,6 +141,7 @@ class PasswordDialog(
                 AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
             binding.passwordDialLayout.startAnimation(animation)
             binding.subTitle = "비밀번호가 일치히지 않아요.\n" + "다시 입력해주세요."
+
         } else {
             makePasswordDial()
             binding.passwordDialLayout.clearAnimation()
