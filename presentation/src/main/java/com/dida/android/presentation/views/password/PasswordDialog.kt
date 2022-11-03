@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
+import com.dida.android.util.AppLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -52,6 +54,7 @@ class PasswordDialog(
         lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.stackSizeState.collect {
+                    
                     checkImageType(it)
                 }
             }
@@ -140,7 +143,7 @@ class PasswordDialog(
             val animation =
                 AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
             binding.passwordDialLayout.startAnimation(animation)
-            binding.subTitle = "비밀번호가 일치히지 않아요.\n" + "다시 입력해주세요."
+            binding.subTitle = "비밀번호가 일치하지 않아요.\n" + "다시 입력해주세요."
 
         } else {
             makePasswordDial()

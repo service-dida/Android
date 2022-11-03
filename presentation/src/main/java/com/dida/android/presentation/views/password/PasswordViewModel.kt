@@ -23,6 +23,8 @@ class PasswordViewModel @Inject constructor(
     private val passwordAPI: CheckPasswordAPI
 ) : BaseViewModel() {
 
+    private var isClickable = true
+
     private val stack = Stack<Int>()
     private var stackSize = 0
 
@@ -36,19 +38,23 @@ class PasswordViewModel @Inject constructor(
     val stackSizeState: StateFlow<Int> = _stackSizeState
 
     fun addStack(num: Int) {
-        if (stack.size < stackSize) {
-            stack.push(num)
-            _stackSizeState.value = stack.size
-        }
-        if (stack.size == stackSize) {
-            submitStack()
+        if(isClickable){
+            if (stack.size < stackSize) {
+                stack.push(num)
+                _stackSizeState.value = stack.size
+            }
+            if (stack.size == stackSize) {
+                submitStack()
+            }
         }
     }
 
     fun removeStack() {
-        if (!stack.isEmpty()) {
-            stack.pop()
-            _stackSizeState.value = stack.size
+        if(isClickable){
+            if (!stack.isEmpty()) {
+                stack.pop()
+                _stackSizeState.value = stack.size
+            }
         }
     }
 
@@ -63,10 +69,12 @@ class PasswordViewModel @Inject constructor(
                     if(it){
                         _completeEvent.emit(password)
                     }else{
+                        isClickable = false
                         _failEvent.emit(true)
                         stack.clear()
                         delay(1000)
                         _failEvent.emit(false)
+                        isClickable = true
                     }
                 }
                 .onError { e -> catchError(e) }
