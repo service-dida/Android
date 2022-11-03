@@ -11,7 +11,6 @@ import com.dida.android.databinding.FragmentEmailBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
@@ -65,12 +64,13 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.lay
         binding.okBtn.setOnClickListener {
             timer.cancel()
             if(viewModel.verifyCheckState.value) {
-                // 지갑이 없으므로 false로 넘겨줘야 한다.
-                val passwordDialog = PasswordDialog(false) { password ->
-                    if(password == "") {navController.popBackStack()}
-                    else { viewModel.postCreateWallet(password, password) }
-                }
-                passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+                PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
+                    if(success){
+                        viewModel.postCreateWallet(password, password)
+                    }else{
+                        navController.popBackStack()
+                    }
+                }.show(childFragmentManager,"EmailFragment")
             }
         }
     }

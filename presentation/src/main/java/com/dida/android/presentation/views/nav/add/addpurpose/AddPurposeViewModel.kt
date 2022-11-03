@@ -1,9 +1,10 @@
 package com.dida.android.presentation.views.nav.add.addpurpose
 
 import com.dida.android.presentation.base.BaseViewModel
+import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.klaytn.UploadAssetUsecase
+import com.dida.domain.usecase.klaytn.UploadAssetAPI
 import com.dida.domain.usecase.main.MintNftAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,
-    private val uploadAssetUsecase: UploadAssetUsecase,
+    private val uploadAssetAPI: UploadAssetAPI
 ) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
@@ -65,26 +66,25 @@ class AddPurposeViewModel @Inject constructor(
         }
     }
 
-    fun uploadAsset(imagePath : String){
-        val file = File(imagePath)
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
+    fun mintNFT(password: String) {
         baseViewModelScope.launch {
             showLoading()
-            uploadAssetUsecase(requestBody)
-                .onSuccess {
-                    mintNFT(it.uri)
-                    dismissLoading() }
-                .onError { e -> catchError(e) }
-        }
-    }
 
-    private fun mintNFT(uri : String){
-        baseViewModelScope.launch {
-            mintNftAPI(titleState.value, descriptionState.value, uri)
-                .onSuccess { _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage) }
-                .onError { e -> catchError(e) }
+            val file = File(nftImageState.value)
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+           uploadAssetAPI(requestBody)
+               .onSuccess {  }
+                .onError { e->catchError(e) }
+                .flatMap {
+                    mintNftAPI(password,titleState.value,descriptionState.value,it.uri)
+                }
+                .onSuccess {
+                    _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                    dismissLoading()
+                }
+                .onError { e->catchError(e) }
         }
     }
 }

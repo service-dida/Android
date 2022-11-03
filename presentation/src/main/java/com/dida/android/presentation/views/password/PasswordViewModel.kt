@@ -1,62 +1,87 @@
 package com.dida.android.presentation.views.password
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.os.Handler
+import android.os.Looper
 import com.dida.android.presentation.base.BaseViewModel
-import com.dida.data.repository.MainRepositoryImpl
+import com.dida.android.presentation.views.nav.mypage.MypageNavigationAction
+import com.dida.android.util.AppLog
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.CheckPasswordAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl
+    private val passwordAPI: CheckPasswordAPI
 ) : BaseViewModel() {
 
-    private val passwordStack = Stack<Int>()
+    private var isClickable = true
 
-    private val _getWalletLiveData = MutableLiveData<Stack<Int>>(passwordStack)
-    val getWalletLiveData: LiveData<Stack<Int>>
-        get() = _getWalletLiveData
+    private val stack = Stack<Int>()
+    private var stackSize = 0
 
-    private val getWalletValue: Stack<Int>
-        get() = getWalletLiveData.value!!
+    private val _completeEvent: MutableSharedFlow<String> = MutableSharedFlow<String>()
+    val completeEvent: SharedFlow<String> = _completeEvent
 
-    private val _completeLiveData = MutableLiveData<Boolean>()
-    val completeLiveData: LiveData<Boolean>
-        get() = _completeLiveData
+    private val _failEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val failEvent: SharedFlow<Boolean> = _failEvent
 
-    fun clearStack(){
-        val stack = getWalletValue
-        stack.clear()
-        _getWalletLiveData.postValue(stack)
-    }
+    private val _stackSizeState = MutableStateFlow<Int>(0)
+    val stackSizeState: StateFlow<Int> = _stackSizeState
 
-    fun addStack(num : Int){
-        val stack = getWalletValue
-        if(stack.size<7){
-            stack.push(num)
-            _getWalletLiveData.postValue(stack)
-        }
-        if(stack.size==6){
-            _completeLiveData.postValue(true)
+    fun addStack(num: Int) {
+        if(isClickable){
+            if (stack.size < stackSize) {
+                stack.push(num)
+                _stackSizeState.value = stack.size
+            }
+            if (stack.size == stackSize) {
+                submitStack()
+            }
         }
     }
 
-    fun removeStack(){
-        if(!getWalletValue.isEmpty()){
-            val stack = getWalletValue
-            stack.pop()
-            _getWalletLiveData.postValue(stack)
+    fun removeStack() {
+        if(isClickable){
+            if (!stack.isEmpty()) {
+                stack.pop()
+                _stackSizeState.value = stack.size
+            }
         }
     }
 
-    fun stackToString() : String {
-        val stack = getWalletValue
+    fun submitStack() {
         var password = ""
         stack.forEach {
             password += it.toString()
         }
-        return password
+        baseViewModelScope.launch {
+            passwordAPI(password)
+                .onSuccess {
+                    if(it){
+                        _completeEvent.emit(password)
+                    }else{
+                        isClickable = false
+                        _failEvent.emit(true)
+                        stack.clear()
+                        delay(1000)
+                        _failEvent.emit(false)
+                        isClickable = true
+                    }
+                }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun setStackSize(size: Int) {
+        stackSize = size
     }
 }

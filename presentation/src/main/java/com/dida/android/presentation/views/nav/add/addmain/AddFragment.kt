@@ -10,14 +10,12 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
 import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -43,7 +41,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         // 이메일에서 인증 완료후 돌아 왔을 때
         setFragmentResultListener("walletCheck") { _, bundle ->
             val result = bundle.getBoolean("hasWallet")
-            if(result) {
+            if (result) {
                 viewModel.createWallet()
                 getImageToGallery()
             }
@@ -70,12 +68,14 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                 viewModel.walletExistsState.collectLatest {
                     // 지갑이 없는 경우 지갑 생성
                     if (it) {
-                        if(!isSelected){
-                            val passwordDialog = PasswordDialog(true) { password ->
-                                if(password == "") {navController.popBackStack()}
-                                else { viewModel.checkPassword(password) }
-                            }
-                            passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
+                        if (!isSelected) {
+                            PasswordDialog(6, "비밀번호 설정", "본인 확인 시 사용됩니다.") { success, password ->
+                                if (success) {
+                                    getImageToGallery()
+                                } else {
+                                    navController.popBackStack()
+                                }
+                            }.show(childFragmentManager, "AddFragment")
                         }
                     } else {
                         toastMessage("지갑을 생성해야 합니다!")
@@ -83,21 +83,6 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     }
                 }
             }
-
-            launch {
-                viewModel.checkPasswordState.collectLatest {
-                    if(it) { getImageToGallery() }
-                    else {
-                        toastMessage("비밀번호가 틀렸습니다.")
-                        val passwordDialog = PasswordDialog(true) { password ->
-                            if(password == "") {navController.popBackStack()}
-                            else { viewModel.checkPassword(password) }
-                        }
-                        passwordDialog.show(requireActivity().supportFragmentManager, passwordDialog.tag)
-                    }
-                }
-            }
-
             launch {
                 viewModel.nftImageState.collectLatest {
                 }

@@ -16,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AddViewModel @Inject constructor(
     private val walletExistedAPI: WalletExistedAPI,
-    private val checkPasswordAPI: CheckPasswordAPI,
 ) : BaseViewModel() {
 
     private val TAG = "AddViewModel"
@@ -71,17 +70,4 @@ class AddViewModel @Inject constructor(
         _nftImageState.value = uri.toString()
     }
 
-    private val _checkPasswordState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
-    val checkPasswordState: SharedFlow<Boolean> = _checkPasswordState
-
-    fun checkPassword(password: String) {
-        baseViewModelScope.launch {
-            showLoading()
-            checkPasswordAPI(password)
-                .onSuccess {
-                    _checkPasswordState.emit(it)
-                    dismissLoading() }
-                .onError { e -> catchError(e) }
-        }
-    }
 }
