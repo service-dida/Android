@@ -8,6 +8,6 @@ class BuyNftAPI @Inject constructor(
     private val repository: MainRepository
 ){
     suspend operator fun invoke(password: String, nftId: Long) : NetworkResult<Unit> {
-        return repository.postBuyNfyAPI(password, nftId)
+        return repository.postBuyNftAPI(password, nftId)
     }
 }

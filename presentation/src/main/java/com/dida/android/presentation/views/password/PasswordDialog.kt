@@ -1,97 +1,92 @@
 package com.dida.android.presentation.views.password
 
-import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
-import android.os.Bundle
-import android.view.HapticFeedbackConstants
-import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.view.WindowManager
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
+import com.dida.android.util.AppLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PasswordDialog(
-    private val walletCheck: Boolean,
-    val password: (String) -> Unit
+    private val size: Int,
+    private val mainTitleStr: String,
+    private val subTitleStr: String,
+    private val result: (Boolean, String) -> Unit
 ) : BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
-
-    private val TAG = "PasswordDialog"
 
     override val layoutResourceId: Int
         get() = R.layout.dialog_password
 
     override val viewModel: PasswordViewModel by viewModels()
 
+    private val imageViewList: MutableList<ImageView> = mutableListOf()
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
+            this.mainTitle = mainTitleStr
+            this.subTitle = subTitleStr
         }
         exception = viewModel.errorEvent
+        viewModel.setStackSize(size)
+        makePasswordDial()
         dialogFullScreen()
+
     }
 
     override fun initDataBinding() {
-        viewModel.completeLiveData.observe(viewLifecycleOwner){
-            // 지갑이 이미 있는 경우
-            if(walletCheck) {
-                password(viewModel.stackToString())
-                dismiss()
-            }
-            // 지갑을 처음 만드는 경우
-            else {
-                val dialog = PasswordReconfirmDialog(){ password ->
-                    if(viewModel.stackToString() == password){
-                        //TODO : 지갑 생성 API 호출
-                        password(viewModel.stackToString())
-                        dismiss()
-                    }else{
-                        Toast.makeText(requireContext(), "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
-                        dismiss()
-                    }
-                    viewModel.clearStack()
+        lifecycleScope.launchWhenStarted {
+            launch {
+                viewModel.stackSizeState.collect {
+                    
+                    checkImageType(it)
                 }
-                dialog.show(childFragmentManager, "PasswordDialog")
+            }
+
+            launch {
+                viewModel.completeEvent.collectLatest {
+                    result.invoke(true, it)
+                    dismiss()
+                }
+            }
+
+            launch {
+                viewModel.failEvent.collectLatest {
+                    failAction(it)
+                }
             }
         }
     }
 
     override fun initAfterBinding() {
-        binding.dialogPaymentKeypad0.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad1.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad2.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad3.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad4.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad5.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad6.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad7.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad8.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypad9.setOnClickListener(numberClickLister)
-        binding.dialogPaymentKeypadBack.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
-            viewModel.removeStack()
+        binding.emailEt.setOnFocusChangeListener { view, b ->
+            if(b){
+                binding.tableLayout.visibility = View.GONE
+            }else{
+                binding.tableLayout.visibility = View.VISIBLE
+            }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dialog?.setOnKeyListener { _, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                //TODO: back key 이벤트 시 필요한 코드 추가
-                password.invoke("")
-                dismiss()
-                return@setOnKeyListener true
-            }
-            return@setOnKeyListener false
-        }
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        result.invoke(false, "")
     }
 
     private fun dialogFullScreen() {
@@ -100,7 +95,6 @@ class PasswordDialog(
                 dialog!!.findViewById(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         }
-
         val view = view
         view!!.post {
             val parent = view!!.parent as View
@@ -112,8 +106,49 @@ class PasswordDialog(
         }
     }
 
-    private val numberClickLister: View.OnClickListener = View.OnClickListener {
-        it.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
-        viewModel.addStack((it as TextView).text.toString().toInt())
+    private fun makePasswordDial() {
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, 1f
+        )
+
+        imageViewList.clear()
+        binding.passwordDialLayout.removeAllViews()
+
+        for (i in 0 until size) {
+            val imageView = ImageView(context)
+            imageView.setImageResource(R.drawable.ic_password_default)
+            imageView.layoutParams = layoutParams
+            binding.passwordDialLayout.addView(imageView)
+            imageViewList.add(imageView)
+        }
+    }
+
+    private fun checkImageType(stackSize: Int) {
+        for (i in 0 until size) {
+            val imageView = binding.passwordDialLayout[i] as ImageView
+            if (i < stackSize) {
+                imageView.setImageResource(R.drawable.ic_password)
+            } else {
+                imageView.setImageResource(R.drawable.ic_password_default)
+            }
+        }
+    }
+
+    private fun failAction(fail : Boolean){
+        if (fail) {
+            imageViewList.forEach {
+                it.setImageResource(R.drawable.ic_password_fail)
+            }
+            val animation =
+                AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
+            binding.passwordDialLayout.startAnimation(animation)
+            binding.subTitle = "비밀번호가 일치하지 않아요.\n" + "다시 입력해주세요."
+
+        } else {
+            makePasswordDial()
+            binding.passwordDialLayout.clearAnimation()
+            binding.subTitle = subTitleStr
+        }
     }
 }

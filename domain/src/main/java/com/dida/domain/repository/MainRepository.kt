@@ -44,7 +44,7 @@ interface  MainRepository {
 
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 
-    suspend fun mintNFT(name : String, description : String, image : String) : NetworkResult<Unit>
+    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<Unit>
 
     suspend fun updateProfileAPI(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit>
 
@@ -56,7 +56,7 @@ interface  MainRepository {
 
     suspend fun putDeviceTokenAPI(deviceToken: String) : NetworkResult<Unit>
 
-    suspend fun postBuyNfyAPI(password: String, nftId: Long) : NetworkResult<Unit>
+    suspend fun postBuyNftAPI(password: String, nftId: Long) : NetworkResult<Unit>
 
     suspend fun postSwapKlayToDida(password: String, klay: Double) : NetworkResult<Unit>
 }

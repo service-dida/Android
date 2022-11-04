@@ -30,7 +30,7 @@
         <entry key="presentation/src/main/res/layout/bottom_add_nft_price.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/dialog_common_alert.xml" value="0.334375" />
         <entry key="presentation/src/main/res/layout/dialog_loading.xml" value="0.1796875" />
-        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.22962962962962963" />
+        <entry key="presentation/src/main/res/layout/dialog_password.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/dialog_password_reconfirm.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/fragment_add.xml" value="0.22" />
         <entry key="presentation/src/main/res/layout/fragment_add_purpose.xml" value="0.17291666666666666" />
