@@ -64,7 +64,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.setOnKeyListener { _, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+            if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.KEYCODE_BACK) {
                 //TODO: back key 이벤트 시 필요한 코드 추가
                 activity?.setResult(0, Intent(requireActivity(), NavHostActivity::class.java))
                 activity?.finish()
