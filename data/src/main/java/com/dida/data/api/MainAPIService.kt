@@ -1,6 +1,6 @@
 package com.dida.data.api
 
-import com.dida.data.model.buynft.PostBuyNftRequest
+import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.createwallet.*
 import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.device.PutDeviceTokenRequest
@@ -13,6 +13,7 @@ import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
+import com.dida.data.model.tradenft.PostSellNftRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -91,5 +92,8 @@ interface MainAPIService {
 
     @POST("/swap/1")
     suspend fun postSwapKlayToDida(@Body request: PostSwapKlayToDidaRequest): Unit
+
+    @POST("/market")
+    suspend fun postSellNft(@Body request: PostSellNftRequest): Unit
 
 }
