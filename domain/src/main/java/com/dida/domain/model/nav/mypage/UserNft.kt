@@ -10,6 +10,11 @@ data class UserNft(
     val liked: Boolean
 ){
     fun priceFormat() : String {
-        return price.toString()+" dida"
+        if(price.isNullOrEmpty()){
+            return "판매X"
+        }else{
+            return price+" dida"
+        }
+
     }
 }
