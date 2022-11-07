@@ -59,4 +59,6 @@ interface  MainRepository {
     suspend fun postBuyNftAPI(password: String, nftId: Long) : NetworkResult<Unit>
 
     suspend fun postSwapKlayToDida(password: String, klay: Double) : NetworkResult<Unit>
+
+    suspend fun postSellNftAPI(payPwd : String, cardId : Long, price : Double) : NetworkResult<Unit>
 }

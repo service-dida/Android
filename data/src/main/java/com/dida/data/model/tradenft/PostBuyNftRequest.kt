@@ -1,4 +1,4 @@
-package com.dida.data.model.buynft
+package com.dida.data.model.tradenft
 
 import com.google.gson.annotations.SerializedName
 
