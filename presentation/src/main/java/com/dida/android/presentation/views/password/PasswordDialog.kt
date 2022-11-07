@@ -1,13 +1,18 @@
 package com.dida.android.presentation.views.password
 
+import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
@@ -15,7 +20,6 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
-import com.dida.android.util.AppLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -50,12 +54,15 @@ class PasswordDialog(
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.stackSizeState.collect {
-                    
                     checkImageType(it)
+                    if(it!=0){
+                        buttonVibrator()
+                    }
                 }
             }
 
@@ -150,5 +157,16 @@ class PasswordDialog(
             binding.passwordDialLayout.clearAnimation()
             binding.subTitle = subTitleStr
         }
+    }
+
+    private fun buttonVibrator(){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vibratorManager = activity?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                val vibrator = vibratorManager.defaultVibrator
+                vibrator.vibrate(VibrationEffect.createOneShot(50, 50));
+            } else {
+                val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                vibrator.vibrate(1000);
+            }
     }
 }
