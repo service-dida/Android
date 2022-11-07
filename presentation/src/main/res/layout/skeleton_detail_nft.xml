@@ -39,34 +39,93 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-                <TextView
-                    android:id="@+id/nft_name_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:background="@color/surface1"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:textColor="@color/white"
-                    android:textSize="24dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nft_img"/>
 
-                <TextView
-                    android:id="@+id/nft_detail_txt"
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/surface1"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="33dp"
                     android:layout_marginRight="16dp"
-                    android:text="\n\n\n\n"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nft_name_txt"/>
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nft_img">
+
+                    <TextView
+                        android:layout_width="182dp"
+                        android:layout_height="18dp"
+                        android:background="@drawable/custom_surface3_radius10" />
+
+                    <TextView
+                        android:layout_width="278dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_surface3_radius10" />
+
+                    <TextView
+                        android:layout_width="278dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_surface3_radius10" />
+
+                    <TextView
+                        android:layout_width="192dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_surface3_radius10" />
+
+                    <TextView
+                        android:layout_width="192dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_surface3_radius10" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/custom_user_img" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="104dp"
+                            android:layout_height="12dp"
+                            android:background="@drawable/custom_surface3_radius10" />
+
+
+                        <TextView
+                            android:layout_width="104dp"
+                            android:layout_height="12dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/custom_surface3_radius10" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="64dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_surface3_radius10" />
+                </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
@@ -75,35 +134,11 @@
             android:id="@+id/price_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/surface3"
+            android:background="@color/surface1"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
-            <ImageView
-                android:id="@+id/price_img"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="14dp"
-                android:background="@color/surface1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:id="@+id/price_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:fontFamily="@font/pretendard_bold"
-                android:textColor="@color/white"
-                android:textSize="22dp"
-                android:text="                    "
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/price_img"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/surface1"/>
 
             <TextView
                 android:id="@+id/buy_btn"
@@ -114,9 +149,7 @@
                 android:paddingTop="16dp"
                 android:paddingRight="68dp"
                 android:paddingBottom="16dp"
-                android:background="@color/surface1"
-                android:textColor="@color/black"
-                android:textSize="18dp"
+                android:background="@drawable/custom_surface3_radius10"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>

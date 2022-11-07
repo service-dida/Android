@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.28229166666666666" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots.xml" value="0.146" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots_heart.xml" value="0.146" />
+        <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface1_radius0.xml" value="0.166" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface1_radius12.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface2_square.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface3_radius10.xml" value="0.1835" />
@@ -40,7 +41,7 @@
         <entry key="presentation/src/main/res/layout/fragment_create_community_nft.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/fragment_defi.xml" value="0.36354166666666665" />
         <entry key="presentation/src/main/res/layout/fragment_detail_community.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.22" />
+        <entry key="presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/fragment_email.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.19927536231884058" />
         <entry key="presentation/src/main/res/layout/fragment_loginmain.xml" value="0.3578125" />
@@ -57,7 +58,8 @@
         <entry key="presentation/src/main/res/layout/holder_soldout.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_wallet_card.xml" value="0.1911231884057971" />
         <entry key="presentation/src/main/res/layout/holder_wallet_nft_history.xml" value="0.1911231884057971" />
-        <entry key="presentation/src/main/res/layout/skeleton_detail_nft.xml" value="0.203125" />
+        <entry key="presentation/src/main/res/layout/skeleton_detail_nft.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/skeleton_holder_hotseller.xml" value="0.1" />
         <entry key="presentation/src/main/res/layout/skeleton_holder_mypage_user_cards.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/skeleton_user_profile.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/layout/view_custom_snack_bar.xml" value="0.36354166666666665" />
