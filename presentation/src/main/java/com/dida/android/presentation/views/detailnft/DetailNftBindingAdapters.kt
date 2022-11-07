@@ -60,7 +60,7 @@ fun TextView.bindContract(uiState: UiState<DetailNFT>) {
             "empty"
         } else {
             with(it.contracts!!) {
-                if(this.length > 6) this.substring(0 until 3) + "..." + this.substring(this.length-4 until this.length-1)
+                if (this.length > 6) this.substring(0 until 3) + "..." + this.substring(this.length - 4 until this.length - 1)
                 else this
             }
         }
@@ -74,44 +74,46 @@ fun TextView.bindTokenId(uiState: UiState<DetailNFT>) {
 
 @BindingAdapter("NftPrice")
 fun TextView.bindPrice(uiState: UiState<DetailNFT>) {
-    if(uiState.successOrNull()?.type == "NEED LOGIN"){
+    if (uiState.successOrNull()?.type == "NEED LOGIN") {
         this.text = "로그인이 필요합니다."
-    } else if(uiState.successOrNull()?.type =="NOT MINE"){
+    } else if (uiState.successOrNull()?.type == "NOT MINE") {
         this.isGone
-    } else{
+    } else {
         this.text = uiState.successOrNull()?.price
     }
 }
 
 @BindingAdapter("NftPriceLayout")
-fun ConstraintLayout.bindVisible(uiState: UiState<DetailNFT>){
-    if(uiState.successOrNull()?.type == "NOT SALE" || uiState.successOrNull()?.type == "MINE"){
+fun ConstraintLayout.bindVisible(uiState: UiState<DetailNFT>) {
+    if (uiState.successOrNull()?.type == "NOT SALE" || uiState.successOrNull()?.type == "MINE") {
         this.visibility = View.GONE
     }
 }
 
 @BindingAdapter("LoginCheck")
 fun FloatingActionButton.bindVisible(uiState: UiState<DetailNFT>) {
-    if(uiState.successOrNull()?.type == "NEED LOGIN"){
-        this.visibility = View.GONE
-    } else {
-        this.visibility = View.VISIBLE
+    if(uiState != UiState.Loading){
+        if(uiState.successOrNull()?.type == "NEED LOGIN") {
+            this.visibility = View.GONE
+        } else {
+            this.visibility = View.VISIBLE
+        }
     }
 }
 
 @BindingAdapter("NftDetailConfirmBtn")
-fun TextView.bindConfrimBtn(uiState: UiState<DetailNFT>){
-    if(uiState.successOrNull()?.type == "NEED LOGIN") {
+fun TextView.bindConfrimBtn(uiState: UiState<DetailNFT>) {
+    if (uiState.successOrNull()?.type == "NEED LOGIN") {
         this.visibility = View.GONE
-    } else if(uiState.successOrNull()?.type == "NOT MINE") {
+    } else if (uiState.successOrNull()?.type == "NOT MINE") {
         this.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         this.gravity = Gravity.CENTER_HORIZONTAL
-        this.text ="판매요청 하기 "
+        this.text = "판매요청 하기 "
     } else {
-        if(uiState.successOrNull()?.price == "NOT SALE") {
+        if (uiState.successOrNull()?.price == "NOT SALE") {
             this.visibility = View.GONE
         } else {
             this.visibility = View.VISIBLE
@@ -120,9 +122,9 @@ fun TextView.bindConfrimBtn(uiState: UiState<DetailNFT>){
 }
 
 @BindingAdapter("NftDetailToolbar")
-fun Toolbar.bindToolbar(uiState: UiState<DetailNFT>){
+fun Toolbar.bindToolbar(uiState: UiState<DetailNFT>) {
     this.menu.clear()
-    if(uiState.successOrNull()?.liked==true) {
+    if (uiState.successOrNull()?.liked == true) {
         this.inflateMenu(R.menu.menu_detailnft_like_toolbar)
     } else {
         this.inflateMenu(R.menu.menu_detailnft_unlike_toolbar)

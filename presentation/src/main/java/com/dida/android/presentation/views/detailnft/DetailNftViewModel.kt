@@ -1,5 +1,7 @@
 package com.dida.android.presentation.views.detailnft
 
+import android.os.Handler
+import android.os.Looper
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.views.nav.community.CommunityActionHandler
 import com.dida.android.presentation.views.nav.community.CommunityWriteActionHandler
@@ -37,7 +39,9 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             detailNftAPI(cardId)
                 .onSuccess {
-                    _detailNftState.value = UiState.Success(it)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        _detailNftState.value = UiState.Success(it)
+                    },500)
                     dismissLoading() }
                 .onError { e -> catchError(e) }
         }
