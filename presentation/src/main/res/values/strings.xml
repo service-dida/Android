@@ -4,6 +4,9 @@
     <string name="app_version">0</string>
     <string name="price_dida">dida</string>
 
+    <string name="notification_channel_name">DIDA</string>
+    <string name="notification_channel_id">dida_notification_channel</string>
+
     <string name="more_text">더보기</string>
     <string name="buy_text">구매하기</string>
     <string name="ok_text">확인</string>
