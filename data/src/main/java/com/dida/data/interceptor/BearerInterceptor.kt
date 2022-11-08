@@ -4,6 +4,7 @@ import android.util.Log
 import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
+import com.dida.data.api.handleApi
 import com.dida.data.model.ErrorResponseImpl
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -39,18 +40,18 @@ class BearerInterceptor : Interceptor {
                 runBlocking {
                     //토큰 갱신 api 호출
                     DataApplication.dataStorePreferences.getRefreshToken()?.let {
-                        val refreshAPI = Retrofit.Builder()
-                            .baseUrl(BASE_URL)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build()
-                            .create(RefreshTokenAPI::class.java)
+                        val result = handleApi {
+                            Retrofit.Builder()
+                                .baseUrl(BASE_URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build()
+                                .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                        }
 
-                        refreshAPI(it)
-                            .onSuccess { response ->
-                                response.accessToken?.let { token ->
-                                    DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
-                                    accessToken = token
-                                } }
+                        result.onSuccess { response ->
+                            response.accessToken?.let { token ->
+                                DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
+                                accessToken = token } }
                             .onError { accessToken = "" }
                     }
                 }
