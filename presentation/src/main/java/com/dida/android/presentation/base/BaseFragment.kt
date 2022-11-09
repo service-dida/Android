@@ -3,13 +3,11 @@ package com.dida.android.presentation.base
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -21,12 +19,10 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.views.login.LoginActivity
-import com.dida.android.util.CustomSnackBarView
 import com.dida.android.util.LoadingDialog
 import com.dida.android.util.Scheme
 import com.dida.android.util.SchemeUtils
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -91,8 +87,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             launch {
                 viewModel.errorEvent.collectLatest { e ->
                     dismissLoadingDialog()
-                    showSnackBar(e.message)
-                    Log.e("DIDA", "onStart: ${e}")
+                    showToastMessage(e)
                 }
             }
 
@@ -157,13 +152,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)?.apply { show() }
     }
 
-    // Show SnackBar 관련 함수
-    protected fun showSnackBar(message: String?) {
-        message?.let {
-            CustomSnackBarView.make(requireView(), it)
-        }
-    }
-
     // navigation 중복체크 관리 <- checkNavigation 대신 사용할것
     protected fun Fragment.navigate(directions: NavDirections) {
         val controller = findNavController()
@@ -193,7 +181,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     private val registerForActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == 0) findNavController().popBackStack()
+            if (result.resultCode == 0) navigateToHomeFragment(null)
         }
 
     // DeepLink Handler

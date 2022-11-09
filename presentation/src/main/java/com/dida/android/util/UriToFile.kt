@@ -6,7 +6,8 @@ import android.database.Cursor
 import android.net.Uri
 import java.io.File
 
-fun UriToFile(uri : Uri , context : Context): File {
+@SuppressLint("Range")
+fun uriToFile(uri : Uri, context : Context): File {
 
     @SuppressLint("Range")
         val cursor: Cursor? = context.contentResolver.query(uri, null, null, null, null )

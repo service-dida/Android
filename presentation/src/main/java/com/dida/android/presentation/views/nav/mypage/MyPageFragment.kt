@@ -14,9 +14,8 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.util.UriToFile
+import com.dida.android.util.uriToFile
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -118,7 +117,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     val intent = result.data
                     if (intent != null) {
                         val uri = intent.data
-                        val file = UriToFile(uri!!,requireContext())
+                        val file = uriToFile(uri!!,requireContext())
                         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
                         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
                         
