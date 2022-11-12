@@ -63,18 +63,15 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.walletExistsState.collectLatest {
                     // 지갑이 없는 경우 지갑 생성
                     if (it) {
                         if (!isSelected) {
-                            PasswordDialog(6, "비밀번호 설정", "본인 확인 시 사용됩니다.") { success, password ->
-                                if (success) {
-                                    getImageToGallery()
-                                } else {
-                                    navController.popBackStack()
-                                }
+                            PasswordDialog(6, "비밀번호 설정", "본인 확인 시 사용됩니다.") { success, _ ->
+                                if (success) getImageToGallery()
+                                else navController.popBackStack()
                             }.show(childFragmentManager, "AddFragment")
                         }
                     } else {
@@ -83,6 +80,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
                     }
                 }
             }
+
             launch {
                 viewModel.nftImageState.collectLatest {
                 }
@@ -123,9 +121,13 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.add_next_step -> {
-                        if(viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0){
+                        if(viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0) {
+                            isSelected = false
                             toastMessage("제목과 설명을 모두 입력해주세요.")
-                        } else{
+                        } else if(viewModel.nftImageState.value == "") {
+                            isSelected = false
+                            toastMessage("NFT에 사용할 이미지를 골라주세요.")
+                        } else {
                             isSelected = true
                             //사진,제목, 설명 이동
                             val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
