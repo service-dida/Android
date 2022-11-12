@@ -57,7 +57,10 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
         exception = viewModel.errorEvent
         initToolbar()
         initRegisterForActivityResult()
+    }
 
+    override fun onResume() {
+        super.onResume()
         // User의 지갑이 있는지 체크
         viewModel.getWalletExists()
     }
