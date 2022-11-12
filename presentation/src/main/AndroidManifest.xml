@@ -5,8 +5,11 @@
     package="com.dida.android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
@@ -28,7 +31,9 @@
         <activity
             android:name=".presentation.views.nav.NavHostActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Dida.RemoveSplash"
+            android:launchMode="singleInstance">
 <!--            바로 메인 이동 테스트-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
