@@ -32,7 +32,7 @@
             android:name=".presentation.views.nav.NavHostActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Dida.RemoveSplash"
+            android:theme="@style/Theme.DIDA.RemoveSplash"
             android:launchMode="singleInstance">
 <!--            바로 메인 이동 테스트-->
             <intent-filter>
