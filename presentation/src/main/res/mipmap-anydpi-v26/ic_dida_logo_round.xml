@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@drawable/ic_dida_logo_background"/>
-    <foreground android:drawable="@mipmap/ic_dida_logo_foreground"/>
+    <background android:drawable="@color/mainblack"/>
+    <foreground android:drawable="@mipmap/ic_launch_dida_logo_foreground"/>
 </adaptive-icon>
