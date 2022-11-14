@@ -12,8 +12,8 @@ data class AlertModel(
 
 class DefaultAlertDialog(
     private val alertModel: AlertModel,
-    private val clickNo: () -> Unit,
-    private val clickYes: () -> Unit
+    private val clickNegative: () -> Unit,
+    private val clickPossitive: () -> Unit
 ) : BaseDialog<DialogCommonAlertBinding>(layoutId = R.layout.dialog_common_alert) {
 
     override val layoutResourceId: Int
@@ -23,11 +23,11 @@ class DefaultAlertDialog(
         binding.alertModel = alertModel
 
         binding.alertNoButton.setOnClickListener {
-            clickNo.invoke()
+            clickNegative.invoke()
             dismiss()
         }
         binding.alertYesButton.setOnClickListener { 
-            clickYes.invoke()
+            clickPossitive.invoke()
             dismiss()
         }
     }

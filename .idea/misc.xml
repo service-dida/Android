@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.28229166666666666" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots.xml" value="0.146" />
         <entry key="presentation/src/main/res/drawable-v24/custom_hots_heart.xml" value="0.146" />
+        <entry key="presentation/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface1_radius0.xml" value="0.166" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface1_radius12.xml" value="0.1835" />
         <entry key="presentation/src/main/res/drawable-xxxhdpi/custom_surface2_square.xml" value="0.1835" />
@@ -24,6 +25,7 @@
         <entry key="presentation/src/main/res/drawable/ic_fill_heart.xml" value="0.141" />
         <entry key="presentation/src/main/res/drawable/ic_heart.xml" value="0.141" />
         <entry key="presentation/src/main/res/drawable/ic_hots_heart.xml" value="0.141" />
+        <entry key="presentation/src/main/res/drawable/ic_launcher_background.xml" value="0.21" />
         <entry key="presentation/src/main/res/drawable/menu_selector_color.xml" value="0.242" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.3578125" />
         <entry key="presentation/src/main/res/layout/activity_nav_host.xml" value="0.36354166666666665" />
@@ -67,6 +69,12 @@
         <entry key="presentation/src/main/res/menu/menu_detailnft_toolbar.xml" value="0.17291666666666666" />
         <entry key="presentation/src/main/res/menu/menu_detailnft_unlike_toolbar.xml" value="0.31979166666666664" />
         <entry key="presentation/src/main/res/menu/menu_main_bottom_nav.xml" value="0.36354166666666665" />
+        <entry key="presentation/src/main/res/mipmap-anydpi-v26/ic_dida_logo.xml" value="0.21" />
+        <entry key="presentation/src/main/res/mipmap-anydpi-v26/ic_dida_logo_round.xml" value="0.21" />
+        <entry key="presentation/src/main/res/mipmap-anydpi-v26/ic_launch_dida_logo.xml" value="0.21" />
+        <entry key="presentation/src/main/res/mipmap-anydpi-v26/ic_launch_dida_logo_round.xml" value="0.21" />
+        <entry key="presentation/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21" />
+        <entry key="presentation/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21" />
       </map>
     </option>
   </component>

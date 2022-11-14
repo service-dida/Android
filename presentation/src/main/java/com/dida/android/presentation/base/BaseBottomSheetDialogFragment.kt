@@ -33,7 +33,7 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
     lateinit var mLoadingDialog: LoadingDialog
 
     protected var exception: SharedFlow<Throwable>? = null
-    protected var toast: Toast? = null
+    private var toast: Toast? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
