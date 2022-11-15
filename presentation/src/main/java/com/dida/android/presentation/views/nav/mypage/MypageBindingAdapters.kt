@@ -1,7 +1,9 @@
 package com.dida.android.presentation.views.nav.mypage
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -52,4 +54,9 @@ fun RecyclerView.bindRecentNftItem(uiState: UiState<List<UserNft>>) {
     if (boundAdapter is RecentNftAdapter) {
         boundAdapter.submitList(uiState.successOrNull())
     }
+}
+
+@BindingAdapter("userToolBar")
+fun androidx.appcompat.widget.Toolbar.bindUserToolBar(uiState: UiState<UserProfile>) {
+    visibility = if (uiState is UiState.Success) View.VISIBLE else View.INVISIBLE
 }
