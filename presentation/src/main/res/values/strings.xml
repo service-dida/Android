@@ -57,6 +57,7 @@
     <!--로그인 화면-->
     <string name="login_description">빠르게 로그인하기</string>
     <string name="kakao_login">카카오톡으로 시작하기</string>
+    <string name="kakao_login_web">카카오계정 직접 입력하기</string>
 
     <!-- NFT 생성 화면-->
     <string name="add_nft_main_title">NFT 생성</string>
