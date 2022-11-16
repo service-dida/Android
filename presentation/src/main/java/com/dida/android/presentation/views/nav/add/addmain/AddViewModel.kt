@@ -23,6 +23,9 @@ class AddViewModel @Inject constructor(
     private val _walletExistsState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
     val walletExistsState: SharedFlow<Boolean> = _walletExistsState
 
+    private val _walletCheckState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val walletCheckState: StateFlow<Boolean> = _walletCheckState
+
     private val _nftImageState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val nftImageState: StateFlow<String> = _nftImageState
 
@@ -58,7 +61,9 @@ class AddViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             walletExistedAPI()
-                .onSuccess { _walletExistsState.emit(it) }
+                .onSuccess {
+                    _walletExistsState.emit(it)
+                    _walletCheckState.value = true }
                 .onError { e ->
                     if(e is NeedToWalletException) _walletExistsState.emit(false)
                     else catchError(e) }
