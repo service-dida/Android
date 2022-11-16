@@ -47,7 +47,7 @@ class LoginMainViewModel @Inject constructor(
                 .onError { e ->
                     catchError(e)
                     _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
-                    dataStorePreferences.removeAccessToken()
+                    dataStorePreferences.removeAccountToken()
                 }
         }
     }

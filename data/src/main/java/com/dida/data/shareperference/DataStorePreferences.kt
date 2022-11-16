@@ -43,7 +43,7 @@ class DataStorePreferences(val context: Context) {
         }
     }
 
-    suspend fun removeAccessToken() {
+    suspend fun removeAccountToken() {
         context.dataStore.edit { preference ->
             preference[accessTokenPreference] = ""
             preference[refreshTokenPreference] = ""
