@@ -51,9 +51,7 @@
         <item name="android:paddingRight">18dp</item>
     </style>
 
-    <style name="Theme.DIDA.RemoveSplash" parent="Theme.DIDA">
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
+    <style name="Theme.DIDA.Launch" parent="Theme.DIDA" />
 
 
 </resources>

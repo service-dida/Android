@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.DIDA.Launch" parent="Theme.DIDA">
+        <item name="android:windowSplashScreenBackground">@color/mainblack</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_dida_logo_round</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+    </style>
+</resources>
