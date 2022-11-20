@@ -4,7 +4,9 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,6 +16,12 @@ class CommunityViewModel @Inject constructor(
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "CommunityViewModel"
+
+    private val _myWriteState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val myWriteState: StateFlow<Boolean> = _myWriteState
+
+    private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val moreEvent: SharedFlow<Unit> = _moreEvent
 
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
@@ -27,6 +35,17 @@ class CommunityViewModel @Inject constructor(
     override fun onCommunityWrtieClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
+        }
+    }
+
+    // 나의 게시물일 경우 More 버튼, 아닐경우 Clip 버튼
+    override fun onClipOrMoreClicked(communityId: Int) {
+        baseViewModelScope.launch {
+            if(myWriteState.value) {
+                _moreEvent.emit(Unit)
+            } else {
+
+            }
         }
     }
 }

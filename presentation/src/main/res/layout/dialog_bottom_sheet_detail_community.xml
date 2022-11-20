@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingHorizontal="32dp"
+    android:paddingTop="42dp"
+    android:background="@drawable/custom_bottom_sheet"
+    android:paddingBottom="40dp">
+
+    <TextView
+        android:id="@+id/update_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:fontFamily="@font/pretendard_regular"
+        android:textSize="16dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/bottom_sheet_update"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/delete_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:fontFamily="@font/pretendard_regular"
+        android:textSize="16dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/bottom_sheet_delete"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+    </TextView>
+
+</LinearLayout>
