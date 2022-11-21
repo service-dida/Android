@@ -26,6 +26,10 @@
     <string name="bottom_community">커뮤니티</string>
     <string name="bottom_my">마이페이지</string>
 
+    <!--Bottom Sheet 관련-->
+    <string name="bottom_sheet_update">수정하기</string>
+    <string name="bottom_sheet_delete">삭제하기</string>
+
     <!--홈 화면-->
     <string name="home_hotitem">HOT Item \uD83D\uDD25</string>
     <string name="home_soldout">Sold Out \uD83D\uDC8E</string>
@@ -57,6 +61,7 @@
     <!--로그인 화면-->
     <string name="login_description">빠르게 로그인하기</string>
     <string name="kakao_login">카카오톡으로 시작하기</string>
+    <string name="kakao_login_web">카카오계정 직접 입력하기</string>
 
     <!-- NFT 생성 화면-->
     <string name="add_nft_main_title">NFT 생성</string>

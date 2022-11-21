@@ -3,7 +3,9 @@ package com.dida.android.presentation.views.nav.add.addmain
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.setFragmentResultListener
@@ -62,7 +64,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
     override fun onResume() {
         super.onResume()
         // User의 지갑이 있는지 체크
-        viewModel.getWalletExists()
+        if(!viewModel.walletCheckState.value) viewModel.getWalletExists()
     }
 
     override fun initDataBinding() {

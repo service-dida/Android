@@ -29,6 +29,12 @@ class DetailNftViewModel @Inject constructor(
 
     private val TAG = "DetailNftViewModel"
 
+    private val _myWriteState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val myWriteState: StateFlow<Boolean> = _myWriteState
+
+    private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val moreEvent: SharedFlow<Unit> = _moreEvent
+
     private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> = MutableSharedFlow<DetailNftNavigationAction>()
     val navigationEvent: SharedFlow<DetailNftNavigationAction> = _navigationEvent
 
@@ -72,5 +78,9 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToCreateCommunity)
         }
+    }
+
+    // 클립 버튼으로 처리
+    override fun onClipOrMoreClicked(communityId: Int) {
     }
 }

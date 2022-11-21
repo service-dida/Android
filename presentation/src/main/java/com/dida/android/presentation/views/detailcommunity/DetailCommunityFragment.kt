@@ -2,6 +2,7 @@ package com.dida.android.presentation.views.detailcommunity
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailCommunityBinding
@@ -11,6 +12,7 @@ import com.dida.android.presentation.views.nav.community.CommunityViewModel
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(R.layout.fragment_detail_community) {
@@ -35,6 +37,17 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     override fun initDataBinding() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            communityViewModel.moreEvent.collectLatest {
+                val morDialog = DetailCommunityBottomSheetDialog {
+                    when (it) {
+                        is MoreState.Update -> {}
+                        is MoreState.Delete -> {}
+                    }
+                }
+                morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
+            }
+        }
     }
 
     override fun initAfterBinding() {

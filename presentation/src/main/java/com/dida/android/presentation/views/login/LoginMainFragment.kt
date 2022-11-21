@@ -66,7 +66,8 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         view.setOnKeyListener { _, keyCode, event ->
             if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.KEYCODE_BACK) {
                 //TODO: back key 이벤트 시 필요한 코드 추가
-                activity?.setResult(0, Intent(requireActivity(), NavHostActivity::class.java))
+                val intent = Intent(requireActivity(), NavHostActivity::class.java)
+                activity?.setResult(0, intent)
                 activity?.finish()
                 return@setOnKeyListener true
             }
@@ -97,7 +98,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         }
 
         // 카카오톡 설치여부 확인
-        if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+        if(viewModel.kakaoTalkLoginState.value && UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = kakaoCallback)
         } else {
             UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)

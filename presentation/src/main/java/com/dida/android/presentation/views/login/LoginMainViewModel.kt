@@ -7,7 +7,9 @@ import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.LoginAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +22,9 @@ class LoginMainViewModel @Inject constructor(
 
     private val _navigationEvent: MutableSharedFlow<LoginNavigationAction> = MutableSharedFlow<LoginNavigationAction>()
     val navigationEvent: SharedFlow<LoginNavigationAction> = _navigationEvent
+
+    private val _kakaoTalkLoginState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val kakaoTalkLoginState: StateFlow<Boolean> = _kakaoTalkLoginState
 
     /** 카카오 로그인 결과
      * refreshToken ->
@@ -47,13 +52,21 @@ class LoginMainViewModel @Inject constructor(
                 .onError { e ->
                     catchError(e)
                     _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
-                    dataStorePreferences.removeAccessToken()
+                    dataStorePreferences.removeAccountToken()
                 }
         }
     }
 
     override fun onKakaoLoginClicked() {
         baseViewModelScope.launch {
+            _kakaoTalkLoginState.value = true
+            _navigationEvent.emit(LoginNavigationAction.NavigateToLogin)
+        }
+    }
+
+    override fun onKakaoWebLoginClicked() {
+        baseViewModelScope.launch {
+            _kakaoTalkLoginState.value = false
             _navigationEvent.emit(LoginNavigationAction.NavigateToLogin)
         }
     }

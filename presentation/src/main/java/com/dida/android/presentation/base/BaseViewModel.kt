@@ -1,14 +1,9 @@
 package com.dida.android.presentation.base
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dida.data.DataApplication
 import com.dida.data.model.HaveNotJwtTokenException
-import com.dida.data.model.InternalServerErrorException
-import com.dida.data.model.ServerNotFoundException
-import com.kakao.sdk.network.KakaoAgentInterceptor
-import com.kakao.sdk.network.origin
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +11,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
-import java.io.IOException
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -40,7 +34,7 @@ abstract class BaseViewModel : ViewModel() {
             e?.let { exception ->
                 when(exception) {
                     is HaveNotJwtTokenException -> {
-                        DataApplication.dataStorePreferences.removeAccessToken()
+                        DataApplication.dataStorePreferences.removeAccountToken()
                         _needLoginEvent.emit(true)
                     }
                     else -> _errorEvent.emit(exception)

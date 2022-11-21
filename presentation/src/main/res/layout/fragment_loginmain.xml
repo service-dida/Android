@@ -41,6 +41,8 @@
             app:layout_constraintEnd_toEndOf="@+id/kakao_login_button"
             app:layout_constraintStart_toStartOf="@+id/kakao_login_button" />
 
+
+
         <!--버튼 이미지 파일 변경해야함-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/kakao_login_button"
@@ -48,10 +50,10 @@
             android:layout_height="54dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="68dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/custom_kakaologin"
-            android:contentDescription="@string/login_description"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/kakao_login"
+            app:layout_constraintBottom_toTopOf="@id/kakao_web_login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:onClick="@{() -> vm.onKakaoLoginClicked()}">
@@ -67,7 +69,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/img_kakao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kakao_logo_1" />
@@ -77,12 +79,44 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_bold"
                     android:textSize="15dp"
-                    android:textColor="#191919"
+                    android:textColor="@color/kakao_login_text_color"
                     android:text="@string/kakao_login"
                     android:layout_marginStart="10dp"/>
-
             </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/kakao_web_login_button"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:contentDescription="@string/kakao_login_web"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{() -> vm.onKakaoWebLoginClicked()}">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:text="@string/kakao_login_web"
+                    android:layout_marginStart="10dp"/>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
