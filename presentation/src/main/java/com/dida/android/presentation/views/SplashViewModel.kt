@@ -1,6 +1,8 @@
 package com.dida.android.presentation.views
 
+import android.provider.Settings.System.getString
 import androidx.lifecycle.viewModelScope
+import com.dida.android.R
 import com.dida.android.presentation.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.domain.onError
@@ -8,9 +10,7 @@ import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckVersionAPI
 import com.dida.domain.usecase.main.DeviceTokenAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,11 +22,14 @@ class SplashViewModel @Inject constructor(
 
     private val TAG = "SplashViewModel"
 
-    private val _appVersion = MutableStateFlow<Int>(0)
-    val appVersion: SharedFlow<Int> = _appVersion
+    private val _splashScreenGone: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val splashScreenGone: StateFlow<Boolean> = _splashScreenGone.asStateFlow()
 
-    private val _navigateToHome = MutableSharedFlow<Boolean>()
-    val navigateToHome: SharedFlow<Boolean> = _navigateToHome
+    private val _appVersion: MutableStateFlow<Int> = MutableStateFlow(0)
+    val appVersion: SharedFlow<Int> = _appVersion.asStateFlow()
+
+    private val _navigateToHome: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val navigateToHome: SharedFlow<Boolean> = _navigateToHome.asSharedFlow()
 
 
     fun checkVersion() {
@@ -47,6 +50,13 @@ class SplashViewModel @Inject constructor(
                 }
             }
             _navigateToHome.emit(true)
+            _splashScreenGone.emit(true)
+        }
+    }
+
+    fun setSplachScreenFlag(flag: Boolean) {
+        baseViewModelScope.launch {
+            _splashScreenGone.value = flag
         }
     }
 }
