@@ -17,12 +17,12 @@ val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
-    compileSdkVersion(32)
+    compileSdkVersion(33)
 
     defaultConfig {
         applicationId = "com.dida.android"
         minSdkVersion(21)
-        targetSdkVersion(32)
+        targetSdkVersion(33)
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true

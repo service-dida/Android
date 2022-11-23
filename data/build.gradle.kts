@@ -15,11 +15,11 @@ val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
-    compileSdkVersion(32)
+    compileSdkVersion(33)
 
     defaultConfig {
         minSdkVersion(21)
-        targetSdkVersion(32)
+        targetSdkVersion(33)
         version = 1
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

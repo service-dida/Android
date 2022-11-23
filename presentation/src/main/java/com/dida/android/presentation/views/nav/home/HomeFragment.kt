@@ -3,6 +3,9 @@ package com.dida.android.presentation.views.nav.home
 import android.annotation.SuppressLint
 import android.os.Build
 import android.widget.LinearLayout
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,9 +13,14 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.util.DidaIntent
 import com.dida.android.util.addSnapPagerScroll
+import com.dida.android.util.permission.PermissionManagerImpl
+import com.dida.android.util.permission.PermissionRequester
+import com.dida.android.util.permission.Permissions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -25,6 +33,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override val viewModel : HomeViewModel by viewModels()
 
+    private val permissionManager = PermissionManagerImpl(this)
+    private val notificationPermissionRequest: PermissionRequester = permissionManager.forPermission(Permissions.PostNotification)
+        .onGranted { setFragmentResult(
+            DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED,
+            bundleOf(DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED to true)
+        ) }
+        .subscribe(this)
+
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -33,6 +50,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initNotificationPermission()
     }
 
     override fun initDataBinding() {
@@ -122,6 +140,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 3 -> { smoothScrollToView(binding.collectionTxt, 0, 750L) }
             }
             binding.appBarLayout.setExpanded(false)
+        }
+    }
+
+    private fun initNotificationPermission() {
+        lifecycleScope.launch {
+            if(NotificationManagerCompat.from(requireContext()).areNotificationsEnabled().not()) {
+                notificationPermissionRequest.request()
+            }
         }
     }
 }
