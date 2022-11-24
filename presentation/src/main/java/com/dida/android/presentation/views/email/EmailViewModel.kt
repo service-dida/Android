@@ -17,7 +17,8 @@ import javax.inject.Inject
 class EmailViewModel @Inject constructor(
     private val sendEmailAPI: SendEmailAPI,
     private val createWalletAPI: CreateWalletAPI
-    ) : BaseViewModel() {
+) : BaseViewModel() {
+
     private val TAG = "EmailViewModel"
 
     private val _sendEmailState: MutableStateFlow<String?> = MutableStateFlow<String?>(null)

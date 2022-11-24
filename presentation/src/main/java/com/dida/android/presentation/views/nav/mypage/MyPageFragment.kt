@@ -14,6 +14,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.base.BaseFragment
+import com.dida.android.util.DidaIntent
 import com.dida.android.util.uriToFile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +33,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     override val viewModel: MyPageViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
 
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var requestUpdateProfile: ActivityResultLauncher<Intent>
 
     override fun initStartView() {
         binding.apply {
@@ -111,27 +112,27 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
 
     private fun initRegisterForActivityResult() {
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    val intent = result.data
-                    if (intent != null) {
-                        val uri = intent.data
-                        val file = uriToFile(uri!!,requireContext())
-                        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                        
-                        //TODO : 이후에 설명도 입력한걸로 넣기
-                        val nicknamePart: MultipartBody.Part = MultipartBody.Part.createFormData("description", "테스트 설명")
-                        viewModel.updateProfile(nicknamePart , requestBody)
-                    }
+        requestUpdateProfile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            val isUpdateProfile = activityResult.data?.getBooleanExtra(DidaIntent.RESULT_KEY_UPDATE_PROFILE, false) ?: false
+            if (isUpdateProfile) {
+                val intent = activityResult.data
+                if (intent != null) {
+                    val uri = intent.data
+                    val file = uriToFile(uri!!,requireContext())
+                    val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                    val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+                    //TODO : 이후에 설명도 입력한걸로 넣기
+                    val nicknamePart: MultipartBody.Part = MultipartBody.Part.createFormData("description", "테스트 설명")
+                    viewModel.updateProfile(nicknamePart , requestBody)
                 }
             }
+        }
     }
 
     private fun getImageToGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        resultLauncher.launch(intent)
+        requestUpdateProfile.launch(intent)
     }
 }
