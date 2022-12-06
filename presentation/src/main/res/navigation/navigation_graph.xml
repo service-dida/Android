@@ -126,6 +126,11 @@
             app:destination="@id/emailFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_myPageFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment
@@ -181,5 +186,9 @@
             app:popUpToInclusive="true"
             app:popUpTo="@+id/addFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.dida.android.presentation.views.nav.mypage.UpdateProfileFragment"
+        android:label="UpdateProfileFragment" />
 
 </navigation>

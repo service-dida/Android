@@ -90,7 +90,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                 when (it.itemId) {
                     R.id.action_wallet -> viewModel.onWalletClicked()
                     R.id.action_setting -> viewModel.onLogoutClicked()
-                    R.id.action_profileImg -> getImageToGallery()
+                    //R.id.action_profileImg -> getImageToGallery()
+                    R.id.action_profileImg -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUpdateProfileFragment())
                     R.id.action_temporary_password -> viewModel.tempPassword()
                     R.id.action_change_password -> viewModel.changePassword("203057","000000")
                 }

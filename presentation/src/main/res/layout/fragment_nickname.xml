@@ -57,6 +57,7 @@
             android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:maxLines="1"
+            android:maxLength="8"
             app:layout_constraintTop_toBottomOf="@id/nickname_main_txt2">
         </EditText>
 
