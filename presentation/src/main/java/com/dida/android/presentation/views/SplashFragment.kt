@@ -1,6 +1,10 @@
 package com.dida.android.presentation.views
 
+import android.os.Build
+import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -25,6 +29,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
 
     override val viewModel : SplashViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            initSplashScreen()
+        }
+    }
+
     override fun initStartView() {
         viewModel.checkVersion()
     }
@@ -32,17 +43,18 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
     override fun initDataBinding() {
         lifecycleScope.launchWhenResumed {
             launch {
+                // 추후 배포시 엡데이트 로직 추가
                 viewModel.appVersion.collectLatest {
-                    if(it.toString() == getString(R.string.app_version)) { getToken() }
+                    if(it.toString() == getString(R.string.app_version))
+                        getToken()
+                    else
+                        viewModel.setSplachScreenFlag(true)
                 }
             }
 
             launch {
                 viewModel.navigateToHome.collectLatest {
-                    if(it) {
-                        delay(1000L)
-                        navigate(SplashFragmentDirections.actionMainFragment())
-                    }
+                    navigate(SplashFragmentDirections.actionMainFragment())
                 }
             }
 
@@ -65,5 +77,19 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
                 viewModel.setDeviceToken(token)
                 AppLog.e("Fetching FCM registration token Success", token)
             })
+    }
+
+    private fun initSplashScreen() {
+        val content: View = requireActivity().findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (viewModel.splashScreenGone.value) {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else false
+                }
+            }
+        )
     }
 }
