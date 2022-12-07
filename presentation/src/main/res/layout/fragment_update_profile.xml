@@ -90,6 +90,7 @@
                         android:drawableEnd="@drawable/ic_baseline_close_14_warning"
                         android:hint="@string/profile_nickname_hint"
                         android:text="@={vm.nickNameState}"
+                        android:inputType="text"
                         android:maxLength="8"
                         android:maxLines="1"/>
 
