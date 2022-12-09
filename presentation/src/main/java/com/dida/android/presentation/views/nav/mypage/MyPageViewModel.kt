@@ -4,6 +4,7 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.AppLog
 import com.dida.android.util.NftActionHandler
 import com.dida.android.util.UiState
+import com.dida.android.util.successOrNull
 import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.UserNft
@@ -12,10 +13,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -124,6 +122,13 @@ class MyPageViewModel @Inject constructor(
     override fun onNftItemClicked(nftId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId.toLong()))
+        }
+    }
+
+    override fun onUpdateProfileClicked() {
+        baseViewModelScope.launch {
+            val mypage = myPageState.value.successOrNull()!!
+            _navigationEvent.emit(MypageNavigationAction.NavigateToUpdateProfile(mypage.profileUrl, mypage.nickname, mypage.description))
         }
     }
 

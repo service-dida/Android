@@ -6,4 +6,5 @@ sealed class MypageNavigationAction {
     object NavigateToWallet : MypageNavigationAction()
     object NavigateToHome: MypageNavigationAction()
     class NavigateToDetailNft(val cardId: Long) : MypageNavigationAction()
+    class NavigateToUpdateProfile(val image :String, val nickname : String, val description : String) : MypageNavigationAction()
 }

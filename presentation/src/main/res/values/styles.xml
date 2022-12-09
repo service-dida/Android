@@ -119,6 +119,7 @@
         <item name="fontFamily">@@font/pretendard_regular</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="EditText_surface2_radius10_solid_surface5" parent="Widget.AppCompat.EditText">
         <item name="android:gravity">left|center</item>
         <item name="android:hint">@string/detail_community_edit_hint</item>

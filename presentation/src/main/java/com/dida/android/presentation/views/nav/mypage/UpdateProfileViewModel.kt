@@ -20,18 +20,23 @@ class UpdateProfileViewModel @Inject constructor(
         MutableSharedFlow<MypageNavigationAction>()
     val navigationEvent: SharedFlow<MypageNavigationAction> = _navigationEvent
 
+    val profileImageState : MutableStateFlow<String> = MutableStateFlow<String>("")
     val nickNameState: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val availableConfirm : MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val descriptionState : MutableStateFlow<String> = MutableStateFlow<String>("")
 
+    lateinit var currentNickname : String
     init {
         baseViewModelScope.launch {
             nickNameState.debounce(500).collect {
-                if(it.isEmpty()) { setNicknameVerify(0) }
-                else if(it.length > 8) { setNicknameVerify(1) }
-                else { nicknameAPIServer(it) }
+                if(it == currentNickname){
+                    setNicknameVerify(4)
+                }else{
+                    if(it.isEmpty()) { setNicknameVerify(0) }
+                    else if(it.length > 8) { setNicknameVerify(1) }
+                    else { nicknameAPIServer(it) }
+                }
             }
         }
-
     }
     /**
     0 -> 초기값
@@ -39,6 +44,27 @@ class UpdateProfileViewModel @Inject constructor(
     2 -> 닉네임이 중복될 경우
     3 -> 닉네임을 사용할 수 있을 경우
      **/
+    fun initProfile(image : String, nickname : String, description : String){
+        baseViewModelScope.launch {
+            profileImageState.emit(image)
+            nickNameState.emit(nickname)
+            descriptionState.emit(description)
+            currentNickname = nickname
+        }
+    }
+
+    fun clearNickname(){
+        baseViewModelScope.launch {
+            nickNameState.emit("")
+        }
+    }
+
+    fun clearDescription(){
+        baseViewModelScope.launch {
+            descriptionState.emit("")
+        }
+    }
+
     private val _nickNameCheckTextState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val nickNameCheckTextState: StateFlow<String> = _nickNameCheckTextState
 
@@ -47,6 +73,7 @@ class UpdateProfileViewModel @Inject constructor(
             1 -> _nickNameCheckTextState.value = "닉네임은 8글자 이하입니다."
             2 -> _nickNameCheckTextState.value = "중복된 닉네임 입니다."
             3 -> _nickNameCheckTextState.value = "사용 가능한 닉네임 입니다."
+            4 -> _nickNameCheckTextState.value = "현재 닉네임과 동일합니다."
             else -> _nickNameCheckTextState.value = ""
         }
     }

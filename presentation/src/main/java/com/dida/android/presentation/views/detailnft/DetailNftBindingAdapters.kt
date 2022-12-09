@@ -15,12 +15,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.android.R
 import com.dida.android.util.UiState
 import com.dida.android.util.successOrNull
-import com.dida.data.DataApplication
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @BindingAdapter("NftImgUrl")
 fun ImageView.bindImgUrl(uiState: UiState<DetailNFT>) {
