@@ -72,8 +72,11 @@ interface MainAPIService {
     suspend fun mintNFT(@Body request: NFTMintRequest)
 
     @Multipart
+    @PUT("/user/img")
+    suspend fun updateProfileImage(@Part file: MultipartBody.Part)
+
     @PUT("/user")
-    suspend fun updateProfile(@Part description: MultipartBody.Part, @Part file: MultipartBody.Part)
+    suspend fun updateProfileDescription(@Body description: String)
 
     @POST("/card/like")
     suspend fun postLike(@Body request: PostLikeRequest) : Unit

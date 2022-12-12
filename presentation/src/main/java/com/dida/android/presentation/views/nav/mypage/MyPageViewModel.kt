@@ -13,16 +13,17 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val userProfileAPI: UserProfileAPI,
     private val userNftAPI: UserNftAPI,
-    private val updateProfileAPI: UpdateProfileAPI,
     private val tempPasswordAPI: TempPasswordAPI,
     private val changePasswordAPI: ChangePasswordAPI,
     private val postLikeAPI: PostLikeAPI
@@ -61,14 +62,6 @@ class MyPageViewModel @Inject constructor(
                 }
                 .onError { e -> catchError(e) }
 
-        }
-    }
-
-    fun updateProfile(description: MultipartBody.Part, file: MultipartBody.Part) {
-        baseViewModelScope.launch {
-            updateProfileAPI(description, file)
-                .onSuccess { getMypage() }
-                .onError { e -> catchError(e) }
         }
     }
 

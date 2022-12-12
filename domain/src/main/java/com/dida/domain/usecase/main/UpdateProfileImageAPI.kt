@@ -6,10 +6,10 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 
-class UpdateProfileAPI @Inject constructor(
+class UpdateProfileImageAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit> {
-        return repository.updateProfileAPI(description, file)
+    suspend operator fun invoke(file : MultipartBody.Part) : NetworkResult<Unit> {
+        return repository.updateProfileImageAPI(file)
     }
 }

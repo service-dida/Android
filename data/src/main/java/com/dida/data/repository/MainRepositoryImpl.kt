@@ -104,8 +104,12 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getTempPassword() }
     }
 
-    override suspend fun updateProfileAPI(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit>{
-        return handleApi { mainAPIService.updateProfile(description,file)}
+    override suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>{
+        return handleApi { mainAPIService.updateProfileImage(file)}
+    }
+
+    override suspend fun updateProfileDescriptionAPI(description: String) : NetworkResult<Unit>{
+        return handleApi { mainAPIService.updateProfileDescription(description)}
     }
 
     override suspend fun postLikeAPI(cardId: Long): NetworkResult<Unit> {

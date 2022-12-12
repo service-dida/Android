@@ -1,10 +1,6 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.app.Activity
-import android.content.Intent
 import android.widget.ArrayAdapter
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -14,13 +10,8 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
 import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.util.DidaIntent
-import com.dida.android.util.uriToFile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
@@ -52,7 +43,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     }
                     is MypageNavigationAction.NavigateToEmail -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment())
                     is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToWalletFragment())
-                   is MypageNavigationAction.NavigateToUpdateProfile -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUpdateProfileFragment(it.image,it.nickname,it.description))
+                    is MypageNavigationAction.NavigateToUpdateProfile -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUpdateProfileFragment(it.image,it.nickname,it.description))
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
                 }
             }
@@ -87,7 +78,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                 when (it.itemId) {
                     R.id.action_wallet -> viewModel.onWalletClicked()
                     R.id.action_setting -> viewModel.onLogoutClicked()
-                    //R.id.action_profileImg -> getImageToGallery()
                     R.id.action_profileImg -> viewModel.onUpdateProfileClicked()
                     R.id.action_temporary_password -> viewModel.tempPassword()
                     R.id.action_change_password -> viewModel.changePassword("203057","000000")

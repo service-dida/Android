@@ -4,6 +4,8 @@ import com.dida.android.presentation.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.NicknameCheckAPI
+import com.dida.domain.usecase.main.UpdateProfileDescriptionAPI
+import com.dida.domain.usecase.main.UpdateProfileImageAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -11,7 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpdateProfileViewModel @Inject constructor(
-    private val nicknameCheckAPI: NicknameCheckAPI
+    private val nicknameCheckAPI: NicknameCheckAPI,
+    private val updateProfileImageAPI: UpdateProfileImageAPI,
+    private val updateProfileDescriptionAPI: UpdateProfileDescriptionAPI
 ) : BaseViewModel() {
 
     private val TAG = "UpdateProfileViewModel"
@@ -20,10 +24,12 @@ class UpdateProfileViewModel @Inject constructor(
         MutableSharedFlow<MypageNavigationAction>()
     val navigationEvent: SharedFlow<MypageNavigationAction> = _navigationEvent
 
-    val profileImageState : MutableStateFlow<String> = MutableStateFlow<String>("")
-    val nickNameState: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val descriptionState : MutableStateFlow<String> = MutableStateFlow<String>("")
-
+    /**
+    0 -> 초기값
+    1 -> 8글자 초과일 경우
+    2 -> 닉네임이 중복될 경우
+    3 -> 닉네임을 사용할 수 있을 경우
+     **/
     lateinit var currentNickname : String
     init {
         baseViewModelScope.launch {
@@ -38,12 +44,12 @@ class UpdateProfileViewModel @Inject constructor(
             }
         }
     }
-    /**
-    0 -> 초기값
-    1 -> 8글자 초과일 경우
-    2 -> 닉네임이 중복될 경우
-    3 -> 닉네임을 사용할 수 있을 경우
-     **/
+
+
+    val profileImageState : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val nickNameState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val descriptionState : MutableStateFlow<String> = MutableStateFlow<String>("")
+
     fun initProfile(image : String, nickname : String, description : String){
         baseViewModelScope.launch {
             profileImageState.emit(image)
