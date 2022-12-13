@@ -108,11 +108,11 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.updateProfileImage(file)}
     }
 
-    override suspend fun updateProfileDescriptionAPI(description: String) : NetworkResult<Unit>{
+    override suspend fun updateProfileDescriptionAPI(description: MultipartBody.Part) : NetworkResult<Unit>{
         return handleApi { mainAPIService.updateProfileDescription(description)}
     }
 
-    override suspend fun updateProfileNicknameAPI(nickname: String): NetworkResult<Unit> {
+    override suspend fun updateProfileNicknameAPI(nickname: MultipartBody.Part): NetworkResult<Unit> {
         return handleApi { mainAPIService.updateProfileNickname(nickname)}
     }
 

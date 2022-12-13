@@ -75,11 +75,13 @@ interface MainAPIService {
     @PUT("/user/img")
     suspend fun updateProfileImage(@Part file: MultipartBody.Part)
 
+    @Multipart
     @PUT("/user/name")
-    suspend fun updateProfileNickname(@Body nickname: String)
+    suspend fun updateProfileNickname(@Part nickname: MultipartBody.Part)
 
+    @Multipart
     @PUT("/user/description")
-    suspend fun updateProfileDescription(@Body description: String)
+    suspend fun updateProfileDescription(@Part description: MultipartBody.Part)
 
     @POST("/card/like")
     suspend fun postLike(@Body request: PostLikeRequest) : Unit

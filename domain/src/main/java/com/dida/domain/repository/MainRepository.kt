@@ -48,9 +48,9 @@ interface  MainRepository {
 
     suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>
 
-    suspend fun updateProfileDescriptionAPI(description: String) : NetworkResult<Unit>
+    suspend fun updateProfileDescriptionAPI(description: MultipartBody.Part) : NetworkResult<Unit>
 
-    suspend fun updateProfileNicknameAPI(nickname: String) : NetworkResult<Unit>
+    suspend fun updateProfileNicknameAPI(nickname: MultipartBody.Part) : NetworkResult<Unit>
 
     suspend fun postLikeAPI(cardId: Long) : NetworkResult<Unit>
 

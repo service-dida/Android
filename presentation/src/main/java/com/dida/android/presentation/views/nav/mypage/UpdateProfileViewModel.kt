@@ -137,12 +137,12 @@ class UpdateProfileViewModel @Inject constructor(
             }
             if(currentNickname != nickNameState.value) {
                 deferreds.add(async {
-                    updateProfileDescriptionAPI(descriptionState.value).onSuccess {  }.onError { e -> catchError(e) }
+                    updateProfileNicknameAPI(MultipartBody.Part.createFormData("nickname", nickNameState.value)).onSuccess {  }.onError { e -> catchError(e) }
                 })
             }
             if(currentDescription != descriptionState.value) {
                 deferreds.add(async {
-                    updateProfileNicknameAPI(nickNameState.value).onSuccess {  }.onError { e -> catchError(e) }
+                    updateProfileDescriptionAPI(MultipartBody.Part.createFormData("description", descriptionState.value)).onSuccess {  }.onError { e -> catchError(e) }
                 })
             }
             deferreds.awaitAll()
