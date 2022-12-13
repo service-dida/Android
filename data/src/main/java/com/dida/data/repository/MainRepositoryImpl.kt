@@ -112,6 +112,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.updateProfileDescription(description)}
     }
 
+    override suspend fun updateProfileNicknameAPI(nickname: String): NetworkResult<Unit> {
+        return handleApi { mainAPIService.updateProfileNickname(nickname)}
+    }
+
     override suspend fun postLikeAPI(cardId: Long): NetworkResult<Unit> {
         val request = PostLikeRequest(cardId = cardId)
         return handleApi { mainAPIService.postLike(request) }
@@ -145,6 +149,4 @@ class MainRepositoryImpl @Inject constructor(
         val request = PostSellNftRequest(payPwd = payPwd, cardId = cardId,price = price)
         return handleApi { mainAPIService.postSellNft(request) }
     }
-
-
 }

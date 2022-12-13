@@ -51,6 +51,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         }
         exception = viewModel.errorEvent
         viewModel.initProfile(args.image,args.nickname,args.description)
+        initRegisterForActivityResult()
         initToolbar()
     }
 
@@ -58,7 +59,9 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.navigationEvent.collectLatest {
-
+                    when(it){
+                        is UpdateProfileNavigationAction.NavigateToBack -> navController.popBackStack()
+                    }
                 }
             }
         }
@@ -66,9 +69,6 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initAfterBinding() {
-        binding.descriptionEt.addTextChangedListener {
-            binding.descriptionCheckTv.isVisible = it.toString().length>=30
-        }
         binding.nicknameEt.setOnTouchListener(clearTextListener)
         binding.descriptionEt.setOnTouchListener(clearTextListener)
     }
@@ -79,29 +79,28 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
             this.setNavigationOnClickListener { navController.popBackStack() }
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_confirm -> viewModel
+                    R.id.action_confirm -> viewModel.updateProfile()
                 }
                 true
             }
         }
 
         binding.profileCl.setOnClickListener {
-            initRegisterForActivityResult()
+           getImageToGallery()
         }
     }
 
     private fun initRegisterForActivityResult() {
         requestUpdateProfile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             val isUpdateProfile = activityResult.data?.getBooleanExtra(DidaIntent.RESULT_KEY_UPDATE_PROFILE, false) ?: false
-            if (isUpdateProfile) {
+            if (!isUpdateProfile) {
                 val intent = activityResult.data
                 if (intent != null) {
                     val uri = intent.data
                     val file = uriToFile(uri!!,requireContext())
                     val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
                     val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
-                    val nicknamePart: MultipartBody.Part = MultipartBody.Part.createFormData("description", "테스트 설명")
+                    viewModel.selectProfileImage(uri,requestBody)
                 }
             }
         }

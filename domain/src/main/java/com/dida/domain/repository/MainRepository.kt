@@ -50,6 +50,8 @@ interface  MainRepository {
 
     suspend fun updateProfileDescriptionAPI(description: String) : NetworkResult<Unit>
 
+    suspend fun updateProfileNicknameAPI(nickname: String) : NetworkResult<Unit>
+
     suspend fun postLikeAPI(cardId: Long) : NetworkResult<Unit>
 
     suspend fun postUserFollowAPI(userId: Long) : NetworkResult<Unit>

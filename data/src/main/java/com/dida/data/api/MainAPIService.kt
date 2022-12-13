@@ -75,7 +75,10 @@ interface MainAPIService {
     @PUT("/user/img")
     suspend fun updateProfileImage(@Part file: MultipartBody.Part)
 
-    @PUT("/user")
+    @PUT("/user/name")
+    suspend fun updateProfileNickname(@Body nickname: String)
+
+    @PUT("/user/description")
     suspend fun updateProfileDescription(@Body description: String)
 
     @POST("/card/like")

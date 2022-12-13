@@ -23,9 +23,9 @@ fun ImageView.bindUpdateProfileImage(state : MutableStateFlow<String>) {
 fun Toolbar.bindToolbar(state : StateFlow<Boolean>) {
     this.menu.clear()
     if (state.value) {
-        this.inflateMenu(R.menu.menu_unable_update_profile_toolbar)
-    } else {
         this.inflateMenu(R.menu.menu_enable_update_profile_toolbar)
+    } else {
+        this.inflateMenu(R.menu.menu_unable_update_profile_toolbar)
     }
 
 }
