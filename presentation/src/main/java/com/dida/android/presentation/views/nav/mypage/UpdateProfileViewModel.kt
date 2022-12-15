@@ -129,6 +129,7 @@ class UpdateProfileViewModel @Inject constructor(
 
     fun updateProfile(){
         baseViewModelScope.launch {
+            showLoading()
             val deferreds : MutableList<Deferred<NetworkResult<Unit>>> = mutableListOf()
             if(currentProfileImage != profileImageState.value){
                 deferreds.add(async {
@@ -146,6 +147,7 @@ class UpdateProfileViewModel @Inject constructor(
                 })
             }
             deferreds.awaitAll()
+            dismissLoading()
             _navigationEvent.emit(UpdateProfileNavigationAction.NavigateToBack)
         }
     }
