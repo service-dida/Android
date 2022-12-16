@@ -29,16 +29,18 @@ class UpdateProfileViewModel @Inject constructor(
 
     private val TAG = "UpdateProfileViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<UpdateProfileNavigationAction> = MutableSharedFlow<UpdateProfileNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<UpdateProfileNavigationAction> = MutableSharedFlow()
     val navigationEvent: SharedFlow<UpdateProfileNavigationAction> = _navigationEvent
 
-    private val _updateCheckState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    private val _updateCheckState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val updateCheckState: StateFlow<Boolean> = _updateCheckState
 
-    val profileImageState : MutableStateFlow<String> = MutableStateFlow<String>("")
-    val nickNameState: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val descriptionState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    //현재 프로필 정보를 저장
+    val profileImageState : MutableStateFlow<String> = MutableStateFlow("")
+    val nickNameState: MutableStateFlow<String> = MutableStateFlow("")
+    val descriptionState: MutableStateFlow<String> = MutableStateFlow("")
 
+    //초기 프로필 정보를 저장 , 초기와 같은 정보들은 수정 API를 호출안하기 위함
     private lateinit var currentNickname : String
     private lateinit var currentProfileImage : String
     private lateinit var currentDescription : String
@@ -68,6 +70,11 @@ class UpdateProfileViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             launch {
+                nickNameState.collect{
+                    _updateCheckState.value = false
+                }
+            }
+            launch {
                 nickNameState.debounce(500).collect {
                     if(it == currentNickname){
                         setNicknameVerify(4)
@@ -86,7 +93,6 @@ class UpdateProfileViewModel @Inject constructor(
                     updateCheck()
                 }
             }
-
         }
     }
 
@@ -121,7 +127,6 @@ class UpdateProfileViewModel @Inject constructor(
         }
         updateCheck()
     }
-
 
     private fun updateCheck(){
         _updateCheckState.value = descriptionCheckState.value && !nickNameCheckState.value

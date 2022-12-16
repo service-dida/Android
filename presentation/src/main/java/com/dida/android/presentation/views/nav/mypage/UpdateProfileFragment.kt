@@ -32,17 +32,14 @@ import okhttp3.RequestBody.Companion.asRequestBody
 class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateProfileViewModel>(R.layout.fragment_update_profile) {
 
     private val TAG = "UpdateProfileFragment"
+    private val navController: NavController by lazy { findNavController() }
+    private val args: UpdateProfileFragmentArgs by navArgs()
+    private lateinit var requestUpdateProfile: ActivityResultLauncher<Intent>
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_update_profile
+    get() = R.layout.fragment_update_profile
 
     override val viewModel: UpdateProfileViewModel by viewModels()
-
-    private val navController: NavController by lazy { findNavController() }
-
-    val args: UpdateProfileFragmentArgs by navArgs()
-
-    private lateinit var requestUpdateProfile: ActivityResultLauncher<Intent>
 
     override fun initStartView() {
         binding.apply {
