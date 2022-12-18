@@ -6,6 +6,10 @@
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.home.Collection" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.android.presentation.views.nav.home.HomeActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +26,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{() -> eventListener.onCollectionItemClicked(holderModel.userId)}">
 
             <ImageView
                 android:id="@+id/user_img"
@@ -78,7 +83,8 @@
             android:paddingRight="16dp"
             android:textColor="@{holderModel.follow ? @color/mainblack : @color/white}"
             android:background="@{holderModel.follow ? @drawable/custom_collect_follow_ok : @drawable/custom_collect_follow}"
-            android:fontFamily="@font/pretendard_regular">
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{() ->  eventListener.onUserFollowClicked(holderModel.userId)}">
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

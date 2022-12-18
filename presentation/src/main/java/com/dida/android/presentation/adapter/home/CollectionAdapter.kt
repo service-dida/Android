@@ -24,12 +24,7 @@ class CollectionAdapter(
             parent,
             false
         )
-        viewDataBinding.nftContents.setOnClickListener {
-            eventListener.onCollectionItemClicked(viewDataBinding.holderModel!!.userId)
-        }
-        viewDataBinding.followBtn.setOnClickListener {
-            eventListener.onUserFollowClicked(viewDataBinding.holderModel!!.userId)
-        }
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 

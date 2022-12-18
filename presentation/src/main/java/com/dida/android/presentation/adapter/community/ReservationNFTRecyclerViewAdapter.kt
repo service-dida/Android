@@ -24,9 +24,6 @@ class ReservationNFTRecyclerViewAdapter(
             parent,
             false
         )
-//        viewDataBinding.root.setOnClickListener {
-//            onClick.invoke(viewDataBinding.holderModel!!.cardId)
-//        }
         return ViewHolder(viewDataBinding)
     }
 

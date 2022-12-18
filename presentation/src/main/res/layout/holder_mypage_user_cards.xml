@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+=
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.mypage.UserNft" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.android.util.NftActionHandler" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -33,7 +37,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/nft_example_image" />
+                tools:srcCompat="@drawable/nft_example_image"
+                android:onClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}"/>
 
             <TextView
                 android:id="@+id/user_name_textview"
@@ -99,7 +104,8 @@
                 android:src="@{holderModel.liked? @drawable/ic_fill_heart : @drawable/ic_empty_heart}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dida_icon_imageview" />
+                app:layout_constraintTop_toBottomOf="@+id/dida_icon_imageview"
+                android:onClick="@{() -> eventListener.onLikeBtnClicked(holderModel.cardId)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

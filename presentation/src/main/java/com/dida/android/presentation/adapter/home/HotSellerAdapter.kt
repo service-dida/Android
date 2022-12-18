@@ -24,9 +24,7 @@ class HotSellerAdapter(
             parent,
             false
         )
-        viewDataBinding.root.setOnClickListener {
-            eventListener.onHotSellerItemClicked(viewDataBinding.holderModel!!.userId)
-        }
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 

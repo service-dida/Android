@@ -24,15 +24,7 @@ class CommunityAdapter(
             parent,
             false
         )
-        viewDataBinding.nextBtn.setOnClickListener {
-            // eventListener.onCommunityItemClicked(viewDataBinding.holderModel!!.contentDetail)
-            eventListener.onCommunityItemClicked(0)
-        }
-
-        viewDataBinding.clipOrMoreBtn.setOnClickListener {
-            //  eventListener.onCommunityItemClicked(viewDataBinding.holderModel!!.contentDetail)
-            eventListener.onClipOrMoreClicked(0)
-        }
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 
