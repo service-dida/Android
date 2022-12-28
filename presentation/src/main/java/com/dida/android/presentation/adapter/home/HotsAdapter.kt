@@ -24,9 +24,7 @@ class HotsAdapter(
             parent,
             false
         )
-        viewDataBinding.root.setOnClickListener {
-            eventListener.onHotItemClicked(viewDataBinding.holderModel!!.cardId.toLong())
-        }
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 

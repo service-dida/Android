@@ -7,6 +7,10 @@
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.community.CreateCommunityNft" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.android.presentation.views.createcommunity.CreateCommunityActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,7 +96,8 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:paddingEnd="16dp"
+            android:onClick="@{() -> eventListener.onNftSelectClicked(holderModel.nftId)}">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

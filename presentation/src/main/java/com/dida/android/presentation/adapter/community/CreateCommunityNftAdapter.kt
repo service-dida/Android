@@ -24,9 +24,7 @@ class CreateCommunityNftAdapter(
             parent,
             false
         )
-        viewDataBinding.nftSelectBtn.setOnClickListener {
-            eventListener.onNftSelectClicked(viewDataBinding.holderModel!!.nftId)
-        }
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 

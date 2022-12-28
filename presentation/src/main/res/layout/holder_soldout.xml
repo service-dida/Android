@@ -5,6 +5,10 @@
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.home.SoldOut" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.android.presentation.views.nav.home.HomeActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:id="@+id/soldout_main">
+        android:id="@+id/soldout_main"
+        android:onClick="@{() -> eventListener.onSoldOutItemClicked(holderModel.nftId)}">
 
         <ImageView
             android:id="@+id/nft_img"

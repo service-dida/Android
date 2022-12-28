@@ -24,9 +24,7 @@ class SoldOutAdapter(
             parent,
             false
         )
-        viewDataBinding.root.setOnClickListener {
-            eventListener.onSoldOutItemClicked(viewDataBinding.holderModel!!.nftId)
-        }
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 

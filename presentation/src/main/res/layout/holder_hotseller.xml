@@ -6,6 +6,10 @@
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.home.HotSeller" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.android.presentation.views.nav.home.HomeActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +17,8 @@
         android:layout_height="174dp"
         android:id="@+id/hots_main"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="14dp">
+        android:layout_marginEnd="14dp"
+        android:onClick="@{() -> eventListener.onHotSellerItemClicked(holderModel.userId)}">
 
         <ImageView
             android:id="@+id/seller_img"
