@@ -25,6 +25,7 @@ class NicknameViewModel @Inject constructor(
     val emailState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val userInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
+
     init {
         baseViewModelScope.launch {
             userInputState.debounce(500).collect {

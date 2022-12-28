@@ -104,8 +104,16 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getTempPassword() }
     }
 
-    override suspend fun updateProfileAPI(description: MultipartBody.Part, file : MultipartBody.Part) : NetworkResult<Unit>{
-        return handleApi { mainAPIService.updateProfile(description,file)}
+    override suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>{
+        return handleApi { mainAPIService.updateProfileImage(file)}
+    }
+
+    override suspend fun updateProfileDescriptionAPI(description: MultipartBody.Part) : NetworkResult<Unit>{
+        return handleApi { mainAPIService.updateProfileDescription(description)}
+    }
+
+    override suspend fun updateProfileNicknameAPI(nickname: MultipartBody.Part): NetworkResult<Unit> {
+        return handleApi { mainAPIService.updateProfileNickname(nickname)}
     }
 
     override suspend fun postLikeAPI(cardId: Long): NetworkResult<Unit> {
@@ -141,6 +149,4 @@ class MainRepositoryImpl @Inject constructor(
         val request = PostSellNftRequest(payPwd = payPwd, cardId = cardId,price = price)
         return handleApi { mainAPIService.postSellNft(request) }
     }
-
-
 }
