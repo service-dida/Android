@@ -60,7 +60,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     private fun initMyPage() {
         initToolbar()
-        initSpinner()
         initAdapter()
     }
 
@@ -84,17 +83,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                 }
                 true
             }
-        }
-    }
-
-    private fun initSpinner() {
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.mypage_spinner_list,
-            R.layout.holder_mypage_nft_type_spinner
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinner.adapter = adapter
         }
     }
 }

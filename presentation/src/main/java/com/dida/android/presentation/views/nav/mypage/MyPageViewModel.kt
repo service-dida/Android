@@ -46,6 +46,14 @@ class MyPageViewModel @Inject constructor(
         MutableStateFlow(UiState.Loading)
     val hasMyNftState: StateFlow<UiState<List<UserNft>>> = _hasMyNftState
 
+
+    enum class MypageNftType{
+        NEWEST,
+        OLDEST
+    }
+    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(MypageNftType.NEWEST)
+    val mypageNftTypeState: StateFlow<MypageNftType> = _mypageNftTypeState
+
     fun getMypage() {
         baseViewModelScope.launch {
             userNftAPI()
@@ -134,5 +142,9 @@ class MyPageViewModel @Inject constructor(
                     dismissLoading()}
                 .onError { e -> catchError(e) }
         }
+    }
+
+    override fun onMypageNftTypeClicked(type: MypageNftType) {
+        _mypageNftTypeState.value = type
     }
 }
