@@ -37,7 +37,7 @@
     <string name="home_collection">활발한 활동 \uD83C\uDF55</string>
 
     <string name="home_soldout_sub_title">기간 별 가장 비싸게 팔린 NFT</string>
-    <string name="home_collection_sub_title">일주일 간 발행한 Nft 수가 10개 이상인 유저</string>
+    <string name="home_collection_sub_title">한달 간 발행한 Nft 수가 10개 이상인 유저</string>
 
     <string name="home_hotitem_tab">Hot Seller</string>
     <string name="home_soldout_tab">Sold Out</string>
