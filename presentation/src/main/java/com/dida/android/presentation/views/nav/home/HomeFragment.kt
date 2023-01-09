@@ -125,7 +125,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_alarm -> {}
-                R.id.action_search -> {}
             }
             true
         }

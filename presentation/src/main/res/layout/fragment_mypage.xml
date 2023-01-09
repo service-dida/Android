@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="com.dida.android.presentation.views.nav.mypage.MyPageViewModel.MypageNftType"/>
         <variable
             name="vm"
             type="com.dida.android.presentation.views.nav.mypage.MyPageViewModel" />
@@ -208,38 +209,54 @@
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="46dp"
                     constraint_endLoading="@{vm.myPageState}"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="22dp"
-                        android:background="@drawable/custom_mypage_nft_type_spinner"
-                        android:popupBackground="@drawable/custom_surface1_radius12"
-                        android:textSize="14dp"
-                        android:theme="@style/SpinnerTheme"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/custom_surface1_radius12"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_mypage_nft_type1"
-                        app:layout_constraintBottom_toBottomOf="@+id/spinner"
-                        app:layout_constraintDimensionRatio="1:1"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/spinner" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/nft_history_buy_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:gravity="center"
+                            android:onClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.NEWEST)}"
+                            android:text="@string/mypage_nft_type_newest_text"
+                            android:textColor="@{vm.mypageNftTypeState==MypageNftType.NEWEST? @color/brand_lemon : @color/surface6}"
+                            android:textSize="14dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_wallet_dot" />
+
+                        <TextView
+                            android:id="@+id/nft_history_sell_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:gravity="center"
+                            android:onClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.OLDEST)}"
+                            android:text="@string/mypage_nft_type_oldest_text"
+                            android:textColor="@{vm.mypageNftTypeState==MypageNftType.OLDEST? @color/brand_lemon : @color/surface6}"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!--TODO : NFT아이템 비율 맞춰야함-->
@@ -248,7 +265,7 @@
                     rv_endLoading="@{vm.myPageState}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -264,6 +281,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     startLoading="@{vm.myPageState}"
+                    tools:visibility="gone"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="9dp">
 

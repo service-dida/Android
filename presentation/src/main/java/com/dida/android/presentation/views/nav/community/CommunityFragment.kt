@@ -36,7 +36,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        initToolbar()
         initRecyclerView()
     }
 
@@ -53,19 +52,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override fun initAfterBinding() {
     }
-
-    private fun initToolbar(){
-        binding.toolbar.inflateMenu(R.menu.menu_community_toolbar)
-        binding.toolbar.setOnMenuItemClickListener {
-            when(it.itemId){
-                R.id.action_search ->{
-                    //TODO : 검색 이벤트 작성
-                }
-            }
-            true
-        }
-    }
-
 
     private fun initRecyclerView(){
         val Reservationlist = mutableListOf(
