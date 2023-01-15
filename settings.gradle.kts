@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
         google()
@@ -29,7 +30,6 @@ buildscript {
 }
 // version catalogs
 enableFeaturePreview("VERSION_CATALOGS")
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -39,7 +39,9 @@ dependencyResolutionManagement {
         maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
     }
     versionCatalogs {
-        create("libs") { from(files("gradle/didalibs.versions.toml")) }
+        create("libs") {
+            from(files("gradle/didalibs.versions.toml"))
+        }
     }
 }
 rootProject.name = "DIDA"

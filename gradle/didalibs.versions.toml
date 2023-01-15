@@ -1,6 +1,11 @@
 [versions]
 # Define the versions
 kotlin = "1.7.10"
+androidGradlePlugin = "7.3.0"
+pluginapplication = "7.2.0"
+pluginkotlin = "1.6.10"
+pluginhilt = "2.39.1"
+pluginsafeargs = "2.3.5"
 
 # Plugins
 safeargs = "2.3.5"
@@ -114,6 +119,9 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-service = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 
 android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+
+android-pluginGradle = {module = "com.android.tools.build:gradle",version.ref = "androidGradlePlugin"}
+kotlin-pluginGradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin",version.ref = "kotlin"}
 
 [bundles]
 # Define bundles/groups of libraries
