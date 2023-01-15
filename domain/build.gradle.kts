@@ -1,4 +1,6 @@
 plugins {
+//    id("android.domain")
+
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
     id("kotlin-kapt")

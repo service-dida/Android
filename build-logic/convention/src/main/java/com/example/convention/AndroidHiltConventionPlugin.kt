@@ -13,11 +13,12 @@ class AndroidHiltConventionPlugin : Plugin<Project> {
             with(pluginManager){
                 apply("org.jetbrains.kotlin.kapt")
                 apply("dagger.hilt.android.plugin")
+                apply("kotlin-kapt")
             }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
-                add("implementation",(libs.findDependency("hilt-android").get()))
-                add("kapt",(libs.findDependency("hilt-android-compiler").get()))
+                add("implementation", (libs.findDependency("hilt-android").get()))
+                add("kapt", (libs.findDependency("hilt-android-compiler").get()))
             }
         }
     }
