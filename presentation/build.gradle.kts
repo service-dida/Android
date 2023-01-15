@@ -4,43 +4,6 @@ plugins {
     id("android.presentation")
 }
 
-val properties = Properties()
-properties.load(project.rootProject.file("local.properties").inputStream())
-
-android {
-    compileSdkVersion(33)
-
-    defaultConfig {
-        applicationId = "com.dida.android"
-        minSdkVersion(21)
-        targetSdkVersion(33)
-        versionCode = 1
-        versionName = "1.0"
-        vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        /* Hide Key (Must In Local.Properties)*/
-        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao_native_app_key"].toString())
-        manifestPlaceholders["KAKAO_NATIVE_APP_KEY_FOR_MANIFEST"] = properties.getProperty("kakao_native_app_key_for_manifest")
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-    compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-
-    buildFeatures.dataBinding = true
-}
-
 dependencies {
 
     implementation(project(mapOf("path" to ":domain")))

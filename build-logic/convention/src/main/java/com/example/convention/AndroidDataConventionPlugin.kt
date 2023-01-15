@@ -45,9 +45,7 @@ class AndroidDataConventionPlugin : Plugin<Project> {
 
                 // DataStore
                 add("implementation", libs.findBundle("datastore").get())
-
             }
-
         }
     }
 }
