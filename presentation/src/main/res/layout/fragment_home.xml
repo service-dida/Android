@@ -48,28 +48,54 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         android:textColor="@color/white"
                         android:textSize="20dp"
+                        tv_endLoading="@{vm.homeState}"
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/home_hotitem">
                     </TextView>
 
                     <com.facebook.shimmer.ShimmerFrameLayout
                         android:id="@+id/hots_shimmer"
+                        startLoading="@{vm.homeState}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        startLoading="@{vm.homeState}"
-                        app:layout_constraintTop_toBottomOf="@id/hotitem_txt">
+                        app:layout_constraintTop_toTopOf="@+id/hotitem_txt"
+                        tools:layout_editor_absoluteX="16dp">
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                            <include layout="@layout/skeleton_holder_hots" />
-                            <include layout="@layout/skeleton_holder_hots" />
-                            <include layout="@layout/skeleton_holder_hots" />
-                            <include layout="@layout/skeleton_holder_hots" />
-                            <include layout="@layout/skeleton_holder_hots" />
-                            <include layout="@layout/skeleton_holder_hots" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="112dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/custom_surface2_radius12"
+                                android:textSize="20dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:orientation="horizontal">
+
+                                <include layout="@layout/skeleton_holder_hots" />
+
+                                <include layout="@layout/skeleton_holder_hots" />
+
+                                <include layout="@layout/skeleton_holder_hots" />
+
+                                <include layout="@layout/skeleton_holder_hots" />
+
+                                <include layout="@layout/skeleton_holder_hots" />
+
+                                <include layout="@layout/skeleton_holder_hots" />
+                            </LinearLayout>
+
                         </LinearLayout>
+
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -176,6 +202,7 @@
                     android:textSize="20dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:text="@string/home_soldout"
+                    tv_endLoading="@{vm.homeState}"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="46dp">
                 </TextView>
@@ -190,6 +217,7 @@
                     android:textSize="14dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/home_soldout_sub_title"
+                    tv_endLoading="@{vm.homeState}"
                     android:layout_marginTop="4dp"
                     android:layout_marginStart="16dp">
                 </TextView>
@@ -275,6 +303,8 @@
                     android:orientation="vertical"
                     soldoutItem="@{vm.soldoutState}"
                     rv_endLoading="@{vm.soldoutState}"
+                    tools:listitem="@layout/holder_soldout"
+                    tools:itemCount="3"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -438,12 +468,39 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-                        <include layout="@layout/skeleton_holder_hotseller" />
+                        android:orientation="vertical">
 
-                        <include layout="@layout/skeleton_holder_hotseller" />
-                        <include layout="@layout/skeleton_holder_hotseller" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <include layout="@layout/skeleton_holder_hotseller" />
+
+                            <include layout="@layout/skeleton_holder_hotseller" />
+                            <include layout="@layout/skeleton_holder_hotseller" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="112dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_surface2_radius12"
+                            android:textSize="20dp"
+                            android:layout_marginTop="53dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="166dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_surface2_radius12"
+                            android:textSize="20dp"
+                            android:layout_marginTop="10dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                     </LinearLayout>
+
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <com.facebook.shimmer.ShimmerFrameLayout
@@ -458,6 +515,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <include layout="@layout/skeleton_holder_soldout" />
                         <include layout="@layout/skeleton_holder_soldout" />
                         <include layout="@layout/skeleton_holder_soldout" />
