@@ -5,15 +5,21 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import java.util.*
 
 internal fun Project.configureKotlinAndroid(
     commonExtensions : CommonExtension<*,*,*,*>
 ){
     commonExtensions.apply {
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+
         compileSdk = 33
 
         defaultConfig{
             minSdk = 21
+            buildConfigField("String", "KLAYTN_HEADER_AUTHORIZATION", properties["klaytn_header_authorization"].toString())
         }
 
         compileOptions{
@@ -22,6 +28,12 @@ internal fun Project.configureKotlinAndroid(
         }
         kotlinOptions{
             jvmTarget = JavaVersion.VERSION_1_8.toString()
+        }
+        buildTypes {
+            getByName("release") {
+                isMinifyEnabled = false
+                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            }
         }
     }
 }

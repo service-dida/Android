@@ -26,10 +26,6 @@ gradlePlugin{
             id = "android.presentation"
             implementationClass = "com.example.convention.AndroidPresentationConventionPlugin"
         }
-        register("AndroidDomain") {
-            id = "android.domain"
-            implementationClass = "com.example.convention.AndroidDomainConventionPlugin"
-        }
         register("AndroidData") {
             id = "android.data"
             implementationClass ="com.example.convention.AndroidDataConventionPlugin"
