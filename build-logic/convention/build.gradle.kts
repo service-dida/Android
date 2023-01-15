@@ -22,5 +22,17 @@ gradlePlugin{
             id = "android.library"
             implementationClass = "com.example.convention.AndroidLibraryConventionPlugin"
         }
+        register("AndroidPresentation"){
+            id = "android.presentation"
+            implementationClass = "com.example.convention.AndroidPresentationConventionPlugin"
+        }
+        register("AndroidDomain"){
+            id = "android.application"
+            implementationClass = "com.example.convention.AndroidDomainConventionPlugin"
+        }
+        register("AndroidData"){
+            id = "android.data"
+            implementationClass ="com.example.convention.AndroidDataConventionPlugin"
+        }
     }
 }
