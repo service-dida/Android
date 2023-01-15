@@ -15,11 +15,13 @@ class AndroidDataConventionPlugin : Plugin<Project> {
             with(pluginManager){
                 apply("android.library")
                 apply("android.hilt")
+                apply("org.jetbrains.kotlin.android")
+                apply("kotlin-parcelize")
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies{
-                add("implementation",project(":domain"))
+                add("implementation", project(":domain"))
             }
 
         }

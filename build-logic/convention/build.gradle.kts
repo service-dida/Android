@@ -13,24 +13,24 @@ dependencies{
 }
 
 gradlePlugin{
-    plugins{
-        register("AndroidHilt"){
+    plugins {
+        register("AndroidHilt") {
             id = "android.hilt"
             implementationClass = "com.example.convention.AndroidHiltConventionPlugin"
         }
-        register("AndroidLibrary"){
+        register("AndroidLibrary") {
             id = "android.library"
             implementationClass = "com.example.convention.AndroidLibraryConventionPlugin"
         }
-        register("AndroidPresentation"){
+        register("AndroidPresentation") {
             id = "android.presentation"
             implementationClass = "com.example.convention.AndroidPresentationConventionPlugin"
         }
-        register("AndroidDomain"){
-            id = "android.application"
+        register("AndroidDomain") {
+            id = "android.domain"
             implementationClass = "com.example.convention.AndroidDomainConventionPlugin"
         }
-        register("AndroidData"){
+        register("AndroidData") {
             id = "android.data"
             implementationClass ="com.example.convention.AndroidDataConventionPlugin"
         }

@@ -1,18 +1,7 @@
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
-//    id("android.presentation")
-
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs")
-    id("kotlin-parcelize")
-
-    id("com.google.gms.google-services")
+    id("android.presentation")
 }
 
 val properties = Properties()

@@ -1,16 +1,7 @@
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
-//    id("android.data")
-    
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs")
-    id("kotlin-parcelize")
+    id("android.data")
 }
 
 val properties = Properties()

@@ -13,8 +13,12 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target){
             with(pluginManager){
-                apply("android.library")
+                apply("com.android.application")
+                apply("org.jetbrains.kotlin.android")
                 apply("android.hilt")
+                apply("androidx.navigation.safeargs.kotlin")
+                apply("kotlin-parcelize")
+                apply("com.google.gms.google-services")
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
