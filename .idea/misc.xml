@@ -3,6 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable-mdpi/custom_surface5_radius10.xml" value="0.1375" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable-v24/custom_hotseller_name.xml" value="0.1945" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable-xxxhdpi/custom_surface2_radius12.xml" value="0.1945" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable/custom_nickname_edit.xml" value="0.1945" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable/custom_surface2_radius16.xml" value="0.1945" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable/custom_surface5_radius10.xml" value="0.1945" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/drawable/ic_defi.xml" value="0.1945" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/activity_nav_host.xml" value="0.30055579307396324" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/fragment_defi.xml" value="0.30055579307396324" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/fragment_detail_nft.xml" value="0.29674968341072183" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/fragment_mypage.xml" value="0.5" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/fragment_nickname.xml" value="0.29674968341072183" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/fragment_swap.xml" value="0.25" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/fragment_update_profile.xml" value="0.20222317229585293" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/holder_collection.xml" value="0.30055579307396324" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/holder_comments.xml" value="0.1675929884566054" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/holder_hots.xml" value="0.25" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/holder_soldout.xml" value="0.30055579307396324" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/skeleton_holder_hots.xml" value="0.5" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/skeleton_holder_hotseller.xml" value="0.29674968341072183" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/skeleton_holder_mypage_user_cards.xml" value="0.29674968341072183" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/layout/skeleton_holder_soldout.xml" value="0.30055579307396324" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/menu/menu_main_bottom_nav.xml" value="0.30055579307396324" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/mipmap-anydpi-v26/ic_dida_logo.xml" value="0.1945" />
+        <entry key="..\:/Users/tmdgh/AndroidStudioProjects/DIDA/presentation/src/main/res/mipmap-anydpi-v26/ic_dida_logo_round.xml" value="0.1945" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_nav_host.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.13055555555555556" />
