@@ -1,7 +1,5 @@
 package com.dida.model.domain
 
-import com.google.gson.annotations.SerializedName
-
 data class CardResponse(
     val cardId: Int,
     val title: String,
