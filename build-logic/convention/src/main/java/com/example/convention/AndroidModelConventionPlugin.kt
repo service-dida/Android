@@ -21,9 +21,8 @@ class AndroidModelConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("junit-junit").get())
                 add("implementation", libs.findLibrary("androidx-test-junit").get())
 
-                // Network
+                // Gson
                 add("implementation", libs.findBundle("gson").get())
-                add("implementation", libs.findLibrary("squareup-retrofit2").get())
             }
         }
     }
