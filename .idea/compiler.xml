@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="DIDA.data" target="11" />
+      <module name="DIDA.model" target="11" />
       <module name="DIDA.presentation" target="11" />
     </bytecodeTargetLevel>
   </component>
