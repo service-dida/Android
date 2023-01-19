@@ -17,6 +17,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentUpdateProfileBinding
 import com.dida.android.util.uriToFile
 import com.dida.common.base.BaseFragment
+import com.dida.common.util.DidaIntent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
