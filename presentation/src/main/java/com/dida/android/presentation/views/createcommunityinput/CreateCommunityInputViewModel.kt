@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views.createcommunityinput
 
-import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.views.nav.home.HomeNavigationAction
+import com.dida.common.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.community.CreateCommunityNft
 import dagger.hilt.android.lifecycle.HiltViewModel

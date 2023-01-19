@@ -8,15 +8,13 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentWalletBinding
 import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapter
 import com.dida.android.presentation.adapter.mypage.WalletNFTHistoryRecyclerViewAdapter
-import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.SnapPagerScrollListener
 import com.dida.android.util.addSnapPagerScroll
+import com.dida.common.base.BaseFragment
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint

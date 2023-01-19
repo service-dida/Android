@@ -8,8 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
-import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.NavHostActivity
+import com.dida.common.base.BaseFragment
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient

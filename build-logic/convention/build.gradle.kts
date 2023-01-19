@@ -38,5 +38,9 @@ gradlePlugin{
             id = "android.feature"
             implementationClass ="com.example.convention.AndroidFeatureConventionPlugin"
         }
+        register("AndroidCommon") {
+            id = "android.common"
+            implementationClass ="com.example.convention.AndroidCommonConventionPlugin"
+        }
     }
 }

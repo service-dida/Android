@@ -6,8 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
-import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.NavHostActivity
+import com.dida.common.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -3,9 +3,7 @@ package com.dida.android.presentation.views.nav.add.addmain
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.setFragmentResultListener
@@ -15,8 +13,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddBinding
-import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.common.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

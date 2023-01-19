@@ -1,11 +1,13 @@
 package com.dida.android.presentation.views.nav.home
 
-import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.util.NftActionHandler
 import com.dida.android.util.UiState
-import com.dida.domain.*
+import com.dida.common.base.BaseViewModel
+import com.dida.domain.flatMap
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HomeAPI
 import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.PostUserFollowAPI

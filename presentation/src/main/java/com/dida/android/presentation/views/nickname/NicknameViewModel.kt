@@ -1,6 +1,6 @@
 package com.dida.android.presentation.views.nickname
 
-import com.dida.android.presentation.base.BaseViewModel
+import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.domain.onError
 import com.dida.domain.onSuccess

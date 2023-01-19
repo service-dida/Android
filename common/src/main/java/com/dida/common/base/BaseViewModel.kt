@@ -40,7 +40,6 @@ abstract class BaseViewModel : ViewModel() {
                     else -> _errorEvent.emit(exception)
                 }
             }
-            dismissLoading()
         }
     }
 

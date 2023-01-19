@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
 import com.dida.android.presentation.adapter.home.RecentNftAdapter
-import com.dida.android.presentation.base.BaseFragment
+import com.dida.common.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

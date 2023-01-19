@@ -1,24 +1,16 @@
 package com.dida.android.presentation.views.nav
 
-import android.content.Intent
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.R
 import com.dida.android.databinding.ActivityNavHostBinding
-import com.dida.android.presentation.base.BaseActivity
-import com.dida.android.presentation.views.login.LoginActivity
-import com.dida.data.DataApplication.Companion.dataStorePreferences
+import com.dida.common.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>() {

@@ -8,8 +8,6 @@ import android.view.View.OnTouchListener
 import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -17,10 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentUpdateProfileBinding
-import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.nickname.NicknameFragmentArgs
 import com.dida.android.util.DidaIntent
 import com.dida.android.util.uriToFile
+import com.dida.common.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -1,9 +1,8 @@
 package com.dida.android.presentation.views.nav.mypage
 
 import android.net.Uri
-import com.dida.android.presentation.base.BaseViewModel
+import com.dida.common.base.BaseViewModel
 import com.dida.domain.NetworkResult
-import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.NicknameCheckAPI

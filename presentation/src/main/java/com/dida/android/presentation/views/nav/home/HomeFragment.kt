@@ -12,16 +12,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
-import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.util.DidaIntent
 import com.dida.android.util.addSnapPagerScroll
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
+import com.dida.common.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {

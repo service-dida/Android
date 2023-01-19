@@ -4,9 +4,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.BottomAddNftPriceBinding
-import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
+import com.dida.common.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
