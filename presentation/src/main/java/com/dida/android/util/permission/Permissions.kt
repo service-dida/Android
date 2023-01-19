@@ -1,6 +1,5 @@
 package com.dida.android.util.permission
 
-
 import android.Manifest
 import android.util.Log
 import androidx.annotation.RequiresApi

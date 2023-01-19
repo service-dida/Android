@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentUpdateProfileBinding
-import com.dida.android.util.DidaIntent
 import com.dida.android.util.uriToFile
 import com.dida.common.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint

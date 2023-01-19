@@ -1,10 +1,10 @@
 package com.dida.android.presentation.views.nav.mypage
 
-import com.dida.android.util.AppLog
 import com.dida.android.util.NftActionHandler
 import com.dida.android.util.UiState
 import com.dida.android.util.successOrNull
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.AppLog
 import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.UserNft
