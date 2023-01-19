@@ -35,7 +35,11 @@ class BearerInterceptor : Interceptor {
         val request = chain.request()
         val response = chain.proceed(request)
         if(response.code == 400) {
+
+            val requestUrl = request.url.toString()
             val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
+            val errorException = createErrorException(requestUrl, response.code, errorResponse)
+
             if(errorResponse?.code == 102) {
                 runBlocking {
                     //토큰 갱신 api 호출
@@ -55,10 +59,13 @@ class BearerInterceptor : Interceptor {
                             .onError { accessToken = "" }
                     }
                 }
+
+                val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
+                    .build()
+                return chain.proceed(newRequest)
             }
-            val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
-                .build()
-            return chain.proceed(newRequest)
+            errorException?.let { throw it }
+            return response
         }
         return response
     }
