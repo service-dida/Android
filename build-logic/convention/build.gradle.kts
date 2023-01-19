@@ -34,5 +34,9 @@ gradlePlugin{
             id = "android.model"
             implementationClass ="com.example.convention.AndroidModelConventionPlugin"
         }
+        register("AndroidFeature") {
+            id = "android.feature"
+            implementationClass ="com.example.convention.AndroidFeatureConventionPlugin"
+        }
     }
 }
