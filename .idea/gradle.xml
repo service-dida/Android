@@ -28,6 +28,9 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/login" />
+            <option value="$PROJECT_DIR$/feature/main" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/presentation" />
           </set>
