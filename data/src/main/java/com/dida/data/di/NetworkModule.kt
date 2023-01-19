@@ -36,7 +36,7 @@ object NetworkModule {
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
-            .addInterceptor(ErrorResponseInterceptor()) // Error Response
+//            .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .addInterceptor(BearerInterceptor()) // Refresh Token
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
@@ -45,7 +45,7 @@ object NetworkModule {
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
-            .addInterceptor(ErrorResponseInterceptor()) // Error Response
+//            .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .addInterceptor(BearerInterceptor()) // Refresh Token
             .build()
     }

@@ -45,7 +45,7 @@ fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
         null
     }
 
-private fun createErrorException(url: String?, httpCode: Int, errorResponse: ErrorResponseImpl?): Exception? =
+fun createErrorException(url: String?, httpCode: Int, errorResponse: ErrorResponseImpl?): Exception? =
     when(errorResponse?.code) {
         100 -> HaveNotJwtTokenException(Throwable(errorResponse.message), url, 100)
         102 -> InvalidJwtTokenException(Throwable(errorResponse.message), url, 102)
