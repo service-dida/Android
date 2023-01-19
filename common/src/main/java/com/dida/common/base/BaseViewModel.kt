@@ -46,13 +46,13 @@ abstract class BaseViewModel : ViewModel() {
 
     fun showLoading() {
         baseViewModelScope.launch {
-            _loadingEvent.emit(false)
+            _loadingEvent.emit(true)
         }
     }
 
     fun dismissLoading() {
         baseViewModelScope.launch {
-            _loadingEvent.emit(true)
+            _loadingEvent.emit(false)
         }
     }
 

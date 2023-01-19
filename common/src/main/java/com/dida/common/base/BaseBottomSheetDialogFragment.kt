@@ -30,8 +30,6 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
 
     private var isSetBackButtonValid = false
 
-    lateinit var mLoadingDialog: LoadingDialog
-
     protected var exception: SharedFlow<Throwable>? = null
     private var toast: Toast? = null
 

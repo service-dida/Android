@@ -1,28 +1,29 @@
 package com.dida.common.util
 
-import android.app.Dialog
-import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Window
-import com.airbnb.lottie.LottieAnimationView
-import com.dida.common.R
+import android.view.*
+import androidx.fragment.app.DialogFragment
+import com.dida.common.databinding.FragmentLoadingBinding
 
-class LoadingDialog constructor(context: Context) : Dialog(context){
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.dialog_loading)
-        setCanceledOnTouchOutside(false)
-        setCancelable(false)
-        window!!.setBackgroundDrawable(ColorDrawable())
-        window!!.setDimAmount(0.2f)
+class LoadingDialogFragment : DialogFragment() {
 
-        val lottieAnimationView = findViewById<LottieAnimationView>(R.id.progressBar)
-        lottieAnimationView.playAnimation()
+    companion object {
+        const val TAG = "LoadingDialogFragment"
     }
 
-    override fun show() {
-        if(!this.isShowing) super.show()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        return FragmentLoadingBinding.inflate(inflater, container, false).root
     }
+
+    override fun onStart() {
+        super.onStart()
+        isCancelable = false
+        dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        setStyle(STYLE_NO_FRAME, android.R.style.Theme)
+    }
+
 }

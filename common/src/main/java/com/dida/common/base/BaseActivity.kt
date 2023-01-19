@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.dida.android.util.LoadingDialog
+import com.dida.common.util.LoadingDialogFragment
 
 abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {
 
@@ -45,10 +46,6 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
     abstract fun initAfterBinding()
 
     private var isSetBackButtonValid = false
-
-    private val mLoadingDialog: LoadingDialog by lazy {
-        LoadingDialog(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

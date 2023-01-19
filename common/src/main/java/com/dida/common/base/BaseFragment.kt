@@ -17,11 +17,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
-import com.dida.android.NavigationGraphDirections
-import com.dida.android.presentation.views.login.LoginActivity
-import com.dida.android.util.LoadingDialog
-import com.dida.android.util.Scheme
-import com.dida.android.util.SchemeUtils
+import com.dida.common.util.LoadingDialogFragment
+import com.dida.common.util.Scheme
+import com.dida.common.util.SchemeUtils
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -68,7 +66,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     /**
      * Loading Dialog 관련해서 사용할 변수
      */
-    private val mLoadingDialog: LoadingDialog by lazy { LoadingDialog(requireContext()) }
+    private val mLoadingDialog: LoadingDialogFragment by lazy { LoadingDialogFragment() }
 
     /**
      * Exception을 처리할 SharedFlow
@@ -93,8 +91,8 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
             launch {
                 viewModel.loadingEvent.collectLatest {
-                    if(!it) { showLoadingDialog() }
-                    else { dismissLoadingDialog() }
+                    if(it) showLoadingDialog()
+                    else dismissLoadingDialog()
                 }
             }
 
@@ -130,12 +128,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.
     private fun showLoadingDialog() {
-        mLoadingDialog.show()
+        mLoadingDialog.show(childFragmentManager, LoadingDialogFragment.TAG)
     }
 
     // 띄워 놓은 로딩 다이얼로그를 없앰.
     private fun dismissLoadingDialog() {
-        if (mLoadingDialog.isShowing) {
+        if (mLoadingDialog.showsDialog) {
             mLoadingDialog.dismiss()
         }
     }
