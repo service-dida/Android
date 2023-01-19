@@ -1,5 +1,5 @@
 plugins {
-    id("android.presentation")
+    id("android.feature")
 }
 
 dependencies {

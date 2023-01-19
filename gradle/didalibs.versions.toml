@@ -46,7 +46,7 @@ circleImageview = "3.1.0"
 datastore = "1.0.0"
 
 firebaseBom = "30.4.1"
-firebaseMessage = "23.0.8"
+firebaseMessage = "20.1.0"
 googleServices = "4.3.13"
 
 lottie = "3.4.0"
@@ -122,8 +122,8 @@ firebase-service = { module = "com.google.gms:google-services", version.ref = "g
 
 android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 
-android-pluginGradle = {module = "com.android.tools.build:gradle",version.ref = "androidGradlePlugin"}
-kotlin-pluginGradle = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin",version.ref = "kotlin"}
+android-pluginGradle = { module = "com.android.tools.build:gradle",version.ref = "androidGradlePlugin" }
+kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin",version.ref = "kotlin" }
 
 [bundles]
 # Define bundles/groups of libraries
