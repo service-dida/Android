@@ -30,5 +30,9 @@ gradlePlugin{
             id = "android.data"
             implementationClass ="com.example.convention.AndroidDataConventionPlugin"
         }
+        register("AndroidModel") {
+            id = "android.model"
+            implementationClass ="com.example.convention.AndroidModelConventionPlugin"
+        }
     }
 }

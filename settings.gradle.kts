@@ -48,3 +48,4 @@ rootProject.name = "DIDA"
 include(":presentation")
 include(":data")
 include(":domain")
+include(":model")
