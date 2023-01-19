@@ -18,7 +18,6 @@ class PresentationApplication :Application(){
         // 다크모드 비활성화
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-//        mySharedPreferences = MySharedPreferences(applicationContext)
         dataStorePreferences = DataStorePreferences(applicationContext)
         // Kakao SDK 초기화
         KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
