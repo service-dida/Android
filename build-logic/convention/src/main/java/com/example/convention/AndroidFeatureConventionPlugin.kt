@@ -17,6 +17,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 apply("android.hilt")
                 apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")
+                apply("com.google.gms.google-services")
             }
 
             extensions.configure<LibraryExtension>{
@@ -77,6 +78,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                     // Firebase
                     add("implementation", libs.findLibrary("firebase-analytics").get())
                     add("implementation", libs.findLibrary("firebase-messaging").get())
+                    add("implementation", libs.findLibrary("firebase-service").get())
+
                 }
             }
         }

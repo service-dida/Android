@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
-import com.dida.android.util.LoadingDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.SharedFlow
@@ -36,7 +35,7 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, com.dida.android.R.style.Theme_DIDA_BottomDialogAboveKeyboard)
+        setStyle(STYLE_NORMAL, com.dida.common.R.style.Theme_DIDA_BottomDialogAboveKeyboard)
     }
 
     override fun onCreateView(

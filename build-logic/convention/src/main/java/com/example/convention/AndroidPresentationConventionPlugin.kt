@@ -94,6 +94,8 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     // Firebase
                     add("implementation", libs.findLibrary("firebase-analytics").get())
                     add("implementation", libs.findLibrary("firebase-messaging").get())
+                    add("implementation", libs.findLibrary("firebase-service").get())
+
                 }
             }
         }
