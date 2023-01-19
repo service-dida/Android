@@ -51,6 +51,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
                                 activity.finish()
                             }
                         }
+                        else -> {}
                     }
                 }
             }

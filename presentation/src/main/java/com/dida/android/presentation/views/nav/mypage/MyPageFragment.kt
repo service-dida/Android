@@ -45,6 +45,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToWalletFragment())
                     is MypageNavigationAction.NavigateToUpdateProfile -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUpdateProfileFragment(it.image,it.nickname,it.description))
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
+                    else -> {}
                 }
             }
         }
