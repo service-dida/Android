@@ -1,6 +1,6 @@
 package com.dida.android.presentation.views.email
 
-import com.dida.android.presentation.base.BaseViewModel
+import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CreateWalletAPI
@@ -8,7 +8,6 @@ import com.dida.domain.usecase.main.SendEmailAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject

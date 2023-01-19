@@ -19,7 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.DialogPasswordBinding
-import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
+import com.dida.common.base.BaseBottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

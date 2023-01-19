@@ -1,9 +1,7 @@
 package com.dida.android.presentation.views
 
-import android.provider.Settings.System.getString
 import androidx.lifecycle.viewModelScope
-import com.dida.android.R
-import com.dida.android.presentation.base.BaseViewModel
+import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.domain.onError
 import com.dida.domain.onSuccess

@@ -1,7 +1,7 @@
-package com.dida.android.presentation.base
+package com.dida.common.base
 
-import com.dida.android.R
-import com.dida.android.databinding.DialogCommonAlertBinding
+import com.dida.common.R
+import com.dida.common.databinding.DialogCommonAlertBinding
 
 data class AlertModel(
     val title : String,

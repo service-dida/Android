@@ -2,12 +2,10 @@ package com.dida.android.presentation.views.detailnft
 
 import android.os.Handler
 import android.os.Looper
-import com.dida.android.presentation.base.BaseViewModel
 import com.dida.android.presentation.views.nav.community.CommunityActionHandler
 import com.dida.android.presentation.views.nav.community.CommunityWriteActionHandler
 import com.dida.android.util.UiState
-import com.dida.data.repository.MainRepositoryImpl
-import com.dida.domain.model.nav.detailnft.Community
+import com.dida.common.base.BaseViewModel
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.onError
 import com.dida.domain.onSuccess

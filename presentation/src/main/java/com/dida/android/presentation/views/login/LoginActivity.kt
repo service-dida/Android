@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.dida.android.R
 import com.dida.android.databinding.ActivityLoginBinding
-import com.dida.android.presentation.base.BaseActivity
+import com.dida.common.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

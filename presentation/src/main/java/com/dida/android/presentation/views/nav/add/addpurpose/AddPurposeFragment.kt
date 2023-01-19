@@ -9,10 +9,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
-import com.dida.android.presentation.base.BaseFragment
 import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
 import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.common.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

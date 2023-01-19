@@ -1,15 +1,16 @@
 package com.dida.android.presentation.views.nav.add.addmain
 
 import android.net.Uri
-import com.dida.android.presentation.base.BaseViewModel
-import com.dida.data.model.HaveNotJwtTokenException
+import com.dida.common.base.BaseViewModel
 import com.dida.data.model.NeedToWalletException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CheckPasswordAPI
 import com.dida.domain.usecase.main.WalletExistedAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -7,14 +7,12 @@ import com.dida.android.databinding.FragmentCommunityBinding
 import com.dida.android.presentation.adapter.community.ActiveNFTRecyclerViewAdapter
 import com.dida.android.presentation.adapter.community.ReservationNFTRecyclerViewAdapter
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
-import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.presentation.views.nav.mypage.MyPageFragmentDirections
+import com.dida.common.base.BaseFragment
 import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint

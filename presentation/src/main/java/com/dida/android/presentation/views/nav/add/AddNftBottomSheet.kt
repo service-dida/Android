@@ -3,7 +3,7 @@ package com.dida.android.presentation.views.nav.add
 import androidx.fragment.app.viewModels
 import com.dida.android.R
 import com.dida.android.databinding.BottomAddNftBinding
-import com.dida.android.presentation.base.BaseBottomSheetDialogFragment
+import com.dida.common.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

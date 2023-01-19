@@ -2,22 +2,17 @@ package com.dida.android.presentation.views
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.dida.android.R
 import com.dida.android.databinding.FragmentSplashBinding
-import com.dida.android.presentation.base.BaseFragment
-import com.dida.android.util.AppLog
+import com.dida.common.base.BaseFragment
+import com.dida.common.util.AppLog
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

@@ -1,6 +1,6 @@
 package com.dida.android.presentation.views.createcommunity
 
-import com.dida.android.presentation.base.BaseViewModel
+import com.dida.common.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

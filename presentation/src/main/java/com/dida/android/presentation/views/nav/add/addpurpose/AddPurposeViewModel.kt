@@ -1,6 +1,6 @@
 package com.dida.android.presentation.views.nav.add.addpurpose
 
-import com.dida.android.presentation.base.BaseViewModel
+import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess

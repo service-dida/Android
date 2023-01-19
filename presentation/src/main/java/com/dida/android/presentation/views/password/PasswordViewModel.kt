@@ -1,10 +1,6 @@
 package com.dida.android.presentation.views.password
 
-import android.os.Handler
-import android.os.Looper
-import com.dida.android.presentation.base.BaseViewModel
-import com.dida.android.presentation.views.nav.mypage.MypageNavigationAction
-import com.dida.android.util.AppLog
+import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckPasswordAPI

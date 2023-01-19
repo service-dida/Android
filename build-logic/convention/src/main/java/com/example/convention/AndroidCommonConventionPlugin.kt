@@ -1,6 +1,6 @@
 package com.example.convention
 
-import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.gradle.LibraryExtension
 import com.example.convention.project.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -9,35 +9,25 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
-class AndroidPresentationConventionPlugin : Plugin<Project> {
+class AndroidCommonConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target){
             with(pluginManager){
-                apply("com.android.application")
-                apply("org.jetbrains.kotlin.android")
+                apply("android.library")
                 apply("android.hilt")
-                apply("androidx.navigation.safeargs.kotlin")
+                apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")
-                apply("com.google.gms.google-services")
             }
 
-            extensions.configure<ApplicationExtension>{
-                defaultConfig {
-                    applicationId = "com.dida.android"
-                    versionCode = 1
-                    versionName = "1.0"
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                }
-
+            extensions.configure<LibraryExtension>{
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 33
                 buildFeatures.dataBinding = true
 
                 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-                dependencies{
-                    add("implementation", project(":domain"))
+                dependencies {
                     add("implementation", project(":data"))
-                    add("implementation", project(":common"))
+                    add("implementation", project(":domain"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
@@ -53,7 +43,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", libs.findLibrary("circle-imageview").get())
                     add("implementation", libs.findLibrary("facebook-shimmer").get())
                     add("implementation", libs.findLibrary("android-lottie").get())
-                    
+
                     // Network
                     add("implementation", libs.findBundle("gson").get())
                     add("implementation", libs.findLibrary("squareup-retrofit2").get())
@@ -84,12 +74,6 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                     // Data Store
                     add("implementation", libs.findBundle("datastore").get())
-
-                    // Firebase
-                    add("implementation", libs.findLibrary("firebase-analytics").get())
-                    add("implementation", libs.findLibrary("firebase-messaging").get())
-                    add("implementation", libs.findLibrary("firebase-service").get())
-
                 }
             }
         }

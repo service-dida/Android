@@ -28,6 +28,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
                 dependencies {
                     add("implementation", project(":data"))
+                    add("implementation", project(":domain"))
+                    add("implementation", project(":common"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
@@ -74,12 +76,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 
                     // Data Store
                     add("implementation", libs.findBundle("datastore").get())
-
-                    // Firebase
-                    add("implementation", libs.findLibrary("firebase-analytics").get())
-                    add("implementation", libs.findLibrary("firebase-messaging").get())
-                    add("implementation", libs.findLibrary("firebase-service").get())
-
                 }
             }
         }

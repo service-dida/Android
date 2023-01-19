@@ -1,8 +1,7 @@
 package com.dida.android.presentation.views.wallet
 
-import com.dida.android.presentation.base.BaseViewModel
+import com.dida.common.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl
-import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
