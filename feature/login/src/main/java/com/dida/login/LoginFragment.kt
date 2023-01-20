@@ -6,6 +6,8 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.dida.android.presentation.views.login.LoginMainFragmentDirections
+import com.dida.android.presentation.views.nav.NavHostActivity
 import com.dida.common.base.BaseFragment
 import com.dida.login.databinding.FragmentLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
@@ -39,8 +41,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginMainViewModel>(R.l
                     is LoginNavigationAction.NavigateToLoginFail -> toastMessage("로그인에 실패하였습니다.")
                     is LoginNavigationAction.NavigateToNickname -> {
                         toastMessage("회원가입이 필요합니다.")
-//                        val action = LoginFragmentDr.actionLoginMainFragmentToNicknameFragment(it.email)
-//                        navigate(action)
+                        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email)
+                        navigate(action)
                     }
                     is LoginNavigationAction.NavigateToHome -> {
                         toastMessage("로그인에 성공하였습니다.")

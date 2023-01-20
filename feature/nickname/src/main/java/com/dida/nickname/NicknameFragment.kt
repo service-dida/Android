@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.dida.android.presentation.views.nav.NavHostActivity
+import com.dida.android.presentation.views.nickname.NicknameFragmentArgs
 import com.dida.common.base.BaseFragment
 import com.dida.nickname.databinding.FragmentNicknameBinding
 import dagger.hilt.android.AndroidEntryPoint
