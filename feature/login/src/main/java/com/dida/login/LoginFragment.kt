@@ -39,9 +39,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginMainViewModel>(R.l
                     is LoginNavigationAction.NavigateToLoginFail -> toastMessage("로그인에 실패하였습니다.")
                     is LoginNavigationAction.NavigateToNickname -> {
                         toastMessage("회원가입이 필요합니다.")
-
-                        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email)
-                        navigate(action)
+//                        val action = LoginFragmentDr.actionLoginMainFragmentToNicknameFragment(it.email)
+//                        navigate(action)
                     }
                     is LoginNavigationAction.NavigateToHome -> {
                         toastMessage("로그인에 성공하였습니다.")

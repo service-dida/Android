@@ -6,6 +6,7 @@
       <module name="DIDA.data" target="11" />
       <module name="DIDA.feature.login" target="11" />
       <module name="DIDA.feature.main" target="11" />
+      <module name="DIDA.feature.nickname" target="11" />
       <module name="DIDA.model" target="11" />
       <module name="DIDA.presentation" target="11" />
     </bytecodeTargetLevel>
