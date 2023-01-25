@@ -1,4 +1,4 @@
-package com.dida.common.base
+package com.dida.android.presentation.views
 
 import android.content.Intent
 import android.net.Uri
@@ -17,6 +17,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
+import com.dida.android.NavigationGraphDirections
+import com.dida.android.presentation.activities.LoginActivity
+import com.dida.common.base.BaseViewModel
 import com.dida.common.util.LoadingDialogFragment
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
@@ -97,7 +100,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-//                viewModel.needLoginEvent.collectLatest { loginCheck() }
+                viewModel.needLoginEvent.collectLatest { loginCheck() }
             }
         }
     }
@@ -161,26 +164,26 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     }
 
     // Home 화면으로 이동
-//    protected fun navigateToHomeFragment(navOptions: NavOptions? = null) {
-//        val mainFragmentId = com.dida.android.R.id.homeFragment
-//        if (findNavController().currentDestination?.id != mainFragmentId) {
-//            val result = findNavController().popBackStack(mainFragmentId, false)
-//            if (!result) {
-//                findNavController().navigate(NavigationGraphDirections.actionMainFragment(), navOptions)
-//            }
-//        }
-//    }
-//
-//    // 미 로그인시 로그인 로직
-//    private fun loginCheck() {
-//        val intent = Intent(requireActivity(), LoginActivity::class.java)
-//        registerForActivityResult.launch(intent)
-//    }
+    protected fun navigateToHomeFragment(navOptions: NavOptions? = null) {
+        val mainFragmentId = com.dida.android.R.id.homeFragment
+        if (findNavController().currentDestination?.id != mainFragmentId) {
+            val result = findNavController().popBackStack(mainFragmentId, false)
+            if (!result) {
+                findNavController().navigate(NavigationGraphDirections.actionMainFragment(), navOptions)
+            }
+        }
+    }
 
-//    private val registerForActivityResult =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == 0) navigateToHomeFragment(null)
-//        }
+    // 미 로그인시 로그인 로직
+    private fun loginCheck() {
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        registerForActivityResult.launch(intent)
+    }
+
+    private val registerForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == 0) navigateToHomeFragment(null)
+        }
 
     // DeepLink Handler
     protected fun handelDeepLinkInternal(deepLink: String, navOptions: NavOptions? = null): Boolean {

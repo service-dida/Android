@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loginMainFragment"
-        android:name="com.dida.android.presentation.views.login.LoginMainFragment"
+        android:name="com.dida.android.presentation.views.LoginMainFragment"
         android:label="LoginMainFragment" >
         <action
             android:id="@+id/action_loginMainFragment_to_nicknameFragment"

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.login
+package com.dida.android.presentation.views
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
-import com.dida.android.presentation.views.nav.NavHostActivity
-import com.dida.common.base.BaseFragment
+import com.dida.android.presentation.activities.NavHostActivity
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.kakao.sdk.auth.model.OAuthToken

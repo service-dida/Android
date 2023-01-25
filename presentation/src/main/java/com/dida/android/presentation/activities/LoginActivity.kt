@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.login
+package com.dida.android.presentation.activities
 
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -6,7 +6,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.dida.android.R
 import com.dida.android.databinding.ActivityLoginBinding
 import com.dida.common.base.BaseActivity
-import com.dida.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -15,7 +15,7 @@ import com.dida.android.presentation.adapter.home.*
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
-import com.dida.common.base.BaseFragment
+import com.dida.android.presentation.views.BaseFragment
 import com.dida.common.util.DidaIntent
 import com.dida.common.util.addSnapPagerScroll
 import dagger.hilt.android.AndroidEntryPoint

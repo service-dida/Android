@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav
+package com.dida.android.presentation.activities
 
 import android.view.View
 import android.widget.Toast

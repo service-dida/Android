@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import com.dida.android.R
 import com.dida.android.databinding.FragmentCreateCommunityNftBinding
 import com.dida.android.presentation.adapter.community.CreateCommunityNftAdapter
-import com.dida.common.base.BaseFragment
+import com.dida.android.presentation.views.BaseFragment
 import com.dida.domain.model.nav.community.CreateCommunityNft
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.NavHostViewModel" />
+            type="com.dida.android.presentation.activities.NavHostViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
