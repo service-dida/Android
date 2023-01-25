@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.home
+package com.dida.home
 
 interface HomeActionHandler {
     fun onHotItemClicked(cardId: Long)

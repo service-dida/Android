@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.home
+package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -10,25 +10,28 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
-import com.dida.android.databinding.FragmentHomeBinding
 import com.dida.android.presentation.adapter.home.*
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
-import com.dida.android.presentation.views.BaseFragment
 import com.dida.common.util.DidaIntent
 import com.dida.common.util.addSnapPagerScroll
+import com.dida.home.HomeNavigationAction
+import com.dida.home.HomeViewModel
+import com.dida.home.adapter.*
+import com.dida.home.databinding.FragmentHomeBinding
+import com.dida.home.smoothScrollToView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home) {
 
     private val TAG = "HomeFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_home
+        get() = com.dida.home.R.layout.fragment_home
 
     override val viewModel : HomeViewModel by viewModels()
 

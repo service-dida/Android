@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.home
+package com.dida.home
 
 import android.animation.ObjectAnimator
 import android.graphics.Rect
@@ -23,7 +23,7 @@ private fun calculateRectOnScreen(view: View): Rect {
     )
 }
 
-internal fun NestedScrollView.smoothScrollToView(
+fun NestedScrollView.smoothScrollToView(
     view: View,
     marginTop: Int = 0,
     maxDuration: Long = 500L,

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.home
+package com.dida.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,20 +7,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
-import com.dida.android.databinding.HolderSoldoutBinding
-import com.dida.android.presentation.views.nav.home.HomeActionHandler
-import com.dida.domain.model.nav.home.SoldOut
+import com.dida.android.databinding.HolderCollectionBinding
+import com.dida.home.HomeActionHandler
+import com.dida.domain.model.nav.home.Collection
 
-class SoldOutAdapter(
+class CollectionAdapter(
     private val eventListener: HomeActionHandler
-): ListAdapter<SoldOut, SoldOutAdapter.ViewHolder>(SoldOutItemDiffCallback) {
+) : ListAdapter<Collection, CollectionAdapter.ViewHolder>(CollectionItemDiffCallback){
 
     init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderSoldoutBinding = DataBindingUtil.inflate(
+        val viewDataBinding: HolderCollectionBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.holder_soldout,
+            R.layout.holder_collection,
             parent,
             false
         )
@@ -32,19 +32,20 @@ class SoldOutAdapter(
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: HolderSoldoutBinding) :
+    class ViewHolder(private val binding: HolderCollectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SoldOut) {
+
+        fun bind(item: Collection) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object SoldOutItemDiffCallback : DiffUtil.ItemCallback<SoldOut>() {
-        override fun areItemsTheSame(oldItem: SoldOut, newItem: SoldOut) =
+    internal object CollectionItemDiffCallback : DiffUtil.ItemCallback<Collection>() {
+        override fun areItemsTheSame(oldItem: Collection, newItem: Collection) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: SoldOut, newItem: SoldOut) =
+        override fun areContentsTheSame(oldItem: Collection, newItem: Collection) =
             oldItem.equals(newItem)
     }
 }

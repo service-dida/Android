@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.databinding.FragmentMypageBinding
-import com.dida.android.presentation.adapter.home.RecentNftAdapter
+import com.dida.home.adapter.RecentNftAdapter
 import com.dida.android.presentation.views.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

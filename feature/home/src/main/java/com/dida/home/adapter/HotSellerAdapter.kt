@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.home
+package com.dida.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.android.databinding.HolderHotsellerBinding
-import com.dida.android.presentation.views.nav.home.HomeActionHandler
+import com.dida.home.HomeActionHandler
 import com.dida.domain.model.nav.home.HotSeller
 
 class HotSellerAdapter(

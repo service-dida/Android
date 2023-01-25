@@ -3,13 +3,12 @@ package com.dida.android.presentation.views.nav.mypage
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.dida.android.presentation.adapter.home.RecentNftAdapter
+import com.dida.home.adapter.RecentNftAdapter
 import com.dida.android.util.UiState
 import com.dida.android.util.successOrNull
 import com.dida.domain.model.nav.mypage.UserNft
