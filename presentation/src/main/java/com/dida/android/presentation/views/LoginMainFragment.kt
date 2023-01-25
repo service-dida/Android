@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.activities.NavHostActivity
+import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
@@ -65,9 +66,8 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         view.setOnKeyListener { _, keyCode, event ->
             if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.KEYCODE_BACK) {
                 //TODO: back key 이벤트 시 필요한 코드 추가
-                val intent = Intent(requireActivity(), NavHostActivity::class.java)
-                activity?.setResult(0, intent)
-                activity?.finish()
+                this@LoginMainFragment.toLoginFailure()
+                
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false

@@ -12,3 +12,11 @@ fun Fragment.toLoginSuccess() {
         activity.finish()
     }
 }
+
+fun Fragment.toLoginFailure() {
+    val intent = Intent(requireActivity(), NavHostActivity::class.java)
+    requireActivity().let {
+        it.setResult(0, intent)
+        it.finish()
+    }
+}
