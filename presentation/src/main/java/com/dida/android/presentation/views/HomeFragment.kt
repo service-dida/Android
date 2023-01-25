@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
-import com.dida.android.presentation.adapter.home.*
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
@@ -126,7 +125,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private fun initToolbar() {
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_alarm -> {}
+                com.dida.common.R.id.action_alarm -> {}
             }
             true
         }

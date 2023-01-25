@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter
+package com.dida.common.util
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-object BindingAdapters {
+object GlideBindingAdapters {
 
     @JvmStatic
     @BindingAdapter("image_from_url")

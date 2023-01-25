@@ -1,4 +1,4 @@
-package com.dida.android.util
+package com.dida.common.util
 
 import android.view.View
 import android.widget.ImageView

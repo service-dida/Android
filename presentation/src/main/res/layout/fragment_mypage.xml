@@ -49,8 +49,8 @@
                     android:layout_height="90dp"
                     android:layout_marginTop="14dp"
                     android:scaleType="centerCrop"
-                    iv_endLoading="@{vm.myPageState}"
-                    userProfile="@{vm.myPageState}"
+                    app:iv_endLoading="@{vm.myPageState}"
+                    app:userProfile="@{vm.myPageState}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

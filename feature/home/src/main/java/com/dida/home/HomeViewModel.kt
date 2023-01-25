@@ -1,8 +1,7 @@
 package com.dida.home
 
-import com.dida.android.util.NftActionHandler
-import com.dida.android.util.UiState
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.NftActionHandler
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.home.Home

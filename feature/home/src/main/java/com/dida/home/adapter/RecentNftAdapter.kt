@@ -6,21 +6,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderMypageUserCardsBinding
-import com.dida.android.util.NftActionHandler
+import com.dida.common.databinding.HolderMypageUserCardsBinding
+import com.dida.common.util.NftActionHandler
 import com.dida.domain.model.nav.mypage.UserNft
 
 class RecentNftAdapter(
     private val eventListener: NftActionHandler
 ): ListAdapter<UserNft, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
-    //init { setHasStableIds(true) }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderMypageUserCardsBinding = DataBindingUtil.inflate<HolderMypageUserCardsBinding?>(
             LayoutInflater.from(parent.context),
-            R.layout.holder_mypage_user_cards,
+            com.dida.common.R.layout.holder_mypage_user_cards,
             parent,
             false
         )

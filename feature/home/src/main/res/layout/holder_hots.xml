@@ -8,13 +8,13 @@
 
         <variable
             name="eventListener"
-            type="com.dida.android.presentation.views.nav.home.HomeActionHandler" />
+            type="com.dida.home.HomeActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="266dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_hots"
+        android:background="@drawable/custom_surface2_radius14"
         android:id="@+id/hots_main"
         android:layout_marginTop="8dp"
         android:layout_marginRight="14dp"
@@ -28,7 +28,7 @@
             android:adjustViewBounds="true"
             app:image_from_url_rounded="@{holderModel.nftImg}"
             android:scaleType="centerCrop"
-            android:background="@drawable/custom_hots">
+            android:background="@drawable/custom_surface2_radius14">
         </ImageView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/custom_hot_name"
+            android:background="@drawable/custom_surface2_bottom_radius14"
             android:padding="16dp">
 
             <TextView
@@ -58,7 +58,7 @@
                 app:layout_constraintTop_toBottomOf="@id/hots_name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="16dp"
-                android:src="@mipmap/ic_dida_logo_foreground"/>
+                android:src="@mipmap/img_dida_logo_foreground"/>
 
             <TextView
                 android:id="@+id/hots_coin_txt"
@@ -88,7 +88,7 @@
             android:paddingRight="12dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:background="@drawable/custom_hots_heart">
+            android:background="@drawable/custom_white_radius100">
 
             <ImageView
                 android:id="@+id/heart_img"

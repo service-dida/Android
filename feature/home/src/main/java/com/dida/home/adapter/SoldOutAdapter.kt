@@ -6,10 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderSoldoutBinding
-import com.dida.home.HomeActionHandler
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.home.HomeActionHandler
+import com.dida.home.R
+import com.dida.home.databinding.HolderSoldoutBinding
 
 class SoldOutAdapter(
     private val eventListener: HomeActionHandler
