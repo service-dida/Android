@@ -12,7 +12,7 @@ import org.gradle.kotlin.dsl.getByType
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target){
-            with(pluginManager){
+            with(pluginManager) {
                 apply("android.library")
                 apply("android.hilt")
                 apply("org.jetbrains.kotlin.android")
@@ -20,7 +20,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 apply("androidx.navigation.safeargs.kotlin")
             }
 
-            extensions.configure<LibraryExtension>{
+            extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 33
                 buildFeatures.dataBinding = true

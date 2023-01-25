@@ -11,8 +11,8 @@ import org.gradle.kotlin.dsl.getByType
 
 class AndroidPresentationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        with(target){
-            with(pluginManager){
+        with(target) {
+            with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
                 apply("android.hilt")
@@ -21,7 +21,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 apply("com.google.gms.google-services")
             }
 
-            extensions.configure<ApplicationExtension>{
+            extensions.configure<ApplicationExtension> {
                 defaultConfig {
                     applicationId = "com.dida.android"
                     versionCode = 1
@@ -34,7 +34,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 buildFeatures.dataBinding = true
 
                 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-                dependencies{
+                dependencies {
                     add("implementation", project(":domain"))
                     add("implementation", project(":data"))
                     add("implementation", project(":common"))

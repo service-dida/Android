@@ -20,7 +20,7 @@ class AndroidDataConventionPlugin : Plugin<Project> {
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-            dependencies{
+            dependencies {
                 add("implementation", project(":domain"))
 
                 add("implementation", libs.findLibrary("androidx-core").get())
