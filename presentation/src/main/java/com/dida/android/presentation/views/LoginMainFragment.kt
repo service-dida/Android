@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.FragmentLoginmainBinding
 import com.dida.android.presentation.activities.NavHostActivity
+import com.dida.android.util.toLoginSuccess
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.kakao.sdk.auth.model.OAuthToken
@@ -48,10 +49,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                     }
                     is LoginNavigationAction.NavigateToHome -> {
                         toastMessage("로그인에 성공하였습니다.")
-
-                        val intent = Intent(requireActivity(), NavHostActivity::class.java)
-                        activity?.setResult(9001,intent)
-                        activity?.finish()
+                        this@LoginMainFragment.toLoginSuccess()
                     }
                     is LoginNavigationAction.NavigateToLogin -> kakaoLogin()
                 }

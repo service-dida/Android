@@ -44,7 +44,7 @@
             android:id="@+id/nick_name_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_nickname_edit"
+            android:background="@drawable/custom_surface2_radius10_surface5_1dp"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:drawablePadding="14dp"
@@ -98,7 +98,7 @@
             android:onClick="@{() -> vm.onCreateItemClicked()}"
             android:textColor="@{vm.nickNameCheckState ? @color/surface6 : @color/mainblack}"
             android:textSize="16dp"
-            android:background="@{vm.nickNameCheckState ? @drawable/custom_okbtn_fail_custom : @drawable/custom_okbtn_success}">
+            android:background="@{vm.nickNameCheckState ? @drawable/custom_surface2_radius10 : @drawable/custom_brandlemon_radius10}">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
