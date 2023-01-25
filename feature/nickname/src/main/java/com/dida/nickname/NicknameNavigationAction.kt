@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nickname
+package com.dida.nickname
 
 sealed class NicknameNavigationAction {
     object NavigateToNickNameFail: NicknameNavigationAction()

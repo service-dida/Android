@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nickname
+package com.dida.nickname
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication

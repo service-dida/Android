@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nickname
+package com.dida.android.presentation.views
 
 import android.content.Intent
 import androidx.fragment.app.viewModels
@@ -7,7 +7,8 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentNicknameBinding
 import com.dida.android.presentation.activities.NavHostActivity
-import com.dida.android.presentation.views.BaseFragment
+import com.dida.nickname.NicknameNavigationAction
+import com.dida.nickname.NicknameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nickname
+package com.dida.nickname
 
 interface NicknameActionHandler {
     fun onCreateItemClicked()

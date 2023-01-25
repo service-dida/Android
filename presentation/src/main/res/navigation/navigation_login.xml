@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/nicknameFragment"
-        android:name="com.dida.android.presentation.views.nickname.NicknameFragment"
+        android:name="com.dida.android.presentation.views.NicknameFragment"
         android:label="NicknameFragment">
         <argument
             android:name="email"
