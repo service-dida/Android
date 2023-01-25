@@ -17,6 +17,7 @@ class AndroidCommonConventionPlugin : Plugin<Project> {
                 apply("android.hilt")
                 apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")
+                apply("androidx.navigation.safeargs.kotlin")
             }
 
             extensions.configure<LibraryExtension> {

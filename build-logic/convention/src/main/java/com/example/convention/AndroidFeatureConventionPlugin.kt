@@ -17,7 +17,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 apply("android.hilt")
                 apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")
-                apply("com.google.gms.google-services")
+                apply("androidx.navigation.safeargs.kotlin")
             }
 
             extensions.configure<LibraryExtension>{
