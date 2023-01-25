@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.dida.android.presentation.views.nav.home.HomeFragment"
+        android:name="com.dida.android.presentation.views.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_detailNftFragment"

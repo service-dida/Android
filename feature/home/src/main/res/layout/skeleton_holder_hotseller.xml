@@ -23,7 +23,7 @@
             android:scaleType="centerCrop"
             app:image_from_url_rounded="@{holderModel.sellerBackground}"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"></ImageView>
+            tools:layout_editor_absoluteX="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hots_contents_main"

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.home
+package com.dida.home
 
 sealed class HomeNavigationAction {
     class NavigateToHotItem(val cardId: Long): HomeNavigationAction()

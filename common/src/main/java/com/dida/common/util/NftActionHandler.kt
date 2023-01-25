@@ -1,4 +1,4 @@
-package com.dida.android.util
+package com.dida.common.util
 
 interface NftActionHandler {
     fun onNftItemClicked(nftId: Int)

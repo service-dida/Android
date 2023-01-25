@@ -8,7 +8,7 @@
 
         <variable
             name="eventListener"
-            type="com.dida.android.presentation.views.nav.home.HomeActionHandler" />
+            type="com.dida.home.HomeActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toTopOf="@id/nft_contents"
             app:layout_constraintBottom_toBottomOf="@id/nft_contents"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/custom_soldout_price"
+            android:background="@drawable/custom_surface6_radius10"
             android:padding="10dp">
 
             <ImageView

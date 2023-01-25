@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.home.HomeViewModel" />
+            type="com.dida.home.HomeViewModel" />
     </data>
 
 
@@ -82,15 +82,10 @@
                                 android:orientation="horizontal">
 
                                 <include layout="@layout/skeleton_holder_hots" />
-
                                 <include layout="@layout/skeleton_holder_hots" />
-
                                 <include layout="@layout/skeleton_holder_hots" />
-
                                 <include layout="@layout/skeleton_holder_hots" />
-
                                 <include layout="@layout/skeleton_holder_hots" />
-
                                 <include layout="@layout/skeleton_holder_hots" />
                             </LinearLayout>
 
@@ -234,7 +229,7 @@
                     android:textSize="16dp"
                     android:onClick="@{() -> vm.onSoldOutDayClicked(7)}"
                     android:textColor="@{vm.termState==7? @color/mainblack : @color/white}"
-                    android:background="@{vm.termState==7? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:background="@{vm.termState==7? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
                     android:fontFamily="@font/pretendard_bold"
                     android:layout_marginStart="16dp">
                 </TextView>
@@ -252,7 +247,7 @@
                     android:textSize="16dp"
                     android:onClick="@{() -> vm.onSoldOutDayClicked(30)}"
                     android:textColor="@{vm.termState==30? @color/mainblack : @color/white}"
-                    android:background="@{vm.termState==30? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:background="@{vm.termState==30? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
                     android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
@@ -269,7 +264,7 @@
                     android:textSize="16dp"
                     android:onClick="@{() -> vm.onSoldOutDayClicked(60)}"
                     android:textColor="@{vm.termState==60? @color/mainblack : @color/white}"
-                    android:background="@{vm.termState==60? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:background="@{vm.termState==60? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
                     android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
@@ -286,7 +281,7 @@
                     android:textSize="16dp"
                     android:onClick="@{() -> vm.onSoldOutDayClicked(365)}"
                     android:textColor="@{vm.termState==365? @color/mainblack : @color/white}"
-                    android:background="@{vm.termState==365? @drawable/custom_soldout_click : @drawable/custom_soldout_not_click}"
+                    android:background="@{vm.termState==365? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
                     android:fontFamily="@font/pretendard_bold">
                 </TextView>
 
@@ -322,7 +317,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:text="@string/more_text"
                     android:textSize="15dp"
-                    android:background="@drawable/custom_soldout_not_click"
+                    android:background="@drawable/custom_surface2_radius10"
                     android:fontFamily="@font/pretendard_regular"
                     android:textColor="@color/white">
                 </TextView>
@@ -379,7 +374,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:text="@string/more_text"
                     android:textSize="15dp"
-                    android:background="@drawable/custom_soldout_not_click"
+                    android:background="@drawable/custom_surface2_radius10"
                     android:fontFamily="@font/pretendard_regular"
                     android:textColor="@color/white">
                 </TextView>
@@ -452,7 +447,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:text="@string/more_text"
                     android:textSize="15dp"
-                    android:background="@drawable/custom_soldout_not_click"
+                    android:background="@drawable/custom_surface2_radius10"
                     android:fontFamily="@font/pretendard_regular"
                     android:textColor="@color/white">
                 </TextView>

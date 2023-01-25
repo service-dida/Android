@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.getByType
 
 class AndroidModelConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        with(target){
+        with(target) {
             with(pluginManager){
                 apply("android.library")
                 apply("org.jetbrains.kotlin.android")
@@ -16,7 +16,7 @@ class AndroidModelConventionPlugin : Plugin<Project> {
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-            dependencies{
+            dependencies {
                 add("implementation", libs.findLibrary("androidx-core").get())
                 add("implementation", libs.findLibrary("junit-junit").get())
                 add("implementation", libs.findLibrary("androidx-test-junit").get())

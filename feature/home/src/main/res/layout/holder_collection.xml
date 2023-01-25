@@ -9,7 +9,7 @@
 
         <variable
             name="eventListener"
-            type="com.dida.android.presentation.views.nav.home.HomeActionHandler" />
+            type="com.dida.home.HomeActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:padding="10dp"
-        android:background="@drawable/custom_soldout_not_click">
+        android:background="@drawable/custom_surface2_radius10">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/nft_contents"
@@ -82,7 +82,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:textColor="@{holderModel.follow ? @color/mainblack : @color/white}"
-            android:background="@{holderModel.follow ? @drawable/custom_collect_follow_ok : @drawable/custom_collect_follow}"
+            android:background="@{holderModel.follow ? @drawable/custom_brandlemon_radius100 : @drawable/custom_brandlemon_1_radius100}"
             android:fontFamily="@font/pretendard_regular"
             android:onClick="@{() ->  eventListener.onUserFollowClicked(holderModel.userId)}">
         </TextView>

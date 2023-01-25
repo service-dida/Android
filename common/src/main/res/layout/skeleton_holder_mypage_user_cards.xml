@@ -49,8 +49,7 @@
                 app:layout_constraintWidth_percent="0.6"
                 android:background="@drawable/custom_surface5_radius10"
                 app:layout_constraintStart_toStartOf="@+id/user_name_textview"
-                app:layout_constraintTop_toBottomOf="@+id/user_name_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/user_name_textview" />
 
             <TextView
                 android:layout_width="0dp"
@@ -62,9 +61,6 @@
                 app:layout_constraintStart_toStartOf="@+id/user_name_textview"
                 app:layout_constraintTop_toBottomOf="@+id/nft_name_textview"
                 app:layout_constraintWidth_percent="0.3" />
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
