@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="120dp"
-            android:src="@mipmap/ic_dida_logo_foreground">
+            android:src="@mipmap/img_dida_logo_foreground">
         </ImageView>
 
         <TextView
@@ -70,9 +70,9 @@
 
                 <ImageView
                     android:id="@+id/img_kakao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kakao_logo_1" />
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/kakao_logo_1" />
 
                 <TextView
                     android:layout_width="wrap_content"
