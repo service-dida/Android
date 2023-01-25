@@ -8,7 +8,7 @@ import com.dida.android.R
 import com.dida.android.databinding.FragmentWalletBinding
 import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapter
 import com.dida.android.presentation.adapter.mypage.WalletNFTHistoryRecyclerViewAdapter
-import com.dida.common.base.BaseFragment
+import com.dida.android.presentation.views.BaseFragment
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel

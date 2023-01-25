@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.databinding.FragmentSplashBinding
-import com.dida.common.base.BaseFragment
 import com.dida.common.util.AppLog
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -40,10 +39,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
             launch {
                 // 추후 배포시 엡데이트 로직 추가
                 viewModel.appVersion.collectLatest {
-                    if(it.toString() == getString(R.string.app_version))
-                        getToken()
-                    else
-                        viewModel.setSplachScreenFlag(true)
+                    if(it.toString() == getString(R.string.app_version)) getToken()
+                    else viewModel.setSplachScreenFlag(true)
                 }
             }
 

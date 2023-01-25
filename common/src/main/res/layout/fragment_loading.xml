@@ -12,7 +12,7 @@
             android:layout_gravity="center"
             android:background="@null"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="dida_loading_lottie.json"
+            app:lottie_rawRes="@raw/dida_loading_lottie"
             app:lottie_loop="true" />
     </FrameLayout>
 </layout>

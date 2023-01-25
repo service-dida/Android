@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentCreateCommunityBinding
 import com.dida.android.presentation.adapter.community.CreateCommunityNftPagerAdapter
-import com.dida.common.base.BaseFragment
+import com.dida.android.presentation.views.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

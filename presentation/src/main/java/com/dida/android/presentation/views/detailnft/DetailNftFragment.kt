@@ -8,7 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
-import com.dida.common.base.BaseFragment
+import com.dida.android.presentation.views.BaseFragment
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint

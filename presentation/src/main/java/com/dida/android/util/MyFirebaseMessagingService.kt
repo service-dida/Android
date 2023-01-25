@@ -2,7 +2,7 @@ package com.dida.android.util
 
 import android.content.Intent
 import android.os.Build
-import com.dida.android.presentation.views.nav.NavHostActivity
+import com.dida.android.presentation.activities.NavHostActivity
 import com.dida.common.util.AppLog
 import com.dida.data.DataApplication
 import com.google.firebase.messaging.FirebaseMessagingService
