@@ -17,7 +17,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 apply("android.hilt")
                 apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")
-                apply("com.google.gms.google-services")
+                apply("androidx.navigation.safeargs.kotlin")
             }
 
             extensions.configure<LibraryExtension>{
@@ -30,7 +30,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                     add("implementation", project(":data"))
                     add("implementation", project(":domain"))
                     add("implementation", project(":common"))
-                    add("implementation", project(":presentation"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
