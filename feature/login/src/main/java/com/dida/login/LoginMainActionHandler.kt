@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.login
+package com.dida.login
 
 interface LoginMainActionHandler {
     fun onKakaoLoginClicked()

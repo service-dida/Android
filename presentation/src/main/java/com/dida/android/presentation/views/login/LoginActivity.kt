@@ -6,6 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.dida.android.R
 import com.dida.android.databinding.ActivityLoginBinding
 import com.dida.common.base.BaseActivity
+import com.dida.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

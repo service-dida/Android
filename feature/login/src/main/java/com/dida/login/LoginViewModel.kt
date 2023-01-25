@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.login
+package com.dida.login
 
 import com.dida.common.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
