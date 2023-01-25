@@ -11,15 +11,15 @@ import org.gradle.kotlin.dsl.getByType
 
 class AndroidCommonConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        with(target){
-            with(pluginManager){
+        with(target) {
+            with(pluginManager) {
                 apply("android.library")
                 apply("android.hilt")
                 apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")
             }
 
-            extensions.configure<LibraryExtension>{
+            extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 33
                 buildFeatures.dataBinding = true

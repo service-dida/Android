@@ -30,7 +30,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                     add("implementation", project(":data"))
                     add("implementation", project(":domain"))
                     add("implementation", project(":common"))
-                    add("implementation", project(":presentation"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
