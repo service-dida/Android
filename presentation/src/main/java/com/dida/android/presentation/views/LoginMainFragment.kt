@@ -5,7 +5,6 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.android.R
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
 import com.dida.login.LoginMainViewModel
@@ -61,11 +60,10 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //TODO: back key 이벤트 시 필요한 코드 추가
         view.setOnKeyListener { _, keyCode, event ->
             if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.KEYCODE_BACK) {
-                //TODO: back key 이벤트 시 필요한 코드 추가
                 this@LoginMainFragment.toLoginFailure()
-                
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false

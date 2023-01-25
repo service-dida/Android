@@ -1,11 +1,8 @@
 package com.dida.android.presentation.views
 
-import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.dida.android.R
-import com.dida.android.presentation.activities.NavHostActivity
 import com.dida.android.util.toLoginSuccess
 import com.dida.nickname.NicknameNavigationAction
 import com.dida.nickname.NicknameViewModel

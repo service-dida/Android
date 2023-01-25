@@ -1,24 +1,17 @@
 package com.dida.data.interceptor
 
-import android.util.Log
 import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
-import com.dida.data.model.ErrorResponseImpl
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.RefreshTokenAPI
-import dagger.Provides
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import javax.inject.Inject
-import javax.inject.Named
-import javax.inject.Singleton
 
 /*
    * bearer 토큰 필요한 api 사용시 accessToken유효한지 검사
