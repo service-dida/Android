@@ -273,9 +273,9 @@
             android:visibility="gone"
             tools:visibility="visible"
             app:LoginCheck="@{vm.detailNftState}"
-            android:src="@drawable/ic_community_write"
+            android:src="@drawable/ic_write"
             android:backgroundTint="@color/brand_lemon"
-            android:onClick="@{() -> vm.onCommunityWrtieClicked()}"
+            android:onClick="@{() -> vm.onCommunityWriteClicked()}"
             android:padding="16dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

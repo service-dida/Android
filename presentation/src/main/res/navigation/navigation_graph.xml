@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.dida.android.presentation.views.nav.community.CommunityFragment"
+        android:name="com.dida.android.presentation.views.CommunityFragment"
         android:label="CommunityFragment" >
         <action
             android:id="@+id/action_communityFragment_to_communityDetailFragment"
@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/createCommunityFragment"
-        android:name="com.dida.android.presentation.views.createcommunity.CreateCommunityFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityFragment"
         android:label="CreateCommunityFragment" >
         <action
             android:id="@+id/action_createCommunityFragment_to_communityCommunityInputFragment"
@@ -81,13 +81,13 @@
 
     <fragment
         android:id="@+id/createCommunityNftFragment"
-        android:name="com.dida.android.presentation.views.createcommunity.CreateCommunityNftFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityNftFragment"
         android:label="CreateCommunityNftFragment" >
     </fragment>
 
     <fragment
         android:id="@+id/communityCommunityInputFragment"
-        android:name="com.dida.android.presentation.views.createcommunityinput.CreateCommunityInputFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityInputFragment"
         android:label="CreateCommunityInputFragment">
         <argument
             android:name="createState"

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.dida.create_community_input.CreateCommunityInputViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainblack">
+
+        <Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ok_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/create_community_input_okbtn"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:padding="16dp">
+        </TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/nft_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/nft_image"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_percent="1"
+                    app:layout_constraintHeight_percent="1"
+                    android:scaleType="centerCrop"
+                    app:image_from_url_rounded="@{vm.currentNftState.nftImg}" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/text_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/nft_image"
+                    app:layout_constraintEnd_toStartOf="@id/nft_before_btn"
+                    android:paddingStart="16dp">
+
+                    <TextView
+                        android:id="@+id/nft_name_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@{vm.currentNftState.nftName}"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/user_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/nft_name_txt"
+                        image_from_url_circle="@{vm.currentNftState.userImg}"
+                        android:layout_marginTop="8dp">
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@id/user_img"
+                        app:layout_constraintBottom_toBottomOf="@id/user_img"
+                        app:layout_constraintLeft_toRightOf="@id/user_img"
+                        android:text="@{vm.currentNftState.userName}"
+                        android:textSize="14dp"
+                        android:textColor="@color/hots_coin_txt"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:layout_marginLeft="8dp">
+                    </TextView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/nft_before_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/create_community_input_back"
+                    android:textSize="14dp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/custom_surface6_radius8"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:onClick="@{() -> vm.onBackButtonClicked()}"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+                </TextView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/nft_main"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:text="@string/create_community_input_title"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/pretendard_bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/title_length_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/title_txt"
+                app:layout_constraintBottom_toBottomOf="@id/title_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:textSize="14dp"
+                android:textColor="@color/surface6">
+            </TextView>
+
+            <View
+                android:id="@+id/title_edit_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/title_txt"
+                android:background="@color/surface5"
+                android:layout_marginTop="12dp">
+            </View>
+
+            <EditText
+                android:id="@+id/title_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_edit_top"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="24dp"
+                android:hint="@string/create_community_input_title_hint"
+                android:background="@color/surface1"
+                android:maxLength="20"
+                android:textColor="@color/white"
+                android:textColorHint="@color/surface5"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="14dp">
+            </EditText>
+
+            <View
+                android:id="@+id/title_edit_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintBottom_toBottomOf="@id/title_edit"
+                android:background="@color/surface5"
+                android:layout_marginTop="12dp">
+            </View>
+
+            <TextView
+                android:id="@+id/description_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:text="@string/create_community_input_description"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/pretendard_bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/description_length_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/description_txt"
+                app:layout_constraintBottom_toBottomOf="@id/description_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:textSize="14dp"
+                android:textColor="@color/surface6">
+            </TextView>
+
+            <EditText
+                android:id="@+id/description_edit"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/description_edit_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="top|left"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="24dp"
+                android:hint="@string/create_community_input_description_hint"
+                android:background="@color/surface1"
+                android:textColor="@color/white"
+                android:maxLength="300"
+                android:maxLines="30"
+                android:textColorHint="@color/surface5"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="14dp">
+            </EditText>
+
+            <View
+                android:id="@+id/description_edit_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/description_txt"
+                android:background="@color/surface5"
+                android:layout_marginTop="12dp">
+            </View>
+
+            <View
+                android:id="@+id/description_edit_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintBottom_toBottomOf="@id/description_edit"
+                android:background="@color/surface5"
+                android:layout_marginTop="12dp">
+            </View>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
