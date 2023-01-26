@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/createCommunityFragment"
-        android:name="com.dida.android.presentation.views.createcommunity.CreateCommunityFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityFragment"
         android:label="CreateCommunityFragment" >
         <action
             android:id="@+id/action_createCommunityFragment_to_communityCommunityInputFragment"
@@ -81,7 +81,7 @@
 
     <fragment
         android:id="@+id/createCommunityNftFragment"
-        android:name="com.dida.android.presentation.views.createcommunity.CreateCommunityNftFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityNftFragment"
         android:label="CreateCommunityNftFragment" >
     </fragment>
 
