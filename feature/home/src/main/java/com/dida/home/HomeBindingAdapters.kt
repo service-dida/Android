@@ -2,6 +2,7 @@ package com.dida.home
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.nav.home.*

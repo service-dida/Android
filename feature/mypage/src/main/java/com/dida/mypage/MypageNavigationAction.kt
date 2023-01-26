@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.mypage
+package com.dida.mypage
 
 sealed class MypageNavigationAction {
     object NavigateToInit: MypageNavigationAction()
