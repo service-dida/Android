@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.dida.android.presentation.views.nav.community.CommunityFragment"
+        android:name="com.dida.android.presentation.views.CommunityFragment"
         android:label="CommunityFragment" >
         <action
             android:id="@+id/action_communityFragment_to_communityDetailFragment"

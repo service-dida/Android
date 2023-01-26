@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.community.CommunityViewModel" />
+            type="com.dida.community.CommunityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,9 +30,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_community_write"
+            android:src="@drawable/ic_write"
             android:backgroundTint="@color/brand_lemon"
-            android:onClick="@{() -> vm.onCommunityWrtieClicked()}"
+            android:onClick="@{() -> vm.onCommunityWriteClicked()}"
             android:padding="16dp" />
 
         <androidx.core.widget.NestedScrollView
