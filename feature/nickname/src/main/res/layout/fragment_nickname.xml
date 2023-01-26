@@ -44,7 +44,7 @@
             android:id="@+id/nick_name_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_surface2_radius10_surface5_1dp"
+            android:background="@drawable/custom_surface2_radius10_surface5_width1"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:drawablePadding="14dp"

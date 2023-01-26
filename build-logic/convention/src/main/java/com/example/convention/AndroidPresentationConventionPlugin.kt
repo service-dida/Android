@@ -39,6 +39,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":data"))
                     add("implementation", project(":common"))
 
+                    add("implementation", project(":feature:email"))
                     add("implementation", project(":feature:login"))
                     add("implementation", project(":feature:nickname"))
                     add("implementation", project(":feature:home"))

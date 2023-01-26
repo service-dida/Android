@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.email
+package com.dida.android.presentation.views
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
@@ -6,22 +6,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.dida.android.R
-import com.dida.android.databinding.FragmentEmailBinding
 import com.dida.android.presentation.views.password.PasswordDialog
-import com.dida.android.presentation.views.BaseFragment
+import com.dida.email.EmailViewModel
+import com.dida.email.databinding.FragmentEmailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
-class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layout.fragment_email) {
+class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.dida.email.R.layout.fragment_email) {
 
     private val TAG = "EmailFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_email // get() : 커스텀 접근자, 코틀린 문법
+        get() = com.dida.email.R.layout.fragment_email // get() : 커스텀 접근자, 코틀린 문법
 
     var timer = Timer()
 
