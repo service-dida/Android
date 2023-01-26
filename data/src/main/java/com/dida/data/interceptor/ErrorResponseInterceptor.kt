@@ -59,6 +59,7 @@ fun createErrorException(url: String?, httpCode: Int, errorResponse: ErrorRespon
         118 -> NotCorrectPasswordException(Throwable(errorResponse.message), url, 118)
         119 -> NeedToWalletException(Throwable(errorResponse.message), url, 119)
         120 -> InvalidPeriodException(Throwable(errorResponse.message), url, 120)
+        121 -> WrongPassword5TimesException(Throwable(errorResponse.message), url, 121)
         124 -> EmptyDeviceTokenException(Throwable(errorResponse.message), url, 124)
         125 -> AlreadyUseWallet(Throwable(errorResponse.message), url, 125)
         127 -> NeedMoreKlay(Throwable(errorResponse.message), url, 127)

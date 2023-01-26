@@ -19,6 +19,7 @@ internal inline fun <T> handleApi(transform: () -> T): NetworkResult<T> = try {
         is NotCorrectPasswordException -> NetworkResult.Error(NotCorrectPasswordException(e.cause, e.url, 118))
         is NeedToWalletException -> NetworkResult.Error(NeedToWalletException(e.cause, e.url, 119))
         is InvalidPeriodException -> NetworkResult.Error(InvalidPeriodException(e.cause, e.url, 120))
+        is WrongPassword5TimesException -> NetworkResult.Error(WrongPassword5TimesException(e.cause, e.url, 121))
         is EmptyDeviceTokenException -> NetworkResult.Error(EmptyDeviceTokenException(e.cause, e.url, 124))
         is AlreadyUseWallet -> NetworkResult.Error(AlreadyUseWallet(e.cause, e.url, 125))
         is NeedMoreKlay -> NetworkResult.Error(NeedMoreKlay(e.cause, e.url, 127))

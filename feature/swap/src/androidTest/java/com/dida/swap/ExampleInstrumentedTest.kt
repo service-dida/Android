@@ -1,4 +1,4 @@
-package com.dida.defi
+package com.dida.swap
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

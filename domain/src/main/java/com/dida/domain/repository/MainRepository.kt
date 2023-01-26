@@ -9,6 +9,7 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.swap.WalletAmount
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
 
@@ -64,5 +65,9 @@ interface  MainRepository {
 
     suspend fun postSwapKlayToDida(password: String, klay: Double) : NetworkResult<Unit>
 
+    suspend fun postSwapDidaToKlay(password: String, dida: Double) : NetworkResult<Unit>
+
     suspend fun postSellNftAPI(payPwd : String, cardId : Long, price : Double) : NetworkResult<Unit>
+
+    suspend fun getWalletAmountAPI() : NetworkResult<WalletAmount>
 }
