@@ -6,6 +6,7 @@ import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
 import com.dida.data.model.mypage.UserProfileResponse
+import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
@@ -13,7 +14,6 @@ import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
-import com.google.gson.annotations.SerializedName
 
 fun GetMainResponse.toDomain() : Home {
     return Home(
@@ -121,3 +121,9 @@ fun GetDetailNFTResponse.toDomain(): DetailNFT {
     )
 }
 
+fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmount {
+    return com.dida.domain.model.nav.swap.WalletAmount(
+        dida = dida,
+        klay = klay
+    )
+}

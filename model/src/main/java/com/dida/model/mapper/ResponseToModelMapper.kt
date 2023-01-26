@@ -215,3 +215,10 @@ fun List<CardHideListItemResponse>.toDomain(): List<CardHideListItem> {
         )
     }
 }
+/*
+fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmount {
+    return com.dida.domain.model.nav.swap.WalletAmount(
+        dida = dida,
+        klay = klay
+    )
+}*/

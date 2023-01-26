@@ -43,7 +43,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             when (destination.id) {
                 R.id.homeFragment -> showBottomNav()
                 R.id.communityFragment -> showBottomNav()
-                R.id.defiFragment -> showBottomNav()
+                R.id.swapFragment -> showBottomNav()
                 R.id.myPageFragment -> showBottomNav()
                 else -> hideBottomNav()
             }
@@ -60,7 +60,7 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         binding.bottomNavi.setOnItemReselectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.homeFragment -> {}
-                R.id.defiFragment -> {}
+                R.id.swapFragment -> {}
                 R.id.myPageFragment -> {}
                 R.id.addFragment -> {}
                 R.id.communityFragment -> {}

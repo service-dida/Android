@@ -21,6 +21,7 @@ class AlreadyWalletException(e: Throwable?, val url: String? = null, code: Int?)
 class NotCorrectPasswordException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 비밀번호가 일치하지 않습니다. 118
 class NeedToWalletException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 지갑이 필요합니다 119
 class InvalidPeriodException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 기간이 잘못되었습니다. 120
+class WrongPassword5TimesException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e)//비밀번호를 5회 이상 잘못 입력하였습니다. 121
 class AlreadyUseWallet(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 지난 지갑 사용후 3분이 안됨. 125
 class NeedMoreKlay(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 보유한 클레이가 부족. 127
 class InvalidLengthException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 닉네임 길이 & 비밀번호 길이가 잘못 되었습니다. 200

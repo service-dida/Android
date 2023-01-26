@@ -32,9 +32,9 @@
 
     </fragment>
     <fragment
-        android:id="@+id/defiFragment"
-        android:name="com.dida.android.presentation.views.nav.defi.DefiFragment"
-        android:label="DefiFragment" />
+        android:id="@+id/swapFragment"
+        android:name="com.dida.android.presentation.views.SwapFragment"
+        android:label="SwapFragment" />
     <fragment
         android:id="@+id/addFragment"
         android:name="com.dida.android.presentation.views.nav.add.addmain.AddFragment"

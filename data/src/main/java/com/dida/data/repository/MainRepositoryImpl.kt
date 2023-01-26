@@ -3,7 +3,6 @@ package com.dida.data.repository
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
-import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.createwallet.PostCheckPasswordRequest
 import com.dida.data.model.createwallet.PostCreateWalletRequest
 import com.dida.data.model.device.PutDeviceTokenRequest
@@ -12,7 +11,9 @@ import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
+import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.tradenft.PostSellNftRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
 import com.dida.domain.NetworkResult
@@ -24,6 +25,7 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.swap.WalletAmount
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.repository.MainRepository
 import okhttp3.MultipartBody
@@ -145,8 +147,17 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.postSwapKlayToDida(request) }
     }
 
+    override suspend fun postSwapDidaToKlay(password: String, dida: Double): NetworkResult<Unit> {
+        val request = PostSwapDidaToKlayRequest(payPwd = password, dida = dida)
+        return handleApi { mainAPIService.postSwapDidaToKlay(request) }
+    }
+
     override suspend fun postSellNftAPI(payPwd: String, cardId: Long, price: Double): NetworkResult<Unit> {
         val request = PostSellNftRequest(payPwd = payPwd, cardId = cardId,price = price)
         return handleApi { mainAPIService.postSellNft(request) }
+    }
+
+    override suspend fun getWalletAmountAPI(): NetworkResult<WalletAmount> {
+        return handleApi { mainAPIService.getWalletAmount().toDomain() }
     }
 }

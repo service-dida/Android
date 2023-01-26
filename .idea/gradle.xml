@@ -38,6 +38,7 @@
             <option value="$PROJECT_DIR$/feature/login" />
             <option value="$PROJECT_DIR$/feature/my" />
             <option value="$PROJECT_DIR$/feature/nickname" />
+            <option value="$PROJECT_DIR$/feature/swap" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/presentation" />
           </set>
