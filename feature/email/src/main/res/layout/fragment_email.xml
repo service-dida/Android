@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.email.EmailViewModel" />
+            type="com.dida.email.EmailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,7 @@
             android:id="@+id/email_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_nickname_edit"
+            android:background="@drawable/custom_surface2_radius10_surface5_width1"
             android:imeOptions="actionSearch"
             android:inputType="number"
             android:drawablePadding="14dp"

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.email
+package com.dida.email
 
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
