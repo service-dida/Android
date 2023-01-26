@@ -5,7 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
-import com.dida.android.presentation.adapter.community.CreateCommunityNftPagerAdapter
+import com.dida.android.presentation.adapter.CreateCommunityNftPagerAdapter
 import com.dida.create_community.databinding.FragmentCreateCommunityBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint

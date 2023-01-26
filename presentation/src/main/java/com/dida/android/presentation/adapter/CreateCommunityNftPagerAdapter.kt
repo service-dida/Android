@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.community
+package com.dida.android.presentation.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
