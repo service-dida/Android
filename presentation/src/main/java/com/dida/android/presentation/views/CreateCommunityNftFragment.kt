@@ -1,24 +1,22 @@
-package com.dida.android.presentation.views.createcommunity
+package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
-import com.dida.android.R
-import com.dida.android.databinding.FragmentCreateCommunityNftBinding
-import com.dida.android.presentation.adapter.community.CreateCommunityNftAdapter
-import com.dida.android.presentation.views.BaseFragment
+import com.dida.create_community.adapter.CreateCommunityNftAdapter
+import com.dida.create_community.databinding.FragmentCreateCommunityNftBinding
 import com.dida.domain.model.nav.community.CreateCommunityNft
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateCommunityNftFragment(
     val createNftState: Int
-) : BaseFragment<FragmentCreateCommunityNftBinding, CreateCommunityViewModel>(R.layout.fragment_create_community_nft) {
+) : BaseFragment<FragmentCreateCommunityNftBinding, com.dida.create_community.CreateCommunityViewModel>(com.dida.create_community.R.layout.fragment_create_community_nft) {
 
     private val TAG = "CreateCommunityNftFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_create_community_nft
+        get() = com.dida.create_community.R.layout.fragment_create_community_nft
 
-    override val viewModel : CreateCommunityViewModel by viewModels({ requireParentFragment() })
+    override val viewModel : com.dida.create_community.CreateCommunityViewModel by viewModels({ requireParentFragment() })
 
     override fun initStartView() {
         binding.apply {

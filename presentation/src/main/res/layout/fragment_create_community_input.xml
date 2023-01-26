@@ -116,7 +116,7 @@
                     android:textSize="14dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:textColor="@color/white"
-                    android:background="@drawable/custom_create_community_nft_select"
+                    android:background="@drawable/custom_surface6_radius8"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:onClick="@{() -> vm.onBackButtonClicked()}"

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.createcommunity.CreateCommunityViewModel" />
+            type="com.dida.create_community.CreateCommunityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

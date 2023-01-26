@@ -3,7 +3,7 @@ package com.dida.android.presentation.adapter.community
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.dida.android.presentation.views.createcommunity.CreateCommunityNftFragment
+import com.dida.android.presentation.views.CreateCommunityNftFragment
 
 class CreateCommunityNftPagerAdapter(fragment: Fragment, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragment.childFragmentManager, lifecycle) {
