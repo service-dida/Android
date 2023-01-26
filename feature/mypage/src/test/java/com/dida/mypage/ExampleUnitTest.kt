@@ -1,4 +1,4 @@
-package com.dida.my
+package com.dida.mypage
 
 import org.junit.Test
 
