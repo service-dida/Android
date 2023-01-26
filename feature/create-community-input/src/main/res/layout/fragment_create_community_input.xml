@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.createcommunityinput.CreateCommunityInputViewModel" />
+            type="com.dida.create_community_input.CreateCommunityInputViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
