@@ -87,7 +87,7 @@
 
     <fragment
         android:id="@+id/communityCommunityInputFragment"
-        android:name="com.dida.android.presentation.views.createcommunityinput.CreateCommunityInputFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityInputFragment"
         android:label="CreateCommunityInputFragment">
         <argument
             android:name="createState"

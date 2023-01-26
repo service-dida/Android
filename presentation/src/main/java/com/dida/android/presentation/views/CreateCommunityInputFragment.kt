@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.createcommunityinput
+package com.dida.android.presentation.views
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -6,21 +6,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
-import com.dida.android.databinding.FragmentCreateCommunityInputBinding
-import com.dida.android.presentation.views.BaseFragment
+import com.dida.create_community_input.databinding.FragmentCreateCommunityInputBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBinding, CreateCommunityInputViewModel>(R.layout.fragment_create_community_input) {
+class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBinding, com.dida.create_community_input.CreateCommunityInputViewModel>(com.dida.create_community_input.R.layout.fragment_create_community_input) {
 
     private val TAG = "CreateCommunityFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_create_community_input
+        get() = com.dida.create_community_input.R.layout.fragment_create_community_input
 
-    override val viewModel : CreateCommunityInputViewModel by viewModels()
+    override val viewModel : com.dida.create_community_input.CreateCommunityInputViewModel by viewModels()
     private val navController by lazy { findNavController() }
     private val args: CreateCommunityInputFragmentArgs by navArgs()
 
@@ -38,7 +37,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is com.dida.create_community_input.CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
             }
         }

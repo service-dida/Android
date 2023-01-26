@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.createcommunityinput
+package com.dida.create_community_input
 
 interface CreateCommunityInputActionHandler {
     fun onBackButtonClicked()
