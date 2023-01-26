@@ -6,8 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.databinding.FragmentDetailCommunityBinding
-import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
-import com.dida.android.presentation.views.nav.community.CommunityViewModel
+import com.dida.common.adapter.CommunityAdapter
 import com.dida.android.presentation.views.BaseFragment
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
@@ -23,7 +22,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         get() = R.layout.fragment_detail_community
 
     override val viewModel : DetailCommunityViewModel by viewModels()
-    private val communityViewModel : CommunityViewModel by viewModels()
+    private val communityViewModel : com.dida.community.CommunityViewModel by viewModels()
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {

@@ -11,7 +11,7 @@
 
         <variable
             name="eventListener"
-            type="com.dida.android.presentation.views.nav.community.CommunityActionHandler" />
+            type="com.dida.common.util.CommunityActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,7 +67,7 @@
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="34dp"
-                    android:background="@drawable/custom_clip"
+                    android:background="@drawable/custom_surface6_radius100"
                     android:padding="8dp"
                     android:src="@drawable/ic_clips"
                     app:layout_constraintBottom_toBottomOf="parent"

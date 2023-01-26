@@ -2,8 +2,7 @@ package com.dida.android.presentation.views.detailnft
 
 import android.os.Handler
 import android.os.Looper
-import com.dida.android.presentation.views.nav.community.CommunityActionHandler
-import com.dida.android.presentation.views.nav.community.CommunityWriteActionHandler
+import com.dida.common.util.CommunityActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.UiState
 import com.dida.domain.model.nav.detailnft.DetailNFT
@@ -23,7 +22,8 @@ import javax.inject.Inject
 class DetailNftViewModel @Inject constructor(
     private val detailNftAPI: DetailNftAPI,
     private val postLikeAPI: PostLikeAPI
-) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
+) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler,
+    com.dida.community.CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
 
@@ -72,7 +72,7 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    override fun onCommunityWrtieClicked() {
+    override fun onCommunityWriteClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToCreateCommunity)
         }
