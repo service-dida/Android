@@ -42,6 +42,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:login"))
                     add("implementation", project(":feature:nickname"))
                     add("implementation", project(":feature:home"))
+                    add("implementation", project(":feature:community"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
