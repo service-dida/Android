@@ -7,6 +7,7 @@
       <module name="DIDA.feature.add" target="11" />
       <module name="DIDA.feature.community" target="11" />
       <module name="DIDA.feature.create-community" target="11" />
+      <module name="DIDA.feature.create-community-input" target="11" />
       <module name="DIDA.feature.defi" target="11" />
       <module name="DIDA.feature.home" target="11" />
       <module name="DIDA.feature.login" target="11" />
