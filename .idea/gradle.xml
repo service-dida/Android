@@ -33,10 +33,9 @@
             <option value="$PROJECT_DIR$/feature/community" />
             <option value="$PROJECT_DIR$/feature/create-community" />
             <option value="$PROJECT_DIR$/feature/create-community-input" />
-            <option value="$PROJECT_DIR$/feature/defi" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/login" />
-            <option value="$PROJECT_DIR$/feature/my" />
+            <option value="$PROJECT_DIR$/feature/mypage" />
             <option value="$PROJECT_DIR$/feature/nickname" />
             <option value="$PROJECT_DIR$/feature/swap" />
             <option value="$PROJECT_DIR$/model" />

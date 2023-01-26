@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--마이페이지 화면-->
+    <string name="mypage_nft_type_newest_text">최신 순</string>
+    <string name="mypage_nft_type_oldest_text">오래된 순</string>
+</resources>

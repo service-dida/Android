@@ -1,4 +1,4 @@
-package com.dida.my
+package com.dida.mypage
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

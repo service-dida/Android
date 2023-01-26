@@ -5,10 +5,10 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.dida.android.presentation.views.nav.mypage.MyPageViewModel.MypageNftType"/>
+        <import type="com.dida.mypage.MyPageViewModel.MypageNftType"/>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.nav.mypage.MyPageViewModel" />
+            type="com.dida.mypage.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
