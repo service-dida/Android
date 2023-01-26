@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.createcommunity
+package com.dida.create_community
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl

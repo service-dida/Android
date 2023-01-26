@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.createcommunity
+package com.dida.create_community
 
 interface CreateCommunityActionHandler {
     fun onNftSelectClicked(nftId: Int)

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.community
+package com.dida.create_community.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderCreateCommunityNftBinding
-import com.dida.android.presentation.views.createcommunity.CreateCommunityActionHandler
+import com.dida.create_community.R
+import com.dida.create_community.databinding.HolderCreateCommunityNftBinding
 import com.dida.domain.model.nav.community.CreateCommunityNft
 
 class CreateCommunityNftAdapter(
-    private val eventListener: CreateCommunityActionHandler
-) : ListAdapter<CreateCommunityNft, CreateCommunityNftAdapter.ViewHolder>(CreateCommunityNftItemDiffCallback){
+    private val eventListener: com.dida.create_community.CreateCommunityActionHandler
+) : ListAdapter<CreateCommunityNft, CreateCommunityNftAdapter.ViewHolder>(
+    CreateCommunityNftItemDiffCallback
+){
 
     init { setHasStableIds(true) }
 
