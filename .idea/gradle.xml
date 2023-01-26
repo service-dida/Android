@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/add" />
             <option value="$PROJECT_DIR$/feature/community" />
+            <option value="$PROJECT_DIR$/feature/create-community" />
             <option value="$PROJECT_DIR$/feature/defi" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/login" />
