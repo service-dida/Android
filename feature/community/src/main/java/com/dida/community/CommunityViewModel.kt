@@ -2,6 +2,7 @@ package com.dida.community
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.CommunityActionHandler
+import com.dida.common.util.CommunityWriteActionHandler
 import com.dida.data.repository.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

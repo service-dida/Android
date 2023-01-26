@@ -1,4 +1,4 @@
-package com.dida.community
+package com.dida.common.util
 
 interface CommunityWriteActionHandler {
     fun onCommunityWriteClicked()

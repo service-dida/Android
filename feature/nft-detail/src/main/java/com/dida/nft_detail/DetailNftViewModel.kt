@@ -1,9 +1,10 @@
-package com.dida.android.presentation.views.detailnft
+package com.dida.nft_detail
 
 import android.os.Handler
 import android.os.Looper
 import com.dida.common.util.CommunityActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.CommunityWriteActionHandler
 import com.dida.common.util.UiState
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.onError
@@ -22,8 +23,7 @@ import javax.inject.Inject
 class DetailNftViewModel @Inject constructor(
     private val detailNftAPI: DetailNftAPI,
     private val postLikeAPI: PostLikeAPI
-) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler,
-    com.dida.community.CommunityWriteActionHandler {
+) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
 

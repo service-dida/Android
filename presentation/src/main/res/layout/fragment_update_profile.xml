@@ -67,7 +67,7 @@
                         updateProfileImage="@{vm.profileImageState}"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
-                        android:background="@drawable/custom_user_img"
+                        android:background="@drawable/custom_surface2_radius100"
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.detailnft
+package com.dida.nft_detail
 
 import android.view.Gravity
 import android.view.View
@@ -12,7 +12,6 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.dida.android.R
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.nav.detailnft.DetailNFT

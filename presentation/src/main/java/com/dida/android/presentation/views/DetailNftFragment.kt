@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.detailnft
+package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -6,21 +6,22 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
-import com.dida.android.databinding.FragmentDetailNftBinding
 import com.dida.common.adapter.CommunityAdapter
-import com.dida.android.presentation.views.BaseFragment
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
+import com.dida.nft_detail.DetailNftNavigationAction
+import com.dida.nft_detail.DetailNftViewModel
+import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(R.layout.fragment_detail_nft) {
+class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.nft_detail.R.layout.fragment_detail_nft) {
 
     private val TAG = "DetailNftFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_detail_nft
+        get() = com.dida.nft_detail.R.layout.fragment_detail_nft
 
     override val viewModel : DetailNftViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
@@ -58,9 +59,8 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             // 우측 메뉴
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_heart -> viewModel.postlikeNft(args.cardId)
-                    R.id.action_more -> {
-                    }
+                    com.dida.nft_detail.R.id.action_heart -> viewModel.postlikeNft(args.cardId)
+                    com.dida.nft_detail.R.id.action_more -> {}
                 }
                 true
             }
