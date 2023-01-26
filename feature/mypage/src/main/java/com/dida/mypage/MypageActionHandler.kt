@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.mypage
+package com.dida.mypage
 
 interface MypageActionHandler {
     fun onWalletClicked()

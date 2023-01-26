@@ -13,6 +13,7 @@ import com.dida.android.R
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
+import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.DidaIntent
 import com.dida.common.util.addSnapPagerScroll
 import com.dida.home.HomeNavigationAction

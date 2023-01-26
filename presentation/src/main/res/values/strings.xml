@@ -143,8 +143,5 @@
     <string name="profile_description_text">자기소개</string>
     <string name="profile_description_hint">30글자 이하의 한글</string>
     <string name="profile_description_check_text">30자 이내로 줄여주세요.</string>
-
-    <!--마이페이지 화면-->
-    <string name="mypage_nft_type_newest_text">최신 순</string>
-    <string name="mypage_nft_type_oldest_text">오래된 순</string>
+    
 </resources>

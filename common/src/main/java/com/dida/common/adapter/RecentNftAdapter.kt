@@ -1,4 +1,4 @@
-package com.dida.home.adapter
+package com.dida.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

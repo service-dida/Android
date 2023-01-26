@@ -45,6 +45,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:home"))
                     add("implementation", project(":feature:swap"))
                     add("implementation", project(":feature:community"))
+                    add("implementation", project(":feature:mypage"))
                     add("implementation", project(":feature:create-community"))
                     add("implementation", project(":feature:create-community-input"))
                     

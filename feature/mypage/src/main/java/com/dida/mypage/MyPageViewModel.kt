@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.mypage
+package com.dida.mypage
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.AppLog
@@ -51,7 +51,9 @@ class MyPageViewModel @Inject constructor(
         NEWEST,
         OLDEST
     }
-    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(MypageNftType.NEWEST)
+    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(
+        MypageNftType.NEWEST
+    )
     val mypageNftTypeState: StateFlow<MypageNftType> = _mypageNftTypeState
 
     fun getMypage() {
@@ -129,7 +131,13 @@ class MyPageViewModel @Inject constructor(
     override fun onUpdateProfileClicked() {
         baseViewModelScope.launch {
             val mypage = myPageState.value.successOrNull()!!
-            _navigationEvent.emit(MypageNavigationAction.NavigateToUpdateProfile(mypage.profileUrl, mypage.nickname, mypage.description))
+            _navigationEvent.emit(
+                MypageNavigationAction.NavigateToUpdateProfile(
+                    mypage.profileUrl,
+                    mypage.nickname,
+                    mypage.description
+                )
+            )
         }
     }
 
