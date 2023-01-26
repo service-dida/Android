@@ -26,7 +26,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.getWalletAmount()
+        viewModel.initWalletAmount()
     }
 
     override fun initDataBinding() {

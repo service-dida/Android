@@ -19,47 +19,62 @@ class SwapViewModel @Inject constructor(
     private val swapKlayToDidaApi: SwapKlayToDidaAPI,
     private val swapDidaToKlayAPI: SwapDidaToKlayAPI,
     private val walletAmountAPI: WalletAmountAPI
-) : BaseViewModel() , SwapActionHandler{
+) : BaseViewModel(), SwapActionHandler {
 
     private val TAG = "SwapViewModel"
 
-    enum class SwapType{
+    enum class SwapType {
         KLAY_TO_DIDA,
         DIDA_TO_KLAY
     }
 
-    private val _navigationEvent: MutableSharedFlow<SwapNavigationAction> = MutableSharedFlow<SwapNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<SwapNavigationAction> =
+        MutableSharedFlow<SwapNavigationAction>()
     val navigationEvent: SharedFlow<SwapNavigationAction> = _navigationEvent
 
-    private val _swapTypeState: MutableStateFlow<SwapType> = MutableStateFlow<SwapType>(SwapType.KLAY_TO_DIDA)
+    private val _swapTypeState: MutableStateFlow<SwapType> =
+        MutableStateFlow<SwapType>(SwapType.KLAY_TO_DIDA)
     val swapTypeState: StateFlow<SwapType> = _swapTypeState
 
     private val _walletAmountState = MutableStateFlow<String>("0.0")
     val walletAmountState: StateFlow<String> = _walletAmountState
 
-    fun getWalletAmount(){
+    lateinit var klayAmount: String
+    lateinit var didaAmount: String
+
+    fun initWalletAmount() {
         baseViewModelScope.launch {
-            if(swapTypeState.value == SwapType.KLAY_TO_DIDA){
-                walletAmountAPI()
-                    .onSuccess { _walletAmountState.emit(it.klay.toString()) }
-                    .onError { e -> catchError(e) }
-            }else{
-                walletAmountAPI()
-                    .onSuccess { _walletAmountState.emit(it.dida.toString()) }
-                    .onError { e -> catchError(e) }
-            }
+            walletAmountAPI()
+                .onSuccess {
+                    klayAmount = it.klay.toString()
+                    didaAmount = it.dida.toString()
+                    setWalletAmount()
+                }
+                .onError { e -> catchError(e) }
         }
     }
 
-    fun swap(password: String, amount : Double){
+    fun setWalletAmount() {
+        if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
+            _walletAmountState.value = klayAmount
+        } else {
+            _walletAmountState.value = didaAmount
+        }
+    }
+
+    fun swap(password: String, amount: Double) {
         baseViewModelScope.launch {
-            if(swapTypeState.value == SwapType.KLAY_TO_DIDA){
-                swapKlayToDidaApi(password,amount)
-                    .onSuccess {  }
+            if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
+                swapKlayToDidaApi(password, amount)
+                    .onSuccess {
+                        initWalletAmount()
+                    }
                     .onError { e -> catchError(e) }
-            }else{
-                swapDidaToKlayAPI(password,amount)
-                    .onSuccess {  }
+            } else {
+                swapDidaToKlayAPI(password, amount)
+                    .onSuccess {
+                        initWalletAmount()
+                    }
                     .onError { e -> catchError(e) }
             }
         }
@@ -68,18 +83,18 @@ class SwapViewModel @Inject constructor(
 
     override fun onSwapClicked() {
         baseViewModelScope.launch {
-            getWalletAmount()
             _navigationEvent.emit(SwapNavigationAction.NavigateToPassword)
         }
     }
 
     override fun onSwapTypeChange() {
         baseViewModelScope.launch {
-            if(swapTypeState.value == SwapType.KLAY_TO_DIDA){
+            if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
                 _swapTypeState.emit(SwapType.DIDA_TO_KLAY)
-            }else{
+            } else {
                 _swapTypeState.emit(SwapType.KLAY_TO_DIDA)
             }
+            setWalletAmount()
         }
     }
 }
