@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.community
+package com.dida.community.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderActiveNftBinding
+import com.dida.community.R
+import com.dida.community.databinding.HolderActiveNftBinding
 import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 
 class ActiveNFTRecyclerViewAdapter(
-) : ListAdapter<ActiveNFTHolderModel, ActiveNFTRecyclerViewAdapter.ViewHolder>(ActivieNftDiffCallback){
+) : ListAdapter<ActiveNFTHolderModel, ActiveNFTRecyclerViewAdapter.ViewHolder>(ActivieNftDiffCallback) {
 
     init { setHasStableIds(true) }
 

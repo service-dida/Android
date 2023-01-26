@@ -1,13 +1,11 @@
-package com.dida.android.presentation.views.nav.community
+package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.android.R
-import com.dida.android.databinding.FragmentCommunityBinding
-import com.dida.android.presentation.adapter.community.ActiveNFTRecyclerViewAdapter
-import com.dida.android.presentation.adapter.community.ReservationNFTRecyclerViewAdapter
-import com.dida.android.presentation.adapter.detailnft.CommunityAdapter
-import com.dida.android.presentation.views.BaseFragment
+import com.dida.common.adapter.CommunityAdapter
+import com.dida.community.adapter.ActiveNFTRecyclerViewAdapter
+import com.dida.community.adapter.ReservationNFTRecyclerViewAdapter
+import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import com.dida.domain.model.nav.detailnft.Comments
@@ -16,14 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewModel>(R.layout.fragment_community) {
+class CommunityFragment : BaseFragment<FragmentCommunityBinding, com.dida.community.CommunityViewModel>(com.dida.community.R.layout.fragment_community) {
 
     private val TAG = "CommunityFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_community
+        get() = com.dida.community.R.layout.fragment_community
 
-    override val viewModel : CommunityViewModel by viewModels()
+    override val viewModel : com.dida.community.CommunityViewModel by viewModels()
     private val activeNFTRecyclerViewAdapter = ActiveNFTRecyclerViewAdapter()
     private val reservationNFTRecyclerViewAdapter = ReservationNFTRecyclerViewAdapter()
 
@@ -41,8 +39,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment())
-                    is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
+                    is com.dida.community.CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment())
+                    is com.dida.community.CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
                 }
             }
         }

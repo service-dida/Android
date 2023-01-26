@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.detailnft
+package com.dida.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderCommentsBinding
+import com.dida.common.R
+import com.dida.common.databinding.HolderCommentsBinding
 import com.dida.domain.model.nav.detailnft.Comments
 
 class CommentsAdapter(

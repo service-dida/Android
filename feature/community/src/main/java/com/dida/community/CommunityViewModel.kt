@@ -1,6 +1,7 @@
-package com.dida.android.presentation.views.nav.community
+package com.dida.community
 
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.CommunityActionHandler
 import com.dida.data.repository.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,7 +33,7 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onCommunityWrtieClicked() {
+    override fun onCommunityWriteClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
         }

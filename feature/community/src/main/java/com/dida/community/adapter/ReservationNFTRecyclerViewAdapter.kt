@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.community
+package com.dida.community.adapter
 
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -8,12 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderReservationNftBinding
+import com.dida.community.R
+import com.dida.community.databinding.HolderReservationNftBinding
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 
 class ReservationNFTRecyclerViewAdapter(
-) : ListAdapter<ReservationNFTHolderModel, ReservationNFTRecyclerViewAdapter.ViewHolder>(ReservationNFTDiffCallback){
+) : ListAdapter<ReservationNFTHolderModel, ReservationNFTRecyclerViewAdapter.ViewHolder>(ReservationNFTDiffCallback) {
 
     init { setHasStableIds(true) }
 

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.detailnft
+package com.dida.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,9 +6,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderCommunityBinding
-import com.dida.android.presentation.views.nav.community.CommunityActionHandler
+import com.dida.common.R
+import com.dida.common.databinding.HolderCommunityBinding
+import com.dida.common.util.CommunityActionHandler
 import com.dida.domain.model.nav.detailnft.Community
 
 class CommunityAdapter(
