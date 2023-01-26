@@ -136,7 +136,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     // 띄워 놓은 로딩 다이얼로그를 없앰.
     private fun dismissLoadingDialog() {
-        if (mLoadingDialog.showsDialog) {
+        if (mLoadingDialog.isVisible) {
             mLoadingDialog.dismiss()
         }
     }
