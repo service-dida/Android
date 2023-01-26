@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.detailnft
+package com.dida.nft_detail
 
 sealed class DetailNftNavigationAction {
     object NavigateToCommunity: DetailNftNavigationAction()
