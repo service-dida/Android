@@ -162,7 +162,7 @@
 
     <fragment
         android:id="@+id/emailFragment"
-        android:name="com.dida.android.presentation.views.email.EmailFragment"
+        android:name="com.dida.android.presentation.views.EmailFragment"
         android:label="EmailFragment" />
 
     <fragment

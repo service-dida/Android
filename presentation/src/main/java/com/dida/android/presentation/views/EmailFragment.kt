@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.email
+package com.dida.android.presentation.views
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
@@ -6,7 +6,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.dida.android.presentation.views.BaseFragment
 import com.dida.android.presentation.views.password.PasswordDialog
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
