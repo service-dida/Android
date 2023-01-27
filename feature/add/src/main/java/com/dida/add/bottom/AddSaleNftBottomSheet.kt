@@ -1,24 +1,24 @@
-package com.dida.android.presentation.views.nav.add.addnftprice
+package com.dida.add.bottom
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.android.R
-import com.dida.android.databinding.BottomAddNftPriceBinding
+import com.dida.add.R
+import com.dida.add.databinding.BottomAddSaleNftBinding
 import com.dida.common.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class AddNftPriceBottomSheet(
+class AddSaleNftBottomSheet(
     val price: (String) -> Unit
-) : BaseBottomSheetDialogFragment<BottomAddNftPriceBinding, AddNftPriceViewModel>() {
+) : BaseBottomSheetDialogFragment<BottomAddSaleNftBinding, AddSaleNftViewModel>() {
 
     private val TAG = "AddNftPriceBottomSheet"
 
     override val layoutResourceId: Int
-        get() = R.layout.bottom_add_nft_price
+        get() = R.layout.bottom_add_sale_nft
 
-    override val viewModel: AddNftPriceViewModel by viewModels()
+    override val viewModel: AddSaleNftViewModel by viewModels()
 
     override fun initStartView() {
         binding.apply {
@@ -32,7 +32,7 @@ class AddNftPriceBottomSheet(
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is AddNftPriceNavigationAction.NavigateToDismiss -> {
+                    is AddSaleNftNavigationAction.NavigateToDismiss -> {
                         // NFT 생성 API호출
                         price(viewModel.userInputStateFlow.value)
                         dismiss()

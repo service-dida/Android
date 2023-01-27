@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.addpurpose
+package com.dida.add.purpose
 
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap

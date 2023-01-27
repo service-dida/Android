@@ -37,7 +37,7 @@
         android:label="SwapFragment" />
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.dida.android.presentation.views.nav.add.addmain.AddFragment"
+        android:name="com.dida.android.presentation.views.AddFragment"
         android:label="AddFragment" >
 
         <action
@@ -167,7 +167,7 @@
 
     <fragment
         android:id="@+id/addPurposeFragment"
-        android:name="com.dida.android.presentation.views.nav.add.addpurpose.AddPurposeFragment"
+        android:name="com.dida.android.presentation.views.AddPurposeFragment"
         android:label="AddPurposeFragment">
         <argument
             android:name="imgURL"

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.addpurpose
+package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
 import android.database.Cursor
@@ -7,12 +7,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.dida.android.R
-import com.dida.android.databinding.FragmentAddPurposeBinding
-import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
-import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
+import com.dida.add.bottom.AddKeepNftBottomSheet
+import com.dida.add.bottom.AddSaleNftBottomSheet
+import com.dida.add.databinding.FragmentAddPurposeBinding
+import com.dida.add.purpose.AddPurposeNavigationAction
+import com.dida.add.purpose.AddPurposeViewModel
+import com.dida.add.R
 import com.dida.android.presentation.views.password.PasswordDialog
-import com.dida.android.presentation.views.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -54,13 +55,13 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
 
     private fun notSaled() {
-        AddNftBottomSheet {
+        AddKeepNftBottomSheet {
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
                     viewModel.mintNFT(password)
@@ -72,7 +73,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     }
 
     private fun isSaled() {
-        val dialog = AddNftPriceBottomSheet {
+        val dialog = AddSaleNftBottomSheet {
         }
         dialog.show(childFragmentManager, "AddPurposeFragment")
     }

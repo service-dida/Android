@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.addnftprice
+package com.dida.add.bottom
 
 import com.dida.common.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,13 +7,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddNftPriceViewModel @Inject constructor(
-) : BaseViewModel(), AddNftPriceActionHandler {
+class AddSaleNftViewModel @Inject constructor(
+) : BaseViewModel(), AddSaleNftActionHandler {
 
     private val TAG = "AddNftPriceViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<AddNftPriceNavigationAction> = MutableSharedFlow<AddNftPriceNavigationAction>()
-    val navigationEvent: SharedFlow<AddNftPriceNavigationAction> = _navigationEvent
+    private val _navigationEvent: MutableSharedFlow<AddSaleNftNavigationAction> = MutableSharedFlow<AddSaleNftNavigationAction>()
+    val navigationEvent: SharedFlow<AddSaleNftNavigationAction> = _navigationEvent
 
     private val _okBtnState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
     val okBtnState: StateFlow<Boolean> = _okBtnState
@@ -21,7 +21,7 @@ class AddNftPriceViewModel @Inject constructor(
     override fun onOkBtnClicked() {
         if(_okBtnState.value) {
             baseViewModelScope.launch {
-                _navigationEvent.emit(AddNftPriceNavigationAction.NavigateToDismiss)
+                _navigationEvent.emit(AddSaleNftNavigationAction.NavigateToDismiss)
             }
         }
     }
