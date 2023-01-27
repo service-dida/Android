@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.addpurpose
+package com.dida.android.presentation.views.nav.add.purpose
 
 import android.annotation.SuppressLint
 import android.database.Cursor
@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.android.databinding.FragmentAddPurposeBinding
-import com.dida.android.presentation.views.nav.add.AddNftBottomSheet
-import com.dida.android.presentation.views.nav.add.addnftprice.AddNftPriceBottomSheet
+import com.dida.android.presentation.views.nav.add.bottom.AddKeepNftBottomSheet
+import com.dida.android.presentation.views.nav.add.bottom.AddSaleNftBottomSheet
 import com.dida.android.presentation.views.password.PasswordDialog
 import com.dida.android.presentation.views.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +60,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     }
 
     private fun notSaled() {
-        AddNftBottomSheet {
+        AddKeepNftBottomSheet {
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
                     viewModel.mintNFT(password)
@@ -72,7 +72,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     }
 
     private fun isSaled() {
-        val dialog = AddNftPriceBottomSheet {
+        val dialog = AddSaleNftBottomSheet {
         }
         dialog.show(childFragmentManager, "AddPurposeFragment")
     }

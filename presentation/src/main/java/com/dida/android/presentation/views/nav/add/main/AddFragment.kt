@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.addmain
+package com.dida.android.presentation.views.nav.add.main
 
 import android.app.Activity
 import android.content.Intent

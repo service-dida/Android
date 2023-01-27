@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.addmain
+package com.dida.android.presentation.views.nav.add.main
 
 import android.net.Uri
 import com.dida.common.base.BaseViewModel
