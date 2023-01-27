@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.bottom
+package com.dida.add.bottom
 
 interface AddSaleNftActionHandler {
     fun onOkBtnClicked()

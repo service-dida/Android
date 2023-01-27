@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.purpose
+package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
 import android.database.Cursor
@@ -7,12 +7,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.dida.android.R
-import com.dida.android.databinding.FragmentAddPurposeBinding
-import com.dida.android.presentation.views.nav.add.bottom.AddKeepNftBottomSheet
-import com.dida.android.presentation.views.nav.add.bottom.AddSaleNftBottomSheet
+import com.dida.add.bottom.AddKeepNftBottomSheet
+import com.dida.add.bottom.AddSaleNftBottomSheet
+import com.dida.add.databinding.FragmentAddPurposeBinding
+import com.dida.add.purpose.AddPurposeNavigationAction
+import com.dida.add.purpose.AddPurposeViewModel
+import com.dida.add.R
 import com.dida.android.presentation.views.password.PasswordDialog
-import com.dida.android.presentation.views.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -54,7 +55,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }

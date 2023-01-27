@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.purpose
+package com.dida.add.purpose
 
 interface AddPurposeActionHandler {
     fun onTypeNotSaleClicked()

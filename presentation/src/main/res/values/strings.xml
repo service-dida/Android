@@ -63,25 +63,6 @@
     <string name="kakao_login">카카오톡으로 시작하기</string>
     <string name="kakao_login_web">카카오계정 직접 입력하기</string>
 
-    <!-- NFT 생성 화면-->
-    <string name="add_nft_main_title">NFT 생성</string>
-    <string name="add_nft_title_text">작품명</string>
-    <string name="add_nft_title_hint">매력적인 제목을 지어보세요.</string>
-    <string name="add_nft_description_text">설명</string>
-    <string name="add_nft_description_hint">당신의 NFT를 소개하세요.</string>
-
-    <string name="add_nft_price_title">판매 가격은 얼마인가요?</string>
-    <string name="add_nft_price_hint">가격을 입력하세요</string>
-    <string name="add_nft_price_ok_btn_text">NFT 생성하기</string>
-
-    <string name="add_purpose_top_text">어떤 목적으로\n아래 NFT를 생성하나요?</string>
-    <string name="not_sale_text">소장용</string>
-    <string name="sale_text">판매용</string>
-
-    <string name="add_nft_bottom_title">언제든 마켓에 판매할 수 있어요!</string>
-    <string name="add_nft_bottom_sub_title">· 마이페이지 > NFT 상세 > 판매하기</string>
-    <string name="add_nft_bottom_ok_btn_text">NFT 생성하기</string>
-
     <!--커뮤니티 화면-->
     <string name="community_reservation_title_text">오늘 곧 민팅될 NFT ⏰</string>
     <string name="community_hot_title_text">시끌벅적 게시판 👀</string>

@@ -1,8 +1,8 @@
-package com.dida.android.presentation.views.nav.add.bottom
+package com.dida.add.bottom
 
 import androidx.fragment.app.viewModels
-import com.dida.android.R
-import com.dida.android.databinding.BottomAddKeepNftBinding
+import com.dida.add.R
+import com.dida.add.databinding.BottomAddKeepNftBinding
 import com.dida.common.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 

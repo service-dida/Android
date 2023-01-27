@@ -1,9 +1,9 @@
-package com.dida.android.presentation.views.nav.add.bottom
+package com.dida.add.bottom
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.android.R
-import com.dida.android.databinding.BottomAddSaleNftBinding
+import com.dida.add.R
+import com.dida.add.databinding.BottomAddSaleNftBinding
 import com.dida.common.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

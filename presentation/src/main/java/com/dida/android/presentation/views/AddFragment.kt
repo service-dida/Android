@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.add.main
+package com.dida.android.presentation.views
 
 import android.app.Activity
 import android.content.Intent
@@ -11,10 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.dida.android.R
-import com.dida.android.databinding.FragmentAddBinding
+import com.dida.add.R
+import com.dida.add.databinding.FragmentAddBinding
+import com.dida.add.main.AddViewModel
 import com.dida.android.presentation.views.password.PasswordDialog
-import com.dida.android.presentation.views.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -118,7 +118,7 @@ class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fr
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
             this.inflateMenu(R.menu.menu_add_toolbar)
             this.setOnMenuItemClickListener {
