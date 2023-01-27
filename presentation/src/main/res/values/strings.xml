@@ -135,13 +135,5 @@
     <!--지갑 화면-->
     <string name="wallet_title_text">내 지갑</string>
     <string name="wallet_deal_title_text">NFT 거래 내역</string>
-
-    <!--프로필 수정 화면 -->
-    <string name="profile_title_text">프로필 수정</string>
-    <string name="profile_nickname_text">닉네임</string>
-    <string name="profile_nickname_hint">닉네임을 입력해주세요.</string>
-    <string name="profile_description_text">자기소개</string>
-    <string name="profile_description_hint">30글자 이하의 한글</string>
-    <string name="profile_description_check_text">30자 이내로 줄여주세요.</string>
     
 </resources>

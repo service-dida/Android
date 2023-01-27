@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.mypage
+package com.dida.update.profile
 
 import android.net.Uri
 import com.dida.common.base.BaseViewModel
