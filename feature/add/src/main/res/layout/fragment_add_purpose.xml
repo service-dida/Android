@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.dida.add.purpose.AddPurposeViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainblack">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:text="@string/add_nft_main_title"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/Textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/add_purpose_top_text"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <TextView
+                android:id="@+id/type1_Button"
+                android:layout_width="108dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@{vm.isSalesState==1? @drawable/custom_okbtn_success : @drawable/custom_surface3_radius10}"
+                android:gravity="center"
+                android:text="@string/not_sale_text"
+                android:onClick="@{() -> vm.onTypeNotSaleClicked()}"
+                android:textColor="@{vm.isSalesState==1 ? @color/black : @color/white}"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/Textview"
+                app:layout_constraintTop_toBottomOf="@+id/Textview"
+                tools:background="@drawable/custom_surface3_radius10" />
+
+            <TextView
+                android:id="@+id/type2_Button"
+                android:layout_width="108dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                android:background="@{vm.isSalesState == 2? @drawable/custom_okbtn_success : @drawable/custom_surface3_radius10}"
+                android:gravity="center"
+                android:text="@string/sale_text"
+                android:onClick="@{() -> vm.onTypeSaleClicked()}"
+                android:textColor="@{vm.isSalesState==2 ? @color/black : @color/white}"
+                tools:background="@drawable/custom_surface3_radius10"
+                android:textSize="16dp"
+                app:layout_constraintStart_toEndOf="@+id/type1_Button"
+                app:layout_constraintTop_toBottomOf="@+id/Textview" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_surface3_radius10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/type1_Button">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="18dp"
+                    android:scaleType="centerCrop"
+                    image_from_url_rounded="@{vm.nftImageState}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/NFT_title_Textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="31dp"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:text="@{vm.titleState}"
+                    app:layout_constraintStart_toEndOf="@+id/imageView4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="NFT name here" />
+
+                <ImageView
+                    android:id="@+id/user_img"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                    app:layout_constraintStart_toStartOf="@+id/NFT_title_Textview"
+                    app:layout_constraintTop_toBottomOf="@+id/NFT_title_Textview"
+                    android:src="@drawable/nft_example_image"
+                    tools:srcCompat="@tools:sample/avatars"/>
+
+                <TextView
+                    android:id="@+id/user_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/pretendard_light"
+                    android:textColor="@color/text_c5c5cf"
+                    android:textSize="14dp"
+                    android:text="user name here"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_img"
+                    app:layout_constraintStart_toEndOf="@+id/user_img"
+                    app:layout_constraintTop_toTopOf="@+id/user_img"
+                    tools:text="user name here" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginBottom="18dp"
+                    android:fontFamily="@font/pretendard_light"
+                    android:textColor="@color/surface6"
+                    android:textSize="14dp"
+                    android:text="@{vm.descriptionState}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/imageView4"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                    tools:text="@string/example_description" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
+

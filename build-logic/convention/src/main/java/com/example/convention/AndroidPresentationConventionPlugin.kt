@@ -45,12 +45,13 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:nickname"))
                     add("implementation", project(":feature:home"))
                     add("implementation", project(":feature:swap"))
+                    add("implementation", project(":feature:add"))
                     add("implementation", project(":feature:community"))
                     add("implementation", project(":feature:mypage"))
                     add("implementation", project(":feature:wallet"))
                     add("implementation", project(":feature:create-community"))
                     add("implementation", project(":feature:create-community-input"))
-
+                    add("implementation", project(":feature:update-profile"))
                     
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())

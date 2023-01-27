@@ -16,6 +16,7 @@
       <module name="DIDA.feature.nickname" target="11" />
       <module name="DIDA.feature.swap" target="11" />
       <module name="DIDA.feature.wallet" target="11" />
+      <module name="DIDA.feature.update-profile" target="11" />
       <module name="DIDA.model" target="11" />
       <module name="DIDA.presentation" target="11" />
     </bytecodeTargetLevel>
