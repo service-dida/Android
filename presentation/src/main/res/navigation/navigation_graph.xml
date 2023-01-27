@@ -188,7 +188,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateProfileFragment"
-        android:name="com.dida.android.presentation.views.nav.mypage.UpdateProfileFragment"
+        android:name="com.dida.android.presentation.views.UpdateProfileFragment"
         android:label="UpdateProfileFragment" >
         <argument
             android:name="image"

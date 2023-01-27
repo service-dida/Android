@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.nav.mypage
+package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -13,11 +13,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.dida.android.R
-import com.dida.android.databinding.FragmentUpdateProfileBinding
+import com.dida.update.profile.R
 import com.dida.android.util.uriToFile
-import com.dida.android.presentation.views.BaseFragment
 import com.dida.common.util.DidaIntent
+import com.dida.update.profile.UpdateProfileNavigationAction
+import com.dida.update.profile.UpdateProfileViewModel
+import com.dida.update.profile.databinding.FragmentUpdateProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -69,7 +70,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
