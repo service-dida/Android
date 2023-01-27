@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.mypage
+package com.dida.wallet.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderWalletNftHistoryBinding
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
+import com.dida.wallet.R
+import com.dida.wallet.databinding.HolderWalletNftHistoryBinding
 
 class WalletNFTHistoryRecyclerViewAdapter(
-) : ListAdapter<WalletNFTHistoryHolderModel, WalletNFTHistoryRecyclerViewAdapter.ViewHolder>(WalletCardDiffCallback){
+) : ListAdapter<WalletNFTHistoryHolderModel, WalletNFTHistoryRecyclerViewAdapter.ViewHolder>(
+    WalletCardDiffCallback
+){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderWalletNftHistoryBinding = DataBindingUtil.inflate(

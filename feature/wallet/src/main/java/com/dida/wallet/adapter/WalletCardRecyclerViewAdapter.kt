@@ -1,4 +1,4 @@
-package com.dida.android.presentation.adapter.mypage
+package com.dida.wallet.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.android.R
-import com.dida.android.databinding.HolderWalletCardBinding
+import com.dida.wallet.R
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
+import com.dida.wallet.databinding.HolderWalletCardBinding
 
 class WalletCardRecyclerViewAdapter(
-) : ListAdapter<WalletCardHolderModel, WalletCardRecyclerViewAdapter.ViewHolder>(WalletCardDiffCallback){
+) : ListAdapter<WalletCardHolderModel, WalletCardRecyclerViewAdapter.ViewHolder>(
+    WalletCardDiffCallback
+){
 
     init { setHasStableIds(true) }
 

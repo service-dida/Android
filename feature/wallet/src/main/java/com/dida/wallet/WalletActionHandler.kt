@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.wallet
+package com.dida.wallet
 
 interface WalletActionHandler {
     fun onNftHistoryClicked(type: Int)

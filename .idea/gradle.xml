@@ -40,6 +40,7 @@
             <option value="$PROJECT_DIR$/feature/nft-detail" />
             <option value="$PROJECT_DIR$/feature/nickname" />
             <option value="$PROJECT_DIR$/feature/swap" />
+            <option value="$PROJECT_DIR$/feature/wallet" />
             <option value="$PROJECT_DIR$/feature/update-profile" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/presentation" />

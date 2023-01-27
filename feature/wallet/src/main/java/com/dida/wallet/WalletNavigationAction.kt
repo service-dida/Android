@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.wallet
+package com.dida.wallet
 
 sealed class WalletNavigationAction {
     object NavigateToBack: WalletNavigationAction()

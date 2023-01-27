@@ -1,31 +1,30 @@
-package com.dida.android.presentation.views.wallet
+package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.dida.android.R
-import com.dida.android.databinding.FragmentWalletBinding
-import com.dida.android.presentation.adapter.mypage.WalletCardRecyclerViewAdapter
-import com.dida.android.presentation.adapter.mypage.WalletNFTHistoryRecyclerViewAdapter
-import com.dida.android.presentation.views.BaseFragment
+import com.dida.wallet.R
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
+import com.dida.wallet.adapter.WalletCardRecyclerViewAdapter
+import com.dida.wallet.adapter.WalletNFTHistoryRecyclerViewAdapter
+import com.dida.wallet.databinding.FragmentWalletBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.layout.fragment_wallet) {
+class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.WalletViewModel>(R.layout.fragment_wallet) {
 
     private val TAG = "WalletFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_wallet
 
-    override val viewModel: WalletViewModel by viewModels()
+    override val viewModel: com.dida.wallet.WalletViewModel by viewModels()
 
     private val walletCardRecyclerViewAdapter = WalletCardRecyclerViewAdapter()
     private val walletNFTHistoryRecyclerViewAdapter = WalletNFTHistoryRecyclerViewAdapter()
@@ -45,7 +44,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is WalletNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is com.dida.wallet.WalletNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
             }
         }
@@ -56,7 +55,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            setNavigationIcon(R.drawable.ic_baseline_close_24)
+            setNavigationIcon(com.dida.android.R.drawable.ic_baseline_close_24)
             setNavigationOnClickListener { viewModel.onBack() }
         }
     }

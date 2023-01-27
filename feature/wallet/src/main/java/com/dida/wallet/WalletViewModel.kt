@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.wallet
+package com.dida.wallet
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl
