@@ -16,6 +16,7 @@
       <module name="DIDA.feature.nft-detail" target="11" />
       <module name="DIDA.feature.nickname" target="11" />
       <module name="DIDA.feature.password" target="11" />
+      <module name="DIDA.feature.splash" target="11" />
       <module name="DIDA.feature.swap" target="11" />
       <module name="DIDA.feature.update-profile" target="11" />
       <module name="DIDA.feature.wallet" target="11" />

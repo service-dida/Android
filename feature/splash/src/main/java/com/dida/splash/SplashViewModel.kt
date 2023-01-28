@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views
+package com.dida.splash
 
 import androidx.lifecycle.viewModelScope
 import com.dida.common.base.BaseViewModel
@@ -49,12 +49,6 @@ class SplashViewModel @Inject constructor(
             }
             _navigateToHome.emit(true)
             _splashScreenGone.emit(true)
-        }
-    }
-
-    fun setSplachScreenFlag(flag: Boolean) {
-        baseViewModelScope.launch {
-            _splashScreenGone.value = flag
         }
     }
 }

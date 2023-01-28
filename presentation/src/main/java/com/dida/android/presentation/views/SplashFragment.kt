@@ -7,8 +7,9 @@ import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
-import com.dida.android.databinding.FragmentSplashBinding
 import com.dida.common.util.AppLog
+import com.dida.splash.SplashViewModel
+import com.dida.splash.databinding.FragmentSplashBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,10 +17,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.layout.fragment_splash) {
+class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.dida.splash.R.layout.fragment_splash) {
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_splash // get() : 커스텀 접근자, 코틀린 문법
+        get() = com.dida.splash.R.layout.fragment_splash // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel : SplashViewModel by viewModels()
 
@@ -40,7 +41,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(R.la
                 // 추후 배포시 엡데이트 로직 추가
                 viewModel.appVersion.collectLatest {
                     if(it.toString() == getString(R.string.app_version)) getToken()
-                    else viewModel.setSplachScreenFlag(true)
                 }
             }
 

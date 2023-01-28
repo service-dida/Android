@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.SplashViewModel" />
+            type="com.dida.splash.SplashViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,14 +16,14 @@
         <ImageView
             android:id="@+id/app_logo"
             android:scaleType="centerCrop"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
+            android:layout_width="148dp"
+            android:layout_height="148dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="120dp"
-            android:src="@mipmap/ic_dida_logo_foreground">
+            android:src="@mipmap/img_dida_logo_foreground">
         </ImageView>
 
         <TextView
