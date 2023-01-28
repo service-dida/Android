@@ -1,25 +1,27 @@
-package com.dida.android.presentation.views.detailcommunity
+package com.dida.android.presentation.views
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
-import com.dida.android.databinding.FragmentDetailCommunityBinding
 import com.dida.common.adapter.CommunityAdapter
-import com.dida.android.presentation.views.BaseFragment
+import com.dida.community_detail.DetailCommunityBottomSheetDialog
+import com.dida.community_detail.DetailCommunityViewModel
+import com.dida.community_detail.MoreState
+import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
 import com.dida.domain.model.nav.detailnft.Comments
 import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(R.layout.fragment_detail_community) {
+class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(com.dida.community_detail.R.layout.fragment_detail_community) {
 
     private val TAG = "DetailCommunityFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_detail_community
+        get() = com.dida.community_detail.R.layout.fragment_detail_community
 
     override val viewModel : DetailCommunityViewModel by viewModels()
     private val communityViewModel : com.dida.community.CommunityViewModel by viewModels()

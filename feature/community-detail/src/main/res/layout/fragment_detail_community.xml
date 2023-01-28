@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.dida.android.presentation.views.detailcommunity.DetailCommunityViewModel" />
+            type="com.dida.community_detail.DetailCommunityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +49,7 @@
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:background="@drawable/custom_detail_community_edit">
+                android:background="@drawable/custom_surface5_radius10">
                 <EditText
                     android:id="@+id/edit_comments"
                     style="@style/Widget.AppCompat.EditText.DetailCommunity.EditText"
@@ -71,7 +71,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:src="@drawable/ic_send"
                     android:padding="8dp"
-                    android:background="@drawable/custom_ic_send">
+                    android:background="@drawable/custom_brandlemon_radius6">
                 </ImageView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
