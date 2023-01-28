@@ -40,7 +40,7 @@ interface MainAPIService {
     @GET("/user")
     suspend fun getUserProfile() : UserProfileResponse
 
-    @POST("/login/refresh")
+    @GET("/login/refresh")
     suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): LoginResponseModel
 
     @GET("/user/cards")

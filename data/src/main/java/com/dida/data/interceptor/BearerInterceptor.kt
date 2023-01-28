@@ -1,5 +1,6 @@
 package com.dida.data.interceptor
 
+import android.util.Log
 import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
@@ -49,7 +50,9 @@ class BearerInterceptor : Interceptor {
                             response.accessToken?.let { token ->
                                 DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
                                 accessToken = token } }
-                            .onError { accessToken = "" }
+                            .onError { 
+                                accessToken = ""
+                                DataApplication.dataStorePreferences.removeAccountToken() }
                     }
                 }
 
