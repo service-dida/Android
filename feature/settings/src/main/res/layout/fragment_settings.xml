@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            android:layout_marginTop="62dp"
+            android:layout_marginTop="32dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:onClick="@{() -> vm.onProfileEditClicked()}">
@@ -262,7 +262,8 @@
             android:padding="16dp"
             android:text="@string/logout_text"
             style="@style/TextView_medium_20_white"
-            android:layout_marginBottom="48dp"/>
+            android:layout_marginBottom="48dp"
+            android:onClick="@{() -> vm.onLogoutClicked()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
