@@ -115,13 +115,6 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onLogoutClicked() {
-        baseViewModelScope.launch {
-            DataApplication.dataStorePreferences.removeAccountToken()
-            _navigationEvent.emit(MypageNavigationAction.NavigateToHome)
-        }
-    }
-
     override fun onNftItemClicked(nftId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId.toLong()))

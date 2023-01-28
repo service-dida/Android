@@ -36,13 +36,16 @@ class SettingsFragment :
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is SettingsNavigationAction.NavigateToProfileEdit -> {}
+                    is SettingsNavigationAction.NavigateToProfileEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToUpdateProfileFragment())
                     is SettingsNavigationAction.NavigateToPrePassword -> {}
                     is SettingsNavigationAction.NavigateToPasswordEdit -> {}
                     is SettingsNavigationAction.NavigateToAccountInformation -> {}
                     is SettingsNavigationAction.NavigateToNotification -> {}
                     is SettingsNavigationAction.NavigateToInVisible -> {}
-                    is SettingsNavigationAction.NavigateToLogout -> {}
+                    is SettingsNavigationAction.NavigateToLogout -> {
+                        toastMessage("로그아웃 하였습니다.")
+                        navigate(SettingsFragmentDirections.actionMainFragment())
+                    }
                 }
             }
         }

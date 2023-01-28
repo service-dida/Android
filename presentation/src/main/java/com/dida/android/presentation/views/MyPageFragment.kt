@@ -37,10 +37,6 @@ class MyPageFragment :
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    is MypageNavigationAction.NavigateToHome -> {
-                        toastMessage("로그아웃 하였습니다.")
-                        navController.popBackStack()
-                    }
                     is MypageNavigationAction.NavigateToEmail -> navigate(
                         MyPageFragmentDirections.actionMyPageFragmentToEmailFragment()
                     )
