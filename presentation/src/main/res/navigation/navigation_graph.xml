@@ -127,10 +127,10 @@
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
         <action
-            android:id="@+id/action_myPageFragment_to_updateProfileFragment"
-            app:destination="@id/updateProfileFragment"
+            android:id="@+id/action_myPageFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
             app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right"/>
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -199,6 +199,17 @@
         <argument
             android:name="description"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.dida.android.presentation.views.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
 </navigation>

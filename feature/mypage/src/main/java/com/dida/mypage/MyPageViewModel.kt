@@ -128,19 +128,6 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onUpdateProfileClicked() {
-        baseViewModelScope.launch {
-            val mypage = myPageState.value.successOrNull()!!
-            _navigationEvent.emit(
-                MypageNavigationAction.NavigateToUpdateProfile(
-                    mypage.profileUrl,
-                    mypage.nickname,
-                    mypage.description
-                )
-            )
-        }
-    }
-
     override fun onLikeBtnClicked(nftId: Int) {
         baseViewModelScope.launch {
             showLoading()
@@ -154,5 +141,11 @@ class MyPageViewModel @Inject constructor(
 
     override fun onMypageNftTypeClicked(type: MypageNftType) {
         _mypageNftTypeState.value = type
+    }
+
+    override fun onSettingsClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MypageNavigationAction.NavigateToSettings)
+        }
     }
 }
