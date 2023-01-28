@@ -5,6 +5,5 @@
         android:fromXDelta="0"
         android:toXDelta="20"
         android:repeatCount="3"
-        android:repeatMode="reverse"
-        />
+        android:repeatMode="reverse" />
 </set>

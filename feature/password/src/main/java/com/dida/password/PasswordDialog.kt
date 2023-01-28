@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.password
+package com.dida.password
 
 import android.content.Context
 import android.content.DialogInterface
@@ -17,9 +17,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.android.R
-import com.dida.android.databinding.DialogPasswordBinding
 import com.dida.common.base.BaseBottomSheetDialogFragment
+import com.dida.password.databinding.DialogPasswordBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

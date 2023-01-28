@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.password
+package com.dida.password
 
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError

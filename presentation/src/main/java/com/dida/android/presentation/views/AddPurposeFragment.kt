@@ -13,7 +13,7 @@ import com.dida.add.databinding.FragmentAddPurposeBinding
 import com.dida.add.purpose.AddPurposeNavigationAction
 import com.dida.add.purpose.AddPurposeViewModel
 import com.dida.add.R
-import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
