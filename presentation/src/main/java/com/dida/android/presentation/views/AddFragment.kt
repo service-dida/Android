@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
-import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

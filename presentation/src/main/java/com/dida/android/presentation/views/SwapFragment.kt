@@ -2,7 +2,7 @@ package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.password.PasswordDialog
 import com.dida.swap.SwapNavigationAction
 import com.dida.swap.SwapViewModel
 import com.dida.swap.databinding.FragmentSwapBinding
