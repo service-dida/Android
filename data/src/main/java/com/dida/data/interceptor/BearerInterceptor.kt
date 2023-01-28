@@ -50,9 +50,9 @@ class BearerInterceptor : Interceptor {
                             response.accessToken?.let { token ->
                                 DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
                                 accessToken = token } }
-                            .onError { 
-                                accessToken = ""
-                                DataApplication.dataStorePreferences.removeAccountToken() }
+                            .onError {
+                                DataApplication.dataStorePreferences.removeAccountToken()
+                                accessToken = "" }
                     }
                 }
 
