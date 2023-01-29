@@ -16,8 +16,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SwapViewModel @Inject constructor(
-    private val swapKlayToDidaApi: SwapKlayToDidaAPI,
-    private val swapDidaToKlayAPI: SwapDidaToKlayAPI,
     private val walletAmountAPI: WalletAmountAPI
 ) : BaseViewModel(), SwapActionHandler {
 
@@ -61,25 +59,6 @@ class SwapViewModel @Inject constructor(
             _walletAmountState.value = didaAmount
         }
     }
-
-    fun swap(password: String, amount: Double) {
-        baseViewModelScope.launch {
-            if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
-                swapKlayToDidaApi(password, amount)
-                    .onSuccess {
-                        initWalletAmount()
-                    }
-                    .onError { e -> catchError(e) }
-            } else {
-                swapDidaToKlayAPI(password, amount)
-                    .onSuccess {
-                        initWalletAmount()
-                    }
-                    .onError { e -> catchError(e) }
-            }
-        }
-    }
-
 
     override fun onSwapClicked() {
         baseViewModelScope.launch {

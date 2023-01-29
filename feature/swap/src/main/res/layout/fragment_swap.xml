@@ -280,7 +280,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            tools:text="@string/swap_dida_equal_klay" />
+                            android:text="@string/swap_dida_equal_klay" />
                     </LinearLayout>
 
                     <LinearLayout
