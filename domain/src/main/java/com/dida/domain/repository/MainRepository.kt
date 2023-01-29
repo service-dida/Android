@@ -11,6 +11,7 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
+import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.model.nav.swap.WalletAmount
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
@@ -72,6 +73,8 @@ interface  MainRepository {
     suspend fun postSellNftAPI(payPwd : String, cardId : Long, price : Double) : NetworkResult<Unit>
 
     suspend fun getWalletAmountAPI() : NetworkResult<WalletAmount>
+
+    suspend fun getPosts() : NetworkResult<List<Posts>>
 
     suspend fun getPostPostId(postId: Int) : NetworkResult<Post>
 

@@ -7,6 +7,8 @@ import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.CommentsPostIdAPI
+import com.dida.domain.usecase.main.PostIdAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailCommunityViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl
+    private val postIdAPI: PostIdAPI,
+    private val commentsPostIdAPI: CommentsPostIdAPI
 ) : BaseViewModel() {
 
     private val TAG = "DetailCommunityViewModel"
@@ -32,9 +35,9 @@ class DetailCommunityViewModel @Inject constructor(
     fun getPost(postId: Int) {
         baseViewModelScope.launch {
             showLoading()
-            mainRepositoryImpl.getPostPostId(postId = postId)
+            postIdAPI.invoke(postId = postId)
                 .onSuccess { _postState.value = it }
-                .flatMap { mainRepositoryImpl.getCommentsPostId(postId = postId) }
+                .flatMap { commentsPostIdAPI.invoke(postId = postId) }
                 .onSuccess { _commentList.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()
