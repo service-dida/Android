@@ -1,7 +1,6 @@
 package com.dida.community_detail
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.UiState
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.post.Comments
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.Thread.State
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,7 +34,7 @@ class DetailCommunityViewModel @Inject constructor(
             showLoading()
             mainRepositoryImpl.getPostPostId(postId = postId)
                 .onSuccess { _postState.value = it }
-                .flatMap { mainRepositoryImpl.getPostIdComments(postId = postId) }
+                .flatMap { mainRepositoryImpl.getCommentsPostId(postId = postId) }
                 .onSuccess { _commentList.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()

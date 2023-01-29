@@ -117,7 +117,7 @@ interface MainAPIService {
     @GET("post/{postId}")
     suspend fun getPostPostId(@Path("postId") postId: Int) : GetPostPostIdResponse
 
-    @GET("{postId}/comments")
-    suspend fun getPostIdComments(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
+    @GET("comments/{postId}")
+    suspend fun getCommentsPostId(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
 
 }
