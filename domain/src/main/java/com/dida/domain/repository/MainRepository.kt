@@ -9,6 +9,7 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.model.nav.post.Posts
@@ -79,4 +80,8 @@ interface  MainRepository {
     suspend fun getPostPostId(postId: Int) : NetworkResult<Post>
 
     suspend fun getCommentsPostId(postId: Int) : NetworkResult<List<Comments>>
+
+    suspend fun getCardsPostLike() : NetworkResult<List<CardPost>>
+
+    suspend fun getCardsPostMy() : NetworkResult<List<CardPost>>
 }

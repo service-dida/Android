@@ -25,6 +25,7 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.model.nav.post.Posts
@@ -174,5 +175,13 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getCommentsPostId(postId: Int): NetworkResult<List<Comments>> {
         return handleApi { mainAPIService.getCommentsPostId(postId = postId).toDomain() }
+    }
+
+    override suspend fun getCardsPostLike(): NetworkResult<List<CardPost>> {
+        return handleApi { mainAPIService.getCardsPostLike().toDomain() }
+    }
+
+    override suspend fun getCardsPostMy(): NetworkResult<List<CardPost>> {
+        return handleApi { mainAPIService.getCardsPostMy().toDomain() }
     }
 }

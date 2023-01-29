@@ -11,6 +11,7 @@ import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.post.GetCardsPostResponse
 import com.dida.data.model.post.GetPostIdCommentsResponse
 import com.dida.data.model.post.GetPostPostIdResponse
 import com.dida.data.model.post.GetPostsResponse
@@ -126,6 +127,14 @@ interface MainAPIService {
     // 게시글 답변 가져오기
     @GET("comments/{postId}")
     suspend fun getCommentsPostId(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
+
+    // 커뮤니티 생성(내가 좋아요한 NFT)
+    @GET("cards/post/like")
+    suspend fun getCardsPostLike() : List<GetCardsPostResponse>
+
+    // 커뮤니티 생성(내가 보유한 NFT)
+    @GET("cards/post/my")
+    suspend fun getCardsPostMy() : List<GetCardsPostResponse>
 
 
 }
