@@ -177,7 +177,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:src="@drawable/ic_next"
-                android:onClick="@{() -> eventListener.onCommunityItemClicked(0)}">
+                android:onClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
             </ImageView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
