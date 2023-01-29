@@ -45,11 +45,12 @@
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/user_img"
                 app:layout_constraintBottom_toBottomOf="@id/user_img"
-                app:layout_constraintLeft_toRightOf="@id/user_img"
+                app:layout_constraintStart_toEndOf="@id/user_img"
+                app:layout_constraintEnd_toStartOf="@id/clip_or_more_btn"
                 android:text="@{vm.postState.userName}"
                 android:textSize="15dp"
                 android:textColor="@color/white"
@@ -67,15 +68,15 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <ImageView
-                    android:layout_width="26dp"
-                    android:layout_height="34dp"
-                    android:background="@drawable/custom_surface6_radius100"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_clips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_baseline_more_vert_24"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
