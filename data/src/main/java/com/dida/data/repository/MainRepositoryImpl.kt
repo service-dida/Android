@@ -25,6 +25,8 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.post.Comments
+import com.dida.domain.model.nav.post.Post
 import com.dida.domain.model.nav.swap.WalletAmount
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.repository.MainRepository
@@ -159,5 +161,13 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getWalletAmountAPI(): NetworkResult<WalletAmount> {
         return handleApi { mainAPIService.getWalletAmount().toDomain() }
+    }
+
+    override suspend fun getPostPostId(postId: Int): NetworkResult<Post> {
+        return handleApi { mainAPIService.getPostPostId(postId = postId).toDomain() }
+    }
+
+    override suspend fun getPostIdComments(postId: Int): NetworkResult<List<Comments>> {
+        return handleApi { mainAPIService.getPostIdComments(postId = postId).toDomain() }
     }
 }

@@ -6,6 +6,8 @@ import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
 import com.dida.data.model.mypage.UserProfileResponse
+import com.dida.data.model.post.GetPostIdCommentsResponse
+import com.dida.data.model.post.GetPostPostIdResponse
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.createwallet.RandomNumber
@@ -14,6 +16,8 @@ import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.post.Comments
+import com.dida.domain.model.nav.post.Post
 
 fun GetMainResponse.toDomain() : Home {
     return Home(
@@ -126,4 +130,32 @@ fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmo
         dida = dida,
         klay = klay
     )
+}
+
+fun GetPostPostIdResponse.toDomain(): Post {
+    return Post(
+        postId = postId,
+        cardId = cardId,
+        userName = userName,
+        userImgUrl = userImgUrl,
+        title = title,
+        content = content,
+        cardName = cardName,
+        cardImgUrl = cardImgUrl,
+        price = price,
+        cardOwnerImgUrl = cardOwnerImgUrl,
+        type = type
+    )
+}
+
+@JvmName("toDomainGetPostIdCommentsResponse")
+fun List<GetPostIdCommentsResponse>.toDomain(): List<Comments> {
+    return map { Comments(
+       commentId = it.commentId,
+        postId = it.postId,
+        content = it.content,
+        userName = it.userName,
+        userImgUrl = it.userImgUrl,
+        type = it.type
+    ) }
 }
