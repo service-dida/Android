@@ -6,6 +6,7 @@ import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
 import com.dida.data.model.mypage.UserProfileResponse
+import com.dida.data.model.`swap-history`.GetSwapHistoryResponse
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.createwallet.RandomNumber
@@ -14,6 +15,7 @@ import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.`swap-history`.SwapHistory
 
 fun GetMainResponse.toDomain() : Home {
     return Home(
@@ -125,5 +127,14 @@ fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmo
     return com.dida.domain.model.nav.swap.WalletAmount(
         dida = dida,
         klay = klay
+    )
+}
+
+fun GetSwapHistoryResponse.toDomain() : SwapHistory{
+    return SwapHistory(
+        sendCoinType = sendCoinType,
+        receiveCoinType = receiveCoinType,
+        sendAmount = sendAmount,
+        time = time
     )
 }
