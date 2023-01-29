@@ -37,7 +37,9 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     SwapLoadingNavigationAction.NavigateToSuccess -> {
-                        //TODO : 성공화면으로 가야함
+                        navigate(
+                            SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment()
+                        )
                     }
                 }
             }

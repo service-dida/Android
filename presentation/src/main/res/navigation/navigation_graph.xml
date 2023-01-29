@@ -38,7 +38,9 @@
 
         <action
             android:id="@+id/action_swapFragment_to_swapLoadingFragment"
-            app:destination="@id/swapLoadingFragment" />
+            app:destination="@id/swapLoadingFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -222,6 +224,17 @@
             android:name="swapType"
             app:argType="com.dida.swap.SwapViewModel$SwapType"
             android:defaultValue="KLAY_TO_DIDA" />
+        <action
+            android:id="@+id/action_swapLoadingFragment_to_swapSuccessFragment"
+            app:destination="@id/swapSuccessFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/swapFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/swapSuccessFragment"
+        android:name="com.dida.android.presentation.views.SwapSuccessFragment"
+        android:label="SwapSuccessFragment" />
 
 </navigation>

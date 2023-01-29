@@ -33,7 +33,7 @@ class SwapLoadingViewModel @Inject constructor(
             if (swapType == SwapViewModel.SwapType.KLAY_TO_DIDA) {
                 swapKlayToDidaApi(password, amount)
                     .onSuccess {
-                        //TODO : 성공화면으로 가야함
+                        _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess)
                     }
                     .onError { e ->
                         //TODO : 실패 시 로직 구현해야함
@@ -42,7 +42,7 @@ class SwapLoadingViewModel @Inject constructor(
             } else {
                 swapDidaToKlayAPI(password, amount)
                     .onSuccess {
-                        //TODO : 성공화면으로 가야함
+                        _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess)
                     }
                     .onError { e ->
                         //TODO : 실패 시 로직 구현해야함
