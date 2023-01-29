@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.mypage.R
 import com.dida.common.adapter.RecentNftAdapter
+import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.databinding.FragmentMypageBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -36,27 +37,18 @@ class MyPageFragment :
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    is com.dida.mypage.MypageNavigationAction.NavigateToHome -> {
-                        toastMessage("로그아웃 하였습니다.")
-                        navController.popBackStack()
-                    }
-                    is com.dida.mypage.MypageNavigationAction.NavigateToEmail -> navigate(
+                    is MypageNavigationAction.NavigateToEmail -> navigate(
                         MyPageFragmentDirections.actionMyPageFragmentToEmailFragment()
                     )
-                    is com.dida.mypage.MypageNavigationAction.NavigateToWallet -> navigate(
+                    is MypageNavigationAction.NavigateToWallet -> navigate(
                         MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
                     )
-                    is com.dida.mypage.MypageNavigationAction.NavigateToUpdateProfile -> navigate(
-                        MyPageFragmentDirections.actionMyPageFragmentToUpdateProfileFragment(
-                            it.image,
-                            it.nickname,
-                            it.description
-                        )
-                    )
-                    is com.dida.mypage.MypageNavigationAction.NavigateToDetailNft -> navigate(
+                    is MypageNavigationAction.NavigateToDetailNft -> navigate(
                         MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId)
                     )
-                    else -> {}
+                    is MypageNavigationAction.NavigateToSettings -> navigate(
+                        MyPageFragmentDirections.actionMyPageFragmentToSettingFragment()
+                    )
                 }
             }
         }
@@ -88,13 +80,7 @@ class MyPageFragment :
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_wallet -> viewModel.onWalletClicked()
-                    R.id.action_setting -> viewModel.onLogoutClicked()
-                    R.id.action_profileImg -> viewModel.onUpdateProfileClicked()
-                    R.id.action_temporary_password -> viewModel.tempPassword()
-                    R.id.action_change_password -> viewModel.changePassword(
-                        "203057",
-                        "000000"
-                    )
+                    R.id.action_setting -> viewModel.onSettingsClicked()
                 }
                 true
             }

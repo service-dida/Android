@@ -39,6 +39,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":data"))
                     add("implementation", project(":common"))
 
+                    add("implementation", project(":feature:splash"))
                     add("implementation", project(":feature:nft-detail"))
                     add("implementation", project(":feature:email"))
                     add("implementation", project(":feature:login"))
@@ -47,11 +48,14 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:swap"))
                     add("implementation", project(":feature:add"))
                     add("implementation", project(":feature:community"))
-                    add("implementation", project(":feature:mypage"))
-                    add("implementation", project(":feature:wallet"))
+                    add("implementation", project(":feature:community-detail"))
                     add("implementation", project(":feature:create-community"))
                     add("implementation", project(":feature:create-community-input"))
+                    add("implementation", project(":feature:mypage"))
+                    add("implementation", project(":feature:wallet"))
                     add("implementation", project(":feature:update-profile"))
+                    add("implementation", project(":feature:password"))
+                    add("implementation", project(":feature:settings"))
                     
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())

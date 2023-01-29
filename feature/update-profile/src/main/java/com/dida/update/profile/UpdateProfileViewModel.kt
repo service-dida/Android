@@ -5,10 +5,7 @@ import com.dida.common.base.BaseViewModel
 import com.dida.domain.NetworkResult
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.NicknameCheckAPI
-import com.dida.domain.usecase.main.UpdateProfileDescriptionAPI
-import com.dida.domain.usecase.main.UpdateProfileImageAPI
-import com.dida.domain.usecase.main.UpdateProfileNicknameAPI
+import com.dida.domain.usecase.main.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -23,7 +20,8 @@ class UpdateProfileViewModel @Inject constructor(
     private val nicknameCheckAPI: NicknameCheckAPI,
     private val updateProfileImageAPI: UpdateProfileImageAPI,
     private val updateProfileDescriptionAPI: UpdateProfileDescriptionAPI,
-    private val updateProfileNicknameAPI: UpdateProfileNicknameAPI
+    private val updateProfileNicknameAPI: UpdateProfileNicknameAPI,
+    private val userProfileAPI: UserProfileAPI
 ) : BaseViewModel() {
 
     private val TAG = "UpdateProfileViewModel"
@@ -44,15 +42,18 @@ class UpdateProfileViewModel @Inject constructor(
     private lateinit var currentProfileImage : String
     private lateinit var currentDescription : String
 
-    fun initProfile(image : String, nickname : String, description : String){
+    init {
         baseViewModelScope.launch {
-            profileImageState.emit(image)
-            nickNameState.emit(nickname)
-            descriptionState.emit(description)
+            userProfileAPI.invoke()
+                .onSuccess {
+                    profileImageState.emit(it.profileUrl)
+                    nickNameState.emit(it.nickname)
+                    descriptionState.emit(it.description)
 
-            currentProfileImage = image
-            currentNickname = nickname
-            currentDescription = description
+                    currentProfileImage = it.profileUrl
+                    currentNickname = it.nickname
+                    currentDescription = it.description
+                }
         }
     }
 

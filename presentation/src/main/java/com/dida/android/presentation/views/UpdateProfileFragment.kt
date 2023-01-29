@@ -31,7 +31,6 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private val TAG = "UpdateProfileFragment"
     private val navController: NavController by lazy { findNavController() }
-    private val args: UpdateProfileFragmentArgs by navArgs()
     private lateinit var requestUpdateProfile: ActivityResultLauncher<Intent>
 
     override val layoutResourceId: Int
@@ -45,7 +44,6 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.initProfile(args.image,args.nickname,args.description)
         initRegisterForActivityResult()
         initToolbar()
     }

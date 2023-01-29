@@ -115,29 +115,9 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onLogoutClicked() {
-        baseViewModelScope.launch {
-            DataApplication.dataStorePreferences.removeAccountToken()
-            _navigationEvent.emit(MypageNavigationAction.NavigateToHome)
-        }
-    }
-
     override fun onNftItemClicked(nftId: Int) {
         baseViewModelScope.launch {
             _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId.toLong()))
-        }
-    }
-
-    override fun onUpdateProfileClicked() {
-        baseViewModelScope.launch {
-            val mypage = myPageState.value.successOrNull()!!
-            _navigationEvent.emit(
-                MypageNavigationAction.NavigateToUpdateProfile(
-                    mypage.profileUrl,
-                    mypage.nickname,
-                    mypage.description
-                )
-            )
         }
     }
 
@@ -154,5 +134,11 @@ class MyPageViewModel @Inject constructor(
 
     override fun onMypageNftTypeClicked(type: MypageNftType) {
         _mypageNftTypeState.value = type
+    }
+
+    override fun onSettingsClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MypageNavigationAction.NavigateToSettings)
+        }
     }
 }

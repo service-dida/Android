@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.dida.android.presentation.views.password.PasswordDialog
+import com.dida.password.PasswordDialog
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
 import dagger.hilt.android.AndroidEntryPoint
