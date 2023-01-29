@@ -4,10 +4,10 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.post.Comments" />
+            type="com.dida.domain.model.nav.post.PostComments" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -17,30 +17,23 @@
 
         <ImageView
             android:id="@+id/user_img"
-            android:layout_width="0dp"
+            android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_weight="0.1"
-            android:layout_gravity="center|top"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:image_from_url_circle="@{holderModel.userImgUrl}">
         </ImageView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_weight="0.8">
-            <TextView
-                android:id="@+id/user_name"
-                style="@style/TextView_bold_15_white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{holderModel.userName}"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                app:layout_constraintTop_toTopOf="parent">
-            </TextView>
-
+            app:layout_constraintStart_toEndOf="@id/user_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
             <TextView
                 android:id="@+id/contents"
                 android:layout_width="match_parent"
@@ -48,21 +41,17 @@
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 android:text="@{holderModel.content}"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:fontFamily="@font/pretendard_regular"
-                app:layout_constraintTop_toBottomOf="@id/user_name">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/custom_surface1_radius100">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/more_btn"
-            android:layout_width="0dp"
-            android:layout_height="33dp"
-            android:layout_weight="0.1"
-            android:layout_gravity="center|top"
-            android:src="@drawable/ic_more_surface"
-            app:isMyComments="@{holderModel.type}">
-        </ImageView>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

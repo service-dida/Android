@@ -4,17 +4,19 @@ import com.dida.common.base.BaseViewModel
 import com.dida.common.util.CommunityActionHandler
 import com.dida.common.util.CommunityWriteActionHandler
 import com.dida.data.repository.MainRepositoryImpl
+import com.dida.domain.model.nav.post.Posts
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.PostsAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl
+    private val mainRepositoryImpl: MainRepositoryImpl,
+    private val postsAPI: PostsAPI,
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "CommunityViewModel"
@@ -27,6 +29,17 @@ class CommunityViewModel @Inject constructor(
 
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
+
+    private val _postsState: MutableStateFlow<List<Posts>> = MutableStateFlow<List<Posts>>(emptyList())
+    val postsState: StateFlow<List<Posts>> = _postsState.asStateFlow()
+
+    init {
+        baseViewModelScope.launch {
+            postsAPI.invoke()
+                .onSuccess { _postsState.value = it }
+                .onError { e -> catchError(e) }
+        }
+    }
 
     override fun onCommunityItemClicked(communityId: Int) {
         baseViewModelScope.launch {
