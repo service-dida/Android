@@ -10,10 +10,11 @@ import com.dida.common.R
 import com.dida.common.databinding.HolderCommunityBinding
 import com.dida.common.util.CommunityActionHandler
 import com.dida.domain.model.nav.detailnft.Community
+import com.dida.domain.model.nav.post.Posts
 
 class CommunityAdapter(
     private val eventListener: CommunityActionHandler
-) : ListAdapter<Community, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
+) : ListAdapter<Posts, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
 
     init { setHasStableIds(true) }
 
@@ -34,21 +35,21 @@ class CommunityAdapter(
 
     class ViewHolder(private val binding: HolderCommunityBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        val adapter = PostCommentsAdapter()
 
-        fun bind(item: Community) {
+        fun bind(item: Posts) {
             binding.holderModel = item
-            val adapter = CommentsAdapter()
-//            adapter.submitList(item.Comments)
+            adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
             binding.executePendingBindings()
         }
     }
 
-    internal object CommuityDiffCallback : DiffUtil.ItemCallback<Community>() {
-        override fun areItemsTheSame(oldItem: Community, newItem: Community) =
+    internal object CommuityDiffCallback : DiffUtil.ItemCallback<Posts>() {
+        override fun areItemsTheSame(oldItem: Posts, newItem: Posts) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Community, newItem: Community) =
+        override fun areContentsTheSame(oldItem: Posts, newItem: Posts) =
             oldItem.equals(newItem)
     }
 }

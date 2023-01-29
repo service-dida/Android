@@ -13,6 +13,7 @@ import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.post.GetPostIdCommentsResponse
 import com.dida.data.model.post.GetPostPostIdResponse
+import com.dida.data.model.post.GetPostsResponse
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
@@ -114,10 +115,17 @@ interface MainAPIService {
     @GET("/wallet")
     suspend fun getWalletAmount() : GetWalletAmountResponse
 
+    // 커뮤니티 게시글 전체
+    @GET("posts")
+    suspend fun getPosts() : List<GetPostsResponse>
+
+    // 게시글 상세 가져오기
     @GET("post/{postId}")
     suspend fun getPostPostId(@Path("postId") postId: Int) : GetPostPostIdResponse
 
+    // 게시글 답변 가져오기
     @GET("comments/{postId}")
     suspend fun getCommentsPostId(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
+
 
 }
