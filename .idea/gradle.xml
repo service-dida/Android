@@ -45,6 +45,7 @@
             <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/feature/splash" />
             <option value="$PROJECT_DIR$/feature/swap" />
+            <option value="$PROJECT_DIR$/feature/swap-history" />
             <option value="$PROJECT_DIR$/feature/update-profile" />
             <option value="$PROJECT_DIR$/feature/wallet" />
             <option value="$PROJECT_DIR$/model" />

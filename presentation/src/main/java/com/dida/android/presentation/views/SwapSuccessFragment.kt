@@ -10,6 +10,7 @@ import com.dida.swap.databinding.FragmentSwapLoadingBinding
 import com.dida.swap.databinding.FragmentSwapSuccessBinding
 import com.dida.swap.loading.SwapLoadingNavigationAction
 import com.dida.swap.loading.SwapLoadingViewModel
+import com.dida.swap.success.SwapSuccessNavigationAction
 import com.dida.swap.success.SwapSuccessViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -33,7 +34,17 @@ class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccess
     }
 
     override fun initDataBinding() {
-
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    SwapSuccessNavigationAction.NavigateToHistory -> {
+                        navigate(
+                            SwapSuccessFragmentDirections.actionSwapSuccessFragmentToSwapHistoryFragment()
+                        )
+                    }
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {

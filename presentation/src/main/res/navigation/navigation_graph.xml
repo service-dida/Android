@@ -235,6 +235,19 @@
     <fragment
         android:id="@+id/swapSuccessFragment"
         android:name="com.dida.android.presentation.views.SwapSuccessFragment"
-        android:label="SwapSuccessFragment" />
+        android:label="SwapSuccessFragment" >
+        <action
+            android:id="@+id/action_swapSuccessFragment_to_swapHistoryFragment"
+            app:destination="@id/swapHistoryFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/swapFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/swapHistoryFragment"
+        android:name="com.dida.android.presentation.views.SwapHistoryFragment"
+        android:label="SwapHistoryFragment"
+        />
 
 </navigation>
