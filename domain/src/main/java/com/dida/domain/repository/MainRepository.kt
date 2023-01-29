@@ -75,5 +75,5 @@ interface  MainRepository {
 
     suspend fun getPostPostId(postId: Int) : NetworkResult<Post>
 
-    suspend fun getPostIdComments(postId: Int) : NetworkResult<List<Comments>>
+    suspend fun getCommentsPostId(postId: Int) : NetworkResult<List<Comments>>
 }
