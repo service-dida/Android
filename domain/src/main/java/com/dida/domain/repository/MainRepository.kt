@@ -9,7 +9,7 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
-import com.dida.domain.model.nav.`swap-history`.SwapHistory
+import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.nav.swap.WalletAmount
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody

@@ -1,4 +1,4 @@
-package com.dida.data.model.`swap-history`
+package com.dida.data.model.swap_history
 
 import com.google.gson.annotations.SerializedName
 

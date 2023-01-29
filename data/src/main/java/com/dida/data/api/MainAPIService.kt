@@ -11,7 +11,7 @@ import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
-import com.dida.data.model.`swap-history`.GetSwapHistoryResponse
+import com.dida.data.model.swap_history.GetSwapHistoryResponse
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest

@@ -27,6 +27,7 @@
     <!--텍스트 색상-->
     <color name="mypage_info_gray_text">#AFAFAF</color>
     <color name="price_gray_text">#C5C5CF</color>
+    <color name="time_gray_text">#C5C5CF</color>
     <color name="wallet_address_text">#AAAAAA</color>
     <color name="hots_coin_txt">#C5C5CF</color>
     <color name="text_c5c5cf">#C5C5CF</color>
