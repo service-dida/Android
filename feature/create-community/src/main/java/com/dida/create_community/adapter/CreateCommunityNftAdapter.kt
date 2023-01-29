@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.create_community.R
 import com.dida.create_community.databinding.HolderCreateCommunityNftBinding
-import com.dida.domain.model.nav.community.CreateCommunityNft
+import com.dida.domain.model.nav.post.CardPost
 
 class CreateCommunityNftAdapter(
     private val eventListener: com.dida.create_community.CreateCommunityActionHandler
-) : ListAdapter<CreateCommunityNft, CreateCommunityNftAdapter.ViewHolder>(
+) : ListAdapter<CardPost, CreateCommunityNftAdapter.ViewHolder>(
     CreateCommunityNftItemDiffCallback
 ){
 
@@ -36,17 +36,17 @@ class CreateCommunityNftAdapter(
     class ViewHolder(private val binding: HolderCreateCommunityNftBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: CreateCommunityNft) {
+        fun bind(item: CardPost) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object CreateCommunityNftItemDiffCallback : DiffUtil.ItemCallback<CreateCommunityNft>() {
-        override fun areItemsTheSame(oldItem: CreateCommunityNft, newItem: CreateCommunityNft) =
-            oldItem.nftId == newItem.nftId
+    internal object CreateCommunityNftItemDiffCallback : DiffUtil.ItemCallback<CardPost>() {
+        override fun areItemsTheSame(oldItem: CardPost, newItem: CardPost) =
+            oldItem.cardId == newItem.cardId
 
-        override fun areContentsTheSame(oldItem: CreateCommunityNft, newItem: CreateCommunityNft) =
+        override fun areContentsTheSame(oldItem: CardPost, newItem: CardPost) =
             oldItem == newItem
     }
 }

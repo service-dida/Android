@@ -9,7 +9,7 @@ import javax.inject.Inject
 class UpdateProfileNicknameAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(nickname: MultipartBody.Part) : NetworkResult<Unit> {
+    suspend operator fun invoke(nickname: String) : NetworkResult<Unit> {
         return repository.updateProfileNicknameAPI(nickname)
     }
 }

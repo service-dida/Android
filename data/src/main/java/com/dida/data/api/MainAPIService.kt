@@ -11,6 +11,7 @@ import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.post.GetCardsPostResponse
 import com.dida.data.model.post.GetPostIdCommentsResponse
 import com.dida.data.model.post.GetPostPostIdResponse
 import com.dida.data.model.post.GetPostsResponse
@@ -20,6 +21,8 @@ import com.dida.data.model.swap.PostSwapKlayToDidaRequest
 import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.tradenft.PostSellNftRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
+import com.dida.data.model.userInfo.PutUserDescriptionRequest
+import com.dida.data.model.userInfo.PutUserNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
@@ -78,15 +81,13 @@ interface MainAPIService {
 
     @Multipart
     @PUT("/user/img")
-    suspend fun updateProfileImage(@Part file: MultipartBody.Part)
+    suspend fun updateProfileImage(@Part file: MultipartBody.Part): Unit
 
-    @Multipart
     @PUT("/user/name")
-    suspend fun updateProfileNickname(@Part nickname: MultipartBody.Part)
+    suspend fun updateProfileNickname(@Body request: PutUserNicknameRequest): Unit
 
-    @Multipart
     @PUT("/user/description")
-    suspend fun updateProfileDescription(@Part description: MultipartBody.Part)
+    suspend fun updateProfileDescription(@Body request: PutUserDescriptionRequest): Unit
 
     @POST("/card/like")
     suspend fun postLike(@Body request: PostLikeRequest) : Unit
@@ -126,6 +127,14 @@ interface MainAPIService {
     // 게시글 답변 가져오기
     @GET("comments/{postId}")
     suspend fun getCommentsPostId(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
+
+    // 커뮤니티 생성(내가 좋아요한 NFT)
+    @GET("cards/post/like")
+    suspend fun getCardsPostLike() : List<GetCardsPostResponse>
+
+    // 커뮤니티 생성(내가 보유한 NFT)
+    @GET("cards/post/my")
+    suspend fun getCardsPostMy() : List<GetCardsPostResponse>
 
 
 }
