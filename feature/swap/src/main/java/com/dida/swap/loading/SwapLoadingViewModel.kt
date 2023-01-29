@@ -27,7 +27,15 @@ class SwapLoadingViewModel @Inject constructor(
         MutableSharedFlow<SwapLoadingNavigationAction>()
     val navigationEvent: SharedFlow<SwapLoadingNavigationAction> = _navigationEvent
 
+    private val _swapTypeState: MutableStateFlow<SwapViewModel.SwapType> =
+        MutableStateFlow<SwapViewModel.SwapType>(SwapViewModel.SwapType.KLAY_TO_DIDA)
+    val swapTypeState: StateFlow<SwapViewModel.SwapType> = _swapTypeState
 
+    fun initLoadingData(swapType : SwapViewModel.SwapType){
+        baseViewModelScope.launch {
+            _swapTypeState.emit(swapType)
+        }
+    }
     fun swap(swapType : SwapViewModel.SwapType, password: String, amount: Double) {
         baseViewModelScope.launch {
             if (swapType == SwapViewModel.SwapType.KLAY_TO_DIDA) {

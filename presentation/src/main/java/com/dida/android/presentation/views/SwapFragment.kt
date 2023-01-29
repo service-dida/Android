@@ -38,7 +38,10 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                             if(success){
                                 //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
                                 navigate(
-                                    SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(binding.topCoinAmountEt.text.toString().toFloat(),password,SwapViewModel.SwapType.KLAY_TO_DIDA)
+                                    SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(
+                                        binding.topCoinAmountEt.text.toString().toFloat(),
+                                        password,
+                                        viewModel.swapTypeState.value)
                                 )
                             }
                         }.show(childFragmentManager, "AddFragment")

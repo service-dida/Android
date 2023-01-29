@@ -243,6 +243,9 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/swapFragment"/>
+        <argument
+            android:name="swapType"
+            app:argType="com.dida.swap.SwapViewModel$SwapType" />
     </fragment>
     <fragment
         android:id="@+id/swapHistoryFragment"

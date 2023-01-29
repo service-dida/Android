@@ -18,7 +18,9 @@
     <string name="swap_dida_to_klay">DIDA -> KLAY</string>
     <string name="swap_confirm_btn_text">스왑하기</string>
 
-    <string name="swap_loading_text">DIDA 코인으로\n스왑하는중</string>
-    <string name="swap_success_text">DIDA 코인을\n충전했어요!</string>
+    <string name="swap_klaytoDida_loading_text">DIDA 코인으로\n스왑하는중</string>
+    <string name="swap_DidaToKlay_loading_text">KLAY 코인으로\n스왑하는중</string>
+    <string name="swap_klaytoDida_success_text">DIDA 코인을\n충전했어요!</string>
+    <string name="swap_DidaToKlay_success_text">KLAY 코인을\n충전했어요!</string>
     <string name="swap_success_confirm_btn">확인</string>
     </resources>

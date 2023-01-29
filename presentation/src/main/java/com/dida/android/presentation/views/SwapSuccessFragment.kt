@@ -25,12 +25,14 @@ class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccess
 
     override val viewModel : SwapSuccessViewModel by viewModels()
 
+    private val args: SwapSuccessFragmentArgs by navArgs()
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        viewModel.initSuccessData(args.swapType)
     }
 
     override fun initDataBinding() {

@@ -10,6 +10,7 @@ import com.dida.swap.loading.SwapLoadingNavigationAction
 import com.dida.swap.loading.SwapLoadingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoadingViewModel>(com.dida.swap.R.layout.fragment_swap_loading) {
@@ -29,18 +30,25 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.swap(args.swapType,args.password,args.amount.toDouble())
+        viewModel.initLoadingData(args.swapType)
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collectLatest {
-                when (it) {
-                    SwapLoadingNavigationAction.NavigateToSuccess -> {
-                        navigate(
-                            SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment()
-                        )
+            launch{
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        SwapLoadingNavigationAction.NavigateToSuccess -> {
+                            navigate(
+                                SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment(args.swapType)
+                            )
+                        }
                     }
+                }
+            }
+            launch {
+                viewModel.swapTypeState.collectLatest {
+                    viewModel.swap(args.swapType,args.password,args.amount.toDouble())
                 }
             }
         }
