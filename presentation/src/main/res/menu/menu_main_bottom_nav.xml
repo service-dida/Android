@@ -11,7 +11,7 @@
         android:id="@+id/swapFragment"
         android:enabled="true"
         android:icon="@drawable/ic_swap"
-        android:title="@string/bottom_difi"/>
+        android:title="@string/bottom_swap"/>
 
     <item
         android:id="@+id/addFragment"

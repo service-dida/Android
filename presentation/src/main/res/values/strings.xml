@@ -22,7 +22,7 @@
 
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
-    <string name="bottom_difi">디파이</string>
+    <string name="bottom_swap">스왑</string>
     <string name="bottom_community">커뮤니티</string>
     <string name="bottom_my">마이페이지</string>
 
