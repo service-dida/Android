@@ -11,6 +11,8 @@ import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.post.GetPostIdCommentsResponse
+import com.dida.data.model.post.GetPostPostIdResponse
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
@@ -111,5 +113,11 @@ interface MainAPIService {
 
     @GET("/wallet")
     suspend fun getWalletAmount() : GetWalletAmountResponse
+
+    @GET("post/{postId}")
+    suspend fun getPostPostId(@Path("postId") postId: Int) : GetPostPostIdResponse
+
+    @GET("{postId}/comments")
+    suspend fun getPostIdComments(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
 
 }
