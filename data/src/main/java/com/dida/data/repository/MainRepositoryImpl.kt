@@ -16,6 +16,8 @@ import com.dida.data.model.swap.PostSwapKlayToDidaRequest
 import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.tradenft.PostSellNftRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
+import com.dida.data.model.userInfo.PutUserDescriptionRequest
+import com.dida.data.model.userInfo.PutUserNicknameRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -110,16 +112,18 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getTempPassword() }
     }
 
-    override suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>{
+    override suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit> {
         return handleApi { mainAPIService.updateProfileImage(file)}
     }
 
-    override suspend fun updateProfileDescriptionAPI(description: MultipartBody.Part) : NetworkResult<Unit>{
-        return handleApi { mainAPIService.updateProfileDescription(description)}
+    override suspend fun updateProfileDescriptionAPI(description: String) : NetworkResult<Unit> {
+        val body = PutUserDescriptionRequest(description = description)
+        return handleApi { mainAPIService.updateProfileDescription(body) }
     }
 
-    override suspend fun updateProfileNicknameAPI(nickname: MultipartBody.Part): NetworkResult<Unit> {
-        return handleApi { mainAPIService.updateProfileNickname(nickname)}
+    override suspend fun updateProfileNicknameAPI(nickname: String): NetworkResult<Unit> {
+        val body = PutUserNicknameRequest(nickname = nickname)
+        return handleApi { mainAPIService.updateProfileNickname(body) }
     }
 
     override suspend fun postLikeAPI(cardId: Long): NetworkResult<Unit> {

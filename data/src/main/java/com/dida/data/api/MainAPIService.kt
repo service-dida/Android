@@ -21,6 +21,8 @@ import com.dida.data.model.swap.PostSwapKlayToDidaRequest
 import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.tradenft.PostSellNftRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
+import com.dida.data.model.userInfo.PutUserDescriptionRequest
+import com.dida.data.model.userInfo.PutUserNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
@@ -81,13 +83,11 @@ interface MainAPIService {
     @PUT("/user/img")
     suspend fun updateProfileImage(@Part file: MultipartBody.Part)
 
-    @Multipart
     @PUT("/user/name")
-    suspend fun updateProfileNickname(@Part nickname: MultipartBody.Part)
+    suspend fun updateProfileNickname(@Body request: PutUserNicknameRequest): Unit
 
-    @Multipart
     @PUT("/user/description")
-    suspend fun updateProfileDescription(@Part description: MultipartBody.Part)
+    suspend fun updateProfileDescription(@Body request: PutUserDescriptionRequest): Unit
 
     @POST("/card/like")
     suspend fun postLike(@Body request: PostLikeRequest) : Unit

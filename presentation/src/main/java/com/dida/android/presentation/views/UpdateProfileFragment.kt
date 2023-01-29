@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
@@ -93,7 +94,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
                     val file = uriToFile(uri!!,requireContext())
                     val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
                     val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                    viewModel.selectProfileImage(uri,requestBody)
+                    viewModel.selectProfileImage(uri, requestBody)
                 }
             }
         }
