@@ -1,7 +1,10 @@
 package com.dida.update.profile
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isGone
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -26,5 +29,14 @@ fun Toolbar.bindToolbar(state : StateFlow<Boolean>) {
     } else {
         this.inflateMenu(R.menu.menu_unable_update_profile_toolbar)
     }
+}
 
+@BindingAdapter("descriptionVisible")
+fun TextView.bindDescriptionVisible(isInVisible: Boolean) {
+    val view = this
+    if(isInVisible) {
+        view.visibility = View.INVISIBLE
+    } else {
+        view.visibility = View.VISIBLE
+    }
 }

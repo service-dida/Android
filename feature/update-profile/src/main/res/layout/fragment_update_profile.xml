@@ -120,7 +120,7 @@
                         android:textColor="@{vm.nickNameCheckState ? @color/notice_red : @color/notice_green}"
                         android:textSize="14dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/nick_name_edit"/>
+                        app:layout_constraintTop_toBottomOf="@id/nickname_et"/>
 
                     <TextView
                         style="@style/TextView_bold_14_white"
@@ -149,9 +149,9 @@
                         android:text="@string/profile_description_check_text"
                         android:textColor="@color/notice_red"
                         android:textSize="14dp"
-                        android:visibility="@{vm.descriptionCheckState ? View.GONE : View.VISIBLE}"
+                        app:descriptionVisible="@{vm.descriptionCheckState}"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/nick_name_edit"
+                        app:layout_constraintTop_toBottomOf="@id/nickname_et"
                         tools:visibility="visible" />
                 </LinearLayout>
 
