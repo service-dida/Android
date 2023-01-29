@@ -139,26 +139,17 @@ class UpdateProfileViewModel @Inject constructor(
             val deferreds : MutableList<Deferred<NetworkResult<Unit>>> = mutableListOf()
             if(currentProfileImage != profileImageState.value){
                 deferreds.add(async {
-                    updateProfileImageAPI(profileImageMultipartState.value!!).onError { e ->
-                        Log.d("response!!!", e.toString())
-                        catchError(e)
-                    }
+                    updateProfileImageAPI(profileImageMultipartState.value!!).onError { e -> catchError(e) }
                 })
             }
             if(currentNickname != nickNameState.value) {
                 deferreds.add(async {
-                    updateProfileNicknameAPI(nickname = nickNameState.value).onError { e ->
-                        Log.d("response!!!", e.toString())
-                        catchError(e)
-                    }
+                    updateProfileNicknameAPI(nickname = nickNameState.value).onError { e -> catchError(e) }
                 })
             }
             if(currentDescription != descriptionState.value) {
                 deferreds.add(async {
-                    updateProfileDescriptionAPI(description = descriptionState.value).onError { e ->
-                        Log.d("response!!!", e.toString())
-                        catchError(e)
-                    }
+                    updateProfileDescriptionAPI(description = descriptionState.value).onError { e -> catchError(e) }
                 })
             }
             deferreds.awaitAll()

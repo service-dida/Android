@@ -81,7 +81,7 @@ interface MainAPIService {
 
     @Multipart
     @PUT("/user/img")
-    suspend fun updateProfileImage(@Part file: MultipartBody.Part)
+    suspend fun updateProfileImage(@Part file: MultipartBody.Part): Unit
 
     @PUT("/user/name")
     suspend fun updateProfileNickname(@Body request: PutUserNicknameRequest): Unit

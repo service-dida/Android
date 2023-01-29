@@ -91,7 +91,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
                 val intent = activityResult.data
                 if (intent != null) {
                     val uri = intent.data
-                    val file = uriToFile(uri!!,requireContext())
+                    val file = uriToFile(uri!!, requireContext())
                     val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
                     val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
                     viewModel.selectProfileImage(uri, requestBody)
