@@ -4,16 +4,16 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dida.android.R
-import com.dida.common.adapter.CommunityAdapter
+import com.dida.common.adapter.CommentsAdapter
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
 import com.dida.community_detail.DetailCommunityViewModel
 import com.dida.community_detail.MoreState
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
-import com.dida.domain.model.nav.detailnft.Comments
-import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(com.dida.community_detail.R.layout.fragment_detail_community) {
@@ -26,6 +26,8 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     override val viewModel : DetailCommunityViewModel by viewModels()
     private val communityViewModel : com.dida.community.CommunityViewModel by viewModels()
     private val navController by lazy { findNavController() }
+    private val args: DetailCommunityFragmentArgs by navArgs()
+    private val commentsAdapter by lazy { CommentsAdapter() }
 
     override fun initStartView() {
         binding.apply {
@@ -49,10 +51,21 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            launch {
+                viewModel.commentList.collectLatest {
+                    commentsAdapter.submitList(it)
+                }
+            }
+        }
     }
 
-    override fun initAfterBinding() {
+    override fun initAfterBinding() {}
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPost(args.postId)
     }
 
     private fun initToolbar(){
@@ -65,24 +78,6 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     private fun initAdapter() {
-        val commentList = mutableListOf(
-            Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ"),
-            Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ"),
-            Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ"),
-            Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ"),
-            Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ")
-        )
-
-        val test = CommunityAdapter(communityViewModel)
-        val testList = listOf(
-            Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-            "test", false, "test", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
-            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here",
-            "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65, commentList
-            )
-        )
-
-        binding.detailCommunityMain.adapter = test
-        test.submitList(testList)
+        binding.detailCommunityMain.adapter = commentsAdapter
     }
 }

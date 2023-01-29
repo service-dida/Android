@@ -38,7 +38,7 @@ class CommunityAdapter(
         fun bind(item: Community) {
             binding.holderModel = item
             val adapter = CommentsAdapter()
-            adapter.submitList(item.Comments)
+//            adapter.submitList(item.Comments)
             binding.commentRecycler.adapter = adapter
             binding.executePendingBindings()
         }
