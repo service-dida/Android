@@ -143,7 +143,13 @@
     <fragment
         android:id="@+id/walletFragment"
         android:name="com.dida.android.presentation.views.WalletFragment"
-        android:label="WalletFragment" />
+        android:label="WalletFragment" >
+        <action
+            android:id="@+id/action_walletFragment_to_swapHistoryFragment"
+            app:destination="@id/swapHistoryFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/detailNftFragment"

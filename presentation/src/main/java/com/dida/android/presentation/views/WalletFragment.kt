@@ -26,7 +26,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
 
     override val viewModel: com.dida.wallet.WalletViewModel by viewModels()
 
-    private val walletCardRecyclerViewAdapter = WalletCardRecyclerViewAdapter()
+    private val walletCardRecyclerViewAdapter by lazy {  WalletCardRecyclerViewAdapter(viewModel) }
     private val walletNFTHistoryRecyclerViewAdapter = WalletNFTHistoryRecyclerViewAdapter()
     private val navController by lazy { findNavController() }
 
@@ -45,6 +45,9 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is com.dida.wallet.WalletNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is com.dida.wallet.WalletNavigationAction.NavigateToSwapHistory -> navigate(
+                        WalletFragmentDirections.actionWalletFragmentToSwapHistoryFragment()
+                    )
                 }
             }
         }

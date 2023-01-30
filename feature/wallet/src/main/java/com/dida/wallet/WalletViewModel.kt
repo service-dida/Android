@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WalletViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl
+
 ) : BaseViewModel(), WalletActionHandler {
 
     private val TAG = "WalletViewModel"
@@ -45,6 +45,12 @@ class WalletViewModel @Inject constructor(
             0 -> { _currentHistoryState.value = _walletHistoryState.value }
             1 -> { _currentHistoryState.value = _walletHistoryState.value.filter { it.type } }
             2 -> { _currentHistoryState.value = _walletHistoryState.value.filter { !it.type } }
+        }
+    }
+
+    override fun onSwapHistoryClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(WalletNavigationAction.NavigateToSwapHistory)
         }
     }
 

@@ -8,6 +8,10 @@
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.mypage.WalletCardHolderModel" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.wallet.WalletActionHandler" />
     </data>
 
     <!--TODO : 데이터모델에 따라 타입명 바꿔야함 -->
@@ -15,7 +19,8 @@
         android:layout_width="298dp"
         android:layout_height="158dp"
         android:layout_marginRight="12dp"
-        android:background='@{holderModel.type=="KLAY"?@drawable/slice_1 : @drawable/slice_2}'>
+        android:background='@{holderModel.type=="KLAY"?@drawable/slice_1 : @drawable/slice_2}'
+        tools:background="@drawable/slice_1">
 
 
         <TextView
@@ -67,9 +72,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="거래 내역"
+                android:text="@string/wallet_swap_history_text"
                 android:textColor="@color/black"
                 android:textSize="14dp"
+                android:onClick="@{()-> eventListener.onSwapHistoryClicked()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

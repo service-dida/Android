@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.wallet.R
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
+import com.dida.wallet.WalletActionHandler
 import com.dida.wallet.databinding.HolderWalletCardBinding
 
 class WalletCardRecyclerViewAdapter(
+    private val walletActionHandler: WalletActionHandler
 ) : ListAdapter<WalletCardHolderModel, WalletCardRecyclerViewAdapter.ViewHolder>(
     WalletCardDiffCallback
 ){
@@ -24,6 +26,7 @@ class WalletCardRecyclerViewAdapter(
             parent,
             false
         )
+        viewDataBinding.eventListener = walletActionHandler
         return ViewHolder(viewDataBinding)
     }
 
