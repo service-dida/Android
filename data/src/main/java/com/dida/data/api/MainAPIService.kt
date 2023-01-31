@@ -114,5 +114,5 @@ interface MainAPIService {
     suspend fun getWalletAmount() : GetWalletAmountResponse
 
     @GET("/swap-list")
-    suspend fun getSwapHistory() : GetSwapHistoryResponse
+    suspend fun getSwapHistory() : List<GetSwapHistoryResponse>
 }

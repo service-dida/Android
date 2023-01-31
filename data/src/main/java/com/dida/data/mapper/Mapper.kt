@@ -130,11 +130,12 @@ fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmo
     )
 }
 
-fun GetSwapHistoryResponse.toDomain() : SwapHistory{
-    return SwapHistory(
-        sendCoinType = sendCoinType,
-        receiveCoinType = receiveCoinType,
-        sendAmount = sendAmount,
-        time = time
-    )
+@JvmName("toDomainGetSwapHistoryResponse")
+fun List<GetSwapHistoryResponse>.toDomain() : List<SwapHistory>{
+    return map{SwapHistory(
+        sendCoinType = it.sendCoinType,
+        receiveCoinType = it.receiveCoinType,
+        sendAmount = it.sendAmount,
+        time = it.time
+    )}
 }

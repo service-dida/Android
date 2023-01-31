@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SwapHistoryAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(): NetworkResult<SwapHistory> {
+    suspend operator fun invoke(): NetworkResult<List<SwapHistory>> {
         return repository.getSwapHistoryAPI()
     }
 }

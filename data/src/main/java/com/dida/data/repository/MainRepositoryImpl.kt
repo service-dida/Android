@@ -162,7 +162,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getWalletAmount().toDomain() }
     }
 
-    override suspend fun getSwapHistoryAPI(): NetworkResult<SwapHistory> {
+    override suspend fun getSwapHistoryAPI(): NetworkResult<List<SwapHistory>> {
         return handleApi { mainAPIService.getSwapHistory().toDomain() }
     }
 }

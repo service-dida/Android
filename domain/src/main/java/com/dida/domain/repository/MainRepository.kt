@@ -72,5 +72,5 @@ interface  MainRepository {
 
     suspend fun getWalletAmountAPI() : NetworkResult<WalletAmount>
 
-    suspend fun getSwapHistoryAPI() : NetworkResult<SwapHistory>
+    suspend fun getSwapHistoryAPI() : NetworkResult<List<SwapHistory>>
 }

@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistoryViewModel>(R.layout.fragment_swap_history) {
 
-    private val TAG = "SwapFragment"
+    private val TAG = "SwapHistoryFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_swap_history
@@ -27,6 +27,7 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
         }
         exception = viewModel.errorEvent
         initToolbar()
+        viewModel.getSwapHistory()
     }
 
     override fun initDataBinding() {
