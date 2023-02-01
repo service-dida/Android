@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@null"
-    android:orientation="vertical"
-    android:paddingBottom="24dp">
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_main"
@@ -53,7 +52,8 @@
             android:id="@+id/capture_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/gallery_btn">
+            app:layout_constraintTop_toBottomOf="@id/gallery_btn"
+            android:layout_marginTop="8dp">
 
             <ImageView
                 android:id="@+id/capture_img"

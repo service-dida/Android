@@ -55,7 +55,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     // 권한을 허용하도록 요청
     private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         results.forEach {
-            if(!it.value) toastMessage("권한 허용 필요")
+            if(!it.value) toastMessage("권한 허용이 필요합니다.")
         }
     }
 
