@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.dida.common.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -45,8 +46,8 @@ class ImageBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val gallery = requireView().findViewById<TextView>(R.id.gallery_btn)
-        val camera = requireView().findViewById<TextView>(R.id.capture_btn)
+        val gallery = requireView().findViewById<ConstraintLayout>(R.id.gallery_btn)
+        val camera = requireView().findViewById<ConstraintLayout>(R.id.capture_btn)
 
         gallery.setOnClickListener {
             callback.invoke(true)
