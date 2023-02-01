@@ -3,9 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <data>
         <variable
-            name="vm"
+            name="eventListener"
+            type="com.dida.swap.history.SwapHistoryActionHandler"/>
+        <variable
+            name="holderModel"
             type="com.dida.domain.model.nav.swap_history.SwapHistory" />
     </data>
 
@@ -22,7 +26,8 @@
         android:id="@+id/imageView"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:src="@drawable/ic_klaytn"
+        android:src='@{holderModel.sendCoinType == "K"? @drawable/ic_klaytn : @drawable/ic_klaytn}'
+        tools:src="@drawable/ic_klaytn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +47,8 @@
             style="@style/TextView_regular_18_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/swap_history_klayToDida_text" />
+            android:text='@{holderModel.sendCoinType == "K"? @string/swap_history_klayToDida_text : @string/swap_history_didaToKlay_text}'
+            tools:text="@string/swap_history_klayToDida_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/swap_history_date_text" />
+                android:text="@{holderModel.timeToDayAndTime().first}" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -69,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/swap_history_date_text" />
+                android:text="@{holderModel.timeToDayAndTime().second}" />
 
         </LinearLayout>
 
@@ -80,7 +86,8 @@
         style="@style/TextView_bold_20_white"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@string/swap_history_amount_text"
+        android:text="@{Double.toString(holderModel.sendAmount)}"
+        tools:text="@string/swap_history_amount_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -55,6 +55,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/swap_history_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:overScrollMode="never"

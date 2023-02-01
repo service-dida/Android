@@ -3,8 +3,8 @@
     <string name="swap_history_title_text">swap 내역</string>
     <string name="swap_history_reload_time_text">방금 전</string>
 
-    <string name="swap_history_didaToKlay_text">dida -> Klaytn</string>
-    <string name="swap_history_klayToDida_text">Klaytn -> dida</string>
+    <string name="swap_history_didaToKlay_text">DIDA -> KLAY</string>
+    <string name="swap_history_klayToDida_text">KLAY -> DIDA</string>
     <string name="swap_history_date_text">01.01</string>
     <string name="swap_history_time_text">00:00</string>
     <string name="swap_history_amount_text">13.402 klay</string>
