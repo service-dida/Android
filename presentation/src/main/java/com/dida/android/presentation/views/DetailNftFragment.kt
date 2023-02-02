@@ -26,7 +26,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     override val viewModel : DetailNftViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
     private val args: DetailNftFragmentArgs by navArgs()
-    private val communityAdapter = CommunityAdapter(viewModel)
 
     override fun initStartView() {
         binding.apply {
@@ -72,6 +71,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     private fun initAdapter() {
-        binding.communityRecycler.adapter = communityAdapter
+        binding.communityRecycler.adapter = CommunityAdapter(viewModel)
     }
 }
