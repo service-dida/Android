@@ -64,7 +64,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
             tools:itemCount="5"
-            tools:listitem="@layout/holder_swap_history" />
+            tools:listitem="@layout/holder_swap_history"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
