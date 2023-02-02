@@ -25,8 +25,7 @@ class SwapHistoryViewModel @Inject constructor(
     fun getSwapHistory(){
         baseViewModelScope.launch {
             swapHistoryAPI()
-                .onSuccess { _swapHistoryState.emit(it)
-                it.get(0).timeToDayAndTime()}
+                .onSuccess { _swapHistoryState.emit(it)}
                 .onError { e -> catchError(e) }
         }
     }

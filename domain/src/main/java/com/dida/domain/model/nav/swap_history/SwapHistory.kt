@@ -21,5 +21,13 @@ data class SwapHistory(
 
         return Pair(day, time)
     }
+
+    fun getAmountUnit(): String {
+        if(sendCoinType.equals("K")){
+            return sendAmount.toString()+"klay"
+        }else{
+            return sendAmount.toString()+"dida"
+        }
+    }
 }
 

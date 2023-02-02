@@ -26,8 +26,8 @@
         android:id="@+id/imageView"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:src='@{holderModel.sendCoinType == "K"? @drawable/ic_klaytn : @drawable/ic_klaytn}'
-        tools:src="@drawable/ic_klaytn"
+        android:src='@{holderModel.sendCoinType.equals("K")? @drawable/ic_klay : @drawable/ic_dida}'
+        tools:src="@drawable/ic_klay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
             style="@style/TextView_regular_18_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{holderModel.sendCoinType == "K"? @string/swap_history_klayToDida_text : @string/swap_history_didaToKlay_text}'
+            android:text='@{holderModel.sendCoinType.equals("K")? @string/swap_history_klayToDida_text : @string/swap_history_didaToKlay_text}'
             tools:text="@string/swap_history_klayToDida_text" />
 
         <LinearLayout
@@ -86,7 +86,7 @@
         style="@style/TextView_bold_20_white"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@{Double.toString(holderModel.sendAmount)}"
+        android:text="@{holderModel.getAmountUnit()}"
         tools:text="@string/swap_history_amount_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
