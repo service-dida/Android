@@ -31,6 +31,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
         exception = viewModel.errorEvent
         initToolbar()
         viewModel.setCreateState(args.createState)
+        viewModel.getCardDetail(cardId = args.cardId)
     }
 
     override fun initDataBinding() {

@@ -30,9 +30,9 @@ class CreateCommunityViewModel @Inject constructor(
     private val _cardPostLikeState: MutableStateFlow<List<CardPost>> = MutableStateFlow<List<CardPost>>(emptyList())
     val cardPostLikeState: StateFlow<List<CardPost>> = _cardPostLikeState.asStateFlow()
 
-    override fun onNftSelectClicked(nftId: Int) {
+    override fun onNftSelectClicked(cardId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToSelectNft(nftId))
+            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToSelectNft(cardId = cardId))
         }
     }
 
