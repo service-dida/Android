@@ -2,7 +2,7 @@ package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.common.adapter.CommunityAdapter
+import com.dida.common.adapter.CommunityPagingAdapter
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.ActiveNFTRecyclerViewAdapter
 import com.dida.community.adapter.ReservationNFTRecyclerViewAdapter
@@ -24,7 +24,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     override val viewModel : CommunityViewModel by viewModels()
     private val activeNFTRecyclerViewAdapter = ActiveNFTRecyclerViewAdapter()
     private val reservationNFTRecyclerViewAdapter = ReservationNFTRecyclerViewAdapter()
-    private val communityAdapter by lazy { CommunityAdapter(viewModel) }
+    private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
 
 
     override fun initStartView() {
@@ -49,7 +49,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.postsState.collectLatest {
-                    communityAdapter.submitData(it)
+                    communityPagingAdapter.submitData(it)
                 }
             }
 
@@ -77,6 +77,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
         activeNFTRecyclerViewAdapter.submitList(ActiveNFTList)
         binding.activeCommunityRecyclerView.adapter = activeNFTRecyclerViewAdapter
-        binding.communityRecyclerView.adapter = communityAdapter
+        binding.communityRecyclerView.adapter = communityPagingAdapter
     }
 }

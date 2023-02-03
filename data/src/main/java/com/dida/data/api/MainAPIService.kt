@@ -136,5 +136,8 @@ interface MainAPIService {
     @GET("cards/post/my")
     suspend fun getCardsPostMy() : List<GetCardsPostResponse>
 
+    // NFT상세 커뮤니티
+    @GET("posts/card/{cardId}")
+    suspend fun getPostsCardCardId(@Path("cardId") cardId: Long) : List<GetPostsResponse>
 
 }

@@ -188,4 +188,8 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getCardsPostMy(): NetworkResult<List<CardPost>> {
         return handleApi { mainAPIService.getCardsPostMy().toDomain() }
     }
+
+    override suspend fun getPostsCardCardId(cardId: Long): NetworkResult<List<Posts>> {
+        return handleApi { mainAPIService.getPostsCardCardId(cardId = cardId).toDomain() }
+    }
 }
