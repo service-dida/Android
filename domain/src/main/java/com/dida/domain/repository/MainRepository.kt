@@ -84,4 +84,6 @@ interface  MainRepository {
     suspend fun getCardsPostLike() : NetworkResult<List<CardPost>>
 
     suspend fun getCardsPostMy() : NetworkResult<List<CardPost>>
+
+    suspend fun getPostsCardCardId(cardId: Int) : NetworkResult<List<Posts>>
 }

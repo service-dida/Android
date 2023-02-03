@@ -11,6 +11,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.DetailNftAPI
 import com.dida.domain.usecase.main.PostLikeAPI
+import com.dida.domain.usecase.main.PostsCardCardIdAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailNftViewModel @Inject constructor(
     private val detailNftAPI: DetailNftAPI,
-    private val postLikeAPI: PostLikeAPI
+    private val postLikeAPI: PostLikeAPI,
+    private val postsCardCardIdAPI: PostsCardCardIdAPI
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
