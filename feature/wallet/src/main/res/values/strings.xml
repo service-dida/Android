@@ -4,5 +4,6 @@
     <!--지갑 화면-->
     <string name="wallet_title_text">내 지갑</string>
     <string name="wallet_deal_title_text">NFT 거래 내역</string>
+    <string name="wallet_swap_history_text">swap 내역</string>
 
 </resources>

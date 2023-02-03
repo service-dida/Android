@@ -10,6 +10,7 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
@@ -75,6 +76,8 @@ interface  MainRepository {
     suspend fun postSellNftAPI(payPwd : String, cardId : Long, price : Double) : NetworkResult<Unit>
 
     suspend fun getWalletAmountAPI() : NetworkResult<WalletAmount>
+
+    suspend fun getSwapHistoryAPI() : NetworkResult<List<SwapHistory>>
 
     suspend fun getPosts(page: Int) : NetworkResult<List<Posts>>
 

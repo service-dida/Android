@@ -20,6 +20,7 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="/usr/local/Cellar/gradle/7.1/libexec" />
+        <option name="gradleJvm" value="corretto-11" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -44,6 +45,7 @@
             <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/feature/splash" />
             <option value="$PROJECT_DIR$/feature/swap" />
+            <option value="$PROJECT_DIR$/feature/swap-history" />
             <option value="$PROJECT_DIR$/feature/update-profile" />
             <option value="$PROJECT_DIR$/feature/wallet" />
             <option value="$PROJECT_DIR$/model" />

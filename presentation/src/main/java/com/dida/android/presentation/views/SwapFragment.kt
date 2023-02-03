@@ -36,7 +36,13 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                     SwapNavigationAction.NavigateToPassword -> {
                         PasswordDialog(6, "비밀번호 설정", "본인 확인 시 사용됩니다.") { success, password ->
                             if(success){
-                                viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
+                                //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
+                                navigate(
+                                    SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(
+                                        binding.topCoinAmountEt.text.toString().toFloat(),
+                                        password,
+                                        viewModel.swapTypeState.value)
+                                )
                             }
                         }.show(childFragmentManager, "AddFragment")
                     }

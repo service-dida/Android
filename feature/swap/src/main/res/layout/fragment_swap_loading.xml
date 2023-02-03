@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.dida.swap.SwapViewModel.SwapType" />
+        <variable
+            name="vm"
+            type="com.dida.swap.loading.SwapLoadingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainblack">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/TextView_bold_20_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/swap_toolbar_text" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="94dp"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dida_loading_lottie" />
+
+        <TextView
+            style="@style/TextView_bold_24_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klaytoDida_loading_text : @string/swap_DidaToKlay_loading_text}"
+            tools:text="@string/swap_klaytoDida_loading_text"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loading_dialog" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

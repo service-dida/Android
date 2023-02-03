@@ -240,17 +240,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/top_outer_cl" />
 
-
-                    <TextView
-                        style="@style/TextView_regular_14_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/swap_dida_equal_klay"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bottom_outer_cl" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -291,7 +280,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            tools:text="@string/swap_exchange_percent_text" />
+                            android:text="@string/swap_dida_equal_klay" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -354,24 +343,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            tools:text="@string/swap_exchange_route_text" />
+                            android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_to_dida : @string/swap_dida_to_klay}"
+                            tools:text="@string/swap_klay_to_dida" />
                     </LinearLayout>
-
-                    <TextView
-                        style="@style/TextView_bold_14_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:gravity="center"
-                        android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_to_dida : @string/swap_dida_to_klay}"
-                        tools:text="@string/swap_klay_to_dida" />
 
                     <TextView
                         android:id="@+id/ok_btn"
                         style="@style/TextView_bold_16_black"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginBottom="40dp"
                         android:background="@drawable/custom_okbtn_success"
                         android:fontFamily="@font/pretendard_bold"

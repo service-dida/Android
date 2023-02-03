@@ -11,6 +11,7 @@ import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.swap_history.GetSwapHistoryResponse
 import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
@@ -112,6 +113,9 @@ interface MainAPIService {
 
     @GET("/wallet")
     suspend fun getWalletAmount() : GetWalletAmountResponse
+
+    @GET("/swap-list")
+    suspend fun getSwapHistory() : List<GetSwapHistoryResponse>
 
     // 커뮤니티 게시글 전체
     @GET("posts/{page}")

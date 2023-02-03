@@ -6,6 +6,7 @@ import com.dida.data.model.detail.GetDetailNFTResponse
 import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
 import com.dida.data.model.mypage.UserProfileResponse
+import com.dida.data.model.swap_history.GetSwapHistoryResponse
 import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.domain.model.klaytn.Asset
@@ -16,6 +17,7 @@ import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.nav.post.*
 
 fun GetMainResponse.toDomain() : Home {
@@ -129,6 +131,16 @@ fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmo
         dida = dida,
         klay = klay
     )
+}
+
+@JvmName("toDomainGetSwapHistoryResponse")
+fun List<GetSwapHistoryResponse>.toDomain() : List<SwapHistory>{
+    return map{SwapHistory(
+        sendCoinType = it.sendCoinType,
+        receiveCoinType = it.receiveCoinType,
+        sendAmount = it.sendAmount,
+        time = it.time
+    )}
 }
 
 @JvmName("toDomainGetPostsResponse")

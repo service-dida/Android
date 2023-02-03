@@ -28,6 +28,7 @@ import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
@@ -170,6 +171,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getWalletAmount().toDomain() }
     }
 
+    override suspend fun getSwapHistoryAPI(): NetworkResult<List<SwapHistory>> {
+        return handleApi { mainAPIService.getSwapHistory().toDomain() }
+    }
+
     override suspend fun getPosts(page: Int): NetworkResult<List<Posts>> {
         return handleApi { mainAPIService.getPosts(page = page).toDomain() }
     }
@@ -198,3 +203,4 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getHotCards().toDomain() }
     }
 }
+
