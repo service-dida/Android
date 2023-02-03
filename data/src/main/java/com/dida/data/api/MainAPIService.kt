@@ -129,13 +129,17 @@ interface MainAPIService {
     @GET("comments/{postId}")
     suspend fun getCommentsPostId(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
 
-    // 커뮤니티 생성(내가 좋아요한 NFT)
+    // 커뮤니티 생성 목록(내가 좋아요한 NFT)
     @GET("cards/post/like")
     suspend fun getCardsPostLike() : List<GetCardsPostResponse>
 
-    // 커뮤니티 생성(내가 보유한 NFT)
+    // 커뮤니티 생성 목록(내가 보유한 NFT)
     @GET("cards/post/my")
     suspend fun getCardsPostMy() : List<GetCardsPostResponse>
+
+    // 커뮤니티 생성 목록
+    @POST("post/{cardId}")
+    suspend fun postPostCardId(@Path("cardId") cardId: Long, @Body body: PostPostCardIdRequest) : Unit
 
     // NFT상세 커뮤니티
     @GET("posts/card/{cardId}")

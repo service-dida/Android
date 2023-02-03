@@ -37,7 +37,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, com
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is com.dida.create_community.CreateCommunityNavigationAction.NavigateToSelectNft ->
-                        navigate(CreateCommunityFragmentDirections.actionCreateCommunityFragmentToCommunityCommunityInputFragment(true))
+                        navigate(CreateCommunityFragmentDirections.actionCreateCommunityFragmentToCommunityCommunityInputFragment(it.cardId, true))
                 }
             }
         }

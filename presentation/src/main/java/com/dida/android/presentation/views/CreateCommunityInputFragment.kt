@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
+import com.dida.create_community_input.CreateCommunityInputNavigationAction
 import com.dida.create_community_input.databinding.FragmentCreateCommunityInputBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -31,13 +32,15 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
         exception = viewModel.errorEvent
         initToolbar()
         viewModel.setCreateState(args.createState)
+        viewModel.getCardDetail(cardId = args.cardId)
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is com.dida.create_community_input.CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
                 }
             }
         }
