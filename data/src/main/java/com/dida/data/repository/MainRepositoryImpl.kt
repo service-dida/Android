@@ -169,7 +169,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getWalletAmount().toDomain() }
     }
 
-    override suspend fun getPosts(): NetworkResult<List<Posts>> {
+    override suspend fun getPosts(page: Int): NetworkResult<List<Posts>> {
         return handleApi { mainAPIService.getPosts().toDomain() }
     }
 

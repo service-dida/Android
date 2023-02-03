@@ -9,7 +9,7 @@ import javax.inject.Inject
 class PostsAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke() : NetworkResult<List<Posts>> {
+    suspend operator fun invoke(page: Int) : NetworkResult<List<Posts>> {
         return repository.getPosts()
     }
 }
