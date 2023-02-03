@@ -15,7 +15,6 @@ class CommunityPagingAdapter(
     private val eventListener: CommunityActionHandler
 ) : PagingDataAdapter<Posts, CommunityPagingAdapter.ViewHolder>(CommuityDiffCallback){
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
