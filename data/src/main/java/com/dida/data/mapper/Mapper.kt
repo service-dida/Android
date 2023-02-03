@@ -7,8 +7,10 @@ import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.swap_history.GetSwapHistoryResponse
+import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.domain.model.klaytn.Asset
+import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.*
@@ -16,6 +18,7 @@ import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.swap_history.SwapHistory
+import com.dida.domain.model.nav.post.*
 
 fun GetMainResponse.toDomain() : Home {
     return Home(
@@ -138,4 +141,79 @@ fun List<GetSwapHistoryResponse>.toDomain() : List<SwapHistory>{
         sendAmount = it.sendAmount,
         time = it.time
     )}
+}
+
+@JvmName("toDomainGetPostsResponse")
+fun List<GetPostsResponse>.toDomain(): List<Posts> {
+    return map { Posts(
+        postId = it.postId,
+        cardId = it.cardId,
+        userName = it.userName,
+        userImgUrl = it.userImgUrl,
+        title = it.title,
+        content = it.content,
+        cardName = it.cardName,
+        cardImgUrl = it.cardImgUrl,
+        price = it.price,
+        cardOwnerImgUrl = it.cardOwnerImgUrl,
+        commentList = it.commentsList.toDomain()
+    ) }
+}
+
+@JvmName("toDomainGetPostsCommentsResponse")
+fun List<GetPostsCommentsResponse>.toDomain(): List<PostComments> {
+    return map { PostComments(
+        commentId = it.commentId,
+        content = it.content,
+        userName = it.userName,
+        userImgUrl = it.userImgUrl,
+        type = it.type
+    ) }
+}
+
+fun GetPostPostIdResponse.toDomain(): Post {
+    return Post(
+        postId = postId,
+        cardId = cardId,
+        userName = userName,
+        userImgUrl = userImgUrl,
+        title = title,
+        content = content,
+        cardName = cardName,
+        cardImgUrl = cardImgUrl,
+        price = price,
+        cardOwnerImgUrl = cardOwnerImgUrl,
+        type = type
+    )
+}
+
+@JvmName("toDomainGetPostIdCommentsResponse")
+fun List<GetPostIdCommentsResponse>.toDomain(): List<Comments> {
+    return map { Comments(
+       commentId = it.commentId,
+        postId = it.postId,
+        content = it.content,
+        userName = it.userName,
+        userImgUrl = it.userImgUrl,
+        type = it.type
+    ) }
+}
+
+@JvmName("toDomainGetCardsPostResponse")
+fun List<GetCardsPostResponse>.toDomain(): List<CardPost> {
+    return map { CardPost(
+        cardId = it.cardId,
+        cardImgUrl = it.cardImgUrl,
+        cardName = it.cardName,
+        userImgUrl = it.userImgUrl,
+        userName = it.userName
+    ) }
+}
+
+@JvmName("toDomainGetHotCardsResponse")
+fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
+    return map { HotCard(
+        cardId = it.cardId,
+        cardImgUrl = it.cardImgUrl
+    ) }
 }

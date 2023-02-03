@@ -109,6 +109,8 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", libs.findLibrary("firebase-messaging").get())
                     add("implementation", libs.findLibrary("firebase-service").get())
 
+                    // Paging
+                    add("implementation", libs.findLibrary("androidx-paging").get())
                 }
             }
         }

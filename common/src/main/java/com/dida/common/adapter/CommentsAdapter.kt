@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.databinding.HolderCommentsBinding
-import com.dida.domain.model.nav.detailnft.Comments
+import com.dida.domain.model.nav.post.Comments
 
 class CommentsAdapter(
 ) : ListAdapter<Comments, CommentsAdapter.ViewHolder>(CommentsDiffCallback){

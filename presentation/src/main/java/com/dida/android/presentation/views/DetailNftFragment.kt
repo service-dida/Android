@@ -7,13 +7,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
-import com.dida.domain.model.nav.detailnft.Comments
-import com.dida.domain.model.nav.detailnft.Community
+import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.util.successOrNull
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.nft_detail.R.layout.fragment_detail_nft) {
@@ -25,8 +26,8 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
     override val viewModel : DetailNftViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
-
     private val args: DetailNftFragmentArgs by navArgs()
+    private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -37,15 +38,24 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         initToolbar()
         initAdapter()
         viewModel.getDetailNft(args.cardId)
+        viewModel.getCommunity(args.cardId)
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
-                    is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment())
-                    is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
+                        is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(0))
+                        is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
+                    }
+                }
+            }
+
+            launch {
+                viewModel.communityState.collectLatest {
+                    communityAdapter.submitList(it)
                 }
             }
         }
@@ -72,26 +82,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     private fun initAdapter() {
-        val item1 = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~! 미아러ㅣㅏ어미라ㅓ")
-        val item2 = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT 가 너무 이쁘네요~~~!")
-        val item = Comments("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트 짧은글 테스트")
-
-        val commentsList = ArrayList<Comments>()
-        commentsList.add(item)
-        commentsList.add(item1)
-        commentsList.add(item2)
-
-        val test = listOf(
-            Community("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2",
-                "test", false, "test", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
-                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", "NFT name here",
-                "https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2", 1.65, commentsList
-            )
-        )
-
-        val testAdapter = CommunityAdapter(viewModel)
-        testAdapter.submitList(test)
-
-        binding.communityRecycler.adapter = testAdapter
+        binding.communityRecycler.adapter = communityAdapter
     }
 }

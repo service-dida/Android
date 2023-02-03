@@ -9,7 +9,7 @@ import javax.inject.Inject
 class UpdateProfileDescriptionAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(description: MultipartBody.Part) : NetworkResult<Unit> {
+    suspend operator fun invoke(description: String) : NetworkResult<Unit> {
         return repository.updateProfileDescriptionAPI(description)
     }
 }

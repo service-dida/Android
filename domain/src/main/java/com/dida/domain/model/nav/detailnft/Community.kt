@@ -10,7 +10,7 @@ class Community(
     val nftName: String,
     val didaImg: String,
     val didaPrice: Double,
-    val Comments: List<Comments>
+    val Comments: List<com.dida.domain.model.nav.post.Comments>
 ){
     fun priceFormatter(): String{
         return "$didaPrice dida"

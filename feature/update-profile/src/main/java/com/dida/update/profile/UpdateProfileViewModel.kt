@@ -1,6 +1,7 @@
 package com.dida.update.profile
 
 import android.net.Uri
+import android.util.Log
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.NetworkResult
 import com.dida.domain.onError
@@ -79,7 +80,7 @@ class UpdateProfileViewModel @Inject constructor(
                     if(it == currentNickname){
                         setNicknameVerify(4)
                         _nickNameCheckState.value = false
-                    }else{
+                    } else {
                         if(it.isEmpty()) { setNicknameVerify(0) }
                         else if(it.length > 8) { setNicknameVerify(1) }
                         else { nicknameAPIServer(it) }
@@ -138,17 +139,17 @@ class UpdateProfileViewModel @Inject constructor(
             val deferreds : MutableList<Deferred<NetworkResult<Unit>>> = mutableListOf()
             if(currentProfileImage != profileImageState.value){
                 deferreds.add(async {
-                    updateProfileImageAPI(profileImageMultipartState.value!!).onSuccess {  }.onError { e -> catchError(e) }
+                    updateProfileImageAPI(profileImageMultipartState.value!!).onError { e -> catchError(e) }
                 })
             }
             if(currentNickname != nickNameState.value) {
                 deferreds.add(async {
-                    updateProfileNicknameAPI(MultipartBody.Part.createFormData("nickname", nickNameState.value)).onSuccess {  }.onError { e -> catchError(e) }
+                    updateProfileNicknameAPI(nickname = nickNameState.value).onError { e -> catchError(e) }
                 })
             }
             if(currentDescription != descriptionState.value) {
                 deferreds.add(async {
-                    updateProfileDescriptionAPI(MultipartBody.Part.createFormData("description", descriptionState.value)).onSuccess {  }.onError { e -> catchError(e) }
+                    updateProfileDescriptionAPI(description = descriptionState.value).onError { e -> catchError(e) }
                 })
             }
             deferreds.awaitAll()

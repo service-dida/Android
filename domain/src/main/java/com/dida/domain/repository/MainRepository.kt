@@ -3,6 +3,7 @@ package com.dida.domain.repository
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
+import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.Home
@@ -10,6 +11,10 @@ import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.swap_history.SwapHistory
+import com.dida.domain.model.nav.post.CardPost
+import com.dida.domain.model.nav.post.Comments
+import com.dida.domain.model.nav.post.Post
+import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.model.nav.swap.WalletAmount
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
@@ -50,9 +55,9 @@ interface  MainRepository {
 
     suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>
 
-    suspend fun updateProfileDescriptionAPI(description: MultipartBody.Part) : NetworkResult<Unit>
+    suspend fun updateProfileDescriptionAPI(description: String) : NetworkResult<Unit>
 
-    suspend fun updateProfileNicknameAPI(nickname: MultipartBody.Part) : NetworkResult<Unit>
+    suspend fun updateProfileNicknameAPI(nickname: String) : NetworkResult<Unit>
 
     suspend fun postLikeAPI(cardId: Long) : NetworkResult<Unit>
 
@@ -73,4 +78,18 @@ interface  MainRepository {
     suspend fun getWalletAmountAPI() : NetworkResult<WalletAmount>
 
     suspend fun getSwapHistoryAPI() : NetworkResult<List<SwapHistory>>
+
+    suspend fun getPosts(page: Int) : NetworkResult<List<Posts>>
+
+    suspend fun getPostPostId(postId: Int) : NetworkResult<Post>
+
+    suspend fun getCommentsPostId(postId: Int) : NetworkResult<List<Comments>>
+
+    suspend fun getCardsPostLike() : NetworkResult<List<CardPost>>
+
+    suspend fun getCardsPostMy() : NetworkResult<List<CardPost>>
+
+    suspend fun getPostsCardCardId(cardId: Long) : NetworkResult<List<Posts>>
+
+    suspend fun getHotCards() : NetworkResult<List<HotCard>>
 }

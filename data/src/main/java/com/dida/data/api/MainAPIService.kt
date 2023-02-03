@@ -12,12 +12,15 @@ import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
 import com.dida.data.model.swap_history.GetSwapHistoryResponse
+import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
 import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.tradenft.PostSellNftRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
+import com.dida.data.model.userInfo.PutUserDescriptionRequest
+import com.dida.data.model.userInfo.PutUserNicknameRequest
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
@@ -76,15 +79,13 @@ interface MainAPIService {
 
     @Multipart
     @PUT("/user/img")
-    suspend fun updateProfileImage(@Part file: MultipartBody.Part)
+    suspend fun updateProfileImage(@Part file: MultipartBody.Part): Unit
 
-    @Multipart
     @PUT("/user/name")
-    suspend fun updateProfileNickname(@Part nickname: MultipartBody.Part)
+    suspend fun updateProfileNickname(@Body request: PutUserNicknameRequest): Unit
 
-    @Multipart
     @PUT("/user/description")
-    suspend fun updateProfileDescription(@Part description: MultipartBody.Part)
+    suspend fun updateProfileDescription(@Body request: PutUserDescriptionRequest): Unit
 
     @POST("/card/like")
     suspend fun postLike(@Body request: PostLikeRequest) : Unit
@@ -115,4 +116,33 @@ interface MainAPIService {
 
     @GET("/swap-list")
     suspend fun getSwapHistory() : List<GetSwapHistoryResponse>
+
+    // 커뮤니티 게시글 전체
+    @GET("posts/{page}")
+    suspend fun getPosts(@Path("page") page: Int) : List<GetPostsResponse>
+
+    // 게시글 상세 가져오기
+    @GET("post/{postId}")
+    suspend fun getPostPostId(@Path("postId") postId: Int) : GetPostPostIdResponse
+
+    // 게시글 답변 가져오기
+    @GET("comments/{postId}")
+    suspend fun getCommentsPostId(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
+
+    // 커뮤니티 생성(내가 좋아요한 NFT)
+    @GET("cards/post/like")
+    suspend fun getCardsPostLike() : List<GetCardsPostResponse>
+
+    // 커뮤니티 생성(내가 보유한 NFT)
+    @GET("cards/post/my")
+    suspend fun getCardsPostMy() : List<GetCardsPostResponse>
+
+    // NFT상세 커뮤니티
+    @GET("posts/card/{cardId}")
+    suspend fun getPostsCardCardId(@Path("cardId") cardId: Long) : List<GetPostsResponse>
+
+    // 커뮤니티 시끌벅적 게시판
+    @GET("hot/cards")
+    suspend fun getHotCards() : List<GetHotCardsResponse>
+
 }

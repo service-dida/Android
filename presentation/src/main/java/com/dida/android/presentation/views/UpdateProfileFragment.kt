@@ -1,7 +1,12 @@
 package com.dida.android.presentation.views
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
@@ -15,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.update.profile.R
 import com.dida.android.util.uriToFile
+import com.dida.common.ui.ImageBottomSheet
 import com.dida.common.util.DidaIntent
 import com.dida.update.profile.UpdateProfileNavigationAction
 import com.dida.update.profile.UpdateProfileViewModel
@@ -25,6 +31,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.nio.file.Files.createFile
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateProfileViewModel>(R.layout.fragment_update_profile) {
@@ -32,6 +41,23 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     private val TAG = "UpdateProfileFragment"
     private val navController: NavController by lazy { findNavController() }
     private lateinit var requestUpdateProfile: ActivityResultLauncher<Intent>
+
+    private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cameraLauncher: ActivityResultLauncher<Uri>
+    private var cameraUri: Uri? = null
+
+    // 요청하고자 하는 권한들
+    private val permissionList = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE)
+
+    // 권한을 허용하도록 요청
+    private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+        results.forEach {
+            if(!it.value) toastMessage("권한 허용이 필요합니다.")
+        }
+    }
 
     override val layoutResourceId: Int
     get() = R.layout.fragment_update_profile
@@ -79,8 +105,17 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         }
 
         binding.profileCl.setOnClickListener {
-           getImageToGallery()
+            editProfileImageBottomSheet()
         }
+    }
+
+    private fun editProfileImageBottomSheet() {
+        requestMultiplePermission.launch(permissionList)
+        val dialog = ImageBottomSheet {
+            if(it) getGalleryImage()
+            else getCaptureImage()
+        }
+        dialog.show(childFragmentManager, TAG)
     }
 
     private fun initRegisterForActivityResult() {
@@ -90,19 +125,53 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
                 val intent = activityResult.data
                 if (intent != null) {
                     val uri = intent.data
-                    val file = uriToFile(uri!!,requireContext())
+                    val file = uriToFile(uri!!, requireContext())
                     val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
                     val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                    viewModel.selectProfileImage(uri,requestBody)
+                    viewModel.selectProfileImage(uri, requestBody)
                 }
             }
         }
+
+        galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            activityResult.data?.let {
+                createFile(it.data!!)
+            }
+        }
+
+        cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+            if(it) { cameraUri?.let { uri ->
+                createFile(uri)
+            } }
+        }
     }
 
-    private fun getImageToGallery() {
+    private fun getGalleryImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        requestUpdateProfile.launch(intent)
+        galleryLauncher.launch(intent)
+
+    }
+
+    private fun getCaptureImage() {
+        cameraUri = createImageFile()
+        cameraLauncher.launch(cameraUri)
+    }
+
+    private fun createImageFile(): Uri? {
+        val now = SimpleDateFormat("yyMMdd_HHmmss").format(Date())
+        val content = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        }
+        return requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+    }
+
+    private fun createFile(uri: Uri) {
+        val file = uriToFile(uri, requireContext())
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        viewModel.profileImageMultipartState.value = requestBody
     }
 
     val clearTextListener = object : OnTouchListener {
