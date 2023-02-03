@@ -52,6 +52,8 @@ googleServices = "4.3.13"
 lottie = "3.4.0"
 navigationCompose = "2.5.1"
 
+paging = "3.0.1"
+
 [plugins]
 hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "safeargs" }
@@ -124,6 +126,8 @@ android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" 
 
 android-pluginGradle = { module = "com.android.tools.build:gradle",version.ref = "androidGradlePlugin" }
 kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin",version.ref = "kotlin" }
+
+androidx-paging = { module = "androidx.paging:paging-runtime-ktx",version.ref = "paging" }
 
 [bundles]
 # Define bundles/groups of libraries
