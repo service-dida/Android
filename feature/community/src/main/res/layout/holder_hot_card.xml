@@ -6,7 +6,12 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.community.ActiveNFTHolderModel" />
+            type="com.dida.domain.model.nav.community.HotCard" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.community.HotCardActionHandler" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -22,11 +27,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:image_from_url="@{holderModel.image_url}"
+                app:image_from_url="@{holderModel.cardImgUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/nft_example_image" />
+                app:srcCompat="@drawable/nft_example_image"
+                android:onClick="@{() -> eventListener.onHotCardClicked(holderModel.cardId)}"/>
 
     </androidx.cardview.widget.CardView>
 

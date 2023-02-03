@@ -7,9 +7,11 @@ import com.dida.common.util.CommunityActionHandler
 import com.dida.common.util.CommunityWriteActionHandler
 import com.dida.community.adapter.createPostsPager
 import com.dida.data.repository.MainRepositoryImpl
+import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.HotCardAPI
 import com.dida.domain.usecase.main.PostsAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
     private val postsAPI: PostsAPI,
-) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler {
+    private val hotCardAPI: HotCardAPI
+) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler {
 
     private val TAG = "CommunityViewModel"
 
@@ -34,9 +37,18 @@ class CommunityViewModel @Inject constructor(
 
     var postsState: Flow<PagingData<Posts>> = emptyFlow()
 
+    private val _hotCardState: MutableStateFlow<List<HotCard>> = MutableStateFlow<List<HotCard>>(emptyList())
+    val hotCardState: StateFlow<List<HotCard>> = _hotCardState.asStateFlow()
+
     init {
         postsState = createPostsPager(postsAPI = postsAPI)
             .flow.cachedIn(baseViewModelScope)
+
+        baseViewModelScope.launch {
+            hotCardAPI.invoke()
+                .onSuccess { _hotCardState.value = it }
+                .onError { e -> catchError(e) }
+        }
     }
 
     override fun onCommunityItemClicked(communityId: Int) {
@@ -59,6 +71,12 @@ class CommunityViewModel @Inject constructor(
             } else {
 
             }
+        }
+    }
+
+    override fun onHotCardClicked(cardId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToNftDetail(cardId = cardId))
         }
     }
 }

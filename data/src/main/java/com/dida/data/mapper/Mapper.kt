@@ -9,6 +9,7 @@ import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.domain.model.klaytn.Asset
+import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.*
@@ -194,5 +195,13 @@ fun List<GetCardsPostResponse>.toDomain(): List<CardPost> {
         cardName = it.cardName,
         userImgUrl = it.userImgUrl,
         userName = it.userName
+    ) }
+}
+
+@JvmName("toDomainGetHotCardsResponse")
+fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
+    return map { HotCard(
+        cardId = it.cardId,
+        cardImgUrl = it.cardImgUrl
     ) }
 }

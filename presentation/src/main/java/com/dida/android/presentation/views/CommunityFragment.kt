@@ -3,11 +3,11 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
-import com.dida.community.adapter.ActiveNFTRecyclerViewAdapter
+import com.dida.community.adapter.HotCardAdapter
 import com.dida.community.adapter.ReservationNFTRecyclerViewAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
-import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -22,7 +22,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         get() = com.dida.community.R.layout.fragment_community
 
     override val viewModel : CommunityViewModel by viewModels()
-    private val activeNFTRecyclerViewAdapter = ActiveNFTRecyclerViewAdapter()
+    private val hotCardAdapter by lazy { HotCardAdapter(viewModel) }
     private val reservationNFTRecyclerViewAdapter = ReservationNFTRecyclerViewAdapter()
     private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
 
@@ -41,8 +41,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
-                        is com.dida.community.CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.communityId))
-                        is com.dida.community.CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
+                        is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.communityId))
+                        is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
+                        is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
                     }
                 }
             }
@@ -53,6 +54,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                 }
             }
 
+            launch {
+                viewModel.hotCardState.collectLatest {
+                    hotCardAdapter.submitList(it)
+                }
+            }
         }
     }
 
@@ -68,15 +74,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
         reservationNFTRecyclerViewAdapter.submitList(Reservationlist)
         binding.reservationRecyclerView.adapter = reservationNFTRecyclerViewAdapter
-
-        val ActiveNFTList = mutableListOf(
-            ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2"),
-            ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2"),
-            ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2")
-        )
-
-        activeNFTRecyclerViewAdapter.submitList(ActiveNFTList)
-        binding.activeCommunityRecyclerView.adapter = activeNFTRecyclerViewAdapter
+        binding.activeCommunityRecyclerView.adapter = hotCardAdapter
         binding.communityRecyclerView.adapter = communityPagingAdapter
     }
 }

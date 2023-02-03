@@ -11,10 +11,7 @@ import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.nickname.PostNicknameRequest
-import com.dida.data.model.post.GetCardsPostResponse
-import com.dida.data.model.post.GetPostIdCommentsResponse
-import com.dida.data.model.post.GetPostPostIdResponse
-import com.dida.data.model.post.GetPostsResponse
+import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
@@ -139,5 +136,9 @@ interface MainAPIService {
     // NFT상세 커뮤니티
     @GET("posts/card/{cardId}")
     suspend fun getPostsCardCardId(@Path("cardId") cardId: Long) : List<GetPostsResponse>
+
+    // 커뮤니티 시끌벅적 게시판
+    @GET("hot/cards")
+    suspend fun getHotCards() : List<GetHotCardsResponse>
 
 }
