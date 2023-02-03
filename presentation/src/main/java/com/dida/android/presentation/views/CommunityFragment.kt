@@ -7,7 +7,7 @@ import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.ActiveNFTRecyclerViewAdapter
 import com.dida.community.adapter.ReservationNFTRecyclerViewAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
-import com.dida.domain.model.nav.community.ActiveNFTHolderModel
+import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -69,13 +69,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         reservationNFTRecyclerViewAdapter.submitList(Reservationlist)
         binding.reservationRecyclerView.adapter = reservationNFTRecyclerViewAdapter
 
-        val ActiveNFTList = mutableListOf(
-            ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2"),
-            ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2"),
-            ActiveNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2")
+        val HotCardLists = mutableListOf(
+            HotCard("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2"),
+            HotCard("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2"),
+            HotCard("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2")
         )
 
-        activeNFTRecyclerViewAdapter.submitList(ActiveNFTList)
+        activeNFTRecyclerViewAdapter.submitList(HotCardLists)
         binding.activeCommunityRecyclerView.adapter = activeNFTRecyclerViewAdapter
         binding.communityRecyclerView.adapter = communityPagingAdapter
     }

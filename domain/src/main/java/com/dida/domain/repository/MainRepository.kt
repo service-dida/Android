@@ -3,6 +3,7 @@ package com.dida.domain.repository
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
+import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.Home
@@ -86,4 +87,6 @@ interface  MainRepository {
     suspend fun getCardsPostMy() : NetworkResult<List<CardPost>>
 
     suspend fun getPostsCardCardId(cardId: Long) : NetworkResult<List<Posts>>
+
+    suspend fun getHotCards() : NetworkResult<List<HotCard>>
 }

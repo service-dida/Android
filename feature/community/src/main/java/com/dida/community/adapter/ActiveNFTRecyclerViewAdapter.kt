@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.community.R
 import com.dida.community.databinding.HolderActiveNftBinding
-import com.dida.domain.model.nav.community.ActiveNFTHolderModel
+import com.dida.domain.model.nav.community.HotCard
 
 class ActiveNFTRecyclerViewAdapter(
-) : ListAdapter<ActiveNFTHolderModel, ActiveNFTRecyclerViewAdapter.ViewHolder>(ActivieNftDiffCallback) {
+) : ListAdapter<HotCard, ActiveNFTRecyclerViewAdapter.ViewHolder>(ActivieNftDiffCallback) {
 
     init { setHasStableIds(true) }
 
@@ -22,9 +22,6 @@ class ActiveNFTRecyclerViewAdapter(
             parent,
             false
         )
-//        viewDataBinding.root.setOnClickListener {
-//            eventListener.onCommunityItemClicked(viewDataBinding.holderModel!!.)
-//        }
         return ViewHolder(viewDataBinding)
     }
 
@@ -35,17 +32,17 @@ class ActiveNFTRecyclerViewAdapter(
     class ViewHolder(private val binding: HolderActiveNftBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ActiveNFTHolderModel) {
+        fun bind(item: HotCard) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object ActivieNftDiffCallback : DiffUtil.ItemCallback<ActiveNFTHolderModel>() {
-        override fun areItemsTheSame(oldItem: ActiveNFTHolderModel, newItem: ActiveNFTHolderModel) =
+    internal object ActivieNftDiffCallback : DiffUtil.ItemCallback<HotCard>() {
+        override fun areItemsTheSame(oldItem: HotCard, newItem: HotCard) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: ActiveNFTHolderModel, newItem: ActiveNFTHolderModel) =
+        override fun areContentsTheSame(oldItem: HotCard, newItem: HotCard) =
             oldItem == newItem
     }
 }

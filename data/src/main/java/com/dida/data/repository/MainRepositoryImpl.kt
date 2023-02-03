@@ -21,6 +21,7 @@ import com.dida.data.model.userInfo.PutUserNicknameRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
+import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.Home
@@ -191,5 +192,9 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getPostsCardCardId(cardId: Long): NetworkResult<List<Posts>> {
         return handleApi { mainAPIService.getPostsCardCardId(cardId = cardId).toDomain() }
+    }
+
+    override suspend fun getHotCards(): NetworkResult<List<HotCard>> {
+        return handleApi { mainAPIService.getHotCards().toDomain() }
     }
 }

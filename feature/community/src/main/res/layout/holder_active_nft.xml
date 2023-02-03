@@ -6,7 +6,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.community.ActiveNFTHolderModel" />
+            type="com.dida.domain.model.nav.community.HotCard" />
     </data>
 
     <androidx.cardview.widget.CardView
