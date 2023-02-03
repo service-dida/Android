@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
+import com.dida.community_detail.DetailCommunityNavigationAction
 import com.dida.community_detail.DetailCommunityViewModel
 import com.dida.community_detail.MoreState
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
@@ -24,10 +25,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         get() = com.dida.community_detail.R.layout.fragment_detail_community
 
     override val viewModel : DetailCommunityViewModel by viewModels()
-    private val communityViewModel : com.dida.community.CommunityViewModel by viewModels()
     private val navController by lazy { findNavController() }
     private val args: DetailCommunityFragmentArgs by navArgs()
-    private val commentsAdapter by lazy { CommentsAdapter() }
+    private val commentsAdapter by lazy { CommentsAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -41,14 +41,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            communityViewModel.moreEvent.collectLatest {
-                val morDialog = DetailCommunityBottomSheetDialog {
-                    when (it) {
-                        is MoreState.Update -> {}
-                        is MoreState.Delete -> {}
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
                     }
                 }
-                morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
             }
         }
 
@@ -79,5 +77,15 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun initAdapter() {
         binding.detailCommunityMain.adapter = commentsAdapter
+    }
+
+    private fun commentMoreBottomSheet(commentId: Long) {
+        val morDialog = DetailCommunityBottomSheetDialog {
+            when (it) {
+                is MoreState.Update -> {}
+                is MoreState.Delete -> viewModel.deleteComment(commentId = commentId)
+            }
+        }
+        morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
     }
 }

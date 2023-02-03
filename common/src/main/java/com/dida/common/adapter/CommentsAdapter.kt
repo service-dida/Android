@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
+import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.databinding.HolderCommentsBinding
 import com.dida.domain.model.nav.post.Comments
 
 class CommentsAdapter(
+    private val eventListener: CommentActionHandler
 ) : ListAdapter<Comments, CommentsAdapter.ViewHolder>(CommentsDiffCallback){
 
     init { setHasStableIds(true) }
@@ -22,6 +24,7 @@ class CommentsAdapter(
             parent,
             false
         )
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 

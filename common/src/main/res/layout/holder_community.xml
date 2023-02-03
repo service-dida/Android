@@ -11,7 +11,7 @@
 
         <variable
             name="eventListener"
-            type="com.dida.common.util.CommunityActionHandler" />
+            type="com.dida.common.actionhandler.CommunityActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

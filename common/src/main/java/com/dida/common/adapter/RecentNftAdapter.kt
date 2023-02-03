@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.databinding.HolderMypageUserCardsBinding
-import com.dida.common.util.NftActionHandler
+import com.dida.common.actionhandler.NftActionHandler
 import com.dida.domain.model.nav.mypage.UserNft
 
 class RecentNftAdapter(

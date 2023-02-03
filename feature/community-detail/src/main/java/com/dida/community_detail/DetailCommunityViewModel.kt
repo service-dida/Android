@@ -1,7 +1,7 @@
 package com.dida.community_detail
 
+import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
@@ -9,11 +9,10 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CommentAPI
 import com.dida.domain.usecase.main.CommentsPostIdAPI
+import com.dida.domain.usecase.main.DeleteCommentAPI
 import com.dida.domain.usecase.main.PostIdAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,10 +20,14 @@ import javax.inject.Inject
 class DetailCommunityViewModel @Inject constructor(
     private val postIdAPI: PostIdAPI,
     private val commentsPostIdAPI: CommentsPostIdAPI,
-    private val commentAPI: CommentAPI
-) : BaseViewModel(), DetailCommunityActionHandler {
+    private val commentAPI: CommentAPI,
+    private val deleteCommentAPI: DeleteCommentAPI
+) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler {
 
     private val TAG = "DetailCommunityViewModel"
+
+    private val _navigationEvent: MutableSharedFlow<DetailCommunityNavigationAction> = MutableSharedFlow<DetailCommunityNavigationAction>()
+    val navigationEvent: SharedFlow<DetailCommunityNavigationAction> = _navigationEvent.asSharedFlow()
 
     private val _postState: MutableStateFlow<Post?> = MutableStateFlow(null)
     val postState: StateFlow<Post?> = _postState.asStateFlow()
@@ -46,6 +49,14 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
+    fun deleteComment(commentId: Long) {
+        baseViewModelScope.launch {
+            deleteCommentAPI(commentId = commentId)
+                .onSuccess { getPost(postId = postState.value!!.postId.toInt()) }
+                .onError { e -> catchError(e) }
+        }
+    }
+
     override fun onCommentClicked() {
         baseViewModelScope.launch {
             if(commentState.value.isNotBlank()) {
@@ -55,6 +66,12 @@ class DetailCommunityViewModel @Inject constructor(
                         getPost(postId = postState.value!!.postId.toInt()) }
                     .onError { e -> catchError(e) }
             }
+        }
+    }
+
+    override fun onCommentMoreClicked(commentId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCommentMore(commentId = commentId))
         }
     }
 }

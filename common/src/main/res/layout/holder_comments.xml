@@ -5,12 +5,16 @@
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.post.Comments" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.common.actionhandler.CommentActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
+        android:paddingTop="12dp"
         android:paddingBottom="6dp"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
@@ -65,7 +69,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/ic_more_surface"
-            app:isMyComments="@{holderModel.type}">
+            app:isMyComments="@{holderModel.type}"
+            android:onClick="@{() -> eventListener.onCommentMoreClicked(holderModel.commentId)}">
         </ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

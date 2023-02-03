@@ -214,5 +214,9 @@ class MainRepositoryImpl @Inject constructor(
         val body = PostCommentRequest(postId = postId, content = content)
         return handleApi { mainAPIService.postComment(body = body) }
     }
+
+    override suspend fun patchCommentIdStatus(commentId: Long): NetworkResult<Unit> {
+        return handleApi { mainAPIService.patchCommentIdStatus(commentId = commentId) }
+    }
 }
 

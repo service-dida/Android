@@ -153,4 +153,8 @@ interface MainAPIService {
     @POST("comment")
     suspend fun postComment(@Body body: PostCommentRequest) : Unit
 
+    // 게시글 댓글 삭제하기
+    @PATCH("comment/{commentId}/status")
+    suspend fun patchCommentIdStatus(@Path("commentId") commentId: Long) : Unit
+
 }

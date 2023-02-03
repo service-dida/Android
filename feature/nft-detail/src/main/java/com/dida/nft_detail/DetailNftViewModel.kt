@@ -2,9 +2,9 @@ package com.dida.nft_detail
 
 import android.os.Handler
 import android.os.Looper
-import com.dida.common.util.CommunityActionHandler
+import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.CommunityWriteActionHandler
+import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.util.UiState
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.post.Posts
