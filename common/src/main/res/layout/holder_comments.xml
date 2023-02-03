@@ -10,8 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:orientation="horizontal">
@@ -58,10 +58,11 @@
 
         <ImageView
             android:id="@+id/more_btn"
-            android:layout_width="36dp"
-            android:layout_height="33dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="0.1"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/ic_more_surface"
             app:isMyComments="@{holderModel.type}">

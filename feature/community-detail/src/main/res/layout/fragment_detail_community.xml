@@ -193,7 +193,8 @@
             android:orientation="vertical"
             android:clipToPadding="false"
             android:fillViewport="true"
-            android:overScrollMode="never">
+            android:overScrollMode="never"
+            android:padding="4dp">
         </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,7 +221,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/send_btn"
-                    android:background="@null">
+                    android:background="@null"
+                    android:text="@={vm.commentState}"
+                    android:layout_marginEnd="8dp">
                 </EditText>
 
                 <ImageView
@@ -232,7 +235,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:src="@drawable/ic_send"
                     android:padding="8dp"
-                    android:background="@drawable/custom_brandlemon_radius6">
+                    android:background="@drawable/custom_brandlemon_radius6"
+                    android:onClick="@{() -> vm.onCommentClicked()}">
                 </ImageView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

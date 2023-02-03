@@ -7,6 +7,7 @@ import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.CommentAPI
 import com.dida.domain.usecase.main.CommentsPostIdAPI
 import com.dida.domain.usecase.main.PostIdAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,18 +20,19 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailCommunityViewModel @Inject constructor(
     private val postIdAPI: PostIdAPI,
-    private val commentsPostIdAPI: CommentsPostIdAPI
-) : BaseViewModel() {
+    private val commentsPostIdAPI: CommentsPostIdAPI,
+    private val commentAPI: CommentAPI
+) : BaseViewModel(), DetailCommunityActionHandler {
 
     private val TAG = "DetailCommunityViewModel"
-
-    var postId: Int = 0
 
     private val _postState: MutableStateFlow<Post?> = MutableStateFlow(null)
     val postState: StateFlow<Post?> = _postState.asStateFlow()
 
     private val _commentList: MutableStateFlow<List<Comments>> = MutableStateFlow(emptyList())
     val commentList: StateFlow<List<Comments>> = _commentList.asStateFlow()
+
+    val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
     fun getPost(postId: Int) {
         baseViewModelScope.launch {
@@ -41,6 +43,18 @@ class DetailCommunityViewModel @Inject constructor(
                 .onSuccess { _commentList.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()
+        }
+    }
+
+    override fun onCommentClicked() {
+        baseViewModelScope.launch {
+            if(commentState.value.isNotBlank()) {
+                commentAPI(postId = postState.value!!.postId, content = commentState.value)
+                    .onSuccess {
+                        commentState.value = ""
+                        getPost(postId = postState.value!!.postId.toInt()) }
+                    .onError { e -> catchError(e) }
+            }
         }
     }
 }
