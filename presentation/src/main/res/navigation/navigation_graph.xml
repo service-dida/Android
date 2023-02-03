@@ -66,6 +66,11 @@
             app:destination="@id/createCommunityFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_communityFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment

@@ -6,22 +6,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.community.HotCardActionHandler
 import com.dida.community.R
-import com.dida.community.databinding.HolderActiveNftBinding
+import com.dida.community.databinding.HolderHotCardBinding
 import com.dida.domain.model.nav.community.HotCard
 
-class ActiveNFTRecyclerViewAdapter(
-) : ListAdapter<HotCard, ActiveNFTRecyclerViewAdapter.ViewHolder>(ActivieNftDiffCallback) {
+class HotCardAdapter(
+    private val eventListener: HotCardActionHandler
+) : ListAdapter<HotCard, HotCardAdapter.ViewHolder>(ActivieNftDiffCallback) {
 
     init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderActiveNftBinding = DataBindingUtil.inflate(
+        val viewDataBinding: HolderHotCardBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.holder_active_nft,
+            R.layout.holder_hot_card,
             parent,
             false
         )
+        viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }
 
@@ -29,7 +32,7 @@ class ActiveNFTRecyclerViewAdapter(
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: HolderActiveNftBinding) :
+    class ViewHolder(private val binding: HolderHotCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HotCard) {
