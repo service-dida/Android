@@ -117,8 +117,8 @@ interface MainAPIService {
     suspend fun getWalletAmount() : GetWalletAmountResponse
 
     // 커뮤니티 게시글 전체
-    @GET("posts")
-    suspend fun getPosts() : List<GetPostsResponse>
+    @GET("posts/{page}")
+    suspend fun getPosts(@Path("page") page: Int) : List<GetPostsResponse>
 
     // 게시글 상세 가져오기
     @GET("post/{postId}")

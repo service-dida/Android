@@ -169,8 +169,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getWalletAmount().toDomain() }
     }
 
-    override suspend fun getPosts(): NetworkResult<List<Posts>> {
-        return handleApi { mainAPIService.getPosts().toDomain() }
+    override suspend fun getPosts(page: Int): NetworkResult<List<Posts>> {
+        return handleApi { mainAPIService.getPosts(page = page).toDomain() }
     }
 
     override suspend fun getPostPostId(postId: Int): NetworkResult<Post> {

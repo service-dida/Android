@@ -9,8 +9,6 @@ import com.dida.community.adapter.ReservationNFTRecyclerViewAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.model.nav.community.ActiveNFTHolderModel
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
-import com.dida.domain.model.nav.detailnft.Comments
-import com.dida.domain.model.nav.detailnft.Community
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -51,7 +49,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.postsState.collectLatest {
-                    communityAdapter.submitList(it)
+                    communityAdapter.submitData(it)
                 }
             }
 

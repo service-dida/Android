@@ -1,8 +1,11 @@
 package com.dida.community
 
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.CommunityActionHandler
 import com.dida.common.util.CommunityWriteActionHandler
+import com.dida.community.adapter.createPostsPager
 import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
@@ -15,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl,
     private val postsAPI: PostsAPI,
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler {
 
@@ -30,15 +32,11 @@ class CommunityViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
 
-    private val _postsState: MutableStateFlow<List<Posts>> = MutableStateFlow<List<Posts>>(emptyList())
-    val postsState: StateFlow<List<Posts>> = _postsState.asStateFlow()
+    var postsState: Flow<PagingData<Posts>> = emptyFlow()
 
     init {
-        baseViewModelScope.launch {
-            postsAPI.invoke()
-                .onSuccess { _postsState.value = it }
-                .onError { e -> catchError(e) }
-        }
+        postsState = createPostsPager(postsAPI = postsAPI)
+            .flow.cachedIn(baseViewModelScope)
     }
 
     override fun onCommunityItemClicked(communityId: Int) {

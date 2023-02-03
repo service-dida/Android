@@ -75,7 +75,7 @@ interface  MainRepository {
 
     suspend fun getWalletAmountAPI() : NetworkResult<WalletAmount>
 
-    suspend fun getPosts() : NetworkResult<List<Posts>>
+    suspend fun getPosts(page: Int) : NetworkResult<List<Posts>>
 
     suspend fun getPostPostId(postId: Int) : NetworkResult<Post>
 
