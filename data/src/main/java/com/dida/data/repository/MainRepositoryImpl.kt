@@ -11,6 +11,7 @@ import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.post.PostPostCardIdRequest
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
 import com.dida.data.model.tradenft.PostBuyNftRequest
@@ -196,5 +197,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getHotCards(): NetworkResult<List<HotCard>> {
         return handleApi { mainAPIService.getHotCards().toDomain() }
+    }
+
+    override suspend fun postPostCardId(cardId: Long, title: String, content: String): NetworkResult<Unit> {
+        val body = PostPostCardIdRequest(title = title, content = content)
+        return handleApi { mainAPIService.postPostCardId(cardId = cardId, body = body) }
     }
 }

@@ -3,7 +3,7 @@ package com.dida.data.model.detail
 import com.google.gson.annotations.SerializedName
 
 data class GetDetailNFTResponse(
-    @SerializedName("cardId") val cardId: Int,
+    @SerializedName("cardId") val cardId: Long,
     @SerializedName("contracts") val contracts: String?,
     @SerializedName("description") val description: String,
     @SerializedName("id") val id: String,

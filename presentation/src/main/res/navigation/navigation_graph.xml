@@ -102,6 +102,13 @@
             android:name="createState"
             app:argType="boolean">
         </argument>
+        <action
+            android:id="@+id/action_communityCommunityInputFragment_to_communityFragment"
+            app:destination="@id/communityFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/communityFragment"/>
     </fragment>
 
 

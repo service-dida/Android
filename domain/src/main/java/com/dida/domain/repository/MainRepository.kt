@@ -89,4 +89,6 @@ interface  MainRepository {
     suspend fun getPostsCardCardId(cardId: Long) : NetworkResult<List<Posts>>
 
     suspend fun getHotCards() : NetworkResult<List<HotCard>>
+
+    suspend fun postPostCardId(cardId: Long, title: String, content: String) : NetworkResult<Unit>
 }

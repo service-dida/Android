@@ -1,7 +1,7 @@
 package com.dida.domain.model.nav.detailnft
 
 data class DetailNFT(
-    val cardId: Int,
+    val cardId: Long,
     val contracts: String?,
     val description: String,
     val id: String,
