@@ -170,7 +170,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPosts(page: Int): NetworkResult<List<Posts>> {
-        return handleApi { mainAPIService.getPosts().toDomain() }
+        return handleApi { mainAPIService.getPosts(page = page).toDomain() }
     }
 
     override suspend fun getPostPostId(postId: Int): NetworkResult<Post> {

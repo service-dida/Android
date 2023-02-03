@@ -49,7 +49,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.postsState.collectLatest {
-                    communityAdapter.submitList(it)
+                    communityAdapter.submitData(it)
                 }
             }
 
