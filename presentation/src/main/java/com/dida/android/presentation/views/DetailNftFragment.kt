@@ -7,11 +7,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
+import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.util.successOrNull
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.nft_detail.R.layout.fragment_detail_nft) {
@@ -35,15 +38,24 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         initToolbar()
         initAdapter()
         viewModel.getDetailNft(args.cardId)
+        viewModel.getCommunity(args.cardId)
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
-                    is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(0))
-                    is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
+                        is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(0))
+                        is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
+                    }
+                }
+            }
+
+            launch {
+                viewModel.communityState.collectLatest {
+                    communityAdapter.submitList(it)
                 }
             }
         }

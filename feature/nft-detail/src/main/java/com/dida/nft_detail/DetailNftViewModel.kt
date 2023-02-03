@@ -7,16 +7,14 @@ import com.dida.common.base.BaseViewModel
 import com.dida.common.util.CommunityWriteActionHandler
 import com.dida.common.util.UiState
 import com.dida.domain.model.nav.detailnft.DetailNFT
+import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.DetailNftAPI
 import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.PostsCardCardIdAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +39,9 @@ class DetailNftViewModel @Inject constructor(
     private val _detailNftState: MutableStateFlow<UiState<DetailNFT>> = MutableStateFlow(UiState.Loading)
     val detailNftState: StateFlow<UiState<DetailNFT>> = _detailNftState
 
+    private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())
+    val communityState: StateFlow<List<Posts>> = _communityState.asStateFlow()
+
     fun getDetailNft(cardId : Long) {
         baseViewModelScope.launch {
             detailNftAPI(cardId)
@@ -49,6 +50,14 @@ class DetailNftViewModel @Inject constructor(
                         _detailNftState.value = UiState.Success(it)
                     },500)
                     dismissLoading() }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun getCommunity(cardId: Long) {
+        baseViewModelScope.launch {
+            postsCardCardIdAPI(cardId = cardId)
+                .onSuccess { _communityState.value = it }
                 .onError { e -> catchError(e) }
         }
     }

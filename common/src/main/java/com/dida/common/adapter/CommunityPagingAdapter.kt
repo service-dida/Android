@@ -5,18 +5,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.databinding.HolderCommunityBinding
 import com.dida.common.util.CommunityActionHandler
 import com.dida.domain.model.nav.post.Posts
 
-class CommunityAdapter(
+class CommunityPagingAdapter(
     private val eventListener: CommunityActionHandler
-) : ListAdapter<Posts, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
+) : PagingDataAdapter<Posts, CommunityPagingAdapter.ViewHolder>(CommuityDiffCallback){
 
-    init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(
