@@ -75,6 +75,9 @@ class AndroidCommonConventionPlugin : Plugin<Project> {
 
                     // Data Store
                     add("implementation", libs.findBundle("datastore").get())
+
+                    // Paging
+                    add("implementation", libs.findLibrary("androidx-paging").get())
                 }
             }
         }
