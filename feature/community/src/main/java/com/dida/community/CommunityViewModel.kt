@@ -3,10 +3,9 @@ package com.dida.community
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.CommunityActionHandler
-import com.dida.common.util.CommunityWriteActionHandler
+import com.dida.common.actionhandler.CommunityActionHandler
+import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.community.adapter.createPostsPager
-import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError

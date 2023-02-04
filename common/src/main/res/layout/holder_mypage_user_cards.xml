@@ -11,7 +11,7 @@
 
         <variable
             name="eventListener"
-            type="com.dida.common.util.NftActionHandler" />
+            type="com.dida.common.actionhandler.NftActionHandler" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -48,6 +48,7 @@
                 android:fontFamily="@font/pretendard_regular"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:maxLines="1"
                 android:background="@drawable/custom_surface1_radius100">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>

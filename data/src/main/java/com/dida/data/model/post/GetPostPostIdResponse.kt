@@ -3,7 +3,7 @@ package com.dida.data.model.post
 import com.google.gson.annotations.SerializedName
 
 data class GetPostPostIdResponse(
-    @SerializedName("postId") val postId: Int,
+    @SerializedName("postId") val postId: Long,
     @SerializedName("cardId") val cardId: Int,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImgUrl") val userImgUrl: String,

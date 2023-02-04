@@ -11,6 +11,7 @@ import com.dida.data.model.login.CreateUserRequestModel
 import com.dida.data.model.main.PostLikeRequest
 import com.dida.data.model.main.PostUserFollowRequest
 import com.dida.data.model.nickname.PostNicknameRequest
+import com.dida.data.model.post.PostCommentRequest
 import com.dida.data.model.post.PostPostCardIdRequest
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
@@ -207,6 +208,15 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postPostCardId(cardId: Long, title: String, content: String): NetworkResult<Unit> {
         val body = PostPostCardIdRequest(title = title, content = content)
         return handleApi { mainAPIService.postPostCardId(cardId = cardId, body = body) }
+    }
+
+    override suspend fun postComment(postId: Long, content: String): NetworkResult<Unit> {
+        val body = PostCommentRequest(postId = postId, content = content)
+        return handleApi { mainAPIService.postComment(body = body) }
+    }
+
+    override suspend fun patchCommentIdStatus(commentId: Long): NetworkResult<Unit> {
+        return handleApi { mainAPIService.patchCommentIdStatus(commentId = commentId) }
     }
 }
 

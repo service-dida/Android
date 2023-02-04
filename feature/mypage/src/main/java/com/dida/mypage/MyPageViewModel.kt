@@ -2,10 +2,8 @@ package com.dida.mypage
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.AppLog
-import com.dida.common.util.NftActionHandler
+import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.util.UiState
-import com.dida.common.util.successOrNull
-import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile

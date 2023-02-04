@@ -52,12 +52,14 @@ class DetailCommunityBottomSheetDialog(
         var declare_btn = requireView().findViewById<TextView>(R.id.update_btn)
         declare_btn.setOnClickListener {
             itemClick(MoreState.Update)
+            dismissAllowingStateLoss()
         }
 
         // 삭제하기
         var block_btn = requireView().findViewById<TextView>(R.id.delete_btn)
         block_btn.setOnClickListener {
             itemClick(MoreState.Delete)
+            dismissAllowingStateLoss()
         }
     }
 }
