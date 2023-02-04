@@ -2,6 +2,6 @@ package com.dida.nft_detail
 
 sealed class DetailNftNavigationAction {
     object NavigateToCommunity: DetailNftNavigationAction()
-    class NavigateToItemCommunity(communityId: Int): DetailNftNavigationAction()
+    class NavigateToItemCommunity(val postId: Long): DetailNftNavigationAction()
     object NavigateToCreateCommunity: DetailNftNavigationAction()
 }

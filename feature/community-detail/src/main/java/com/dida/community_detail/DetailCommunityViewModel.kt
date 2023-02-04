@@ -37,7 +37,7 @@ class DetailCommunityViewModel @Inject constructor(
 
     val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
-    fun getPost(postId: Int) {
+    fun getPost(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postIdAPI.invoke(postId = postId)
@@ -52,7 +52,7 @@ class DetailCommunityViewModel @Inject constructor(
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
             deleteCommentAPI(commentId = commentId)
-                .onSuccess { getPost(postId = postState.value!!.postId.toInt()) }
+                .onSuccess { getPost(postId = postState.value!!.postId) }
                 .onError { e -> catchError(e) }
         }
     }
@@ -63,7 +63,7 @@ class DetailCommunityViewModel @Inject constructor(
                 commentAPI(postId = postState.value!!.postId, content = commentState.value)
                     .onSuccess {
                         commentState.value = ""
-                        getPost(postId = postState.value!!.postId.toInt()) }
+                        getPost(postId = postState.value!!.postId) }
                     .onError { e -> catchError(e) }
             }
         }

@@ -125,7 +125,7 @@
         android:label="DetailCommunityFragment">
         <argument
             android:name="postId"
-            app:argType="integer">
+            app:argType="long">
         </argument>
         <action
             android:id="@+id/action_communityDetailFragment_to_communityCommunityInputFragment"

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class PostIdAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(postId: Int) : NetworkResult<Post> {
+    suspend operator fun invoke(postId: Long) : NetworkResult<Post> {
         return repository.getPostPostId(postId = postId)
     }
 }

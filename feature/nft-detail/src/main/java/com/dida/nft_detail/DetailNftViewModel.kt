@@ -77,10 +77,8 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    override fun onCommunityItemClicked(communityId: Int) {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(DetailNftNavigationAction.NavigateToItemCommunity(communityId))
-        }
+    override fun onCommunityItemClicked(postId: Long) {
+
     }
 
     override fun onCommunityWriteClicked() {
@@ -90,6 +88,6 @@ class DetailNftViewModel @Inject constructor(
     }
 
     // 클립 버튼으로 처리
-    override fun onClipOrMoreClicked(communityId: Int) {
+    override fun onClipOrMoreClicked(postId: Long) {
     }
 }

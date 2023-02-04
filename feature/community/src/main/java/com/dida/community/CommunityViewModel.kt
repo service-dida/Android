@@ -50,9 +50,9 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onCommunityItemClicked(communityId: Int) {
+    override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CommunityNavigationAction.NavigateToDetail(communityId))
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToDetail(postId))
         }
     }
 
@@ -63,7 +63,7 @@ class CommunityViewModel @Inject constructor(
     }
 
     // 나의 게시물일 경우 More 버튼, 아닐경우 Clip 버튼
-    override fun onClipOrMoreClicked(communityId: Int) {
+    override fun onClipOrMoreClicked(postId: Long) {
         baseViewModelScope.launch {
             if(myWriteState.value) {
                 _moreEvent.emit(Unit)

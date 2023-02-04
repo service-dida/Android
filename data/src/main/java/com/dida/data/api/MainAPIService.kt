@@ -123,11 +123,11 @@ interface MainAPIService {
 
     // 게시글 상세 가져오기
     @GET("post/{postId}")
-    suspend fun getPostPostId(@Path("postId") postId: Int) : GetPostPostIdResponse
+    suspend fun getPostPostId(@Path("postId") postId: Long) : GetPostPostIdResponse
 
     // 게시글 답변 가져오기
     @GET("comments/{postId}")
-    suspend fun getCommentsPostId(@Path("postId") postId: Int) : List<GetPostIdCommentsResponse>
+    suspend fun getCommentsPostId(@Path("postId") postId: Long) : List<GetPostIdCommentsResponse>
 
     // 커뮤니티 생성 목록(내가 좋아요한 NFT)
     @GET("cards/post/like")

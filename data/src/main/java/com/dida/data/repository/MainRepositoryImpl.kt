@@ -181,11 +181,11 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getPosts(page = page).toDomain() }
     }
 
-    override suspend fun getPostPostId(postId: Int): NetworkResult<Post> {
+    override suspend fun getPostPostId(postId: Long): NetworkResult<Post> {
         return handleApi { mainAPIService.getPostPostId(postId = postId).toDomain() }
     }
 
-    override suspend fun getCommentsPostId(postId: Int): NetworkResult<List<Comments>> {
+    override suspend fun getCommentsPostId(postId: Long): NetworkResult<List<Comments>> {
         return handleApi { mainAPIService.getCommentsPostId(postId = postId).toDomain() }
     }
 
