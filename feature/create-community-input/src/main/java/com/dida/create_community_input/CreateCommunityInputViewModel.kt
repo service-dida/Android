@@ -24,7 +24,6 @@ class CreateCommunityInputViewModel @Inject constructor(
     val navigationEvent: SharedFlow<CreateCommunityInputNavigationAction> = _navigationEvent.asSharedFlow()
 
     private val _cardIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
-    private val cardIdState: StateFlow<Long> = _cardIdState.asStateFlow()
 
     private val _cardImgState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val cardImgState: StateFlow<String> = _cardImgState.asStateFlow()
@@ -111,7 +110,7 @@ class CreateCommunityInputViewModel @Inject constructor(
             showLoading()
             if(titleState.value.isNotBlank() && descriptionState.value.isNotBlank()) {
                 if(isNewCreate.value) {
-                    postCardIdAPI(cardId = cardIdState.value, title = titleState.value, content = descriptionState.value)
+                    postCardIdAPI(cardId = _cardIdState.value, title = titleState.value, content = descriptionState.value)
                         .onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
                         .onError { e -> catchError(e) }
                 } else {
