@@ -14,6 +14,7 @@
       <module name="DIDA.feature.login" target="11" />
       <module name="DIDA.feature.mypage" target="11" />
       <module name="DIDA.feature.nft-detail" target="11" />
+      <module name="DIDA.feature.nft-sale" target="11" />
       <module name="DIDA.feature.nickname" target="11" />
       <module name="DIDA.feature.password" target="11" />
       <module name="DIDA.feature.settings" target="11" />

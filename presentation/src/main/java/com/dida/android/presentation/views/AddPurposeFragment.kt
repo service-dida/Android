@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.add.bottom.AddKeepNftBottomSheet
-import com.dida.add.bottom.AddSaleNftBottomSheet
+import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.add.databinding.FragmentAddPurposeBinding
 import com.dida.add.purpose.AddPurposeNavigationAction
 import com.dida.add.purpose.AddPurposeViewModel

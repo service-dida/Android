@@ -1,4 +1,4 @@
-package com.dida.add.bottom
+package com.dida.nft.sale
 
 sealed class AddSaleNftNavigationAction {
     object NavigateToDismiss: AddSaleNftNavigationAction()

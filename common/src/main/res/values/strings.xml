@@ -83,10 +83,6 @@
     <string name="add_nft_description_text">설명</string>
     <string name="add_nft_description_hint">당신의 NFT를 소개하세요.</string>
 
-    <string name="add_nft_price_title">판매 가격은 얼마인가요?</string>
-    <string name="add_nft_price_hint">가격을 입력하세요</string>
-    <string name="add_nft_price_ok_btn_text">NFT 생성하기</string>
-
     <string name="add_purpose_top_text">어떤 목적으로\n아래 NFT를 생성하나요?</string>
     <string name="not_sale_text">소장용</string>
     <string name="sale_text">판매용</string>

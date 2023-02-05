@@ -195,7 +195,14 @@
             app:argType="long" />
         <action
             android:id="@+id/action_detailNftFragment_to_createCommunityFragment"
-            app:destination="@id/createCommunityFragment" />
+            app:destination="@id/createCommunityFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_detailNftFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment

@@ -10,11 +10,13 @@ import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.adapter.CommunityPagingAdapter
 import com.dida.common.ui.ImageBottomSheet
 import com.dida.common.util.successOrNull
+import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.DetailNftBottomSheet
 import com.dida.nft_detail.DetailNftMenuType
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
+import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -52,6 +54,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                         is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
                         is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(it.postId))
                         is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
+                        is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
                     }
                 }
             }
@@ -76,7 +79,18 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     com.dida.nft_detail.R.id.action_more -> {
                         val dialog = DetailNftBottomSheet { type ->
                             when(type){
-                                DetailNftMenuType.SELL ->{}
+                                DetailNftMenuType.SELL ->{
+                                    val dialog = AddSaleNftBottomSheet { price ->
+                                        PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
+                                            if(success){
+                                                viewModel.sellNft(password,args.cardId,price.toDouble())
+                                            }else{
+                                                navController.popBackStack()
+                                            }
+                                        }.show(childFragmentManager,"DetailNftBottomSheet")
+                                    }
+                                    dialog.show(childFragmentManager, "DetailNftFragment")
+                                }
                                 DetailNftMenuType.CANCEL ->{}
                                 DetailNftMenuType.REMOVE ->{}
                             }
