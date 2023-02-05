@@ -24,11 +24,11 @@ class DefaultAlertDialog(
 
         binding.alertNoButton.setOnClickListener {
             clickNegative.invoke()
-            dismiss()
+            dismissAllowingStateLoss()
         }
         binding.alertYesButton.setOnClickListener { 
             clickPositive.invoke()
-            dismiss()
+            dismissAllowingStateLoss()
         }
     }
 

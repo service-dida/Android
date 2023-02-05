@@ -1,4 +1,4 @@
-package com.dida.common.util
+package com.dida.common.bindingadapters
 
 import android.content.ContentValues.TAG
 import android.util.Log

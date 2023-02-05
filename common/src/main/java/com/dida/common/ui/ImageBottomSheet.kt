@@ -51,12 +51,12 @@ class ImageBottomSheet(
 
         gallery.setOnClickListener {
             callback.invoke(true)
-            dismiss()
+            dismissAllowingStateLoss()
         }
 
         camera.setOnClickListener {
             callback.invoke(false)
-            dismiss()
+            dismissAllowingStateLoss()
         }
     }
 }
