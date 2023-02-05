@@ -7,10 +7,7 @@ import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CommentAPI
-import com.dida.domain.usecase.main.CommentsPostIdAPI
-import com.dida.domain.usecase.main.DeleteCommentAPI
-import com.dida.domain.usecase.main.PostIdAPI
+import com.dida.domain.usecase.main.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -21,7 +18,8 @@ class DetailCommunityViewModel @Inject constructor(
     private val postIdAPI: PostIdAPI,
     private val commentsPostIdAPI: CommentsPostIdAPI,
     private val commentAPI: CommentAPI,
-    private val deleteCommentAPI: DeleteCommentAPI
+    private val deleteCommentAPI: DeleteCommentAPI,
+    private val deletePostAPI: DeletePostAPI
 ) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler {
 
     private val TAG = "DetailCommunityViewModel"
@@ -57,6 +55,14 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
+    fun deleteCommunity() {
+        baseViewModelScope.launch {
+            deletePostAPI.invoke(postState.value!!.postId)
+                .onSuccess { _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
+                .onError { e -> catchError(e) }
+        }
+    }
+
     override fun onCommentClicked() {
         baseViewModelScope.launch {
             if(commentState.value.isNotBlank()) {
@@ -66,6 +72,12 @@ class DetailCommunityViewModel @Inject constructor(
                         getPost(postId = postState.value!!.postId) }
                     .onError { e -> catchError(e) }
             }
+        }
+    }
+
+    override fun onCommunityMoreClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCommunityMore)
         }
     }
 

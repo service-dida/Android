@@ -45,6 +45,8 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
+                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
+                        is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                     }
                 }
             }
@@ -77,6 +79,16 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun initAdapter() {
         binding.detailCommunityMain.adapter = commentsAdapter
+    }
+
+    private fun communityMoreBottomSheet() {
+        val morDialog = DetailCommunityBottomSheetDialog {
+            when (it) {
+                is MoreState.Update -> {}
+                is MoreState.Delete -> viewModel.deleteCommunity()
+            }
+        }
+        morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
     }
 
     private fun commentMoreBottomSheet(commentId: Long) {
