@@ -103,7 +103,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         val dialog = DefaultAlertDialog(
             alertModel = res,
             clickNegative = {},
-            clickPossitive = { viewModel.deleteCommunity() }
+            clickPositive = { viewModel.deleteCommunity() }
         )
         dialog.show(requireActivity().supportFragmentManager, dialog.tag)
     }
@@ -128,7 +128,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         val dialog = DefaultAlertDialog(
             alertModel = res,
             clickNegative = {},
-            clickPossitive = { viewModel.deleteComment(commentId = commentId) }
+            clickPositive = { viewModel.deleteComment(commentId = commentId) }
         )
         dialog.show(requireActivity().supportFragmentManager, dialog.tag)
     }
