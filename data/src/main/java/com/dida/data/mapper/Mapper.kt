@@ -1,15 +1,12 @@
 package com.dida.data.mapper
 
-import com.dida.data.model.createwallet.PostCheckPasswordResponse
-import com.dida.data.model.createwallet.SendEmailResponse
-import com.dida.data.model.detail.GetDetailNFTResponse
-import com.dida.data.model.klaytn.AssetResponse
 import com.dida.data.model.main.*
-import com.dida.data.model.mypage.UserProfileResponse
-import com.dida.data.model.swap_history.GetSwapHistoryResponse
+import com.dida.data.model.response.UserProfileResponse
+import com.dida.data.model.response.GetSwapHistoryResponse
 import com.dida.data.model.post.*
-import com.dida.data.model.swap.GetWalletAmountResponse
-import com.dida.data.model.tradenft.GetBuySellListResponse
+import com.dida.data.model.response.*
+import com.dida.data.model.response.GetWalletAmountResponse
+import com.dida.data.model.response.GetBuySellListResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
