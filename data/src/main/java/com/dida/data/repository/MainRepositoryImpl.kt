@@ -210,6 +210,19 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.postPostCardId(cardId = cardId, body = body) }
     }
 
+    override suspend fun patchPostPostId(
+        postId: Long,
+        title: String,
+        content: String
+    ): NetworkResult<Unit> {
+        val body = PostPostCardIdRequest(title = title, content = content)
+        return handleApi { mainAPIService.patchPostPostId(postId = postId, body = body) }
+    }
+
+    override suspend fun patchPostPostIdStatus(postId: Long): NetworkResult<Unit> {
+        return handleApi { mainAPIService.patchPostPostIdStatus(postId = postId) }
+    }
+
     override suspend fun postComment(postId: Long, content: String): NetworkResult<Unit> {
         val body = PostCommentRequest(postId = postId, content = content)
         return handleApi { mainAPIService.postComment(body = body) }

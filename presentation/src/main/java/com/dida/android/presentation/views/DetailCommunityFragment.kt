@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
+import com.dida.common.base.DefaultAlertDialog
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
 import com.dida.community_detail.DetailCommunityNavigationAction
 import com.dida.community_detail.DetailCommunityViewModel
@@ -85,19 +86,49 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         val morDialog = DetailCommunityBottomSheetDialog {
             when (it) {
                 is MoreState.Update -> {}
-                is MoreState.Delete -> viewModel.deleteCommunity()
+                is MoreState.Delete -> deletePostAlert()
             }
         }
         morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
+    }
+
+    private fun deletePostAlert() {
+        val res = com.dida.common.base.AlertModel(
+            title = "게시글을 삭제하시겠습니까?",
+            description = "게시글을 삭제하면 복구가 불가능합니다.",
+            noButtonTitle = "취소",
+            yesButtonTitle = "확인"
+        )
+        val dialog = DefaultAlertDialog(
+            alertModel = res,
+            clickNegative = {},
+            clickPossitive = { viewModel.deleteCommunity() }
+        )
+        dialog.show(requireActivity().supportFragmentManager, dialog.tag)
     }
 
     private fun commentMoreBottomSheet(commentId: Long) {
         val morDialog = DetailCommunityBottomSheetDialog {
             when (it) {
                 is MoreState.Update -> {}
-                is MoreState.Delete -> viewModel.deleteComment(commentId = commentId)
+                is MoreState.Delete -> deleteCommentAlert(commentId = commentId)
             }
         }
         morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
+    }
+
+    private fun deleteCommentAlert(commentId: Long) {
+        val res = com.dida.common.base.AlertModel(
+            title = "댓글을 삭제하시겠습니까?",
+            description = "댓글을 삭제하면 복구가 불가능합니다.",
+            noButtonTitle = "취소",
+            yesButtonTitle = "확인"
+        )
+        val dialog = DefaultAlertDialog(
+            alertModel = res,
+            clickNegative = {},
+            clickPossitive = { viewModel.deleteComment(commentId = commentId) }
+        )
+        dialog.show(requireActivity().supportFragmentManager, dialog.tag)
     }
 }
