@@ -84,8 +84,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                                         PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                                             if(success){
                                                 viewModel.sellNft(password,args.cardId,price.toDouble())
-                                            }else{
-                                                navController.popBackStack()
                                             }
                                         }.show(childFragmentManager,"DetailNftBottomSheet")
                                     }
