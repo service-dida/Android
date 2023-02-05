@@ -8,7 +8,10 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.ui.ImageBottomSheet
 import com.dida.common.util.successOrNull
+import com.dida.nft_detail.DetailNftBottomSheet
+import com.dida.nft_detail.DetailNftMenuType
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
@@ -70,7 +73,16 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     com.dida.nft_detail.R.id.action_heart -> viewModel.postlikeNft(args.cardId)
-                    com.dida.nft_detail.R.id.action_more -> {}
+                    com.dida.nft_detail.R.id.action_more -> {
+                        val dialog = DetailNftBottomSheet { type ->
+                            when(type){
+                                DetailNftMenuType.SELL ->{}
+                                DetailNftMenuType.CANCEL ->{}
+                                DetailNftMenuType.REMOVE ->{}
+                            }
+                        }
+                        dialog.show(childFragmentManager, TAG)
+                    }
                 }
                 true
             }

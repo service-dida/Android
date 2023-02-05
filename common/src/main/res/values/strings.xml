@@ -113,14 +113,6 @@
     <string name="detail_community_title">게시글</string>
     <string name="detail_community_edit_hint">댓글을 남겨보세요.</string>
 
-    <!--NFT 상세-->
-    <string name="detail_nft_title">제목</string>
-    <string name="detail_nft_who_text">소유권 내역</string>
-    <string name="detail_nft_detail_title">상세정보 📎</string>
-    <string name="detail_nft_link_title">컨트랙트 링크 주소</string>
-    <string name="detail_nft_token_title">토큰 ID</string>
-    <string name="detail_nft_community_title">커뮤니티 ✋</string>
-
     <!--게시글 작성 & 수정-->
     <string name="create_community_title">게시글 작성</string>
     <string name="create_community_input_update">게시글 수정</string>

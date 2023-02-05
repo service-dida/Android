@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/custom_bottom_sheet_surface2"
+        android:background="@drawable/custom_bottom_sheet"
         android:paddingTop="32dp"
         android:paddingBottom="32dp"
         android:paddingStart="24dp"
@@ -36,7 +36,7 @@
 
             <TextView
                 android:id="@+id/gallery_text"
-                style="@style/TextView_regular_14_white"
+                style="@style/TextView_regular_16_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +66,7 @@
 
             <TextView
                 android:id="@+id/capture_text"
-                style="@style/TextView_regular_14_white"
+                style="@style/TextView_regular_16_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
