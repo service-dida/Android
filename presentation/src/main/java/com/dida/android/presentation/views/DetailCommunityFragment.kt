@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
+import com.dida.common.base.DefaultAlertDialog
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
 import com.dida.community_detail.DetailCommunityNavigationAction
 import com.dida.community_detail.DetailCommunityViewModel
@@ -45,6 +46,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
+                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
+                        is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
+                        is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
                     }
                 }
             }
@@ -79,13 +83,53 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         binding.detailCommunityMain.adapter = commentsAdapter
     }
 
+    private fun communityMoreBottomSheet() {
+        val morDialog = DetailCommunityBottomSheetDialog {
+            when (it) {
+                is MoreState.Update -> viewModel.updateCommunity()
+                is MoreState.Delete -> deletePostAlert()
+            }
+        }
+        morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
+    }
+
+    private fun deletePostAlert() {
+        val res = com.dida.common.base.AlertModel(
+            title = requireContext().getString(com.dida.common.R.string.delete_post_title),
+            description = requireContext().getString(com.dida.common.R.string.delete_post_description),
+            noButtonTitle = requireContext().getString(com.dida.common.R.string.cancel),
+            yesButtonTitle = requireContext().getString(com.dida.common.R.string.ok)
+        )
+        val dialog = DefaultAlertDialog(
+            alertModel = res,
+            clickNegative = {},
+            clickPossitive = { viewModel.deleteCommunity() }
+        )
+        dialog.show(requireActivity().supportFragmentManager, dialog.tag)
+    }
+
     private fun commentMoreBottomSheet(commentId: Long) {
         val morDialog = DetailCommunityBottomSheetDialog {
             when (it) {
                 is MoreState.Update -> {}
-                is MoreState.Delete -> viewModel.deleteComment(commentId = commentId)
+                is MoreState.Delete -> deleteCommentAlert(commentId = commentId)
             }
         }
         morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
+    }
+
+    private fun deleteCommentAlert(commentId: Long) {
+        val res = com.dida.common.base.AlertModel(
+            title = requireContext().getString(com.dida.common.R.string.delete_comment_title),
+            description = requireContext().getString(com.dida.common.R.string.delete_comment_description),
+            noButtonTitle = requireContext().getString(com.dida.common.R.string.cancel),
+            yesButtonTitle = requireContext().getString(com.dida.common.R.string.ok)
+        )
+        val dialog = DefaultAlertDialog(
+            alertModel = res,
+            clickNegative = {},
+            clickPossitive = { viewModel.deleteComment(commentId = commentId) }
+        )
+        dialog.show(requireActivity().supportFragmentManager, dialog.tag)
     }
 }

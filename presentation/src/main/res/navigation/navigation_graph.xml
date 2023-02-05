@@ -109,6 +109,11 @@
             android:name="createState"
             app:argType="boolean">
         </argument>
+        <argument
+            android:name="postId"
+            app:argType="long"
+            android:defaultValue="0L">
+        </argument>
         <action
             android:id="@+id/action_communityCommunityInputFragment_to_communityFragment"
             app:destination="@id/communityFragment"

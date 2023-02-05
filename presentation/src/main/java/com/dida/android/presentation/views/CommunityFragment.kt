@@ -35,7 +35,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
@@ -61,6 +61,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     override fun initAfterBinding() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCommunity()
     }
 
     private fun initRecyclerView(){

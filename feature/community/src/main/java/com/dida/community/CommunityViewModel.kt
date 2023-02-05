@@ -39,7 +39,7 @@ class CommunityViewModel @Inject constructor(
     private val _hotCardState: MutableStateFlow<List<HotCard>> = MutableStateFlow<List<HotCard>>(emptyList())
     val hotCardState: StateFlow<List<HotCard>> = _hotCardState.asStateFlow()
 
-    init {
+    fun getCommunity() {
         postsState = createPostsPager(postsAPI = postsAPI)
             .flow.cachedIn(baseViewModelScope)
 

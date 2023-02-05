@@ -137,9 +137,17 @@ interface MainAPIService {
     @GET("cards/post/my")
     suspend fun getCardsPostMy() : List<GetCardsPostResponse>
 
-    // 커뮤니티 생성 목록
+    // 커뮤니티 생성
     @POST("post/{cardId}")
     suspend fun postPostCardId(@Path("cardId") cardId: Long, @Body body: PostPostCardIdRequest) : Unit
+
+    // 커뮤니티 수정
+    @PATCH("post/{postId}")
+    suspend fun patchPostPostId(@Path("postId") postId: Long, @Body body: PostPostCardIdRequest) : Unit
+
+    // 커뮤니티 삭제
+    @PATCH("post/{postId}/status")
+    suspend fun patchPostPostIdStatus(@Path("postId") postId: Long) : Unit
 
     // NFT상세 커뮤니티
     @GET("posts/card/{cardId}")

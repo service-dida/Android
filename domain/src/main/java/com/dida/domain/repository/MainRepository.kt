@@ -95,6 +95,10 @@ interface  MainRepository {
 
     suspend fun postPostCardId(cardId: Long, title: String, content: String) : NetworkResult<Unit>
 
+    suspend fun patchPostPostId(postId: Long, title: String, content: String) : NetworkResult<Unit>
+
+    suspend fun patchPostPostIdStatus(postId: Long) : NetworkResult<Unit>
+
     suspend fun postComment(postId: Long, content: String): NetworkResult<Unit>
 
     suspend fun patchCommentIdStatus(commentId: Long) : NetworkResult<Unit>
