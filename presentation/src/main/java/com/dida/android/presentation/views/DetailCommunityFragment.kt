@@ -48,6 +48,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
                         is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
+                        is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
                     }
                 }
             }
@@ -85,7 +86,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private fun communityMoreBottomSheet() {
         val morDialog = DetailCommunityBottomSheetDialog {
             when (it) {
-                is MoreState.Update -> {}
+                is MoreState.Update -> viewModel.updateCommunity()
                 is MoreState.Delete -> deletePostAlert()
             }
         }

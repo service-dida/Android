@@ -47,6 +47,12 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
+    fun updateCommunity() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdateCommunity(postId = postState.value!!.postId))
+        }
+    }
+
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
             deleteCommentAPI(commentId = commentId)
@@ -57,9 +63,11 @@ class DetailCommunityViewModel @Inject constructor(
 
     fun deleteCommunity() {
         baseViewModelScope.launch {
+            showLoading()
             deletePostAPI.invoke(postState.value!!.postId)
                 .onSuccess { _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
                 .onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 

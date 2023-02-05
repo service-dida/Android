@@ -31,17 +31,26 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
         }
         exception = viewModel.errorEvent
         initToolbar()
-        viewModel.setCreateState(args.createState)
-        viewModel.getCardDetail(cardId = args.cardId)
+        viewModel.isNewCreate(isCreate = args.createState)
+
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
+                        is CreateCommunityInputNavigationAction.NavigateToCommunity -> navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
+                    }
                 }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.isNewCreate.collectLatest {
+                if(it) viewModel.getCardDetail(cardId = args.cardId)
+                else viewModel.getPostDetail(postId = args.postId)
             }
         }
     }
