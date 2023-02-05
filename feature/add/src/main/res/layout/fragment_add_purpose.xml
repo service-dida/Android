@@ -103,7 +103,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
                     android:scaleType="centerCrop"
-                    image_from_url_rounded="@{vm.nftImageState}"
+                    app:image_from_url_rounded="@{vm.nftImageState}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -129,7 +129,8 @@
                     app:layout_constraintStart_toStartOf="@+id/NFT_title_Textview"
                     app:layout_constraintTop_toBottomOf="@+id/NFT_title_Textview"
                     android:src="@drawable/nft_example_image"
-                    tools:srcCompat="@tools:sample/avatars"/>
+                    tools:srcCompat="@tools:sample/avatars"
+                    app:image_from_url_circle="@{vm.profileImgState}"/>
 
                 <TextView
                     android:id="@+id/user_name_textview"
@@ -143,7 +144,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/user_img"
                     app:layout_constraintStart_toEndOf="@+id/user_img"
                     app:layout_constraintTop_toTopOf="@+id/user_img"
-                    tools:text="user name here" />
+                    tools:text="@{vm.nickNameState}"/>
 
                 <TextView
                     android:id="@+id/textView8"

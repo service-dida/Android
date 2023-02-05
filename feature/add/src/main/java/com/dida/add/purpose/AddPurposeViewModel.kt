@@ -2,10 +2,12 @@ package com.dida.add.purpose
 
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
+import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.klaytn.UploadAssetAPI
 import com.dida.domain.usecase.main.MintNftAPI
+import com.dida.domain.usecase.main.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,
-    private val uploadAssetAPI: UploadAssetAPI
+    private val uploadAssetAPI: UploadAssetAPI,
+    private val userProfileAPI: UserProfileAPI
 ) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
@@ -33,11 +36,23 @@ class AddPurposeViewModel @Inject constructor(
     private val _descriptionState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val descriptionState: StateFlow<String> = _descriptionState.asStateFlow()
 
+    private val _profileImgState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val profileImgState: StateFlow<String> = _profileImgState.asStateFlow()
+
+    private val _nickNameState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val nickNameState: StateFlow<String> = _nickNameState.asStateFlow()
+
     fun initNFTInfo(imgUrl : String, title : String, description : String) {
         baseViewModelScope.launch {
             _nftImageState.value = imgUrl
             _titleState.value = title
             _descriptionState.value = description
+
+            userProfileAPI()
+                .onSuccess {
+                    _profileImgState.value = it.profileUrl
+                    _nickNameState.value = it.nickname }
+                .onError { e -> catchError(e) }
         }
     }
 
