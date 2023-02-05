@@ -64,9 +64,7 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
         AddKeepNftBottomSheet {
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
-                    viewModel.mintNFT(password)
-                }else{
-
+                    viewModel.mintNFT(password,AddPurposeViewModel.AddNftType.NOT_SALE)
                 }
             }.show(childFragmentManager,"AddNftBottomSheet")
         }.show(childFragmentManager,"AddPurposeFragment")
@@ -74,6 +72,11 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     private fun isSaled() {
         val dialog = AddSaleNftBottomSheet {
+            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
+                if(success){
+                    viewModel.mintNFT(password,AddPurposeViewModel.AddNftType.SALE)
+                }
+            }.show(childFragmentManager,"AddNftBottomSheet")
         }
         dialog.show(childFragmentManager, "AddPurposeFragment")
     }
