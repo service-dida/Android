@@ -94,10 +94,10 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun deletePostAlert() {
         val res = com.dida.common.base.AlertModel(
-            title = "게시글을 삭제하시겠습니까?",
-            description = "게시글을 삭제하면 복구가 불가능합니다.",
-            noButtonTitle = "취소",
-            yesButtonTitle = "확인"
+            title = requireContext().getString(com.dida.common.R.string.delete_post_title),
+            description = requireContext().getString(com.dida.common.R.string.delete_post_description),
+            noButtonTitle = requireContext().getString(com.dida.common.R.string.cancel),
+            yesButtonTitle = requireContext().getString(com.dida.common.R.string.ok)
         )
         val dialog = DefaultAlertDialog(
             alertModel = res,
@@ -119,10 +119,10 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun deleteCommentAlert(commentId: Long) {
         val res = com.dida.common.base.AlertModel(
-            title = "댓글을 삭제하시겠습니까?",
-            description = "댓글을 삭제하면 복구가 불가능합니다.",
-            noButtonTitle = "취소",
-            yesButtonTitle = "확인"
+            title = requireContext().getString(com.dida.common.R.string.delete_comment_title),
+            description = requireContext().getString(com.dida.common.R.string.delete_comment_description),
+            noButtonTitle = requireContext().getString(com.dida.common.R.string.cancel),
+            yesButtonTitle = requireContext().getString(com.dida.common.R.string.ok)
         )
         val dialog = DefaultAlertDialog(
             alertModel = res,
