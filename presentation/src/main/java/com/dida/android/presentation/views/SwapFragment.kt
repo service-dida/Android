@@ -19,7 +19,6 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
 
     override val viewModel : SwapViewModel by viewModels()
 
-
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel

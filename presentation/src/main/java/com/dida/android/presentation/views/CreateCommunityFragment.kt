@@ -6,20 +6,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.presentation.adapter.CreateCommunityNftPagerAdapter
+import com.dida.create_community.CreateCommunityViewModel
 import com.dida.create_community.databinding.FragmentCreateCommunityBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, com.dida.create_community.CreateCommunityViewModel>(com.dida.create_community.R.layout.fragment_create_community) {
+class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, CreateCommunityViewModel>(com.dida.create_community.R.layout.fragment_create_community) {
 
     private val TAG = "CreateCommunityFragment"
 
     override val layoutResourceId: Int
         get() = com.dida.create_community.R.layout.fragment_create_community
 
-    override val viewModel : com.dida.create_community.CreateCommunityViewModel by viewModels()
+    override val viewModel : CreateCommunityViewModel by viewModels()
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {

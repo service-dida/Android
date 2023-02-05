@@ -7,8 +7,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
-import com.dida.common.adapter.CommunityPagingAdapter
-import com.dida.common.util.successOrNull
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding

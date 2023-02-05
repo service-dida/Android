@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
 import com.dida.wallet.R
+import com.dida.wallet.WalletViewModel
 import com.dida.wallet.adapter.WalletAdapter
 import com.dida.wallet.adapter.WalletHistoryAdapter
 import com.dida.wallet.databinding.FragmentWalletBinding
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.WalletViewModel>(R.layout.fragment_wallet) {
+class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.layout.fragment_wallet) {
 
     private val TAG = "WalletFragment"
 
