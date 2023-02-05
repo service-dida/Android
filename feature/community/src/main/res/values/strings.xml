@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--커뮤니티 화면-->
+    <string name="community_reservation_title_text">오늘 곧 민팅될 NFT ⏰</string>
+    <string name="community_hot_title_text">시끌벅적 게시판 👀</string>
+    <string name="community_hot_sub_title_text">이야기가 활발한 NFT를 소개합니다</string>
+    <string name="community_recent_title_text">최신 게시물</string>
+    <string name="community_floatingActionButton_description">게시물 작성</string>
+</resources>

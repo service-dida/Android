@@ -6,7 +6,6 @@ import com.dida.common.adapter.CommunityPagingAdapter
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardAdapter
-import com.dida.community.adapter.ReservationNFTRecyclerViewAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +22,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override val viewModel : CommunityViewModel by viewModels()
     private val hotCardAdapter by lazy { HotCardAdapter(viewModel) }
-    private val reservationNFTRecyclerViewAdapter = ReservationNFTRecyclerViewAdapter()
     private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
 
 
@@ -66,14 +64,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     private fun initRecyclerView(){
-        val Reservationlist = mutableListOf(
-            ReservationNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here","23:00"),
-            ReservationNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here","23:00"),
-            ReservationNFTHolderModel("https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg?type=m665_443_2","user name here","NFT name here","23:00")
-        )
-
-        reservationNFTRecyclerViewAdapter.submitList(Reservationlist)
-        binding.reservationRecyclerView.adapter = reservationNFTRecyclerViewAdapter
         binding.activeCommunityRecyclerView.adapter = hotCardAdapter
         binding.communityRecyclerView.adapter = communityPagingAdapter
     }

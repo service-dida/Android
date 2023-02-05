@@ -33,6 +33,7 @@
             android:src="@drawable/ic_write"
             android:backgroundTint="@color/brand_lemon"
             android:onClick="@{() -> vm.onCommunityWriteClicked()}"
+            android:contentDescription="@string/community_floatingActionButton_description"
             android:padding="16dp" />
 
         <androidx.core.widget.NestedScrollView
@@ -53,41 +54,10 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/reservation_Text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:gravity="left"
-                    android:text="@string/community_reservation_title_text"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/reservation_RecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:overScrollMode="never"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/reservation_Text"
-                    tools:itemCount="3"
-                    android:orientation="horizontal"
-                    tools:listitem="@layout/holder_reservation_nft"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-
-                <TextView
                     android:id="@+id/active_community_Text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="39dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:gravity="start"
                     android:text="@string/community_hot_title_text"
@@ -95,7 +65,7 @@
                     android:textSize="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/reservation_RecyclerView" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/active_community_Text2"
