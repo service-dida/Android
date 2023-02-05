@@ -10,8 +10,8 @@ import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.wallet.R
 import com.dida.wallet.databinding.HolderWalletNftHistoryBinding
 
-class WalletNFTHistoryRecyclerViewAdapter(
-) : ListAdapter<BuySellList, WalletNFTHistoryRecyclerViewAdapter.ViewHolder>(WalletNftHistoryDiffCallback) {
+class WalletHistoryAdapter(
+) : ListAdapter<BuySellList, WalletHistoryAdapter.ViewHolder>(WalletNftHistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderWalletNftHistoryBinding = DataBindingUtil.inflate(

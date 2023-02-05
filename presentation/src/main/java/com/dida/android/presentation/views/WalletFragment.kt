@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
 import com.dida.wallet.R
-import com.dida.wallet.adapter.WalletCardRecyclerViewAdapter
-import com.dida.wallet.adapter.WalletNFTHistoryRecyclerViewAdapter
+import com.dida.wallet.adapter.WalletAdapter
+import com.dida.wallet.adapter.WalletHistoryAdapter
 import com.dida.wallet.databinding.FragmentWalletBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -25,8 +25,8 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
 
     override val viewModel: com.dida.wallet.WalletViewModel by viewModels()
 
-    private val walletCardRecyclerViewAdapter by lazy {  WalletCardRecyclerViewAdapter(viewModel) }
-    private val walletNFTHistoryRecyclerViewAdapter = WalletNFTHistoryRecyclerViewAdapter()
+    private val walletAdapter by lazy { WalletAdapter(viewModel) }
+    private val walletHistoryAdapter by lazy { WalletHistoryAdapter() }
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -52,13 +52,13 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.walletListState.collectLatest {
-                    walletCardRecyclerViewAdapter.submitList(it)
+                    walletAdapter.submitList(it)
                 }
             }
 
             launch {
                 viewModel.currentHistoryState.collectLatest {
-                    walletNFTHistoryRecyclerViewAdapter.submitList(it)
+                    walletHistoryAdapter.submitList(it)
                 }
             }
         }
@@ -75,7 +75,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
     }
 
     private fun initAdapter() {
-        binding.nftHistoryRecyclerView.adapter = walletNFTHistoryRecyclerViewAdapter
+        binding.nftHistoryRecyclerView.adapter = walletHistoryAdapter
 
         val listener = SnapPagerScrollListener(
             PagerSnapHelper(),
@@ -89,7 +89,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
         )
 
         binding.walletCardRecyclerView.apply {
-            adapter = walletCardRecyclerViewAdapter
+            adapter = walletAdapter
             addSnapPagerScroll()
             addOnScrollListener(listener)
         }

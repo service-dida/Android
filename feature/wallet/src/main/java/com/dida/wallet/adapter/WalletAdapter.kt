@@ -11,9 +11,9 @@ import com.dida.domain.model.nav.mypage.WalletCardHolderModel
 import com.dida.wallet.WalletActionHandler
 import com.dida.wallet.databinding.HolderWalletCardBinding
 
-class WalletCardRecyclerViewAdapter(
+class WalletAdapter(
     private val walletActionHandler: WalletActionHandler
-) : ListAdapter<WalletCardHolderModel, WalletCardRecyclerViewAdapter.ViewHolder>(
+) : ListAdapter<WalletCardHolderModel, WalletAdapter.ViewHolder>(
     WalletCardDiffCallback
 ){
 
