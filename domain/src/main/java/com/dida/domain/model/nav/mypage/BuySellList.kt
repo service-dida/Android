@@ -6,4 +6,8 @@ data class BuySellList(
     val userName: String,
     val price: Float,
     val type: String
-)
+) {
+    fun priceFormat() : String{
+        return "$price dida"
+    }
+}

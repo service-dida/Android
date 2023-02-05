@@ -4,16 +4,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.dida.wallet.R
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
-import com.dida.domain.model.nav.mypage.WalletCardHolderModel
-import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
+import com.dida.wallet.R
 import com.dida.wallet.adapter.WalletCardRecyclerViewAdapter
 import com.dida.wallet.adapter.WalletNFTHistoryRecyclerViewAdapter
 import com.dida.wallet.databinding.FragmentWalletBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -51,8 +50,16 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.walletListState.collectLatest {
-                walletCardRecyclerViewAdapter.submitList(it)
+            launch {
+                viewModel.walletListState.collectLatest {
+                    walletCardRecyclerViewAdapter.submitList(it)
+                }
+            }
+
+            launch {
+                viewModel.currentHistoryState.collectLatest {
+                    walletNFTHistoryRecyclerViewAdapter.submitList(it)
+                }
             }
         }
     }
@@ -69,25 +76,6 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
 
     private fun initAdapter() {
         binding.nftHistoryRecyclerView.adapter = walletNFTHistoryRecyclerViewAdapter
-        val exampleList = mutableListOf(
-            WalletNFTHistoryHolderModel(1, "", "user name here", "구매한 NFT111", 1.65, true),
-            WalletNFTHistoryHolderModel(2, "", "user name here", "NFT name here", 1.65, false),
-            WalletNFTHistoryHolderModel(3, "", "user name here", "구매한 NFT222", 1.65, true),
-            WalletNFTHistoryHolderModel(4, "", "user name here", "구매한 NFT111", 1.65, false),
-            WalletNFTHistoryHolderModel(5, "", "user name here", "구매한 NFT222", 1.65, true),
-            WalletNFTHistoryHolderModel(6, "", "user name here", "NFT name here", 1.65, false),
-            WalletNFTHistoryHolderModel(7, "", "user name here", "구매한 NFT222", 1.65, true),
-            WalletNFTHistoryHolderModel(8, "", "user name here", "NFT name here", 1.65, false),
-            WalletNFTHistoryHolderModel(9, "", "user name here", "구매한 NFT222", 1.65, true),
-            WalletNFTHistoryHolderModel(10, "", "user name here", "NFT name here", 1.65, false)
-        )
-
-        viewModel.setNftHistory(exampleList)
-        lifecycleScope.launchWhenStarted {
-            viewModel.currentHistoryState.collectLatest { list ->
-                walletNFTHistoryRecyclerViewAdapter.submitList(list)
-            }
-        }
 
         val listener = SnapPagerScrollListener(
             PagerSnapHelper(),
@@ -106,5 +94,4 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
             addOnScrollListener(listener)
         }
     }
-
 }

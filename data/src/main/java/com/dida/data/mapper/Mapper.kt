@@ -31,6 +31,7 @@ fun GetMainResponse.toDomain() : Home {
     )
 }
 
+@JvmName("toDomainGetSoldOutResponse")
 fun List<GetSoldOutResponse>.toDomain(): List<SoldOut> {
     return map { SoldOut(
         nftId = it.nftId,
@@ -220,6 +221,7 @@ fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
     ) }
 }
 
+@JvmName("toDomainGetBuySellListResponse")
 fun List<GetBuySellListResponse>.toDomain(): List<BuySellList> {
     return map { BuySellList(
         cardName = it.cardName,

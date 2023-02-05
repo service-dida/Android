@@ -6,14 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel
+import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.wallet.R
 import com.dida.wallet.databinding.HolderWalletNftHistoryBinding
 
 class WalletNFTHistoryRecyclerViewAdapter(
-) : ListAdapter<WalletNFTHistoryHolderModel, WalletNFTHistoryRecyclerViewAdapter.ViewHolder>(
-    WalletCardDiffCallback
-){
+) : ListAdapter<BuySellList, WalletNFTHistoryRecyclerViewAdapter.ViewHolder>(WalletNftHistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderWalletNftHistoryBinding = DataBindingUtil.inflate(
@@ -32,17 +30,17 @@ class WalletNFTHistoryRecyclerViewAdapter(
     class ViewHolder(private val binding: HolderWalletNftHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: WalletNFTHistoryHolderModel) {
+        fun bind(item: BuySellList) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object WalletCardDiffCallback : DiffUtil.ItemCallback<WalletNFTHistoryHolderModel>() {
-        override fun areItemsTheSame(oldItem: WalletNFTHistoryHolderModel, newItem: WalletNFTHistoryHolderModel) =
-            oldItem.historyId == newItem.historyId
+    internal object WalletNftHistoryDiffCallback : DiffUtil.ItemCallback<BuySellList>() {
+        override fun areItemsTheSame(oldItem: BuySellList, newItem: BuySellList) =
+            oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: WalletNFTHistoryHolderModel, newItem: WalletNFTHistoryHolderModel) =
+        override fun areContentsTheSame(oldItem: BuySellList, newItem: BuySellList) =
             oldItem == newItem
     }
 

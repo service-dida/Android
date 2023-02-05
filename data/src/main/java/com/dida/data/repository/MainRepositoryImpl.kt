@@ -28,6 +28,7 @@ import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.swap_history.SwapHistory
@@ -230,6 +231,18 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun patchCommentIdStatus(commentId: Long): NetworkResult<Unit> {
         return handleApi { mainAPIService.patchCommentIdStatus(commentId = commentId) }
+    }
+
+    override suspend fun getBuySellList(): NetworkResult<List<BuySellList>> {
+        return handleApi { mainAPIService.getBuySellList().toDomain() }
+    }
+
+    override suspend fun getBuyList(): NetworkResult<List<BuySellList>> {
+        return handleApi { mainAPIService.getBuyList().toDomain() }
+    }
+
+    override suspend fun getSellList(): NetworkResult<List<BuySellList>> {
+        return handleApi { mainAPIService.getSellList().toDomain() }
     }
 }
 
