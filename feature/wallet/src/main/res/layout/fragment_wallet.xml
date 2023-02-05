@@ -105,7 +105,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp">
 
-
                 <TextView
                     android:id="@+id/nft_history_textview"
                     android:layout_width="0dp"
@@ -140,8 +139,8 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="@string/all_text"
-                        android:onClick="@{() -> vm.onNftHistoryClicked(0)}"
-                        android:textColor="@{vm.nftTypeState==0? @color/brand_lemon : @color/surface6}"
+                        android:onClick="@{() -> vm.onHistoryTypeClicked(0)}"
+                        android:textColor="@{vm.typeHistoryState==0? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -159,8 +158,8 @@
                         android:fontFamily="ㅑ@font/pretendard_regular"
                         android:gravity="center"
                         android:text="@string/buy_text_short"
-                        android:onClick="@{() -> vm.onNftHistoryClicked(1)}"
-                        android:textColor="@{vm.nftTypeState==1? @color/brand_lemon : @color/surface6}"
+                        android:onClick="@{() -> vm.onHistoryTypeClicked(1)}"
+                        android:textColor="@{vm.typeHistoryState==1? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
 
                     <ImageView
@@ -178,8 +177,8 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="@string/sold_text_short"
-                        android:onClick="@{() -> vm.onNftHistoryClicked(2)}"
-                        android:textColor="@{vm.nftTypeState==2? @color/brand_lemon : @color/surface6}"
+                        android:onClick="@{() -> vm.onHistoryTypeClicked(2)}"
+                        android:textColor="@{vm.typeHistoryState==2? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
