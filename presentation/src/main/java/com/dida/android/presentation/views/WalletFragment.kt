@@ -41,14 +41,18 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is com.dida.wallet.WalletNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is com.dida.wallet.WalletNavigationAction.NavigateToSwapHistory -> navigate(
-                        WalletFragmentDirections.actionWalletFragmentToSwapHistoryFragment()
-                    )
+                    is com.dida.wallet.WalletNavigationAction.NavigateToSwapHistory -> navigate(WalletFragmentDirections.actionWalletFragmentToSwapHistoryFragment())
                 }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.walletListState.collectLatest {
+                walletCardRecyclerViewAdapter.submitList(it)
             }
         }
     }
@@ -85,11 +89,6 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
             }
         }
 
-        val walletCardHolderModelList = mutableListOf(
-            WalletCardHolderModel("20.09865", "KLAY"),
-            WalletCardHolderModel("333.09865", "DIDA")
-        )
-
         val listener = SnapPagerScrollListener(
             PagerSnapHelper(),
             SnapPagerScrollListener.ON_SETTLED,
@@ -101,7 +100,6 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, com.dida.wallet.Walle
             }
         )
 
-        walletCardRecyclerViewAdapter.submitList(walletCardHolderModelList)
         binding.walletCardRecyclerView.apply {
             adapter = walletCardRecyclerViewAdapter
             addSnapPagerScroll()
