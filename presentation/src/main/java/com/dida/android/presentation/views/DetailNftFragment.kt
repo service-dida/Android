@@ -79,16 +79,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     com.dida.nft_detail.R.id.action_more -> {
                         val dialog = DetailNftBottomSheet { type ->
                             when(type){
-                                DetailNftMenuType.SELL ->{
-                                    val dialog = AddSaleNftBottomSheet { price ->
-                                        PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                                            if(success){
-                                                viewModel.sellNft(password,args.cardId,price.toDouble())
-                                            }
-                                        }.show(childFragmentManager,"DetailNftBottomSheet")
-                                    }
-                                    dialog.show(childFragmentManager, "DetailNftFragment")
-                                }
+                                DetailNftMenuType.SELL ->{ showSellNftDialog() }
                                 DetailNftMenuType.CANCEL ->{}
                                 DetailNftMenuType.REMOVE ->{}
                             }
@@ -107,5 +98,16 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
     private fun initAdapter() {
         binding.communityRecycler.adapter = communityAdapter
+    }
+
+    private fun showSellNftDialog(){
+        val dialog = AddSaleNftBottomSheet { price ->
+            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
+                if(success){
+                    viewModel.sellNft(password,args.cardId,price.toDouble())
+                }
+            }.show(childFragmentManager,"DetailNftBottomSheet")
+        }
+        dialog.show(childFragmentManager, "DetailNftFragment")
     }
 }

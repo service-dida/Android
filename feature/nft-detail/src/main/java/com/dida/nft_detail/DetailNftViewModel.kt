@@ -29,9 +29,6 @@ class DetailNftViewModel @Inject constructor(
 
     private val TAG = "DetailNftViewModel"
 
-    private val _myWriteState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
-    val myWriteState: StateFlow<Boolean> = _myWriteState
-
     private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val moreEvent: SharedFlow<Unit> = _moreEvent
 
