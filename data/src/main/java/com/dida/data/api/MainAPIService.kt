@@ -16,6 +16,7 @@ import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
 import com.dida.data.model.swap.PostSwapDidaToKlayRequest
 import com.dida.data.model.swap.PostSwapKlayToDidaRequest
+import com.dida.data.model.tradenft.GetBuySellListResponse
 import com.dida.data.model.tradenft.PostBuyNftRequest
 import com.dida.data.model.tradenft.PostSellNftRequest
 import com.dida.data.model.userInfo.PostPasswordChangeRequest
@@ -164,5 +165,17 @@ interface MainAPIService {
     // 게시글 댓글 삭제하기
     @PATCH("comment/{commentId}/status")
     suspend fun patchCommentIdStatus(@Path("commentId") commentId: Long) : Unit
+
+    // 전체 거래 내역 가져오기
+    @GET("buy-sell-list")
+    suspend fun getBuySellList() : List<GetBuySellListResponse>
+
+    // 전체 거래 내역 가져오기
+    @GET("buy-list")
+    suspend fun getBuyList() : List<GetBuySellListResponse>
+
+    // 전체 거래 내역 가져오기
+    @GET("sell-list")
+    suspend fun getSellList() : List<GetBuySellListResponse>
 
 }

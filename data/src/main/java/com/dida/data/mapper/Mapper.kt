@@ -9,12 +9,14 @@ import com.dida.data.model.mypage.UserProfileResponse
 import com.dida.data.model.swap_history.GetSwapHistoryResponse
 import com.dida.data.model.post.*
 import com.dida.data.model.swap.GetWalletAmountResponse
+import com.dida.data.model.tradenft.GetBuySellListResponse
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
+import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.swap_history.SwapHistory
@@ -215,5 +217,15 @@ fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
     return map { HotCard(
         cardId = it.cardId,
         cardImgUrl = it.cardImgUrl
+    ) }
+}
+
+fun List<GetBuySellListResponse>.toDomain(): List<BuySellList> {
+    return map { BuySellList(
+        cardName = it.cardName,
+        cardImgUrl = it.cardImgUrl,
+        userName = it.userName,
+        price = it.price,
+        type = it.type
     ) }
 }
