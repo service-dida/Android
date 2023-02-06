@@ -7,7 +7,6 @@ import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
-import com.dida.domain.model.nav.community.ReservationNFTHolderModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

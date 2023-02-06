@@ -7,20 +7,21 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.settings.SettingsNavigationAction
+import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class SettingsFragment :
-    BaseFragment<FragmentSettingsBinding, com.dida.settings.SettingsViewModel>(com.dida.settings.R.layout.fragment_settings) {
+    BaseFragment<FragmentSettingsBinding, SettingsViewModel>(com.dida.settings.R.layout.fragment_settings) {
 
     private val TAG = "SettingsFragment"
 
     override val layoutResourceId: Int
         get() = com.dida.settings.R.layout.fragment_settings
 
-    override val viewModel: com.dida.settings.SettingsViewModel by viewModels()
+    override val viewModel: SettingsViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {

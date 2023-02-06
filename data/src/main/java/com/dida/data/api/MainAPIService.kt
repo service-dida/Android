@@ -1,27 +1,7 @@
 package com.dida.data.api
 
-import com.dida.data.model.createwallet.*
-import com.dida.data.model.detail.GetDetailNFTResponse
-import com.dida.data.model.device.PutDeviceTokenRequest
-import com.dida.data.model.klaytn.NFTMintRequest
-import com.dida.data.model.login.CreateUserRequestModel
-import com.dida.data.model.main.GetMainResponse
-import com.dida.data.model.main.GetSoldOutResponse
-import com.dida.data.model.main.PostLikeRequest
-import com.dida.data.model.main.PostUserFollowRequest
-import com.dida.data.model.mypage.UserProfileResponse
-import com.dida.data.model.nickname.PostNicknameRequest
-import com.dida.data.model.swap_history.GetSwapHistoryResponse
-import com.dida.data.model.post.*
-import com.dida.data.model.swap.GetWalletAmountResponse
-import com.dida.data.model.swap.PostSwapDidaToKlayRequest
-import com.dida.data.model.swap.PostSwapKlayToDidaRequest
-import com.dida.data.model.tradenft.GetBuySellListResponse
-import com.dida.data.model.tradenft.PostBuyNftRequest
-import com.dida.data.model.tradenft.PostSellNftRequest
-import com.dida.data.model.userInfo.PostPasswordChangeRequest
-import com.dida.data.model.userInfo.PutUserDescriptionRequest
-import com.dida.data.model.userInfo.PutUserNicknameRequest
+import com.dida.data.model.request.*
+import com.dida.data.model.response.*
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
@@ -40,7 +20,7 @@ interface MainAPIService {
     suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): NicknameResponseModel
 
     @POST("/new/user")
-    suspend fun createuserAPIServer(@Body request: CreateUserRequestModel): LoginResponseModel
+    suspend fun createuserAPIServer(@Body request: CreateUserRequest): LoginResponseModel
 
     @GET("/user")
     suspend fun getUserProfile() : UserProfileResponse

@@ -7,20 +7,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.create_community_input.CreateCommunityInputNavigationAction
+import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.dida.create_community_input.databinding.FragmentCreateCommunityInputBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBinding, com.dida.create_community_input.CreateCommunityInputViewModel>(com.dida.create_community_input.R.layout.fragment_create_community_input) {
+class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBinding, CreateCommunityInputViewModel>(com.dida.create_community_input.R.layout.fragment_create_community_input) {
 
     private val TAG = "CreateCommunityFragment"
 
     override val layoutResourceId: Int
         get() = com.dida.create_community_input.R.layout.fragment_create_community_input
 
-    override val viewModel : com.dida.create_community_input.CreateCommunityInputViewModel by viewModels()
+    override val viewModel : CreateCommunityInputViewModel by viewModels()
     private val navController by lazy { findNavController() }
     private val args: CreateCommunityInputFragmentArgs by navArgs()
 

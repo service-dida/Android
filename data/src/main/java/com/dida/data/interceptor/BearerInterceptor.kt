@@ -1,6 +1,5 @@
 package com.dida.data.interceptor
 
-import android.util.Log
 import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService

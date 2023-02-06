@@ -3,8 +3,6 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.dida.password.PasswordDialog
-import com.dida.swap.SwapNavigationAction
 import com.dida.swap.databinding.FragmentSwapLoadingBinding
 import com.dida.swap.loading.SwapLoadingNavigationAction
 import com.dida.swap.loading.SwapLoadingViewModel

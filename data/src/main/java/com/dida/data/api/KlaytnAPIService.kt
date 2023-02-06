@@ -1,6 +1,6 @@
 package com.dida.data.api
 
-import com.dida.data.model.klaytn.AssetResponse
+import com.dida.data.model.response.AssetResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Multipart
 import retrofit2.http.POST
