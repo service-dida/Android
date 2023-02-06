@@ -133,6 +133,7 @@
                         <androidx.appcompat.widget.Toolbar
                             android:id="@+id/home_toolbar"
                             app:title="@string/app_name"
+                            app:titleTextColor="@color/brand_lemon"
                             app:menu="@menu/menu_home_toolbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
