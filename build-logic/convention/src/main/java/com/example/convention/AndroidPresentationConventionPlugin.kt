@@ -57,6 +57,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:update-profile"))
                     add("implementation", project(":feature:password"))
                     add("implementation", project(":feature:settings"))
+                    add("implementation", project(":feature:recent-nft"))
                     
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
