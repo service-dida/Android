@@ -37,6 +37,8 @@
             <option value="$PROJECT_DIR$/feature/create-community-input" />
             <option value="$PROJECT_DIR$/feature/email" />
             <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/hot-seller" />
+            <option value="$PROJECT_DIR$/feature/hot-user" />
             <option value="$PROJECT_DIR$/feature/login" />
             <option value="$PROJECT_DIR$/feature/mypage" />
             <option value="$PROJECT_DIR$/feature/nft-detail" />

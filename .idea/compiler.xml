@@ -11,6 +11,8 @@
       <module name="DIDA.feature.create-community-input" target="11" />
       <module name="DIDA.feature.email" target="11" />
       <module name="DIDA.feature.home" target="11" />
+      <module name="DIDA.feature.hot-seller" target="11" />
+      <module name="DIDA.feature.hot-user" target="11" />
       <module name="DIDA.feature.login" target="11" />
       <module name="DIDA.feature.mypage" target="11" />
       <module name="DIDA.feature.nft-detail" target="11" />
