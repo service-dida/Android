@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     private val soldOutAPI: SoldOutAPI,
     private val postLikeAPI: PostLikeAPI,
     private val postUserFollowAPI: PostUserFollowAPI,
-    ) : BaseViewModel(), HomeActionHandler, NftActionHandler {
+) : BaseViewModel(), HomeActionHandler, NftActionHandler {
 
     private val TAG = "HomeViewModel"
 
@@ -75,6 +75,24 @@ class HomeViewModel @Inject constructor(
             postUserFollowAPI(userId.toLong())
                 .onSuccess { getHome() }
                 .onError { e -> catchError(e) }
+        }
+    }
+
+    override fun onSoldOutMoreClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToSoldOutMore)
+        }
+    }
+
+    override fun onRecentMoreNftClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftMore)
+        }
+    }
+
+    override fun onCollectionMoreClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToCollectionMore)
         }
     }
 
