@@ -58,7 +58,8 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:password"))
                     add("implementation", project(":feature:settings"))
                     add("implementation", project(":feature:recent-nft"))
-                    
+                    add("implementation", project(":feature:hot-user"))
+
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
                     add("implementation", libs.findLibrary("androidx-appcompat").get())
