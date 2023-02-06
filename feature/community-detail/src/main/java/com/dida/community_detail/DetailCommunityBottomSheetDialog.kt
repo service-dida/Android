@@ -1,63 +1,32 @@
 package com.dida.community_detail
 
-import android.app.Dialog
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.fragment.app.viewModels
+import com.dida.common.base.BaseBottomSheetDialogFragment
+import com.dida.community_detail.databinding.DialogBottomSheetDetailCommunityBinding
 
 class DetailCommunityBottomSheetDialog(
     val itemClick: (MoreState) -> Unit
-) : BottomSheetDialogFragment(){
-    private lateinit var dlg : BottomSheetDialog
+) : BaseBottomSheetDialogFragment<DialogBottomSheetDetailCommunityBinding, DetailCommunityViewModel>(){
+    override val layoutResourceId: Int
+        get() = R.layout.dialog_bottom_sheet_detail_community
 
-    var check = false
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // 이 코드를 실행하지 않으면
-        // XML에서 round 처리를 했어도 적용되지 않는다.
-        dlg = ( super.onCreateDialog(savedInstanceState).apply {
-            // window?.setDimAmount(0.2f) // Set dim amount here
-            setOnShowListener {
-                val bottomSheet = findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
-                bottomSheet.setBackgroundResource(android.R.color.transparent)
-
-//                 아래와 같이하면 Drag를 불가능하게 한다.
-                val behavior = BottomSheetBehavior.from(bottomSheet!!)
-                behavior.isDraggable = true
-                behavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }
-        } ) as BottomSheetDialog
-        return dlg
+    override val viewModel: DetailCommunityViewModel by viewModels()
+    override fun initStartView() {
+        binding.apply {
+            this.vm
+            this.lifecycleOwner = viewLifecycleOwner
+        }
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.dialog_bottom_sheet_detail_community, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun initDataBinding() {}
+    override fun initAfterBinding() {
         // 수정하기
-        var declare_btn = requireView().findViewById<TextView>(R.id.update_btn)
-        declare_btn.setOnClickListener {
+        binding.updateBtn.setOnClickListener {
             itemClick(MoreState.Update)
             dismissAllowingStateLoss()
         }
 
         // 삭제하기
-        var block_btn = requireView().findViewById<TextView>(R.id.delete_btn)
-        block_btn.setOnClickListener {
+        binding.deleteBtn.setOnClickListener {
             itemClick(MoreState.Delete)
             dismissAllowingStateLoss()
         }
