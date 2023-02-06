@@ -145,8 +145,9 @@
 
                 <ImageView
                     android:id="@+id/dida_img"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/custom_brandlemon_fill_radius100"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/nft_name"
                     android:src="@mipmap/img_dida_logo_foreground"
