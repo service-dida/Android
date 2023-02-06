@@ -15,9 +15,7 @@ fun createCardPager(
 ): Pager<Int, UserNft> = Pager(
     config = PagingConfig(pageSize = 20, initialLoadSize = 20, enablePlaceholders = true),
     initialKey = 0,
-    pagingSourceFactory = {
-        CardPagingSource(recentCardAPI = recentCardAPI)
-    }
+    pagingSourceFactory = { CardPagingSource(recentCardAPI = recentCardAPI) }
 )
 
 class CardPagingSource(

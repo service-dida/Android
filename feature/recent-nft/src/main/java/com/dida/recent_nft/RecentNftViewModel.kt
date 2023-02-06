@@ -43,8 +43,9 @@ class RecentNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId.toLong())
-                .onSuccess { getCards() }
+                .onSuccess { _navigationEvent.emit(RecentNftNavigationAction.NavigateToCardRefresh) }
                 .onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 
