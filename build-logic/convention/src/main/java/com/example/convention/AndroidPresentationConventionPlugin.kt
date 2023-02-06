@@ -59,6 +59,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:settings"))
                     add("implementation", project(":feature:recent-nft"))
                     add("implementation", project(":feature:hot-user"))
+                    add("implementation", project(":feature:hot-seller"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())

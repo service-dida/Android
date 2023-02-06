@@ -19,6 +19,7 @@
     <string name="buy_text_short">구매</string>
     <string name="sold_text_short">판매</string>
 
+    <string name="hot_seller">Hot Seller</string>
 
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
