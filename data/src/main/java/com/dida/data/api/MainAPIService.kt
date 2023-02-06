@@ -158,4 +158,8 @@ interface MainAPIService {
     @GET("sell-list")
     suspend fun getSellList() : List<GetBuySellListResponse>
 
+    // 최신 NFT 더보기
+    @GET("recent/card/{page}")
+    suspend fun getRecentCard(@Path("page") page: Int) : List<RecentCardResponse>
+
 }

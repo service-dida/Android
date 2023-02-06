@@ -293,6 +293,11 @@
         android:id="@+id/recentNftFragment"
         android:name="com.dida.android.presentation.views.RecentNftFragment"
         android:label="RecentNftFragment" >
+        <action
+            android:id="@+id/action_recentNftFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
 </navigation>

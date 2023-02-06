@@ -1,13 +1,13 @@
 package com.dida.android.presentation.views
 
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
-import com.dida.android.util.toLoginSuccess
-import com.dida.nickname.NicknameNavigationAction
-import com.dida.nickname.NicknameViewModel
-import com.dida.nickname.databinding.FragmentNicknameBinding
+import androidx.navigation.fragment.findNavController
+import com.dida.android.R
+import com.dida.recent_nft.RecentNftNavigationAction
 import com.dida.recent_nft.RecentNftViewModel
+import com.dida.recent_nft.adapter.CardPagingAdapter
 import com.dida.recent_nft.databinding.FragmentRecentNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -22,6 +22,8 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
         get() = com.dida.recent_nft.R.layout.fragment_recent_nft // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel : RecentNftViewModel by viewModels()
+    private val navController by lazy { findNavController() }
+    private val cardPagingAdapter by lazy { CardPagingAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -29,18 +31,48 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        initToolbar()
+        initAdapter()
+        viewModel.getCards()
     }
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
+            viewModel.errorEvent.collectLatest {
+                showToastMessage(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.errorEvent.collectLatest {
-                    showToastMessage(it)
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is RecentNftNavigationAction.NavigateToRecentNftItem -> navigate(RecentNftFragmentDirections.actionRecentNftFragmentToDetailNftFragment(cardId = it.nftId.toLong()))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.cardsState.collectLatest {
+                    cardPagingAdapter.submitData(it)
                 }
             }
         }
     }
 
     override fun initAfterBinding() {
+    }
+
+    private fun initToolbar(){
+        binding.toolbar.apply {
+            this.title = resources.getString(R.string.home_recentnft)
+            this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationOnClickListener { navController.popBackStack() }
+        }
+    }
+
+    private fun initAdapter() {
+        binding.recentNftRecycler.adapter = cardPagingAdapter
     }
 }
