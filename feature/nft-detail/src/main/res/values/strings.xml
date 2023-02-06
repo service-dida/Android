@@ -10,8 +10,10 @@
     
     <!--NFT 상세 Bottom Sheet-->
     <string name="detail_nft_sell">판매하기</string>
-    <string name="detail_nft_cancel">판매 취소하기</string>
+    <string name="detail_nft_cancel">마켓에서 내리기</string>
     <string name="detail_nft_remove">NFT 삭제하기</string>
+    <string name="detail_nft_hide">NFT 숨기기</string>
+    <string name="detail_nft_report">NFT 신고하기</string>
 
 
 </resources>

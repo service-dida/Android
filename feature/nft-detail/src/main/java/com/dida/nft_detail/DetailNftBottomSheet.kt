@@ -7,7 +7,9 @@ import com.dida.nft_detail.databinding.DialogBottomDetailNftBinding
 enum class DetailNftMenuType{
     SELL,
     CANCEL,
-    REMOVE
+    REMOVE,
+    HIDE,
+    REPORT
 }
 class DetailNftBottomSheet(
     val callback: (clickGallery: DetailNftMenuType) -> Unit
@@ -31,14 +33,20 @@ class DetailNftBottomSheet(
             callback.invoke(DetailNftMenuType.SELL)
             dismiss()
         }
-
         binding.cancelBtn.setOnClickListener {
             callback.invoke(DetailNftMenuType.CANCEL)
             dismiss()
         }
-
         binding.removeBtn.setOnClickListener {
             callback.invoke(DetailNftMenuType.REMOVE)
+            dismiss()
+        }
+        binding.hideBtn.setOnClickListener {
+            callback.invoke(DetailNftMenuType.HIDE)
+            dismiss()
+        }
+        binding.reportBtn.setOnClickListener {
+            callback.invoke(DetailNftMenuType.REPORT)
             dismiss()
         }
     }
