@@ -244,5 +244,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getSellList(): NetworkResult<List<BuySellList>> {
         return handleApi { mainAPIService.getSellList().toDomain() }
     }
+
+    override suspend fun getRecentCard(page: Int): NetworkResult<List<UserNft>> {
+        return handleApi { mainAPIService.getRecentCard(page = page).toDomain() }
+    }
 }
 
