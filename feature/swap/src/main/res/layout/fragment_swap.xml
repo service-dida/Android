@@ -71,15 +71,47 @@
                     <TextView
                         android:id="@+id/swap_asset_tv"
                         style="@style/TextView_regular_24_lemon"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="start"
                         android:text="@{vm.walletAmountState}"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView11"
                         tools:text="@string/swap_asset_tools_text" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/swap_asset_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/swap_asset_tv">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
+                            android:padding="4dp"
+                            android:src="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
+                            tools:src="@drawable/ic_klaytn" />
+
+                        <TextView
+                            style="@style/TextView_regular_14_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:gravity="center"
+                            android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_text : @string/swap_dida_text}"
+                            tools:text="@string/swap_klay_text" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:src="@drawable/ic_swap_change_empty" />
+                    </LinearLayout>
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -238,7 +270,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{() -> vm.onSwapTypeChange()}"
-                        android:src="@drawable/ic_swap_change"
+                        android:src="@drawable/ic_swap_change_fill"
                         app:layout_constraintBottom_toBottomOf="@+id/bottom_outer_cl"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
