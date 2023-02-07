@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.swap.history.R
 import com.dida.swap.history.SwapHistoryActionHandler
+import com.dida.swap.history.SwapHistoryNavigationAction
 import com.dida.swap.history.databinding.HolderSwapHistoryBinding
 
 class SwapHistoryAdapter(
