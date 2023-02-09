@@ -211,6 +211,11 @@
         <action
             android:id="@+id/action_detailNftFragment_to_createCommunityFragment"
             app:destination="@id/createCommunityFragment" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_buyNftFragment"
+            app:destination="@id/buyNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment
@@ -321,5 +326,9 @@
         android:name="com.dida.android.presentation.views.HotSellerFragment"
         android:label="HotSellerFragment" >
     </fragment>
+    <fragment
+        android:id="@+id/buyNftFragment"
+        android:name="com.dida.android.presentation.views.BuyNftFragment"
+        android:label="BuyNftFragment" />
 
 </navigation>

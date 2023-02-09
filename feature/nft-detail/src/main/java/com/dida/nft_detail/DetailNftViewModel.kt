@@ -92,4 +92,10 @@ class DetailNftViewModel @Inject constructor(
     // 클립 버튼으로 처리
     override fun onClipOrMoreClicked(postId: Long) {
     }
+
+    override fun onBuyNftClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft)
+        }
+    }
 }

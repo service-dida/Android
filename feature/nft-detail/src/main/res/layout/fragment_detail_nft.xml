@@ -325,6 +325,7 @@
                 android:paddingRight="60dp"
                 android:paddingBottom="16dp"
                 android:text="@string/buy_text"
+                android:onClick="@{() -> vm.onBuyNftClicked()}"
                 NftDetailConfirmBtn="@{vm.detailNftState}"
                 android:textColor="@color/black"
                 android:textSize="18dp"
