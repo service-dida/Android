@@ -5,6 +5,7 @@
       <module name="DIDA.common" target="11" />
       <module name="DIDA.data" target="11" />
       <module name="DIDA.feature.add" target="11" />
+      <module name="DIDA.feature.buy-nft" target="11" />
       <module name="DIDA.feature.community" target="11" />
       <module name="DIDA.feature.community-detail" target="11" />
       <module name="DIDA.feature.create-community" target="11" />
