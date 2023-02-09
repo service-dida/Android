@@ -39,6 +39,11 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
+                viewModel.navigationEvent.collectLatest {
+                    binding.swapHistoryRefreshLayout.isRefreshing = false
+                }
+            }
+            launch {
                 viewModel.swapHistoryState.collectLatest {
                     swapHistoryAdapter.submitList(it)
                 }
@@ -54,6 +59,9 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
+        }
+        binding.swapHistoryRefreshLayout.setOnRefreshListener {
+            viewModel.getSwapHistory()
         }
     }
 
