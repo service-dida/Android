@@ -58,6 +58,7 @@ compose = "1.2.0"
 pagingCompose = "1.0.0-alpha15"
 coil = "2.1.0"
 viewModelCompose = "2.5.1"
+composeMaterial = "1.2.0"
 
 [plugins]
 hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
@@ -142,6 +143,7 @@ compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest", version
 compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-paging = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewModelCompose" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "composeMaterial" }
 
 
 [bundles]
@@ -153,4 +155,4 @@ room = ["androidx-room-runtime", "androidx-room"]
 moshi = ["converter-moshi", "moshi-moshi", "moshi-kotlin"]
 gson = ["gson-gson", "converter-gson"]
 datastore = ["datastore-preference", "datastore-core"]
-compose = ["compose-ui", "compose-ui-preview", "compose-ui-test", "compose-ui-tooling", "compose-ui-manifest", "compose-coil", "compose-viewmodel", "navigation-compose"]
+compose = ["compose-ui", "compose-ui-preview", "compose-material", "compose-ui-test", "compose-ui-tooling", "compose-ui-manifest", "compose-coil", "compose-viewmodel", "navigation-compose"]
