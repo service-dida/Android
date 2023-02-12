@@ -31,6 +31,9 @@ internal fun Project.configureKotlinAndroid(
         kotlinOptions{
             jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
+        composeOptions {
+            kotlinCompilerExtensionVersion = "1.2.0"
+        }
         buildTypes {
             getByName("release") {
                 isMinifyEnabled = false
