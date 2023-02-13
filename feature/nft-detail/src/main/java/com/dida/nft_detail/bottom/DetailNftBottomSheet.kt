@@ -1,7 +1,9 @@
-package com.dida.nft_detail
+package com.dida.nft_detail.bottom
 
 import androidx.fragment.app.viewModels
 import com.dida.common.base.BaseBottomSheetDialogFragment
+import com.dida.nft_detail.DetailNftViewModel
+import com.dida.nft_detail.R
 import com.dida.nft_detail.databinding.DialogBottomDetailNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 

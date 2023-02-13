@@ -14,6 +14,7 @@ import com.dida.domain.usecase.main.DetailNftAPI
 import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.PostsCardCardIdAPI
 import com.dida.domain.usecase.main.SellNftAPI
+import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

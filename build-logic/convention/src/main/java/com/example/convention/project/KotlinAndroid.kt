@@ -32,7 +32,7 @@ internal fun Project.configureKotlinAndroid(
             jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = "1.2.0"
+            kotlinCompilerExtensionVersion = "1.3.2"
         }
         buildTypes {
             getByName("release") {

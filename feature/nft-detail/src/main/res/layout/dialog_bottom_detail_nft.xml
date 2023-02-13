@@ -5,14 +5,14 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.dida.nft_detail.DetailOwnerType"/>
+        <import type="com.dida.nft_detail.bottom.DetailOwnerType"/>
         <variable
             name="vm"
             type="com.dida.nft_detail.DetailNftViewModel" />
 
         <variable
             name="type"
-            type="com.dida.nft_detail.DetailOwnerType" />
+            type="com.dida.nft_detail.bottom.DetailOwnerType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
