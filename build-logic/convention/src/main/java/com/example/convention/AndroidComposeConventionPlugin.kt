@@ -25,6 +25,7 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
                 dependencies {
                     // Compose
                     add("implementation", libs.findBundle("compose").get())
+                    add("implementation", libs.findLibrary("compose-paging").get())
                 }
             }
         }
