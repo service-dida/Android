@@ -48,50 +48,9 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         android:textColor="@color/white"
                         android:textSize="20dp"
-                        tv_endLoading="@{vm.homeState}"
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/home_hotitem">
                     </TextView>
-
-                    <com.facebook.shimmer.ShimmerFrameLayout
-                        android:id="@+id/hots_shimmer"
-                        startLoading="@{vm.homeState}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@+id/hotitem_txt"
-                        tools:layout_editor_absoluteX="16dp">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="112dp"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/custom_surface2_radius12"
-                                android:textSize="20dp"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="8dp"
-                                android:orientation="horizontal">
-
-                                <include layout="@layout/skeleton_holder_hots" />
-                                <include layout="@layout/skeleton_holder_hots" />
-                                <include layout="@layout/skeleton_holder_hots" />
-                                <include layout="@layout/skeleton_holder_hots" />
-                                <include layout="@layout/skeleton_holder_hots" />
-                                <include layout="@layout/skeleton_holder_hots" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/hots_recycler"
@@ -102,8 +61,8 @@
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
                         android:orientation="horizontal"
-                        hotsItem="@{vm.homeState}"
-                        rv_endLoading="@{vm.homeState}"
+                        app:hotsItem="@{vm.homeState}"
+                        app:rv_endLoading="@{vm.homeState}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/holder_hots">
                     </androidx.recyclerview.widget.RecyclerView>
@@ -182,8 +141,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:orientation="horizontal"
-                    hotSellerItem="@{vm.homeState}"
-                    rv_endLoading="@{vm.homeState}"
+                    app:hotSellerItem="@{vm.homeState}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -197,7 +155,6 @@
                     android:textSize="20dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:text="@string/home_soldout"
-                    tv_endLoading="@{vm.homeState}"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="46dp">
                 </TextView>
@@ -212,7 +169,6 @@
                     android:textSize="14dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/home_soldout_sub_title"
-                    tv_endLoading="@{vm.homeState}"
                     android:layout_marginTop="4dp"
                     android:layout_marginStart="16dp">
                 </TextView>
@@ -296,8 +252,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
-                    soldoutItem="@{vm.soldoutState}"
-                    rv_endLoading="@{vm.soldoutState}"
+                    app:soldoutItem="@{vm.soldoutState}"
                     tools:listitem="@layout/holder_soldout"
                     tools:itemCount="3"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
@@ -354,8 +309,7 @@
                     app:layout_constraintTop_toBottomOf="@id/recentnft_txt"
                     app:layout_constraintBottom_toTopOf="@id/recent_more"
                     android:layout_margin="9dp"
-                    rv_endLoading="@{vm.homeState}"
-                    recentNftItem="@{vm.homeState}"
+                    app:recentNftItem="@{vm.homeState}"
                     android:orientation="vertical"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:listitem="@layout/holder_mypage_user_cards">
@@ -428,8 +382,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:orientation="vertical"
-                    collectionsItem="@{vm.homeState}"
-                    rv_endLoading="@{vm.homeState}"
+                    app:collectionsItem="@{vm.homeState}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -454,135 +407,6 @@
                     android:textColor="@color/white"
                     android:onClick="@{() -> vm.onCollectionMoreClicked()}">
                 </TextView>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/hots_seller_shimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    startLoading="@{vm.homeState}"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/soldout_txt">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                            <include layout="@layout/skeleton_holder_hotseller" />
-
-                            <include layout="@layout/skeleton_holder_hotseller" />
-                            <include layout="@layout/skeleton_holder_hotseller" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="112dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_surface2_radius12"
-                            android:textSize="20dp"
-                            android:layout_marginTop="53dp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="166dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_surface2_radius12"
-                            android:textSize="20dp"
-                            android:layout_marginTop="10dp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </LinearLayout>
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/soldout_shimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    startLoading="@{vm.soldoutState}"
-                    app:layout_constraintTop_toBottomOf="@id/day7_btn"
-                    app:layout_constraintBottom_toTopOf="@id/soldout_more">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <include layout="@layout/skeleton_holder_soldout" />
-                        <include layout="@layout/skeleton_holder_soldout" />
-                        <include layout="@layout/skeleton_holder_soldout" />
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/recentnft_shimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    startLoading="@{vm.homeState}"
-                    app:layout_constraintTop_toBottomOf="@id/recentnft_txt"
-                    app:layout_constraintBottom_toTopOf="@id/recent_more">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-                        <include
-                            layout="@layout/skeleton_holder_mypage_user_cards"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="14dp"/>
-                        <include
-                            layout="@layout/skeleton_holder_mypage_user_cards"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="14dp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-                        <include
-                            layout="@layout/skeleton_holder_mypage_user_cards"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="14dp"/>
-                        <include
-                            layout="@layout/skeleton_holder_mypage_user_cards"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="14dp"/>
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/collection_shimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    startLoading="@{vm.homeState}"
-                    app:layout_constraintTop_toBottomOf="@id/collection_txt2"
-                    app:layout_constraintBottom_toTopOf="@id/collection_more">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <include layout="@layout/skeleton_holder_collection" />
-                        <include layout="@layout/skeleton_holder_collection" />
-                        <include layout="@layout/skeleton_holder_collection" />
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
