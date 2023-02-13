@@ -7,6 +7,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.klaytn.UploadAssetAPI
 import com.dida.domain.usecase.main.MintNftAPI
+import com.dida.domain.usecase.main.SellNftAPI
 import com.dida.domain.usecase.main.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,
     private val uploadAssetAPI: UploadAssetAPI,
-    private val userProfileAPI: UserProfileAPI
+    private val userProfileAPI: UserProfileAPI,
+    private val sellNftAPI: SellNftAPI
 ) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
@@ -81,7 +83,11 @@ class AddPurposeViewModel @Inject constructor(
         }
     }
 
-    fun mintNFT(password: String) {
+    enum class AddNftType{
+        NOT_SALE,
+        SALE
+    }
+    fun mintNFT(password: String , type : AddNftType) {
         baseViewModelScope.launch {
             showLoading()
 
@@ -96,10 +102,26 @@ class AddPurposeViewModel @Inject constructor(
                     mintNftAPI(password,titleState.value,descriptionState.value,it.uri)
                 }
                 .onSuccess {
-                    _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-                    dismissLoading()
+                    if(type == AddNftType.NOT_SALE){
+                        _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                        dismissLoading()
+                    }else{
+                        //TODO : 추후에 NFT발행 시 Return으로 NFT ID값을 받아와야함
+                        //TODO : 그 후 판매 까지 진행
+                    }
                 }
                 .onError { e->catchError(e) }
+        }
+    }
+
+    fun sellNft(payPwd : String, cardId: Long, price : Double){
+        baseViewModelScope.launch {
+            showLoading()
+            sellNftAPI(payPwd,cardId,price)
+                .onSuccess {
+                    _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                }
+                .onError { e -> catchError(e) }
         }
     }
 }

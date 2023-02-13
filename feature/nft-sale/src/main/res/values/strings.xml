@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_nft_price_title">판매 가격은 얼마인가요?</string>
+    <string name="add_nft_price_hint">가격을 입력하세요</string>
+    <string name="add_nft_price_ok_btn_text">NFT 생성하기</string>
+</resources>

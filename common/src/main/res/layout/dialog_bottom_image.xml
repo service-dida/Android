@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.dida.common.ui.ImageBottomSheetViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@null"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_bottom_sheet"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/custom_bottom_sheet_surface2"
         android:paddingTop="32dp"
         android:paddingBottom="32dp"
         android:paddingStart="24dp"
@@ -36,7 +43,7 @@
 
             <TextView
                 android:id="@+id/gallery_text"
-                style="@style/TextView_regular_14_white"
+                style="@style/TextView_regular_16_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +73,7 @@
 
             <TextView
                 android:id="@+id/capture_text"
-                style="@style/TextView_regular_14_white"
+                style="@style/TextView_regular_16_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -81,3 +88,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

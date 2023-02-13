@@ -42,6 +42,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                     add("implementation", project(":feature:splash"))
                     add("implementation", project(":feature:nft-detail"))
+                    add("implementation", project(":feature:nft-sale"))
                     add("implementation", project(":feature:email"))
                     add("implementation", project(":feature:login"))
                     add("implementation", project(":feature:nickname"))
