@@ -5,6 +5,7 @@ import androidx.paging.cachedIn
 import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
+import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.community.adapter.createPostsPager
 import com.dida.domain.model.nav.community.HotCard
@@ -48,7 +49,7 @@ class CommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             hotCardAPI.invoke()
                 .onSuccess {
-                    delay(300)
+                    delay(SHIMMER_TIME)
                     _hotCardState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }

@@ -5,6 +5,7 @@ import android.os.Looper
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityWriteActionHandler
+import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.post.Posts
@@ -48,7 +49,7 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             detailNftAPI(cardId)
                 .onSuccess {
-                    delay(300)
+                    delay(SHIMMER_TIME)
                     _detailNftState.value = UiState.Success(it)
                     setDetailOwnerType(it)
                     dismissLoading() }

@@ -3,6 +3,7 @@ package com.dida.mypage
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.AppLog
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.UserNft
@@ -59,13 +60,12 @@ class MyPageViewModel @Inject constructor(
         baseViewModelScope.launch {
             userNftAPI()
                 .onSuccess {
-                    AppLog.d(it.toString())
                     _hasMyNftState.value = UiState.Success(it)
                 }
                 .flatMap {
                     userProfileAPI()
                         .onSuccess {
-                            delay(300)
+                            delay(SHIMMER_TIME)
                             _myPageState.value = UiState.Success(it)
                             _hasWalletState.value = it.getWallet }
                         .onError { e -> catchError(e) }

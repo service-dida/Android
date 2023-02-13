@@ -2,6 +2,7 @@ package com.dida.home
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.home.Home
@@ -44,11 +45,11 @@ class HomeViewModel @Inject constructor(
         baseViewModelScope.launch {
             soldOutAPI.invoke(7)
                 .onSuccess {
-                    delay(300)
+                    delay(SHIMMER_TIME)
                     _soldoutState.value = UiState.Success(it) }
                 .flatMap { homeAPI() }
                 .onSuccess {
-                    delay(300)
+                    delay(SHIMMER_TIME)
                     _homeState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
