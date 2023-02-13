@@ -13,6 +13,7 @@ import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.PostUserFollowAPI
 import com.dida.domain.usecase.main.SoldOutAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,9 +43,13 @@ class HomeViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             soldOutAPI.invoke(7)
-                .onSuccess { _soldoutState.value = UiState.Success(it) }
+                .onSuccess {
+                    delay(300)
+                    _soldoutState.value = UiState.Success(it) }
                 .flatMap { homeAPI() }
-                .onSuccess { _homeState.value = UiState.Success(it) }
+                .onSuccess {
+                    delay(300)
+                    _homeState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
     }

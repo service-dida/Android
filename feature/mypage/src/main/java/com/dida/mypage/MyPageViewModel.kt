@@ -11,6 +11,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -64,6 +65,7 @@ class MyPageViewModel @Inject constructor(
                 .flatMap {
                     userProfileAPI()
                         .onSuccess {
+                            delay(300)
                             _myPageState.value = UiState.Success(it)
                             _hasWalletState.value = it.getWallet }
                         .onError { e -> catchError(e) }

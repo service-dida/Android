@@ -48,7 +48,7 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             detailNftAPI(cardId)
                 .onSuccess {
-                    delay(500)
+                    delay(300)
                     _detailNftState.value = UiState.Success(it)
                     setDetailOwnerType(it)
                     dismissLoading() }

@@ -48,7 +48,7 @@ class CommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             hotCardAPI.invoke()
                 .onSuccess {
-                    delay(500)
+                    delay(300)
                     _hotCardState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
