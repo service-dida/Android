@@ -44,9 +44,7 @@ class HomeViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             soldOutAPI.invoke(7)
-                .onSuccess {
-                    delay(SHIMMER_TIME)
-                    _soldoutState.value = UiState.Success(it) }
+                .onSuccess { _soldoutState.value = UiState.Success(it) }
                 .flatMap { homeAPI() }
                 .onSuccess {
                     delay(SHIMMER_TIME)
