@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -50,5 +51,10 @@ fun NestedScrollView.endLoading(uiState: UiState<*>) {
 
 @BindingAdapter("fab_endLoading")
 fun FloatingActionButton.endLoading(uiState: UiState<*>) {
+    visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
+}
+
+@BindingAdapter("ctl_endLoading")
+fun CoordinatorLayout.endLoading(uiState: UiState<*>) {
     visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
 }
