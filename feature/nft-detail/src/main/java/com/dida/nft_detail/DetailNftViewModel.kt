@@ -16,6 +16,7 @@ import com.dida.domain.usecase.main.PostsCardCardIdAPI
 import com.dida.domain.usecase.main.SellNftAPI
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,10 +48,9 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             detailNftAPI(cardId)
                 .onSuccess {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        _detailNftState.value = UiState.Success(it)
-                        setDetailOwnerType(it)
-                    },500)
+                    delay(500)
+                    _detailNftState.value = UiState.Success(it)
+                    setDetailOwnerType(it)
                     dismissLoading() }
                 .onError { e -> catchError(e) }
         }
