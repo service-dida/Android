@@ -6,7 +6,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.mypage.WalletNFTHistoryHolderModel" />
+            type="com.dida.domain.model.nav.mypage.BuySellList" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +42,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/pretendard_regular"
-            android:text="@{holderModel.nft_name}"
+            android:text="@{holderModel.cardName}"
             android:textColor="@color/white"
             android:textSize="16dp"
             tools:text="NFT name here"
@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/pretendard_light"
-            android:text="@{holderModel.user_name}"
+            android:text="@{holderModel.userName}"
             android:textColor="@color/white"
             android:textSize="11dp"
             tools:text="user name here"
@@ -86,7 +86,7 @@
             android:contentDescription="구매 or 판매"
             android:minWidth="48dp"
             android:minHeight="48dp"
-            android:src="@{holderModel.type ? @drawable/ic_wallet_buy_icon : @drawable/ic_wallet_sell_icon}"
+            app:historyType="@{holderModel.type}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/wallet_price_textview"
             app:layout_constraintTop_toBottomOf="@+id/wallet_price_textview"

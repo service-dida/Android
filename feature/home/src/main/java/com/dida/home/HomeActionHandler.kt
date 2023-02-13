@@ -7,4 +7,7 @@ interface HomeActionHandler {
     fun onCollectionItemClicked(userId: Int)
     fun onSoldOutDayClicked(day: Int)
     fun onUserFollowClicked(userId: Int)
+    fun onSoldOutMoreClicked()
+    fun onRecentMoreNftClicked()
+    fun onCollectionMoreClicked()
 }

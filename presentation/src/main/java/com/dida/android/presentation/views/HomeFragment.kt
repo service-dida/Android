@@ -59,11 +59,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is HomeNavigationAction.NavigateToHotItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId)) }
+                    is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
                     is HomeNavigationAction.NavigateToHotSeller -> {  }
-                    is HomeNavigationAction.NavigateToSoldOut -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId)) }
-                    is HomeNavigationAction.NavigateToRecentNftItem -> { navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId.toLong())) }
+                    is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
+                    is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId.toLong()))
                     is HomeNavigationAction.NavigateToCollection -> {  }
+                    is HomeNavigationAction.NavigateToSoldOutMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
+                    is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
+                    is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
                 }
             }
         }

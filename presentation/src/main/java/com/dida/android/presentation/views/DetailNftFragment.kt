@@ -7,9 +7,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
-import com.dida.common.adapter.CommunityPagingAdapter
-import com.dida.common.ui.ImageBottomSheet
-import com.dida.common.util.successOrNull
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.DetailNftBottomSheet
 import com.dida.nft_detail.DetailNftMenuType

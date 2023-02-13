@@ -319,7 +319,8 @@
                     android:textSize="15dp"
                     android:background="@drawable/custom_surface2_radius10"
                     android:fontFamily="@font/pretendard_regular"
-                    android:textColor="@color/white">
+                    android:textColor="@color/white"
+                    android:onClick="@{() -> vm.onSoldOutMoreClicked()}">
                 </TextView>
 
                 <View
@@ -376,7 +377,8 @@
                     android:textSize="15dp"
                     android:background="@drawable/custom_surface2_radius10"
                     android:fontFamily="@font/pretendard_regular"
-                    android:textColor="@color/white">
+                    android:textColor="@color/white"
+                    android:onClick="@{() -> vm.onRecentMoreNftClicked()}">
                 </TextView>
 
                 <View
@@ -449,7 +451,8 @@
                     android:textSize="15dp"
                     android:background="@drawable/custom_surface2_radius10"
                     android:fontFamily="@font/pretendard_regular"
-                    android:textColor="@color/white">
+                    android:textColor="@color/white"
+                    android:onClick="@{() -> vm.onCollectionMoreClicked()}">
                 </TextView>
 
                 <com.facebook.shimmer.ShimmerFrameLayout

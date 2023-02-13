@@ -8,6 +8,7 @@ import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.swap_history.SwapHistory
@@ -102,4 +103,12 @@ interface  MainRepository {
     suspend fun postComment(postId: Long, content: String): NetworkResult<Unit>
 
     suspend fun patchCommentIdStatus(commentId: Long) : NetworkResult<Unit>
+
+    suspend fun getBuySellList() : NetworkResult<List<BuySellList>>
+
+    suspend fun getBuyList() : NetworkResult<List<BuySellList>>
+
+    suspend fun getSellList() : NetworkResult<List<BuySellList>>
+
+    suspend fun getRecentCard(page: Int) : NetworkResult<List<UserNft>>
 }

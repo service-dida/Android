@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddFragment() : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fragment_add) {
+class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.fragment_add) {
 
     private val TAG = "AddFragment"
 

@@ -7,11 +7,11 @@ data class Hots(
     val heartCount: String,
     val price: String
 ){
-    fun priceFormat() : String{
-        return "$price dida"
+    fun priceFormat() : String {
+        return if(price.isBlank()) "판매X" else "$price dida"
     }
 
     fun heartFormat(): String{
-        return heartCount+"K"
+        return heartCount
     }
 }

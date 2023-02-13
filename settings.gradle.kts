@@ -70,3 +70,8 @@ include(":feature:splash")
 include(":feature:settings")
 include(":feature:swap-history")
 include(":feature:nft-sale")
+include(":feature:recent-nft")
+include(":feature:hot-user")
+include(":feature:hot-seller")
+include(":feature:compose")
+

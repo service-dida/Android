@@ -37,6 +37,8 @@ class SwapViewModel @Inject constructor(
     private val _walletAmountState = MutableStateFlow<String>("0.0")
     val walletAmountState: StateFlow<String> = _walletAmountState
 
+    val amountInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
+
     lateinit var klayAmount: String
     lateinit var didaAmount: String
 

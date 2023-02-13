@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.mypage.R
 import com.dida.common.adapter.RecentNftAdapter
+import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.databinding.FragmentMypageBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,14 +15,14 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MyPageFragment :
-    BaseFragment<FragmentMypageBinding, com.dida.mypage.MyPageViewModel>(R.layout.fragment_mypage) {
+    BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
 
     private val TAG = "MyPageFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_mypage
 
-    override val viewModel: com.dida.mypage.MyPageViewModel by viewModels()
+    override val viewModel: MyPageViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {

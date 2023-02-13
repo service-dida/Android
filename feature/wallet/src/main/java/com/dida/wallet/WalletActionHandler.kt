@@ -1,6 +1,6 @@
 package com.dida.wallet
 
 interface WalletActionHandler {
-    fun onNftHistoryClicked(type: Int)
+    fun onHistoryTypeClicked(type: Int)
     fun onSwapHistoryClicked()
 }

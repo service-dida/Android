@@ -3,23 +3,23 @@ package com.dida.data.repository
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
-import com.dida.data.model.createwallet.PostCheckPasswordRequest
-import com.dida.data.model.createwallet.PostCreateWalletRequest
-import com.dida.data.model.device.PutDeviceTokenRequest
-import com.dida.data.model.klaytn.NFTMintRequest
-import com.dida.data.model.login.CreateUserRequestModel
-import com.dida.data.model.main.PostLikeRequest
-import com.dida.data.model.main.PostUserFollowRequest
-import com.dida.data.model.nickname.PostNicknameRequest
-import com.dida.data.model.post.PostCommentRequest
-import com.dida.data.model.post.PostPostCardIdRequest
-import com.dida.data.model.swap.PostSwapDidaToKlayRequest
-import com.dida.data.model.swap.PostSwapKlayToDidaRequest
-import com.dida.data.model.tradenft.PostBuyNftRequest
-import com.dida.data.model.tradenft.PostSellNftRequest
-import com.dida.data.model.userInfo.PostPasswordChangeRequest
-import com.dida.data.model.userInfo.PutUserDescriptionRequest
-import com.dida.data.model.userInfo.PutUserNicknameRequest
+import com.dida.data.model.request.PostCheckPasswordRequest
+import com.dida.data.model.request.PostCreateWalletRequest
+import com.dida.data.model.request.PutDeviceTokenRequest
+import com.dida.data.model.request.NFTMintRequest
+import com.dida.data.model.request.CreateUserRequest
+import com.dida.data.model.response.PostLikeRequest
+import com.dida.data.model.request.PostUserFollowRequest
+import com.dida.data.model.request.PostNicknameRequest
+import com.dida.data.model.request.PostCommentRequest
+import com.dida.data.model.request.PostPostCardIdRequest
+import com.dida.data.model.request.PostSwapDidaToKlayRequest
+import com.dida.data.model.request.PostSwapKlayToDidaRequest
+import com.dida.data.model.response.PostBuyNftRequest
+import com.dida.data.model.response.PostSellNftRequest
+import com.dida.data.model.request.PostPasswordChangeRequest
+import com.dida.data.model.request.PutUserDescriptionRequest
+import com.dida.data.model.request.PutUserNicknameRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -28,6 +28,7 @@ import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
+import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.swap_history.SwapHistory
@@ -60,7 +61,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<LoginResponseModel> {
-        val request = CreateUserRequestModel(email, nickName)
+        val request = CreateUserRequest(email, nickName)
         return handleApi { mainAPIService.createuserAPIServer(request) }
     }
 
@@ -230,6 +231,22 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun patchCommentIdStatus(commentId: Long): NetworkResult<Unit> {
         return handleApi { mainAPIService.patchCommentIdStatus(commentId = commentId) }
+    }
+
+    override suspend fun getBuySellList(): NetworkResult<List<BuySellList>> {
+        return handleApi { mainAPIService.getBuySellList().toDomain() }
+    }
+
+    override suspend fun getBuyList(): NetworkResult<List<BuySellList>> {
+        return handleApi { mainAPIService.getBuyList().toDomain() }
+    }
+
+    override suspend fun getSellList(): NetworkResult<List<BuySellList>> {
+        return handleApi { mainAPIService.getSellList().toDomain() }
+    }
+
+    override suspend fun getRecentCard(page: Int): NetworkResult<List<UserNft>> {
+        return handleApi { mainAPIService.getRecentCard(page = page).toDomain() }
     }
 }
 

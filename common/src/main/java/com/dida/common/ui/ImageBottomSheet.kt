@@ -22,12 +22,12 @@ class ImageBottomSheet(
     override fun initAfterBinding() {
         binding.galleryBtn.setOnClickListener {
             callback.invoke(true)
-            dismiss()
+            dismissAllowingStateLoss()
         }
 
         binding.captureBtn.setOnClickListener {
             callback.invoke(false)
-            dismiss()
+            dismissAllowingStateLoss()
         }
     }
 }

@@ -32,6 +32,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 33
                 buildFeatures.dataBinding = true
+                buildFeatures.compose = true
 
                 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
                 dependencies {
@@ -58,7 +59,11 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:update-profile"))
                     add("implementation", project(":feature:password"))
                     add("implementation", project(":feature:settings"))
-                    
+                    add("implementation", project(":feature:recent-nft"))
+                    add("implementation", project(":feature:hot-user"))
+                    add("implementation", project(":feature:hot-seller"))
+                    add("implementation", project(":feature:compose"))
+
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())
                     add("implementation", libs.findLibrary("androidx-appcompat").get())
@@ -112,6 +117,10 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                     // Paging
                     add("implementation", libs.findLibrary("androidx-paging").get())
+
+                    // Compose
+                    add("implementation", libs.findBundle("compose").get())
+                    add("implementation", libs.findLibrary("compose-paging").get())
                 }
             }
         }

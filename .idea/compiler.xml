@@ -7,16 +7,20 @@
       <module name="DIDA.feature.add" target="11" />
       <module name="DIDA.feature.community" target="11" />
       <module name="DIDA.feature.community-detail" target="11" />
+      <module name="DIDA.feature.compose" target="11" />
       <module name="DIDA.feature.create-community" target="11" />
       <module name="DIDA.feature.create-community-input" target="11" />
       <module name="DIDA.feature.email" target="11" />
       <module name="DIDA.feature.home" target="11" />
+      <module name="DIDA.feature.hot-seller" target="11" />
+      <module name="DIDA.feature.hot-user" target="11" />
       <module name="DIDA.feature.login" target="11" />
       <module name="DIDA.feature.mypage" target="11" />
       <module name="DIDA.feature.nft-detail" target="11" />
       <module name="DIDA.feature.nft-sale" target="11" />
       <module name="DIDA.feature.nickname" target="11" />
       <module name="DIDA.feature.password" target="11" />
+      <module name="DIDA.feature.recent-nft" target="11" />
       <module name="DIDA.feature.settings" target="11" />
       <module name="DIDA.feature.splash" target="11" />
       <module name="DIDA.feature.swap" target="11" />

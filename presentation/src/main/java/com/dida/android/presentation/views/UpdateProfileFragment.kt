@@ -6,7 +6,6 @@ import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
@@ -17,11 +16,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.dida.update.profile.R
 import com.dida.android.util.uriToFile
 import com.dida.common.ui.ImageBottomSheet
 import com.dida.common.util.DidaIntent
+import com.dida.update.profile.R
 import com.dida.update.profile.UpdateProfileNavigationAction
 import com.dida.update.profile.UpdateProfileViewModel
 import com.dida.update.profile.databinding.FragmentUpdateProfileBinding
@@ -31,7 +29,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.nio.file.Files.createFile
 import java.text.SimpleDateFormat
 import java.util.*
 
