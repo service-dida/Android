@@ -17,3 +17,5 @@ fun <T> UiState<T>.throwableOrNull(): Throwable? = if (this is UiState.Error) {
 } else {
     null
 }
+
+const val SHIMMER_TIME = 300L

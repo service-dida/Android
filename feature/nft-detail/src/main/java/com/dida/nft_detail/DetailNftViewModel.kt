@@ -5,6 +5,7 @@ import android.os.Looper
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityWriteActionHandler
+import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.post.Posts
@@ -16,6 +17,7 @@ import com.dida.domain.usecase.main.PostsCardCardIdAPI
 import com.dida.domain.usecase.main.SellNftAPI
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,10 +49,9 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             detailNftAPI(cardId)
                 .onSuccess {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        _detailNftState.value = UiState.Success(it)
-                        setDetailOwnerType(it)
-                    },500)
+                    delay(SHIMMER_TIME)
+                    _detailNftState.value = UiState.Success(it)
+                    setDetailOwnerType(it)
                     dismissLoading() }
                 .onError { e -> catchError(e) }
         }
