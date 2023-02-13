@@ -151,26 +151,25 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="14dp"
-                    android:src="@drawable/nft_example_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_trans"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="14dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="@+id/imageView"
-                    app:layout_constraintVertical_bias="0.0">
+                    app:layout_constraintTop_toBottomOf="@+id/textView2">
 
                     <TextView
                         android:id="@+id/seller_tv"
