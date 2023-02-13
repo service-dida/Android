@@ -5,6 +5,7 @@ import androidx.paging.cachedIn
 import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
+import com.dida.common.util.UiState
 import com.dida.community.adapter.createPostsPager
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.post.Posts
@@ -13,6 +14,7 @@ import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HotCardAPI
 import com.dida.domain.usecase.main.PostsAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,8 +38,8 @@ class CommunityViewModel @Inject constructor(
 
     var postsState: Flow<PagingData<Posts>> = emptyFlow()
 
-    private val _hotCardState: MutableStateFlow<List<HotCard>> = MutableStateFlow<List<HotCard>>(emptyList())
-    val hotCardState: StateFlow<List<HotCard>> = _hotCardState.asStateFlow()
+    private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
+    val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
 
     fun getCommunity() {
         postsState = createPostsPager(postsAPI = postsAPI)
@@ -45,7 +47,9 @@ class CommunityViewModel @Inject constructor(
 
         baseViewModelScope.launch {
             hotCardAPI.invoke()
-                .onSuccess { _hotCardState.value = it }
+                .onSuccess {
+                    delay(500)
+                    _hotCardState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
     }

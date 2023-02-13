@@ -3,6 +3,7 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardAdapter
@@ -53,7 +54,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.hotCardState.collectLatest {
-                    hotCardAdapter.submitList(it)
+                    hotCardAdapter.submitList(it.successOrNull())
                 }
             }
         }
