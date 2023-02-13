@@ -5,9 +5,14 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="com.dida.nft_detail.DetailOwnerType"/>
         <variable
             name="vm"
             type="com.dida.nft_detail.DetailNftViewModel" />
+
+        <variable
+            name="type"
+            type="com.dida.nft_detail.DetailOwnerType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +39,7 @@
                 android:id="@+id/sell_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="@{type == DetailOwnerType.MINE_AND_NOTSALE? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -63,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:visibility="@{type == DetailOwnerType.MINE_AND_SALE? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@id/sell_btn">
 
                 <ImageView
@@ -92,6 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:visibility="@{type != DetailOwnerType.NOTMINE? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@+id/cancel_btn"
                 tools:layout_editor_absoluteX="24dp">
 
@@ -123,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:visibility="@{type == DetailOwnerType.NOTMINE? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@+id/remove_btn"
                 tools:layout_editor_absoluteX="24dp">
 
@@ -153,6 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:visibility="@{type == DetailOwnerType.NOTMINE? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@+id/hide_btn"
                 tools:layout_editor_absoluteX="24dp">
 

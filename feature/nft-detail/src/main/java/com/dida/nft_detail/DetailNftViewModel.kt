@@ -41,12 +41,14 @@ class DetailNftViewModel @Inject constructor(
     private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Posts>> = _communityState.asStateFlow()
 
+    val detailOwnerTypeState: MutableStateFlow<DetailOwnerType> = MutableStateFlow(DetailOwnerType.ALL)
     fun getDetailNft(cardId : Long) {
         baseViewModelScope.launch {
             detailNftAPI(cardId)
                 .onSuccess {
                     Handler(Looper.getMainLooper()).postDelayed({
                         _detailNftState.value = UiState.Success(it)
+                        setDetailOwnerType(it)
                     },500)
                     dismissLoading() }
                 .onError { e -> catchError(e) }
@@ -78,6 +80,20 @@ class DetailNftViewModel @Inject constructor(
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
                 .onError { e -> catchError(e) }
+        }
+    }
+
+    private fun setDetailOwnerType(detailNFT: DetailNFT) {
+        baseViewModelScope.launch {
+            if (detailNFT.type == "MINE") {
+                if (detailNFT.price == "NOT SALE") {
+                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_NOTSALE)
+                } else {
+                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_SALE)
+                }
+            } else {
+                detailOwnerTypeState.emit(DetailOwnerType.NOTMINE)
+            }
         }
     }
 

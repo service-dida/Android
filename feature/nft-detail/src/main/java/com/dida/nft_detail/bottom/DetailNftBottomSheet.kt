@@ -3,15 +3,11 @@ package com.dida.nft_detail
 import androidx.fragment.app.viewModels
 import com.dida.common.base.BaseBottomSheetDialogFragment
 import com.dida.nft_detail.databinding.DialogBottomDetailNftBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-enum class DetailNftMenuType{
-    SELL,
-    CANCEL,
-    REMOVE,
-    HIDE,
-    REPORT
-}
+@AndroidEntryPoint
 class DetailNftBottomSheet(
+    val detailOwnerType: DetailOwnerType,
     val callback: (clickGallery: DetailNftMenuType) -> Unit
 ) : BaseBottomSheetDialogFragment<DialogBottomDetailNftBinding, DetailNftViewModel>() {
 
@@ -21,8 +17,9 @@ class DetailNftBottomSheet(
     override val viewModel: DetailNftViewModel by viewModels()
     override fun initStartView() {
         binding.apply {
-            this.vm
+            this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
+            this.type = detailOwnerType
         }
     }
 
@@ -50,4 +47,18 @@ class DetailNftBottomSheet(
             dismiss()
         }
     }
+}
+
+enum class DetailNftMenuType{
+    SELL,
+    CANCEL,
+    REMOVE,
+    HIDE,
+    REPORT
+}
+enum class DetailOwnerType {
+    ALL,
+    MINE_AND_SALE,
+    MINE_AND_NOTSALE,
+    NOTMINE
 }

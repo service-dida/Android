@@ -77,7 +77,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                 when (it.itemId) {
                     com.dida.nft_detail.R.id.action_heart -> viewModel.postlikeNft(args.cardId)
                     com.dida.nft_detail.R.id.action_more -> {
-                        val dialog = DetailNftBottomSheet { type ->
+                        val dialog = DetailNftBottomSheet(viewModel.detailOwnerTypeState.value) { type ->
                             when(type){
                                 DetailNftMenuType.SELL ->{ showSellNftDialog() }
                                 DetailNftMenuType.CANCEL ->{}
