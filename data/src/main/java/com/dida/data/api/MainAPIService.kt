@@ -162,4 +162,7 @@ interface MainAPIService {
     @GET("recent/card/{page}")
     suspend fun getRecentCard(@Path("page") page: Int) : List<RecentCardResponse>
 
+    //NFT 숨기기
+    @GET("card/hide/{cardId}")
+    suspend fun getHideNft(@Path("cardId") cardId: Long) : Unit
 }

@@ -248,5 +248,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getRecentCard(page: Int): NetworkResult<List<UserNft>> {
         return handleApi { mainAPIService.getRecentCard(page = page).toDomain() }
     }
+
+    override suspend fun getHideNft(cardId : Long): NetworkResult<Unit> {
+        return handleApi { mainAPIService.getHideNft(cardId = cardId) }
+    }
 }
 

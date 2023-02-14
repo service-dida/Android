@@ -111,4 +111,6 @@ interface  MainRepository {
     suspend fun getSellList() : NetworkResult<List<BuySellList>>
 
     suspend fun getRecentCard(page: Int) : NetworkResult<List<UserNft>>
+
+    suspend fun getHideNft(cardId : Long) : NetworkResult<Unit>
 }
