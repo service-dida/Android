@@ -26,6 +26,7 @@ import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
+import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.BuySellList
@@ -249,8 +250,16 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getRecentCard(page = page).toDomain() }
     }
 
+    override suspend fun getHideList(): NetworkResult<List<CardHideList>> {
+        return handleApi { mainAPIService.getHideList().toDomain() }
+    }
+
     override suspend fun getHideNft(cardId : Long): NetworkResult<Unit> {
         return handleApi { mainAPIService.getHideNft(cardId = cardId) }
+    }
+
+    override suspend fun getHideCancelNft(cardId: Long): NetworkResult<Unit> {
+        return handleApi { mainAPIService.getHideCancelNft(cardId = cardId) }
     }
 }
 
