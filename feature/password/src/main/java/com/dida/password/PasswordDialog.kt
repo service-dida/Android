@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
@@ -75,6 +76,14 @@ class PasswordDialog(
             launch {
                 viewModel.failEvent.collectLatest {
                     failAction(it)
+                }
+            }
+
+            launch {
+                viewModel.dismissEvent.collectLatest {
+                    Toast.makeText(requireContext(),"비밀번호를 5회이상 틀렸습니다.\n재발급 받아주세요",Toast.LENGTH_SHORT).show()
+                    result.invoke(false,"")
+                    dismiss()
                 }
             }
         }

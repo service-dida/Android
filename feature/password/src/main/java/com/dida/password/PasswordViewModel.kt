@@ -1,6 +1,7 @@
 package com.dida.password
 
 import com.dida.common.base.BaseViewModel
+import com.dida.data.model.WrongPassword5TimesException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckPasswordAPI
@@ -30,11 +31,14 @@ class PasswordViewModel @Inject constructor(
     private val _failEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
     val failEvent: SharedFlow<Boolean> = _failEvent
 
+    private val _dismissEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val dismissEvent: SharedFlow<Boolean> = _dismissEvent
+
     private val _stackSizeState = MutableStateFlow<Int>(0)
     val stackSizeState: StateFlow<Int> = _stackSizeState
 
     fun addStack(num: Int) {
-        if(isClickable){
+        if (isClickable) {
             if (stack.size < stackSize) {
                 stack.push(num)
                 _stackSizeState.value = stack.size
@@ -46,7 +50,7 @@ class PasswordViewModel @Inject constructor(
     }
 
     fun removeStack() {
-        if(isClickable){
+        if (isClickable) {
             if (!stack.isEmpty()) {
                 stack.pop()
                 _stackSizeState.value = stack.size
@@ -62,9 +66,9 @@ class PasswordViewModel @Inject constructor(
         baseViewModelScope.launch {
             passwordAPI(password)
                 .onSuccess {
-                    if(it){
+                    if (it) {
                         _completeEvent.emit(password)
-                    }else{
+                    } else {
                         isClickable = false
                         _failEvent.emit(true)
                         stack.clear()
@@ -73,11 +77,16 @@ class PasswordViewModel @Inject constructor(
                         isClickable = true
                     }
                 }
-                .onError { e -> catchError(e) }
+                .onError { e ->
+                    if (e is WrongPassword5TimesException) {
+                        _dismissEvent.emit(true)
+                    } else {
+                        catchError(e)
+                    }
+                }
         }
     }
-
-    fun setStackSize(size: Int) {
-        stackSize = size
+        fun setStackSize(size: Int) {
+            stackSize = size
+        }
     }
-}
