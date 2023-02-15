@@ -93,7 +93,9 @@ class DetailNftViewModel @Inject constructor(
                 } else {
                     detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_SALE)
                 }
-            } else {
+            } else if(detailNFT.type == "NEED LOGIN"){
+                detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN)
+            } else{
                 detailOwnerTypeState.emit(DetailOwnerType.NOTMINE)
             }
         }

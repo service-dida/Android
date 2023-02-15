@@ -12,6 +12,7 @@ import com.dida.nft_detail.bottom.DetailNftBottomSheet
 import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
+import com.dida.nft_detail.bottom.DetailOwnerType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
