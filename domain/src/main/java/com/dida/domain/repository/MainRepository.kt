@@ -6,6 +6,7 @@ import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
+import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.BuySellList
@@ -111,4 +112,10 @@ interface  MainRepository {
     suspend fun getSellList() : NetworkResult<List<BuySellList>>
 
     suspend fun getRecentCard(page: Int) : NetworkResult<List<UserNft>>
+
+    suspend fun getHideList() : NetworkResult<List<CardHideList>>
+
+    suspend fun getHideNft(cardId : Long) : NetworkResult<Unit>
+
+    suspend fun getHideCancelNft(cardId : Long) : NetworkResult<Unit>
 }

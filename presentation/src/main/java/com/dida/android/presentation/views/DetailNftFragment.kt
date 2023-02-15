@@ -80,7 +80,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                                 DetailNftMenuType.SELL ->{ showSellNftDialog() }
                                 DetailNftMenuType.CANCEL ->{}
                                 DetailNftMenuType.REMOVE ->{}
-                                DetailNftMenuType.HIDE ->{}
+                                DetailNftMenuType.HIDE ->{ viewModel.hideNft(args.cardId) }
                                 DetailNftMenuType.REPORT ->{}
                             }
                         }
@@ -110,4 +110,5 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         }
         dialog.show(childFragmentManager, "DetailNftFragment")
     }
+
 }

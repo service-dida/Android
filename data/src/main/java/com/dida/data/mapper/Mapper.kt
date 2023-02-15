@@ -5,6 +5,7 @@ import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
+import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.BuySellList
@@ -220,5 +221,13 @@ fun List<GetBuySellListResponse>.toDomain(): List<BuySellList> {
         userName = it.userName,
         price = it.price,
         type = it.type
+    ) }
+}
+
+fun List<CardHideListResponse>.toDomain(): List<CardHideList> {
+    return map { CardHideList(
+        cardId = it.cardId,
+        cardTitle = it.cardTitle,
+        cardUrl = it.cardUrl
     ) }
 }

@@ -11,10 +11,7 @@ import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.DetailNftAPI
-import com.dida.domain.usecase.main.PostLikeAPI
-import com.dida.domain.usecase.main.PostsCardCardIdAPI
-import com.dida.domain.usecase.main.SellNftAPI
+import com.dida.domain.usecase.main.*
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -27,7 +24,8 @@ class DetailNftViewModel @Inject constructor(
     private val detailNftAPI: DetailNftAPI,
     private val postLikeAPI: PostLikeAPI,
     private val postsCardCardIdAPI: PostsCardCardIdAPI,
-    private val sellNftAPI: SellNftAPI
+    private val sellNftAPI: SellNftAPI,
+    private val hideNftAPI: HideNftAPI
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
@@ -78,6 +76,17 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             sellNftAPI(payPwd,cardId,price)
+                .onSuccess {
+                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
+                }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun hideNft(cardId: Long){
+        baseViewModelScope.launch {
+            showLoading()
+            hideNftAPI(cardId)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
