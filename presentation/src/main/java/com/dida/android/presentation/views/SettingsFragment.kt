@@ -42,7 +42,7 @@ class SettingsFragment :
                     is SettingsNavigationAction.NavigateToPasswordEdit -> {}
                     is SettingsNavigationAction.NavigateToAccountInformation -> {}
                     is SettingsNavigationAction.NavigateToNotification -> {}
-                    is SettingsNavigationAction.NavigateToInVisible -> {}
+                    is SettingsNavigationAction.NavigateToHideList -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
                     is SettingsNavigationAction.NavigateToLogout -> {
                         toastMessage("로그아웃 하였습니다.")
                         navigate(SettingsFragmentDirections.actionMainFragment())
