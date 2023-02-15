@@ -6,6 +6,6 @@ sealed class SettingsNavigationAction {
     object NavigateToPasswordEdit: SettingsNavigationAction()
     object NavigateToAccountInformation: SettingsNavigationAction()
     object NavigateToNotification: SettingsNavigationAction()
-    object NavigateToInVisible: SettingsNavigationAction()
+    object NavigateToHideList: SettingsNavigationAction()
     object NavigateToLogout: SettingsNavigationAction()
 }

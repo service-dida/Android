@@ -1,5 +1,6 @@
 package com.dida.settings.hidelist
 
 interface HideListActionHandler {
-    fun onHideClicked()
+    fun onNftItemClicked(nftId: Long)
+    fun onHideClicked(nftId : Long)
 }

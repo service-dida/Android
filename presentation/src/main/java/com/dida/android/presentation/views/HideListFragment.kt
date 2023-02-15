@@ -71,8 +71,6 @@ class HideListFragment :
 
     private fun initToolbar() {
         with(binding.toolbar) {
-            this.title = resources.getString(com.dida.settings.R.string.invisible_title)
-            this.setTitleTextColor(ContextCompat.getColor(requireContext(), com.dida.android.R.color.white))
             this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }

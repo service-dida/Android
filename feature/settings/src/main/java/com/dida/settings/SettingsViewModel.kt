@@ -51,7 +51,7 @@ class SettingsViewModel @Inject constructor() : BaseViewModel(), SettingsActionH
 
     override fun onInVisibleClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(SettingsNavigationAction.NavigateToInVisible)
+            _navigationEvent.emit(SettingsNavigationAction.NavigateToHideList)
         }
     }
 

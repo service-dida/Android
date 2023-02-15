@@ -12,6 +12,7 @@
         <variable
             name="eventListener"
             type="com.dida.settings.hidelist.HideListActionHandler" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -47,7 +48,6 @@
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="@{holderModel.}"
                 android:textColor="@color/white"
                 android:textSize="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="@{holderModel.cardName}"
+                android:text="@{holderModel.cardTitle}"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="@{holderModel.priceFormat()}"
                 android:textColor="@color/price_gray_text"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/dida_icon_imageview"
@@ -102,11 +101,11 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:background="@color/surface1"
-                android:src="@{holderModel.liked? @drawable/ic_fill_heart : @drawable/ic_empty_heart}"
+                android:src="@drawable/ic_hide_cancel"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dida_icon_imageview"
-                android:onClick="@{() -> eventListener.onLikeBtnClicked(holderModel.cardId)}"/>
+                android:onClick="@{() -> eventListener.onHideClicked(holderModel.cardId)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
