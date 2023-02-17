@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
+import com.dida.common.util.successOrNull
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.bottom.DetailNftBottomSheet
 import com.dida.nft_detail.bottom.DetailNftMenuType
@@ -52,7 +53,9 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                         is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
                         is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(it.postId))
                         is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
-                        is DetailNftNavigationAction.NavigateToBuyNft -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment())
+                        is DetailNftNavigationAction.NavigateToBuyNft -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment(
+                            viewModel.detailNftState.value.successOrNull()?.price.toString(),
+                            viewModel.detailNftState.value.successOrNull()?.cardId!!))
                         is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
                     }
                 }

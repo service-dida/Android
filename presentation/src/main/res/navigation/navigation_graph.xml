@@ -340,7 +340,14 @@
     <fragment
         android:id="@+id/buyNftFragment"
         android:name="com.dida.android.presentation.views.BuyNftFragment"
-        android:label="BuyNftFragment" />
+        android:label="BuyNftFragment" >
+        <argument
+            android:name="price"
+            app:argType="string" />
+        <argument
+            android:name="cardId"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/hideListFragment"

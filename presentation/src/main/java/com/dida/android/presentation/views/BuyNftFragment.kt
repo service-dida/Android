@@ -3,9 +3,11 @@ package com.dida.android.presentation.views
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dida.buy.nft.BuyNftViewModel
 import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuyNftBinding
+import com.dida.password.PasswordDialog
 
 class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.layout.fragment_buy_nft) {
 
@@ -18,6 +20,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
 
     private val navController by lazy { findNavController() }
 
+    private val args: BuyNftFragmentArgs by navArgs()
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -28,9 +31,18 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     }
 
     override fun initDataBinding() {
+        binding.priceTv.text =  args.price
+        binding.bottomPriceTv.text = args.price
     }
 
     override fun initAfterBinding() {
+        binding.buyBtn.setOnClickListener {
+            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
+                if(success){
+                    viewModel.buyNft(password,args.cardId)
+                }
+            }.show(childFragmentManager,"BuyNftFragment")
+        }
     }
 
     private fun initToolbar() {

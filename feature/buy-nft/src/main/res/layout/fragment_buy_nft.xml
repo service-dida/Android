@@ -226,6 +226,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/price_tv"
                             style="@style/TextView_regular_18_white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -246,11 +247,10 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/price_tv"
                             style="@style/TextView_regular_18_white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="수수료" />
+                            android:text="@string/buy_nft_fee_text"/>
 
                         <TextView
                             android:id="@+id/fee_tv"
@@ -327,11 +327,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/buy_btn"
-                app:layout_constraintLeft_toRightOf="@id/price_img"
-                app:layout_constraintStart_toEndOf="@+id/price_img"
+                app:layout_constraintStart_toEndOf="@+id/price_iv"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="325.91" />
 
