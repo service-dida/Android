@@ -174,4 +174,8 @@ interface MainAPIService {
     //NFT 숨기기 취소
     @GET("card/reveal/{cardId}")
     suspend fun getHideCancelNft(@Path("cardId") cardId: Long) : Unit
+
+    // 타 유저 프로필 조회
+    @GET("/user/{userId}")
+    suspend fun getUserUserId(@Path("userId") userId: Long) : GetUserUserIdResponse
 }

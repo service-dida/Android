@@ -63,6 +63,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:hot-user"))
                     add("implementation", project(":feature:hot-seller"))
                     add("implementation", project(":feature:compose"))
+                    add("implementation", project(":feature:user-profile"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())

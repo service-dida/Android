@@ -10,6 +10,7 @@ import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.BuySellList
+import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.swap_history.SwapHistory
@@ -118,4 +119,6 @@ interface  MainRepository {
     suspend fun getHideNft(cardId : Long) : NetworkResult<Unit>
 
     suspend fun getHideCancelNft(cardId : Long) : NetworkResult<Unit>
+
+    suspend fun getUserUserId(userId: Long) : NetworkResult<OtherUserProfie>
 }

@@ -52,6 +52,7 @@
             <option value="$PROJECT_DIR$/feature/swap" />
             <option value="$PROJECT_DIR$/feature/swap-history" />
             <option value="$PROJECT_DIR$/feature/update-profile" />
+            <option value="$PROJECT_DIR$/feature/user-profile" />
             <option value="$PROJECT_DIR$/feature/wallet" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/presentation" />
