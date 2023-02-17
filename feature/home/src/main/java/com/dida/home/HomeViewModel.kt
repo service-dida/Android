@@ -2,6 +2,7 @@ package com.dida.home
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.home.Home
@@ -13,6 +14,7 @@ import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.PostUserFollowAPI
 import com.dida.domain.usecase.main.SoldOutAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,7 +46,9 @@ class HomeViewModel @Inject constructor(
             soldOutAPI.invoke(7)
                 .onSuccess { _soldoutState.value = UiState.Success(it) }
                 .flatMap { homeAPI() }
-                .onSuccess { _homeState.value = UiState.Success(it) }
+                .onSuccess {
+                    delay(SHIMMER_TIME)
+                    _homeState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
     }

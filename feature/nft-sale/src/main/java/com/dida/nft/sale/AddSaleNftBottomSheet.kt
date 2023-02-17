@@ -1,10 +1,9 @@
-package com.dida.add.bottom
+package com.dida.nft.sale
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.dida.add.R
-import com.dida.add.databinding.BottomAddSaleNftBinding
 import com.dida.common.base.BaseBottomSheetDialogFragment
+import com.dida.nft.sale.databinding.BottomAddSaleNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

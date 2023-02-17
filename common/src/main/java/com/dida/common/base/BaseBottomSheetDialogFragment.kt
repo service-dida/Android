@@ -86,6 +86,7 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
                     behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 }
             })
+            bottomSheet.setBackgroundResource(android.R.color.transparent)
         }
     }
 

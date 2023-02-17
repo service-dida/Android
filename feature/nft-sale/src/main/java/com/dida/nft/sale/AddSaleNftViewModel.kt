@@ -1,4 +1,4 @@
-package com.dida.add.bottom
+package com.dida.nft.sale
 
 import com.dida.common.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

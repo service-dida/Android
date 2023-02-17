@@ -83,10 +83,6 @@
     <string name="add_nft_description_text">설명</string>
     <string name="add_nft_description_hint">당신의 NFT를 소개하세요.</string>
 
-    <string name="add_nft_price_title">판매 가격은 얼마인가요?</string>
-    <string name="add_nft_price_hint">가격을 입력하세요</string>
-    <string name="add_nft_price_ok_btn_text">NFT 생성하기</string>
-
     <string name="add_purpose_top_text">어떤 목적으로\n아래 NFT를 생성하나요?</string>
     <string name="not_sale_text">소장용</string>
     <string name="sale_text">판매용</string>
@@ -112,14 +108,6 @@
     <!--게시글 상세-->
     <string name="detail_community_title">게시글</string>
     <string name="detail_community_edit_hint">댓글을 남겨보세요.</string>
-
-    <!--NFT 상세-->
-    <string name="detail_nft_title">제목</string>
-    <string name="detail_nft_who_text">소유권 내역</string>
-    <string name="detail_nft_detail_title">상세정보 📎</string>
-    <string name="detail_nft_link_title">컨트랙트 링크 주소</string>
-    <string name="detail_nft_token_title">토큰 ID</string>
-    <string name="detail_nft_community_title">커뮤니티 ✋</string>
 
     <!--게시글 작성 & 수정-->
     <string name="create_community_title">게시글 작성</string>

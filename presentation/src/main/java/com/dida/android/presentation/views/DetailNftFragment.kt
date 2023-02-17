@@ -7,9 +7,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
+import com.dida.nft.sale.AddSaleNftBottomSheet
+import com.dida.nft_detail.bottom.DetailNftBottomSheet
+import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
+import com.dida.nft_detail.bottom.DetailOwnerType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
+import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -48,6 +53,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                         is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(it.postId))
                         is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
                         is DetailNftNavigationAction.NavigateToBuyNft -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment())
+                        is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
                     }
                 }
             }
@@ -69,7 +75,18 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     com.dida.nft_detail.R.id.action_heart -> viewModel.postlikeNft(args.cardId)
-                    com.dida.nft_detail.R.id.action_more -> {}
+                    com.dida.nft_detail.R.id.action_more -> {
+                        val dialog = DetailNftBottomSheet(viewModel.detailOwnerTypeState.value) { type ->
+                            when(type){
+                                DetailNftMenuType.SELL ->{ showSellNftDialog() }
+                                DetailNftMenuType.CANCEL ->{}
+                                DetailNftMenuType.REMOVE ->{}
+                                DetailNftMenuType.HIDE ->{ viewModel.hideNft(args.cardId) }
+                                DetailNftMenuType.REPORT ->{}
+                            }
+                        }
+                        dialog.show(childFragmentManager, TAG)
+                    }
                 }
                 true
             }
@@ -83,4 +100,16 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     private fun initAdapter() {
         binding.communityRecycler.adapter = communityAdapter
     }
+
+    private fun showSellNftDialog(){
+        val dialog = AddSaleNftBottomSheet { price ->
+            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
+                if(success){
+                    viewModel.sellNft(password,args.cardId,price.toDouble())
+                }
+            }.show(childFragmentManager,"DetailNftBottomSheet")
+        }
+        dialog.show(childFragmentManager, "DetailNftFragment")
+    }
+
 }

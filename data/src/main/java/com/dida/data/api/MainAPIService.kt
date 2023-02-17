@@ -6,6 +6,7 @@ import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.splash.AppVersionResponse
+import com.dida.domain.usecase.main.HideNftAPI
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
@@ -162,4 +163,15 @@ interface MainAPIService {
     @GET("recent/card/{page}")
     suspend fun getRecentCard(@Path("page") page: Int) : List<RecentCardResponse>
 
+    //NFT 목록 조회
+    @GET("card/hideList")
+    suspend fun getHideList() : List<CardHideListResponse>
+
+    //NFT 숨기기
+    @GET("card/hide/{cardId}")
+    suspend fun getHideNft(@Path("cardId") cardId: Long) : Unit
+
+    //NFT 숨기기 취소
+    @GET("card/reveal/{cardId}")
+    suspend fun getHideCancelNft(@Path("cardId") cardId: Long) : Unit
 }

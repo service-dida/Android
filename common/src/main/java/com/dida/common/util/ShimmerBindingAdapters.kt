@@ -5,9 +5,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 @BindingAdapter("startLoading")
@@ -38,5 +41,20 @@ fun TextView.endLoading(uiState: UiState<*>) {
 
 @BindingAdapter("iv_endLoading")
 fun ImageView.endLoading(uiState: UiState<*>) {
+    visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
+}
+
+@BindingAdapter("nsv_endLoading")
+fun NestedScrollView.endLoading(uiState: UiState<*>) {
+    visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
+}
+
+@BindingAdapter("fab_endLoading")
+fun FloatingActionButton.endLoading(uiState: UiState<*>) {
+    visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
+}
+
+@BindingAdapter("ctl_endLoading")
+fun CoordinatorLayout.endLoading(uiState: UiState<*>) {
     visibility = if (uiState is UiState.Loading) View.GONE else View.VISIBLE
 }

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/mainblack">
+
+        <LinearLayout
+            android:layout_width="151dp"
+            android:layout_height="18dp"
+            android:background="@drawable/custom_surface3_radius10"
+            android:layout_marginTop="72dp"
+            android:layout_marginStart="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp">
+            <LinearLayout
+                android:layout_width="243dp"
+                android:layout_height="72dp"
+                android:background="@drawable/custom_surface1_radius10"
+                android:layout_marginTop="16dp">
+                <LinearLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/custom_surface3_radius10"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="243dp"
+                android:layout_height="72dp"
+                android:background="@drawable/custom_surface1_radius10"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp">
+                <LinearLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/custom_surface3_radius10"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="151dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="44dp"
+            android:background="@drawable/custom_surface3_radius10"
+            android:layout_marginStart="16dp"/>
+
+        <LinearLayout
+            android:layout_width="190dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_surface3_radius10"
+            android:layout_marginStart="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp">
+            <LinearLayout
+                android:layout_width="114dp"
+                android:layout_height="114dp"
+                android:background="@drawable/custom_surface3_radius10"/>
+
+            <LinearLayout
+                android:layout_width="114dp"
+                android:layout_height="114dp"
+                android:background="@drawable/custom_surface3_radius10"
+                android:layout_marginStart="14dp"/>
+
+            <LinearLayout
+                android:layout_width="114dp"
+                android:layout_height="114dp"
+                android:background="@drawable/custom_surface3_radius10"
+                android:layout_marginStart="14dp"/>
+
+            <LinearLayout
+                android:layout_width="114dp"
+                android:layout_height="114dp"
+                android:background="@drawable/custom_surface3_radius10"
+                android:layout_marginStart="14dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="91dp"
+            android:layout_height="18dp"
+            android:background="@drawable/custom_surface3_radius10"
+            android:layout_marginTop="88dp"
+            android:layout_marginStart="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="343dp"
+            android:background="@color/surface1"
+            android:layout_marginTop="17dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="21dp">
+                <LinearLayout
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/custom_surface3_radius100"/>
+
+                <LinearLayout
+                    android:layout_width="114dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/custom_surface3_radius10"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="21dp">
+                <LinearLayout
+                    android:layout_width="218dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/custom_surface3_radius100"/>
+
+                <LinearLayout
+                    android:layout_width="218dp"
+                    android:layout_height="12dp"
+                    android:background="@drawable/custom_surface3_radius10"
+                    android:layout_marginTop="9dp"/>
+
+                <LinearLayout
+                    android:layout_width="218dp"
+                    android:layout_height="12dp"
+                    android:background="@drawable/custom_surface3_radius10"
+                    android:layout_marginTop="9dp"/>
+
+                <LinearLayout
+                    android:layout_width="66dp"
+                    android:layout_height="12dp"
+                    android:background="@drawable/custom_surface3_radius10"
+                    android:layout_marginTop="9dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
+

@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="com.dida.nft_detail.bottom.DetailOwnerType"/>
         <variable
             name="vm"
             type="com.dida.nft_detail.DetailNftViewModel" />
@@ -34,6 +36,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="@{vm.detailOwnerTypeState == DetailOwnerType.NOTLOGIN? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:titleTextAppearance="@style/ToolBarStyle"/>
 

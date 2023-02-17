@@ -5,4 +5,5 @@ sealed class DetailNftNavigationAction {
     class NavigateToItemCommunity(val postId: Long): DetailNftNavigationAction()
     object NavigateToCreateCommunity: DetailNftNavigationAction()
     object NavigateToBuyNft : DetailNftNavigationAction()
+    object NavigateToHome : DetailNftNavigationAction()
 }

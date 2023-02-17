@@ -44,7 +44,7 @@ class CommunityPagingAdapter(
 
     internal object CommuityDiffCallback : DiffUtil.ItemCallback<Posts>() {
         override fun areItemsTheSame(oldItem: Posts, newItem: Posts) =
-            oldItem == newItem
+            oldItem.postId == newItem.postId
 
         override fun areContentsTheSame(oldItem: Posts, newItem: Posts) =
             oldItem.equals(newItem)
