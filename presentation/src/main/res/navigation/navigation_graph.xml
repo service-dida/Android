@@ -340,4 +340,18 @@
             app:destination="@id/detailNftFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.dida.android.presentation.views.UserProfileFragment"
+        android:label="UserProfileFragment" >
+        <argument
+            android:name="userId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
 </navigation>
