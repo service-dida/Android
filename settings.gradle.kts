@@ -75,3 +75,4 @@ include(":feature:hot-user")
 include(":feature:hot-seller")
 include(":feature:compose")
 
+include(":feature:user-profile")
