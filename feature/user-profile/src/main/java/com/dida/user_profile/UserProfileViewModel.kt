@@ -76,6 +76,7 @@ class UserProfileViewModel @Inject constructor(
             postUserFollowAPI(userProfileState.value.successOrNull()!!.userId.toLong())
                 .onSuccess { getUserProfile(userProfileState.value.successOrNull()!!.userId.toLong()) }
                 .onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 
