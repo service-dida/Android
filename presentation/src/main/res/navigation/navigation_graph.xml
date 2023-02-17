@@ -223,6 +223,11 @@
             app:destination="@id/homeFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_detailNftFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment

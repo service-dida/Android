@@ -116,6 +116,12 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
+    override fun onUserProfileClicked(userId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToUserProfile(userId = userId))
+        }
+    }
+
     override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToItemCommunity(postId = postId))
