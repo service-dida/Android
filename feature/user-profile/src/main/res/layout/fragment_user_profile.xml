@@ -258,7 +258,6 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!--TODO : NFT아이템 비율 맞춰야함-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_userNft"
                     app:rv_endLoading="@{vm.userProfileState}"
@@ -273,68 +272,6 @@
                     android:orientation="vertical"
                     android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/holder_mypage_user_cards" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/user_shimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:startLoading="@{vm.userProfileState}"
-                    tools:visibility="gone"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="9dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <include layout="@layout/skeleton_user_profile" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginTop="7dp">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:weightSum="2"
-                                android:orientation="horizontal">
-                                <include
-                                    layout="@layout/skeleton_holder_mypage_user_cards"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:layout_margin="7dp"/>
-                                <include
-                                    layout="@layout/skeleton_holder_mypage_user_cards"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:layout_margin="7dp"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:weightSum="2"
-                                android:orientation="horizontal">
-                                <include
-                                    layout="@layout/skeleton_holder_mypage_user_cards"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:layout_margin="7dp"/>
-                                <include
-                                    layout="@layout/skeleton_holder_mypage_user_cards"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:layout_margin="7dp"/>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

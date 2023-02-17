@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController

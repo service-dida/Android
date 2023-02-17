@@ -43,6 +43,7 @@ class UserProfileViewModel @Inject constructor(
     val userProfileState: StateFlow<UiState<OtherUserProfie>> = _userProfileState.asStateFlow()
 
     fun getUserProfile(userId: Long) {
+        _userIdState.value = userId
         baseViewModelScope.launch {
             userUserIdAPI(userIdState.value)
                 .onSuccess { _userProfileState.value = UiState.Success(it) }

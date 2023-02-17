@@ -7,6 +7,7 @@ import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
+import com.dida.common.util.successOrNull
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
@@ -116,9 +117,9 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    override fun onUserProfileClicked(userId: Long) {
+    override fun onUserProfileClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailNftNavigationAction.NavigateToUserProfile(userId = userId))
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToUserProfile(userId = detailNftState.value.successOrNull()!!.userId))
         }
     }
 
