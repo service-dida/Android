@@ -273,7 +273,8 @@
                     tools:itemCount="2"
                     android:orientation="vertical"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/holder_mypage_user_cards" />
+                    tools:listitem="@layout/holder_mypage_user_cards"
+                    app:userNftItem="@{vm.hasMyNftState}" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/user_shimmer"
