@@ -5,6 +5,7 @@ import com.dida.common.util.AppLog
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
+import com.dida.common.util.successOrNull
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(
     private val postLikeAPI: PostLikeAPI,
-    private val userUserIdAPI: UserUserIdAPI
+    private val userUserIdAPI: UserUserIdAPI,
+    private val postUserFollowAPI: PostUserFollowAPI
 ) : BaseViewModel(), UserProfileActionHandler, NftActionHandler {
 
     private val TAG = "UserProfileViewModel"
@@ -62,14 +64,19 @@ class UserProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId.toLong())
-                .onSuccess {}
+                .onSuccess {  }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
 
     override fun onFollowClicked() {
-        TODO("Not yet implemented")
+        baseViewModelScope.launch {
+            showLoading()
+            postUserFollowAPI(userProfileState.value.successOrNull()!!.userId.toLong())
+                .onSuccess { getUserProfile(userProfileState.value.successOrNull()!!.userId.toLong()) }
+                .onError { e -> catchError(e) }
+        }
     }
 
     override fun onCardSortTypeClicked(type: CardSortType) {

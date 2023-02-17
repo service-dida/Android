@@ -54,19 +54,47 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/user_name_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:fontFamily="@font/pretendard_regular"
-                    app:otherUserNickname="@{vm.userProfileState}"
-                    app:tv_endLoading="@{vm.userProfileState}"
-                    android:textColor="@color/white"
-                    android:textSize="22dp"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView"
                     app:layout_constraintStart_toStartOf="@+id/circleImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        app:otherUserNickname="@{vm.userProfileState}"
+                        app:tv_endLoading="@{vm.userProfileState}"
+                        android:textColor="@color/white"
+                        android:textSize="24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/follow_btn"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/follow_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/textView"
+                        android:layout_marginStart="8dp"
+                        android:textSize="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        app:tv_endLoading="@{vm.userProfileState}"
+                        app:otherUserFollowBtn="@{vm.userProfileState}"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:onClick="@{() ->  vm.onFollowClicked()}"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!--TODO : 자기소개 없을 시 기본 말 추가-->
                 <TextView
@@ -80,7 +108,8 @@
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView"
                     app:layout_constraintStart_toStartOf="@+id/circleImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/user_name_layout"
+                    android:layout_marginTop="6dp"/>
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
