@@ -54,7 +54,9 @@ class UserProfileViewModel @Inject constructor(
             userUserIdAPI(userIdState.value)
                 .onSuccess { _userProfileState.value = UiState.Success(it) }
                 .flatMap { userCardUserIdAPI(userId = userId) }
-                .onSuccess { _userCardState.value = UiState.Success(it) }
+                .onSuccess {
+                    delay(SHIMMER_TIME)
+                    _userCardState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
     }
