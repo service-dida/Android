@@ -3,6 +3,7 @@ package com.dida.domain.repository
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
+import com.dida.domain.model.nav.add.AddNft
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
@@ -54,7 +55,7 @@ interface  MainRepository {
 
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 
-    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<Unit>
+    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<AddNft>
 
     suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>
 

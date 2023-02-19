@@ -23,6 +23,7 @@ import com.dida.data.model.request.PutUserNicknameRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
+import com.dida.domain.model.nav.add.AddNft
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
@@ -91,9 +92,9 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getSoldOut(term).toDomain() }
     }
 
-    override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<Unit> {
+    override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<AddNft> {
         val request = NFTMintRequest(payPwd, name,description,image)
-        return handleApi { mainAPIService.mintNFT(request) }
+        return handleApi { mainAPIService.mintNFT(request).toDomain() }
     }
 
     override suspend fun postCreateWalletAPI(password: String, passwordCheck: String, ): NetworkResult<Unit> {

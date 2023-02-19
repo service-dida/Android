@@ -87,7 +87,7 @@ class AddPurposeViewModel @Inject constructor(
         NOT_SALE,
         SALE
     }
-    fun mintNFT(password: String , type : AddNftType) {
+    fun mintNFT(password: String , type : AddNftType, price: Double) {
         baseViewModelScope.launch {
             showLoading()
 
@@ -106,8 +106,7 @@ class AddPurposeViewModel @Inject constructor(
                         _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
                         dismissLoading()
                     }else{
-                        //TODO : 추후에 NFT발행 시 Return으로 NFT ID값을 받아와야함
-                        //TODO : 그 후 판매 까지 진행
+                        sellNft(password,it.cardId,price)
                     }
                 }
                 .onError { e->catchError(e) }
