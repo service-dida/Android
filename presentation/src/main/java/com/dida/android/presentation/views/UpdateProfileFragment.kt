@@ -169,6 +169,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
         viewModel.profileImageMultipartState.value = requestBody
+        viewModel.selectProfileImage(uri, requestBody)
     }
 
     val clearTextListener = object : OnTouchListener {

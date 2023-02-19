@@ -23,7 +23,8 @@ import javax.inject.Inject
 class UserProfileViewModel @Inject constructor(
     private val postLikeAPI: PostLikeAPI,
     private val userUserIdAPI: UserUserIdAPI,
-    private val postUserFollowAPI: PostUserFollowAPI
+    private val postUserFollowAPI: PostUserFollowAPI,
+    private val userCardUserIdAPI: UserCardUserIdAPI,
 ) : BaseViewModel(), UserProfileActionHandler, NftActionHandler {
 
     private val TAG = "UserProfileViewModel"
@@ -44,11 +45,16 @@ class UserProfileViewModel @Inject constructor(
     private val _userProfileState: MutableStateFlow<UiState<OtherUserProfie>> = MutableStateFlow<UiState<OtherUserProfie>>(UiState.Loading)
     val userProfileState: StateFlow<UiState<OtherUserProfie>> = _userProfileState.asStateFlow()
 
+    private val _userCardState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow<UiState<List<UserNft>>>(UiState.Loading)
+    val userCardState: StateFlow<UiState<List<UserNft>>> = _userCardState.asStateFlow()
+
     fun getUserProfile(userId: Long) {
         _userIdState.value = userId
         baseViewModelScope.launch {
             userUserIdAPI(userIdState.value)
                 .onSuccess { _userProfileState.value = UiState.Success(it) }
+                .flatMap { userCardUserIdAPI(userId = userId) }
+                .onSuccess { _userCardState.value = UiState.Success(it) }
                 .onError { e -> catchError(e) }
         }
     }

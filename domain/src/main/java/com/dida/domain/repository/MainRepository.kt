@@ -121,4 +121,6 @@ interface  MainRepository {
     suspend fun getHideCancelNft(cardId : Long) : NetworkResult<Unit>
 
     suspend fun getUserUserId(userId: Long) : NetworkResult<OtherUserProfie>
+
+    suspend fun getUserCardsUserId(userId: Long) : NetworkResult<List<UserNft>>
 }

@@ -266,5 +266,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getUserUserId(userId: Long): NetworkResult<OtherUserProfie> {
         return handleApi { mainAPIService.getUserUserId(userId = userId).toDomain() }
     }
+
+    override suspend fun getUserCardsUserId(userId: Long): NetworkResult<List<UserNft>> {
+        return handleApi { mainAPIService.getUserCardsUserId(userId = userId).toDomain() }
+    }
 }
 
