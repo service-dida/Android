@@ -65,6 +65,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", project(":feature:compose"))
                     add("implementation", project(":feature:user-profile"))
                     add("implementation", project(":feature:temp-password"))
+                    add("implementation", project(":feature:change-password"))
 
                     // Android Common
                     add("implementation", libs.findLibrary("androidx-core").get())

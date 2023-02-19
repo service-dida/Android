@@ -77,3 +77,4 @@ include(":feature:compose")
 
 include(":feature:user-profile")
 include(":feature:temp-password")
+include(":feature:change-password")

@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/add" />
+            <option value="$PROJECT_DIR$/feature/change-password" />
             <option value="$PROJECT_DIR$/feature/community" />
             <option value="$PROJECT_DIR$/feature/community-detail" />
             <option value="$PROJECT_DIR$/feature/compose" />
