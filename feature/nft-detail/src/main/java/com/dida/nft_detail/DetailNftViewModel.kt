@@ -89,7 +89,7 @@ class DetailNftViewModel @Inject constructor(
             showLoading()
             hideNftAPI(cardId)
                 .onSuccess {
-                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
+                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
                 }
                 .onError { e -> catchError(e) }
         }

@@ -6,4 +6,5 @@ sealed class DetailNftNavigationAction {
     object NavigateToCreateCommunity: DetailNftNavigationAction()
     object NavigateToHome : DetailNftNavigationAction()
     class NavigateToUserProfile(val userId: Long): DetailNftNavigationAction()
+    object NavigateToBack : DetailNftNavigationAction()
 }
