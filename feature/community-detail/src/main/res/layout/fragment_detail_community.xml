@@ -27,7 +27,7 @@
             android:id="@+id/community_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             android:background="@color/surface1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
