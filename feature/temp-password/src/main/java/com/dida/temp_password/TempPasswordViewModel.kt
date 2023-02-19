@@ -22,15 +22,25 @@ import javax.inject.Inject
 @HiltViewModel
 class TempPasswordViewModel @Inject constructor(
     private val tempPasswordAPI: TempPasswordAPI
-) : BaseViewModel() {
+) : BaseViewModel(), TempPasswordActionHandler {
 
     private val TAG = "TempPasswordViewModel"
 
+    private val _navigationEvent: MutableSharedFlow<TempPasswordNavigationAction> = MutableSharedFlow<TempPasswordNavigationAction>()
+    val navigationEvent: SharedFlow<TempPasswordNavigationAction> = _navigationEvent.asSharedFlow()
+
     init {
         baseViewModelScope.launch {
+            showLoading()
             tempPasswordAPI()
-                .onSuccess {  }
-                .onError {  }
+                .onError { e -> catchError(e) }
+            dismissLoading()
+        }
+    }
+
+    override fun onPasswordChangeClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(TempPasswordNavigationAction.NavigateToPasswordChange)
         }
     }
 }

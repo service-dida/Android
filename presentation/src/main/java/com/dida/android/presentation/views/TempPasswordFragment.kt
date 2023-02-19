@@ -10,6 +10,7 @@ import com.dida.recent_nft.RecentNftNavigationAction
 import com.dida.recent_nft.RecentNftViewModel
 import com.dida.recent_nft.adapter.CardPagingAdapter
 import com.dida.recent_nft.databinding.FragmentRecentNftBinding
+import com.dida.temp_password.TempPasswordNavigationAction
 import com.dida.temp_password.TempPasswordViewModel
 import com.dida.temp_password.databinding.FragmentTempPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +42,14 @@ class TempPasswordFragment : BaseFragment<FragmentTempPasswordBinding, TempPassw
         lifecycleScope.launchWhenStarted {
             viewModel.errorEvent.collectLatest {
                 showToastMessage(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is TempPasswordNavigationAction.NavigateToPasswordChange -> {}
+                }
             }
         }
     }
