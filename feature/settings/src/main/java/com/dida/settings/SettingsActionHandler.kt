@@ -2,7 +2,7 @@ package com.dida.settings
 
 interface SettingsActionHandler {
     fun onProfileEditClicked()
-    fun onPrePasswordClicked()
+    fun onTempPasswordClicked()
     fun onPasswordEditClicked()
     fun onAccountInformationClicked()
     fun onNotificationClicked()

@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@id/profile_edit"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> vm.onPrePasswordClicked()}">
+            android:onClick="@{() -> vm.onTempPasswordClicked()}">
 
             <ImageView
                 android:id="@+id/pre_password_img"

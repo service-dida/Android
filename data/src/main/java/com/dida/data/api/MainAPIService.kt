@@ -53,6 +53,7 @@ interface MainAPIService {
     @POST("/user/wallet/pwd")
     suspend fun postPasswordChange(@Body request: PostPasswordChangeRequest)
 
+    // 임시 비밀번호 발급(카카오 계정으로 등록된 이메일)
     @GET("/user/wallet/pwd")
     suspend fun getTempPassword()
 
