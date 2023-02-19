@@ -39,7 +39,7 @@ class SettingsFragment :
                 when(it) {
                     is SettingsNavigationAction.NavigateToProfileEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToUpdateProfileFragment())
                     is SettingsNavigationAction.NavigateToTempPassword -> navigate(SettingsFragmentDirections.actionSettingFragmentToTempPasswordFragment())
-                    is SettingsNavigationAction.NavigateToPasswordEdit -> {}
+                    is SettingsNavigationAction.NavigateToPasswordEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToChangePasswordFragment())
                     is SettingsNavigationAction.NavigateToAccountInformation -> {}
                     is SettingsNavigationAction.NavigateToNotification -> {}
                     is SettingsNavigationAction.NavigateToHideList -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())

@@ -1,4 +1,4 @@
-package com.dida.temp_password
+package com.dida.change_password
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.AppLog
@@ -20,27 +20,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TempPasswordViewModel @Inject constructor(
-    private val tempPasswordAPI: TempPasswordAPI
-) : BaseViewModel(), TempPasswordActionHandler {
+class ChangePasswordViewModel @Inject constructor(
+    private val changePasswordAPI: ChangePasswordAPI
+) : BaseViewModel(), ChangePasswordActionHandler {
 
-    private val TAG = "TempPasswordViewModel"
+    private val TAG = "ChangePasswordViewModel"
 
     private val _navigationEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val navigationEvent: SharedFlow<Unit> = _navigationEvent.asSharedFlow()
 
-    init {
+    val beforePasswordState: MutableStateFlow<String> = MutableStateFlow<String>("")
+    val newPasswordState: MutableStateFlow<String> = MutableStateFlow<String>("")
+
+
+    override fun onOkBtnClicked() {
         baseViewModelScope.launch {
             showLoading()
-            tempPasswordAPI()
+            changePasswordAPI(beforePassword = beforePasswordState.value, afterPassword = newPasswordState.value)
+                .onSuccess { _navigationEvent.emit(Unit) }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
 
-    override fun onPasswordChangeClicked() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(Unit)
-        }
-    }
 }

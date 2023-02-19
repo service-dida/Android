@@ -1,8 +1,7 @@
 package com.dida.mypage
 
-import com.dida.common.base.BaseViewModel
-import com.dida.common.util.AppLog
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap
@@ -10,7 +9,9 @@ import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.*
+import com.dida.domain.usecase.main.PostLikeAPI
+import com.dida.domain.usecase.main.UserNftAPI
+import com.dida.domain.usecase.main.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,8 +25,6 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     private val userProfileAPI: UserProfileAPI,
     private val userNftAPI: UserNftAPI,
-    private val tempPasswordAPI: TempPasswordAPI,
-    private val changePasswordAPI: ChangePasswordAPI,
     private val postLikeAPI: PostLikeAPI
 ) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
@@ -72,36 +71,6 @@ class MyPageViewModel @Inject constructor(
                 }
                 .onError { e -> catchError(e) }
 
-        }
-    }
-
-    fun tempPassword() {
-        baseViewModelScope.launch {
-            tempPasswordAPI()
-                .onSuccess {
-                    catchError(
-                        Throwable(
-                            message = "임시비밀번호 발급성공",
-                            cause = null
-                        )
-                    )
-                }
-                .onError { e -> catchError(e) }
-        }
-    }
-
-    fun changePassword(beforePassword: String, afterPassword: String) {
-        baseViewModelScope.launch {
-            changePasswordAPI(beforePassword, afterPassword)
-                .onSuccess {
-                    catchError(
-                        Throwable(
-                            message = "비밀번호 변경 성공",
-                            cause = null
-                        )
-                    )
-                }
-                .onError { e -> catchError(e) }
         }
     }
 

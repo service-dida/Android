@@ -6,6 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
+import com.dida.change_password.ChangePasswordViewModel
+import com.dida.change_password.databinding.FragmentChangePasswordBinding
 import com.dida.recent_nft.RecentNftNavigationAction
 import com.dida.recent_nft.RecentNftViewModel
 import com.dida.recent_nft.adapter.CardPagingAdapter
@@ -19,14 +21,14 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class TempPasswordFragment : BaseFragment<FragmentTempPasswordBinding, TempPasswordViewModel>(com.dida.temp_password.R.layout.fragment_temp_password) {
+class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, ChangePasswordViewModel>(com.dida.change_password.R.layout.fragment_change_password) {
 
-    private val TAG = "TempPasswordFragment"
+    private val TAG = "ChangePasswordFragment"
 
     override val layoutResourceId: Int
-        get() = com.dida.temp_password.R.layout.fragment_temp_password // get() : 커스텀 접근자, 코틀린 문법
+        get() = com.dida.change_password.R.layout.fragment_change_password // get() : 커스텀 접근자, 코틀린 문법
 
-    override val viewModel : TempPasswordViewModel by viewModels()
+    override val viewModel : ChangePasswordViewModel by viewModels()
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -47,7 +49,7 @@ class TempPasswordFragment : BaseFragment<FragmentTempPasswordBinding, TempPassw
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
-                navigate(TempPasswordFragmentDirections.actionTempPasswordFragmentToChangePasswordFragment())
+                navController.popBackStack()
             }
         }
     }
