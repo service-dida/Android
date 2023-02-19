@@ -157,6 +157,11 @@
             app:destination="@id/communityCommunityInputFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_communityDetailFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment
