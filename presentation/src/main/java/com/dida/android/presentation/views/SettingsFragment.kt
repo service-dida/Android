@@ -38,7 +38,7 @@ class SettingsFragment :
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is SettingsNavigationAction.NavigateToProfileEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToUpdateProfileFragment())
-                    is SettingsNavigationAction.NavigateToPrePassword -> {}
+                    is SettingsNavigationAction.NavigateToTempPassword -> navigate(SettingsFragmentDirections.actionSettingFragmentToTempPasswordFragment())
                     is SettingsNavigationAction.NavigateToPasswordEdit -> {}
                     is SettingsNavigationAction.NavigateToAccountInformation -> {}
                     is SettingsNavigationAction.NavigateToNotification -> {}
