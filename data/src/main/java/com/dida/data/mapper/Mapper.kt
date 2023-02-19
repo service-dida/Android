@@ -171,6 +171,7 @@ fun GetPostPostIdResponse.toDomain(): Post {
     return Post(
         postId = postId,
         cardId = cardId,
+        userId = userId,
         userName = userName,
         userImgUrl = userImgUrl,
         title = title,
@@ -188,6 +189,7 @@ fun List<GetPostIdCommentsResponse>.toDomain(): List<Comments> {
     return map { Comments(
        commentId = it.commentId,
         postId = it.postId,
+        userId = it.userId,
         content = it.content,
         userName = it.userName,
         userImgUrl = it.userImgUrl,

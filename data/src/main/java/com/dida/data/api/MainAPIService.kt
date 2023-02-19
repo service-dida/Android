@@ -178,4 +178,8 @@ interface MainAPIService {
     // 타 유저 프로필 조회
     @GET("/user/{userId}")
     suspend fun getUserUserId(@Path("userId") userId: Long) : GetUserUserIdResponse
+
+    // 타 유저 카드 조회
+    @GET("/user/cards/{userId}")
+    suspend fun getUserCardsUserId(@Path("userId") userId: Long) : List<RecentCardResponse>
 }
