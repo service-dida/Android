@@ -26,6 +26,7 @@
       <module name="DIDA.feature.splash" target="11" />
       <module name="DIDA.feature.swap" target="11" />
       <module name="DIDA.feature.swap-history" target="11" />
+      <module name="DIDA.feature.temp-password" target="11" />
       <module name="DIDA.feature.update-profile" target="11" />
       <module name="DIDA.feature.user-profile" target="11" />
       <module name="DIDA.feature.wallet" target="11" />
