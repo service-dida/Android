@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:layout_marginTop="12dp"
-                    app:image_from_url="@{vm.nftImageState}"
+                    app:image_from_url_fullsize="@{vm.nftImageState}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
