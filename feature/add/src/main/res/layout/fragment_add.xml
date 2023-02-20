@@ -116,6 +116,8 @@
                         android:text="@={vm.titleTextState}"
                         android:maxLength="20"
                         android:textColor="@color/white"
+                        android:maxLines="1"
+                        android:inputType="text"
                         android:textColorHint="@color/surface6"
                         android:textSize="14dp" />
 
