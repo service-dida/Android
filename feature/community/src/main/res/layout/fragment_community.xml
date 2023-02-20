@@ -38,6 +38,7 @@
             app:fab_endLoading="@{vm.hotCardState}"/>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/community_scroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"

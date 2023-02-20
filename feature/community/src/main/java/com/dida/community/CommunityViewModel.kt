@@ -37,15 +37,13 @@ class CommunityViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
 
-    var postsState: Flow<PagingData<Posts>> = emptyFlow()
+    val postsState: Flow<PagingData<Posts>> = createPostsPager(postsAPI = postsAPI)
+    .flow.cachedIn(baseViewModelScope)
 
     private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
     val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
 
-    fun getCommunity() {
-        postsState = createPostsPager(postsAPI = postsAPI)
-            .flow.cachedIn(baseViewModelScope)
-
+    init {
         baseViewModelScope.launch {
             hotCardAPI.invoke()
                 .onSuccess {
