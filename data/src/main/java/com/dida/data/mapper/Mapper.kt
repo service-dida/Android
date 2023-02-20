@@ -231,7 +231,9 @@ fun List<CardHideListResponse>.toDomain(): List<CardHideList> {
     return map { CardHideList(
         cardId = it.cardId,
         cardTitle = it.cardTitle,
-        cardUrl = it.cardUrl
+        cardUrl = it.cardUrl,
+        userName = it.userName,
+        price = it.price
     ) }
 }
 
