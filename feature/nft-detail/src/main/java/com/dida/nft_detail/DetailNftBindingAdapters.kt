@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 fun ImageView.bindImgUrl(uiState: UiState<DetailNFT>) {
     Glide.with(context)
         .load(uiState.successOrNull()?.imgUrl)
-        .transform(CenterCrop())
         .into(this)
 }
 
