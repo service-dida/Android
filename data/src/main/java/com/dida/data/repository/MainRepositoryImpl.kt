@@ -3,23 +3,10 @@ package com.dida.data.repository
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
-import com.dida.data.model.request.PostCheckPasswordRequest
-import com.dida.data.model.request.PostCreateWalletRequest
-import com.dida.data.model.request.PutDeviceTokenRequest
-import com.dida.data.model.request.NFTMintRequest
-import com.dida.data.model.request.CreateUserRequest
-import com.dida.data.model.response.PostLikeRequest
-import com.dida.data.model.request.PostUserFollowRequest
-import com.dida.data.model.request.PostNicknameRequest
-import com.dida.data.model.request.PostCommentRequest
-import com.dida.data.model.request.PostPostCardIdRequest
-import com.dida.data.model.request.PostSwapDidaToKlayRequest
-import com.dida.data.model.request.PostSwapKlayToDidaRequest
+import com.dida.data.model.request.*
 import com.dida.data.model.response.PostBuyNftRequest
+import com.dida.data.model.response.PostLikeRequest
 import com.dida.data.model.response.PostSellNftRequest
-import com.dida.data.model.request.PostPasswordChangeRequest
-import com.dida.data.model.request.PutUserDescriptionRequest
-import com.dida.data.model.request.PutUserNicknameRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
@@ -33,12 +20,12 @@ import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
-import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.model.nav.swap.WalletAmount
+import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.splash.AppVersionResponse
 import com.dida.domain.repository.MainRepository
 import okhttp3.MultipartBody
@@ -91,7 +78,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getSoldOut(term).toDomain() }
     }
 
-    override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<Unit> {
+    override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<Long> {
         val request = NFTMintRequest(payPwd, name,description,image)
         return handleApi { mainAPIService.mintNFT(request) }
     }

@@ -13,12 +13,12 @@ import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
-import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.model.nav.swap.WalletAmount
+import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
 
@@ -54,7 +54,7 @@ interface  MainRepository {
 
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 
-    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<Unit>
+    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<Long>
 
     suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>
 

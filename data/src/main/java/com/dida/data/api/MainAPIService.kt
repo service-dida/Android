@@ -6,7 +6,6 @@ import com.dida.domain.model.login.LoginResponseModel
 import com.dida.domain.model.login.NicknameResponseModel
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.splash.AppVersionResponse
-import com.dida.domain.usecase.main.HideNftAPI
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
@@ -58,7 +57,7 @@ interface MainAPIService {
     suspend fun getTempPassword()
 
     @POST("/card")
-    suspend fun mintNFT(@Body request: NFTMintRequest)
+    suspend fun mintNFT(@Body request: NFTMintRequest) : Long
 
     @Multipart
     @PUT("/user/img")
