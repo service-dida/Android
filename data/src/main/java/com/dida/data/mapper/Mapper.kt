@@ -2,7 +2,6 @@ package com.dida.data.mapper
 
 import com.dida.data.model.response.*
 import com.dida.domain.model.klaytn.Asset
-import com.dida.domain.model.nav.add.AddNft
 import com.dida.domain.model.nav.community.HotCard
 import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
@@ -182,12 +181,6 @@ fun GetPostPostIdResponse.toDomain(): Post {
         price = price,
         cardOwnerImgUrl = cardOwnerImgUrl,
         type = type
-    )
-}
-
-fun PostAddNftResponse.toDomain(): AddNft {
-    return AddNft(
-        cardId = cardId,
     )
 }
 

@@ -2,7 +2,6 @@ package com.dida.add.purpose
 
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
-import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.klaytn.UploadAssetAPI
@@ -101,12 +100,11 @@ class AddPurposeViewModel @Inject constructor(
                 .flatMap {
                     mintNftAPI(password,titleState.value,descriptionState.value,it.uri)
                 }
-                .onSuccess {
+                .onSuccess {cardId ->
                     if(type == AddNftType.NOT_SALE){
                         _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-                        dismissLoading()
                     }else{
-                        sellNft(password,it.cardId,price)
+                        sellNft(password,cardId,price)
                     }
                 }
                 .onError { e->catchError(e) }
@@ -115,9 +113,9 @@ class AddPurposeViewModel @Inject constructor(
 
     fun sellNft(payPwd : String, cardId: Long, price : Double){
         baseViewModelScope.launch {
-            showLoading()
             sellNftAPI(payPwd,cardId,price)
                 .onSuccess {
+                    dismissLoading()
                     _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
                 }
                 .onError { e -> catchError(e) }

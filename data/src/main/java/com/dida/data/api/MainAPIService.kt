@@ -57,7 +57,7 @@ interface MainAPIService {
     suspend fun getTempPassword()
 
     @POST("/card")
-    suspend fun mintNFT(@Body request: NFTMintRequest) : PostAddNftResponse
+    suspend fun mintNFT(@Body request: NFTMintRequest) : Long
 
     @Multipart
     @PUT("/user/img")
