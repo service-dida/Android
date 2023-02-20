@@ -43,6 +43,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         ) }
         .subscribe(this)
 
+    private var lastScrollY = 0
 
     override fun initStartView() {
         binding.apply {
@@ -93,6 +94,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getLastScrollY()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setLastScrollY()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -152,6 +163,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             if(NotificationManagerCompat.from(requireContext()).areNotificationsEnabled().not()) {
                 notificationPermissionRequest.request()
             }
+        }
+    }
+
+    private fun setLastScrollY() {
+        lastScrollY = binding.homeScroll.scrollY
+    }
+
+    private fun getLastScrollY() {
+        if(lastScrollY > 0) {
+            binding.homeScroll.scrollTo(0, lastScrollY)
+            lastScrollY = 0
         }
     }
 }
