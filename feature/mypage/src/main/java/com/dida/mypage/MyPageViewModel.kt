@@ -30,12 +30,10 @@ class MyPageViewModel @Inject constructor(
 
     private val TAG = "MyPageViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<MypageNavigationAction> =
-        MutableSharedFlow<MypageNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<MypageNavigationAction> = MutableSharedFlow<MypageNavigationAction>()
     val navigationEvent: SharedFlow<MypageNavigationAction> = _navigationEvent
 
-    private val _myPageState: MutableStateFlow<UiState<UserProfile>> =
-        MutableStateFlow(UiState.Loading)
+    private val _myPageState: MutableStateFlow<UiState<UserProfile>> = MutableStateFlow(UiState.Loading)
     val myPageState: StateFlow<UiState<UserProfile>> = _myPageState
 
     private val _hasWalletState = MutableStateFlow<Boolean>(false)
