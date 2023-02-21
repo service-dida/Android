@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.nav.detailnft.DetailNFT
+import com.dida.nft_detail.bottom.DetailOwnerType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @BindingAdapter("NftImgUrl")
@@ -68,18 +70,12 @@ fun TextView.bindTokenId(uiState: UiState<DetailNFT>) {
 
 @BindingAdapter("NftPrice")
 fun TextView.bindPrice(uiState: UiState<DetailNFT>) {
-    if (uiState.successOrNull()?.type == "NEED LOGIN") {
-        this.text = "로그인이 필요합니다."
-    } else if (uiState.successOrNull()?.type == "NOT MINE") {
-        this.isGone
-    } else {
-        this.text = uiState.successOrNull()?.price
-    }
+    this.text = uiState.successOrNull()?.price
 }
 
 @BindingAdapter("NftPriceLayout")
-fun ConstraintLayout.bindVisible(uiState: UiState<DetailNFT>) {
-    if (uiState.successOrNull()?.type == "NOT SALE" || uiState.successOrNull()?.type == "MINE") {
+fun ConstraintLayout.bindVisible(type: DetailOwnerType) {
+    if (type == DetailOwnerType.NOTMINE_AND_NOTSALE ||type == DetailOwnerType.NOTLOGIN_AND_NOTSALE) {
         this.visibility = View.GONE
     }
 }
@@ -96,21 +92,23 @@ fun FloatingActionButton.bindVisible(uiState: UiState<DetailNFT>) {
 }
 
 @BindingAdapter("NftDetailConfirmBtn")
-fun TextView.bindConfrimBtn(uiState: UiState<DetailNFT>) {
-    if (uiState.successOrNull()?.type == "NEED LOGIN") {
-        this.visibility = View.GONE
-    } else if (uiState.successOrNull()?.type == "NOT MINE") {
-        this.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        this.gravity = Gravity.CENTER_HORIZONTAL
-        this.text = "판매요청 하기 "
-    } else {
-        if (uiState.successOrNull()?.price == "NOT SALE") {
-            this.visibility = View.GONE
-        } else {
-            this.visibility = View.VISIBLE
+fun TextView.bindConfrimBtn(type: DetailOwnerType) {
+    when(type) {
+        DetailOwnerType.MINE_AND_NOTSALE -> {
+            this.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            this.gravity = Gravity.CENTER_HORIZONTAL
+            this.text = "판매하기"
+        }
+        DetailOwnerType.MINE_AND_SALE-> {
+            this.text = "판매중"
+            this.setTextColor(ContextCompat.getColor(this.context,com.dida.common.R.color.surface6))
+            this.background = ContextCompat.getDrawable(this.context,com.dida.common.R.drawable.custom_surface2_radius10)
+        }
+        else -> {
+
         }
     }
 }
