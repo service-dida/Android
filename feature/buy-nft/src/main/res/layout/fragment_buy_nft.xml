@@ -74,6 +74,7 @@
                         android:layout_width="81dp"
                         android:layout_height="81dp"
                         android:layout_marginTop="14dp"
+                        nft_img_rounded="@{vm.detailNftState.imgUrl}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:src="@drawable/nft_example_image" />
@@ -94,6 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
+                            android:text="@{vm.detailNftState.title}"
                             tools:text="NFT name here" />
 
                         <LinearLayout
@@ -110,6 +112,7 @@
                                 android:id="@+id/user_iv"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
+                                image_from_url_circle="@{vm.detailNftState.profileUrl}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:src="@drawable/nft_example_image" />
@@ -121,6 +124,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="8dp"
                                 android:gravity="start"
+                                android:text="@{vm.detailNftState.nickname}"
                                 tools:text="User name" />
                         </LinearLayout>
                     </LinearLayout>
@@ -177,6 +181,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
+                        sellerText="@{vm.detailNftState}"
                         tools:text="user name 판매자" />
 
                     <TextView
@@ -237,6 +242,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="end"
+                            priceText="@{vm.detailNftState}"
                             tools:text="324.91 dida" />
                     </LinearLayout>
 
@@ -323,10 +329,13 @@
 
             <TextView
                 android:id="@+id/bottom_price_tv"
-                style="@style/TextView_bold_14_white"
+                style="@style/TextView_bold_22_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 android:gravity="start"
+                android:text="@{vm.detailNftState.price}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/buy_btn"
                 app:layout_constraintStart_toEndOf="@+id/price_iv"
@@ -343,7 +352,8 @@
                 android:paddingRight="60dp"
                 android:paddingBottom="16dp"
                 android:text="@string/buy_text"
-                style="@style/TextView_regular_18_black"
+                android:gravity="center"
+                style="@style/TextView_bold_18_black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

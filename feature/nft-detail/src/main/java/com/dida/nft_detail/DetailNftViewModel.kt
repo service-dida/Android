@@ -143,7 +143,13 @@ class DetailNftViewModel @Inject constructor(
                     //TODO : 로그인
                 }
                 DetailOwnerType.NOTMINE_AND_SALE ->{
-                    //TODO : 구매하기
+                    val detailNFT = detailNftState.value.successOrNull()
+                    if(detailNFT != null){
+                        _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft(
+                            detailNFT.cardId, detailNFT.imgUrl,detailNFT.title,detailNFT.profileUrl,
+                            detailNFT.nickname,"",detailNFT.price
+                        ))
+                    }
                 }
                 DetailOwnerType.MINE_AND_NOTSALE ->{
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToSell)
@@ -167,11 +173,5 @@ class DetailNftViewModel @Inject constructor(
 
     // 클립 버튼으로 처리
     override fun onClipOrMoreClicked(postId: Long) {
-    }
-
-    override fun onBuyNftClicked() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft)
-        }
     }
 }

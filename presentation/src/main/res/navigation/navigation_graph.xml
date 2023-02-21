@@ -205,6 +205,11 @@
         android:id="@+id/detailNftFragment"
         android:name="com.dida.android.presentation.views.DetailNftFragment"
         android:label="DetailNftFragment" >
+
+        <argument
+            android:name="cardId"
+            app:argType="long" />
+
         <action
             android:id="@+id/action_detailNftFragment_to_communityDetailFragment"
             app:destination="@id/communityDetailFragment"
@@ -215,9 +220,7 @@
             app:destination="@id/communityFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
-        <argument
-            android:name="cardId"
-            app:argType="long" />
+
         <action
             android:id="@+id/action_detailNftFragment_to_createCommunityFragment"
             app:destination="@id/createCommunityFragment"
@@ -389,11 +392,26 @@
         android:name="com.dida.android.presentation.views.BuyNftFragment"
         android:label="BuyNftFragment" >
         <argument
-            android:name="price"
+            android:name="nftId"
+            app:argType="long" />
+        <argument
+            android:name="nftImg"
             app:argType="string" />
         <argument
-            android:name="cardId"
-            app:argType="long" />
+            android:name="nftTitle"
+            app:argType="string" />
+        <argument
+            android:name="userImg"
+            app:argType="string" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+        <argument
+            android:name="myName"
+            app:argType="string" />
+        <argument
+            android:name="price"
+            app:argType="string" />
     </fragment>
 
     <fragment
