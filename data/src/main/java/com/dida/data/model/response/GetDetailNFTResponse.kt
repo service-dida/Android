@@ -8,6 +8,7 @@ data class GetDetailNFTResponse(
     @SerializedName("description") val description: String,
     @SerializedName("id") val id: String,
     @SerializedName("imgUrl") val imgUrl: String,
+    @SerializedName("viewerNickname") val viewerNickname: String,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("price") val price: String,
     @SerializedName("profileUrl") val profileUrl: String,

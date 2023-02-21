@@ -56,6 +56,6 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     }
 
     private fun initData(){
-        viewModel.initDetailNft(args.nftId,args.nftImg,args.nftTitle,args.userImg,args.userName,args.price)
+        viewModel.initDetailNft(args.nftId,args.nftImg,args.nftTitle,args.userImg,args.userName,args.price,args.viewerNickname)
     }
 }

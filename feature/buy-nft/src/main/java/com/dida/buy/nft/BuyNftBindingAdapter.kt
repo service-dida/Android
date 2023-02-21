@@ -15,7 +15,7 @@ fun TextView.bindSellerName(detailNFT: StateFlow<DetailNFT>) {
 
 @BindingAdapter("buyerText")
 fun TextView.bindBuyerName(detailNFT: StateFlow<DetailNFT>) {
-    this.text = " 구매자"
+    this.text = "${detailNFT.value.viewerNickname} 구매자"
 }
 
 @BindingAdapter("priceText")

@@ -6,6 +6,7 @@ data class DetailNFT(
     val description: String,
     val id: String,
     val imgUrl: String,
+    val viewerNickname: String,
     val nickname: String,
     val price: String,
     val profileUrl: String,

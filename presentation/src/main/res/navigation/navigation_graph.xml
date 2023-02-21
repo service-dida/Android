@@ -407,10 +407,10 @@
             android:name="userName"
             app:argType="string" />
         <argument
-            android:name="myName"
+            android:name="price"
             app:argType="string" />
         <argument
-            android:name="price"
+            android:name="viewerNickname"
             app:argType="string" />
     </fragment>
 

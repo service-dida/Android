@@ -28,9 +28,9 @@ class BuyNftViewModel @Inject constructor(
     private val _detailNftState: MutableStateFlow<DetailNFT?> = MutableStateFlow(null)
     val detailNftState: StateFlow<DetailNFT?> = _detailNftState
 
-    fun initDetailNft(cardId : Long, imgUrl : String, title : String, profileUrl : String,nickname : String, price :String){
+    fun initDetailNft(cardId : Long, imgUrl : String, title : String, profileUrl : String,nickname : String, price :String , viewerNickname : String){
         baseViewModelScope.launch {
-            _detailNftState.emit(DetailNFT(cardId,"","","",imgUrl,nickname,price,profileUrl,title,false,"",0L))
+            _detailNftState.emit(DetailNFT(cardId,"","","",imgUrl,viewerNickname,nickname,price,profileUrl,title,false,"",0L))
         }
     }
     fun buyNft(password : String, nftId : Long){
