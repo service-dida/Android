@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:visibility="@{type != DetailOwnerType.NOTMINE? View.VISIBLE : View.GONE}"
+                android:visibility="@{(type == DetailOwnerType.MINE_AND_SALE || type == DetailOwnerType.MINE_AND_NOTSALE) ? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@+id/cancel_btn"
                 tools:layout_editor_absoluteX="24dp">
 
@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:visibility="@{type == DetailOwnerType.NOTMINE? View.VISIBLE : View.GONE}"
+                android:visibility="@{(type == DetailOwnerType.NOTMINE_AND_NOTSALE || type == DetailOwnerType.NOTMINE_AND_SALE)? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@+id/remove_btn"
                 tools:layout_editor_absoluteX="24dp">
 
@@ -162,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:visibility="@{type == DetailOwnerType.NOTMINE? View.VISIBLE : View.GONE}"
+                android:visibility="@{(type == DetailOwnerType.NOTMINE_AND_NOTSALE || type == DetailOwnerType.NOTMINE_AND_SALE)? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@+id/hide_btn"
                 tools:layout_editor_absoluteX="24dp">
 
