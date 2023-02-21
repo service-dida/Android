@@ -41,7 +41,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
         binding.buyBtn.setOnClickListener {
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
-                    viewModel.buyNft(password,args.nftId)
+                    viewModel.buyNft(password,args.marketId)
                 }
             }.show(childFragmentManager,"BuyNftFragment")
         }

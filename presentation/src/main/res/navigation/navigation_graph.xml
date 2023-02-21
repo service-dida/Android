@@ -412,6 +412,9 @@
         <argument
             android:name="viewerNickname"
             app:argType="string" />
+        <argument
+            android:name="marketId"
+            app:argType="long" />
     </fragment>
 
     <fragment

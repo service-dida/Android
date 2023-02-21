@@ -1,7 +1,6 @@
 package com.dida.buy.nft
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.UiState
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -30,12 +29,12 @@ class BuyNftViewModel @Inject constructor(
 
     fun initDetailNft(cardId : Long, imgUrl : String, title : String, profileUrl : String,nickname : String, price :String , viewerNickname : String){
         baseViewModelScope.launch {
-            _detailNftState.emit(DetailNFT(cardId,"","","",imgUrl,viewerNickname,nickname,price,profileUrl,title,false,"",0L))
+            _detailNftState.emit(DetailNFT(cardId,"","","",imgUrl,viewerNickname,nickname,price,profileUrl,title,false,"",0L,0L))
         }
     }
-    fun buyNft(password : String, nftId : Long){
+    fun buyNft(password : String, marketId : Long){
         baseViewModelScope.launch {
-            buyNftAPI(password, nftId)
+            buyNftAPI(password, marketId)
                 .onSuccess {}
                 .onError { e -> catchError(e) }
         }

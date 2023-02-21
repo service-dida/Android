@@ -147,7 +147,7 @@ class DetailNftViewModel @Inject constructor(
                     if(detailNFT != null){
                         _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft(
                             detailNFT.cardId, detailNFT.imgUrl,detailNFT.title,detailNFT.profileUrl,
-                            detailNFT.nickname,detailNFT.price,detailNFT.viewerNickname
+                            detailNFT.nickname,detailNFT.price,detailNFT.viewerNickname,detailNFT.marketId
                         ))
                     }
                 }

@@ -57,7 +57,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                         is DetailNftNavigationAction.NavigateToBuyNft -> {
                             navigate(
                                 DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment(
-                                    it.nftId,it.nftImg,it.nftTitle,it.userImg,it.userName,it.price,it.viewerNickName
+                                    it.nftId,it.nftImg,it.nftTitle,it.userImg,it.userName,it.price,it.viewerNickName,it.marketId
                                 )
                             )
                         }
