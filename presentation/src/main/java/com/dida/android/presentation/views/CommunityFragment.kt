@@ -24,6 +24,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     private val hotCardAdapter by lazy { HotCardAdapter(viewModel) }
     private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
 
+    private var lastScrollY = 0
 
     override fun initStartView() {
         binding.apply {
@@ -45,10 +46,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                     }
                 }
             }
+        }
 
+        viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.postsState.collectLatest {
-                    communityPagingAdapter.submitData(it)
+                    communityPagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
                 }
             }
 
@@ -65,11 +68,27 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override fun onResume() {
         super.onResume()
-        viewModel.getCommunity()
+        getLastScrollY()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setLastScrollY()
     }
 
     private fun initRecyclerView(){
         binding.activeCommunityRecyclerView.adapter = hotCardAdapter
         binding.communityRecyclerView.adapter = communityPagingAdapter
+    }
+
+    private fun setLastScrollY() {
+        lastScrollY = binding.communityScroll.scrollY
+    }
+
+    private fun getLastScrollY() {
+        if(lastScrollY > 0) {
+            binding.communityScroll.scrollTo(0, lastScrollY)
+            lastScrollY = 0
+        }
     }
 }

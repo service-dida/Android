@@ -4,6 +4,7 @@ import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
 import com.dida.data.model.request.*
+import com.dida.data.model.response.PostBuyNftRequest
 import com.dida.data.model.response.PostLikeRequest
 import com.dida.data.model.response.PostSellNftRequest
 import com.dida.domain.NetworkResult
@@ -16,6 +17,7 @@ import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.BuySellList
+import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.post.CardPost
@@ -76,7 +78,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getSoldOut(term).toDomain() }
     }
 
-    override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<Unit> {
+    override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<Long> {
         val request = NFTMintRequest(payPwd, name,description,image)
         return handleApi { mainAPIService.mintNFT(request) }
     }
@@ -246,6 +248,14 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getHideCancelNft(cardId: Long): NetworkResult<Unit> {
         return handleApi { mainAPIService.getHideCancelNft(cardId = cardId) }
+    }
+
+    override suspend fun getUserUserId(userId: Long): NetworkResult<OtherUserProfie> {
+        return handleApi { mainAPIService.getUserUserId(userId = userId).toDomain() }
+    }
+
+    override suspend fun getUserCardsUserId(userId: Long): NetworkResult<List<UserNft>> {
+        return handleApi { mainAPIService.getUserCardsUserId(userId = userId).toDomain() }
     }
 }
 

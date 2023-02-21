@@ -52,11 +52,12 @@ interface MainAPIService {
     @POST("/user/wallet/pwd")
     suspend fun postPasswordChange(@Body request: PostPasswordChangeRequest)
 
+    // 임시 비밀번호 발급(카카오 계정으로 등록된 이메일)
     @GET("/user/wallet/pwd")
     suspend fun getTempPassword()
 
     @POST("/card")
-    suspend fun mintNFT(@Body request: NFTMintRequest)
+    suspend fun mintNFT(@Body request: NFTMintRequest) : Long
 
     @Multipart
     @PUT("/user/img")
@@ -173,5 +174,13 @@ interface MainAPIService {
     //NFT 숨기기 취소
     @GET("card/reveal/{cardId}")
     suspend fun getHideCancelNft(@Path("cardId") cardId: Long) : Unit
+
+    // 타 유저 프로필 조회
+    @GET("/user/{userId}")
+    suspend fun getUserUserId(@Path("userId") userId: Long) : GetUserUserIdResponse
+
+    // 타 유저 카드 조회
+    @GET("/user/cards/{userId}")
+    suspend fun getUserCardsUserId(@Path("userId") userId: Long) : List<RecentCardResponse>
 
 }

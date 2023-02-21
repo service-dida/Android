@@ -2,10 +2,6 @@ package com.dida.settings
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication
-import com.dida.domain.onError
-import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CreateUserAPI
-import com.dida.domain.usecase.main.NicknameCheckAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -25,9 +21,9 @@ class SettingsViewModel @Inject constructor() : BaseViewModel(), SettingsActionH
         }
     }
 
-    override fun onPrePasswordClicked() {
+    override fun onTempPasswordClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(SettingsNavigationAction.NavigateToPrePassword)
+            _navigationEvent.emit(SettingsNavigationAction.NavigateToTempPassword)
         }
     }
 

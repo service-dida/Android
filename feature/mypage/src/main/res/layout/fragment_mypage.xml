@@ -27,6 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/mypage_scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -274,13 +275,13 @@
                     android:orientation="vertical"
                     android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/holder_mypage_user_cards"
-                    userNftItem="@{vm.hasMyNftState}" />
+                    app:userNftItem="@{vm.hasMyNftState}" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/user_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    startLoading="@{vm.myPageState}"
+                    app:startLoading="@{vm.myPageState}"
                     tools:visibility="gone"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="9dp">

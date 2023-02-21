@@ -49,6 +49,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
+                        is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                     }
                 }
             }

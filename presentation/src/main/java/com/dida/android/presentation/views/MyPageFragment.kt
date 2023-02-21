@@ -25,6 +25,8 @@ class MyPageFragment :
     override val viewModel: MyPageViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
 
+    private var lastScrollY = 0
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -61,6 +63,12 @@ class MyPageFragment :
     override fun onResume() {
         super.onResume()
         viewModel.getMypage()
+        getLastScrollY()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setLastScrollY()
     }
 
     private fun initMyPage() {
@@ -86,5 +94,16 @@ class MyPageFragment :
                 true
             }
         }
+    }
+
+    private fun getLastScrollY() {
+        if(lastScrollY > 0) {
+            binding.mypageScroll.scrollTo(0, lastScrollY)
+            lastScrollY = 0
+        }
+    }
+
+    private fun setLastScrollY() {
+        lastScrollY = binding.mypageScroll.scrollY
     }
 }

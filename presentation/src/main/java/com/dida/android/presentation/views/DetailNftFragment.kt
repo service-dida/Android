@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -57,6 +58,8 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                             viewModel.detailNftState.value.successOrNull()?.price.toString(),
                             viewModel.detailNftState.value.successOrNull()?.cardId!!))
                         is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
+                        is DetailNftNavigationAction.NavigateToBack -> navController.popBackStack()
+                        is DetailNftNavigationAction.NavigateToUserProfile -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToUserProfileFragment(it.userId))
                     }
                 }
             }

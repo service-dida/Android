@@ -9,6 +9,7 @@ import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.*
 import com.dida.domain.model.nav.home.Collection
 import com.dida.domain.model.nav.mypage.BuySellList
+import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.model.nav.post.*
@@ -170,6 +171,7 @@ fun GetPostPostIdResponse.toDomain(): Post {
     return Post(
         postId = postId,
         cardId = cardId,
+        userId = userId,
         userName = userName,
         userImgUrl = userImgUrl,
         title = title,
@@ -187,6 +189,7 @@ fun List<GetPostIdCommentsResponse>.toDomain(): List<Comments> {
     return map { Comments(
        commentId = it.commentId,
         postId = it.postId,
+        userId = it.userId,
         content = it.content,
         userName = it.userName,
         userImgUrl = it.userImgUrl,
@@ -228,6 +231,21 @@ fun List<CardHideListResponse>.toDomain(): List<CardHideList> {
     return map { CardHideList(
         cardId = it.cardId,
         cardTitle = it.cardTitle,
-        cardUrl = it.cardUrl
+        cardUrl = it.cardUrl,
+        userName = it.userName,
+        price = it.price
     ) }
+}
+
+fun GetUserUserIdResponse.toDomain(): OtherUserProfie {
+    return OtherUserProfie(
+        userId = userId,
+        nickname = nickname,
+        profileUrl = profileUrl,
+        description = description,
+        cardCnt = cardCnt,
+        followerCnt = followerCnt,
+        followingCnt = followingCnt,
+        followed = followed
+    )
 }

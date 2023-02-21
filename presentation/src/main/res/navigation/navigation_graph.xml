@@ -44,6 +44,11 @@
             app:destination="@id/hotUserFragment"
             app:enterAnim="@anim/enter_from_right"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
 
     </fragment>
     <fragment
@@ -152,6 +157,11 @@
             app:destination="@id/communityCommunityInputFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_communityDetailFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment
@@ -224,6 +234,11 @@
             app:destination="@id/homeFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_detailNftFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -269,8 +284,40 @@
             app:enterAnim="@anim/enter_from_right" />
         <action
             android:id="@+id/action_settingFragment_to_hideListFragment"
-            app:destination="@id/hideListFragment" />
+            app:destination="@id/hideListFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_tempPasswordFragment"
+            app:destination="@id/tempPasswordFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/tempPasswordFragment"
+        android:name="com.dida.android.presentation.views.TempPasswordFragment"
+        android:label="TempPasswordFragment" >
+        <action
+            android:id="@+id/action_tempPasswordFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/settingFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.dida.android.presentation.views.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" >
+    </fragment>
+
     <fragment
         android:id="@+id/swapLoadingFragment"
         android:name="com.dida.android.presentation.views.SwapLoadingFragment"
@@ -356,6 +403,20 @@
         <action
             android:id="@+id/action_hideListFragment_to_detailNftFragment"
             app:destination="@id/detailNftFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.dida.android.presentation.views.UserProfileFragment"
+        android:label="UserProfileFragment" >
+        <argument
+            android:name="userId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
 </navigation>

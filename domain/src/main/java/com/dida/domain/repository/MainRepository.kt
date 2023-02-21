@@ -10,14 +10,15 @@ import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.Home
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.BuySellList
+import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
-import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.model.nav.post.Comments
 import com.dida.domain.model.nav.post.Post
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.model.nav.swap.WalletAmount
+import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.domain.model.splash.AppVersionResponse
 import okhttp3.MultipartBody
 
@@ -53,7 +54,7 @@ interface  MainRepository {
 
     suspend fun getSoldOutAPI(term: Int) : NetworkResult<List<SoldOut>>
 
-    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<Unit>
+    suspend fun mintNFT(payPwd : String, name : String, description : String, image : String) : NetworkResult<Long>
 
     suspend fun updateProfileImageAPI(file : MultipartBody.Part) : NetworkResult<Unit>
 
@@ -118,4 +119,8 @@ interface  MainRepository {
     suspend fun getHideNft(cardId : Long) : NetworkResult<Unit>
 
     suspend fun getHideCancelNft(cardId : Long) : NetworkResult<Unit>
+
+    suspend fun getUserUserId(userId: Long) : NetworkResult<OtherUserProfie>
+
+    suspend fun getUserCardsUserId(userId: Long) : NetworkResult<List<UserNft>>
 }

@@ -43,6 +43,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         ) }
         .subscribe(this)
 
+    private var lastScrollY = 0
 
     override fun initStartView() {
         binding.apply {
@@ -63,7 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                     is HomeNavigationAction.NavigateToHotSeller -> {  }
                     is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
                     is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId.toLong()))
-                    is HomeNavigationAction.NavigateToCollection -> {  }
+                    is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId.toLong()))
                     is HomeNavigationAction.NavigateToSoldOutMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
                     is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
                     is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
@@ -93,6 +94,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getLastScrollY()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setLastScrollY()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -152,6 +163,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             if(NotificationManagerCompat.from(requireContext()).areNotificationsEnabled().not()) {
                 notificationPermissionRequest.request()
             }
+        }
+    }
+
+    private fun setLastScrollY() {
+        lastScrollY = binding.homeScroll.scrollY
+    }
+
+    private fun getLastScrollY() {
+        if(lastScrollY > 0) {
+            binding.homeScroll.scrollTo(0, lastScrollY)
+            lastScrollY = 0
         }
     }
 }

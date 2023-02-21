@@ -25,6 +25,17 @@ object GlideBindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("image_from_url_fullsize")
+    fun bindImageFromURLFullSize(imageView: ImageView, imageURL: String?) {
+        if (imageURL.isNullOrEmpty().not()) {
+            Glide.with(imageView.context)
+                .load(imageURL)
+                .placeholder(R.mipmap.img_dida_logo_foreground)
+                .into(imageView)
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("image_from_url_rounded")
     fun bindImageFromURLRounded(imageView: ImageView, imageURL: String?) {
         if (imageURL.isNullOrEmpty().not()) {
