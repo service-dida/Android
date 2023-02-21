@@ -7,4 +7,5 @@ interface DetailNftActionHandler {
     fun onCommunityMoreClicked()
     fun onBuyNftClicked()
     fun onUserProfileClicked()
+    fun onNextButtonClicked()
 }

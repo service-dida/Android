@@ -34,24 +34,29 @@ class DetailNftViewModel @Inject constructor(
     private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val moreEvent: SharedFlow<Unit> = _moreEvent
 
-    private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> = MutableSharedFlow<DetailNftNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> =
+        MutableSharedFlow<DetailNftNavigationAction>()
     val navigationEvent: SharedFlow<DetailNftNavigationAction> = _navigationEvent
 
-    private val _detailNftState: MutableStateFlow<UiState<DetailNFT>> = MutableStateFlow(UiState.Loading)
+    private val _detailNftState: MutableStateFlow<UiState<DetailNFT>> =
+        MutableStateFlow(UiState.Loading)
     val detailNftState: StateFlow<UiState<DetailNFT>> = _detailNftState
 
     private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Posts>> = _communityState.asStateFlow()
 
-    val detailOwnerTypeState: MutableStateFlow<DetailOwnerType> = MutableStateFlow(DetailOwnerType.ALL)
-    fun getDetailNft(cardId : Long) {
+    val detailOwnerTypeState: MutableStateFlow<DetailOwnerType> =
+        MutableStateFlow(DetailOwnerType.ALL)
+
+    fun getDetailNft(cardId: Long) {
         baseViewModelScope.launch {
             detailNftAPI(cardId)
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _detailNftState.value = UiState.Success(it)
                     setDetailOwnerType(it)
-                    dismissLoading() }
+                    dismissLoading()
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -64,7 +69,7 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun postlikeNft(cardId : Long){
+    fun postlikeNft(cardId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(cardId)
@@ -73,10 +78,10 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun sellNft(payPwd : String, cardId: Long, price : Double){
+    fun sellNft(payPwd: String, cardId: Long, price: Double) {
         baseViewModelScope.launch {
             showLoading()
-            sellNftAPI(payPwd,cardId,price)
+            sellNftAPI(payPwd, cardId, price)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
@@ -84,7 +89,7 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun hideNft(cardId: Long){
+    fun hideNft(cardId: Long) {
         baseViewModelScope.launch {
             showLoading()
             hideNftAPI(cardId)
@@ -103,10 +108,18 @@ class DetailNftViewModel @Inject constructor(
                 } else {
                     detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_SALE)
                 }
-            } else if(detailNFT.type == "NEED LOGIN"){
-                detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN)
-            } else{
-                detailOwnerTypeState.emit(DetailOwnerType.NOTMINE)
+            } else if (detailNFT.type == "NOT MINE") {
+                if (detailNFT.price == "NOT SALE") {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_NOTSALE)
+                } else {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_SALE)
+                }
+            } else if (detailNFT.type == "NEED LOGIN") {
+                if (detailNFT.price == "NOT SALE") {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_NOTSALE)
+                } else {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_SALE)
+                }
             }
         }
     }
@@ -120,6 +133,23 @@ class DetailNftViewModel @Inject constructor(
     override fun onUserProfileClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToUserProfile(userId = detailNftState.value.successOrNull()!!.userId))
+        }
+    }
+
+    override fun onNextButtonClicked() {
+        baseViewModelScope.launch {
+            when(detailOwnerTypeState.value){
+                DetailOwnerType.NOTLOGIN_AND_SALE ->{
+                    //TODO : 로그인
+                }
+                DetailOwnerType.NOTMINE_AND_SALE ->{
+                    //TODO : 구매하기
+                }
+                DetailOwnerType.MINE_AND_NOTSALE ->{
+                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToSell)
+                }
+                else -> {}
+            }
         }
     }
 
