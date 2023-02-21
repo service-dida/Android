@@ -325,7 +325,7 @@
                 tools:text="325.91"/>
 
             <TextView
-                android:id="@+id/buy_btn"
+                android:id="@+id/next_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_brandlemon_radius10"
@@ -335,6 +335,7 @@
                 android:paddingRight="60dp"
                 android:paddingBottom="16dp"
                 android:text="@string/buy_text"
+                android:onClick="@{() -> vm.onNextButtonClicked()}"
                 NftDetailConfirmBtn="@{vm.detailOwnerTypeState}"
                 android:textColor="@color/black"
                 android:textSize="18dp"

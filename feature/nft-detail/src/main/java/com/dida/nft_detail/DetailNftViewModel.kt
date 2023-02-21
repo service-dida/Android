@@ -136,6 +136,23 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
+    override fun onNextButtonClicked() {
+        baseViewModelScope.launch {
+            when(detailOwnerTypeState.value){
+                DetailOwnerType.NOTLOGIN_AND_SALE ->{
+                    //TODO : 로그인
+                }
+                DetailOwnerType.NOTMINE_AND_SALE ->{
+                    //TODO : 구매하기
+                }
+                DetailOwnerType.MINE_AND_NOTSALE ->{
+                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToSell)
+                }
+                else -> {}
+            }
+        }
+    }
+
     override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToItemCommunity(postId = postId))

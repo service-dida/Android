@@ -56,6 +56,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                         is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
                         is DetailNftNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailNftNavigationAction.NavigateToUserProfile -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToUserProfileFragment(it.userId))
+                        is DetailNftNavigationAction.NavigateToSell -> showSellNftDialog()
                     }
                 }
             }

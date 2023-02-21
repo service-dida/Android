@@ -6,4 +6,5 @@ import com.dida.domain.model.nav.detailnft.DetailNFT
 interface DetailNftActionHandler {
     fun onCommunityMoreClicked()
     fun onUserProfileClicked()
+    fun onNextButtonClicked()
 }
