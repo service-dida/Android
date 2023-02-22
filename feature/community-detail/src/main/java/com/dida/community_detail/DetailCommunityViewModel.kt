@@ -106,4 +106,10 @@ class DetailCommunityViewModel @Inject constructor(
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserProfile(userId = postState.value!!.userId))
         }
     }
+
+    override fun onCardClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = postState.value!!.cardId))
+        }
+    }
 }
