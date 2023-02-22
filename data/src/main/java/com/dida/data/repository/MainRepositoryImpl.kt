@@ -257,5 +257,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getUserCardsUserId(userId: Long): NetworkResult<List<UserNft>> {
         return handleApi { mainAPIService.getUserCardsUserId(userId = userId).toDomain() }
     }
+
+    override suspend fun patchDeleteNft(cardId: Long): NetworkResult<Long> {
+        return handleApi { mainAPIService.patchDeleteNft(cardId) }
+    }
 }
 

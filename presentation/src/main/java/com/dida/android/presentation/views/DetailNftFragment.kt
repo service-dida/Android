@@ -83,7 +83,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                             when(type){
                                 DetailNftMenuType.SELL ->{ showSellNftDialog() }
                                 DetailNftMenuType.CANCEL ->{}
-                                DetailNftMenuType.REMOVE ->{}
+                                DetailNftMenuType.REMOVE ->{showDeleteNftDialog()}
                                 DetailNftMenuType.HIDE ->{ viewModel.hideNft(args.cardId) }
                                 DetailNftMenuType.REPORT ->{}
                             }
@@ -113,6 +113,14 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             }.show(childFragmentManager,"DetailNftBottomSheet")
         }
         dialog.show(childFragmentManager, "DetailNftFragment")
+    }
+
+    private fun showDeleteNftDialog(){
+        PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
+            if(success){
+                viewModel.deleteNft(args.cardId)
+            }
+        }.show(childFragmentManager,"DetailNftBottomSheet")
     }
 
 }
