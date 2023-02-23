@@ -97,7 +97,7 @@
                             android:paddingRight="16dp"
                             app:otherUserFollowBtn="@{vm.userProfileState}"
                             android:fontFamily="@font/pretendard_regular"
-                            android:onClick="@{() ->  vm.onFollowClicked()}"/>
+                            app:onSingleClick="@{() ->  vm.onFollowClicked()}"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!--TODO : 자기소개 없을 시 기본 말 추가-->
@@ -261,7 +261,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
-                                android:onClick="@{() -> vm.onCardSortTypeClicked(CardSortType.NEWEST)}"
+                                app:onSingleClick="@{() -> vm.onCardSortTypeClicked(CardSortType.NEWEST)}"
                                 android:text="@string/mypage_nft_type_newest_text"
                                 android:textColor="@{vm.cardSortTypeState==CardSortType.NEWEST? @color/brand_lemon : @color/surface6}"
                                 android:textSize="14dp" />
@@ -280,7 +280,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
-                                android:onClick="@{() -> vm.onCardSortTypeClicked(CardSortType.OLDEST)}"
+                                app:onSingleClick="@{() -> vm.onCardSortTypeClicked(CardSortType.OLDEST)}"
                                 android:text="@string/mypage_nft_type_oldest_text"
                                 android:textColor="@{vm.cardSortTypeState==CardSortType.OLDEST? @color/brand_lemon : @color/surface6}"
                                 android:textSize="14dp" />
