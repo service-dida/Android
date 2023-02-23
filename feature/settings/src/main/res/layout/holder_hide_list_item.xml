@@ -39,7 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@drawable/nft_example_image"
-                android:onClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}"/>
+                onSingleClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}"/>
 
             <TextView
                 android:id="@+id/user_name_textview"
@@ -107,7 +107,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dida_icon_imageview"
-                android:onClick="@{() -> eventListener.onHideClicked(holderModel.cardId)}"/>
+                app:onSingleClick="@{() -> eventListener.onHideClicked(holderModel.cardId)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
