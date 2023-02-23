@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateCommunityViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl,
     private val cardsPostLikeAPI: CardsPostLikeAPI,
     private val cardsPostMyAPI: CardsPostMyAPI,
 ) : BaseViewModel(), CreateCommunityActionHandler {
