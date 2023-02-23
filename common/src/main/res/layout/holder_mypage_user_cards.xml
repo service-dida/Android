@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}">
+                app:onSingleClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}">
 
                 <ImageView
                     android:id="@+id/nft_ImageView"
@@ -113,7 +113,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/holder_main"
-                android:onClick="@{() -> eventListener.onLikeBtnClicked(holderModel.cardId)}"/>
+                app:onSingleClick="@{() -> eventListener.onLikeBtnClicked(holderModel.cardId)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

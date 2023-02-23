@@ -17,7 +17,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:id="@+id/soldout_main"
-        android:onClick="@{() -> eventListener.onSoldOutItemClicked(holderModel.nftId)}">
+        app:onSingleClick="@{() -> eventListener.onSoldOutItemClicked(holderModel.nftId)}">
 
         <ImageView
             android:id="@+id/nft_img"

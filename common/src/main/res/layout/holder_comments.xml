@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/more_btn"
-            android:onClick="@{() -> eventListener.onCommentUserProfileClicked(holderModel.userId)}">
+            app:onSingleClick="@{() -> eventListener.onCommentUserProfileClicked(holderModel.userId)}">
 
             <ImageView
                 android:id="@+id/user_img"

@@ -32,7 +32,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_write"
             android:backgroundTint="@color/brand_lemon"
-            android:onClick="@{() -> vm.onCommunityWriteClicked()}"
+            app:onSingleClick="@{() -> vm.onCommunityWriteClicked()}"
             android:contentDescription="@string/community_floatingActionButton_description"
             android:padding="16dp"
             app:fab_endLoading="@{vm.hotCardState}"/>
