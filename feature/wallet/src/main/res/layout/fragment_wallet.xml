@@ -139,7 +139,7 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="@string/all_text"
-                        android:onClick="@{() -> vm.onHistoryTypeClicked(0)}"
+                        app:onSingleClick="@{() -> vm.onHistoryTypeClicked(0)}"
                         android:textColor="@{vm.typeHistoryState==0? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
 
@@ -158,7 +158,7 @@
                         android:fontFamily="ㅑ@font/pretendard_regular"
                         android:gravity="center"
                         android:text="@string/buy_text_short"
-                        android:onClick="@{() -> vm.onHistoryTypeClicked(1)}"
+                        app:onSingleClick="@{() -> vm.onHistoryTypeClicked(1)}"
                         android:textColor="@{vm.typeHistoryState==1? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
 
@@ -177,7 +177,7 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center"
                         android:text="@string/sold_text_short"
-                        android:onClick="@{() -> vm.onHistoryTypeClicked(2)}"
+                        app:onSingleClick="@{() -> vm.onHistoryTypeClicked(2)}"
                         android:textColor="@{vm.typeHistoryState==2? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
                 </LinearLayout>
