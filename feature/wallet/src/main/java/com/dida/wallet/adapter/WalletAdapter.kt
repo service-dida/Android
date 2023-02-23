@@ -34,6 +34,8 @@ class WalletAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemViewType(position: Int): Int = R.layout.holder_wallet_card
+
     class ViewHolder(private val binding: HolderWalletCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

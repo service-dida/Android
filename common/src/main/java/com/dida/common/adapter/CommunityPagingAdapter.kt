@@ -30,6 +30,8 @@ class CommunityPagingAdapter(
         getItem(position)?.let { holder.bind(it) }
     }
 
+    override fun getItemViewType(position: Int): Int = R.layout.holder_community
+
     class ViewHolder(private val binding: HolderCommunityBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val adapter = PostCommentsAdapter()

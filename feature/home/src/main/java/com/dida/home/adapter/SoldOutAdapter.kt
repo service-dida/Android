@@ -32,6 +32,10 @@ class SoldOutAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemId(position: Int): Long = getItem(position).nftId * -1
+
+    override fun getItemViewType(position: Int): Int = R.layout.holder_soldout
+
     class ViewHolder(private val binding: HolderSoldoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SoldOut) {

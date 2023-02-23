@@ -31,6 +31,8 @@ class SwapHistoryAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemViewType(position: Int): Int = R.layout.holder_swap_history
+
     class ViewHolder(private val binding: HolderSwapHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SwapHistory) {

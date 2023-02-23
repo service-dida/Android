@@ -27,6 +27,8 @@ class WalletHistoryAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemViewType(position: Int): Int = R.layout.holder_wallet_nft_history
+
     class ViewHolder(private val binding: HolderWalletNftHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
