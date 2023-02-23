@@ -29,10 +29,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                constraint_endLoading="@{vm.detailNftState}">
+                app:constraint_endLoading="@{vm.detailNftState}">
 
                 <androidx.appcompat.widget.Toolbar
-                    NftDetailToolbar="@{vm.detailNftState}"
+                    app:NftDetailToolbar="@{vm.detailNftState}"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
 
                 <ImageView
                     android:id="@+id/nft_img"
-                    NftImgUrl="@{vm.detailNftState}"
+                    app:NftImgUrl="@{vm.detailNftState}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -66,7 +66,7 @@
 
                 <TextView
                     android:id="@+id/nft_detail_txt"
-                    NftDescription="@{vm.detailNftState}"
+                    app:NftDescription="@{vm.detailNftState}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     app:layout_constraintTop_toBottomOf="@id/nft_detail_txt"
-                    android:onClick="@{() -> vm.onUserProfileClicked()}">
+                    app:onSingleClick="@{() -> vm.onUserProfileClicked()}">
 
                     <ImageView
                         android:id="@+id/user_img"
@@ -180,7 +180,7 @@
 
                 <TextView
                     android:id="@+id/user_link"
-                    NftContract="@{vm.detailNftState}"
+                    app:NftContract="@{vm.detailNftState}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -210,7 +210,7 @@
 
                 <TextView
                     android:id="@+id/user_token"
-                    NftTokenId="@{vm.detailNftState}"
+                    app:NftTokenId="@{vm.detailNftState}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -249,7 +249,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:onClick="@{() -> vm.onCommunityMoreClicked()}"
+                    app:onSingleClick="@{() -> vm.onCommunityMoreClicked()}"
                     android:padding="12dp"
                     android:text="@string/more_text"
                     android:textColor="@color/hots_coin_txt"
@@ -285,17 +285,17 @@
             app:LoginCheck="@{vm.detailNftState}"
             android:src="@drawable/ic_write"
             android:backgroundTint="@color/brand_lemon"
-            android:onClick="@{() -> vm.onCommunityWriteClicked()}"
+            app:onSingleClick="@{() -> vm.onCommunityWriteClicked()}"
             android:padding="16dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/price_main"
-            NftPriceLayout="@{vm.detailOwnerTypeState}"
+            app:NftPriceLayout="@{vm.detailOwnerTypeState}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/surface3"
             android:padding="16dp"
-            constraint_endLoading="@{vm.detailNftState}"
+            app:constraint_endLoading="@{vm.detailNftState}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -335,8 +335,8 @@
                 android:paddingRight="60dp"
                 android:paddingBottom="16dp"
                 android:text="@string/buy_text"
-                android:onClick="@{() -> vm.onNextButtonClicked()}"
-                NftDetailConfirmBtn="@{vm.detailOwnerTypeState}"
+                app:onSingleClick="@{() -> vm.onNextButtonClicked()}"
+                app:NftDetailConfirmBtn="@{vm.detailOwnerTypeState}"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -347,7 +347,7 @@
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/user_shimmer"
-            startLoading="@{vm.detailNftState}"
+            app:startLoading="@{vm.detailNftState}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"

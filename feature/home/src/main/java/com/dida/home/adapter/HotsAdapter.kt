@@ -32,6 +32,10 @@ class HotsAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemId(position: Int): Long = getItem(position).cardId.toLong() * -1
+
+    override fun getItemViewType(position: Int): Int = R.layout.holder_hots
+
     class ViewHolder(private val binding: HolderHotsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

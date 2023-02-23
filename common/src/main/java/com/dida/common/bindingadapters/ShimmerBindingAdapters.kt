@@ -1,4 +1,4 @@
-package com.dida.common.util
+package com.dida.common.bindingadapters
 
 import android.view.View
 import android.widget.ImageView
@@ -9,6 +9,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.common.util.UiState
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

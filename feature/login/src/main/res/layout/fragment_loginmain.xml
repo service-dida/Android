@@ -55,7 +55,7 @@
             app:layout_constraintBottom_toTopOf="@id/kakao_web_login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{() -> vm.onKakaoLoginClicked()}">
+            app:onSingleClick="@{() -> vm.onKakaoLoginClicked()}">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{() -> vm.onKakaoWebLoginClicked()}">
+            app:onSingleClick="@{() -> vm.onKakaoWebLoginClicked()}">
 
             <LinearLayout
                 android:layout_width="wrap_content"

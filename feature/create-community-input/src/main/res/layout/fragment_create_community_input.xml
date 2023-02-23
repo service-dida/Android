@@ -34,7 +34,7 @@
             android:padding="16dp"
             android:background="@null"
             app:createBtnEnable="@{vm.createBtnState}"
-            android:onClick="@{() -> vm.onCreateClicked()}"/>
+            app:onSingleClick="@{() -> vm.onCreateClicked()}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                     android:background="@drawable/custom_surface6_radius8"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:onClick="@{() -> vm.onBackButtonClicked()}"
+                    app:onSingleClick="@{() -> vm.onBackButtonClicked()}"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp">
                 </TextView>

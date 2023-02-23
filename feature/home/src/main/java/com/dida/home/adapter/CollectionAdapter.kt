@@ -32,6 +32,10 @@ class CollectionAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemId(position: Int): Long = getItem(position).userId.toLong() * -1
+
+    override fun getItemViewType(position: Int): Int = R.layout.holder_collection
+
     class ViewHolder(private val binding: HolderCollectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
