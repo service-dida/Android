@@ -23,6 +23,8 @@ class CreateCommunityInputViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<CreateCommunityInputNavigationAction> = MutableSharedFlow<CreateCommunityInputNavigationAction>()
     val navigationEvent: SharedFlow<CreateCommunityInputNavigationAction> = _navigationEvent.asSharedFlow()
 
+    val createState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+
     private val _cardIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
 
     private val _cardImgState: MutableStateFlow<String> = MutableStateFlow<String>("")
