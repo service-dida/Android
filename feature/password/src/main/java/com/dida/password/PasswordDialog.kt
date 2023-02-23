@@ -30,6 +30,7 @@ class PasswordDialog(
     private val size: Int,
     private val mainTitleStr: String,
     private val subTitleStr: String,
+    private val settingYn : Boolean = false,
     private val result: (Boolean, String) -> Unit
 ) : BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
@@ -48,7 +49,7 @@ class PasswordDialog(
             this.subTitle = subTitleStr
         }
         exception = viewModel.errorEvent
-        viewModel.setStackSize(size)
+        viewModel.initPwdInfo(size, settingYn)
         makePasswordDial()
         dialogFullScreen()
 
