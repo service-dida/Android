@@ -2,6 +2,7 @@ package com.dida.create_community
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.repository.MainRepositoryImpl
+import com.dida.domain.flatMap
 import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -14,7 +15,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateCommunityViewModel @Inject constructor(
-    private val mainRepositoryImpl: MainRepositoryImpl,
     private val cardsPostLikeAPI: CardsPostLikeAPI,
     private val cardsPostMyAPI: CardsPostMyAPI,
 ) : BaseViewModel(), CreateCommunityActionHandler {
@@ -30,25 +30,19 @@ class CreateCommunityViewModel @Inject constructor(
     private val _cardPostLikeState: MutableStateFlow<List<CardPost>> = MutableStateFlow<List<CardPost>>(emptyList())
     val cardPostLikeState: StateFlow<List<CardPost>> = _cardPostLikeState.asStateFlow()
 
-    override fun onNftSelectClicked(cardId: Long) {
+    init {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToSelectNft(cardId = cardId))
-        }
-    }
-
-    fun getCardsPostMy() {
-        baseViewModelScope.launch {
-            cardsPostMyAPI.invoke()
+            cardsPostLikeAPI.invoke()
+                .onSuccess { _cardPostLikeState.value = it }
+                .flatMap { cardsPostMyAPI() }
                 .onSuccess { _cardPostMyState.value = it }
                 .onError { e -> catchError(e) }
         }
     }
 
-    fun getCardsPostLike() {
+    override fun onNftSelectClicked(cardId: Long) {
         baseViewModelScope.launch {
-            cardsPostLikeAPI.invoke()
-                .onSuccess { _cardPostLikeState.value = it }
-                .onError { e -> catchError(e) }
+            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToSelectNft(cardId = cardId))
         }
     }
 }

@@ -29,8 +29,6 @@ class CreateCommunityNftFragment(
         }
         exception = viewModel.errorEvent
         initAdapter()
-        viewModel.getCardsPostMy()
-        viewModel.getCardsPostLike()
     }
 
     override fun initDataBinding() {
