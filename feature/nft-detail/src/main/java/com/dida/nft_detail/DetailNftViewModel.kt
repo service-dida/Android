@@ -26,7 +26,8 @@ class DetailNftViewModel @Inject constructor(
     private val postLikeAPI: PostLikeAPI,
     private val postsCardCardIdAPI: PostsCardCardIdAPI,
     private val sellNftAPI: SellNftAPI,
-    private val hideNftAPI: HideNftAPI
+    private val hideNftAPI: HideNftAPI,
+    private val deleteNftAPI: DeleteNftAPI
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
@@ -95,6 +96,17 @@ class DetailNftViewModel @Inject constructor(
             hideNftAPI(cardId)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
+                }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun deleteNft(cardId: Long) {
+        baseViewModelScope.launch {
+            showLoading()
+            deleteNftAPI(cardId)
+                .onSuccess {
+                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
                 .onError { e -> catchError(e) }
         }
