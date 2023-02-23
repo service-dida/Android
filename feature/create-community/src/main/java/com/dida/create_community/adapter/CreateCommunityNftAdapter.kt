@@ -33,6 +33,10 @@ class CreateCommunityNftAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemId(position: Int): Long = getItem(position).cardId * -1
+
+    override fun getItemViewType(position: Int): Int = R.layout.holder_create_community_nft
+
     class ViewHolder(private val binding: HolderCreateCommunityNftBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

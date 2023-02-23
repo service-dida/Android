@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.databinding.HolderMypageUserCardsBinding
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.recent_nft.R
 
 class CardPagingAdapter(
     private val eventListener: NftActionHandler
@@ -28,6 +29,8 @@ class CardPagingAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
+
+    override fun getItemViewType(position: Int): Int = com.dida.common.R.layout.holder_mypage_user_cards
 
     class ViewHolder(private val binding: HolderMypageUserCardsBinding) :
         RecyclerView.ViewHolder(binding.root) {
