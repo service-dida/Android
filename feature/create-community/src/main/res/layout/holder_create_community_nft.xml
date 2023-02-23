@@ -97,7 +97,7 @@
             android:paddingBottom="8dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> eventListener.onNftSelectClicked(holderModel.cardId)}">
+            app:onSingleClick="@{() -> eventListener.onNftSelectClicked(holderModel.cardId)}">
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
