@@ -18,7 +18,7 @@
         android:id="@+id/hots_main"
         android:layout_marginTop="8dp"
         android:layout_marginRight="14dp"
-        android:onClick="@{() -> eventListener.onHotItemClicked(holderModel.cardId)}">
+        app:onSingleClick="@{() -> eventListener.onHotItemClicked(holderModel.cardId)}">
 
         <ImageView
             android:id="@+id/hots_img"
