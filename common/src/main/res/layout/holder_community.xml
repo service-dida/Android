@@ -28,7 +28,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="20dp"
-            android:onClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
+            app:onSingleClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
 
             <ImageView
                 android:id="@+id/user_img"
@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="@id/user_img"
                 app:layout_constraintBottom_toBottomOf="@id/user_img"
                 app:layout_constraintRight_toRightOf="parent"
-                android:onClick="@{() -> eventListener.onClipOrMoreClicked(holderModel.postId)}"
+                app:onSingleClick="@{() -> eventListener.onClipOrMoreClicked(holderModel.postId)}"
                 android:visibility="gone">
 
                 <ImageView
