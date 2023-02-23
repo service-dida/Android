@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/nft_example_image"
-                android:onClick="@{() -> eventListener.onHotCardClicked(holderModel.cardId)}"/>
+                app:onSingleClick="@{() -> eventListener.onHotCardClicked(holderModel.cardId)}"/>
 
     </androidx.cardview.widget.CardView>
 
