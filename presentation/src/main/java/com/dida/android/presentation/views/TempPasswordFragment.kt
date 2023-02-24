@@ -57,7 +57,6 @@ class TempPasswordFragment : BaseFragment<FragmentTempPasswordBinding, TempPassw
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }

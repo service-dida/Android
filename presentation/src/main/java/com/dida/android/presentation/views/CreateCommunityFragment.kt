@@ -61,7 +61,6 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.title = resources.getString(R.string.create_community_title)
             this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
