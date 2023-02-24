@@ -35,13 +35,17 @@ class DetailCommunityViewModel @Inject constructor(
 
     val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
+    val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+
     fun getPost(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postIdAPI.invoke(postId = postId)
                 .onSuccess { _postState.value = it }
                 .flatMap { commentsPostIdAPI.invoke(postId = postId) }
-                .onSuccess { _commentList.value = it }
+                .onSuccess {
+                    _commentList.value = it
+                    isWrite.value = false }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
@@ -75,9 +79,11 @@ class DetailCommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             if(commentState.value.isNotBlank()) {
                 commentAPI(postId = postState.value!!.postId, content = commentState.value)
+                    .onSuccess { commentState.value = "" }
+                    .flatMap { commentsPostIdAPI.invoke(postId = postState.value!!.postId) }
                     .onSuccess {
-                        commentState.value = ""
-                        getPost(postId = postState.value!!.postId) }
+                        isWrite.value = true
+                        _commentList.value = it }
                     .onError { e -> catchError(e) }
             }
         }

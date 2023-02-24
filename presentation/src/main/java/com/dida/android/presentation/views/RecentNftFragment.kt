@@ -68,8 +68,6 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.title = resources.getString(R.string.home_recentnft)
-            this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }

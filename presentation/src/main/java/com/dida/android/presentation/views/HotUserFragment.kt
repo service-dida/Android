@@ -50,7 +50,6 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.title = resources.getString(R.string.home_collection)
             this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
