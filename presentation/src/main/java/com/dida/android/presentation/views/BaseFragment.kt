@@ -162,6 +162,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         FirebaseCrashlytics.getInstance().recordException(exception)
     }
 
+    // FirebaseAnalytics Screen 보내기
     protected fun sendAnalyticsScreen(screenName: String, screenClass: String) {
         val bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
@@ -169,6 +170,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         analytics?.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
+    // FirebaseAnalytics Event 보내기
     protected fun sendAnalyticsEvent(itemId: String, itemName: String) {
         val bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId)
