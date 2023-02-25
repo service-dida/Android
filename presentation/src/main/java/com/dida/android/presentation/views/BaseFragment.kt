@@ -3,7 +3,6 @@ package com.dida.android.presentation.views
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.StatsLog.logEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,6 @@ import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
