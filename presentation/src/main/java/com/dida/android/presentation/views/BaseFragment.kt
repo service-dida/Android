@@ -3,6 +3,7 @@ package com.dida.android.presentation.views
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.StatsLog.logEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,9 @@ import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -79,6 +82,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     */
     protected var exception: SharedFlow<Throwable>? = null
     private var toast: Toast? = null
+
+    /**
+     * Google Analytics 관련 Params
+     */
+    protected var analytics: FirebaseAnalytics? = null
 
     init {
         lifecycleScope.launchWhenStarted {
@@ -154,6 +162,20 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             else -> Exception(throwable)
         }
         FirebaseCrashlytics.getInstance().recordException(exception)
+    }
+
+    protected fun sendAnalyticsScreen(screenName: String, screenClass: String) {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenClass)
+        analytics?.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
+
+    protected fun sendAnalyticsEvent(itemId: String, itemName: String) {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId)
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, itemName)
+        analytics?.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
     // Toast Message 관련 함수
