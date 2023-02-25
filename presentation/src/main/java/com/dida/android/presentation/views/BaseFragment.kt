@@ -23,6 +23,9 @@ import com.dida.common.base.BaseViewModel
 import com.dida.common.util.LoadingDialogFragment
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
+import com.dida.data.model.InternalServerErrorException
+import com.dida.data.model.ServerNotFoundException
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -81,12 +84,14 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         lifecycleScope.launchWhenStarted {
             launch {
                 exception?.collectLatest { exception ->
+                    sendException(exception)
                     showToastMessage(exception)
                 }
             }
 
             launch {
                 viewModel.errorEvent.collectLatest { e ->
+                    sendException(e)
                     dismissLoadingDialog()
                     showToastMessage(e)
                 }
@@ -139,6 +144,16 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         if (mLoadingDialog.isVisible) {
             mLoadingDialog.dismiss()
         }
+    }
+
+    // FirebaseCrashlytics Exception 보내기
+    private fun sendException(throwable: Throwable) {
+        val exception = when (throwable) {
+            is ServerNotFoundException -> Exception("url -> ${throwable.url}", throwable)
+            is InternalServerErrorException -> Exception("url -> ${throwable.url}", throwable)
+            else -> Exception(throwable)
+        }
+        FirebaseCrashlytics.getInstance().recordException(exception)
     }
 
     // Toast Message 관련 함수
