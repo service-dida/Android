@@ -19,6 +19,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 apply("androidx.navigation.safeargs.kotlin")
                 apply("kotlin-parcelize")
                 apply("com.google.gms.google-services")
+                apply("com.google.firebase.crashlytics")
             }
 
             extensions.configure<ApplicationExtension> {
@@ -117,6 +118,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", libs.findLibrary("firebase-analytics").get())
                     add("implementation", libs.findLibrary("firebase-messaging").get())
                     add("implementation", libs.findLibrary("firebase-service").get())
+                    add("implementation", libs.findLibrary("firebase-crashlytics").get())
 
                     // Paging
                     add("implementation", libs.findLibrary("androidx-paging").get())
