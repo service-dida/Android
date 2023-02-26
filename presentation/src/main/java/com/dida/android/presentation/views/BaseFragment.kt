@@ -181,7 +181,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     // Toast Message 관련 함수
     protected fun showToastMessage(e: Throwable?) {
         toast?.cancel()
-        toast = Toast.makeText(activity, e?.message, Toast.LENGTH_SHORT)?.apply { show() }
+        toast = Toast.makeText(activity, e?.cause?.message ?: "알 수 없는 에러가 발생했습니다.", Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수
