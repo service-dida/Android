@@ -24,6 +24,7 @@ class PasswordViewModel @Inject constructor(
 
     private val stack = Stack<Int>()
     private var stackSize = 0
+    private var settingYn = false
 
     private val _completeEvent: MutableSharedFlow<String> = MutableSharedFlow<String>()
     val completeEvent: SharedFlow<String> = _completeEvent
@@ -64,29 +65,38 @@ class PasswordViewModel @Inject constructor(
             password += it.toString()
         }
         baseViewModelScope.launch {
-            passwordAPI(password)
-                .onSuccess {
-                    if (it) {
-                        _completeEvent.emit(password)
-                    } else {
-                        isClickable = false
-                        _failEvent.emit(true)
-                        stack.clear()
-                        delay(1000)
-                        _failEvent.emit(false)
-                        isClickable = true
-                    }
-                }
-                .onError { e ->
-                    if (e is WrongPassword5TimesException) {
-                        _dismissEvent.emit(true)
-                    } else {
-                        catchError(e)
-                    }
-                }
+            if(settingYn){
+                _completeEvent.emit(password)
+            }else{
+                checkPassword(password)
+            }
         }
     }
-        fun setStackSize(size: Int) {
-            stackSize = size
+
+    private suspend fun checkPassword(password : String){
+        passwordAPI(password)
+            .onSuccess {
+                if (it) {
+                    _completeEvent.emit(password)
+                } else {
+                    isClickable = false
+                    _failEvent.emit(true)
+                    stack.clear()
+                    delay(1000)
+                    _failEvent.emit(false)
+                    isClickable = true
+                }
+            }
+            .onError { e ->
+                if (e is WrongPassword5TimesException) {
+                    _dismissEvent.emit(true)
+                } else {
+                    catchError(e)
+                }
+            }
+    }
+        fun initPwdInfo(stackSize: Int,settingYn : Boolean) {
+            this.stackSize = stackSize
+            this.settingYn = settingYn
         }
     }
