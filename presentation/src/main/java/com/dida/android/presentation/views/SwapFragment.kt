@@ -8,6 +8,7 @@ import com.dida.swap.SwapViewModel
 import com.dida.swap.databinding.FragmentSwapBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.swap.R.layout.fragment_swap) {
@@ -19,31 +20,47 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
 
     override val viewModel : SwapViewModel by viewModels()
 
+    override fun onResume() {
+        super.onResume()
+        if(!viewModel.walletCheckState.value) viewModel.getWalletExists()
+    }
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.initWalletAmount()
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    SwapNavigationAction.NavigateToPassword -> {
-                        PasswordDialog(6, "비밀번호 설정", "본인 확인 시 사용됩니다.") { success, password ->
-                            if(success){
-                                //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
-                                navigate(
-                                    SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(
-                                        binding.topCoinAmountEt.text.toString().toFloat(),
-                                        password,
-                                        viewModel.swapTypeState.value)
-                                )
-                            }
-                        }.show(childFragmentManager, "AddFragment")
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        SwapNavigationAction.NavigateToPassword -> {
+                            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                                if (success) {
+                                    //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
+                                    navigate(
+                                        SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(
+                                            binding.topCoinAmountEt.text.toString().toFloat(),
+                                            password,
+                                            viewModel.swapTypeState.value
+                                        )
+                                    )
+                                }
+                            }.show(childFragmentManager, "AddFragment")
+                        }
+                    }
+                }
+            }
+          launch {
+            viewModel.walletExistsState.collectLatest {
+                    if (it) {
+                        viewModel.initWalletAmount()
+                    } else {
+                        toastMessage("지갑을 생성해야 합니다!")
+                        navigate(SwapFragmentDirections.actionSwapFragmentToEmailFragment())
                     }
                 }
             }
