@@ -3,6 +3,7 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="trans_parents">#00000000</color>
 
     <color name="status_bar">#121212</color>
     <color name="mainblack">#121212</color>
