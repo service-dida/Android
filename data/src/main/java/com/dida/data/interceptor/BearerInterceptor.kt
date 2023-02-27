@@ -58,10 +58,13 @@ class BearerInterceptor : Interceptor {
                 val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
                     .build()
                 return chain.proceed(newRequest)
+            } else {
+                errorException?.let { throw it }
+                return response
             }
-            errorException?.let { throw it }
+        } else {
             return response
         }
-        return response
+
     }
 }
