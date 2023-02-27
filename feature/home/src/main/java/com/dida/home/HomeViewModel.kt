@@ -29,13 +29,15 @@ class HomeViewModel @Inject constructor(
 
     private val TAG = "HomeViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<HomeNavigationAction> = MutableSharedFlow<HomeNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<HomeNavigationAction> =
+        MutableSharedFlow<HomeNavigationAction>()
     val navigationEvent: SharedFlow<HomeNavigationAction> = _navigationEvent.asSharedFlow()
 
     private val _homeState: MutableStateFlow<UiState<Home>> = MutableStateFlow(UiState.Loading)
     val homeState: StateFlow<UiState<Home>> = _homeState.asStateFlow()
 
-    private val _soldoutState: MutableStateFlow<UiState<List<SoldOut>>> = MutableStateFlow(UiState.Loading)
+    private val _soldoutState: MutableStateFlow<UiState<List<SoldOut>>> =
+        MutableStateFlow(UiState.Loading)
     val soldoutState: StateFlow<UiState<List<SoldOut>>> = _soldoutState.asStateFlow()
 
     private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
@@ -48,7 +50,8 @@ class HomeViewModel @Inject constructor(
                 .flatMap { homeAPI() }
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    _homeState.value = UiState.Success(it) }
+                    _homeState.value = UiState.Success(it)
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -58,7 +61,8 @@ class HomeViewModel @Inject constructor(
             homeAPI()
                 .onSuccess {
                     _homeState.value = UiState.Success(it)
-                    dismissLoading() }
+                    dismissLoading()
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -68,7 +72,8 @@ class HomeViewModel @Inject constructor(
             soldOutAPI(term)
                 .onSuccess {
                     _soldoutState.value = UiState.Success(it)
-                    _termState.value = term }
+                    _termState.value = term
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -134,8 +139,13 @@ class HomeViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId.toLong())
-                .onSuccess { getHome() }
-                .onError { e -> catchError(e) }
+                .onSuccess {
+                    getHome()
+                }
+                .onError { e ->
+                    catchError(e)
+                }
+            dismissLoading()
         }
     }
 }
