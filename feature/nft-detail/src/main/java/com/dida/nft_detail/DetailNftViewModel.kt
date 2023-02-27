@@ -5,6 +5,7 @@ import android.os.Looper
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityWriteActionHandler
+import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
@@ -46,8 +47,7 @@ class DetailNftViewModel @Inject constructor(
     private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Posts>> = _communityState.asStateFlow()
 
-    val detailOwnerTypeState: MutableStateFlow<DetailOwnerType> =
-        MutableStateFlow(DetailOwnerType.ALL)
+    val detailOwnerTypeState: NoCompareMutableStateFlow<DetailOwnerType> = NoCompareMutableStateFlow(DetailOwnerType.ALL)
 
     fun getDetailNft(cardId: Long) {
         baseViewModelScope.launch {
