@@ -33,7 +33,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     SwapNavigationAction.NavigateToPassword -> {
-                        PasswordDialog(6, "비밀번호 설정", "본인 확인 시 사용됩니다.") { success, password ->
+                        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
                             if(success){
                                 //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
                                 navigate(

@@ -127,5 +127,4 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             toastMessage("마켓에 올라가 있는 NFT는 삭제 할 수 없습니다.")
         }
     }
-
 }
