@@ -48,16 +48,15 @@ class MyPageViewModel @Inject constructor(
         NEWEST,
         OLDEST
     }
-    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(
-        MypageNftType.NEWEST
-    )
+    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(MypageNftType.NEWEST)
     val mypageNftTypeState: StateFlow<MypageNftType> = _mypageNftTypeState
 
     fun getMypage() {
         baseViewModelScope.launch {
             userNftAPI()
                 .onSuccess {
-                    _hasMyNftState.value = UiState.Success(it)
+                    val list = it.sortedByDescending { it.cardId }
+                    _hasMyNftState.value = UiState.Success(list)
                 }
                 .flatMap {
                     userProfileAPI()
