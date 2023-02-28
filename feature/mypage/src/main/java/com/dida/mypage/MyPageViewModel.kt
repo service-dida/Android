@@ -4,6 +4,7 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
+import com.dida.common.util.successOrNull
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.model.nav.mypage.UserProfile
@@ -48,16 +49,15 @@ class MyPageViewModel @Inject constructor(
         NEWEST,
         OLDEST
     }
-    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(
-        MypageNftType.NEWEST
-    )
+    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(MypageNftType.NEWEST)
     val mypageNftTypeState: StateFlow<MypageNftType> = _mypageNftTypeState
 
     fun getMypage() {
         baseViewModelScope.launch {
             userNftAPI()
                 .onSuccess {
-                    _hasMyNftState.value = UiState.Success(it)
+                    val list = it.sortedByDescending { it.cardId }
+                    _hasMyNftState.value = UiState.Success(list)
                 }
                 .flatMap {
                     userProfileAPI()
@@ -68,10 +68,16 @@ class MyPageViewModel @Inject constructor(
                         .onError { e -> catchError(e) }
                 }
                 .onError { e -> catchError(e) }
-
         }
     }
 
+    fun changeMyNftListType(type : MypageNftType){
+        if(type==MypageNftType.NEWEST){
+            _hasMyNftState.value = UiState.Success(hasMyNftState.value.successOrNull()!!.sortedByDescending { it.cardId })
+        }else{
+            _hasMyNftState.value = UiState.Success(hasMyNftState.value.successOrNull()!!.sortedBy { it.cardId })
+        }
+    }
     override fun onWalletClicked() {
         baseViewModelScope.launch {
             if (hasWalletState.value) {
@@ -101,6 +107,7 @@ class MyPageViewModel @Inject constructor(
 
     override fun onMypageNftTypeClicked(type: MypageNftType) {
         _mypageNftTypeState.value = type
+        changeMyNftListType(type)
     }
 
     override fun onSettingsClicked() {
