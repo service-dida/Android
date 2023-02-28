@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
@@ -100,9 +101,13 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                 if (result.resultCode == Activity.RESULT_OK) {
                     val intent = result.data
                     if (intent != null) {
-                        //TODO : 추후에 이미지 용량 체크도 해야합니다.
                         val uri = intent.data
-                        viewModel.setNFTImage(uri)
+                        if(checkImageSize(uri!!)){
+                            viewModel.setNFTImage(uri)
+                        }else{
+                            toastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
+                            getImageToGallery()
+                        }
                     }
                 } else{
                     navController.popBackStack()
@@ -144,6 +149,20 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                 }
                 true
             }
+        }
+    }
+
+    fun checkImageSize(uri : Uri) : Boolean{
+        val inputStream = requireActivity().contentResolver.openInputStream(uri)
+        val bytes = inputStream?.buffered()?.use { it.readBytes() }
+        val sizeInMb = bytes?.size?.toDouble()?.div(1024)?.div(1024)
+
+        if (sizeInMb != null && sizeInMb > 10) {
+            // 용량이 10MB를 초과하면 처리할 코드 작성
+            return false
+        } else {
+            // 용량이 10MB를 초과하지 않으면 처리할 코드 작성
+            return true
         }
     }
 }
