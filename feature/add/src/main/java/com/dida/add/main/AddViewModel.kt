@@ -75,5 +75,4 @@ class AddViewModel @Inject constructor(
     fun setNFTImage(uri: Uri?){
         _nftImageState.value = uri.toString()
     }
-
 }
