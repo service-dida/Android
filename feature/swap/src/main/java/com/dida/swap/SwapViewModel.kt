@@ -1,11 +1,11 @@
 package com.dida.swap
 
 import com.dida.common.base.BaseViewModel
+import com.dida.data.model.NeedToWalletException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.SwapDidaToKlayAPI
-import com.dida.domain.usecase.main.SwapKlayToDidaAPI
 import com.dida.domain.usecase.main.WalletAmountAPI
+import com.dida.domain.usecase.main.WalletExistedAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SwapViewModel @Inject constructor(
-    private val walletAmountAPI: WalletAmountAPI
+    private val walletAmountAPI: WalletAmountAPI,
+    private val walletExistedAPI: WalletExistedAPI
 ) : BaseViewModel(), SwapActionHandler {
 
     private val TAG = "SwapViewModel"
@@ -29,6 +30,12 @@ class SwapViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<SwapNavigationAction> =
         MutableSharedFlow<SwapNavigationAction>()
     val navigationEvent: SharedFlow<SwapNavigationAction> = _navigationEvent
+
+    private val _walletExistsState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val walletExistsState: SharedFlow<Boolean> = _walletExistsState
+
+    private val _walletCheckState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val walletCheckState: StateFlow<Boolean> = _walletCheckState
 
     private val _swapTypeState: MutableStateFlow<SwapType> =
         MutableStateFlow<SwapType>(SwapType.KLAY_TO_DIDA)
@@ -62,6 +69,19 @@ class SwapViewModel @Inject constructor(
         }
     }
 
+    fun getWalletExists() {
+        baseViewModelScope.launch {
+            showLoading()
+            walletExistedAPI()
+                .onSuccess {
+                    _walletExistsState.emit(it)
+                    _walletCheckState.value = true }
+                .onError { e ->
+                    if(e is NeedToWalletException) _walletExistsState.emit(false)
+                    else catchError(e) }
+            dismissLoading()
+        }
+    }
     override fun onSwapClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(SwapNavigationAction.NavigateToPassword)
