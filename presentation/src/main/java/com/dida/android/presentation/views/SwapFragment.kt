@@ -1,5 +1,8 @@
 package com.dida.android.presentation.views
 
+import android.app.Service
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.password.PasswordDialog
@@ -61,6 +64,20 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                     } else {
                         toastMessage("지갑을 생성해야 합니다!")
                         navigate(SwapFragmentDirections.actionSwapFragmentToEmailFragment())
+                    }
+                }
+            }
+
+            launch {
+                viewModel.amountInputState.collectLatest {
+                    if(it == Int.MAX_VALUE.toString()){
+                        val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm1.hideSoftInputFromWindow(binding.topCoinAmountEt.windowToken, 0);
+
+                        val imm2 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm2.hideSoftInputFromWindow(binding.bottomCoinAmountTv.windowToken, 0);
+
+                        Toast.makeText(requireContext(),"최대 ${Int.MAX_VALUE}까지 입력가능합니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

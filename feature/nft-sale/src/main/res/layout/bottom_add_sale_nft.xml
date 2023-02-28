@@ -53,6 +53,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:hint="@string/add_nft_price_hint"
+                    decimalFormat="@{2}"
                     style="@style/TextView_regular_14_white"
                     android:singleLine="true"
                     android:text="@={vm.userInputStateFlow}"

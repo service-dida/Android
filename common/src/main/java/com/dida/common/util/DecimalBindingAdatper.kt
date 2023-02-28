@@ -16,6 +16,9 @@ fun EditText.setDecimalFormat( decimalDigits: Int) {
             if (currentValue.isEmpty()) {
                 return
             }
+            if(currentValue.toDouble() > Int.MAX_VALUE){
+                this@setDecimalFormat.setText(Int.MAX_VALUE.toString())
+            }
             val dotPos = currentValue.indexOf(".")
             if (dotPos < 0) {
                 return
@@ -25,6 +28,8 @@ fun EditText.setDecimalFormat( decimalDigits: Int) {
                 s?.delete(dotPos + decimalDigits + 1, s.length)
                 this@setDecimalFormat.addTextChangedListener(this)
             }
+
+
         }
     })
 }
