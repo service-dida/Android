@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="@{holderModel.priceFormat()}"
+                    decimalPrice="@{holderModel.price}"
                     android:textColor="@color/price_gray_text"
                     android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="@+id/dida_icon_imageview"
