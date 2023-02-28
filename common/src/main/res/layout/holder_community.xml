@@ -154,6 +154,8 @@
                     app:layout_constraintBottom_toBottomOf="@id/dida_img"
                     app:layout_constraintLeft_toRightOf="@id/dida_img"
                     decimalPrice="@{holderModel.price}"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="12dp"
                     android:textColor="@color/hots_coin_txt"
                     android:fontFamily="@font/pretendard_semibold"

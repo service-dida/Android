@@ -75,6 +75,8 @@
             android:textColor="@color/white"
             android:textSize="16dp"
             tools:text="13.402 dida"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

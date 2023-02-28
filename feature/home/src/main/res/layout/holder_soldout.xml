@@ -103,9 +103,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/soldout_img"
                 decimalPrice="@{holderModel.price}"
-                android:textSize="14dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/pretendard_bold"
+                android:ellipsize="end"
+                android:maxLines="1"
+                style="@style/TextView_bold_14_white"
                 android:layout_marginLeft="8dp">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>

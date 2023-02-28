@@ -90,6 +90,8 @@
                 android:textColor="@color/price_gray_text"
                 android:textSize="12dp"
                 decimalPrice="@{holderModel.price}"
+                android:ellipsize="end"
+                android:maxLines="1"
                 app:layout_constraintBottom_toBottomOf="@+id/dida_icon_imageview"
                 app:layout_constraintStart_toEndOf="@+id/dida_icon_imageview"
                 app:layout_constraintTop_toTopOf="@+id/dida_icon_imageview"
