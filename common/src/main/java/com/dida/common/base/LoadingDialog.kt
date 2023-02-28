@@ -23,7 +23,11 @@ class LoadingDialogFragment : DialogFragment() {
         isCancelable = false
         dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        setStyle(STYLE_NO_FRAME, android.R.style.Theme)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
     }
 
 }
