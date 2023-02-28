@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             android:fontFamily="@font/pretendard_bold"
-            android:text="@{holderModel.priceFormat()}"
+            decimalPrice="@{holderModel.price}"
             android:textColor="@color/white"
             android:textSize="16dp"
             tools:text="13.402 dida"

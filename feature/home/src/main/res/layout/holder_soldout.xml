@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/soldout_img"
-                android:text="@{holderModel.priceFormat}"
+                decimalPrice="@{holderModel.price}"
                 android:textSize="14dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/pretendard_bold"

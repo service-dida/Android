@@ -7,8 +7,4 @@ data class SoldOut(
     val userImg: String,
     val userName: String,
     val price: String
-){
-    fun priceFormat() : String{
-        return price
-    }
-}
+)

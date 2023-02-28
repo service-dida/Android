@@ -3,6 +3,7 @@ package com.dida.swap
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 
 
@@ -32,4 +33,37 @@ fun EditText.setDecimalFormat( decimalDigits: Int) {
 
         }
     })
+}
+
+@BindingAdapter("decimalPrice")
+fun TextView.setDecimalPrice(price : String){
+    if(price.isNullOrEmpty() || price == "NOT SALE" || price == "NO MARKETED"){
+        this.text = "판매X"
+    }else{
+        val roundedValue = (price.toDouble() * 100).toLong() / 100.0
+
+        val formattedValue = if (roundedValue % 1 == 0.0) {
+            String.format("%.0f", roundedValue)
+        } else {
+            String.format("%.2f", roundedValue)
+        }
+        this.text = "$formattedValue dida"
+    }
+}
+
+@BindingAdapter("decimalPrice")
+fun TextView.setDecimalPrice(priceF : Float){
+    val price = priceF.toString()
+    if(price.isNullOrEmpty() || price == "NOT SALE" || price == "NO MARKETED"){
+        this.text = "판매X"
+    }else{
+        val roundedValue = (price.toDouble() * 100).toLong() / 100.0
+
+        val formattedValue = if (roundedValue % 1 == 0.0) {
+            String.format("%.0f", roundedValue)
+        } else {
+            String.format("%.2f", roundedValue)
+        }
+        this.text = "$formattedValue dida"
+    }
 }

@@ -14,7 +14,6 @@ data class HotItem(
     val heartCount: String,
     val price: String
 ) {
-    fun priceFormat() : String = "$price dida"
     fun heartFormat(): String = heartCount+"K"
 }
 
@@ -32,9 +31,7 @@ data class RecentCard(
     val imgUrl : String,
     val price : String,
     val liked: Boolean
-) {
-    fun priceFormat() : String = if(price.isEmpty()) "판매X" else "$price dida"
-}
+)
 
 data class HotUser(
     val userId: Int,

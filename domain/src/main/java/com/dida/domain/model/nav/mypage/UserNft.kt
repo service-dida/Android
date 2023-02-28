@@ -8,13 +8,4 @@ data class UserNft(
     val imgUrl : String,
     val price : String,
     val liked: Boolean
-){
-    fun priceFormat() : String {
-        if(price.isNullOrEmpty()){
-            return "판매X"
-        }else{
-            return price+" dida"
-        }
-
-    }
-}
+)
