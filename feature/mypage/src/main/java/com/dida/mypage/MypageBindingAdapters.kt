@@ -39,12 +39,12 @@ fun TextView.bindUserNftCount(uiState: UiState<UserProfile>) {
 
 @BindingAdapter("userFollwingCount")
 fun TextView.bindUserFollwingCount(uiState: UiState<UserProfile>) {
-    this.text = uiState.successOrNull()?.followerCnt.toString()
+    this.text = uiState.successOrNull()?.followingCnt.toString()
 }
 
 @BindingAdapter("userFollwerCount")
 fun TextView.bindUserFollwerCount(uiState: UiState<UserProfile>) {
-    this.text = uiState.successOrNull()?.followingCnt.toString()
+    this.text = uiState.successOrNull()?.followerCnt.toString()
 }
 
 @BindingAdapter("userNftItem")

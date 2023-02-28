@@ -42,12 +42,12 @@ fun TextView.bindOtherUserNftCount(uiState: UiState<OtherUserProfie>) {
 
 @BindingAdapter("otherUserFollwingCount")
 fun TextView.bindOtherUserFollwingCount(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.followerCnt.toString()
+    this.text = uiState.successOrNull()?.followingCnt.toString()
 }
 
 @BindingAdapter("otherUserFollwerCount")
 fun TextView.bindOtherUserFollwerCount(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.followingCnt.toString()
+    this.text = uiState.successOrNull()?.followerCnt.toString()
 }
 
 @BindingAdapter("otherUserCardItem")
