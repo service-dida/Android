@@ -1,10 +1,10 @@
 package com.dida.domain.model.nav.home
 
 data class HotUser(
-    val userId: Int,
+    val userId: Long,
     val name: String,
     val profileUrl: String,
-    val cardCnt: String,
+    val cardCnt: Long,
     val cardUrls: List<String>,
     val isFollowed: Boolean
 )

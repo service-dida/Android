@@ -255,6 +255,7 @@ fun List<GetBuySellListResponse>.toDomain(): List<BuySellList> {
     }
 }
 
+@JvmName("toDomainCardHideListResponse")
 fun List<CardHideListResponse>.toDomain(): List<CardHideList> {
     return map {
         CardHideList(
@@ -280,6 +281,7 @@ fun GetUserUserIdResponse.toDomain(): OtherUserProfie {
     )
 }
 
+@JvmName("toDomainGetHotUserResponse")
 fun List<GetHotUserResponse>.toDomain(): List<HotUser> {
     return map {
         HotUser(
