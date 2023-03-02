@@ -8,27 +8,36 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 import java.util.*
 
 internal fun Project.configureKotlinAndroid(
-    commonExtensions : CommonExtension<*,*,*,*>
-){
+    commonExtensions: CommonExtension<*, *, *, *>
+) {
     commonExtensions.apply {
         val properties = Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
 
         compileSdk = 33
 
-        defaultConfig{
+        defaultConfig {
             minSdk = 21
-            buildConfigField("String", "KLAYTN_HEADER_AUTHORIZATION", properties["klaytn_header_authorization"].toString())
+            buildConfigField(
+                "String",
+                "KLAYTN_HEADER_AUTHORIZATION",
+                properties["klaytn_header_authorization"].toString()
+            )
             /* Hide Key (Must In Local.Properties)*/
-            buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao_native_app_key"].toString())
-            manifestPlaceholders["KAKAO_NATIVE_APP_KEY_FOR_MANIFEST"] = properties.getProperty("kakao_native_app_key_for_manifest")
+            buildConfigField(
+                "String",
+                "KAKAO_NATIVE_APP_KEY",
+                properties["kakao_native_app_key"].toString()
+            )
+            manifestPlaceholders["KAKAO_NATIVE_APP_KEY_FOR_MANIFEST"] =
+                properties.getProperty("kakao_native_app_key_for_manifest")
         }
 
-        compileOptions{
+        compileOptions {
             sourceCompatibility = JavaVersion.VERSION_1_8
             targetCompatibility = JavaVersion.VERSION_1_8
         }
-        kotlinOptions{
+        kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
         composeOptions {
@@ -37,12 +46,15 @@ internal fun Project.configureKotlinAndroid(
         buildTypes {
             getByName("release") {
                 isMinifyEnabled = false
-                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
             }
         }
     }
 }
 
-fun CommonExtension<*,*,*,*>.kotlinOptions(block : KotlinJvmOptions.() -> Unit){
+fun CommonExtension<*, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit) {
     (this as ExtensionAware).extensions.configure("kotlinOptions", block)
 }

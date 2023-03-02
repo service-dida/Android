@@ -1,4 +1,4 @@
-package com.dida.common.util
+package com.dida.common.base
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

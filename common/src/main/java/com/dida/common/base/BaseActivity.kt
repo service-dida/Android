@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {
 
     private var _binding: T? = null
-    val binding get()= requireNotNull(_binding)
+    val binding get() = requireNotNull(_binding)
 
     /**
      * setContentView로 호출할 Layout의 리소스 Id.

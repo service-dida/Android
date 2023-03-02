@@ -12,10 +12,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.SharedFlow
 
-abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewModel>: BottomSheetDialogFragment() {
+abstract class BaseBottomSheetDialogFragment<T : ViewDataBinding, R : BaseViewModel> :
+    BottomSheetDialogFragment() {
 
     private var _binding: T? = null
-    val binding get()= requireNotNull(_binding)
+    val binding get() = requireNotNull(_binding)
 
     abstract val layoutResourceId: Int
 
@@ -67,17 +68,18 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, R : BaseViewMod
         _binding = null
     }
 
-    private fun settingBottomSheetDialog(){
+    private fun settingBottomSheetDialog() {
         // 팝업 생성 시 전체화면으로 띄우기
-        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-        if(bottomSheet != null) {
+        val bottomSheet =
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        if (bottomSheet != null) {
             val behavior = BottomSheetBehavior.from<View>(bottomSheet)
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
             //바텀시트 다이얼로그 드래그 막기
             behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if(newState == BottomSheetBehavior.STATE_DRAGGING) {
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
                         behavior.state = BottomSheetBehavior.STATE_EXPANDED
                     }
                 }

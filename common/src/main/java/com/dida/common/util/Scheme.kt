@@ -5,27 +5,27 @@ import kotlinx.parcelize.Parcelize
 
 sealed class Scheme : Parcelable {
     @Parcelize
-    object Home: Scheme()
+    object Home : Scheme()
 
     @Parcelize
-    object Defi: Scheme()
+    object Defi : Scheme()
 
     @Parcelize
-    object Add: Scheme()
+    object Add : Scheme()
 
     @Parcelize
-    object Community: Scheme()
+    object Community : Scheme()
 
     @Parcelize
-    object My: Scheme()
+    object My : Scheme()
 
     @Parcelize
     data class DetailNft(
         val nftId: Int
-    ): Scheme()
+    ) : Scheme()
 
     @Parcelize
     data class DetailCommunity(
         val communityId: Int
-    ): Scheme()
+    ) : Scheme()
 }

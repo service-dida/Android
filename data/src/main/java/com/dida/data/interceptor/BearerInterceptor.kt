@@ -27,13 +27,13 @@ class BearerInterceptor : Interceptor {
         var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
-        if(response.code == 400 || response.code == 403) {
+        if (response.code == 400 || response.code == 403) {
 
             val requestUrl = request.url.toString()
             val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
             val errorException = createErrorException(requestUrl, response.code, errorResponse)
 
-            if(errorResponse?.code == 102) {
+            if (errorResponse?.code == 102) {
                 runBlocking {
                     //토큰 갱신 api 호출
                     DataApplication.dataStorePreferences.getRefreshToken()?.let {
@@ -47,16 +47,23 @@ class BearerInterceptor : Interceptor {
 
                         result.onSuccess { response ->
                             response.accessToken?.let { token ->
-                                DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
-                                accessToken = token } }
+                                DataApplication.dataStorePreferences.setAccessToken(
+                                    token,
+                                    response.refreshToken
+                                )
+                                accessToken = token
+                            }
+                        }
                             .onError {
                                 DataApplication.dataStorePreferences.removeAccountToken()
-                                accessToken = "" }
+                                accessToken = ""
+                            }
                     }
                 }
 
-                val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken)
-                    .build()
+                val newRequest =
+                    chain.request().newBuilder().addHeader("Authorization", accessToken)
+                        .build()
                 return chain.proceed(newRequest)
             } else {
                 errorException?.let { throw it }

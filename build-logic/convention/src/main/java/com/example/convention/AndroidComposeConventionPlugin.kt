@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.getByType
 
 class AndroidComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        with(target){
+        with(target) {
             with(pluginManager) {
                 apply("android.library")
             }
