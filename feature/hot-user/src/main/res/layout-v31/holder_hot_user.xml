@@ -82,7 +82,7 @@
             android:paddingRight="16dp"
             app:hotUserFollowBtn="@{holderModel.followed}"
             android:fontFamily="@font/pretendard_regular"
-            app:onSingleClick="@{() ->  eventListener.onUserFollowed()}"/>
+            app:onSingleClick="@{() ->  eventListener.onUserFollowed(holderModel.userId)}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_card_recyclerview"

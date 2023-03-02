@@ -379,6 +379,11 @@
         android:id="@+id/hotUserFragment"
         android:name="com.dida.android.presentation.views.HotUserFragment"
         android:label="HotUserFragment" >
+        <action
+            android:id="@+id/action_hotUserFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment

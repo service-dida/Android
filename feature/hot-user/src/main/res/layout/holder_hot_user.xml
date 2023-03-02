@@ -74,15 +74,16 @@
             app:layout_constraintTop_toTopOf="@id/user_layout"
             app:layout_constraintBottom_toBottomOf="@id/user_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp"
-            android:textSize="12dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
+            android:textSize="14dp"
+            android:text="@{holderModel.isFollowed ? @string/user_following : @string/user_follow}"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            app:hotUserFollowBtn="@{holderModel.followed}"
+            android:textColor="@{holderModel.isFollowed ? @color/mainblack : @color/white}"
+            android:background="@{holderModel.isFollowed ? @drawable/custom_brandlemon_radius100 : @drawable/custom_brandlemon_1_radius100}"
             android:fontFamily="@font/pretendard_regular"
-            app:onSingleClick="@{() ->  eventListener.onUserFollowed()}"/>
+            app:onSingleClick="@{() ->  eventListener.onUserFollowed(holderModel.userId)}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_card_recyclerview"
@@ -92,7 +93,8 @@
             android:layout_marginTop="14dp"
             android:orientation="horizontal"
             android:background="@drawable/custom_surface3_radius14"
-            android:clipToOutline="true"/>
+            android:clipToOutline="true"
+            app:onSingleClick="@{() -> eventListener.onUserClicked(holderModel.userId)}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

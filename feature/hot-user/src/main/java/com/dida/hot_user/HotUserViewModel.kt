@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HotUserViewModel @Inject constructor(
     private val hotUserAPI: HotUserAPI,
-    private val userFollowAPI: PostUserFollowAPI
+    private val postUserFollowAPI: PostUserFollowAPI
 ) : BaseViewModel(), HotUserActionHandler {
 
     private val TAG = "HotUserViewModel"
@@ -33,16 +33,18 @@ class HotUserViewModel @Inject constructor(
 
     override fun onUserClicked(userId: Long) {
         baseViewModelScope.launch {
-        showLoading()
-            userFollowAPI(userId = userId)
-                .onSuccess { _userFollowEvent.emit(Unit) }
-                .onError { e -> catchError(e) }
+            _navigationEvent.emit(HotUserNavigationAction.NavigateToUserProfile(userId = userId))
         }
-        dismissLoading()
     }
 
-    override fun onUserFollowed() {
-        TODO("Not yet implemented")
+    override fun onUserFollowed(userId: Long) {
+        baseViewModelScope.launch {
+            showLoading()
+            postUserFollowAPI(userId)
+                .onSuccess { _userFollowEvent.emit(Unit) }
+                .onError { e -> catchError(e) }
+            dismissLoading()
+        }
     }
 
 }
