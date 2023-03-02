@@ -47,8 +47,16 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.hotUserState.collectLatest {
-                hotUserPagingAdapter.submitData(it)
+            launch {
+                viewModel.hotUserState.collectLatest {
+                    hotUserPagingAdapter.submitData(it)
+                }
+            }
+
+            launch {
+                viewModel.userFollowEvent.collectLatest {
+                    hotUserPagingAdapter.refresh()
+                }
             }
         }
     }
