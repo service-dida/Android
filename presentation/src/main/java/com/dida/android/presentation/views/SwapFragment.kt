@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views
 
 import android.app.Service
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -26,6 +27,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
     override fun onResume() {
         super.onResume()
         if(!viewModel.walletCheckState.value) viewModel.getWalletExists()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
     override fun initStartView() {
         binding.apply {
