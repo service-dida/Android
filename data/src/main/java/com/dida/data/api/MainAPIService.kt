@@ -192,4 +192,7 @@ interface MainAPIService {
     @PATCH("/card/status/{cardId}")
     suspend fun patchDeleteNft(@Path("cardId") cardId: Long): Long
 
+    // 활발한 활동 더보기
+    @GET("/hot/user/{page}")
+    suspend fun getHotUser(@Path("page") page: Int): List<GetHotUserResponse>
 }

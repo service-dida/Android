@@ -279,3 +279,17 @@ fun GetUserUserIdResponse.toDomain(): OtherUserProfie {
         followed = followed
     )
 }
+
+fun List<GetHotUserResponse>.toDomain(): List<HotUser> {
+    return map {
+        HotUser(
+            userId = it.userId,
+            name = it.name,
+            profileUrl = it.profileUrl,
+            cardCnt = it.cardCnt,
+            cardUrls = it.cardUrls,
+            isFollowed = it.isFollowed
+        )
+    }
+}
+
