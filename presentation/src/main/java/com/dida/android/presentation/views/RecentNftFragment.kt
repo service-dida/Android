@@ -35,7 +35,6 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-        viewModel.getCards()
     }
 
     override fun initDataBinding() {
