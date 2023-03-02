@@ -190,6 +190,6 @@ interface MainAPIService {
     suspend fun getUserCardsUserId(@Path("userId") userId: Long): List<RecentCardResponse>
 
     @PATCH("/card/status/{cardId}")
-    suspend fun patchDeleteNft(@Path("cardId") cardId: Long): Long
+    suspend fun patchDeleteNft(@Path("cardId") cardId: Long, @Body payPwd : String): Long
 
 }

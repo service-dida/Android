@@ -8,7 +8,7 @@ import javax.inject.Inject
 class DeleteNftAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(cardId : Long) : NetworkResult<Long> {
-        return repository.patchDeleteNft(cardId = cardId)
+    suspend operator fun invoke(cardId : Long, payPwd : String) : NetworkResult<Long> {
+        return repository.patchDeleteNft(cardId = cardId, payPwd = payPwd)
     }
 }

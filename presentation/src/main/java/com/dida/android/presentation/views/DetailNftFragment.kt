@@ -120,7 +120,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         if(viewModel.detailNftState.value.successOrNull()?.price == "NOT SALE"){
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
-                    viewModel.deleteNft(args.cardId)
+                    viewModel.deleteNft(args.cardId,password)
                 }
             }.show(childFragmentManager,"DetailNftBottomSheet")
         }else{

@@ -101,10 +101,10 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun deleteNft(cardId: Long) {
+    fun deleteNft(cardId: Long,password : String) {
         baseViewModelScope.launch {
             showLoading()
-            deleteNftAPI(cardId)
+            deleteNftAPI(cardId,password)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
