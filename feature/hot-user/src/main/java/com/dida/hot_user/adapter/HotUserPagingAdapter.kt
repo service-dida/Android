@@ -49,7 +49,7 @@ class HotUserPagingAdapter(
 
     internal object HotUserItemDiffCallback : DiffUtil.ItemCallback<HotUser>() {
         override fun areItemsTheSame(oldItem: HotUser, newItem: HotUser) =
-            oldItem.userId == newItem.userId && oldItem.isFollowed == newItem.isFollowed
+            oldItem.userId == newItem.userId
 
         override fun areContentsTheSame(oldItem: HotUser, newItem: HotUser) =
             oldItem.equals(newItem)

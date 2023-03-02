@@ -28,9 +28,6 @@ class HotUserViewModel @Inject constructor(
 
     var hotUserState: Flow<PagingData<HotUser>> = createHotUserPager(hotUserAPI = hotUserAPI).flow.cachedIn(baseViewModelScope)
 
-    private val _userFollowEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val userFollowEvent: SharedFlow<Unit> = _userFollowEvent.asSharedFlow()
-
     override fun onUserClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HotUserNavigationAction.NavigateToUserProfile(userId = userId))
@@ -41,7 +38,7 @@ class HotUserViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postUserFollowAPI(userId)
-                .onSuccess { _userFollowEvent.emit(Unit) }
+                .onSuccess { _navigationEvent.emit(HotUserNavigationAction.NavigateToFollow) }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

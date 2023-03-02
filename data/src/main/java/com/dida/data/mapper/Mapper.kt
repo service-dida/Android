@@ -290,7 +290,7 @@ fun List<GetHotUserResponse>.toDomain(): List<HotUser> {
             profileUrl = it.profileUrl,
             cardCnt = it.cardCnt,
             cardUrls = it.cardUrls,
-            isFollowed = it.isFollowed
+            followed = it.followed
         )
     }
 }

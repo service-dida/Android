@@ -8,5 +8,5 @@ data class GetHotUserResponse(
     @SerializedName("profileUrl") val profileUrl: String,
     @SerializedName("cardCnt") val cardCnt: Long,
     @SerializedName("cardUrls") val cardUrls: List<String>,
-    @SerializedName("isFollowed") val isFollowed: Boolean
+    @SerializedName("followed") val followed: Boolean
 )

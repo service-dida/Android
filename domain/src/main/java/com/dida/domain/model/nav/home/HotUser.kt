@@ -6,5 +6,5 @@ data class HotUser(
     val profileUrl: String,
     val cardCnt: Long,
     val cardUrls: List<String>,
-    val isFollowed: Boolean
+    val followed: Boolean
 )

@@ -58,13 +58,8 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))
+                        is HotUserNavigationAction.NavigateToFollow -> hotUserPagingAdapter.refresh()
                     }
-                }
-            }
-
-            launch {
-                viewModel.userFollowEvent.collectLatest {
-                    hotUserPagingAdapter.retry()
                 }
             }
         }
