@@ -82,7 +82,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", libs.findLibrary("circle-imageview").get())
                     add("implementation", libs.findLibrary("facebook-shimmer").get())
                     add("implementation", libs.findLibrary("android-lottie").get())
-                    
+
                     // Network
                     add("implementation", libs.findBundle("gson").get())
                     add("implementation", libs.findLibrary("squareup-retrofit2").get())

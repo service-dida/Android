@@ -20,7 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.LoadingDialogFragment
+import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
 import com.dida.data.model.InternalServerErrorException

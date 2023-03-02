@@ -4,10 +4,10 @@ import com.dida.common.R
 import com.dida.common.databinding.DialogCommonAlertBinding
 
 data class AlertModel(
-    val title : String,
-    val description : String,
-    val noButtonTitle : String,
-    val yesButtonTitle : String
+    val title: String,
+    val description: String,
+    val noButtonTitle: String,
+    val yesButtonTitle: String
 )
 
 class DefaultAlertDialog(
@@ -26,7 +26,7 @@ class DefaultAlertDialog(
             clickNegative.invoke()
             dismissAllowingStateLoss()
         }
-        binding.alertYesButton.setOnClickListener { 
+        binding.alertYesButton.setOnClickListener {
             clickPositive.invoke()
             dismissAllowingStateLoss()
         }

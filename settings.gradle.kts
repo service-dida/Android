@@ -7,10 +7,10 @@ pluginManagement {
     }
     resolutionStrategy {
         eachPlugin {
-            if( requested.id.id == "dagger.hilt.android.plugin") {
+            if (requested.id.id == "dagger.hilt.android.plugin") {
                 useModule("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
             }
-            if( requested.id.id == "androidx.navigation.safeargs.kotlin") {
+            if (requested.id.id == "androidx.navigation.safeargs.kotlin") {
                 useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2")
             }
         }

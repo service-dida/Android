@@ -13,9 +13,11 @@ import com.dida.domain.model.nav.post.Posts
 
 class CommunityAdapter(
     private val eventListener: CommunityActionHandler
-) : ListAdapter<Posts, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
+) : ListAdapter<Posts, CommunityAdapter.ViewHolder>(CommuityDiffCallback) {
 
-    init { setHasStableIds(true) }
+    init {
+        setHasStableIds(true)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(
