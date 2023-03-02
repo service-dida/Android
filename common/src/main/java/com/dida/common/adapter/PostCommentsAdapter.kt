@@ -11,9 +11,11 @@ import com.dida.common.databinding.HolderPostCommentsBinding
 import com.dida.domain.model.nav.post.PostComments
 
 class PostCommentsAdapter(
-) : ListAdapter<PostComments, PostCommentsAdapter.ViewHolder>(CommentsDiffCallback){
+) : ListAdapter<PostComments, PostCommentsAdapter.ViewHolder>(CommentsDiffCallback) {
 
-    init { setHasStableIds(true) }
+    init {
+        setHasStableIds(true)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderPostCommentsBinding = DataBindingUtil.inflate(

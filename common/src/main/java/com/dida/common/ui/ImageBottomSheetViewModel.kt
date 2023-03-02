@@ -5,6 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ImageBottomSheetViewModel @Inject constructor() : BaseViewModel(){
+class ImageBottomSheetViewModel @Inject constructor() : BaseViewModel() {
     private val TAG = "ImageBottomSheetViewModel"
 }

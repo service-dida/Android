@@ -13,15 +13,16 @@ import com.dida.domain.model.nav.mypage.UserNft
 
 class RecentNftAdapter(
     private val eventListener: NftActionHandler
-): ListAdapter<UserNft, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
+) : ListAdapter<UserNft, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderMypageUserCardsBinding = DataBindingUtil.inflate<HolderMypageUserCardsBinding?>(
-            LayoutInflater.from(parent.context),
-            R.layout.holder_mypage_user_cards,
-            parent,
-            false
-        )
+        val viewDataBinding: HolderMypageUserCardsBinding =
+            DataBindingUtil.inflate<HolderMypageUserCardsBinding?>(
+                LayoutInflater.from(parent.context),
+                R.layout.holder_mypage_user_cards,
+                parent,
+                false
+            )
         viewDataBinding.eventListener = eventListener
         return ViewHolder(viewDataBinding)
     }

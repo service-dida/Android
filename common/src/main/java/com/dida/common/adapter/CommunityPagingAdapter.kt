@@ -13,7 +13,7 @@ import com.dida.domain.model.nav.post.Posts
 
 class CommunityPagingAdapter(
     private val eventListener: CommunityActionHandler
-) : PagingDataAdapter<Posts, CommunityPagingAdapter.ViewHolder>(CommuityDiffCallback){
+) : PagingDataAdapter<Posts, CommunityPagingAdapter.ViewHolder>(CommuityDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(

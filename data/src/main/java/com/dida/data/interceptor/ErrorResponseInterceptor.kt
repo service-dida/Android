@@ -8,7 +8,7 @@ import okhttp3.Response
 import java.io.IOException
 import javax.net.ssl.SSLHandshakeException
 
-class ErrorResponseInterceptor: Interceptor {
+class ErrorResponseInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
@@ -29,7 +29,7 @@ class ErrorResponseInterceptor: Interceptor {
              * Non-IOException subtypes thrown from interceptor never notify Callback
              * See https://github.com/square/okhttp/issues/5151
              */
-            when(e) {
+            when (e) {
                 is IOException,
                 is SSLHandshakeException -> throw e
                 else -> throw IOException(e)
@@ -40,13 +40,18 @@ class ErrorResponseInterceptor: Interceptor {
 
 fun createErrorResponse(responseBodyString: String): ErrorResponseImpl? =
     try {
-        Gson().newBuilder().create().getAdapter(ErrorResponseImpl::class.java).fromJson(responseBodyString)
+        Gson().newBuilder().create().getAdapter(ErrorResponseImpl::class.java)
+            .fromJson(responseBodyString)
     } catch (e: Exception) {
         null
     }
 
-fun createErrorException(url: String?, httpCode: Int, errorResponse: ErrorResponseImpl?): Exception? =
-    when(errorResponse?.code) {
+fun createErrorException(
+    url: String?,
+    httpCode: Int,
+    errorResponse: ErrorResponseImpl?
+): Exception? =
+    when (errorResponse?.code) {
         100 -> HaveNotJwtTokenException(Throwable(errorResponse.message), url, 100)
         102 -> InvalidJwtTokenException(Throwable(errorResponse.message), url, 102)
         104 -> InvalidKakaoAccessTokenException(Throwable(errorResponse.message), url, 104)
@@ -67,7 +72,7 @@ fun createErrorException(url: String?, httpCode: Int, errorResponse: ErrorRespon
         404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
         500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
         else -> {
-            when(httpCode) {
+            when (httpCode) {
                 404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
                 500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
                 else -> null

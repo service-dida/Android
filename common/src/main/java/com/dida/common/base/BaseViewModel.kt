@@ -32,7 +32,7 @@ abstract class BaseViewModel : ViewModel() {
     fun catchError(e: Throwable?) {
         viewModelScope.launch(errorHandler) {
             e?.let { exception ->
-                when(exception) {
+                when (exception) {
                     is HaveNotJwtTokenException -> {
                         DataApplication.dataStorePreferences.removeAccountToken()
                         _needLoginEvent.emit(true)

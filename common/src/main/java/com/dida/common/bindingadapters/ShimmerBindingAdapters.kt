@@ -13,7 +13,6 @@ import com.dida.common.util.UiState
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-
 @BindingAdapter("startLoading")
 fun ShimmerFrameLayout.startLoading(uiState: UiState<*>) {
     visibility = if (uiState is UiState.Loading) View.VISIBLE else View.GONE

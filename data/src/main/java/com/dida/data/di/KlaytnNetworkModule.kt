@@ -23,7 +23,7 @@ object KlaytnNetworkModule {
     @Singleton
     @Provides
     @Named("Klaytn")
-    fun provideKlaytnOkHttpClient() = if(BuildConfig.DEBUG) {
+    fun provideKlaytnOkHttpClient() = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
@@ -34,7 +34,7 @@ object KlaytnNetworkModule {
             .callTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(KlaytnAuthInterceptor())
             .build()
-    }else{
+    } else {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
@@ -52,16 +52,17 @@ object KlaytnNetworkModule {
     @Singleton
     @Provides
     @Named("Klaytn")
-    fun provideKlaytnRetrofit(@Named("Klaytn") okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(KLAYTN_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(okHttpClient)
-        .build()
+    fun provideKlaytnRetrofit(@Named("Klaytn") okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(KLAYTN_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
 
     @Singleton
     @Provides
     @Named("Klaytn")
-    fun provideKlaytnAPIService(@Named("Klaytn") retrofit: Retrofit) : KlaytnAPIService =
+    fun provideKlaytnAPIService(@Named("Klaytn") retrofit: Retrofit): KlaytnAPIService =
         retrofit.create(KlaytnAPIService::class.java)
 
 
