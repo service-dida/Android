@@ -15,6 +15,7 @@ import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.Home
+import com.dida.domain.model.nav.home.HotSellerMore
 import com.dida.domain.model.nav.home.HotUser
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.BuySellList
@@ -265,6 +266,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getHotUser(page: Int): NetworkResult<List<HotUser>> {
         return handleApi { mainAPIService.getHotUser(page = page).toDomain() }
+    }
+
+    override suspend fun getHotSeller(page: Int): NetworkResult<List<HotSellerMore>> {
+        return handleApi { mainAPIService.getHotSeller(page = page).toDomain() }
     }
 }
 

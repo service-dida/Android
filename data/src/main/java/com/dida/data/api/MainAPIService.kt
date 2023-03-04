@@ -195,4 +195,8 @@ interface MainAPIService {
     // 활발한 활동 더보기
     @GET("/hot/user/{page}")
     suspend fun getHotUser(@Path("page") page: Int): List<GetHotUserResponse>
+
+    // 핫 셀러 더보기
+    @GET("/hot/seller/{page}")
+    suspend fun getHotSeller(@Path("page") page: Int): List<GetHotSellerResponse>
 }
