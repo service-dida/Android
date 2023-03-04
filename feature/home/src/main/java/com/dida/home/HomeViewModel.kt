@@ -87,6 +87,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    override fun onHotSellerMoreClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToSoldOutMore)
+        }
+    }
+
     override fun onSoldOutMoreClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToSoldOutMore)
