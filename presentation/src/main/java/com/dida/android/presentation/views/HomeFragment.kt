@@ -122,10 +122,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
 
+        val hotSellerMoreAdapter = HotSellerMoreAdapter(viewModel)
+        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
         hotSellerConcatAdapter = ConcatAdapter(
             adapterConfig,
             HotSellerAdapter(viewModel),
-            HotSellerMoreAdapter(viewModel)
+            hotSellerMoreAdapter
         )
         binding.hotSellerRecycler.adapter = hotSellerConcatAdapter
 
