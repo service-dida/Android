@@ -6,7 +6,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
+import com.dida.hot_user.HotUserNavigationAction
 import com.dida.hot_user.HotUserViewModel
+import com.dida.hot_user.adapter.HotUserPagingAdapter
 import com.dida.hot_user.databinding.FragmentHotUserBinding
 import com.dida.recent_nft.RecentNftNavigationAction
 import com.dida.recent_nft.RecentNftViewModel
@@ -27,7 +29,7 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
 
     override val viewModel : HotUserViewModel by viewModels()
     private val navController by lazy { findNavController() }
-
+    private val hotUserPagingAdapter by lazy { HotUserPagingAdapter(viewModel) }
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -35,12 +37,30 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
         }
         exception = viewModel.errorEvent
         initToolbar()
+        initAdapter()
     }
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             viewModel.errorEvent.collectLatest {
                 showToastMessage(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launch {
+                viewModel.hotUserState.collectLatest {
+                    hotUserPagingAdapter.submitData(it)
+                }
+            }
+
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))
+                        is HotUserNavigationAction.NavigateToFollow -> hotUserPagingAdapter.refresh()
+                    }
+                }
             }
         }
     }
@@ -54,5 +74,9 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
+    }
+
+    private fun initAdapter() {
+        binding.hotUserRecycler.adapter = hotUserPagingAdapter
     }
 }

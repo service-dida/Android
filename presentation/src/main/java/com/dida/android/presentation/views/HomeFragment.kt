@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.android.util.permission.PermissionManagerImpl
@@ -43,6 +44,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         ) }
         .subscribe(this)
 
+    private lateinit var hotSellerConcatAdapter: ConcatAdapter
+
     private var lastScrollY = 0
 
     override fun initStartView() {
@@ -61,11 +64,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
-                    is HomeNavigationAction.NavigateToHotSeller -> {  }
+                    is HomeNavigationAction.NavigateToHotSeller -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId.toLong()))
                     is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
                     is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId.toLong()))
                     is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId.toLong()))
-                    is HomeNavigationAction.NavigateToSoldOutMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
+                    is HomeNavigationAction.NavigateToHotSellerMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
+                    is HomeNavigationAction.NavigateToSoldOutMore -> { }
                     is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
                     is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
                 }
@@ -108,14 +112,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
+        val adapterConfig = ConcatAdapter.Config.Builder().build()
+
         binding.hotsRecycler.apply {
             adapter = HotsAdapter(viewModel)
             addSnapPagerScroll()
         }
         binding.hotsRecycler.adapter = HotsAdapter(viewModel)
-        binding.hotSellerRecycler.adapter = HotSellerAdapter(viewModel)
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
+
+        val hotSellerMoreAdapter = HotSellerMoreAdapter(viewModel)
+        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
+        hotSellerConcatAdapter = ConcatAdapter(
+            adapterConfig,
+            HotSellerAdapter(viewModel),
+            hotSellerMoreAdapter
+        )
+        binding.hotSellerRecycler.adapter = hotSellerConcatAdapter
 
         binding.recentnftRecycler.apply {
             adapter = RecentNftAdapter(viewModel)
