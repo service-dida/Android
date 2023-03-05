@@ -6,6 +6,7 @@ sealed class HomeNavigationAction {
     class NavigateToRecentNftItem(val nftId: Int): HomeNavigationAction()
     class NavigateToSoldOut(val cardId: Long): HomeNavigationAction()
     class NavigateToCollection(val userId: Int) : HomeNavigationAction()
+    object NavigateToHotSellerMore : HomeNavigationAction()
     object NavigateToSoldOutMore : HomeNavigationAction()
     object NavigateToRecentNftMore : HomeNavigationAction()
     object NavigateToCollectionMore : HomeNavigationAction()
