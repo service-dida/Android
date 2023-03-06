@@ -40,6 +40,10 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+    }
+
+    override fun onStart() {
+        super.onStart()
         viewModel.getDetailNft(args.cardId)
         viewModel.getCommunity(args.cardId)
     }

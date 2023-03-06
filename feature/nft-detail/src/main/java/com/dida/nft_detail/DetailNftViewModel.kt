@@ -7,6 +7,7 @@ import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
+import com.dida.data.model.HaveNotJwtTokenException
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
@@ -30,9 +31,6 @@ class DetailNftViewModel @Inject constructor(
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
-
-    private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val moreEvent: SharedFlow<Unit> = _moreEvent
 
     private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> =
         MutableSharedFlow<DetailNftNavigationAction>()
@@ -150,7 +148,7 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             when(detailOwnerTypeState.value){
                 DetailOwnerType.NOTLOGIN_AND_SALE ->{
-                    //TODO : 로그인
+                    catchError(HaveNotJwtTokenException(Throwable(), "", 100))
                 }
                 DetailOwnerType.NOTMINE_AND_SALE ->{
                     val detailNFT = detailNftState.value.successOrNull()
