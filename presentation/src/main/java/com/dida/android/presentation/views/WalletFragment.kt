@@ -1,5 +1,10 @@
 package com.dida.android.presentation.views
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -72,6 +77,12 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
         binding.toolbar.apply {
             setNavigationIcon(com.dida.android.R.drawable.ic_baseline_close_24)
             setNavigationOnClickListener { viewModel.onBack() }
+        }
+        binding.walletAddressArea.setOnClickListener {
+            val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label", viewModel.walletAddressState.value)
+            clipboard.setPrimaryClip(clip)
+            toastMessage("텍스트가 복사되었습니다.")
         }
     }
 

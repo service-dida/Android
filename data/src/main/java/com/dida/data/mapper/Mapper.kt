@@ -138,6 +138,8 @@ fun GetDetailNFTResponse.toDomain(): DetailNFT {
 
 fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmount {
     return com.dida.domain.model.nav.swap.WalletAmount(
+        walletId = walletId,
+        address = address,
         dida = dida,
         klay = klay
     )
