@@ -126,7 +126,7 @@ interface  MainRepository {
 
     suspend fun getUserCardsUserId(userId: Long) : NetworkResult<List<UserNft>>
 
-    suspend fun patchDeleteNft(cardId: Long) : NetworkResult<Long>
+    suspend fun patchDeleteNft(cardId: Long,payPwd : String) : NetworkResult<Long>
 
     suspend fun getHotUser(page: Int): NetworkResult<List<HotUser>>
 

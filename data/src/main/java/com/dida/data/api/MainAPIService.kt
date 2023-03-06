@@ -190,7 +190,7 @@ interface MainAPIService {
     suspend fun getUserCardsUserId(@Path("userId") userId: Long): List<RecentCardResponse>
 
     @PATCH("/card/status/{cardId}")
-    suspend fun patchDeleteNft(@Path("cardId") cardId: Long): Long
+    suspend fun patchDeleteNft(@Path("cardId") cardId: Long, @Body payPwd : String): Long
 
     // 활발한 활동 더보기
     @GET("/hot/user/{page}")
