@@ -1,7 +1,7 @@
 package com.dida.model.domain
 
 data class CardResponse(
-    val cardId: Int,
+    val cardId: Long,
     val title: String,
     val description: String,
     val imgUrl: String,

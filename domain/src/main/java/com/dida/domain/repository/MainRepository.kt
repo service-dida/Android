@@ -66,7 +66,7 @@ interface  MainRepository {
 
     suspend fun postLikeAPI(cardId: Long) : NetworkResult<Unit>
 
-    suspend fun postUserFollowAPI(userId: Long) : NetworkResult<Unit>
+    suspend fun postUserFollowAPI(userId: Int) : NetworkResult<Unit>
 
     suspend fun getDetailNFT(cardId: Long) : NetworkResult<DetailNFT>
 
@@ -122,9 +122,9 @@ interface  MainRepository {
 
     suspend fun getHideCancelNft(cardId : Long) : NetworkResult<Unit>
 
-    suspend fun getUserUserId(userId: Long) : NetworkResult<OtherUserProfie>
+    suspend fun getUserUserId(userId: Int) : NetworkResult<OtherUserProfie>
 
-    suspend fun getUserCardsUserId(userId: Long) : NetworkResult<List<UserNft>>
+    suspend fun getUserCardsUserId(userId: Int) : NetworkResult<List<UserNft>>
 
     suspend fun patchDeleteNft(cardId: Long,payPwd : String) : NetworkResult<Long>
 

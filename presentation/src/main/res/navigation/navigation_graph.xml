@@ -406,7 +406,7 @@
         android:label="UserProfileFragment" >
         <argument
             android:name="userId"
-            app:argType="long" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_userProfileFragment_to_detailNftFragment"
             app:destination="@id/detailNftFragment"

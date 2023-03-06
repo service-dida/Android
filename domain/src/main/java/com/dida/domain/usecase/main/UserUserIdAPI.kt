@@ -9,7 +9,7 @@ import javax.inject.Inject
 class UserUserIdAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(userId: Long) : NetworkResult<OtherUserProfie> {
+    suspend operator fun invoke(userId: Int) : NetworkResult<OtherUserProfie> {
         return repository.getUserUserId(userId = userId)
     }
 }

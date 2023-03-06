@@ -3,7 +3,7 @@ package com.dida.model.data.response
 import com.google.gson.annotations.SerializedName
 
 data class GetCardResponse(
-    @SerializedName("cardId") val cardId: Int,
+    @SerializedName("cardId") val cardId: Long,
     @SerializedName("title") val title: String,
     @SerializedName("description") val description: String,
     @SerializedName("imgUrl") val imgUrl: String,

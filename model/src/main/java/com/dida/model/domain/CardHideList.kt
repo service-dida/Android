@@ -5,7 +5,7 @@ data class CardHideList(
 )
 
 data class CardHideListItem(
-    val cardId: Int,
+    val cardId: Long,
     val cardUrl: Int,
     val cardTitle: Int
 )

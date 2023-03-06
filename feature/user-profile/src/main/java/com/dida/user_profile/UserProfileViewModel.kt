@@ -40,8 +40,8 @@ class UserProfileViewModel @Inject constructor(
     private val _cardSortTypeState: MutableStateFlow<CardSortType> = MutableStateFlow<CardSortType>(CardSortType.NEWEST)
     val cardSortTypeState: StateFlow<CardSortType> = _cardSortTypeState.asStateFlow()
 
-    private val _userIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
-    val userIdState: StateFlow<Long> = _userIdState.asStateFlow()
+    private val _userIdState: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
+    val userIdState: StateFlow<Int> = _userIdState.asStateFlow()
 
     private val _userProfileState: MutableStateFlow<UiState<OtherUserProfie>> = MutableStateFlow<UiState<OtherUserProfie>>(UiState.Loading)
     val userProfileState: StateFlow<UiState<OtherUserProfie>> = _userProfileState.asStateFlow()
@@ -49,7 +49,7 @@ class UserProfileViewModel @Inject constructor(
     private val _userCardState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow<UiState<List<UserNft>>>(UiState.Loading)
     val userCardState: StateFlow<UiState<List<UserNft>>> = _userCardState.asStateFlow()
 
-    fun getUserProfile(userId: Long) {
+    fun getUserProfile(userId: Int) {
         _userIdState.value = userId
         baseViewModelScope.launch {
             userUserIdAPI(userIdState.value)
@@ -63,16 +63,16 @@ class UserProfileViewModel @Inject constructor(
     }
 
 
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(UserProfileNavigationAction.NavigateToDetailNft(nftId.toLong()))
+            _navigationEvent.emit(UserProfileNavigationAction.NavigateToDetailNft(nftId))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId.toLong())
+            postLikeAPI(nftId)
                 .onSuccess {  }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -82,8 +82,8 @@ class UserProfileViewModel @Inject constructor(
     override fun onFollowClicked() {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userProfileState.value.successOrNull()!!.userId.toLong())
-                .onSuccess { getUserProfile(userProfileState.value.successOrNull()!!.userId.toLong()) }
+            postUserFollowAPI(userProfileState.value.successOrNull()!!.userId)
+                .onSuccess { getUserProfile(userProfileState.value.successOrNull()!!.userId) }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

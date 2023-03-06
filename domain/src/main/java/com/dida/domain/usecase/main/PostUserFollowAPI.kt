@@ -7,7 +7,7 @@ import javax.inject.Inject
 class PostUserFollowAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(userId: Long) : NetworkResult<Unit> {
+    suspend operator fun invoke(userId: Int) : NetworkResult<Unit> {
         return repository.postUserFollowAPI(userId)
     }
 }

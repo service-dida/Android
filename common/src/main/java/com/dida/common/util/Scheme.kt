@@ -21,7 +21,7 @@ sealed class Scheme : Parcelable {
 
     @Parcelize
     data class DetailNft(
-        val nftId: Int
+        val nftId: Long
     ) : Scheme()
 
     @Parcelize

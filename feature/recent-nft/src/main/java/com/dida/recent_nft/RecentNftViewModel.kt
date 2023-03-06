@@ -31,13 +31,13 @@ class RecentNftViewModel @Inject constructor(
 
     var cardsState: Flow<PagingData<UserNft>> = createCardPager(recentCardAPI = recentCardAPI).flow.cachedIn(baseViewModelScope)
 
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(RecentNftNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId.toLong())

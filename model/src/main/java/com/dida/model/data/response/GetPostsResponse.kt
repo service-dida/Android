@@ -11,8 +11,8 @@ data class GetUserPostsResponse(
 )
 
 data class PostsItemResponse(
-    @SerializedName("postId") val postId: Int,
-    @SerializedName("cardId") val cardId: Int,
+    @SerializedName("postId") val postId: Long,
+    @SerializedName("cardId") val cardId: Long,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImgUrl") val userImgUrl: String,
     @SerializedName("title") val title: String,

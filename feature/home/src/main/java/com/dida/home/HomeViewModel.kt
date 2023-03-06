@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
     override fun onUserFollowClicked(userId: Int) {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userId.toLong())
+            postUserFollowAPI(userId)
                 .onSuccess { getHome() }
                 .onError { e -> catchError(e) }
         }
@@ -135,16 +135,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId.toLong())
+            postLikeAPI(nftId)
                 .onSuccess {
                     getHome()
                 }

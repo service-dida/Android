@@ -11,8 +11,8 @@ data class GetPostIdPreCommentsResponse(
 )
 
 data class CommentItemResponse(
-    @SerializedName("commentId") val commentId: Int,
-    @SerializedName("postId") val postId: Int,
+    @SerializedName("commentId") val commentId: Long,
+    @SerializedName("postId") val postId: Long,
     @SerializedName("content") val content: String,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImgUrl") val userImgUrl: String,

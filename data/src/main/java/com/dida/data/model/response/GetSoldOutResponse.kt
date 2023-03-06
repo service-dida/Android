@@ -7,7 +7,7 @@ data class GetSoldOutResponse(
     @SerializedName("name") val name: String,
     @SerializedName("imgUrl") val imgUrl: String,
     @SerializedName("price") val price: String,
-    @SerializedName("userId") val userId: Long,
+    @SerializedName("userId") val userId: Int,
     @SerializedName("userName") val userName: String,
     @SerializedName("profileUrl") val profileUrl: String
 )
