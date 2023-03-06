@@ -22,6 +22,6 @@ fun TextView.bindHotUserFollowBtn(isFollow: Boolean) {
     } else {
         view.text = context.getString(com.dida.common.R.string.user_follow)
         view.setTextColor(context.getColor(com.dida.common.R.color.brand_lemon))
-        view.setBackgroundResource(com.dida.common.R.drawable.custom_brandlemon_1_radius100)
+        view.setBackgroundResource(com.dida.common.R.drawable.custom_brandlemon_empty_radius100)
     }
 }
