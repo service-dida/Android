@@ -4,15 +4,17 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.data.DataApplication
 import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.*
+import com.dida.domain.usecase.main.PostLikeAPI
+import com.dida.domain.usecase.main.RecentCardAPI
 import com.dida.recent_nft.adapter.createCardPager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,19 +29,15 @@ class RecentNftViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<RecentNftNavigationAction> = MutableSharedFlow<RecentNftNavigationAction>()
     val navigationEvent: SharedFlow<RecentNftNavigationAction> = _navigationEvent.asSharedFlow()
 
-    var cardsState: Flow<PagingData<UserNft>> = emptyFlow()
+    var cardsState: Flow<PagingData<UserNft>> = createCardPager(recentCardAPI = recentCardAPI).flow.cachedIn(baseViewModelScope)
 
-    fun getCards() {
-        cardsState = createCardPager(recentCardAPI = recentCardAPI)
-            .flow.cachedIn(baseViewModelScope)
-    }
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(RecentNftNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId.toLong())

@@ -39,7 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@drawable/nft_example_image"
-                android:onClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}"/>
+                onSingleClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}"/>
 
             <TextView
                 android:id="@+id/user_name_textview"
@@ -89,7 +89,9 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/price_gray_text"
                 android:textSize="12dp"
-                android:text="@{holderModel.price}"
+                decimalPrice="@{holderModel.price}"
+                android:ellipsize="end"
+                android:maxLines="1"
                 app:layout_constraintBottom_toBottomOf="@+id/dida_icon_imageview"
                 app:layout_constraintStart_toEndOf="@+id/dida_icon_imageview"
                 app:layout_constraintTop_toTopOf="@+id/dida_icon_imageview"
@@ -107,7 +109,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dida_icon_imageview"
-                android:onClick="@{() -> eventListener.onHideClicked(holderModel.cardId)}"/>
+                app:onSingleClick="@{() -> eventListener.onHideClicked(holderModel.cardId)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

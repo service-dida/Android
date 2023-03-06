@@ -10,5 +10,5 @@ data class UserProfileResponse(
     @SerializedName("getWallet") val getWallet: Boolean,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("profileUrl") val profileUrl: String,
-    @SerializedName("userId") val userId: Int
+    @SerializedName("userId") val userId: Long
 )

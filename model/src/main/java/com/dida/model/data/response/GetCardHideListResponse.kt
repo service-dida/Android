@@ -7,7 +7,7 @@ data class GetCardHideListResponse(
 )
 
 data class CardHideListItemResponse(
-    @SerializedName("cardId") val cardId: Int,
+    @SerializedName("cardId") val cardId: Long,
     @SerializedName("cardUrl") val cardUrl: Int,
     @SerializedName("cardTitle") val cardTitle: Int
 )

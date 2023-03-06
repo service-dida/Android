@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GetPostPostIdResponse(
     @SerializedName("postId") val postId: Long,
-    @SerializedName("cardId") val cardId: Int,
+    @SerializedName("cardId") val cardId: Long,
     @SerializedName("userId") val userId: Long,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImgUrl") val userImgUrl: String,

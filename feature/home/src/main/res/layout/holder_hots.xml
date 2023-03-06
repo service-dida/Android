@@ -18,7 +18,7 @@
         android:id="@+id/hots_main"
         android:layout_marginTop="8dp"
         android:layout_marginRight="14dp"
-        android:onClick="@{() -> eventListener.onHotItemClicked(holderModel.cardId)}">
+        app:onSingleClick="@{() -> eventListener.onHotItemClicked(holderModel.cardId)}">
 
         <ImageView
             android:id="@+id/hots_img"
@@ -70,7 +70,9 @@
                 app:layout_constraintLeft_toRightOf="@id/hots_coin_img"
                 android:layout_marginLeft="8dp"
                 android:textSize="12dp"
-                android:text="@{holderModel.priceFormat()}"
+                decimalPrice="@{holderModel.price}"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/hots_coin_txt"
                 android:fontFamily="@font/pretendard_semibold">
             </TextView>

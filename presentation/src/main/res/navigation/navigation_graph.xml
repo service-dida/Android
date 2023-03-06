@@ -61,6 +61,9 @@
             app:destination="@id/swapLoadingFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_swapFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -160,6 +163,11 @@
         <action
             android:id="@+id/action_communityDetailFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_communityDetailFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
     </fragment>
@@ -380,6 +388,11 @@
         android:id="@+id/hotUserFragment"
         android:name="com.dida.android.presentation.views.HotUserFragment"
         android:label="HotUserFragment" >
+        <action
+            android:id="@+id/action_hotUserFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment

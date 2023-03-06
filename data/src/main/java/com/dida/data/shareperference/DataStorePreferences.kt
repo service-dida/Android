@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.first
 
 class DataStorePreferences(val context: Context) {
 
-    private val Context.dataStore  by preferencesDataStore(name = context.getString(R.string.prefs_key))
+    private val Context.dataStore by preferencesDataStore(name = context.getString(R.string.prefs_key))
 
     // Token Variance
     private val accessTokenPreference = stringPreferencesKey("X-ACCESS-TOKEN")
@@ -73,10 +73,10 @@ class DataStorePreferences(val context: Context) {
     }
 
     suspend fun getFcmIndex(): Int? {
-        if(context.dataStore.data.first()[fcmIndexPreference] == null){
+        if (context.dataStore.data.first()[fcmIndexPreference] == null) {
             setFcmIndex(0)
             return 0
-        }else{
+        } else {
             return context.dataStore.data.first()[fcmIndexPreference]
         }
     }

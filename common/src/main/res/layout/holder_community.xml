@@ -16,8 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/community_main"
@@ -28,7 +27,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="20dp"
-            android:onClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
+            app:onSingleClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
 
             <ImageView
                 android:id="@+id/user_img"
@@ -60,7 +59,7 @@
                 app:layout_constraintTop_toTopOf="@id/user_img"
                 app:layout_constraintBottom_toBottomOf="@id/user_img"
                 app:layout_constraintRight_toRightOf="parent"
-                android:onClick="@{() -> eventListener.onClipOrMoreClicked(holderModel.postId)}"
+                app:onSingleClick="@{() -> eventListener.onClipOrMoreClicked(holderModel.postId)}"
                 android:visibility="gone">
 
                 <ImageView
@@ -154,7 +153,9 @@
                     app:layout_constraintTop_toTopOf="@id/dida_img"
                     app:layout_constraintBottom_toBottomOf="@id/dida_img"
                     app:layout_constraintLeft_toRightOf="@id/dida_img"
-                    android:text="@{holderModel.price}"
+                    decimalPrice="@{holderModel.price}"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="12dp"
                     android:textColor="@color/hots_coin_txt"
                     android:fontFamily="@font/pretendard_semibold"

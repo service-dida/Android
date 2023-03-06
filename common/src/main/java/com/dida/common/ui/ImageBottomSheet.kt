@@ -7,7 +7,7 @@ import com.dida.common.databinding.DialogBottomImageBinding
 
 class ImageBottomSheet(
     val callback: (clickGallery: Boolean) -> Unit
-) : BaseBottomSheetDialogFragment<DialogBottomImageBinding,ImageBottomSheetViewModel>(){
+) : BaseBottomSheetDialogFragment<DialogBottomImageBinding, ImageBottomSheetViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.dialog_bottom_image
 
@@ -18,6 +18,7 @@ class ImageBottomSheet(
             this.lifecycleOwner = viewLifecycleOwner
         }
     }
+
     override fun initDataBinding() {}
     override fun initAfterBinding() {
         binding.galleryBtn.setOnClickListener {

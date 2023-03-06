@@ -1,10 +1,16 @@
 package com.dida.android.presentation.views
 
-import androidx.core.content.ContextCompat
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.view.inputmethod.InputMethodManager
+import android.widget.ScrollView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.base.DefaultAlertDialog
@@ -30,6 +36,11 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private val args: DetailCommunityFragmentArgs by navArgs()
     private val commentsAdapter by lazy { CommentsAdapter(viewModel) }
 
+    val smoothScroller: RecyclerView.SmoothScroller by lazy { object : LinearSmoothScroller(requireContext()) {
+            override fun getVerticalSnapPreference() = SNAP_TO_START
+        }
+    }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -50,6 +61,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
+                        is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
                     }
                 }
             }
@@ -59,6 +71,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             launch {
                 viewModel.commentList.collectLatest {
                     commentsAdapter.submitList(it)
+                    if(viewModel.isWrite.value) keyboardHide()
                 }
             }
         }
@@ -73,8 +86,6 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.title = resources.getString(R.string.detail_community_title)
-            this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
@@ -132,5 +143,17 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             clickPositive = { viewModel.deleteComment(commentId = commentId) }
         )
         dialog.show(requireActivity().supportFragmentManager, dialog.tag)
+    }
+
+    private fun keyboardHide() {
+        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(binding.editComments.windowToken, 0)
+        scrollToDown()
+    }
+
+    private fun scrollToDown() {
+        Handler(Looper.getMainLooper()).post {
+            binding.detailCommunityScroll.fullScroll(ScrollView.FOCUS_DOWN)
+        }
     }
 }

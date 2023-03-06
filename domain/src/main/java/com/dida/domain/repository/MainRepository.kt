@@ -8,6 +8,8 @@ import com.dida.domain.model.nav.createwallet.RandomNumber
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.hide.CardHideList
 import com.dida.domain.model.nav.home.Home
+import com.dida.domain.model.nav.home.HotSellerMore
+import com.dida.domain.model.nav.home.HotUser
 import com.dida.domain.model.nav.home.SoldOut
 import com.dida.domain.model.nav.mypage.BuySellList
 import com.dida.domain.model.nav.mypage.OtherUserProfie
@@ -123,4 +125,10 @@ interface  MainRepository {
     suspend fun getUserUserId(userId: Long) : NetworkResult<OtherUserProfie>
 
     suspend fun getUserCardsUserId(userId: Long) : NetworkResult<List<UserNft>>
+
+    suspend fun patchDeleteNft(cardId: Long,payPwd : String) : NetworkResult<Long>
+
+    suspend fun getHotUser(page: Int): NetworkResult<List<HotUser>>
+
+    suspend fun getHotSeller(page: Int): NetworkResult<List<HotSellerMore>>
 }

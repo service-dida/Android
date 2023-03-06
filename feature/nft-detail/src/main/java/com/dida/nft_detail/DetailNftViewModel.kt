@@ -1,10 +1,9 @@
 package com.dida.nft_detail
 
-import android.os.Handler
-import android.os.Looper
 import com.dida.common.actionhandler.CommunityActionHandler
-import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityWriteActionHandler
+import com.dida.common.base.BaseViewModel
+import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
@@ -26,7 +25,8 @@ class DetailNftViewModel @Inject constructor(
     private val postLikeAPI: PostLikeAPI,
     private val postsCardCardIdAPI: PostsCardCardIdAPI,
     private val sellNftAPI: SellNftAPI,
-    private val hideNftAPI: HideNftAPI
+    private val hideNftAPI: HideNftAPI,
+    private val deleteNftAPI: DeleteNftAPI
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
@@ -45,8 +45,7 @@ class DetailNftViewModel @Inject constructor(
     private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Posts>> = _communityState.asStateFlow()
 
-    val detailOwnerTypeState: MutableStateFlow<DetailOwnerType> =
-        MutableStateFlow(DetailOwnerType.ALL)
+    val detailOwnerTypeState: NoCompareMutableStateFlow<DetailOwnerType> = NoCompareMutableStateFlow(DetailOwnerType.ALL)
 
     fun getDetailNft(cardId: Long) {
         baseViewModelScope.launch {
@@ -95,6 +94,17 @@ class DetailNftViewModel @Inject constructor(
             hideNftAPI(cardId)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
+                }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun deleteNft(cardId: Long,password : String) {
+        baseViewModelScope.launch {
+            showLoading()
+            deleteNftAPI(cardId,password)
+                .onSuccess {
+                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
                 .onError { e -> catchError(e) }
         }

@@ -1,7 +1,5 @@
 package com.dida.common.bindingadapters
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide

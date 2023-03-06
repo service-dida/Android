@@ -11,8 +11,4 @@ class Community(
     val didaImg: String,
     val didaPrice: Double,
     val Comments: List<com.dida.domain.model.nav.post.Comments>
-){
-    fun priceFormatter(): String{
-        return "$didaPrice dida"
-    }
-}
+)

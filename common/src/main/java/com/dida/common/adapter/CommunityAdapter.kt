@@ -7,15 +7,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
-import com.dida.common.databinding.HolderCommunityBinding
 import com.dida.common.actionhandler.CommunityActionHandler
+import com.dida.common.databinding.HolderCommunityBinding
 import com.dida.domain.model.nav.post.Posts
 
 class CommunityAdapter(
     private val eventListener: CommunityActionHandler
-) : ListAdapter<Posts, CommunityAdapter.ViewHolder>(CommuityDiffCallback){
+) : ListAdapter<Posts, CommunityAdapter.ViewHolder>(CommuityDiffCallback) {
 
-    init { setHasStableIds(true) }
+    init {
+        setHasStableIds(true)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(
@@ -31,6 +33,10 @@ class CommunityAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
+
+    override fun getItemId(position: Int): Long = getItem(position).postId * -1
+
+    override fun getItemViewType(position: Int): Int = R.layout.holder_community
 
     class ViewHolder(private val binding: HolderCommunityBinding) :
         RecyclerView.ViewHolder(binding.root) {

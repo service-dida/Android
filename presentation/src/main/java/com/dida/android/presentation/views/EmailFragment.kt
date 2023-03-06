@@ -6,9 +6,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.dida.password.PasswordDialog
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
+import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -52,6 +52,14 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.d
                     }
                 }
             }
+            launch {
+                viewModel.retryEvent.collectLatest {
+                    if(true){
+                        toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
+                        makePassword()
+                    }
+                }
+            }
         }
     }
 
@@ -63,17 +71,20 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.d
         binding.okBtn.setOnClickListener {
             timer.cancel()
             if(viewModel.verifyCheckState.value) {
-                PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                    if(success){
-                        viewModel.postCreateWallet(password, password)
-                    }else{
-                        navController.popBackStack()
-                    }
-                }.show(childFragmentManager,"EmailFragment")
+                makePassword()
             }
         }
     }
 
+    private fun makePassword(){
+        PasswordDialog(6,"비밀번호 설정","6자리를 입력해주세요.",true){ success, firstPassword ->
+            if(success){
+                PasswordDialog(6,"비밀번호 확인","6자리를 입력해주세요.",true) { success, secondPassword ->
+                    viewModel.postCreateWallet(firstPassword, secondPassword)
+                }
+            }
+        }.show(childFragmentManager,"EmailFragment")
+    }
     private fun timeOver() {
         timer.cancel()
         lifecycleScope.launch {

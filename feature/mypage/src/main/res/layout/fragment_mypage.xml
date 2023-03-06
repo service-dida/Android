@@ -227,13 +227,12 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
-                            android:id="@+id/nft_history_buy_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:onClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.NEWEST)}"
+                            app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.NEWEST)}"
                             android:text="@string/mypage_nft_type_newest_text"
                             android:textColor="@{vm.mypageNftTypeState==MypageNftType.NEWEST? @color/brand_lemon : @color/surface6}"
                             android:textSize="14dp" />
@@ -246,13 +245,12 @@
                             app:srcCompat="@drawable/ic_wallet_dot" />
 
                         <TextView
-                            android:id="@+id/nft_history_sell_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:onClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.OLDEST)}"
+                            app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.OLDEST)}"
                             android:text="@string/mypage_nft_type_oldest_text"
                             android:textColor="@{vm.mypageNftTypeState==MypageNftType.OLDEST? @color/brand_lemon : @color/surface6}"
                             android:textSize="14dp" />

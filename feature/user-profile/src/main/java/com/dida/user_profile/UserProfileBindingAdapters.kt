@@ -1,7 +1,6 @@
 package com.dida.user_profile
 
 import android.os.Build
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -15,7 +14,6 @@ import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.mypage.UserProfile
 
 @BindingAdapter("otherUserProfile")
 fun ImageView.bindOtherUserProfile(uiState: UiState<OtherUserProfie>) {
@@ -42,12 +40,12 @@ fun TextView.bindOtherUserNftCount(uiState: UiState<OtherUserProfie>) {
 
 @BindingAdapter("otherUserFollwingCount")
 fun TextView.bindOtherUserFollwingCount(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.followerCnt.toString()
+    this.text = uiState.successOrNull()?.followingCnt.toString()
 }
 
 @BindingAdapter("otherUserFollwerCount")
 fun TextView.bindOtherUserFollwerCount(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.followingCnt.toString()
+    this.text = uiState.successOrNull()?.followerCnt.toString()
 }
 
 @BindingAdapter("otherUserCardItem")
@@ -73,6 +71,6 @@ fun TextView.bindOtherUserFollowBtn(uiState: UiState<OtherUserProfie>) {
     } else {
         view.text = context.getString(com.dida.common.R.string.user_follow)
         view.setTextColor(context.getColor(com.dida.common.R.color.brand_lemon))
-        view.setBackgroundResource(com.dida.common.R.drawable.custom_brandlemon_1_radius100)
+        view.setBackgroundResource(com.dida.common.R.drawable.custom_brandlemon_empty_radius100)
     }
 }

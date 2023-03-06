@@ -32,6 +32,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
         }
         exception = viewModel.errorEvent
         initToolbar()
+        viewModel.createState.value = args.createState
         viewModel.isNewCreate(isCreate = args.createState)
 
     }
@@ -61,7 +62,6 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.title = if(args.createState) resources.getString(R.string.create_community_title) else resources.getString(R.string.create_community_input_update)
             this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }

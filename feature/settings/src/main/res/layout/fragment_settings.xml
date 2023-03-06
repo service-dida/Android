@@ -19,7 +19,14 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                style="@style/TextView_bold_20_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/settings_title" />
+        </Toolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/profile_edit"
@@ -29,7 +36,7 @@
             android:layout_marginTop="32dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> vm.onProfileEditClicked()}">
+            app:onSingleClick="@{() -> vm.onProfileEditClicked()}">
 
             <ImageView
                 android:id="@+id/profile_edit_img"
@@ -66,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@id/profile_edit"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> vm.onTempPasswordClicked()}">
+            app:onSingleClick="@{() -> vm.onTempPasswordClicked()}">
 
             <ImageView
                 android:id="@+id/pre_password_img"
@@ -103,7 +110,7 @@
             app:layout_constraintTop_toBottomOf="@id/pre_password"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> vm.onPasswordEditClicked()}">
+            app:onSingleClick="@{() -> vm.onPasswordEditClicked()}">
 
             <ImageView
                 android:id="@+id/password_edit_img"
@@ -140,7 +147,7 @@
             app:layout_constraintTop_toBottomOf="@id/password_edit"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> vm.onAccountInformationClicked()}">
+            app:onSingleClick="@{() -> vm.onAccountInformationClicked()}">
 
             <ImageView
                 android:id="@+id/account_information_img"
@@ -177,7 +184,7 @@
             app:layout_constraintTop_toBottomOf="@id/account_information"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> vm.onNotificationClicked()}">
+            app:onSingleClick="@{() -> vm.onNotificationClicked()}">
 
             <ImageView
                 android:id="@+id/notification_img"
@@ -214,7 +221,7 @@
             app:layout_constraintTop_toBottomOf="@id/notification"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:onClick="@{() -> vm.onInVisibleClicked()}">
+            app:onSingleClick="@{() -> vm.onInVisibleClicked()}">
 
             <ImageView
                 android:id="@+id/invisible_img"
@@ -263,7 +270,7 @@
             android:text="@string/logout_text"
             style="@style/TextView_medium_20_white"
             android:layout_marginBottom="48dp"
-            android:onClick="@{() -> vm.onLogoutClicked()}"/>
+            app:onSingleClick="@{() -> vm.onLogoutClicked()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

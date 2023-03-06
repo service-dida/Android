@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.domain.model.nav.swap_history.SwapHistory
 import com.dida.swap.history.R
 import com.dida.swap.history.SwapHistoryActionHandler
-import com.dida.swap.history.SwapHistoryNavigationAction
 import com.dida.swap.history.databinding.HolderSwapHistoryBinding
 
 class SwapHistoryAdapter(
@@ -30,6 +29,8 @@ class SwapHistoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    override fun getItemViewType(position: Int): Int = R.layout.holder_swap_history
 
     class ViewHolder(private val binding: HolderSwapHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {

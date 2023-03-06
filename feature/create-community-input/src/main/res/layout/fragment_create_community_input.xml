@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -20,7 +19,14 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                style="@style/TextView_bold_20_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{vm.createState ? @string/create_community_title : @string/create_community_input_update}" />
+        </Toolbar>
 
         <TextView
             android:id="@+id/ok_btn"
@@ -34,7 +40,7 @@
             android:padding="16dp"
             android:background="@null"
             app:createBtnEnable="@{vm.createBtnState}"
-            android:onClick="@{() -> vm.onCreateClicked()}"/>
+            app:onSingleClick="@{() -> vm.onCreateClicked()}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -121,7 +127,7 @@
                     android:background="@drawable/custom_surface6_radius8"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:onClick="@{() -> vm.onBackButtonClicked()}"
+                    app:onSingleClick="@{() -> vm.onBackButtonClicked()}"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp">
                 </TextView>

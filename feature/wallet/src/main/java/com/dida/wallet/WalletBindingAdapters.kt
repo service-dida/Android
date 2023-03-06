@@ -1,8 +1,6 @@
 package com.dida.wallet
 
-import android.view.View
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("historyType")

@@ -5,8 +5,8 @@ data class Comments(
 )
 
 data class Comment(
-    val commentId: Int,
-    val postId: Int,
+    val commentId: Long,
+    val postId: Long,
     val content: String,
     val userName: String,
     val userImgUrl: String,

@@ -19,6 +19,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 apply("androidx.navigation.safeargs.kotlin")
                 apply("kotlin-parcelize")
                 apply("com.google.gms.google-services")
+                apply("com.google.firebase.crashlytics")
             }
 
             extensions.configure<ApplicationExtension> {
@@ -82,7 +83,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", libs.findLibrary("circle-imageview").get())
                     add("implementation", libs.findLibrary("facebook-shimmer").get())
                     add("implementation", libs.findLibrary("android-lottie").get())
-                    
+
                     // Network
                     add("implementation", libs.findBundle("gson").get())
                     add("implementation", libs.findLibrary("squareup-retrofit2").get())
@@ -118,6 +119,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     add("implementation", libs.findLibrary("firebase-analytics").get())
                     add("implementation", libs.findLibrary("firebase-messaging").get())
                     add("implementation", libs.findLibrary("firebase-service").get())
+                    add("implementation", libs.findLibrary("firebase-crashlytics").get())
 
                     // Paging
                     add("implementation", libs.findLibrary("androidx-paging").get())

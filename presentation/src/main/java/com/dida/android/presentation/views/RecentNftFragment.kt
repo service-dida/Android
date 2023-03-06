@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -35,7 +34,6 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-        viewModel.getCards()
     }
 
     override fun initDataBinding() {
@@ -68,8 +66,6 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.title = resources.getString(R.string.home_recentnft)
-            this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }

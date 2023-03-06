@@ -1,7 +1,7 @@
 package com.dida.model.domain
 
 data class User(
-    val userId: Int,
+    val userId: Long,
     val nickname: String,
     val profileUrl: String,
     val description: String,

@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.getByType
 
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        with(target){
+        with(target) {
             with(pluginManager) {
                 apply("android.library")
                 apply("android.hilt")

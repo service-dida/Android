@@ -17,7 +17,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:id="@+id/soldout_main"
-        android:onClick="@{() -> eventListener.onSoldOutItemClicked(holderModel.nftId)}">
+        app:onSingleClick="@{() -> eventListener.onSoldOutItemClicked(holderModel.nftId)}">
 
         <ImageView
             android:id="@+id/nft_img"
@@ -102,10 +102,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/soldout_img"
-                android:text="@{holderModel.priceFormat}"
-                android:textSize="14dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/pretendard_bold"
+                decimalPrice="@{holderModel.price}"
+                android:ellipsize="end"
+                android:maxLines="1"
+                style="@style/TextView_bold_14_white"
                 android:layout_marginLeft="8dp">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>

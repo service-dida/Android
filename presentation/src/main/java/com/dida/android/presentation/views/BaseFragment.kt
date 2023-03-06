@@ -20,9 +20,13 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.LoadingDialogFragment
+import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
+import com.dida.data.model.InternalServerErrorException
+import com.dida.data.model.ServerNotFoundException
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -77,16 +81,23 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     protected var exception: SharedFlow<Throwable>? = null
     private var toast: Toast? = null
 
+    /**
+     * Google Analytics 관련 Params
+     */
+    protected var analytics: FirebaseAnalytics? = null
+
     init {
         lifecycleScope.launchWhenStarted {
             launch {
                 exception?.collectLatest { exception ->
+                    sendException(exception)
                     showToastMessage(exception)
                 }
             }
 
             launch {
                 viewModel.errorEvent.collectLatest { e ->
+                    sendException(e)
                     dismissLoadingDialog()
                     showToastMessage(e)
                 }
@@ -141,10 +152,36 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         }
     }
 
+    // FirebaseCrashlytics Exception 보내기
+    private fun sendException(throwable: Throwable) {
+        val exception = when (throwable) {
+            is ServerNotFoundException -> Exception("url -> ${throwable.url}", throwable)
+            is InternalServerErrorException -> Exception("url -> ${throwable.url}", throwable)
+            else -> Exception(throwable)
+        }
+        FirebaseCrashlytics.getInstance().recordException(exception)
+    }
+
+    // FirebaseAnalytics Screen 보내기
+    protected fun sendAnalyticsScreen(screenName: String, screenClass: String) {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenClass)
+        analytics?.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
+
+    // FirebaseAnalytics Event 보내기
+    protected fun sendAnalyticsEvent(itemId: String, itemName: String) {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId)
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, itemName)
+        analytics?.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
     // Toast Message 관련 함수
     protected fun showToastMessage(e: Throwable?) {
         toast?.cancel()
-        toast = Toast.makeText(activity, e?.message, Toast.LENGTH_SHORT)?.apply { show() }
+        toast = Toast.makeText(activity, e?.cause?.message ?: "알 수 없는 에러가 발생했습니다.", Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수

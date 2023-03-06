@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -57,8 +56,6 @@ class SettingsFragment :
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.title = resources.getString(com.dida.settings.R.string.settings_title)
-            this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }

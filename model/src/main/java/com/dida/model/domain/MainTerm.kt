@@ -11,6 +11,4 @@ data class MainTermItem(
     val userImg: String,
     val userName: String,
     val price: String
-) {
-    fun priceFormat() : String = price
-}
+)

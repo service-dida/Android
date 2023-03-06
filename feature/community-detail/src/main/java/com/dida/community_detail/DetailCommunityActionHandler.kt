@@ -4,4 +4,5 @@ interface DetailCommunityActionHandler {
     fun onCommentClicked()
     fun onCommunityMoreClicked()
     fun onUserProfileClicked()
+    fun onCardClicked()
 }

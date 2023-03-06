@@ -1,7 +1,7 @@
 package com.dida.home
 
-import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap
@@ -29,13 +29,15 @@ class HomeViewModel @Inject constructor(
 
     private val TAG = "HomeViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<HomeNavigationAction> = MutableSharedFlow<HomeNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<HomeNavigationAction> =
+        MutableSharedFlow<HomeNavigationAction>()
     val navigationEvent: SharedFlow<HomeNavigationAction> = _navigationEvent.asSharedFlow()
 
     private val _homeState: MutableStateFlow<UiState<Home>> = MutableStateFlow(UiState.Loading)
     val homeState: StateFlow<UiState<Home>> = _homeState.asStateFlow()
 
-    private val _soldoutState: MutableStateFlow<UiState<List<SoldOut>>> = MutableStateFlow(UiState.Loading)
+    private val _soldoutState: MutableStateFlow<UiState<List<SoldOut>>> =
+        MutableStateFlow(UiState.Loading)
     val soldoutState: StateFlow<UiState<List<SoldOut>>> = _soldoutState.asStateFlow()
 
     private val _termState: MutableStateFlow<Int> = MutableStateFlow(7)
@@ -48,7 +50,8 @@ class HomeViewModel @Inject constructor(
                 .flatMap { homeAPI() }
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    _homeState.value = UiState.Success(it) }
+                    _homeState.value = UiState.Success(it)
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -58,7 +61,8 @@ class HomeViewModel @Inject constructor(
             homeAPI()
                 .onSuccess {
                     _homeState.value = UiState.Success(it)
-                    dismissLoading() }
+                    dismissLoading()
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -68,17 +72,24 @@ class HomeViewModel @Inject constructor(
             soldOutAPI(term)
                 .onSuccess {
                     _soldoutState.value = UiState.Success(it)
-                    _termState.value = term }
+                    _termState.value = term
+                }
                 .onError { e -> catchError(e) }
         }
     }
 
-    override fun onUserFollowClicked(userId: Int) {
+    override fun onUserFollowClicked(userId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userId.toLong())
+            postUserFollowAPI(userId)
                 .onSuccess { getHome() }
                 .onError { e -> catchError(e) }
+        }
+    }
+
+    override fun onHotSellerMoreClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToHotSellerMore)
         }
     }
 
@@ -106,7 +117,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onHotSellerItemClicked(userId: Int) {
+    override fun onHotSellerItemClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToHotSeller(userId))
         }
@@ -118,24 +129,29 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onCollectionItemClicked(userId: Int) {
+    override fun onCollectionItemClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToCollection(userId))
         }
     }
 
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId.toLong())
-                .onSuccess { getHome() }
-                .onError { e -> catchError(e) }
+            postLikeAPI(nftId)
+                .onSuccess {
+                    getHome()
+                }
+                .onError { e ->
+                    catchError(e)
+                }
+            dismissLoading()
         }
     }
 }

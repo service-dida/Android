@@ -1,18 +1,19 @@
 package com.dida.user_profile
 
-import com.dida.common.base.BaseViewModel
-import com.dida.common.util.AppLog
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.mypage.UserProfile
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.*
+import com.dida.domain.usecase.main.PostLikeAPI
+import com.dida.domain.usecase.main.PostUserFollowAPI
+import com.dida.domain.usecase.main.UserCardUserIdAPI
+import com.dida.domain.usecase.main.UserUserIdAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -62,16 +63,16 @@ class UserProfileViewModel @Inject constructor(
     }
 
 
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(UserProfileNavigationAction.NavigateToDetailNft(nftId.toLong()))
+            _navigationEvent.emit(UserProfileNavigationAction.NavigateToDetailNft(nftId))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId.toLong())
+            postLikeAPI(nftId)
                 .onSuccess {  }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -81,8 +82,8 @@ class UserProfileViewModel @Inject constructor(
     override fun onFollowClicked() {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userProfileState.value.successOrNull()!!.userId.toLong())
-                .onSuccess { getUserProfile(userProfileState.value.successOrNull()!!.userId.toLong()) }
+            postUserFollowAPI(userProfileState.value.successOrNull()!!.userId)
+                .onSuccess { getUserProfile(userProfileState.value.successOrNull()!!.userId) }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

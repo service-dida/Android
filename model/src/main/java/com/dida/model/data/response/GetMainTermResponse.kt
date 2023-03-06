@@ -13,6 +13,4 @@ data class MainTermItemResponse(
     @SerializedName("userImg") val userImg: String,
     @SerializedName("userName") val userName: String,
     @SerializedName("price") val price: String
-) {
-    fun priceFormat() : String = price
-}
+)

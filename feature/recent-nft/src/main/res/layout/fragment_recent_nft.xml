@@ -20,7 +20,14 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                style="@style/TextView_bold_20_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/home_recentnft" />
+        </Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recent_nft_recycler"

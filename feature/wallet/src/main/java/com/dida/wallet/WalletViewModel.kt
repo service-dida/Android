@@ -33,6 +33,9 @@ class WalletViewModel @Inject constructor(
     private val _walletListState: MutableStateFlow<List<WalletCardHolderModel>> = MutableStateFlow(emptyList())
     val walletListState: StateFlow<List<WalletCardHolderModel>> = _walletListState.asStateFlow()
 
+    private val _walletAddressState: MutableStateFlow<String> = MutableStateFlow("")
+    val walletAddressState: StateFlow<String> = _walletAddressState.asStateFlow()
+
 
 
     /** NFT 거래 내역 타입 LiveData
@@ -50,7 +53,9 @@ class WalletViewModel @Inject constructor(
                     _walletListState.value = listOf(
                         WalletCardHolderModel(amount = it.dida.toString(), type = "DIDA"),
                         WalletCardHolderModel(amount = it.klay.toString(), type = "KLAY")
-                    ) }
+                    )
+                    _walletAddressState.value = it.address
+                }
                 .flatMap { buySellListAPI() }
                 .onSuccess {  }
                 .onError { e -> catchError(e) }

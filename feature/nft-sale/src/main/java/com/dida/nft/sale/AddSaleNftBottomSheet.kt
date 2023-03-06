@@ -1,11 +1,15 @@
 package com.dida.nft.sale
 
+import android.app.Service
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.base.BaseBottomSheetDialogFragment
 import com.dida.nft.sale.databinding.BottomAddSaleNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddSaleNftBottomSheet(
@@ -29,12 +33,25 @@ class AddSaleNftBottomSheet(
 
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is AddSaleNftNavigationAction.NavigateToDismiss -> {
-                        // NFT 생성 API호출
-                        price(viewModel.userInputStateFlow.value)
-                        dismiss()
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is AddSaleNftNavigationAction.NavigateToDismiss -> {
+                            // NFT 생성 API호출
+                            price(viewModel.userInputStateFlow.value)
+                            dismiss()
+                        }
+                    }
+                }
+            }
+
+            launch {
+                viewModel.userInputStateFlow.collectLatest {
+                    if(it == Int.MAX_VALUE.toString()){
+                        val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm1.hideSoftInputFromWindow(binding.priceTxt.windowToken, 0);
+
+                        Toast.makeText(requireContext(),"최대 ${Int.MAX_VALUE}까지 입력가능합니다.",Toast.LENGTH_SHORT).show()
                     }
                 }
             }

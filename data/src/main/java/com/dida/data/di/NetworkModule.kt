@@ -54,6 +54,6 @@ object NetworkModule {
     @Singleton
     @Provides
     @Named("Main")
-    fun provideMainAPIService(@Named("Main") retrofit: Retrofit) : MainAPIService =
+    fun provideMainAPIService(@Named("Main") retrofit: Retrofit): MainAPIService =
         retrofit.create(MainAPIService::class.java)
 }

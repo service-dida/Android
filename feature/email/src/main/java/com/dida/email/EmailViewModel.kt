@@ -1,14 +1,13 @@
 package com.dida.email
 
 import com.dida.common.base.BaseViewModel
+import com.dida.data.model.NotCorrectPasswordException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CreateWalletAPI
 import com.dida.domain.usecase.main.SendEmailAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +21,9 @@ class EmailViewModel @Inject constructor(
 
     private val _sendEmailState: MutableStateFlow<String?> = MutableStateFlow<String?>(null)
     val sendEmailState: StateFlow<String?> = _sendEmailState
+
+    private val _retryEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val retryEvent: SharedFlow<Boolean> = _retryEvent
 
     val userInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
@@ -65,7 +67,14 @@ class EmailViewModel @Inject constructor(
                 .onSuccess {
                     _createWalletState.value = true
                     dismissLoading() }
-                .onError { e -> catchError(e) }
+                .onError { e ->
+                    when(e) {
+                        is NotCorrectPasswordException -> {
+                            _retryEvent.emit(true)
+                        }
+                        else -> catchError(e)
+                    }
+                }
         }
     }
 

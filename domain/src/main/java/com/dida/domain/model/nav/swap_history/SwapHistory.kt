@@ -8,7 +8,7 @@ data class SwapHistory(
     val receiveCoinType: String,
     val sendAmount: Double,
     val time: String
-){
+) {
     fun timeToDayAndTime() : Pair<String,String> {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
         val date = inputFormat.parse(time)
@@ -23,11 +23,7 @@ data class SwapHistory(
     }
 
     fun getAmountUnit(): String {
-        if(sendCoinType.equals("K")){
-            return sendAmount.toString()+"klay"
-        }else{
-            return sendAmount.toString()+"dida"
-        }
+        return if(sendCoinType == "K") sendAmount.toString()+"klay" else sendAmount.toString()+"dida"
     }
 }
 

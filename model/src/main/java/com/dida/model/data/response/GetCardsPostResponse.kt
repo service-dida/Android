@@ -11,7 +11,7 @@ data class GetCardsPostMyResponse(
 )
 
 data class CardPostLikeItemResponse(
-    @SerializedName("cardId") val cardId: Int,
+    @SerializedName("cardId") val cardId: Long,
     @SerializedName("cardImgUrl") val cardImgUrl: String,
     @SerializedName("cardName") val cardName: String,
     @SerializedName("userImgUrl") val userImgUrl: String,

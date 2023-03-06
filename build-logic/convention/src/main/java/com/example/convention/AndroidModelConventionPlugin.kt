@@ -9,7 +9,7 @@ import org.gradle.kotlin.dsl.getByType
 class AndroidModelConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager){
+            with(pluginManager) {
                 apply("android.library")
                 apply("org.jetbrains.kotlin.android")
                 apply("kotlin-parcelize")

@@ -1,10 +1,12 @@
 package com.dida.create_community_input
 
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.*
+import com.dida.domain.usecase.main.DetailNftAPI
+import com.dida.domain.usecase.main.PostCardIdAPI
+import com.dida.domain.usecase.main.PostIdAPI
+import com.dida.domain.usecase.main.UpdatePostAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,6 +24,8 @@ class CreateCommunityInputViewModel @Inject constructor(
 
     private val _navigationEvent: MutableSharedFlow<CreateCommunityInputNavigationAction> = MutableSharedFlow<CreateCommunityInputNavigationAction>()
     val navigationEvent: SharedFlow<CreateCommunityInputNavigationAction> = _navigationEvent.asSharedFlow()
+
+    val createState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     private val _cardIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
 

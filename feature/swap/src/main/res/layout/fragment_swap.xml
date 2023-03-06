@@ -19,7 +19,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -271,7 +271,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{() -> vm.onSwapTypeChange()}"
+                        app:onSingleClick="@{() -> vm.onSwapTypeChange()}"
                         android:src="@drawable/ic_swap_change_fill"
                         app:layout_constraintBottom_toBottomOf="@+id/bottom_outer_cl"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -395,7 +395,7 @@
                         android:background="@drawable/custom_okbtn_success"
                         android:fontFamily="@font/pretendard_bold"
                         android:gravity="center"
-                        android:onClick="@{() -> vm.onSwapClicked()}"
+                        app:onSingleClick="@{() -> vm.onSwapClicked()}"
                         android:padding="18dp"
                         android:text="@string/swap_confirm_btn_text"
                         android:textColor="@color/black"

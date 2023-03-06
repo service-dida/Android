@@ -7,12 +7,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.dida.add.R
 import com.dida.add.bottom.AddKeepNftBottomSheet
-import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.add.databinding.FragmentAddPurposeBinding
 import com.dida.add.purpose.AddPurposeNavigationAction
 import com.dida.add.purpose.AddPurposeViewModel
-import com.dida.add.R
+import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

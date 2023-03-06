@@ -32,6 +32,10 @@ class HotSellerAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun getItemId(position: Int): Long = getItem(position).userId * -1
+
+    override fun getItemViewType(position: Int): Int = R.layout.holder_hotseller
+
     class ViewHolder(private val binding: HolderHotsellerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HotSeller) {

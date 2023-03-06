@@ -4,20 +4,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.change_password.ChangePasswordViewModel
 import com.dida.change_password.databinding.FragmentChangePasswordBinding
-import com.dida.recent_nft.RecentNftNavigationAction
-import com.dida.recent_nft.RecentNftViewModel
-import com.dida.recent_nft.adapter.CardPagingAdapter
-import com.dida.recent_nft.databinding.FragmentRecentNftBinding
-import com.dida.temp_password.TempPasswordNavigationAction
-import com.dida.temp_password.TempPasswordViewModel
-import com.dida.temp_password.databinding.FragmentTempPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint

@@ -47,17 +47,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:layout_constraintTop_toBottomOf="@id/main_txt1"
-                    android:background="@drawable/custom_okbtn_fail_custom"
+                    android:background="@drawable/custom_okbtn_fail"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:textColor="@color/white"
                     android:hint="@string/add_nft_price_hint"
-                    android:textSize="14dp"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:maxLines="1"
+                    decimalFormat="@{2}"
+                    style="@style/TextView_regular_14_white"
+                    android:singleLine="true"
                     android:text="@={vm.userInputStateFlow}"
+                    android:imeOptions="actionDone"
+                    android:scrollHorizontally="true"
                     android:textColorHint="@color/surface6"
                     android:inputType="numberDecimal"
                     android:digits="0123456789.">
@@ -87,11 +88,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/add_nft_price_ok_btn_text"
-                android:onClick="@{() -> vm.onOkBtnClicked()}"
+                app:onSingleClick="@{() -> vm.onOkBtnClicked()}"
                 android:fontFamily="@font/pretendard_bold"
                 android:textSize="16dp"
                 android:textColor="@{vm.okBtnState? @color/mainblack : @color/surface6}"
-                android:background="@{vm.okBtnState? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail_custom}">
+                android:background="@{vm.okBtnState? @drawable/custom_okbtn_success : @drawable/custom_okbtn_fail}">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

@@ -2,19 +2,10 @@ package com.dida.domain.model.nav.mypage
 
 //TODO : UserCards 데이터 모델 재정의 하기
 data class UserNft(
-    val cardId : Int,
+    val cardId : Long,
     val userName : String,
     val cardName : String,
     val imgUrl : String,
     val price : String,
     val liked: Boolean
-){
-    fun priceFormat() : String {
-        if(price.isNullOrEmpty()){
-            return "판매X"
-        }else{
-            return price+" dida"
-        }
-
-    }
-}
+)

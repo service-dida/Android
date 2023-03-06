@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{() -> eventListener.onCollectionItemClicked(holderModel.userId)}">
+            app:onSingleClick="@{() -> eventListener.onCollectionItemClicked(holderModel.userId)}">
 
             <ImageView
                 android:id="@+id/user_img"
@@ -82,9 +82,9 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:textColor="@{holderModel.follow ? @color/mainblack : @color/white}"
-            android:background="@{holderModel.follow ? @drawable/custom_brandlemon_radius100 : @drawable/custom_brandlemon_1_radius100}"
+            android:background="@{holderModel.follow ? @drawable/custom_brandlemon_radius100 : @drawable/custom_brandlemon_empty_radius100}"
             android:fontFamily="@font/pretendard_regular"
-            android:onClick="@{() ->  eventListener.onUserFollowClicked(holderModel.userId)}">
+            app:onSingleClick="@{() ->  eventListener.onUserFollowClicked(holderModel.userId)}">
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

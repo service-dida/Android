@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment
 abstract class BaseDialog<T : ViewDataBinding>(layoutId: Int) : DialogFragment(layoutId) {
 
     private var _binding: T? = null
-    val binding get()= requireNotNull(_binding)
+    val binding get() = requireNotNull(_binding)
 
     abstract val layoutResourceId: Int
 
