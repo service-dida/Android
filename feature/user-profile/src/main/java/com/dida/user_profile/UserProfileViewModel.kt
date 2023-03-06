@@ -40,8 +40,8 @@ class UserProfileViewModel @Inject constructor(
     private val _cardSortTypeState: MutableStateFlow<CardSortType> = MutableStateFlow<CardSortType>(CardSortType.NEWEST)
     val cardSortTypeState: StateFlow<CardSortType> = _cardSortTypeState.asStateFlow()
 
-    private val _userIdState: MutableStateFlow<Int> = MutableStateFlow<Int>(0)
-    val userIdState: StateFlow<Int> = _userIdState.asStateFlow()
+    private val _userIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
+    val userIdState: StateFlow<Long> = _userIdState.asStateFlow()
 
     private val _userProfileState: MutableStateFlow<UiState<OtherUserProfie>> = MutableStateFlow<UiState<OtherUserProfie>>(UiState.Loading)
     val userProfileState: StateFlow<UiState<OtherUserProfie>> = _userProfileState.asStateFlow()
