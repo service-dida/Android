@@ -2,7 +2,6 @@ package com.dida.domain.usecase.main
 
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.nav.detailnft.DetailNFT
-import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.repository.MainRepository
 import javax.inject.Inject
 

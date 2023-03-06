@@ -5,10 +5,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.dida.mypage.R
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
+import com.dida.mypage.R
 import com.dida.mypage.databinding.FragmentMypageBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

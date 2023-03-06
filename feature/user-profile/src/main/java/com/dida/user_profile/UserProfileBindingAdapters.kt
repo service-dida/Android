@@ -1,7 +1,6 @@
 package com.dida.user_profile
 
 import android.os.Build
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -15,7 +14,6 @@ import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.nav.mypage.OtherUserProfie
 import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.mypage.UserProfile
 
 @BindingAdapter("otherUserProfile")
 fun ImageView.bindOtherUserProfile(uiState: UiState<OtherUserProfie>) {

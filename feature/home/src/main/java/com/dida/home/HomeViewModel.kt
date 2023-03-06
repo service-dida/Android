@@ -1,7 +1,7 @@
 package com.dida.home
 
-import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap

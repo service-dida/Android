@@ -1,7 +1,6 @@
 package com.dida.create_community
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.repository.MainRepositoryImpl
 import com.dida.domain.flatMap
 import com.dida.domain.model.nav.post.CardPost
 import com.dida.domain.onError

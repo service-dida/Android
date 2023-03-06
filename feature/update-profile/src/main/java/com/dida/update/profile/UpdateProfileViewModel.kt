@@ -1,7 +1,6 @@
 package com.dida.update.profile
 
 import android.net.Uri
-import android.util.Log
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.NetworkResult
 import com.dida.domain.onError

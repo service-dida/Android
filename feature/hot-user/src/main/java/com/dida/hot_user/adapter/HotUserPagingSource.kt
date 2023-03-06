@@ -6,11 +6,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.dida.domain.fold
 import com.dida.domain.model.nav.home.HotUser
-import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.usecase.main.HotUserAPI
-import com.dida.domain.usecase.main.PostsAPI
-import com.dida.domain.usecase.main.RecentCardAPI
 
 fun createHotUserPager(
     hotUserAPI: HotUserAPI
