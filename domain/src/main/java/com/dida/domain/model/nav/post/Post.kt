@@ -3,7 +3,7 @@ package com.dida.domain.model.nav.post
 data class Post(
     val postId: Long,
     val cardId: Long,
-    val userId: Int,
+    val userId: Long,
     val userName: String,
     val userImgUrl: String,
     val title: String,

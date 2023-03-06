@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class GetPostIdCommentsResponse(
     @SerializedName("commentId") val commentId: Long,
     @SerializedName("postId") val postId: Long,
-    @SerializedName("userId") val userId: Int,
+    @SerializedName("userId") val userId: Long,
     @SerializedName("content") val content: String,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImgUrl") val userImgUrl: String,

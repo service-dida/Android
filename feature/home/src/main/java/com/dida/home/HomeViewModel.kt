@@ -78,7 +78,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onUserFollowClicked(userId: Int) {
+    override fun onUserFollowClicked(userId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postUserFollowAPI(userId)
@@ -117,7 +117,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onHotSellerItemClicked(userId: Int) {
+    override fun onHotSellerItemClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToHotSeller(userId))
         }
@@ -129,7 +129,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onCollectionItemClicked(userId: Int) {
+    override fun onCollectionItemClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToCollection(userId))
         }

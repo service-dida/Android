@@ -127,7 +127,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.postLike(request) }
     }
 
-    override suspend fun postUserFollowAPI(userId: Int): NetworkResult<Unit> {
+    override suspend fun postUserFollowAPI(userId: Long): NetworkResult<Unit> {
         val request = PostUserFollowRequest(userId = userId)
         return handleApi { mainAPIService.postUserFollow(request) }
     }
@@ -252,11 +252,11 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getHideCancelNft(cardId = cardId) }
     }
 
-    override suspend fun getUserUserId(userId: Int): NetworkResult<OtherUserProfie> {
+    override suspend fun getUserUserId(userId: Long): NetworkResult<OtherUserProfie> {
         return handleApi { mainAPIService.getUserUserId(userId = userId).toDomain() }
     }
 
-    override suspend fun getUserCardsUserId(userId: Int): NetworkResult<List<UserNft>> {
+    override suspend fun getUserCardsUserId(userId: Long): NetworkResult<List<UserNft>> {
         return handleApi { mainAPIService.getUserCardsUserId(userId = userId).toDomain() }
     }
 

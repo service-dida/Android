@@ -1,7 +1,7 @@
 package com.dida.domain.model.nav.mypage
 
 data class OtherUserProfie(
-    val userId: Int,
+    val userId: Long,
     val nickname: String,
     val profileUrl: String,
     val description: String,

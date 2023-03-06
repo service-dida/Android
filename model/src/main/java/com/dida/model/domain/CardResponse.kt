@@ -5,7 +5,7 @@ data class CardResponse(
     val title: String,
     val description: String,
     val imgUrl: String,
-    val userId: Int,
+    val userId: Long,
     val nickname: String,
     val profileUrl: String,
     val id: String,

@@ -18,7 +18,7 @@ data class HotItem(
 }
 
 data class HotSeller(
-    val userId: Int,
+    val userId: Long,
     val sellerBackground: String,
     val sellerProfile: String,
     val sellerName: String
@@ -34,7 +34,7 @@ data class RecentCard(
 )
 
 data class HotUser(
-    val userId: Int,
+    val userId: Long,
     val userImg: String,
     val userName: String,
     val userDetail: String,

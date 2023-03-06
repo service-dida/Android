@@ -30,13 +30,13 @@ class HotUserViewModel @Inject constructor(
 
     var hotUserState: Flow<PagingData<HotUser>> = createHotUserPager(hotUserAPI = hotUserAPI).flow.cachedIn(baseViewModelScope)
 
-    override fun onUserClicked(userId: Int) {
+    override fun onUserClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HotUserNavigationAction.NavigateToUserProfile(userId = userId))
         }
     }
 
-    override fun onUserFollowed(userId: Int) {
+    override fun onUserFollowed(userId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postUserFollowAPI(userId)

@@ -18,7 +18,7 @@ data class HotItemResponse(
 )
 
 data class HotSellerResponse(
-    @SerializedName("userId") val userId: Int,
+    @SerializedName("userId") val userId: Long,
     @SerializedName("name") val name: String,
     @SerializedName("imgUrl") val imgUrl: String,
     @SerializedName("profileUrl") val profileUrl: String
@@ -34,7 +34,7 @@ data class RecentCardResponse(
 )
 
 data class HotUserResponse(
-    @SerializedName("userId") val userId: Int,
+    @SerializedName("userId") val userId: Long,
     @SerializedName("name") val name: String,
     @SerializedName("profileUrl") val profileUrl: String,
     @SerializedName("count") val count: String,

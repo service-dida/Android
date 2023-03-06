@@ -49,7 +49,7 @@ class UserProfileViewModel @Inject constructor(
     private val _userCardState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow<UiState<List<UserNft>>>(UiState.Loading)
     val userCardState: StateFlow<UiState<List<UserNft>>> = _userCardState.asStateFlow()
 
-    fun getUserProfile(userId: Int) {
+    fun getUserProfile(userId: Long) {
         _userIdState.value = userId
         baseViewModelScope.launch {
             userUserIdAPI(userIdState.value)

@@ -101,7 +101,7 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onCommentUserProfileClicked(userId: Int) {
+    override fun onCommentUserProfileClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserProfile(userId = userId))
         }

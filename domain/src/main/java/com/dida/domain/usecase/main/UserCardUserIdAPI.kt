@@ -8,7 +8,7 @@ import javax.inject.Inject
 class UserCardUserIdAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(userId: Int) : NetworkResult<List<UserNft>> {
+    suspend operator fun invoke(userId: Long) : NetworkResult<List<UserNft>> {
         return repository.getUserCardsUserId(userId = userId)
     }
 }
