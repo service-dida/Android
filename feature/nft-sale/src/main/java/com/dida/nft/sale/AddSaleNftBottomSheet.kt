@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.base.BaseBottomSheetDialogFragment
+import com.dida.common.util.removeTrailingDot
 import com.dida.nft.sale.databinding.BottomAddSaleNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -38,7 +39,7 @@ class AddSaleNftBottomSheet(
                     when(it) {
                         is AddSaleNftNavigationAction.NavigateToDismiss -> {
                             // NFT 생성 API호출
-                            price(viewModel.userInputStateFlow.value)
+                            price(removeTrailingDot(viewModel.userInputStateFlow.value))
                             dismiss()
                         }
                     }

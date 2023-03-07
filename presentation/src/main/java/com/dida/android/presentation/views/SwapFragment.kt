@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.dida.common.util.removeTrailingDot
 import com.dida.password.PasswordDialog
 import com.dida.swap.SwapNavigationAction
 import com.dida.swap.SwapViewModel
@@ -48,7 +49,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                                     //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
                                     navigate(
                                         SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(
-                                            binding.topCoinAmountEt.text.toString().toFloat(),
+                                            removeTrailingDot(binding.topCoinAmountEt.text.toString()).toFloat(),
                                             password,
                                             viewModel.swapTypeState.value
                                         )
