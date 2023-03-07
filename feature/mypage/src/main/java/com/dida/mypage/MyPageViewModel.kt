@@ -88,16 +88,16 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(MypageNavigationAction.NavigateToDetailNft(nftId.toLong()))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId.toLong())
+            postLikeAPI(nftId)
                 .onSuccess {
                     getMypage()
                     dismissLoading()}

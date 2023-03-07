@@ -4,16 +4,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.hot_user.HotUserNavigationAction
 import com.dida.hot_user.HotUserViewModel
 import com.dida.hot_user.adapter.HotUserPagingAdapter
 import com.dida.hot_user.databinding.FragmentHotUserBinding
-import com.dida.recent_nft.RecentNftNavigationAction
-import com.dida.recent_nft.RecentNftViewModel
-import com.dida.recent_nft.adapter.CardPagingAdapter
-import com.dida.recent_nft.databinding.FragmentRecentNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

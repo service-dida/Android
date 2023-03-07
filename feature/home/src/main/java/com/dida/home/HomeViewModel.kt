@@ -1,7 +1,7 @@
 package com.dida.home
 
-import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.domain.flatMap
@@ -78,10 +78,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onUserFollowClicked(userId: Int) {
+    override fun onUserFollowClicked(userId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userId.toLong())
+            postUserFollowAPI(userId)
                 .onSuccess { getHome() }
                 .onError { e -> catchError(e) }
         }
@@ -117,7 +117,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onHotSellerItemClicked(userId: Int) {
+    override fun onHotSellerItemClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToHotSeller(userId))
         }
@@ -129,22 +129,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onCollectionItemClicked(userId: Int) {
+    override fun onCollectionItemClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToCollection(userId))
         }
     }
 
-    override fun onNftItemClicked(nftId: Int) {
+    override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToRecentNftItem(nftId))
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Int) {
+    override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId.toLong())
+            postLikeAPI(nftId)
                 .onSuccess {
                     getHome()
                 }

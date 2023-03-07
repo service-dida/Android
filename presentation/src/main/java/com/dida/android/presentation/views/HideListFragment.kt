@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -13,7 +12,6 @@ import com.dida.settings.hidelist.HideListNavigationAction
 import com.dida.settings.hidelist.HideListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HideListFragment :

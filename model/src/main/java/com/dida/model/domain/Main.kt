@@ -8,7 +8,7 @@ data class Main(
 )
 
 data class HotItem(
-    val cardId: Int,
+    val cardId: Long,
     val nftImg: String,
     val nftName: String,
     val heartCount: String,
@@ -18,14 +18,14 @@ data class HotItem(
 }
 
 data class HotSeller(
-    val userId: Int,
+    val userId: Long,
     val sellerBackground: String,
     val sellerProfile: String,
     val sellerName: String
 )
 
 data class RecentCard(
-    val cardId : Int,
+    val cardId : Long,
     val userName : String,
     val cardName : String,
     val imgUrl : String,
@@ -34,7 +34,7 @@ data class RecentCard(
 )
 
 data class HotUser(
-    val userId: Int,
+    val userId: Long,
     val userImg: String,
     val userName: String,
     val userDetail: String,

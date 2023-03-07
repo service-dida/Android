@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.home.HomeActionHandler
 import com.dida.domain.model.nav.home.Collection
+import com.dida.home.HomeActionHandler
 import com.dida.home.R
 import com.dida.home.databinding.HolderCollectionBinding
 
@@ -32,7 +32,7 @@ class CollectionAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).userId.toLong() * -1
+    override fun getItemId(position: Int): Long = getItem(position).userId * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_collection
 

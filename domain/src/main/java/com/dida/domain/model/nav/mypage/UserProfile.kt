@@ -8,5 +8,5 @@ data class UserProfile(
     val getWallet: Boolean,
     val nickname: String,
     val profileUrl: String,
-    val userId: Int
+    val userId: Long
 )

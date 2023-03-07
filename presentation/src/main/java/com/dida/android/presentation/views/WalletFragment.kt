@@ -3,8 +3,6 @@ package com.dida.android.presentation.views
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController

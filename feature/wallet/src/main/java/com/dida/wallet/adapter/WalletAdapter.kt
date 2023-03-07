@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.wallet.R
 import com.dida.domain.model.nav.mypage.WalletCardHolderModel
+import com.dida.wallet.R
 import com.dida.wallet.WalletActionHandler
 import com.dida.wallet.databinding.HolderWalletCardBinding
 

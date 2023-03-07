@@ -5,7 +5,7 @@ data class UserCards(
 )
 
 data class UserCard(
-    val cardId: Int,
+    val cardId: Long,
     val userName: String,
     val cardName: String,
     val imgUrl: String,

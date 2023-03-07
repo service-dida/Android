@@ -7,7 +7,7 @@ data class GetUserCardsResponse(
 )
 
 data class UserCardResponse(
-    @SerializedName("cardId") val cardId: Int,
+    @SerializedName("cardId") val cardId: Long,
     @SerializedName("userName") val userName: String,
     @SerializedName("cardName") val cardName: String,
     @SerializedName("imgUrl") val imgUrl: String,

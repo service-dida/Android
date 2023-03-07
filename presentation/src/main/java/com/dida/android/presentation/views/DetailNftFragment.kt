@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -10,11 +9,10 @@ import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.util.successOrNull
 import com.dida.nft.sale.AddSaleNftBottomSheet
-import com.dida.nft_detail.bottom.DetailNftBottomSheet
-import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
-import com.dida.nft_detail.bottom.DetailOwnerType
+import com.dida.nft_detail.bottom.DetailNftBottomSheet
+import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint

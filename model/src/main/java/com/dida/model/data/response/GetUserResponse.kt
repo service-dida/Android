@@ -3,7 +3,7 @@ package com.dida.model.data.response
 import com.google.gson.annotations.SerializedName
 
 data class GetUserResponse(
-    @SerializedName("userId") val userId: Int,
+    @SerializedName("userId") val userId: Long,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("profileUrl") val profileUrl: String,
     @SerializedName("description") val description: String,

@@ -1,8 +1,8 @@
 package com.dida.model.domain
 
 data class Post(
-    val postId: Int,
-    val cardId: Int,
+    val postId: Long,
+    val cardId: Long,
     val userName: String,
     val userImgUrl: String,
     val title: String,

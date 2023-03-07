@@ -5,7 +5,7 @@ data class CardsPostLikes(
 )
 
 data class CardsPostLike(
-    val cardId: Int,
+    val cardId: Long,
     val cardImgUrl: String,
     val cardName: String,
     val userImgUrl: String,

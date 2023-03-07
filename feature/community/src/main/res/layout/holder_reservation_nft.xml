@@ -82,7 +82,9 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_alert" />
+                 />
+            <!--app:srcCompat="@drawable/ic_alert" 추후에 예약된 NFT추가할 때 아이콘 추가하기-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

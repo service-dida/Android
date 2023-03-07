@@ -132,15 +132,6 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="TextView_regular_14_surface6" parent="@style/Widget.AppCompat.TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/pretendard_regular</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:textColor">@color/surface6</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-
     <style name="TextView_regular_14_timeGray" parent="@style/Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -155,7 +146,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">18dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/custom_lemon_radius16</item>
+        <item name="android:background">@drawable/custom_brandlemon_radius16</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="android:textSize">16dp</item>
         <item name="android:textColor">@color/black</item>

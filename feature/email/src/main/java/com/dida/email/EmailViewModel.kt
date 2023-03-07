@@ -1,8 +1,6 @@
 package com.dida.email
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.DataApplication
-import com.dida.data.model.HaveNotJwtTokenException
 import com.dida.data.model.NotCorrectPasswordException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess

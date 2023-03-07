@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.hot_seller.HotSellerViewModel
 import com.dida.hot_seller.databinding.FragmentHotSellerBinding
-import com.dida.hot_user.adapter.HotUserPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

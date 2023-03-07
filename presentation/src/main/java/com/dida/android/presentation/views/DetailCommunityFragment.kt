@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController

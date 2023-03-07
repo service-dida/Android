@@ -5,8 +5,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.swap.history.R
-import com.dida.swap.history.adapter.SwapHistoryAdapter
 import com.dida.swap.history.SwapHistoryViewModel
+import com.dida.swap.history.adapter.SwapHistoryAdapter
 import com.dida.swap.history.databinding.FragmentSwapHistoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

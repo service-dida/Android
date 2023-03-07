@@ -5,7 +5,6 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.SwapDidaToKlayAPI
 import com.dida.domain.usecase.main.SwapKlayToDidaAPI
-import com.dida.domain.usecase.main.WalletAmountAPI
 import com.dida.swap.SwapViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

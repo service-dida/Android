@@ -1,10 +1,8 @@
 package com.dida.nft_detail
 
-import android.os.Handler
-import android.os.Looper
 import com.dida.common.actionhandler.CommunityActionHandler
-import com.dida.common.base.BaseViewModel
 import com.dida.common.actionhandler.CommunityWriteActionHandler
+import com.dida.common.base.BaseViewModel
 import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState

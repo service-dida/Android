@@ -4,14 +4,16 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.model.nav.home.HotUser
-import com.dida.domain.model.nav.mypage.UserNft
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HotUserAPI
 import com.dida.domain.usecase.main.PostUserFollowAPI
 import com.dida.hot_user.adapter.createHotUserPager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
