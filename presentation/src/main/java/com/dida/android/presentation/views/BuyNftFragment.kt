@@ -3,13 +3,18 @@ package com.dida.android.presentation.views
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.dida.buy.nft.BuyNftNavigationAction
 import com.dida.buy.nft.BuyNftViewModel
 import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuyNftBinding
 import com.dida.password.PasswordDialog
+import com.dida.recent_nft.RecentNftNavigationAction
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.layout.fragment_buy_nft) {
@@ -35,6 +40,16 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     override fun initDataBinding() {
         binding.priceTv.text =  args.price
         binding.bottomPriceTv.text = args.price
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        is BuyNftNavigationAction.NavigateToMypage -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToMyPageFragment())
+                    }
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {

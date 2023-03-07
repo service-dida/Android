@@ -428,6 +428,9 @@
         <argument
             android:name="marketId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_buyNftFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
     </fragment>
 
     <fragment

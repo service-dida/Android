@@ -34,9 +34,14 @@ class BuyNftViewModel @Inject constructor(
     }
     fun buyNft(password : String, marketId : Long){
         baseViewModelScope.launch {
+            showLoading()
             buyNftAPI(password, marketId)
-                .onSuccess {}
+                .onSuccess {
+                    _navigationEvent.emit(BuyNftNavigationAction.NavigateToMypage)
+                }
                 .onError { e -> catchError(e) }
+            dismissLoading()
+
         }
     }
 }
