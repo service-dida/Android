@@ -7,6 +7,10 @@
         <variable
             name="holderModel"
             type="com.dida.domain.model.nav.mypage.BuySellList" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.wallet.WalletActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,27 +18,22 @@
         android:layout_height="80dp"
         android:background="@color/mainblack"
         android:paddingRight="16dp"
+        app:onSingleClick="@{() -> eventListener.onNftItemClicked()}"
         android:layout_marginBottom="12dp">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/wallet_nft_imageview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="1"
                 app:layout_constraintHeight_percent="1"
                 android:scaleType="centerCrop"
+                image_from_url_rounded="@{holderModel.cardImgUrl}"
                 android:src="@drawable/nft_example_image" />
 
-        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/walle_nft_name_textview"
@@ -45,11 +44,11 @@
             android:text="@{holderModel.cardName}"
             android:textColor="@color/white"
             android:textSize="16dp"
-            tools:text="NFT name here"
             app:layout_constraintBottom_toBottomOf="@+id/wallet_price_textview"
             app:layout_constraintEnd_toStartOf="@+id/wallet_price_textview"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="@+id/wallet_price_textview" />
+            app:layout_constraintStart_toEndOf="@+id/wallet_nft_imageview"
+            app:layout_constraintTop_toTopOf="@+id/wallet_price_textview"
+            tools:text="NFT name here" />
 
         <TextView
             android:id="@+id/walle_user_name_textview"
