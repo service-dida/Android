@@ -187,7 +187,7 @@ interface MainAPIService {
 
     // 타 유저 카드 조회
     @GET("/user/cards/{userId}")
-    suspend fun getUserCardsUserId(@Path("userId") userId: Long): List<RecentCardResponse>
+    suspend fun getUserCardsUserId(@Path("userId") userId: Long) : List<RecentCardResponse>
 
     @PATCH("/card/status/{cardId}")
     suspend fun patchDeleteNft(@Path("cardId") cardId: Long, @Body payPwd : String): Long

@@ -7,6 +7,7 @@ import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
+import com.dida.data.model.HaveNotJwtTokenException
 import com.dida.domain.model.nav.detailnft.DetailNFT
 import com.dida.domain.model.nav.post.Posts
 import com.dida.domain.onError
@@ -30,9 +31,6 @@ class DetailNftViewModel @Inject constructor(
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
 
     private val TAG = "DetailNftViewModel"
-
-    private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val moreEvent: SharedFlow<Unit> = _moreEvent
 
     private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> =
         MutableSharedFlow<DetailNftNavigationAction>()
@@ -150,10 +148,16 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             when(detailOwnerTypeState.value){
                 DetailOwnerType.NOTLOGIN_AND_SALE ->{
-                    //TODO : 로그인
+                    catchError(HaveNotJwtTokenException(Throwable(), "", 100))
                 }
                 DetailOwnerType.NOTMINE_AND_SALE ->{
-                    //TODO : 구매하기
+                    val detailNFT = detailNftState.value.successOrNull()
+                    if(detailNFT != null){
+                        _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft(
+                            detailNFT.cardId, detailNFT.imgUrl,detailNFT.title,detailNFT.profileUrl,
+                            detailNFT.nickname,detailNFT.price,detailNFT.viewerNickname,detailNFT.marketId
+                        ))
+                    }
                 }
                 DetailOwnerType.MINE_AND_NOTSALE ->{
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToSell)

@@ -40,6 +40,10 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+    }
+
+    override fun onStart() {
+        super.onStart()
         viewModel.getDetailNft(args.cardId)
         viewModel.getCommunity(args.cardId)
     }
@@ -52,6 +56,13 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                         is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
                         is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(it.postId))
                         is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
+                        is DetailNftNavigationAction.NavigateToBuyNft -> {
+                            navigate(
+                                DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment(
+                                    it.nftId,it.nftImg,it.nftTitle,it.userImg,it.userName,it.price,it.viewerNickName,it.marketId
+                                )
+                            )
+                        }
                         is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
                         is DetailNftNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailNftNavigationAction.NavigateToUserProfile -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToUserProfileFragment(it.userId))

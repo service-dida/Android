@@ -120,6 +120,33 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="TextView_regular_18_black" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_bold_18_black" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_18_brand_lemon" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="Button_surface3_regular_16_white" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -132,11 +159,40 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="TextView_regular_14_surface6" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/surface6</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_14_C5C5CF" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/text_c5c5cf</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+=======
+>>>>>>> feature/remove_unusedCode
     <style name="TextView_regular_14_timeGray" parent="@style/Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/time_gray_text</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_18_timeGray" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">18dp</item>
         <item name="android:textColor">@color/time_gray_text</item>
         <item name="android:includeFontPadding">false</item>
     </style>
@@ -235,6 +291,16 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_bold_24_brand_lemon" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
         <item name="android:textSize">24dp</item>
         <item name="android:textColor">@color/brand_lemon</item>
         <item name="android:includeFontPadding">false</item>

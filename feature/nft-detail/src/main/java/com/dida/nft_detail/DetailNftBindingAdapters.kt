@@ -1,5 +1,4 @@
 package com.dida.nft_detail
-
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView

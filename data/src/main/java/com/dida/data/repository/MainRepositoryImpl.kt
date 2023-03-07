@@ -4,7 +4,6 @@ import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.mapper.toDomain
 import com.dida.data.model.request.*
-import com.dida.data.model.response.PostBuyNftRequest
 import com.dida.data.model.response.PostLikeRequest
 import com.dida.data.model.response.PostSellNftRequest
 import com.dida.domain.NetworkResult

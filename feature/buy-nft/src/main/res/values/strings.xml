@@ -1,0 +1,8 @@
+<resources>
+    <string name="buy_nft_main_title">구매하기</string>
+    <string name="buy_nft_info_text">NFT 정보</string>
+    <string name="buy_nft_change_owner_text">소유권 변동</string>
+    <string name="buy_nft_price_info_text">가격 정보</string>
+    <string name="buy_nft_total_price_text">총액</string>
+    <string name="buy_nft_fee_text">수수료</string>
+</resources>

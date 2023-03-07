@@ -126,13 +126,15 @@ fun GetDetailNFTResponse.toDomain(): DetailNFT {
         description = description,
         id = id,
         imgUrl = imgUrl,
+        viewerNickname = viewerNickname,
         nickname = nickname,
         price = price,
         profileUrl = profileUrl,
         title = title,
         liked = liked,
         type = type,
-        userId = userId
+        userId = userId,
+        marketId = marketId
     )
 }
 

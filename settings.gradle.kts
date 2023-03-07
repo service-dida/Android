@@ -73,8 +73,9 @@ include(":feature:nft-sale")
 include(":feature:recent-nft")
 include(":feature:hot-user")
 include(":feature:hot-seller")
+include(":feature:buy-nft")
 include(":feature:compose")
-
 include(":feature:user-profile")
 include(":feature:temp-password")
 include(":feature:change-password")
+
