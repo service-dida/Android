@@ -42,8 +42,8 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         initAdapter()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         viewModel.getDetailNft(args.cardId)
         viewModel.getCommunity(args.cardId)
     }
