@@ -39,6 +39,7 @@ object GlideBindingAdapters {
         if (imageURL.isNullOrEmpty().not()) {
             Glide.with(imageView.context)
                 .load(imageURL)
+                .placeholder(R.mipmap.img_dida_logo_foreground)
                 .transform(CenterCrop(), RoundedCorners(50))
                 .into(imageView)
         }
