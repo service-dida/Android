@@ -17,8 +17,8 @@ fun EditText.setDecimalFormat(decimalDigits: Int) {
             if (currentValue.isEmpty()) {
                 return
             }
-            if (currentValue.toDouble() > Int.MAX_VALUE) {
-                this@setDecimalFormat.setText(Int.MAX_VALUE.toString())
+            if (currentValue.toDouble() > 20000000) {
+                this@setDecimalFormat.setText("20000000")
             }
             val dotPos = currentValue.indexOf(".")
             if (dotPos < 0) {

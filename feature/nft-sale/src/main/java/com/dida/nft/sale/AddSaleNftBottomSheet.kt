@@ -47,11 +47,11 @@ class AddSaleNftBottomSheet(
 
             launch {
                 viewModel.userInputStateFlow.collectLatest {
-                    if(it == Int.MAX_VALUE.toString()){
+                    if(it == "20000000"){
                         val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
                         imm1.hideSoftInputFromWindow(binding.priceTxt.windowToken, 0);
 
-                        Toast.makeText(requireContext(),"최대 ${Int.MAX_VALUE}까지 입력가능합니다.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),"최대 20,000,000까지 입력가능합니다.",Toast.LENGTH_SHORT).show()
                     }
                 }
             }

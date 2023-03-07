@@ -173,7 +173,7 @@
                             <EditText
                                 android:id="@+id/top_coin_amount_et"
                                 style="@style/TextView_regular_22_white"
-                                decimalFormat="@{6}"
+                                decimalFormat="@{2}"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
@@ -250,7 +250,7 @@
                             <EditText
                                 android:id="@+id/bottom_coin_amount_tv"
                                 style="@style/TextView_regular_22_white"
-                                decimalFormat="@{6}"
+                                decimalFormat="@{2}"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
