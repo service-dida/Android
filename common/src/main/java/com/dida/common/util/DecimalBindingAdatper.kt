@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.dida.common.util.Constants
 
 
 @BindingAdapter("decimalFormat")
@@ -20,8 +21,8 @@ fun EditText.setDecimalFormat(decimalDigits: Int) {
                 if (currentValue.isEmpty()) {
                     return
                 }
-                if (currentValue.toDouble() > 20000000) {
-                    this@setDecimalFormat.setText("20000000")
+                if (currentValue.toDouble() > Constants.MAX_AMOUNT) {
+                    this@setDecimalFormat.setText(Constants.MAX_AMOUNT)
                 }
                 val dotPos = currentValue.indexOf(".")
                 if (dotPos < 0) {

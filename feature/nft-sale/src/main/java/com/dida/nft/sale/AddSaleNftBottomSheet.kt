@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.base.BaseBottomSheetDialogFragment
+import com.dida.common.util.Constants
 import com.dida.common.util.removeTrailingDot
 import com.dida.nft.sale.databinding.BottomAddSaleNftBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,11 +49,11 @@ class AddSaleNftBottomSheet(
 
             launch {
                 viewModel.userInputStateFlow.collectLatest {
-                    if(it == "20000000"){
+                    if(it == Constants.MAX_AMOUNT.toString()){
                         val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
                         imm1.hideSoftInputFromWindow(binding.priceTxt.windowToken, 0);
 
-                        Toast.makeText(requireContext(),"최대 20,000,000까지 입력가능합니다.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),"최대 ${Constants.MAX_AMOUNT_TEXT}까지 입력가능합니다.",Toast.LENGTH_SHORT).show()
                     }
                 }
             }
