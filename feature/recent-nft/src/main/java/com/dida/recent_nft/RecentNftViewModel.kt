@@ -46,6 +46,4 @@ class RecentNftViewModel @Inject constructor(
             dismissLoading()
         }
     }
-
-
 }

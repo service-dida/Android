@@ -62,6 +62,9 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
     }
 
     override fun initAfterBinding() {
+        parentFragmentManager.addOnBackStackChangedListener {
+            cardPagingAdapter.refresh()
+        }
     }
 
     private fun initToolbar(){

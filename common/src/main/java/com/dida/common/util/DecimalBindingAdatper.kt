@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.dida.common.util.Constants
 
 
 @BindingAdapter("decimalFormat")
@@ -14,23 +15,25 @@ fun EditText.setDecimalFormat(decimalDigits: Int) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable?) {
             val currentValue = s.toString()
-            if (currentValue.isEmpty()) {
-                return
+            if(currentValue.startsWith(".")){
+                s?.delete(0,1)
+            }else{
+                if (currentValue.isEmpty()) {
+                    return
+                }
+                if (currentValue.toDouble() > Constants.MAX_AMOUNT) {
+                    this@setDecimalFormat.setText(Constants.MAX_AMOUNT)
+                }
+                val dotPos = currentValue.indexOf(".")
+                if (dotPos < 0) {
+                    return
+                }
+                if (currentValue.length - dotPos - 1 > decimalDigits) {
+                    this@setDecimalFormat.removeTextChangedListener(this)
+                    s?.delete(dotPos + decimalDigits + 1, s.length)
+                    this@setDecimalFormat.addTextChangedListener(this)
+                }
             }
-            if (currentValue.toDouble() > Int.MAX_VALUE) {
-                this@setDecimalFormat.setText(Int.MAX_VALUE.toString())
-            }
-            val dotPos = currentValue.indexOf(".")
-            if (dotPos < 0) {
-                return
-            }
-            if (currentValue.length - dotPos - 1 > decimalDigits) {
-                this@setDecimalFormat.removeTextChangedListener(this)
-                s?.delete(dotPos + decimalDigits + 1, s.length)
-                this@setDecimalFormat.addTextChangedListener(this)
-            }
-
-
         }
     })
 }
