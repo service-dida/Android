@@ -194,6 +194,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nft_history_textview"
             tools:itemCount="4"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:layout_editor_absoluteX="-16dp"
             tools:listitem="@layout/holder_wallet_nft_history"
