@@ -6,7 +6,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.home.HotUser" />
+            type="com.dida.domain.model.main.HotUser" />
 
         <variable
             name="eventListener"

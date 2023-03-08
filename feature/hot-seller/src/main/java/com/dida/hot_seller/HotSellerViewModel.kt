@@ -2,7 +2,7 @@ package com.dida.hot_seller
 
 import androidx.paging.PagingData
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.main.UserNft
 import com.dida.domain.usecase.main.HotSellerAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.mypage.UserNft" />
+            type="com.dida.domain.model.main.UserNft" />
     </data>
 
     <androidx.cardview.widget.CardView

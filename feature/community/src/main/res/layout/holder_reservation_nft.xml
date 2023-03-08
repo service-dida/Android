@@ -6,7 +6,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.community.ReservationNFTHolderModel" />
+            type="com.dida.domain.model.main.ReservationNft" />
     </data>
 
     <androidx.cardview.widget.CardView

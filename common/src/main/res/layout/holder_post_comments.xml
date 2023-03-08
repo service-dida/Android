@@ -4,7 +4,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.post.PostComments" />
+            type="com.dida.domain.model.main.PostComments" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

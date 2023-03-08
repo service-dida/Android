@@ -7,7 +7,7 @@
         <import type="android.view.View"></import>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.post.Posts" />
+            type="com.dida.domain.model.main.Posts" />
 
         <variable
             name="eventListener"

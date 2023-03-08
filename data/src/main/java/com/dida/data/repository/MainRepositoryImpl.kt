@@ -7,27 +7,27 @@ import com.dida.data.model.request.*
 import com.dida.data.model.response.PostLikeRequest
 import com.dida.data.model.response.PostSellNftRequest
 import com.dida.domain.NetworkResult
-import com.dida.domain.model.login.LoginResponseModel
-import com.dida.domain.model.login.NicknameResponseModel
-import com.dida.domain.model.nav.community.HotCard
-import com.dida.domain.model.nav.createwallet.RandomNumber
-import com.dida.domain.model.nav.detailnft.DetailNFT
-import com.dida.domain.model.nav.hide.CardHideList
-import com.dida.domain.model.nav.home.Home
-import com.dida.domain.model.nav.home.HotSellerMore
-import com.dida.domain.model.nav.home.HotUser
-import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.BuySellList
-import com.dida.domain.model.nav.mypage.OtherUserProfie
-import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.mypage.UserProfile
-import com.dida.domain.model.nav.post.CardPost
-import com.dida.domain.model.nav.post.Comments
-import com.dida.domain.model.nav.post.Post
-import com.dida.domain.model.nav.post.Posts
-import com.dida.domain.model.nav.swap.WalletAmount
-import com.dida.domain.model.nav.swap_history.SwapHistory
-import com.dida.domain.model.splash.AppVersionResponse
+import com.dida.domain.model.main.Token
+import com.dida.domain.model.main.Nickname
+import com.dida.domain.model.main.HotCard
+import com.dida.domain.model.main.RandomNumber
+import com.dida.domain.model.main.DetailNft
+import com.dida.domain.model.nav.hide.HideCard
+import com.dida.domain.model.main.Home
+import com.dida.domain.model.main.HotSellerMore
+import com.dida.domain.model.main.HotUser
+import com.dida.domain.model.main.SoldOut
+import com.dida.domain.model.main.TradeHistory
+import com.dida.domain.model.main.OtherUserProfie
+import com.dida.domain.model.main.UserNft
+import com.dida.domain.model.main.UserProfile
+import com.dida.domain.model.main.CardPost
+import com.dida.domain.model.main.Comments
+import com.dida.domain.model.main.Post
+import com.dida.domain.model.main.Posts
+import com.dida.domain.model.main.WalletAmount
+import com.dida.domain.model.main.SwapHistory
+import com.dida.domain.model.main.AppVersion
 import com.dida.domain.repository.MainRepository
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -37,20 +37,20 @@ class MainRepositoryImpl @Inject constructor(
     @Named("Main") private val mainAPIService: MainAPIService
 ): MainRepository {
 
-    override suspend fun checkVersionAPI(): NetworkResult<AppVersionResponse> {
+    override suspend fun checkVersionAPI(): NetworkResult<AppVersion> {
         return handleApi { mainAPIService.checkVersion() }
     }
 
-    override suspend fun loginAPI(idToken: String): NetworkResult<LoginResponseModel> {
+    override suspend fun loginAPI(idToken: String): NetworkResult<Token> {
         return handleApi { mainAPIService.loginAPIServer(idToken = idToken) }
     }
 
-    override suspend fun nicknameAPI(nickName: String): NetworkResult<NicknameResponseModel> {
+    override suspend fun nicknameAPI(nickName: String): NetworkResult<Nickname> {
         val request = PostNicknameRequest(nickName)
         return handleApi { mainAPIService.nicknameAPIServer(request) }
     }
 
-    override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<LoginResponseModel> {
+    override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<Token> {
         val request = CreateUserRequest(email, nickName)
         return handleApi { mainAPIService.createuserAPIServer(request) }
     }
@@ -59,7 +59,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getUserProfile().toDomain() }
     }
 
-    override suspend fun refreshTokenAPI(request: String): NetworkResult<LoginResponseModel> {
+    override suspend fun refreshTokenAPI(request: String): NetworkResult<Token> {
         return handleApi { mainAPIService.refreshtokenAPIServer(request) }
     }
 
@@ -131,7 +131,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.postUserFollow(request) }
     }
 
-    override suspend fun getDetailNFT(cardId: Long): NetworkResult<DetailNFT> {
+    override suspend fun getDetailNFT(cardId: Long): NetworkResult<DetailNft> {
         return handleApi { mainAPIService.getDetailNFT(cardId = cardId.toString()).toDomain() }
 
     }
@@ -223,15 +223,15 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.patchCommentIdStatus(commentId = commentId) }
     }
 
-    override suspend fun getBuySellList(): NetworkResult<List<BuySellList>> {
+    override suspend fun getBuySellList(): NetworkResult<List<TradeHistory>> {
         return handleApi { mainAPIService.getBuySellList().toDomain() }
     }
 
-    override suspend fun getBuyList(): NetworkResult<List<BuySellList>> {
+    override suspend fun getBuyList(): NetworkResult<List<TradeHistory>> {
         return handleApi { mainAPIService.getBuyList().toDomain() }
     }
 
-    override suspend fun getSellList(): NetworkResult<List<BuySellList>> {
+    override suspend fun getSellList(): NetworkResult<List<TradeHistory>> {
         return handleApi { mainAPIService.getSellList().toDomain() }
     }
 
@@ -239,7 +239,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getRecentCard(page = page).toDomain() }
     }
 
-    override suspend fun getHideList(): NetworkResult<List<CardHideList>> {
+    override suspend fun getHideList(): NetworkResult<List<HideCard>> {
         return handleApi { mainAPIService.getHideList().toDomain() }
     }
 

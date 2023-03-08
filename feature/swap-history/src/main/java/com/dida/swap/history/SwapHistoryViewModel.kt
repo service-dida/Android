@@ -1,7 +1,7 @@
 package com.dida.swap.history
 
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.nav.swap_history.SwapHistory
+import com.dida.domain.model.main.SwapHistory
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.SwapHistoryAPI

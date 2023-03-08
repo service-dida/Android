@@ -1,7 +1,7 @@
 package com.dida.domain.usecase.main
 
 import com.dida.domain.NetworkResult
-import com.dida.domain.model.nav.home.Home
+import com.dida.domain.model.main.Home
 import com.dida.domain.repository.MainRepository
 import javax.inject.Inject
 

@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.nav.swap_history.SwapHistory
+import com.dida.domain.model.main.SwapHistory
 import com.dida.swap.history.R
 import com.dida.swap.history.SwapHistoryActionHandler
 import com.dida.swap.history.databinding.HolderSwapHistoryBinding

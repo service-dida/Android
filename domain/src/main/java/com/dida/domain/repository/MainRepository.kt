@@ -1,42 +1,42 @@
 package com.dida.domain.repository
 
 import com.dida.domain.NetworkResult
-import com.dida.domain.model.login.LoginResponseModel
-import com.dida.domain.model.login.NicknameResponseModel
-import com.dida.domain.model.nav.community.HotCard
-import com.dida.domain.model.nav.createwallet.RandomNumber
-import com.dida.domain.model.nav.detailnft.DetailNFT
-import com.dida.domain.model.nav.hide.CardHideList
-import com.dida.domain.model.nav.home.Home
-import com.dida.domain.model.nav.home.HotSellerMore
-import com.dida.domain.model.nav.home.HotUser
-import com.dida.domain.model.nav.home.SoldOut
-import com.dida.domain.model.nav.mypage.BuySellList
-import com.dida.domain.model.nav.mypage.OtherUserProfie
-import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.mypage.UserProfile
-import com.dida.domain.model.nav.post.CardPost
-import com.dida.domain.model.nav.post.Comments
-import com.dida.domain.model.nav.post.Post
-import com.dida.domain.model.nav.post.Posts
-import com.dida.domain.model.nav.swap.WalletAmount
-import com.dida.domain.model.nav.swap_history.SwapHistory
-import com.dida.domain.model.splash.AppVersionResponse
+import com.dida.domain.model.main.Token
+import com.dida.domain.model.main.Nickname
+import com.dida.domain.model.main.HotCard
+import com.dida.domain.model.main.RandomNumber
+import com.dida.domain.model.main.DetailNft
+import com.dida.domain.model.nav.hide.HideCard
+import com.dida.domain.model.main.Home
+import com.dida.domain.model.main.HotSellerMore
+import com.dida.domain.model.main.HotUser
+import com.dida.domain.model.main.SoldOut
+import com.dida.domain.model.main.TradeHistory
+import com.dida.domain.model.main.OtherUserProfie
+import com.dida.domain.model.main.UserNft
+import com.dida.domain.model.main.UserProfile
+import com.dida.domain.model.main.CardPost
+import com.dida.domain.model.main.Comments
+import com.dida.domain.model.main.Post
+import com.dida.domain.model.main.Posts
+import com.dida.domain.model.main.WalletAmount
+import com.dida.domain.model.main.SwapHistory
+import com.dida.domain.model.main.AppVersion
 import okhttp3.MultipartBody
 
 interface  MainRepository {
 
-    suspend fun checkVersionAPI(): NetworkResult<AppVersionResponse>
+    suspend fun checkVersionAPI(): NetworkResult<AppVersion>
 
-    suspend fun loginAPI(idToken : String): NetworkResult<LoginResponseModel>
+    suspend fun loginAPI(idToken : String): NetworkResult<Token>
 
-    suspend fun nicknameAPI(nickName: String): NetworkResult<NicknameResponseModel>
+    suspend fun nicknameAPI(nickName: String): NetworkResult<Nickname>
 
-    suspend fun createUserAPI(email: String, nickName: String): NetworkResult<LoginResponseModel>
+    suspend fun createUserAPI(email: String, nickName: String): NetworkResult<Token>
 
     suspend fun getUserProfileAPI() : NetworkResult<UserProfile>
 
-    suspend fun refreshTokenAPI(request: String): NetworkResult<LoginResponseModel>
+    suspend fun refreshTokenAPI(request: String): NetworkResult<Token>
 
     suspend fun getUserCardsAPI() : NetworkResult<List<UserNft>>
 
@@ -68,7 +68,7 @@ interface  MainRepository {
 
     suspend fun postUserFollowAPI(userId: Long) : NetworkResult<Unit>
 
-    suspend fun getDetailNFT(cardId: Long) : NetworkResult<DetailNFT>
+    suspend fun getDetailNFT(cardId: Long) : NetworkResult<DetailNft>
 
     suspend fun putDeviceTokenAPI(deviceToken: String) : NetworkResult<Unit>
 
@@ -108,15 +108,15 @@ interface  MainRepository {
 
     suspend fun patchCommentIdStatus(commentId: Long) : NetworkResult<Unit>
 
-    suspend fun getBuySellList() : NetworkResult<List<BuySellList>>
+    suspend fun getBuySellList() : NetworkResult<List<TradeHistory>>
 
-    suspend fun getBuyList() : NetworkResult<List<BuySellList>>
+    suspend fun getBuyList() : NetworkResult<List<TradeHistory>>
 
-    suspend fun getSellList() : NetworkResult<List<BuySellList>>
+    suspend fun getSellList() : NetworkResult<List<TradeHistory>>
 
     suspend fun getRecentCard(page: Int) : NetworkResult<List<UserNft>>
 
-    suspend fun getHideList() : NetworkResult<List<CardHideList>>
+    suspend fun getHideList() : NetworkResult<List<HideCard>>
 
     suspend fun getHideNft(cardId : Long) : NetworkResult<Unit>
 

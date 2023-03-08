@@ -2,7 +2,7 @@ package com.dida.create_community
 
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
-import com.dida.domain.model.nav.post.CardPost
+import com.dida.domain.model.main.CardPost
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CardsPostLikeAPI

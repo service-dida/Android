@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.databinding.HolderCommunityBinding
-import com.dida.domain.model.nav.post.Posts
+import com.dida.domain.model.main.Posts
 
 class CommunityAdapter(
     private val eventListener: CommunityActionHandler

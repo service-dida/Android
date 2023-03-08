@@ -13,34 +13,34 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.domain.model.nav.detailnft.DetailNFT
+import com.dida.domain.model.main.DetailNft
 import com.dida.nft_detail.bottom.DetailOwnerType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @BindingAdapter("NftImgUrl")
-fun ImageView.bindImgUrl(uiState: UiState<DetailNFT>) {
+fun ImageView.bindImgUrl(uiState: UiState<DetailNft>) {
     Glide.with(context)
         .load(uiState.successOrNull()?.imgUrl)
         .into(this)
 }
 
 @BindingAdapter("NftTitle")
-fun TextView.bindTitle(uiState: UiState<DetailNFT>) {
+fun TextView.bindTitle(uiState: UiState<DetailNft>) {
     this.text = uiState.successOrNull()?.title
 }
 
 @BindingAdapter("NftDescription")
-fun TextView.bindDescription(uiState: UiState<DetailNFT>) {
+fun TextView.bindDescription(uiState: UiState<DetailNft>) {
     this.text = uiState.successOrNull()?.description
 }
 
 @BindingAdapter("NftNickName")
-fun TextView.bindNickName(uiState: UiState<DetailNFT>) {
+fun TextView.bindNickName(uiState: UiState<DetailNft>) {
     this.text = uiState.successOrNull()?.nickname
 }
 
 @BindingAdapter("NftProfileUrl")
-fun ImageView.bindProfileUrl(uiState: UiState<DetailNFT>) {
+fun ImageView.bindProfileUrl(uiState: UiState<DetailNft>) {
     Glide.with(context)
         .load(uiState.successOrNull()?.profileUrl)
         .transform(CenterCrop(), RoundedCorners(1000))
@@ -48,7 +48,7 @@ fun ImageView.bindProfileUrl(uiState: UiState<DetailNFT>) {
 }
 
 @BindingAdapter("NftContract")
-fun TextView.bindContract(uiState: UiState<DetailNFT>) {
+fun TextView.bindContract(uiState: UiState<DetailNft>) {
     this.text = uiState.successOrNull()?.let {
         if (it.contracts.isNullOrEmpty()) {
             "empty"
@@ -62,12 +62,12 @@ fun TextView.bindContract(uiState: UiState<DetailNFT>) {
 }
 
 @BindingAdapter("NftTokenId")
-fun TextView.bindTokenId(uiState: UiState<DetailNFT>) {
+fun TextView.bindTokenId(uiState: UiState<DetailNft>) {
     this.text = uiState.successOrNull()?.id
 }
 
 @BindingAdapter("NftPrice")
-fun TextView.bindPrice(uiState: UiState<DetailNFT>) {
+fun TextView.bindPrice(uiState: UiState<DetailNft>) {
     this.text = uiState.successOrNull()?.price
 }
 
@@ -79,7 +79,7 @@ fun ConstraintLayout.bindVisible(type: DetailOwnerType) {
 }
 
 @BindingAdapter("LoginCheck")
-fun FloatingActionButton.bindVisible(uiState: UiState<DetailNFT>) {
+fun FloatingActionButton.bindVisible(uiState: UiState<DetailNft>) {
     if(uiState != UiState.Loading){
         if(uiState.successOrNull()?.type == "NEED LOGIN") {
             this.visibility = View.GONE
@@ -112,7 +112,7 @@ fun TextView.bindConfrimBtn(type: DetailOwnerType) {
 }
 
 @BindingAdapter("NftDetailToolbar")
-fun Toolbar.bindToolbar(uiState: UiState<DetailNFT>) {
+fun Toolbar.bindToolbar(uiState: UiState<DetailNft>) {
     this.menu.clear()
     if (uiState.successOrNull()?.liked == true) {
         this.inflateMenu(R.menu.menu_detailnft_like_toolbar)

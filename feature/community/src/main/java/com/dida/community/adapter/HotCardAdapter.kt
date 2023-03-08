@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.community.HotCardActionHandler
 import com.dida.community.R
 import com.dida.community.databinding.HolderHotCardBinding
-import com.dida.domain.model.nav.community.HotCard
+import com.dida.domain.model.main.HotCard
 
 class HotCardAdapter(
     private val eventListener: HotCardActionHandler

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.databinding.HolderMypageUserCardsBinding
-import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.main.UserNft
 
 class RecentNftAdapter(
     private val eventListener: NftActionHandler

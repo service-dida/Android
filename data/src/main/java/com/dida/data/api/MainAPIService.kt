@@ -2,31 +2,31 @@ package com.dida.data.api
 
 import com.dida.data.model.request.*
 import com.dida.data.model.response.*
-import com.dida.domain.model.login.LoginResponseModel
-import com.dida.domain.model.login.NicknameResponseModel
-import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.splash.AppVersionResponse
+import com.dida.domain.model.main.Token
+import com.dida.domain.model.main.Nickname
+import com.dida.domain.model.main.UserNft
+import com.dida.domain.model.main.AppVersion
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface MainAPIService {
     @GET("/app/version")
-    suspend fun checkVersion(): AppVersionResponse
+    suspend fun checkVersion(): AppVersion
 
     @POST("/kakao/login")
-    suspend fun loginAPIServer(@Body idToken: String): LoginResponseModel
+    suspend fun loginAPIServer(@Body idToken: String): Token
 
     @POST("/user/nickname")
-    suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): NicknameResponseModel
+    suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): Nickname
 
     @POST("/new/user")
-    suspend fun createuserAPIServer(@Body request: CreateUserRequest): LoginResponseModel
+    suspend fun createuserAPIServer(@Body request: CreateUserRequest): Token
 
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
 
     @GET("/login/refresh")
-    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): LoginResponseModel
+    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Token
 
     @GET("/user/cards")
     suspend fun getUserCards(): List<UserNft>
