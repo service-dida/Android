@@ -8,6 +8,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.BuyListAPI
 import com.dida.domain.usecase.main.BuySellListAPI
+import com.dida.domain.usecase.main.SellListAPI
 import com.dida.domain.usecase.main.WalletAmountAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -19,7 +20,7 @@ class WalletViewModel @Inject constructor(
     private val walletAmountAPI: WalletAmountAPI,
     private val buySellListAPI: BuySellListAPI,
     private val buyListAPI: BuyListAPI,
-    private val sellListAPI: BuySellListAPI
+    private val sellListAPI: SellListAPI
 ) : BaseViewModel(), WalletActionHandler {
 
     private val TAG = "WalletViewModel"
