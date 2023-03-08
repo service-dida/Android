@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.dida.common.util.Constants
+import com.dida.common.util.addPriceDot
 
 
 @BindingAdapter("decimalFormat")
@@ -50,7 +51,8 @@ fun TextView.setDecimalPrice(price: String) {
         } else {
             String.format("%.2f", roundedValue)
         }
-        this.text = "$formattedValue dida"
+
+        this.text = "${addPriceDot(formattedValue)} dida"
     }
 }
 
@@ -67,6 +69,6 @@ fun TextView.setDecimalPrice(priceF: Float) {
         } else {
             String.format("%.2f", roundedValue)
         }
-        this.text = "$formattedValue dida"
+        this.text = "${addPriceDot(formattedValue)} dida"
     }
 }
