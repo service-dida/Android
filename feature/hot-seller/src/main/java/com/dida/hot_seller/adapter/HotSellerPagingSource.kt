@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.dida.domain.fold
-import com.dida.domain.model.nav.home.HotSellerMore
+import com.dida.domain.model.main.HotSellerMore
 import com.dida.domain.usecase.main.HotSellerAPI
 
 fun createHotSellerPager(

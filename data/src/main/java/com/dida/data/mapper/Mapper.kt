@@ -2,18 +2,17 @@ package com.dida.data.mapper
 
 import com.dida.data.model.response.*
 import com.dida.domain.model.klaytn.Asset
-import com.dida.domain.model.nav.community.HotCard
-import com.dida.domain.model.nav.createwallet.RandomNumber
-import com.dida.domain.model.nav.detailnft.DetailNFT
-import com.dida.domain.model.nav.hide.CardHideList
+import com.dida.domain.model.main.*
+import com.dida.domain.model.nav.hide.HideCard
 import com.dida.domain.model.nav.home.*
-import com.dida.domain.model.nav.home.Collection
-import com.dida.domain.model.nav.mypage.BuySellList
-import com.dida.domain.model.nav.mypage.OtherUserProfie
-import com.dida.domain.model.nav.mypage.UserNft
-import com.dida.domain.model.nav.mypage.UserProfile
+import com.dida.domain.model.main.Collection
+import com.dida.domain.model.main.TradeHistory
+import com.dida.domain.model.main.OtherUserProfie
+import com.dida.domain.model.main.UserNft
+import com.dida.domain.model.main.UserProfile
 import com.dida.domain.model.nav.post.*
-import com.dida.domain.model.nav.swap_history.SwapHistory
+import com.dida.domain.model.main.Comments
+import com.dida.domain.model.main.SwapHistory
 
 fun GetMainResponse.toDomain(): Home {
     return Home(
@@ -94,7 +93,7 @@ fun List<RecentCardResponse>.toDomain(): List<UserNft> {
 }
 
 @JvmName("toDomainHotUserResponse")
-fun List<HotUserResponse>.toDomain(): List<Collection> {
+fun List<HotUserResponse>.toDomain(): List<com.dida.domain.model.main.Collection> {
     return map {
         Collection(
             userId = it.userId,
@@ -119,8 +118,8 @@ fun UserProfileResponse.toDomain(): UserProfile {
     )
 }
 
-fun GetDetailNFTResponse.toDomain(): DetailNFT {
-    return DetailNFT(
+fun GetDetailNFTResponse.toDomain(): DetailNft {
+    return DetailNft(
         cardId = cardId,
         contracts = contracts,
         description = description,
@@ -138,8 +137,8 @@ fun GetDetailNFTResponse.toDomain(): DetailNFT {
     )
 }
 
-fun GetWalletAmountResponse.toDomain(): com.dida.domain.model.nav.swap.WalletAmount {
-    return com.dida.domain.model.nav.swap.WalletAmount(
+fun GetWalletAmountResponse.toDomain(): WalletAmount {
+    return WalletAmount(
         walletId = walletId,
         address = address,
         dida = dida,
@@ -247,9 +246,9 @@ fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
 }
 
 @JvmName("toDomainGetBuySellListResponse")
-fun List<GetBuySellListResponse>.toDomain(): List<BuySellList> {
+fun List<GetBuySellListResponse>.toDomain(): List<TradeHistory> {
     return map {
-        BuySellList(
+        TradeHistory(
             cardName = it.cardName,
             cardImgUrl = it.cardImgUrl,
             userName = it.userName,
@@ -260,9 +259,9 @@ fun List<GetBuySellListResponse>.toDomain(): List<BuySellList> {
 }
 
 @JvmName("toDomainCardHideListResponse")
-fun List<CardHideListResponse>.toDomain(): List<CardHideList> {
+fun List<CardHideListResponse>.toDomain(): List<HideCard> {
     return map {
-        CardHideList(
+        HideCard(
             cardId = it.cardId,
             cardTitle = it.cardTitle,
             cardUrl = it.cardUrl,

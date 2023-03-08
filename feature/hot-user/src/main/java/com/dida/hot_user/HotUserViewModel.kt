@@ -3,7 +3,7 @@ package com.dida.hot_user
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.nav.home.HotUser
+import com.dida.domain.model.main.HotUser
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HotUserAPI

@@ -7,7 +7,7 @@
 =
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.hide.CardHideList" />
+            type="com.dida.domain.model.nav.hide.HideCard" />
 
         <variable
             name="eventListener"

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.databinding.HolderCommentsBinding
-import com.dida.domain.model.nav.post.Comments
+import com.dida.domain.model.main.Comments
 
 class CommentsAdapter(
     private val eventListener: CommentActionHandler

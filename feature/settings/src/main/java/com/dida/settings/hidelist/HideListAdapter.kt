@@ -7,13 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.nav.hide.CardHideList
+import com.dida.domain.model.nav.hide.HideCard
 import com.dida.settings.R
 import com.dida.settings.databinding.HolderHideListItemBinding
 
 class HideListAdapter(
     private val eventListener: HideListActionHandler
-): ListAdapter<CardHideList, HideListAdapter.ViewHolder>(HideListItemDiffCallback) {
+): ListAdapter<HideCard, HideListAdapter.ViewHolder>(HideListItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderHideListItemBinding = DataBindingUtil.inflate<HolderHideListItemBinding?>(
@@ -36,17 +36,17 @@ class HideListAdapter(
 
     class ViewHolder(private val binding: HolderHideListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CardHideList) {
+        fun bind(item: HideCard) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object HideListItemDiffCallback : DiffUtil.ItemCallback<CardHideList>() {
-        override fun areItemsTheSame(oldItem: CardHideList, newItem: CardHideList) =
+    internal object HideListItemDiffCallback : DiffUtil.ItemCallback<HideCard>() {
+        override fun areItemsTheSame(oldItem: HideCard, newItem: HideCard) =
             oldItem.cardId == newItem.cardId
 
-        override fun areContentsTheSame(oldItem: CardHideList, newItem: CardHideList) =
+        override fun areContentsTheSame(oldItem: HideCard, newItem: HideCard) =
             oldItem == newItem
     }
 }

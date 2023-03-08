@@ -6,14 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.nav.mypage.WalletCardHolderModel
+import com.dida.domain.model.main.Wallet
 import com.dida.wallet.R
 import com.dida.wallet.WalletActionHandler
 import com.dida.wallet.databinding.HolderWalletCardBinding
 
 class WalletAdapter(
     private val walletActionHandler: WalletActionHandler
-) : ListAdapter<WalletCardHolderModel, WalletAdapter.ViewHolder>(
+) : ListAdapter<Wallet, WalletAdapter.ViewHolder>(
     WalletCardDiffCallback
 ){
 
@@ -39,17 +39,17 @@ class WalletAdapter(
     class ViewHolder(private val binding: HolderWalletCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: WalletCardHolderModel) {
+        fun bind(item: Wallet) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object WalletCardDiffCallback : DiffUtil.ItemCallback<WalletCardHolderModel>() {
-        override fun areItemsTheSame(oldItem: WalletCardHolderModel, newItem: WalletCardHolderModel) =
+    internal object WalletCardDiffCallback : DiffUtil.ItemCallback<Wallet>() {
+        override fun areItemsTheSame(oldItem: Wallet, newItem: Wallet) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: WalletCardHolderModel, newItem: WalletCardHolderModel) =
+        override fun areContentsTheSame(oldItem: Wallet, newItem: Wallet) =
             oldItem.equals(newItem)
     }
 }

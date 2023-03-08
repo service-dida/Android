@@ -4,7 +4,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.home.Hots" />
+            type="com.dida.domain.model.main.Hots" />
 
         <variable
             name="eventListener"

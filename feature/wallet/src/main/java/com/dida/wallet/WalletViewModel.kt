@@ -2,8 +2,8 @@ package com.dida.wallet
 
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
-import com.dida.domain.model.nav.mypage.BuySellList
-import com.dida.domain.model.nav.mypage.WalletCardHolderModel
+import com.dida.domain.model.main.TradeHistory
+import com.dida.domain.model.main.Wallet
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.BuyListAPI
@@ -28,11 +28,11 @@ class WalletViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<WalletNavigationAction> = MutableSharedFlow<WalletNavigationAction>()
     val navigationEvent: SharedFlow<WalletNavigationAction> = _navigationEvent
 
-    private val _currentHistoryState: MutableStateFlow<List<BuySellList>> = MutableStateFlow<List<BuySellList>>(emptyList())
-    val currentHistoryState: StateFlow<List<BuySellList>> = _currentHistoryState.asStateFlow()
+    private val _currentHistoryState: MutableStateFlow<List<TradeHistory>> = MutableStateFlow<List<TradeHistory>>(emptyList())
+    val currentHistoryState: StateFlow<List<TradeHistory>> = _currentHistoryState.asStateFlow()
 
-    private val _walletListState: MutableStateFlow<List<WalletCardHolderModel>> = MutableStateFlow(emptyList())
-    val walletListState: StateFlow<List<WalletCardHolderModel>> = _walletListState.asStateFlow()
+    private val _walletListState: MutableStateFlow<List<Wallet>> = MutableStateFlow(emptyList())
+    val walletListState: StateFlow<List<Wallet>> = _walletListState.asStateFlow()
 
     private val _walletAddressState: MutableStateFlow<String> = MutableStateFlow("")
     val walletAddressState: StateFlow<String> = _walletAddressState.asStateFlow()
@@ -52,8 +52,8 @@ class WalletViewModel @Inject constructor(
             walletAmountAPI()
                 .onSuccess {
                     _walletListState.value = listOf(
-                        WalletCardHolderModel(amount = it.dida.toString(), type = "DIDA"),
-                        WalletCardHolderModel(amount = it.klay.toString(), type = "KLAY")
+                        Wallet(amount = it.dida.toString(), type = "DIDA"),
+                        Wallet(amount = it.klay.toString(), type = "KLAY")
                     )
                     _walletAddressState.value = it.address
                 }

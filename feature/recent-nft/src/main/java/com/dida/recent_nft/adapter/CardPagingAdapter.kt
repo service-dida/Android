@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.databinding.HolderMypageUserCardsBinding
-import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.main.UserNft
 
 class CardPagingAdapter(
     private val eventListener: NftActionHandler

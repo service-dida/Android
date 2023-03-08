@@ -12,8 +12,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.domain.model.nav.mypage.OtherUserProfie
-import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.main.OtherUserProfie
+import com.dida.domain.model.main.UserNft
 
 @BindingAdapter("otherUserProfile")
 fun ImageView.bindOtherUserProfile(uiState: UiState<OtherUserProfie>) {

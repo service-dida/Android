@@ -2,7 +2,7 @@ package com.dida.settings.hidelist
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.UiState
-import com.dida.domain.model.nav.hide.CardHideList
+import com.dida.domain.model.nav.hide.HideCard
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HideCancelNftAPI
@@ -26,13 +26,13 @@ class HideListViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<HideListNavigationAction> = MutableSharedFlow<HideListNavigationAction>()
     val navigationEvent: SharedFlow<HideListNavigationAction> = _navigationEvent
 
-    private val _cardHideListState: MutableStateFlow<UiState<List<CardHideList>>> = MutableStateFlow(UiState.Loading)
-    val cardHideListState: StateFlow<UiState<List<CardHideList>>> = _cardHideListState
+    private val _HideCardState: MutableStateFlow<UiState<List<HideCard>>> = MutableStateFlow(UiState.Loading)
+    val hideCardState: StateFlow<UiState<List<HideCard>>> = _HideCardState
 
     fun getHideList(){
         baseViewModelScope.launch {
             hideListAPI()
-                .onSuccess { _cardHideListState.emit(UiState.Success(it)) }
+                .onSuccess { _HideCardState.emit(UiState.Success(it)) }
                 .onError { e -> catchError(e) }
         }
     }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.create_community.R
 import com.dida.create_community.databinding.HolderCreateCommunityNftBinding
-import com.dida.domain.model.nav.post.CardPost
+import com.dida.domain.model.main.CardPost
 
 class CreateCommunityNftAdapter(
     private val eventListener: com.dida.create_community.CreateCommunityActionHandler

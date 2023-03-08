@@ -3,8 +3,8 @@ package com.dida.community_detail
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
-import com.dida.domain.model.nav.post.Comments
-import com.dida.domain.model.nav.post.Post
+import com.dida.domain.model.main.Comments
+import com.dida.domain.model.main.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*

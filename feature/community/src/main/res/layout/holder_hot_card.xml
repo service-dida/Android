@@ -6,7 +6,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.nav.community.HotCard" />
+            type="com.dida.domain.model.main.HotCard" />
 
         <variable
             name="eventListener"

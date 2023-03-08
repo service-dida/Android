@@ -8,8 +8,8 @@ import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.data.model.HaveNotJwtTokenException
-import com.dida.domain.model.nav.detailnft.DetailNFT
-import com.dida.domain.model.nav.post.Posts
+import com.dida.domain.model.main.DetailNft
+import com.dida.domain.model.main.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
@@ -36,9 +36,9 @@ class DetailNftViewModel @Inject constructor(
         MutableSharedFlow<DetailNftNavigationAction>()
     val navigationEvent: SharedFlow<DetailNftNavigationAction> = _navigationEvent
 
-    private val _detailNftState: MutableStateFlow<UiState<DetailNFT>> =
+    private val _detailNftState: MutableStateFlow<UiState<DetailNft>> =
         MutableStateFlow(UiState.Loading)
-    val detailNftState: StateFlow<UiState<DetailNFT>> = _detailNftState
+    val detailNftState: StateFlow<UiState<DetailNft>> = _detailNftState
 
     private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Posts>> = _communityState.asStateFlow()
@@ -108,7 +108,7 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    private fun setDetailOwnerType(detailNFT: DetailNFT) {
+    private fun setDetailOwnerType(detailNFT: DetailNft) {
         baseViewModelScope.launch {
             if (detailNFT.type == "MINE") {
                 if (detailNFT.price == "NOT SALE") {

@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.nav.mypage.UserNft
+import com.dida.domain.model.main.UserNft
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.PostLikeAPI

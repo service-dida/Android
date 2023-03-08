@@ -32,8 +32,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hide_list_recycler"
-            hideListItem="@{vm.cardHideListState}"
-            rv_endLoading="@{vm.cardHideListState}"
+            hideListItem="@{vm.hideCardState}"
+            rv_endLoading="@{vm.hideCardState}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:nestedScrollingEnabled="false"

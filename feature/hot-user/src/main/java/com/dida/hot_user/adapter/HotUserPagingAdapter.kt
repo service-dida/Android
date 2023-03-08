@@ -7,7 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.nav.home.HotUser
+import com.dida.domain.model.main.HotUser
 import com.dida.hot_user.HotUserActionHandler
 import com.dida.hot_user.R
 import com.dida.hot_user.databinding.HolderHotUserBinding
