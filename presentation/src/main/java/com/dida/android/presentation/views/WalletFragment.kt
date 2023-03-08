@@ -41,7 +41,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-        viewModel.historyAll()
+        viewModel.getHistory()
     }
 
     override fun initDataBinding() {

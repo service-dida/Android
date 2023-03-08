@@ -66,11 +66,15 @@ class WalletViewModel @Inject constructor(
     override fun onHistoryTypeClicked(type: Int) {
         baseViewModelScope.launch {
             _typeHistoryState.value = type
-            when(type) {
-                0 -> historyAll()
-                1 -> historyBuy()
-                2 -> historySell()
-            }
+            getHistory()
+        }
+    }
+
+    fun getHistory(){
+        when(typeHistoryState.value) {
+            0 -> historyAll()
+            1 -> historyBuy()
+            2 -> historySell()
         }
     }
 
