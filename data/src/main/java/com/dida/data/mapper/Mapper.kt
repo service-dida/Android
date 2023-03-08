@@ -4,15 +4,6 @@ import com.dida.data.model.response.*
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.main.*
 import com.dida.domain.model.nav.hide.HideCard
-import com.dida.domain.model.nav.home.*
-import com.dida.domain.model.main.Collection
-import com.dida.domain.model.main.TradeHistory
-import com.dida.domain.model.main.OtherUserProfie
-import com.dida.domain.model.main.UserNft
-import com.dida.domain.model.main.UserProfile
-import com.dida.domain.model.nav.post.*
-import com.dida.domain.model.main.Comments
-import com.dida.domain.model.main.SwapHistory
 
 fun GetMainResponse.toDomain(): Home {
     return Home(
