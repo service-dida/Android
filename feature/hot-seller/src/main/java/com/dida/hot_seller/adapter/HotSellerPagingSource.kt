@@ -20,17 +20,23 @@ class HotSellerPagingSource(
     private val hotSellerAPI: HotSellerAPI
 ) : PagingSource<Int, HotSellerMore>() {
 
-    override fun getRefreshKey(state: PagingState<Int, HotSellerMore>): Int? = null
+    override fun getRefreshKey(state: PagingState<Int, HotSellerMore>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HotSellerMore> {
         val pageIndex = params.key ?: 0
         val result = hotSellerAPI(page = pageIndex)
+
         return result.fold(
             onSuccess = { contents ->
                 LoadResult.Page(
                     data = contents,
-                    prevKey = null,
-                    nextKey = if(contents.isNotEmpty()) pageIndex+1 else null
+                    prevKey = if (pageIndex == 0) null else pageIndex - 1,
+                    nextKey = if(contents.isNotEmpty()) pageIndex + 1 else null
                 )
             },
             onError = { e -> LoadResult.Error(e) }

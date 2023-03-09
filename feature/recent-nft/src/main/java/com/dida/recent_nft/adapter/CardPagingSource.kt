@@ -19,20 +19,23 @@ fun createCardPager(
 class CardPagingSource(
     private val recentCardAPI: RecentCardAPI
 ) : PagingSource<Int, UserNft>() {
-
-    override fun getRefreshKey(state: PagingState<Int, UserNft>): Int? = null
+    override fun getRefreshKey(state: PagingState<Int, UserNft>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserNft> {
         val pageIndex = params.key ?: 0
-        val result = recentCardAPI.invoke(
-            page = pageIndex
-        )
+        val result = recentCardAPI.invoke(page = pageIndex)
+
         return result.fold(
             onSuccess = { contents ->
                 LoadResult.Page(
                     data = contents,
-                    prevKey = null,
-                    nextKey = if(contents.isNotEmpty()) pageIndex+1 else null
+                    prevKey = if (pageIndex == 0) null else pageIndex - 1,
+                    nextKey = if (contents.isNotEmpty()) pageIndex + 1 else null
                 )
             },
             onError = { e -> LoadResult.Error(e) }

@@ -29,7 +29,7 @@ class RecentNftViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<RecentNftNavigationAction> = MutableSharedFlow<RecentNftNavigationAction>()
     val navigationEvent: SharedFlow<RecentNftNavigationAction> = _navigationEvent.asSharedFlow()
 
-    var cardsState: Flow<PagingData<UserNft>> = createCardPager(recentCardAPI = recentCardAPI).flow.cachedIn(baseViewModelScope)
+    val cardsState: Flow<PagingData<UserNft>> = createCardPager(recentCardAPI = recentCardAPI).flow.cachedIn(baseViewModelScope)
 
     override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {

@@ -28,7 +28,7 @@ class HotUserViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<HotUserNavigationAction> = MutableSharedFlow<HotUserNavigationAction>()
     val navigationEvent: SharedFlow<HotUserNavigationAction> = _navigationEvent.asSharedFlow()
 
-    var hotUserState: Flow<PagingData<HotUser>> = createHotUserPager(hotUserAPI = hotUserAPI).flow.cachedIn(baseViewModelScope)
+    val hotUserState: Flow<PagingData<HotUser>> = createHotUserPager(hotUserAPI = hotUserAPI).flow.cachedIn(baseViewModelScope)
 
     override fun onUserClicked(userId: Long) {
         baseViewModelScope.launch {
