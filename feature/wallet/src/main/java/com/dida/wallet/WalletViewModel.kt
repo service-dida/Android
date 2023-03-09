@@ -108,7 +108,7 @@ class WalletViewModel @Inject constructor(
         }
     }
 
-    override fun onNftItemClicked() {
+    override fun onNftItemClicked(cardId: Long) {
         //TODO : 추후에 클릭 상황에 따라 구현해야함
     }
 

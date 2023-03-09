@@ -240,6 +240,7 @@ fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
 fun List<GetBuySellListResponse>.toDomain(): List<TradeHistory> {
     return map {
         TradeHistory(
+            cardId = it.cardId,
             cardName = it.cardName,
             cardImgUrl = it.cardImgUrl,
             userName = it.userName,
