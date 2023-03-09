@@ -37,7 +37,7 @@ class PostsPagingSource(
                 LoadResult.Page(
                     data = contents,
                     prevKey = if (pageIndex == 0) null else pageIndex - 1,
-                    nextKey = if(contents.isNotEmpty()) pageIndex+1 else null
+                    nextKey = if (contents.isNotEmpty()) pageIndex + 1 else null
                 )
             },
             onError = { e -> LoadResult.Error(e) }
