@@ -30,7 +30,7 @@ class HotSellerPagingSource(
                 LoadResult.Page(
                     data = contents,
                     prevKey = null,
-                    nextKey = if(contents.isNotEmpty()) pageIndex+1 else null
+                    nextKey = if (contents.isNotEmpty()) pageIndex + 1 else null
                 )
             },
             onError = { e -> LoadResult.Error(e) }
