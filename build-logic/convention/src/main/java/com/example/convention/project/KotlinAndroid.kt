@@ -43,15 +43,6 @@ internal fun Project.configureKotlinAndroid(
         composeOptions {
             kotlinCompilerExtensionVersion = "1.3.2"
         }
-        buildTypes {
-            getByName("release") {
-                isMinifyEnabled = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
-            }
-        }
     }
 }
 
