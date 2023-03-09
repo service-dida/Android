@@ -15,3 +15,5 @@
 .cxx
 google-services.json
 local.properties
+/keystore/release.keystore
+/keystore/debug.keystore
