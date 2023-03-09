@@ -28,15 +28,14 @@ class PostsPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Posts> {
         val pageIndex = params.key ?: 0
-        val result = postsAPI.invoke(
-            page = pageIndex
-        )
+        val result = postsAPI.invoke(page = pageIndex)
+
         return result.fold(
             onSuccess = { contents ->
                 LoadResult.Page(
                     data = contents,
                     prevKey = null,
-                    nextKey = if(contents.isNotEmpty()) pageIndex+1 else null
+                    nextKey = if (contents.isNotEmpty()) pageIndex + 1 else null
                 )
             },
             onError = { e -> LoadResult.Error(e) }
