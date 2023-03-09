@@ -237,7 +237,7 @@ fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
 }
 
 @JvmName("toDomainGetBuySellListResponse")
-fun List<GetBuySellListResponse>.toDomain(): List<TradeHistory> {
+fun List<GetTradeHistoryListResponse>.toDomain(): List<TradeHistory> {
     return map {
         TradeHistory(
             cardId = it.cardId,
