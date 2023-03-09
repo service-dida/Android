@@ -11,9 +11,9 @@ fun removeTrailingDot(input: String): String {
 }
 
 fun addPriceDot(input : String) : String {
-    val number = input.toLong()
+    val number = input.toDouble()
 
-    val formatter = DecimalFormat("#,###")
+    val formatter = DecimalFormat("#,###.##")
     val formatterNumber = formatter.format(number)
 
     return formatterNumber
