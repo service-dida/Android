@@ -1,10 +1,13 @@
 package com.dida.buy.nft
 
 import com.dida.common.base.BaseViewModel
+import com.dida.domain.flatMap
 import com.dida.domain.model.main.DetailNft
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.BuyNftAPI
+import com.dida.domain.usecase.main.CreateWalletAPI
+import com.dida.domain.usecase.main.WalletAmountAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BuyNftViewModel @Inject constructor(
-    private val buyNftAPI: BuyNftAPI
+    private val buyNftAPI: BuyNftAPI,
+    private val amountAPI: WalletAmountAPI
 ) : BaseViewModel() {
 
     private val TAG = "BuyNftViewModel"
@@ -27,21 +31,57 @@ class BuyNftViewModel @Inject constructor(
     private val _detailNftState: MutableStateFlow<DetailNft?> = MutableStateFlow(null)
     val detailNftState: StateFlow<DetailNft?> = _detailNftState
 
-    fun initDetailNft(cardId : Long, imgUrl : String, title : String, profileUrl : String,nickname : String, price :String , viewerNickname : String){
+    private var nftPrice = 0.0
+
+    fun initDetailNft(
+        cardId: Long,
+        imgUrl: String,
+        title: String,
+        profileUrl: String,
+        nickname: String,
+        price: String,
+        viewerNickname: String
+    ) {
         baseViewModelScope.launch {
-            _detailNftState.emit(DetailNft(cardId,"","","",imgUrl,viewerNickname,nickname,price,profileUrl,title,false,"",0L,0L))
+            _detailNftState.emit(
+                DetailNft(
+                    cardId,
+                    "",
+                    "",
+                    "",
+                    imgUrl,
+                    viewerNickname,
+                    nickname,
+                    price,
+                    profileUrl,
+                    title,
+                    false,
+                    "",
+                    0L,
+                    0L
+                )
+            )
         }
     }
-    fun buyNft(password : String, marketId : Long){
+
+    fun buyNft(password: String, marketId: Long, price: String) {
         baseViewModelScope.launch {
             showLoading()
-            buyNftAPI(password, marketId)
+            amountAPI()
                 .onSuccess {
-                    _navigationEvent.emit(BuyNftNavigationAction.NavigateToMypage)
+                    if (it.dida >= price.toDouble()) {
+                        buyNftAPI(password, marketId)
+                            .onSuccess {
+                                _navigationEvent.emit(BuyNftNavigationAction.NavigateToSuccess)
+                            }
+                            .onError { e -> catchError(e) }
+                        dismissLoading()
+                    } else {
+                        _navigationEvent.emit(BuyNftNavigationAction.NavigateToFailAlert)
+                    }
                 }
                 .onError { e -> catchError(e) }
             dismissLoading()
-
         }
     }
 }

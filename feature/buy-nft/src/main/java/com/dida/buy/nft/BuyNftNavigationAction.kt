@@ -1,5 +1,6 @@
 package com.dida.buy.nft
 
 sealed class BuyNftNavigationAction {
-    object NavigateToMypage: BuyNftNavigationAction()
+    object NavigateToSuccess: BuyNftNavigationAction()
+    object NavigateToFailAlert: BuyNftNavigationAction()
 }
