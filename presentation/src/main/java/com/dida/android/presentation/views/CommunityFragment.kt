@@ -51,7 +51,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.postsState.collectLatest {
-                    communityPagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+                    communityPagingAdapter.submitData(it)
                 }
             }
 

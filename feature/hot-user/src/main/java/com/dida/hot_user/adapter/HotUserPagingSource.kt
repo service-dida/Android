@@ -20,7 +20,12 @@ class HotUserPagingSource(
     private val hotUserAPI: HotUserAPI
 ) : PagingSource<Int, HotUser>() {
 
-    override fun getRefreshKey(state: PagingState<Int, HotUser>): Int? = null
+    override fun getRefreshKey(state: PagingState<Int, HotUser>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HotUser> {
         val pageIndex = params.key ?: 0
@@ -30,7 +35,7 @@ class HotUserPagingSource(
             onSuccess = { contents ->
                 LoadResult.Page(
                     data = contents,
-                    prevKey = null,
+                    prevKey = if (pageIndex == 0) null else pageIndex - 1,
                     nextKey = if (contents.isNotEmpty()) pageIndex + 1 else null
                 )
             },
