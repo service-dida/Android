@@ -155,15 +155,15 @@ interface MainAPIService {
 
     // 전체 거래 내역 가져오기
     @GET("buy-sell-list")
-    suspend fun getBuySellList(): List<GetBuySellListResponse>
+    suspend fun getBuySellList(): List<GetTradeHistoryListResponse>
 
     // 전체 거래 내역 가져오기
     @GET("buy-list")
-    suspend fun getBuyList(): List<GetBuySellListResponse>
+    suspend fun getBuyList(): List<GetTradeHistoryListResponse>
 
     // 전체 거래 내역 가져오기
     @GET("sell-list")
-    suspend fun getSellList(): List<GetBuySellListResponse>
+    suspend fun getSellList(): List<GetTradeHistoryListResponse>
 
     // 최신 NFT 더보기
     @GET("recent/card/{page}")

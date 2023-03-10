@@ -18,7 +18,7 @@
         android:layout_height="80dp"
         android:background="@color/mainblack"
         android:paddingRight="16dp"
-        app:onSingleClick="@{() -> eventListener.onNftItemClicked()}"
+        app:onSingleClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}"
         android:layout_marginBottom="12dp">
 
             <ImageView
