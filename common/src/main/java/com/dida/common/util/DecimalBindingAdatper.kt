@@ -23,7 +23,7 @@ fun EditText.setDecimalFormat(decimalDigits: Int) {
                     return
                 }
                 if (currentValue.toDouble() > Constants.MAX_AMOUNT) {
-                    this@setDecimalFormat.setText(Constants.MAX_AMOUNT)
+                    this@setDecimalFormat.setText(Constants.MAX_AMOUNT.toString())
                 }
                 val dotPos = currentValue.indexOf(".")
                 if (dotPos < 0) {
