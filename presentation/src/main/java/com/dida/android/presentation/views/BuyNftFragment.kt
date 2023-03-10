@@ -10,6 +10,7 @@ import com.dida.buy.nft.BuyNftNavigationAction
 import com.dida.buy.nft.BuyNftViewModel
 import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuyNftBinding
+import com.dida.common.base.DefaultAlertDialog
 import com.dida.password.PasswordDialog
 import com.dida.recent_nft.RecentNftNavigationAction
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +47,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
                         is BuyNftNavigationAction.NavigateToSuccess -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToBuySuccessFragment(args.nftId))
+                        is BuyNftNavigationAction.NavigateToFailAlert -> { failBuyAlert() }
                     }
                 }
             }
@@ -56,7 +58,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
         binding.buyBtn.setOnClickListener {
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
-                    viewModel.buyNft(password,args.marketId)
+                    viewModel.buyNft(password,args.marketId,args.price)
                 }
             }.show(childFragmentManager,"BuyNftFragment")
         }
@@ -72,5 +74,20 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
 
     private fun initData(){
         viewModel.initDetailNft(args.nftId,args.nftImg,args.nftTitle,args.userImg,args.userName,args.price,args.viewerNickname)
+    }
+
+    private fun failBuyAlert() {
+        val res = com.dida.common.base.AlertModel(
+            title = requireContext().getString(R.string.buy_fail_main_title),
+            description = requireContext().getString(R.string.buy_fail_sub_title),
+            noButtonTitle = requireContext().getString(com.dida.common.R.string.cancel),
+            yesButtonTitle = requireContext().getString(R.string.buy_fail_ok_btn)
+        )
+        val dialog = DefaultAlertDialog(
+            alertModel = res,
+            clickNegative = {},
+            clickPositive = {navController.navigate(BuyNftFragmentDirections.actionBuyNftFragmentToSwapFragment())}
+        )
+        dialog.show(requireActivity().supportFragmentManager, dialog.tag)
     }
 }

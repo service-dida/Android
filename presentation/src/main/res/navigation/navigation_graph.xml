@@ -435,6 +435,13 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/detailNftFragment"/>
+        <action
+            android:id="@+id/action_buyNftFragment_to_swapFragment"
+            app:destination="@id/swapFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"/>
     </fragment>
 
     <fragment
