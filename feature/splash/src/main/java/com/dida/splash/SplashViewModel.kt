@@ -7,6 +7,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckVersionAPI
 import com.dida.domain.usecase.main.DeviceTokenAPI
+import com.dida.domain.usecase.main.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val versionAPI: CheckVersionAPI,
     private val deviceTokenAPI: DeviceTokenAPI,
+    private val userProfileAPI: UserProfileAPI
 ) : BaseViewModel() {
 
     private val TAG = "SplashViewModel"
@@ -40,10 +42,20 @@ class SplashViewModel @Inject constructor(
 
     fun setDeviceToken(token: String) {
         baseViewModelScope.launch {
-            dataStorePreferences.getAccessToken()?.let {
-                if(it != "") {
-                    deviceTokenAPI(token)
-                        .onSuccess { dataStorePreferences.setFcmToken(token) }
+            launch {
+                dataStorePreferences.getAccessToken()?.let {
+                    if(it != "") {
+                        deviceTokenAPI(token)
+                            .onSuccess { dataStorePreferences.setFcmToken(token) }
+                            .onError { e -> catchError(e) }
+                    }
+                }
+            }
+
+            launch {
+                dataStorePreferences.getAccessToken()?.let {
+                    userProfileAPI()
+                        .onSuccess { dataStorePreferences.setUserId(it.userId) }
                         .onError { e -> catchError(e) }
                 }
             }

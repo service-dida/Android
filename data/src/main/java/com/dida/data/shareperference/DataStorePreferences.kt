@@ -3,6 +3,7 @@ package com.dida.data.shareperference
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.dida.data.R
@@ -17,6 +18,19 @@ class DataStorePreferences(val context: Context) {
     private val refreshTokenPreference = stringPreferencesKey("refresh-token")
     private val fcmTokenPreference = stringPreferencesKey("FCM-TOKEN")
     private val fcmIndexPreference = intPreferencesKey("FCM-INDEX")
+    private val userIdPreferences = longPreferencesKey("USER-ID")
+
+    suspend fun setUserId(userId: Long) {
+        context.dataStore.edit { preference ->
+            preference[userIdPreferences] = userId
+        }
+    }
+
+    suspend fun getUserId(): Long {
+        return context.dataStore.data.first().let {
+            it[userIdPreferences] ?: -1
+        }
+    }
 
     suspend fun setAccessToken(accessToken: String?, refreshToken: String?) {
         accessToken?.let {
