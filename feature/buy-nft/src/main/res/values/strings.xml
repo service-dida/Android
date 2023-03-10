@@ -5,4 +5,9 @@
     <string name="buy_nft_price_info_text">가격 정보</string>
     <string name="buy_nft_total_price_text">총액</string>
     <string name="buy_nft_fee_text">수수료</string>
+
+    <string name="buy_success_main_text">구매가 완료되었습니다.</string>
+    <string name="buy_success_sub_text">축하해요. 멋진 작품을 소장하게 되셨네요!</string>
+    <string name="buy_success_sale_btn">나도 판매하기</string>
+    <string name="buy_success_mypage_btn">구매 NFT 확인하기</string>
 </resources>

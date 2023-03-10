@@ -45,7 +45,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
-                        is BuyNftNavigationAction.NavigateToMypage -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToMyPageFragment())
+                        is BuyNftNavigationAction.NavigateToSuccess -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToBuySuccessFragment(args.nftId))
                     }
                 }
             }

@@ -37,7 +37,7 @@ class BuyNftViewModel @Inject constructor(
             showLoading()
             buyNftAPI(password, marketId)
                 .onSuccess {
-                    _navigationEvent.emit(BuyNftNavigationAction.NavigateToMypage)
+                    _navigationEvent.emit(BuyNftNavigationAction.NavigateToSuccess)
                 }
                 .onError { e -> catchError(e) }
             dismissLoading()

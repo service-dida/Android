@@ -429,8 +429,12 @@
             android:name="marketId"
             app:argType="long" />
         <action
-            android:id="@+id/action_buyNftFragment_to_myPageFragment"
-            app:destination="@id/myPageFragment" />
+            android:id="@+id/action_buyNftFragment_to_buySuccessFragment"
+            app:destination="@id/buySuccessFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/detailNftFragment"/>
     </fragment>
 
     <fragment
@@ -454,6 +458,21 @@
             app:destination="@id/detailNftFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/buySuccessFragment"
+        android:name="com.dida.android.presentation.views.BuySuccessFragment"
+        android:label="BuySuccessFragment" >
+        <action
+            android:id="@+id/action_buySuccessFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"/>
+        <argument
+            android:name="nftId"
+            app:argType="long" />
     </fragment>
 
 </navigation>

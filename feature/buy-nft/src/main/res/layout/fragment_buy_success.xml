@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.dida.swap.SwapViewModel.SwapType" />
+
         <variable
             name="vm"
-            type="com.dida.swap.success.SwapSuccessViewModel" />
+            type="com.dida.buy.nft.success.BuySuccessViewModel" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.buy.nft.success.BuySuccessActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,12 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                style="@style/TextView_bold_20_white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/swap_toolbar_text" />
         </androidx.appcompat.widget.Toolbar>
 
         <!--DIDA아이콘으로도 바꿔야 함-->
@@ -37,40 +35,73 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_marginTop="89dp"
-            android:src="@drawable/ic_success_dida"
+            android:src="@drawable/ic_buy_success"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <TextView
+            android:id="@+id/textView4"
             style="@style/TextView_bold_24_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:gravity="center"
-            android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klaytoDida_success_text : @string/swap_DidaToKlay_success_text}"
-            tools:text="@string/swap_klaytoDida_success_text"
+            android:text="@string/buy_nft_main_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/ok_btn"
-            style="@style/TextView_bold_16_black"
+            style="@style/TextView_regular_16_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/buy_success_sub_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/custom_okbtn_success"
-            android:fontFamily="@font/pretendard_bold"
-            android:gravity="center"
-            android:padding="18dp"
-            android:text="@string/swap_success_confirm_btn"
-            android:textColor="@color/black"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/sale_btn"
+                style="@style/TextView_bold_16_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                onSingleClick="@{() -> vm.onSaleClicked()}"
+                android:text="@string/buy_success_sale_btn"
+                app:backgroundTint="@null"
+                android:background="@drawable/custom_okbtn_success"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/mypage_btn"
+                style="@style/TextView_bold_16_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                onSingleClick="@{() -> vm.onMypageClicked()}"
+                android:text="@string/buy_success_mypage_btn"
+                android:background="@drawable/custom_white_radius10"
+                app:backgroundTint="@null"
+                android:gravity="center" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
