@@ -18,6 +18,13 @@ object GlideBindingAdapters {
                 .override(1024, 1024)
                 .transform(CenterCrop())
                 .placeholder(R.mipmap.img_dida_logo_foreground)
+                .error(R.mipmap.img_dida_logo_foreground)
+                .into(imageView)
+        } else {
+            Glide.with(imageView.context)
+                .load(R.mipmap.img_dida_logo_foreground)
+                .override(1024, 1024)
+                .transform(CenterCrop())
                 .into(imageView)
         }
     }
@@ -29,6 +36,11 @@ object GlideBindingAdapters {
             Glide.with(imageView.context)
                 .load(imageURL)
                 .placeholder(R.mipmap.img_dida_logo_foreground)
+                .error(R.mipmap.img_dida_logo_foreground)
+                .into(imageView)
+        } else {
+            Glide.with(imageView.context)
+                .load(R.mipmap.img_dida_logo_foreground)
                 .into(imageView)
         }
     }
@@ -40,6 +52,12 @@ object GlideBindingAdapters {
             Glide.with(imageView.context)
                 .load(imageURL)
                 .placeholder(R.mipmap.img_dida_logo_foreground)
+                .error(R.mipmap.img_dida_logo_foreground)
+                .transform(CenterCrop(), RoundedCorners(50))
+                .into(imageView)
+        } else {
+            Glide.with(imageView.context)
+                .load(R.mipmap.img_dida_logo_foreground)
                 .transform(CenterCrop(), RoundedCorners(50))
                 .into(imageView)
         }
@@ -51,6 +69,15 @@ object GlideBindingAdapters {
         if (imageURL.isNullOrEmpty().not()) {
             Glide.with(imageView.context)
                 .load(imageURL)
+                .placeholder(R.mipmap.img_dida_logo_foreground)
+                .error(R.mipmap.img_dida_logo_foreground)
+                .transform(CenterCrop(), RoundedCorners(40))
+                .into(imageView)
+        } else {
+            Glide.with(imageView.context)
+                .load(R.mipmap.img_dida_logo_foreground)
+                .placeholder(R.mipmap.img_dida_logo_foreground)
+                .error(R.mipmap.img_dida_logo_foreground)
                 .transform(CenterCrop(), RoundedCorners(40))
                 .into(imageView)
         }
@@ -62,6 +89,13 @@ object GlideBindingAdapters {
         if (imageURL.isNullOrEmpty().not()) {
             Glide.with(imageView.context)
                 .load(imageURL)
+                .placeholder(R.mipmap.img_dida_logo_foreground)
+                .error(R.mipmap.img_dida_logo_foreground)
+                .transform(CenterCrop(), RoundedCorners(200))
+                .into(imageView)
+        } else {
+            Glide.with(imageView.context)
+                .load(R.mipmap.img_dida_logo_foreground)
                 .transform(CenterCrop(), RoundedCorners(200))
                 .into(imageView)
         }
