@@ -17,10 +17,21 @@ import com.dida.domain.model.main.UserNft
 
 @BindingAdapter("otherUserProfile")
 fun ImageView.bindOtherUserProfile(uiState: UiState<OtherUserProfie>) {
-    Glide.with(context)
-        .load(uiState.successOrNull()?.profileUrl)
-        .transform(CenterCrop(), RoundedCorners(1000))
-        .into(this)
+    uiState.successOrNull()?.let {
+        if (it.profileUrl.isEmpty().not()) {
+            Glide.with(context)
+                .load(it.profileUrl)
+                .placeholder(com.dida.common.R.mipmap.img_dida_logo_foreground)
+                .error(com.dida.common.R.mipmap.img_dida_logo_foreground)
+                .transform(CenterCrop(), RoundedCorners(1000))
+                .into(this)
+        } else {
+            Glide.with(context)
+                .load(com.dida.common.R.mipmap.img_dida_logo_foreground)
+                .transform(CenterCrop(), RoundedCorners(1000))
+                .into(this)
+        }
+    }
 }
 
 @BindingAdapter("otherUserNickname")

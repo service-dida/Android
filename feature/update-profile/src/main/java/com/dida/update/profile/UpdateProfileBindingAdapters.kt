@@ -13,10 +13,19 @@ import kotlinx.coroutines.flow.StateFlow
 
 @BindingAdapter("updateProfileImage")
 fun ImageView.bindUpdateProfileImage(state : MutableStateFlow<String>) {
-    Glide.with(context)
-        .load(state.value)
-        .transform(CenterCrop(), RoundedCorners(1000))
-        .into(this)
+    if (state.value.isNotBlank()) {
+        Glide.with(context)
+            .load(state.value)
+            .placeholder(com.dida.common.R.mipmap.img_dida_logo_foreground)
+            .error(com.dida.common.R.mipmap.img_dida_logo_foreground)
+            .transform(CenterCrop(), RoundedCorners(1000))
+            .into(this)
+    } else {
+        Glide.with(context)
+            .load(com.dida.common.R.mipmap.img_dida_logo_foreground)
+            .transform(CenterCrop(), RoundedCorners(1000))
+            .into(this)
+    }
 }
 
 
