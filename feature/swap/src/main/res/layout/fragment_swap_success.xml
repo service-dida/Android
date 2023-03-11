@@ -67,7 +67,7 @@
             android:gravity="center"
             android:padding="18dp"
             android:text="@string/swap_success_confirm_btn"
-            android:onClick="@{() -> vm.onSwapConfirm()}"
+            app:onSingleClick="@{() -> vm.onSwapConfirm()}"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
