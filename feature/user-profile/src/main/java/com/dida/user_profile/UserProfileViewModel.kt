@@ -4,7 +4,6 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
-import com.dida.common.util.successOrNull
 import com.dida.domain.flatMap
 import com.dida.domain.model.main.OtherUserProfie
 import com.dida.domain.model.main.UserNft
@@ -49,12 +48,16 @@ class UserProfileViewModel @Inject constructor(
     private val _userCardState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow<UiState<List<UserNft>>>(UiState.Loading)
     val userCardState: StateFlow<UiState<List<UserNft>>> = _userCardState.asStateFlow()
 
-    fun getUserProfile(userId: Long) {
-        _userIdState.value = userId
+    fun setUserId(userId: Long) {
         baseViewModelScope.launch {
-            userUserIdAPI(userIdState.value)
+            _userIdState.value = userId
+        }
+    }
+    fun getUserProfile() {
+        baseViewModelScope.launch {
+            userUserIdAPI(userId = userIdState.value)
                 .onSuccess { _userProfileState.value = UiState.Success(it) }
-                .flatMap { userCardUserIdAPI(userId = userId) }
+                .flatMap { userCardUserIdAPI(userId = userIdState.value) }
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _userCardState.value = UiState.Success(it) }
@@ -82,8 +85,8 @@ class UserProfileViewModel @Inject constructor(
     override fun onFollowClicked() {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userProfileState.value.successOrNull()!!.userId)
-                .onSuccess { getUserProfile(userProfileState.value.successOrNull()!!.userId) }
+            postUserFollowAPI(userId = userIdState.value)
+                .onSuccess { getUserProfile() }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

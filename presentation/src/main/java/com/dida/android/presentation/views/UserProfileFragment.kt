@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -7,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
+import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
 import com.dida.user_profile.databinding.FragmentUserProfileBinding
@@ -49,9 +51,19 @@ class UserProfileFragment :
     override fun initAfterBinding() {
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setUserId(args.userId)
+        lifecycleScope.launchWhenCreated {
+            if(args.userId == dataStorePreferences.getUserId()) {
+                navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        viewModel.getUserProfile(userId = args.userId)
+        viewModel.getUserProfile()
     }
 
     private fun initAdapter() {
