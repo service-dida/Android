@@ -24,7 +24,6 @@ class AndroidDataConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 compileSdk = 33
-
                 defaultConfig {
                     minSdk = 24
                     buildConfigField("String", "KLAYTN_HEADER_AUTHORIZATION", properties["klaytn_header_authorization"].toString())

@@ -25,7 +25,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
             val properties = Properties()
             properties.load(project.rootProject.file("local.properties").inputStream())
-            
+
             extensions.configure<ApplicationExtension> {
                 defaultConfig {
                     applicationId = "com.dida.android"
