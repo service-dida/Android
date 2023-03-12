@@ -21,8 +21,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
 
             extensions.configure<LibraryExtension> {
-                configureKotlinAndroid(this)
-                defaultConfig.targetSdk = 33
                 buildFeatures.dataBinding = true
 
                 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
