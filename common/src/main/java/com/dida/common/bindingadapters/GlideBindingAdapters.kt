@@ -12,58 +12,100 @@ object GlideBindingAdapters {
     @JvmStatic
     @BindingAdapter("image_from_url")
     fun bindImageFromURL(imageView: ImageView, imageURL: String?) {
-        if (imageURL.isNullOrEmpty().not()) {
-            Glide.with(imageView.context)
-                .load(imageURL)
-                .override(1024, 1024)
-                .transform(CenterCrop())
-                .placeholder(R.mipmap.img_dida_logo_foreground)
-                .into(imageView)
+        imageURL?.let {
+            if (it.isNotBlank()) {
+                Glide.with(imageView.context)
+                    .load(imageURL)
+                    .override(1024, 1024)
+                    .transform(CenterCrop())
+                    .placeholder(R.mipmap.img_dida_logo_foreground)
+                    .error(R.mipmap.img_dida_logo_foreground)
+                    .into(imageView)
+            } else {
+                Glide.with(imageView.context)
+                    .load(R.mipmap.img_dida_logo_foreground)
+                    .override(1024, 1024)
+                    .transform(CenterCrop())
+                    .into(imageView)
+            }
         }
     }
 
     @JvmStatic
     @BindingAdapter("image_from_url_fullsize")
     fun bindImageFromURLFullSize(imageView: ImageView, imageURL: String?) {
-        if (imageURL.isNullOrEmpty().not()) {
-            Glide.with(imageView.context)
-                .load(imageURL)
-                .placeholder(R.mipmap.img_dida_logo_foreground)
-                .into(imageView)
+        imageURL?.let {
+            if (it.isNotBlank()) {
+                Glide.with(imageView.context)
+                    .load(imageURL)
+                    .placeholder(R.mipmap.img_dida_logo_foreground)
+                    .error(R.mipmap.img_dida_logo_foreground)
+                    .into(imageView)
+            } else {
+                Glide.with(imageView.context)
+                    .load(R.mipmap.img_dida_logo_foreground)
+                    .into(imageView)
+            }
         }
     }
 
     @JvmStatic
     @BindingAdapter("image_from_url_rounded")
     fun bindImageFromURLRounded(imageView: ImageView, imageURL: String?) {
-        if (imageURL.isNullOrEmpty().not()) {
-            Glide.with(imageView.context)
-                .load(imageURL)
-                .placeholder(R.mipmap.img_dida_logo_foreground)
-                .transform(CenterCrop(), RoundedCorners(50))
-                .into(imageView)
+        imageURL?.let {
+            if (it.isNotBlank()) {
+                Glide.with(imageView.context)
+                    .load(imageURL)
+                    .placeholder(R.mipmap.img_dida_logo_foreground)
+                    .error(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), RoundedCorners(50))
+                    .into(imageView)
+            } else {
+                Glide.with(imageView.context)
+                    .load(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), RoundedCorners(50))
+                    .into(imageView)
+            }
         }
     }
 
     @JvmStatic
     @BindingAdapter("nft_img_rounded")
     fun bindNftImgRounded(imageView: ImageView, imageURL: String?) {
-        if (imageURL.isNullOrEmpty().not()) {
-            Glide.with(imageView.context)
-                .load(imageURL)
-                .transform(CenterCrop(), RoundedCorners(40))
-                .into(imageView)
+        imageURL?.let {
+            if (imageURL.isNotBlank()) {
+                Glide.with(imageView.context)
+                    .load(imageURL)
+                    .placeholder(R.mipmap.img_dida_logo_foreground)
+                    .error(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), RoundedCorners(40))
+                    .into(imageView)
+            } else {
+                Glide.with(imageView.context)
+                    .load(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), RoundedCorners(40))
+                    .into(imageView)
+            }
         }
     }
 
     @JvmStatic
     @BindingAdapter("image_from_url_circle")
     fun bindImageFromURLCircle(imageView: ImageView, imageURL: String?) {
-        if (imageURL.isNullOrEmpty().not()) {
-            Glide.with(imageView.context)
-                .load(imageURL)
-                .transform(CenterCrop(), RoundedCorners(200))
-                .into(imageView)
+        imageURL?.let {
+            if (it.isNotBlank()) {
+                Glide.with(imageView.context)
+                    .load(imageURL)
+                    .placeholder(R.mipmap.img_dida_logo_foreground)
+                    .error(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), RoundedCorners(200))
+                    .into(imageView)
+            } else {
+                Glide.with(imageView.context)
+                    .load(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), RoundedCorners(200))
+                    .into(imageView)
+            }
         }
     }
 }
