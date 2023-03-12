@@ -27,26 +27,28 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home) {
+class HomeFragment :
+    BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home) {
 
     private val TAG = "HomeFragment"
 
     override val layoutResourceId: Int
         get() = com.dida.home.R.layout.fragment_home
 
-    override val viewModel : HomeViewModel by viewModels()
+    override val viewModel: HomeViewModel by viewModels()
 
     private val permissionManager = PermissionManagerImpl(this)
-    private val notificationPermissionRequest: PermissionRequester = permissionManager.forPermission(Permissions.PostNotification)
-        .onGranted { setFragmentResult(
-            DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED,
-            bundleOf(DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED to true)
-        ) }
-        .subscribe(this)
+    private val notificationPermissionRequest: PermissionRequester =
+        permissionManager.forPermission(Permissions.PostNotification)
+            .onGranted {
+                setFragmentResult(
+                    DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED,
+                    bundleOf(DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED to true)
+                )
+            }
+            .subscribe(this)
 
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
-
-    private var lastScrollY = 0
 
     override fun initStartView() {
         binding.apply {
@@ -62,14 +64,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
-                when(it) {
+                when (it) {
                     is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
                     is HomeNavigationAction.NavigateToHotSeller -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
                     is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
                     is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId))
                     is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
                     is HomeNavigationAction.NavigateToHotSellerMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
-                    is HomeNavigationAction.NavigateToSoldOutMore -> { }
+                    is HomeNavigationAction.NavigateToSoldOutMore -> Unit
                     is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
                     is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
                 }
@@ -81,19 +83,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
                 // soldout
-                if(binding.hotSellerRecycler.y+binding.hotSellerRecycler.height<= scrollY && scrollY < binding.soldoutMore.y) {
+                if (binding.hotSellerRecycler.y + binding.hotSellerRecycler.height <= scrollY && scrollY < binding.soldoutMore.y) {
                     binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
                 }
                 // recent
-                else if(binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y+100) {
+                else if (binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y + 100) {
                     binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
                 }
                 // collection
-                else if(binding.recentnftRecycler.y+100 <= scrollY) {
+                else if (binding.recentnftRecycler.y + 100 <= scrollY) {
                     binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
                 }
                 // hot seller
-                else{
+                else {
                     binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
                 }
             }
@@ -102,12 +104,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     override fun onResume() {
         super.onResume()
-        getLastScrollY()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setLastScrollY()
+        viewModel.getHome()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -162,11 +159,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     private fun moveScroll(tabId: Int) {
         with(binding.homeScroll) {
-            when(tabId) {
-                0 -> { smoothScrollToView(binding.hotSellerRecycler, 100, 750L) }
-                1 -> { smoothScrollToView(binding.soldoutTxt, 50, 750L) }
-                2 -> { smoothScrollToView(binding.recentnftTxt, 50, 750L) }
-                3 -> { smoothScrollToView(binding.collectionTxt, 0, 750L) }
+            when (tabId) {
+                0 -> smoothScrollToView(binding.hotSellerRecycler, 100, 750L)
+                1 -> smoothScrollToView(binding.soldoutTxt, 50, 750L)
+                2 -> smoothScrollToView(binding.recentnftTxt, 50, 750L)
+                3 -> smoothScrollToView(binding.collectionTxt, 0, 750L)
             }
             binding.appBarLayout.setExpanded(false)
         }
@@ -174,20 +171,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     private fun initNotificationPermission() {
         lifecycleScope.launch {
-            if(NotificationManagerCompat.from(requireContext()).areNotificationsEnabled().not()) {
+            if (NotificationManagerCompat.from(requireContext()).areNotificationsEnabled().not()) {
                 notificationPermissionRequest.request()
             }
-        }
-    }
-
-    private fun setLastScrollY() {
-        lastScrollY = binding.homeScroll.scrollY
-    }
-
-    private fun getLastScrollY() {
-        if(lastScrollY > 0) {
-            binding.homeScroll.scrollTo(0, lastScrollY)
-            lastScrollY = 0
         }
     }
 }
