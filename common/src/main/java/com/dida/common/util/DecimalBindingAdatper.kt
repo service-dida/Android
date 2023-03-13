@@ -42,7 +42,7 @@ fun EditText.setDecimalFormat(decimalDigits: Int) {
 @BindingAdapter("decimalPrice")
 fun TextView.setDecimalPrice(price: String) {
     if (price.isNullOrEmpty() || price == "NOT SALE" || price == "NO MARKETED") {
-        this.text = "판매X"
+        this.text = "NOT SALE"
     } else {
         val roundedValue = (price.toDouble() * 100).toLong() / 100.0
 
@@ -60,7 +60,7 @@ fun TextView.setDecimalPrice(price: String) {
 fun TextView.setDecimalPrice(priceF: Float) {
     val price = priceF.toString()
     if (price.isNullOrEmpty() || price == "NOT SALE" || price == "NO MARKETED") {
-        this.text = "판매X"
+        this.text = "NOT SALE"
     } else {
         val roundedValue = (price.toDouble() * 100).toLong() / 100.0
 
