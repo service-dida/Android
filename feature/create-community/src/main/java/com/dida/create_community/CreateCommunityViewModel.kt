@@ -32,9 +32,13 @@ class CreateCommunityViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             cardsPostLikeAPI.invoke()
-                .onSuccess { _cardPostLikeState.value = it }
+                .onSuccess {
+                    val list = it.sortedByDescending { it.cardId }
+                    _cardPostLikeState.value = list }
                 .flatMap { cardsPostMyAPI() }
-                .onSuccess { _cardPostMyState.value = it }
+                .onSuccess {
+                    val list = it.sortedByDescending { it.cardId }
+                    _cardPostMyState.value = list }
                 .onError { e -> catchError(e) }
         }
     }
