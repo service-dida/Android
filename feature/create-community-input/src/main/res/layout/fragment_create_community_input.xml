@@ -180,10 +180,10 @@
                 android:hint="@string/create_community_input_title_hint"
                 android:background="@color/surface1"
                 android:maxLength="20"
-                android:textColor="@color/white"
+                android:maxLines="1"
+                android:inputType="text"
+                style="@style/TextView_regular_14_white"
                 android:textColorHint="@color/surface5"
-                android:fontFamily="@font/pretendard_regular"
-                android:textSize="14dp"
                 android:text="@={vm.titleState}"/>
 
             <View
