@@ -22,6 +22,7 @@ import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
 import com.dida.home.databinding.FragmentHomeBinding
 import com.dida.home.smoothScrollToView
+import com.dida.recent_nft.adapter.CardPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -118,16 +119,7 @@ class HomeFragment :
         binding.hotsRecycler.adapter = HotsAdapter(viewModel)
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
-
-        val hotSellerMoreAdapter = HotSellerMoreAdapter(viewModel)
-        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
-        hotSellerConcatAdapter = ConcatAdapter(
-            adapterConfig,
-            HotSellerAdapter(viewModel),
-            hotSellerMoreAdapter
-        )
-        binding.hotSellerRecycler.adapter = hotSellerConcatAdapter
-
+        binding.hotSellerRecycler.adapter = HotSellerAdapter(viewModel)
         binding.recentnftRecycler.apply {
             adapter = RecentNftAdapter(viewModel)
             layoutManager = GridLayoutManager(context, 2)
