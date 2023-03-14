@@ -5,7 +5,9 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
@@ -44,15 +46,20 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     private var cameraUri: Uri? = null
 
     // 요청하고자 하는 권한들
-    private val permissionList = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val permissionList = arrayOf(Manifest.permission.CAMERA)
 
     // 권한을 허용하도록 요청
     private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         results.forEach {
-            if(!it.value) toastMessage("권한 허용이 필요합니다.")
+            if(!it.value) {
+                toastMessage("권한 허용이 필요합니다.")
+            }else{
+                val dialog = ImageBottomSheet {
+                    if(it) getGalleryImage()
+                    else getCaptureImage()
+                }
+                dialog.show(childFragmentManager, TAG)
+            }
         }
     }
 
@@ -108,11 +115,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private fun editProfileImageBottomSheet() {
         requestMultiplePermission.launch(permissionList)
-        val dialog = ImageBottomSheet {
-            if(it) getGalleryImage()
-            else getCaptureImage()
-        }
-        dialog.show(childFragmentManager, TAG)
+
     }
 
     private fun initRegisterForActivityResult() {
