@@ -1,6 +1,7 @@
 package com.dida.home
 
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.UiState
@@ -20,8 +21,8 @@ fun RecyclerView.bindHotsItems(uiState: UiState<Home>) {
 @BindingAdapter("hotSellerItem")
 fun RecyclerView.bindHotSellerItem(uiState: UiState<Home>) {
     val boundAdapter = this.adapter
-    if (boundAdapter is HotSellerAdapter) {
-        boundAdapter.submitList(uiState.successOrNull()?.getHotSellers)
+    if (boundAdapter is ConcatAdapter) {
+        (boundAdapter.adapters.get(0) as HotSellerAdapter).submitList(uiState.successOrNull()?.getHotSellers)
     }
 }
 

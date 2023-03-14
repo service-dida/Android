@@ -110,7 +110,7 @@ class HomeFragment :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initAdapter() {
-        val adapterConfig = ConcatAdapter.Config.Builder().build()
+        val adapterConfig = ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
 
         binding.hotsRecycler.apply {
             adapter = HotsAdapter(viewModel)
@@ -119,7 +119,16 @@ class HomeFragment :
         binding.hotsRecycler.adapter = HotsAdapter(viewModel)
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
-        binding.hotSellerRecycler.adapter = HotSellerAdapter(viewModel)
+
+        val hotSellerMoreAdapter = HotSellerMoreAdapter(viewModel)
+        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
+        val hotSellerAdapter = HotSellerAdapter(viewModel)
+        hotSellerConcatAdapter = ConcatAdapter(
+            adapterConfig,
+            hotSellerAdapter,
+            hotSellerMoreAdapter
+        )
+        binding.hotSellerRecycler.adapter = hotSellerConcatAdapter
         binding.recentnftRecycler.apply {
             adapter = RecentNftAdapter(viewModel)
             layoutManager = GridLayoutManager(context, 2)
