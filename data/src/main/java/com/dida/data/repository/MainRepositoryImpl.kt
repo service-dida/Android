@@ -51,7 +51,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<Token> {
-        val request = CreateUserRequest(email, nickName)
+        val request = PostCreateUserRequest(email, nickName)
         return handleApi { mainAPIService.createuserAPIServer(request) }
     }
 
@@ -80,7 +80,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun mintNFT(payPwd: String,name: String, description: String, image: String): NetworkResult<Long> {
-        val request = NFTMintRequest(payPwd, name,description,image)
+        val request = PostNftMintRequest(payPwd, name,description,image)
         return handleApi { mainAPIService.mintNFT(request) }
     }
 
@@ -260,7 +260,8 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun patchDeleteNft(cardId: Long,payPwd: String): NetworkResult<Long> {
-        return handleApi { mainAPIService.patchDeleteNft(cardId,payPwd) }
+        val request = PatchNftRemoveRequest(cardId, payPwd)
+        return handleApi { mainAPIService.patchDeleteNft(request) }
     }
 
     override suspend fun getHotUser(page: Int): NetworkResult<List<HotUser>> {

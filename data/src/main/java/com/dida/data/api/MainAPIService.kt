@@ -20,7 +20,7 @@ interface MainAPIService {
     suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): Nickname
 
     @POST("/new/user")
-    suspend fun createuserAPIServer(@Body request: CreateUserRequest): Token
+    suspend fun createuserAPIServer(@Body request: PostCreateUserRequest): Token
 
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
@@ -57,7 +57,7 @@ interface MainAPIService {
     suspend fun getTempPassword()
 
     @POST("/card")
-    suspend fun mintNFT(@Body request: NFTMintRequest): Long
+    suspend fun mintNFT(@Body request: PostNftMintRequest): Long
 
     @Multipart
     @PUT("/user/img")
@@ -189,8 +189,8 @@ interface MainAPIService {
     @GET("/user/cards/{userId}")
     suspend fun getUserCardsUserId(@Path("userId") userId: Long) : List<RecentCardResponse>
 
-    @PATCH("/card/status/{cardId}")
-    suspend fun patchDeleteNft(@Path("cardId") cardId: Long, @Body payPwd : String): Long
+    @PATCH("/card/status")
+    suspend fun patchDeleteNft(@Body body : PatchNftRemoveRequest): Long
 
     // 활발한 활동 더보기
     @GET("/hot/user/{page}")
