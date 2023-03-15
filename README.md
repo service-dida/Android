@@ -6,7 +6,8 @@
 - release/버젼 (출시 후 버젼에 대한 관리)
 
 ### CI/CD 관련
- - Keystore & Key값 관리를 위하여 CI/CD전용 Repository에서 Bitrise + Firebase
+ - Keystore & Key값 관리를 위하여 CI/CD전용 Private Repository에 Bitrise + Firebase 연동
+ - Feature -> Develop -> (Private Repository 최신화) -> CI/CD Branch
 
 ### 사용기술
 - Clean Architecture (Data & Presentation: Android 모듈, Domain: Kotlin & Java 모듈)
