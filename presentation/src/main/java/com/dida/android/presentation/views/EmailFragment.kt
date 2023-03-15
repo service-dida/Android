@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.dida.common.util.repeatOnResumed
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
 import com.dida.password.PasswordDialog
@@ -43,7 +44,9 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.d
                     timeCheck()
                 }
             }
+        }
 
+        viewLifecycleOwner.repeatOnResumed {
             launch {
                 viewModel.createWalletState.collect { result ->
                     if(result) {
@@ -52,12 +55,11 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.d
                     }
                 }
             }
+
             launch {
                 viewModel.retryEvent.collectLatest {
-                    if(true){
-                        toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
-                        makePassword()
-                    }
+                    toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
+                    makePassword()
                 }
             }
         }
