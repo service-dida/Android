@@ -3,6 +3,8 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.swap.databinding.FragmentSwapLoadingBinding
 import com.dida.swap.loading.SwapLoadingNavigationAction
 import com.dida.swap.loading.SwapLoadingViewModel
@@ -32,22 +34,17 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch{
-                viewModel.navigationEvent.collectLatest {
-                    when (it) {
-                        SwapLoadingNavigationAction.NavigateToSuccess -> {
-                            navigate(
-                                SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment(args.swapType)
-                            )
-                        }
-                    }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    SwapLoadingNavigationAction.NavigateToSuccess -> navigate(SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment(args.swapType))
                 }
             }
-            launch {
-                viewModel.swapTypeState.collectLatest {
-                    viewModel.swap(args.swapType,args.password,args.amount.toDouble())
-                }
+        }
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.swapTypeState.collectLatest {
+                viewModel.swap(args.swapType, args.password, args.amount.toDouble())
             }
         }
     }

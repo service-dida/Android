@@ -11,6 +11,7 @@ import com.dida.buy.nft.BuyNftViewModel
 import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuyNftBinding
 import com.dida.common.base.DefaultAlertDialog
+import com.dida.common.util.repeatOnResumed
 import com.dida.password.PasswordDialog
 import com.dida.recent_nft.RecentNftNavigationAction
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,16 +40,14 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     }
 
     override fun initDataBinding() {
-        binding.priceTv.text =  args.price
+        binding.priceTv.text = args.price
         binding.bottomPriceTv.text = args.price
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when (it) {
-                        is BuyNftNavigationAction.NavigateToSuccess -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToBuySuccessFragment(args.nftId))
-                        is BuyNftNavigationAction.NavigateToFailAlert -> { failBuyAlert() }
-                    }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    is BuyNftNavigationAction.NavigateToSuccess -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToBuySuccessFragment(args.nftId))
+                    is BuyNftNavigationAction.NavigateToFailAlert -> { failBuyAlert() }
                 }
             }
         }
@@ -56,11 +55,11 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
 
     override fun initAfterBinding() {
         binding.buyBtn.setOnClickListener {
-            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                if(success){
-                    viewModel.buyNft(password,args.marketId,args.price)
+            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                if (success) {
+                    viewModel.buyNft(password, args.marketId, args.price)
                 }
-            }.show(childFragmentManager,"BuyNftFragment")
+            }.show(childFragmentManager, "BuyNftFragment")
         }
     }
 

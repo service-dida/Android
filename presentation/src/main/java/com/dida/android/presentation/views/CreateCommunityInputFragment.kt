@@ -6,6 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.create_community_input.CreateCommunityInputNavigationAction
 import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.dida.create_community_input.databinding.FragmentCreateCommunityInputBinding
@@ -38,18 +40,16 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it) {
-                        is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
-                        is CreateCommunityInputNavigationAction.NavigateToCommunity -> navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
-                    }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
                 }
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnStarted {
             viewModel.isNewCreate.collectLatest {
                 if(it) viewModel.getCardDetail(cardId = args.cardId)
                 else viewModel.getPostDetail(postId = args.postId)

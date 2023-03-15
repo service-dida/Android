@@ -4,6 +4,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.swap.history.R
 import com.dida.swap.history.SwapHistoryViewModel
 import com.dida.swap.history.adapter.SwapHistoryAdapter
@@ -37,16 +39,15 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    binding.swapHistoryRefreshLayout.isRefreshing = false
-                }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                binding.swapHistoryRefreshLayout.isRefreshing = false
             }
-            launch {
-                viewModel.swapHistoryState.collectLatest {
-                    swapHistoryAdapter.submitList(it)
-                }
+        }
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.swapHistoryState.collectLatest {
+                swapHistoryAdapter.submitList(it)
             }
         }
     }

@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.dida.common.util.repeatOnStarted
 import com.dida.create_community.CreateCommunityViewModel
 import com.dida.create_community.adapter.CreateCommunityNftAdapter
 import com.dida.create_community.databinding.FragmentCreateCommunityNftBinding
@@ -32,7 +33,7 @@ class CreateCommunityNftFragment(
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.cardPostLikeState.collectLatest {
                     if(createNftState == 0) cardsAdapter.submitList(it)

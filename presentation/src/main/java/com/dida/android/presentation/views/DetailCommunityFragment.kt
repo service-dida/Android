@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.base.DefaultAlertDialog
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
 import com.dida.community_detail.DetailCommunityNavigationAction
 import com.dida.community_detail.DetailCommunityViewModel
@@ -52,27 +54,23 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it) {
-                        is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
-                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
-                        is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
-                        is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
-                        is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
-                        is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
-                    }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
+                    is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
+                    is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
+                    is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
+                    is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
                 }
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            launch {
-                viewModel.commentList.collectLatest {
-                    commentsAdapter.submitList(it)
-                    if(viewModel.isWrite.value) keyboardHide()
-                }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.commentList.collectLatest {
+                commentsAdapter.submitList(it)
+                if(viewModel.isWrite.value) keyboardHide()
             }
         }
     }

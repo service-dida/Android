@@ -7,8 +7,10 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.change_password.ChangePasswordViewModel
 import com.dida.change_password.databinding.FragmentChangePasswordBinding
+import com.dida.common.util.repeatOnResumed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -32,13 +34,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorEvent.collectLatest {
-                showToastMessage(it)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 navController.popBackStack()
             }

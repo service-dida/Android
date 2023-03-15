@@ -3,6 +3,7 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.dida.common.util.repeatOnResumed
 import com.dida.swap.databinding.FragmentSwapSuccessBinding
 import com.dida.swap.success.SwapSuccessNavigationAction
 import com.dida.swap.success.SwapSuccessViewModel
@@ -30,14 +31,10 @@ class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccess
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    SwapSuccessNavigationAction.NavigateToHistory -> {
-                        navigate(
-                            SwapSuccessFragmentDirections.actionSwapSuccessFragmentToSwapHistoryFragment()
-                        )
-                    }
+                    SwapSuccessNavigationAction.NavigateToHistory -> navigate(SwapSuccessFragmentDirections.actionSwapSuccessFragmentToSwapHistoryFragment())
                 }
             }
         }

@@ -17,6 +17,7 @@ import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.DidaIntent
 import com.dida.common.util.addSnapPagerScroll
+import com.dida.common.util.repeatOnResumed
 import com.dida.home.HomeNavigationAction
 import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
@@ -63,7 +64,7 @@ class HomeFragment :
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))

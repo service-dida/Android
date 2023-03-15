@@ -21,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.util.uriToFile
 import com.dida.common.ui.ImageBottomSheet
 import com.dida.common.util.DidaIntent
+import com.dida.common.util.repeatOnResumed
 import com.dida.update.profile.R
 import com.dida.update.profile.UpdateProfileNavigationAction
 import com.dida.update.profile.UpdateProfileViewModel
@@ -79,12 +80,10 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it){
-                        is UpdateProfileNavigationAction.NavigateToBack -> navController.popBackStack()
-                    }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    is UpdateProfileNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
             }
         }

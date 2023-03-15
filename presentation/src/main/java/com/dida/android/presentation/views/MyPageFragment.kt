@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
+import com.dida.common.util.repeatOnResumed
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
@@ -37,21 +38,13 @@ class MyPageFragment :
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    is MypageNavigationAction.NavigateToEmail -> navigate(
-                        MyPageFragmentDirections.actionMyPageFragmentToEmailFragment()
-                    )
-                    is MypageNavigationAction.NavigateToWallet -> navigate(
-                        MyPageFragmentDirections.actionMyPageFragmentToWalletFragment()
-                    )
-                    is MypageNavigationAction.NavigateToDetailNft -> navigate(
-                        MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId)
-                    )
-                    is MypageNavigationAction.NavigateToSettings -> navigate(
-                        MyPageFragmentDirections.actionMyPageFragmentToSettingFragment()
-                    )
+                    is MypageNavigationAction.NavigateToEmail -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment())
+                    is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToWalletFragment())
+                    is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
+                    is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
                 }
             }
         }
