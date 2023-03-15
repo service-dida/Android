@@ -5,6 +5,9 @@
 - feature -> develop -> main(release version)
 - release/버젼 (출시 후 버젼에 대한 관리)
 
+### CI/CD 관련
+ - Keystore & Key값 관리를 위하여 CI/CD전용 Repository에서 Bitrise + Firebase
+
 ### 사용기술
 - Clean Architecture (Data & Presentation: Android 모듈, Domain: Kotlin & Java 모듈)
 - MVVM with AAC ViewModel
@@ -24,6 +27,7 @@
 - Version Catalog (build-logic convention을 활용한 라이브러리 버젼 관리)
 - Micro Architecture (Resource 관리 측면)
 - Firebase Crashlytics
+- Bitrise + Firebase + Discord Webhook (CI/CD 관련)
 
 #### Ui 측면
 - Collapsing Toolbar
@@ -32,6 +36,7 @@
 
 #### 추후 적용기술
 - Unit Test (JUnit등)
-- CI/CD (GitAction || Fastline & Firebase || Bitrise & Firebase)
 - Compose (순차적으로 업데이트 마이그레이션 예정)
 - Firebase Analytics (이벤트 명시 확정 후 도입 예정)
+- Klint (정적 분석도구 추후 도입 예정)
+- Kapt to Ksp Migration (추후 지원 라이브러리 관련해서 도입 예정)
