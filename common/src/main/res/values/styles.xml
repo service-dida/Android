@@ -250,12 +250,30 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="TextView_bold_16_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="TextView_regular_13_white" parent="@style/Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="android:textSize">13dp</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_13_mypage_info_gray" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/mypage_info_gray_text</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -11,7 +12,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainblack">
+        android:background="@color/mainblack"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <Toolbar
             android:id="@+id/toolbar"
@@ -28,6 +31,8 @@
             android:orientation="vertical"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
+            tools:itemCount="3"
+            tools:listitem="@layout/holder_hotseller"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
