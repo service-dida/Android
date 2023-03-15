@@ -9,6 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.wallet.R
 import com.dida.wallet.WalletViewModel
 import com.dida.wallet.adapter.WalletAdapter
@@ -45,7 +47,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is com.dida.wallet.WalletNavigationAction.NavigateToBack -> navController.popBackStack()
@@ -54,7 +56,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.walletListState.collectLatest {
                     walletAdapter.submitList(it)

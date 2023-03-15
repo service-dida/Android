@@ -3,6 +3,8 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
@@ -36,7 +38,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        viewLifecycleOwner.repeatOnResumed {
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
@@ -48,7 +50,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.postsState.collectLatest {
                     communityPagingAdapter.submitData(it)

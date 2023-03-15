@@ -34,12 +34,6 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     override fun initDataBinding() {
         lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.errorEvent.collectLatest {
-                    showToastMessage(it)
-                }
-            }
-
-            launch {
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is NicknameNavigationAction.NavigateToHome -> {

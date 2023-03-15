@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
+import com.dida.common.util.repeatOnStarted
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -63,11 +64,11 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
     override fun onResume() {
         super.onResume()
         // User의 지갑이 있는지 체크
-        if(!viewModel.walletCheckState.value) viewModel.getWalletExists()
+        if (!viewModel.walletCheckState.value) viewModel.getWalletExists()
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.walletExistsState.collectLatest {
                     // 지갑이 없는 경우 지갑 생성
@@ -102,14 +103,14 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     val intent = result.data
                     if (intent != null) {
                         val uri = intent.data
-                        if(checkImageSize(uri!!)){
+                        if (checkImageSize(uri!!)) {
                             viewModel.setNFTImage(uri)
-                        }else{
+                        } else {
                             toastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
                             getImageToGallery()
                         }
                     }
-                } else{
+                } else {
                     navController.popBackStack()
                 }
             }
@@ -129,20 +130,21 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.add_next_step -> {
-                        if(viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0) {
+                        if (viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0) {
                             isSelected = false
                             toastMessage("제목과 설명을 모두 입력해주세요.")
-                        } else if(viewModel.nftImageState.value == "") {
+                        } else if (viewModel.nftImageState.value == "") {
                             isSelected = false
                             toastMessage("NFT에 사용할 이미지를 골라주세요.")
                         } else {
                             isSelected = true
                             //사진,제목, 설명 이동
-                            val action = AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                                viewModel.nftImageState.value,
-                                viewModel.titleTextState.value,
-                                viewModel.descriptionTextState.value
-                            )
+                            val action =
+                                AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                                    viewModel.nftImageState.value,
+                                    viewModel.titleTextState.value,
+                                    viewModel.descriptionTextState.value
+                                )
                             navigate(action)
                         }
                     }
@@ -152,7 +154,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
     }
 
-    fun checkImageSize(uri : Uri) : Boolean{
+    fun checkImageSize(uri: Uri): Boolean {
         val inputStream = requireActivity().contentResolver.openInputStream(uri)
         val bytes = inputStream?.buffered()?.use { it.readBytes() }
         val sizeInMb = bytes?.size?.toDouble()?.div(1024)?.div(1024)

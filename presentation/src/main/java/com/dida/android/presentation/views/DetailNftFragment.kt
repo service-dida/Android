@@ -7,6 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.DetailNftNavigationAction
@@ -49,32 +51,29 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it) {
-                        is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
-                        is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(it.postId))
-                        is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
-                        is DetailNftNavigationAction.NavigateToBuyNft -> {
-                            navigate(
-                                DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment(
-                                    it.nftId,it.nftImg,it.nftTitle,it.userImg,it.userName,it.price,it.viewerNickName,it.marketId
-                                )
-                            )
-                        }
-                        is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
-                        is DetailNftNavigationAction.NavigateToBack -> navController.popBackStack()
-                        is DetailNftNavigationAction.NavigateToUserProfile -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToUserProfileFragment(it.userId))
-                        is DetailNftNavigationAction.NavigateToSell -> showSellNftDialog()
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
+                    is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(it.postId))
+                    is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
+                    is DetailNftNavigationAction.NavigateToBuyNft -> {
+                        navigate(
+                            DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment(
+                                it.nftId,it.nftImg,it.nftTitle,it.userImg,it.userName,it.price,it.viewerNickName,it.marketId)
+                        )
                     }
+                    is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
+                    is DetailNftNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is DetailNftNavigationAction.NavigateToUserProfile -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToUserProfileFragment(it.userId))
+                    is DetailNftNavigationAction.NavigateToSell -> showSellNftDialog()
                 }
             }
+        }
 
-            launch {
-                viewModel.communityState.collectLatest {
-                    communityAdapter.submitList(it)
-                }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.communityState.collectLatest {
+                communityAdapter.submitList(it)
             }
         }
     }

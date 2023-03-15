@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.common.util.AppLog
+import com.dida.common.util.repeatOnResumed
 import com.dida.splash.SplashViewModel
 import com.dida.splash.databinding.FragmentSplashBinding
 import com.google.android.gms.tasks.OnCompleteListener
@@ -36,7 +37,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenResumed {
+        viewLifecycleOwner.repeatOnResumed {
             launch {
                 // 추후 배포시 엡데이트 로직 추가
                 viewModel.appVersion.collectLatest {
@@ -49,7 +50,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.
                     navigate(SplashFragmentDirections.actionMainFragment())
                 }
             }
-
         }
     }
 

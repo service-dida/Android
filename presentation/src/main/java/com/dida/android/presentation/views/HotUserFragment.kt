@@ -5,6 +5,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.hot_user.HotUserNavigationAction
 import com.dida.hot_user.HotUserViewModel
 import com.dida.hot_user.adapter.HotUserPagingAdapter
@@ -36,25 +38,17 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorEvent.collectLatest {
-                showToastMessage(it)
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.hotUserState.collectLatest {
+                hotUserPagingAdapter.submitData(it)
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.hotUserState.collectLatest {
-                    hotUserPagingAdapter.submitData(it)
-                }
-            }
-
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it) {
-                        is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))
-                        is HotUserNavigationAction.NavigateToFollow -> hotUserPagingAdapter.refresh()
-                    }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))
+                    is HotUserNavigationAction.NavigateToFollow -> hotUserPagingAdapter.refresh()
                 }
             }
         }

@@ -37,11 +37,6 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorEvent.collectLatest {
-                showToastMessage(it)
-            }
-        }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {

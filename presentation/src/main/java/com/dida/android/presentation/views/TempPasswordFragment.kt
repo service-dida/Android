@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
+import com.dida.common.util.repeatOnResumed
 import com.dida.temp_password.TempPasswordViewModel
 import com.dida.temp_password.databinding.FragmentTempPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,13 +32,7 @@ class TempPasswordFragment : BaseFragment<FragmentTempPasswordBinding, TempPassw
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorEvent.collectLatest {
-                showToastMessage(it)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 navigate(TempPasswordFragmentDirections.actionTempPasswordFragmentToChangePasswordFragment())
             }

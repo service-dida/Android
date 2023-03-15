@@ -22,8 +22,8 @@ class EmailViewModel @Inject constructor(
     private val _sendEmailState: MutableStateFlow<String?> = MutableStateFlow<String?>(null)
     val sendEmailState: StateFlow<String?> = _sendEmailState
 
-    private val _retryEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
-    val retryEvent: SharedFlow<Boolean> = _retryEvent
+    private val _retryEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val retryEvent: SharedFlow<Unit> = _retryEvent
 
     val userInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
@@ -69,9 +69,7 @@ class EmailViewModel @Inject constructor(
                     dismissLoading() }
                 .onError { e ->
                     when(e) {
-                        is NotCorrectPasswordException -> {
-                            _retryEvent.emit(true)
-                        }
+                        is NotCorrectPasswordException -> _retryEvent.emit(Unit)
                         else -> catchError(e)
                     }
                 }

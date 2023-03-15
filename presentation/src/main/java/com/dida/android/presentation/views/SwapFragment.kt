@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.util.Constants
 import com.dida.common.util.removeTrailingDot
+import com.dida.common.util.repeatOnResumed
 import com.dida.password.PasswordDialog
 import com.dida.swap.SwapNavigationAction
 import com.dida.swap.SwapViewModel
@@ -40,7 +41,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {

@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
+import com.dida.common.util.repeatOnResumed
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
@@ -39,7 +40,7 @@ class UserProfileFragment :
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))

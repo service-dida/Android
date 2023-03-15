@@ -12,13 +12,15 @@ import com.dida.add.bottom.AddKeepNftBottomSheet
 import com.dida.add.databinding.FragmentAddPurposeBinding
 import com.dida.add.purpose.AddPurposeNavigationAction
 import com.dida.add.purpose.AddPurposeViewModel
+import com.dida.common.util.repeatOnResumed
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeViewModel>(R.layout.fragment_add_purpose) {
+class AddPurposeFragment :
+    BaseFragment<FragmentAddPurposeBinding, AddPurposeViewModel>(R.layout.fragment_add_purpose) {
 
     private val TAG = "AddPurposeFragment"
 
@@ -36,21 +38,24 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.initNFTInfo(getPath(args.imgURL),args.title,args.description)
+        viewModel.initNFTInfo(getPath(args.imgURL), args.title, args.description)
         initToolbar()
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
-                when(it) {
+                when (it) {
                     is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
                     is AddPurposeNavigationAction.NavigateToSaled -> isSaled()
-                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
+                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(
+                        AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()
+                    )
                 }
             }
         }
     }
+
     override fun initAfterBinding() {}
 
     private fun initToolbar() {
@@ -62,31 +67,32 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
 
     private fun notSaled() {
         AddKeepNftBottomSheet {
-            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                if(success){
-                    viewModel.mintNFT(password,AddPurposeViewModel.AddNftType.NOT_SALE,0.0)
+            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                if (success) {
+                    viewModel.mintNFT(password, AddPurposeViewModel.AddNftType.NOT_SALE, 0.0)
                 }
-            }.show(childFragmentManager,"AddNftBottomSheet")
-        }.show(childFragmentManager,"AddPurposeFragment")
+            }.show(childFragmentManager, "AddNftBottomSheet")
+        }.show(childFragmentManager, "AddPurposeFragment")
     }
 
     private fun isSaled() {
         val dialog = AddSaleNftBottomSheet {
-            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                if(success){
-                    viewModel.mintNFT(password,AddPurposeViewModel.AddNftType.SALE,it.toDouble())
+            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                if (success) {
+                    viewModel.mintNFT(password, AddPurposeViewModel.AddNftType.SALE, it.toDouble())
                 }
-            }.show(childFragmentManager,"AddNftBottomSheet")
+            }.show(childFragmentManager, "AddNftBottomSheet")
         }
         dialog.show(childFragmentManager, "AddPurposeFragment")
     }
 
     @SuppressLint("Range")
     private fun getPath(uri: String): String {
-        val cursor: Cursor? = requireContext().contentResolver.query(Uri.parse(uri), null, null, null, null )
+        val cursor: Cursor? =
+            requireContext().contentResolver.query(Uri.parse(uri), null, null, null, null)
         cursor?.moveToNext()
         val path: String? = cursor?.getString(cursor.getColumnIndex("_data"))
         cursor?.close()
-        return path?:""
+        return path ?: ""
     }
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
+import com.dida.common.util.repeatOnResumed
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.dida.login.databinding.FragmentLoginmainBinding
@@ -35,13 +36,12 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.repeatOnResumed {
             viewModel.navigationEvent.collectLatest {
                 when(it){
                     is LoginNavigationAction.NavigateToLoginFail -> toastMessage("로그인에 실패하였습니다.")
                     is LoginNavigationAction.NavigateToNickname -> {
                         toastMessage("회원가입이 필요합니다.")
-
                         val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email)
                         navigate(action)
                     }
