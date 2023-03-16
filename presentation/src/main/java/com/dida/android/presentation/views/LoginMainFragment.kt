@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
@@ -36,7 +37,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.repeatOnCreated {
             viewModel.navigationEvent.collectLatest {
                 when(it){
                     is LoginNavigationAction.NavigateToLoginFail -> toastMessage("로그인에 실패하였습니다.")
