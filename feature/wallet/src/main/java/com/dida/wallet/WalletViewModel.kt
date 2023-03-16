@@ -55,10 +55,7 @@ class WalletViewModel @Inject constructor(
                         Wallet(amount = it.dida.toString(), type = "DIDA"),
                         Wallet(amount = it.klay.toString(), type = "KLAY")
                     )
-                    _walletAddressState.value = it.address
-                }
-                .flatMap { buySellListAPI() }
-                .onSuccess {  }
+                    _walletAddressState.value = it.address }
                 .onError { e -> catchError(e) }
         }
     }
