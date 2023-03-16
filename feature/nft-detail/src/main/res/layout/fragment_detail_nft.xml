@@ -23,7 +23,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:visibility="@{(vm.detailOwnerTypeState == DetailOwnerType.NOTLOGIN_AND_SALE || vm.detailOwnerTypeState == DetailOwnerType.NOTLOGIN_AND_NOTSALE)? View.INVISIBLE : View.VISIBLE}"
             app:NftDetailToolbar="@{vm.detailNftState}"
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextAppearance="@style/ToolBarStyle" />

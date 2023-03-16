@@ -32,12 +32,10 @@ class DetailNftViewModel @Inject constructor(
 
     private val TAG = "DetailNftViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> =
-        MutableSharedFlow<DetailNftNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> = MutableSharedFlow<DetailNftNavigationAction>()
     val navigationEvent: SharedFlow<DetailNftNavigationAction> = _navigationEvent
 
-    private val _detailNftState: MutableStateFlow<UiState<DetailNft>> =
-        MutableStateFlow(UiState.Loading)
+    private val _detailNftState: MutableStateFlow<UiState<DetailNft>> = MutableStateFlow(UiState.Loading)
     val detailNftState: StateFlow<UiState<DetailNft>> = _detailNftState
 
     private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())

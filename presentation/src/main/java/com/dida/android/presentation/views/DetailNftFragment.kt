@@ -15,6 +15,7 @@ import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
 import com.dida.nft_detail.bottom.DetailNftBottomSheet
 import com.dida.nft_detail.bottom.DetailNftMenuType
+import com.dida.nft_detail.bottom.DetailOwnerType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +41,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        initToolbar()
         initAdapter()
     }
 
@@ -48,6 +48,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         super.onResume()
         viewModel.getDetailNft(args.cardId)
         viewModel.getCommunity(args.cardId)
+        initToolbar()
     }
 
     override fun initDataBinding() {
@@ -83,7 +84,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
     private fun initToolbar() {
         with(binding.toolbar) {
-            // 우측 메뉴
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
                     com.dida.nft_detail.R.id.action_heart -> viewModel.postlikeNft(args.cardId)

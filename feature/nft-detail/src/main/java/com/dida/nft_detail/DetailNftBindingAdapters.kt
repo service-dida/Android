@@ -135,10 +135,11 @@ fun TextView.bindConfrimBtn(type: DetailOwnerType) {
 @BindingAdapter("NftDetailToolbar")
 fun Toolbar.bindToolbar(uiState: UiState<DetailNft>) {
     this.menu.clear()
-    if (uiState.successOrNull()?.liked == true) {
-        this.inflateMenu(R.menu.menu_detailnft_like_toolbar)
-    } else {
-        this.inflateMenu(R.menu.menu_detailnft_unlike_toolbar)
+    if (uiState.successOrNull()?.type != "NEED LOGIN") {
+        if (uiState.successOrNull()?.liked == true) {
+            this.inflateMenu(R.menu.menu_detailnft_like_toolbar)
+        } else {
+            this.inflateMenu(R.menu.menu_detailnft_unlike_toolbar)
+        }
     }
-
 }
