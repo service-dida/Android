@@ -29,7 +29,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     override val layoutResourceId: Int
         get() = R.layout.fragment_wallet
 
-    override val viewModel: com.dida.wallet.WalletViewModel by viewModels()
+    override val viewModel: WalletViewModel by viewModels()
 
     private val walletAdapter by lazy { WalletAdapter(viewModel) }
     private val walletHistoryAdapter by lazy { WalletHistoryAdapter() }
@@ -43,7 +43,6 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-        viewModel.getHistory()
     }
 
     override fun initDataBinding() {
@@ -72,6 +71,11 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     }
 
     override fun initAfterBinding() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getHistory()
     }
 
     private fun initToolbar() {
