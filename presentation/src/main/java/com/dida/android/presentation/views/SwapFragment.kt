@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.common.util.Constants
 import com.dida.common.util.removeTrailingDot
 import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.password.PasswordDialog
 import com.dida.swap.SwapNavigationAction
 import com.dida.swap.SwapViewModel
@@ -29,7 +30,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
 
     override fun onResume() {
         super.onResume()
-        if(!viewModel.walletCheckState.value) viewModel.getWalletExists()
+        viewModel.getWalletExists()
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
     override fun initStartView() {
@@ -45,7 +46,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
-                        SwapNavigationAction.NavigateToPassword -> {
+                        is SwapNavigationAction.NavigateToPassword -> {
                             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
                                 if (success) {
                                     //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
@@ -62,8 +63,9 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                     }
                 }
             }
-          launch {
-            viewModel.walletExistsState.collectLatest {
+
+            launch {
+                viewModel.walletExistsState.collectLatest {
                     if (it) {
                         viewModel.initWalletAmount()
                     } else {
@@ -72,23 +74,22 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                     }
                 }
             }
+        }
 
-            launch {
-                viewModel.amountInputState.collectLatest {
-                    if(it == Constants.MAX_AMOUNT.toString()){
-                        val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
-                        imm1.hideSoftInputFromWindow(binding.topCoinAmountEt.windowToken, 0);
-                        val imm2 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
-                        imm2.hideSoftInputFromWindow(binding.bottomCoinAmountTv.windowToken, 0);
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.amountInputState.collectLatest {
+                if(it == Constants.MAX_AMOUNT.toString()){
+                    val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm1.hideSoftInputFromWindow(binding.topCoinAmountEt.windowToken, 0);
+                    val imm2 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm2.hideSoftInputFromWindow(binding.bottomCoinAmountTv.windowToken, 0);
 
-                        Toast.makeText(requireContext(),"최대 ${Constants.MAX_AMOUNT_TEXT}까지 입력가능합니다.", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(requireContext(),"최대 ${Constants.MAX_AMOUNT_TEXT}까지 입력가능합니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     override fun initAfterBinding() {
-
     }
 }

@@ -27,18 +27,13 @@ class SwapViewModel @Inject constructor(
         DIDA_TO_KLAY
     }
 
-    private val _navigationEvent: MutableSharedFlow<SwapNavigationAction> =
-        MutableSharedFlow<SwapNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<SwapNavigationAction> = MutableSharedFlow<SwapNavigationAction>()
     val navigationEvent: SharedFlow<SwapNavigationAction> = _navigationEvent
 
     private val _walletExistsState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
     val walletExistsState: SharedFlow<Boolean> = _walletExistsState
 
-    private val _walletCheckState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
-    val walletCheckState: StateFlow<Boolean> = _walletCheckState
-
-    private val _swapTypeState: MutableStateFlow<SwapType> =
-        MutableStateFlow<SwapType>(SwapType.KLAY_TO_DIDA)
+    private val _swapTypeState: MutableStateFlow<SwapType> = MutableStateFlow<SwapType>(SwapType.KLAY_TO_DIDA)
     val swapTypeState: StateFlow<SwapType> = _swapTypeState
 
     private val _walletAmountState = MutableStateFlow<String>("0.0")
@@ -74,10 +69,9 @@ class SwapViewModel @Inject constructor(
             showLoading()
             walletExistedAPI()
                 .onSuccess {
-                    _walletExistsState.emit(it)
-                    _walletCheckState.value = true }
+                    _walletExistsState.emit(it) }
                 .onError { e ->
-                    if(e is NeedToWalletException) _walletExistsState.emit(false)
+                    if (e is NeedToWalletException) _walletExistsState.emit(false)
                     else catchError(e) }
             dismissLoading()
         }
