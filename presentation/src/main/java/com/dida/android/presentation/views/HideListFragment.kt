@@ -13,6 +13,7 @@ import com.dida.settings.hidelist.HideListNavigationAction
 import com.dida.settings.hidelist.HideListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HideListFragment :
@@ -37,7 +38,7 @@ class HideListFragment :
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is HideListNavigationAction.NavigateToDetailNft -> navigate(

@@ -54,7 +54,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)

@@ -43,7 +43,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
         binding.priceTv.text = args.price
         binding.bottomPriceTv.text = args.price
 
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is BuyNftNavigationAction.NavigateToSuccess -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToBuySuccessFragment(args.nftId))

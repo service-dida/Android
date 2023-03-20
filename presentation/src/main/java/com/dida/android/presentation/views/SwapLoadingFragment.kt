@@ -34,7 +34,7 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     SwapLoadingNavigationAction.NavigateToSuccess -> navigate(SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment(args.swapType))

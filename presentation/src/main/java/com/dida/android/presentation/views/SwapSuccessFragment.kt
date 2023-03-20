@@ -9,6 +9,7 @@ import com.dida.swap.success.SwapSuccessNavigationAction
 import com.dida.swap.success.SwapSuccessViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccessViewModel>(com.dida.swap.R.layout.fragment_swap_success) {
@@ -31,7 +32,7 @@ class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccess
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     SwapSuccessNavigationAction.NavigateToHistory -> navigate(SwapSuccessFragmentDirections.actionSwapSuccessFragmentToSwapHistoryFragment())

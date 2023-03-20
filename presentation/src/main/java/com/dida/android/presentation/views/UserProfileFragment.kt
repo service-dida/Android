@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserProfileNavigationAction
@@ -15,6 +16,7 @@ import com.dida.user_profile.UserProfileViewModel
 import com.dida.user_profile.databinding.FragmentUserProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserProfileFragment :
@@ -40,10 +42,18 @@ class UserProfileFragment :
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnCreated {
+                if(args.userId == dataStorePreferences.getUserId()) {
+                    navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
                 }
             }
         }
@@ -55,11 +65,6 @@ class UserProfileFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.setUserId(args.userId)
-        lifecycleScope.launchWhenCreated {
-            if(args.userId == dataStorePreferences.getUserId()) {
-                navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
-            }
-        }
     }
 
     override fun onResume() {

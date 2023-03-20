@@ -37,18 +37,16 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
-            launch {
-                // 추후 배포시 엡데이트 로직 추가
-                viewModel.appVersion.collectLatest {
-                    if(it.toString() == getString(R.string.app_version)) getToken()
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigateToHome.collectLatest {
+                navigate(SplashFragmentDirections.actionMainFragment())
             }
+        }
 
-            launch {
-                viewModel.navigateToHome.collectLatest {
-                    navigate(SplashFragmentDirections.actionMainFragment())
-                }
+        viewLifecycleOwner.repeatOnResumed {
+            // 추후 배포시 엡데이트 로직 추가
+            viewModel.appVersion.collectLatest {
+                if(it.toString() == getString(R.string.app_version)) getToken()
             }
         }
     }

@@ -40,7 +40,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()

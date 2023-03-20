@@ -9,6 +9,7 @@ import com.dida.temp_password.TempPasswordViewModel
 import com.dida.temp_password.databinding.FragmentTempPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -32,7 +33,7 @@ class TempPasswordFragment : BaseFragment<FragmentTempPasswordBinding, TempPassw
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 navigate(TempPasswordFragmentDirections.actionTempPasswordFragmentToChangePasswordFragment())
             }

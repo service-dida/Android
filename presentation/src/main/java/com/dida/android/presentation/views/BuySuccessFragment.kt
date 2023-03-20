@@ -36,7 +36,7 @@ class BuySuccessFragment : BaseFragment<FragmentBuySuccessBinding, BuySuccessVie
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is BuySuccessNavigationAction.NavigateToMypage -> { navigate(BuySuccessFragmentDirections.actionBuySuccessFragmentToMyPageFragment()) }

@@ -34,7 +34,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 navController.popBackStack()
             }

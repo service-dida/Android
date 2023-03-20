@@ -13,6 +13,7 @@ import com.dida.create_community.databinding.FragmentCreateCommunityBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, CreateCommunityViewModel>(com.dida.create_community.R.layout.fragment_create_community) {
@@ -36,7 +37,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is com.dida.create_community.CreateCommunityNavigationAction.NavigateToSelectNft ->

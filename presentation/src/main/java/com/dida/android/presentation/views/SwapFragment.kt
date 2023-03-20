@@ -42,36 +42,34 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when (it) {
-                        is SwapNavigationAction.NavigateToPassword -> {
-                            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
-                                if (success) {
-                                    //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
-                                    navigate(
-                                        SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(
-                                            removeTrailingDot(binding.topCoinAmountEt.text.toString()).toFloat(),
-                                            password,
-                                            viewModel.swapTypeState.value
-                                        )
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    is SwapNavigationAction.NavigateToPassword -> {
+                        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                            if (success) {
+                                //viewModel.swap(password,binding.topCoinAmountEt.text.toString().toDouble())
+                                navigate(
+                                    SwapFragmentDirections.actionSwapFragmentToSwapLoadingFragment(
+                                        removeTrailingDot(binding.topCoinAmountEt.text.toString()).toFloat(),
+                                        password,
+                                        viewModel.swapTypeState.value
                                     )
-                                }
-                            }.show(childFragmentManager, "AddFragment")
-                        }
+                                )
+                            }
+                        }.show(childFragmentManager, "AddFragment")
                     }
                 }
             }
+        }
 
-            launch {
-                viewModel.walletExistsState.collectLatest {
-                    if (it) {
-                        viewModel.initWalletAmount()
-                    } else {
-                        toastMessage("지갑을 생성해야 합니다!")
-                        navigate(SwapFragmentDirections.actionSwapFragmentToEmailFragment())
-                    }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.walletExistsState.collectLatest {
+                if (it) {
+                    viewModel.initWalletAmount()
+                } else {
+                    toastMessage("지갑을 생성해야 합니다!")
+                    navigate(SwapFragmentDirections.actionSwapFragmentToEmailFragment())
                 }
             }
         }

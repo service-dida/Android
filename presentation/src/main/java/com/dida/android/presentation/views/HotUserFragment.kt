@@ -44,7 +44,7 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
             }
         }
 
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))

@@ -38,14 +38,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it) {
-                        is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
-                        is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
-                        is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
+                    is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
+                    is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
                 }
             }
         }

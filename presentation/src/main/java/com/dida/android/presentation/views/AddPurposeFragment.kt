@@ -17,6 +17,7 @@ import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddPurposeFragment :
@@ -43,7 +44,7 @@ class AddPurposeFragment :
     }
 
     override fun initDataBinding() {
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()

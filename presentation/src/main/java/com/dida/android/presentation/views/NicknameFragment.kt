@@ -32,14 +32,12 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it) {
-                        is NicknameNavigationAction.NavigateToHome -> {
-                            toastMessage("회원가입에 성공하였습니다.")
-                            this@NicknameFragment.toLoginSuccess()
-                        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is NicknameNavigationAction.NavigateToHome -> {
+                        toastMessage("회원가입에 성공하였습니다.")
+                        this@NicknameFragment.toLoginSuccess()
                     }
                 }
             }

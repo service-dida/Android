@@ -23,6 +23,7 @@ import com.dida.common.base.BaseViewModel
 import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
+import com.dida.common.util.repeatOnStarted
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -87,31 +88,33 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     protected var analytics: FirebaseAnalytics? = null
 
     init {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                exception?.collectLatest { exception ->
-                    sendException(exception)
-                    showToastMessage(exception)
+        lifecycleScope.launch {
+            repeatOnStarted {
+                launch {
+                    exception?.collectLatest { exception ->
+                        sendException(exception)
+                        showToastMessage(exception)
+                    }
                 }
-            }
 
-            launch {
-                viewModel.errorEvent.collectLatest { e ->
-                    sendException(e)
-                    dismissLoadingDialog()
-                    showToastMessage(e)
+                launch {
+                    viewModel.errorEvent.collectLatest { e ->
+                        sendException(e)
+                        dismissLoadingDialog()
+                        showToastMessage(e)
+                    }
                 }
-            }
 
-            launch {
-                viewModel.loadingEvent.collectLatest {
-                    if(it) showLoadingDialog()
-                    else dismissLoadingDialog()
+                launch {
+                    viewModel.loadingEvent.collectLatest {
+                        if(it) showLoadingDialog()
+                        else dismissLoadingDialog()
+                    }
                 }
-            }
 
-            launch {
-                viewModel.needLoginEvent.collectLatest { loginCheck() }
+                launch {
+                    viewModel.needLoginEvent.collectLatest { loginCheck() }
+                }
             }
         }
     }

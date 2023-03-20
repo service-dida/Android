@@ -5,6 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
+import com.dida.common.util.repeatOnStarted
 import com.dida.recent_nft.RecentNftNavigationAction
 import com.dida.recent_nft.RecentNftViewModel
 import com.dida.recent_nft.adapter.CardPagingAdapter
@@ -37,21 +38,18 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
     }
 
     override fun initDataBinding() {
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when(it) {
-                        is RecentNftNavigationAction.NavigateToRecentNftItem -> navigate(RecentNftFragmentDirections.actionRecentNftFragmentToDetailNftFragment(cardId = it.nftId.toLong()))
-                        is RecentNftNavigationAction.NavigateToCardRefresh -> cardPagingAdapter.refresh()
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationEvent.collectLatest {
+                when(it) {
+                    is RecentNftNavigationAction.NavigateToRecentNftItem -> navigate(RecentNftFragmentDirections.actionRecentNftFragmentToDetailNftFragment(cardId = it.nftId.toLong()))
+                    is RecentNftNavigationAction.NavigateToCardRefresh -> cardPagingAdapter.refresh()
                 }
             }
+        }
 
-            launch {
-                viewModel.cardsState.collectLatest {
-                    cardPagingAdapter.submitData(it)
-                }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.cardsState.collectLatest {
+                cardPagingAdapter.submitData(it)
             }
         }
     }

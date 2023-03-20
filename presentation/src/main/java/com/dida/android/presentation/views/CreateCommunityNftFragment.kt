@@ -45,7 +45,6 @@ class CreateCommunityNftFragment(
                     if(createNftState == 1) cardsAdapter.submitList(it)
                 }
             }
-
         }
     }
 

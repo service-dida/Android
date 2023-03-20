@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
@@ -38,29 +39,25 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.d
     }
 
     override fun initDataBinding() {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.sendEmailState.collectLatest {
-                    timeCheck()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.createWalletState.collect { result ->
+                if(result) {
+                    setFragmentResult("walletCheck", bundleOf("hasWallet" to true))
+                    navController.popBackStack()
                 }
             }
         }
 
-        viewLifecycleOwner.repeatOnResumed {
-            launch {
-                viewModel.createWalletState.collect { result ->
-                    if(result) {
-                        setFragmentResult("walletCheck", bundleOf("hasWallet" to true))
-                        navController.popBackStack()
-                    }
-                }
+        viewLifecycleOwner.repeatOnCreated {
+            viewModel.sendEmailState.collectLatest {
+                timeCheck()
             }
+        }
 
-            launch {
-                viewModel.retryEvent.collectLatest {
-                    toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
-                    makePassword()
-                }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.retryEvent.collectLatest {
+                toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
+                makePassword()
             }
         }
     }
