@@ -76,7 +76,7 @@ class UserProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId)
-                .onSuccess {  }
+                .onSuccess { getUserProfile() }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
