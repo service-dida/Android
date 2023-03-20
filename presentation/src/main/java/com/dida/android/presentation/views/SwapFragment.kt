@@ -78,9 +78,9 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
             viewModel.amountInputState.collectLatest {
                 if (it == Constants.MAX_AMOUNT.toString()) {
                     val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm1.hideSoftInputFromWindow(binding.topCoinAmountEt.windowToken, 0);
+                    imm1.hideSoftInputFromWindow(binding.topCoinAmountEt.windowToken, 0)
                     val imm2 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm2.hideSoftInputFromWindow(binding.bottomCoinAmountTv.windowToken, 0);
+                    imm2.hideSoftInputFromWindow(binding.bottomCoinAmountTv.windowToken, 0)
 
                     Toast.makeText(requireContext(),"최대 ${Constants.MAX_AMOUNT_TEXT}까지 입력가능합니다.", Toast.LENGTH_SHORT).show()
                 }

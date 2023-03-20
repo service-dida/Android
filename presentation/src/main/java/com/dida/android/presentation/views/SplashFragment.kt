@@ -56,17 +56,16 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.
 
     private fun getToken() {
         //토큰값을 받아옵니다.
-        FirebaseMessaging.getInstance().token
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    AppLog.e("Fetching FCM registration token failed", task.exception.toString())
-                    return@OnCompleteListener
-                }
-                // Get new FCM registration token
-                val token = task.result
-                viewModel.setDeviceToken(token)
-                AppLog.e("Fetching FCM registration token Success", token)
-            })
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                AppLog.e("Fetching FCM registration token failed", task.exception.toString())
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            val token = task.result
+            viewModel.setDeviceToken(token)
+            AppLog.e("Fetching FCM registration token Success", token)
+        })
     }
 
     private fun initSplashScreen() {

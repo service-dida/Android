@@ -52,7 +52,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     // 권한을 허용하도록 요청
     private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         results.forEach {
-            if(!it.value) toastMessage("권한 허용이 필요합니다.")
+            if (!it.value) toastMessage("권한 허용이 필요합니다.")
             if (!it.value) {
                 toastMessage("권한 허용이 필요합니다.")
             } else {
@@ -178,8 +178,8 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View, motionEvent: MotionEvent): Boolean {
             val view = v as EditText
-            if(motionEvent.action == MotionEvent.ACTION_UP){
-                if(motionEvent.rawX >= view.right - view.compoundDrawables[2].getBounds().width()) {
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                if(motionEvent.rawX >= view.right - view.compoundDrawables[2].bounds.width()) {
                     when (v.id) {
                         R.id.nickname_et -> viewModel.clearNickname()
                         R.id.description_et -> viewModel.clearDescription()

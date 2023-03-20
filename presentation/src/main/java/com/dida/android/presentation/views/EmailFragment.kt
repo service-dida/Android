@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
-class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.dida.email.R.layout.fragment_email) {
+class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.dida.email.R.layout.fragment_email) {
 
     private val TAG = "EmailFragment"
 

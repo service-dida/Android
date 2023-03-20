@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CreateCommunityNftFragment(
-    val createNftState: Int
+    private val createNftState: Int
 ) : BaseFragment<FragmentCreateCommunityNftBinding, CreateCommunityViewModel>(com.dida.create_community.R.layout.fragment_create_community_nft) {
 
     private val TAG = "CreateCommunityNftFragment"

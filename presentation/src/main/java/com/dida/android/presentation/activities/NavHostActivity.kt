@@ -87,9 +87,9 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
             } else {
                 when (navController.currentDestination?.id) {
                     R.id.homeFragment -> {
-                        if(System.currentTimeMillis()-waitTime >= 1500) {
+                        if (System.currentTimeMillis() - waitTime >= 1500) {
                             waitTime = System.currentTimeMillis()
-                            Toast.makeText(this,"뒤로가기 버튼을 \n한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "뒤로가기 버튼을 \n한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
                         } else {
                             finishAffinity() // 액티비티 종료
                         }

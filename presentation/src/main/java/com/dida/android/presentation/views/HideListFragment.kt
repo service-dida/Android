@@ -15,8 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HideListFragment :
-    BaseFragment<FragmentHideListBinding, HideListViewModel>(R.layout.fragment_hide_list) {
+class HideListFragment : BaseFragment<FragmentHideListBinding, HideListViewModel>(R.layout.fragment_hide_list) {
 
     private val TAG = "HideListFragment"
 

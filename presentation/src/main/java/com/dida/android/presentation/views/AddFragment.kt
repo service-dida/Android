@@ -87,7 +87,6 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
         viewLifecycleOwner.repeatOnStarted {
             viewModel.nftImageState.collectLatest {
-
             }
         }
     }

@@ -36,7 +36,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is NicknameNavigationAction.NavigateToHome -> {
-                        toastMessage("회원가입에 성공하였습니다.")
+                        toastMessage("회원가입에 성공 하였습니다.")
                         this@NicknameFragment.toLoginSuccess()
                     }
                 }

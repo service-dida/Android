@@ -40,7 +40,7 @@ class RecentNftViewModel @Inject constructor(
     override fun onLikeBtnClicked(nftId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId.toLong())
+            postLikeAPI(nftId)
                 .onSuccess { _navigationEvent.emit(RecentNftNavigationAction.NavigateToCardRefresh) }
                 .onError { e -> catchError(e) }
             dismissLoading()

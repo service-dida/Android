@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -38,6 +37,7 @@ class UserProfileFragment :
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        viewModel.setUserId(args.userId)
     }
 
     override fun initDataBinding() {
@@ -59,11 +59,6 @@ class UserProfileFragment :
     }
 
     override fun initAfterBinding() {
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.setUserId(args.userId)
     }
 
     override fun onResume() {

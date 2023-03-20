@@ -46,12 +46,7 @@ class NotificationUtil {
         pendingIntent = TaskStackBuilder.create(context).run {
             addParentStack(activity)
             addNextIntentWithParentStack(intent)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getPendingIntent(id, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            } else {
-                getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT)
-
-            }
+            getPendingIntent(id, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         }
     }
 

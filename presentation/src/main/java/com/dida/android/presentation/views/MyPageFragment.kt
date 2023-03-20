@@ -24,7 +24,6 @@ class MyPageFragment :
         get() = R.layout.fragment_mypage
 
     override val viewModel: MyPageViewModel by viewModels()
-    private val navController: NavController by lazy { findNavController() }
 
     private var lastScrollY = 0
 

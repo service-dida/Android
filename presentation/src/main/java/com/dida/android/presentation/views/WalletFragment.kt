@@ -87,18 +87,18 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
             val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("label", viewModel.walletAddressState.value)
             clipboard.setPrimaryClip(clip)
-            toastMessage("텍스트가 복사되었습니다.")
+            toastMessage("텍스트가 복사 되었습니다.")
         }
     }
 
     private fun initAdapter() {
         binding.nftHistoryRecyclerView.adapter = walletHistoryAdapter
 
-        val listener = SnapPagerScrollListener(
-            PagerSnapHelper(),
-            SnapPagerScrollListener.ON_SETTLED,
-            true,
-            object : SnapPagerScrollListener.OnChangeListener {
+        val snapPagerScrollListener = SnapPagerScrollListener(
+            snapHelper = PagerSnapHelper(),
+            type = SnapPagerScrollListener.ON_SETTLED,
+            notifyOnInit = true,
+            listener = object : SnapPagerScrollListener.OnChangeListener {
                 override fun onSnapped(position: Int) {
                     //position 받아서 이벤트 처리
                 }
@@ -108,7 +108,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
         binding.walletCardRecyclerView.apply {
             adapter = walletAdapter
             addSnapPagerScroll()
-            addOnScrollListener(listener)
+            addOnScrollListener(snapPagerScrollListener)
         }
     }
 }

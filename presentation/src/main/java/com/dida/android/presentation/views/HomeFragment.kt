@@ -27,8 +27,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment :
-    BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home) {
 
     private val TAG = "HomeFragment"
 
@@ -80,24 +79,15 @@ class HomeFragment :
     }
 
     override fun initAfterBinding() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-                // soldout
-                if (binding.hotSellerRecycler.y + binding.hotSellerRecycler.height <= scrollY && scrollY < binding.soldoutMore.y) {
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
-                }
-                // recent
-                else if (binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y + 100) {
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
-                }
-                // collection
-                else if (binding.recentnftRecycler.y + 100 <= scrollY) {
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
-                }
-                // hot seller
-                else {
-                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
-                }
+        binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            if (binding.hotSellerRecycler.y + binding.hotSellerRecycler.height <= scrollY && scrollY < binding.soldoutMore.y) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+            } else if (binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y + 100) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+            } else if (binding.recentnftRecycler.y + 100 <= scrollY) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+            } else {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
             }
         }
     }

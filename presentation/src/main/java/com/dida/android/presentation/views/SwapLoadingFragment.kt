@@ -43,7 +43,7 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
 
         viewLifecycleOwner.repeatOnStarted {
             viewModel.swapTypeState.collectLatest {
-                viewModel.swap(args.swapType, args.password, args.amount.toDouble())
+                viewModel.swap(swapType = args.swapType, password = args.password, amount = args.amount.toDouble())
             }
         }
     }
