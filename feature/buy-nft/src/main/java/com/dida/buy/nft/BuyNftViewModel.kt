@@ -44,21 +44,9 @@ class BuyNftViewModel @Inject constructor(
     ) {
         baseViewModelScope.launch {
             _detailNftState.emit(
-                DetailNft(
-                    cardId,
-                    "",
-                    "",
-                    "",
-                    imgUrl,
-                    viewerNickname,
-                    nickname,
-                    price,
-                    profileUrl,
-                    title,
-                    false,
-                    "",
-                    0L,
-                    0L
+                DetailNft(cardId = cardId, contracts = "", description = "", id = "", imgUrl = imgUrl, viewerNickname = viewerNickname,
+                    nickname = nickname, price = price, profileUrl = profileUrl, title = title,
+                    liked = false, type = "", userId = 0L, marketId = 0L
                 )
             )
         }

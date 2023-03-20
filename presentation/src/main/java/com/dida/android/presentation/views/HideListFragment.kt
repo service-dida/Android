@@ -5,7 +5,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.dida.common.util.repeatOnResumed
 import com.dida.settings.R
 import com.dida.settings.databinding.FragmentHideListBinding
 import com.dida.settings.hidelist.HideListAdapter

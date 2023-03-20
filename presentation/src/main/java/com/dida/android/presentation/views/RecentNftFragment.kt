@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewModel>(com.dida.recent_nft.R.layout.fragment_recent_nft) {
 

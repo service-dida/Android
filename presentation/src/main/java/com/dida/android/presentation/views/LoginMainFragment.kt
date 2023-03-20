@@ -7,8 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
-import com.dida.common.util.repeatOnCreated
-import com.dida.common.util.repeatOnResumed
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.dida.login.databinding.FragmentLoginmainBinding
@@ -95,7 +93,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         }
 
         // 카카오톡 설치여부 확인
-        if(viewModel.kakaoTalkLoginState.value && UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+        if (viewModel.kakaoTalkLoginState.value && UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = kakaoCallback)
         } else {
             UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)

@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.dida.common.util.repeatOnStarted
 import com.dida.create_community.CreateCommunityViewModel
 import com.dida.create_community.adapter.CreateCommunityNftAdapter
@@ -36,13 +35,13 @@ class CreateCommunityNftFragment(
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.cardPostLikeState.collectLatest {
-                    if(createNftState == 0) cardsAdapter.submitList(it)
+                    if (createNftState == 0) cardsAdapter.submitList(it)
                 }
             }
 
             launch {
                 viewModel.cardPostMyState.collectLatest {
-                    if(createNftState == 1) cardsAdapter.submitList(it)
+                    if (createNftState == 1) cardsAdapter.submitList(it)
                 }
             }
         }

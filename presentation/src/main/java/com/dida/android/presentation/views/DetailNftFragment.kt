@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
-import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.nft.sale.AddSaleNftBottomSheet
@@ -15,7 +14,6 @@ import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
 import com.dida.nft_detail.bottom.DetailNftBottomSheet
 import com.dida.nft_detail.bottom.DetailNftMenuType
-import com.dida.nft_detail.bottom.DetailOwnerType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -125,13 +123,13 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     private fun showDeleteNftDialog(){
-        if(viewModel.detailNftState.value.successOrNull()?.price == "NOT SALE"){
-            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                if(success){
-                    viewModel.deleteNft(args.cardId,password)
+        if (viewModel.detailNftState.value.successOrNull()?.price == "NOT SALE") {
+            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                if (success) {
+                    viewModel.deleteNft(args.cardId, password)
                 }
-            }.show(childFragmentManager,"DetailNftBottomSheet")
-        }else{
+            }.show(childFragmentManager, "DetailNftBottomSheet")
+        } else {
             toastMessage("마켓에 올라가 있는 NFT는 삭제 할 수 없습니다.")
         }
     }

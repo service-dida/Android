@@ -7,8 +7,6 @@ import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuySuccessBinding
 import com.dida.buy.nft.success.BuySuccessNavigationAction
 import com.dida.buy.nft.success.BuySuccessViewModel
-import com.dida.common.util.repeatOnResumed
-import com.dida.common.util.repeatOnStarted
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,9 +41,7 @@ class BuySuccessFragment : BaseFragment<FragmentBuySuccessBinding, BuySuccessVie
                     is BuySuccessNavigationAction.NavigateToSaleNft -> {
                         val dialog = AddSaleNftBottomSheet { price ->
                             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                                if(success){
-                                    viewModel.sellNft(password,args.nftId,price.toDouble())
-                                }
+                                if (success) viewModel.sellNft(password,args.nftId,price.toDouble())
                             }.show(childFragmentManager,"DetailNftBottomSheet")
                         }
                         dialog.show(childFragmentManager, "DetailNftFragment")

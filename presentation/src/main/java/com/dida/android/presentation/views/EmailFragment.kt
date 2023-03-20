@@ -77,7 +77,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.d
 
     private fun makePassword(){
         PasswordDialog(6,"비밀번호 설정","6자리를 입력해주세요.",true){ success, firstPassword ->
-            if(success){
+            if (success) {
                 PasswordDialog(6,"비밀번호 확인","6자리를 입력해주세요.",true) { success, secondPassword ->
                     viewModel.postCreateWallet(firstPassword, secondPassword)
                 }
@@ -108,7 +108,7 @@ class EmailFragment() : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.d
                 lifecycleScope.launch {
                     viewModel.timeToString(minute, second)
                 }
-                if(minute < 0){
+                if (minute < 0) {
                     timer.cancel()
                     timeOver()
                 }

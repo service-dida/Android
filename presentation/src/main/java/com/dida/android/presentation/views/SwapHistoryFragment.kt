@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.common.util.repeatOnResumed
@@ -12,7 +11,6 @@ import com.dida.swap.history.adapter.SwapHistoryAdapter
 import com.dida.swap.history.databinding.FragmentSwapHistoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistoryViewModel>(R.layout.fragment_swap_history) {

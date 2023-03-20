@@ -76,7 +76,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
 
         viewLifecycleOwner.repeatOnStarted {
             viewModel.amountInputState.collectLatest {
-                if(it == Constants.MAX_AMOUNT.toString()){
+                if (it == Constants.MAX_AMOUNT.toString()) {
                     val imm1 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm1.hideSoftInputFromWindow(binding.topCoinAmountEt.windowToken, 0);
                     val imm2 = requireContext().getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager

@@ -17,13 +17,11 @@ import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.DidaIntent
 import com.dida.common.util.addSnapPagerScroll
-import com.dida.common.util.repeatOnResumed
 import com.dida.home.HomeNavigationAction
 import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
 import com.dida.home.databinding.FragmentHomeBinding
 import com.dida.home.smoothScrollToView
-import com.dida.recent_nft.adapter.CardPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -9,9 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
-import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
 import com.dida.wallet.R
+import com.dida.wallet.WalletNavigationAction
 import com.dida.wallet.WalletViewModel
 import com.dida.wallet.adapter.WalletAdapter
 import com.dida.wallet.adapter.WalletHistoryAdapter
@@ -48,9 +48,9 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is com.dida.wallet.WalletNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is com.dida.wallet.WalletNavigationAction.NavigateToSwapHistory -> navigate(WalletFragmentDirections.actionWalletFragmentToSwapHistoryFragment())
+                when (it) {
+                    is WalletNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is WalletNavigationAction.NavigateToSwapHistory -> navigate(WalletFragmentDirections.actionWalletFragmentToSwapHistoryFragment())
                 }
             }
         }

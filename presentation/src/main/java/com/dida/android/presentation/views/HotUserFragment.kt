@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
-import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
 import com.dida.hot_user.HotUserNavigationAction
 import com.dida.hot_user.HotUserViewModel
@@ -14,7 +13,6 @@ import com.dida.hot_user.databinding.FragmentHotUserBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(com.dida.hot_user.R.layout.fragment_hot_user) {

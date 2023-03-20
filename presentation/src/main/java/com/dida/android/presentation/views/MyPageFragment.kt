@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
-import com.dida.common.util.repeatOnResumed
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
@@ -91,7 +90,7 @@ class MyPageFragment :
     }
 
     private fun getLastScrollY() {
-        if(lastScrollY > 0) {
+        if (lastScrollY > 0) {
             binding.mypageScroll.scrollTo(0, lastScrollY)
             lastScrollY = 0
         }

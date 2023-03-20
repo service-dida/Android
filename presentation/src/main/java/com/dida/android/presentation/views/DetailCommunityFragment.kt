@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.base.DefaultAlertDialog
-import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
 import com.dida.community_detail.DetailCommunityNavigationAction
@@ -70,7 +69,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         viewLifecycleOwner.repeatOnStarted {
             viewModel.commentList.collectLatest {
                 commentsAdapter.submitList(it)
-                if(viewModel.isWrite.value) keyboardHide()
+                if (viewModel.isWrite.value) keyboardHide()
             }
         }
     }

@@ -2,15 +2,11 @@ package com.dida.android.presentation.views
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
-import com.dida.common.util.repeatOnResumed
 import com.dida.hot_seller.HotSellerViewModel
 import com.dida.hot_seller.databinding.FragmentHotSellerBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-
 
 @AndroidEntryPoint
 class HotSellerFragment : BaseFragment<FragmentHotSellerBinding, HotSellerViewModel>(com.dida.hot_seller.R.layout.fragment_hot_seller) {

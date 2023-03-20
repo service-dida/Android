@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,9 +10,7 @@ import com.dida.buy.nft.BuyNftViewModel
 import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuyNftBinding
 import com.dida.common.base.DefaultAlertDialog
-import com.dida.common.util.repeatOnResumed
 import com.dida.password.PasswordDialog
-import com.dida.recent_nft.RecentNftNavigationAction
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -72,7 +69,15 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     }
 
     private fun initData(){
-        viewModel.initDetailNft(args.nftId,args.nftImg,args.nftTitle,args.userImg,args.userName,args.price,args.viewerNickname)
+        viewModel.initDetailNft(
+            cardId = args.nftId,
+            imgUrl = args.nftImg,
+            title = args.nftTitle,
+            profileUrl = args.userImg,
+            nickname = args.userName,
+            price = args.price,
+            viewerNickname = args.viewerNickname
+        )
     }
 
     private fun failBuyAlert() {

@@ -58,14 +58,14 @@ class CreateCommunityInputViewModel @Inject constructor(
             launch {
                 titleState.collect {
                     titleLengthState.value = it.length.toString()+"/20"
-                    if(it.isNotBlank()) _createBtnState.value = true
+                    if (it.isNotBlank()) _createBtnState.value = true
                 }
             }
 
             launch {
                 descriptionState.collect {
                     descriptionLengthState.value = it.length.toString()+"/300"
-                    if(it.isNotBlank()) _createBtnState.value = true
+                    if (it.isNotBlank()) _createBtnState.value = true
                 }
             }
         }
@@ -105,7 +105,7 @@ class CreateCommunityInputViewModel @Inject constructor(
 
     override fun onBackButtonClicked() {
         baseViewModelScope.launch {
-            if(isNewCreate.value) _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
+            if (isNewCreate.value) _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
         }
     }
 
@@ -113,7 +113,7 @@ class CreateCommunityInputViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             if(titleState.value.isNotBlank() && descriptionState.value.isNotBlank()) {
-                if(isNewCreate.value) {
+                if (isNewCreate.value) {
                     postCardIdAPI(cardId = _cardIdState.value, title = titleState.value, content = descriptionState.value)
                         .onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
                         .onError { e -> catchError(e) }

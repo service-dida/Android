@@ -6,8 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.android.presentation.adapter.CreateCommunityNftPagerAdapter
-import com.dida.common.util.repeatOnResumed
-import com.dida.common.util.repeatOnStarted
 import com.dida.create_community.CreateCommunityViewModel
 import com.dida.create_community.databinding.FragmentCreateCommunityBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -39,7 +37,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
-                when(it) {
+                when (it) {
                     is com.dida.create_community.CreateCommunityNavigationAction.NavigateToSelectNft ->
                         navigate(CreateCommunityFragmentDirections.actionCreateCommunityFragmentToCommunityCommunityInputFragment(it.cardId, true))
                 }

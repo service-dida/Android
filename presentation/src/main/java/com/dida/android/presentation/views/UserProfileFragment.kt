@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.repeatOnCreated
-import com.dida.common.util.repeatOnResumed
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel

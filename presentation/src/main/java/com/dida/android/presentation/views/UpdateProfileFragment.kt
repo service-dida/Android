@@ -5,9 +5,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
@@ -21,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.util.uriToFile
 import com.dida.common.ui.ImageBottomSheet
 import com.dida.common.util.DidaIntent
-import com.dida.common.util.repeatOnResumed
 import com.dida.update.profile.R
 import com.dida.update.profile.UpdateProfileNavigationAction
 import com.dida.update.profile.UpdateProfileViewModel

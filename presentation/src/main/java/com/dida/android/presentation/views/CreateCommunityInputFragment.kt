@@ -6,7 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
-import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
 import com.dida.create_community_input.CreateCommunityInputNavigationAction
 import com.dida.create_community_input.CreateCommunityInputViewModel
@@ -42,7 +41,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
-                when(it) {
+                when (it) {
                     is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
                     is CreateCommunityInputNavigationAction.NavigateToCommunity -> navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
                 }

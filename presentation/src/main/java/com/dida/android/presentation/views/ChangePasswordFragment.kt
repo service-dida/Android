@@ -7,11 +7,9 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.change_password.ChangePasswordViewModel
 import com.dida.change_password.databinding.FragmentChangePasswordBinding
-import com.dida.common.util.repeatOnResumed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, ChangePasswordViewModel>(com.dida.change_password.R.layout.fragment_change_password) {
