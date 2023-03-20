@@ -44,16 +44,20 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     private var cameraUri: Uri? = null
 
     // 요청하고자 하는 권한들
-    private val permissionList = arrayOf(Manifest.permission.CAMERA)
+    private val permissionList = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE)
 
     // 권한을 허용하도록 요청
     private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         results.forEach {
-            if(!it.value) {
+            if(!it.value) toastMessage("권한 허용이 필요합니다.")
+            if (!it.value) {
                 toastMessage("권한 허용이 필요합니다.")
-            }else{
-                val dialog = ImageBottomSheet {
-                    if(it) getGalleryImage()
+            } else {
+                val dialog = ImageBottomSheet { getGallery ->
+                    if (getGallery) getGalleryImage()
                     else getCaptureImage()
                 }
                 dialog.show(childFragmentManager, TAG)
@@ -111,7 +115,6 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private fun editProfileImageBottomSheet() {
         requestMultiplePermission.launch(permissionList)
-
     }
 
     private fun initRegisterForActivityResult() {
@@ -177,13 +180,9 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
             val view = v as EditText
             if(motionEvent.action == MotionEvent.ACTION_UP){
                 if(motionEvent.rawX >= view.right - view.compoundDrawables[2].getBounds().width()) {
-                    when(v.id){
-                        R.id.nickname_et ->{
-                            viewModel.clearNickname()
-                        }
-                        R.id.description_et ->{
-                            viewModel.clearDescription()
-                        }
+                    when (v.id) {
+                        R.id.nickname_et -> viewModel.clearNickname()
+                        R.id.description_et -> viewModel.clearDescription()
                     }
                     return true
                 }
