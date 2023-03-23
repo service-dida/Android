@@ -4,6 +4,7 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
+import com.dida.common.util.successOrNull
 import com.dida.domain.flatMap
 import com.dida.domain.model.main.OtherUserProfie
 import com.dida.domain.model.main.UserNft
@@ -33,9 +34,9 @@ class UserProfileViewModel @Inject constructor(
     val navigationEvent: SharedFlow<UserProfileNavigationAction> = _navigationEvent.asSharedFlow()
 
     enum class CardSortType{
-        NEWEST,
-        OLDEST
+        NEWEST, OLDEST
     }
+
     private val _cardSortTypeState: MutableStateFlow<CardSortType> = MutableStateFlow<CardSortType>(CardSortType.NEWEST)
     val cardSortTypeState: StateFlow<CardSortType> = _cardSortTypeState.asStateFlow()
 
@@ -60,7 +61,8 @@ class UserProfileViewModel @Inject constructor(
                 .flatMap { userCardUserIdAPI(userId = userIdState.value) }
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    _userCardState.value = UiState.Success(it) }
+                    _userCardState.value = UiState.Success(it)
+                    setCardSort(type = cardSortTypeState.value) }
                 .onError { e -> catchError(e) }
         }
     }
@@ -94,5 +96,13 @@ class UserProfileViewModel @Inject constructor(
 
     override fun onCardSortTypeClicked(type: CardSortType) {
         _cardSortTypeState.value = type
+        setCardSort(type = cardSortTypeState.value)
+    }
+
+    private fun setCardSort(type: CardSortType) {
+        when(type) {
+            CardSortType.NEWEST -> _userCardState.value = UiState.Success(userCardState.value.successOrNull()!!.sortedByDescending { it.cardId })
+            CardSortType.OLDEST -> _userCardState.value = UiState.Success(userCardState.value.successOrNull()!!.sortedBy { it.cardId })
+        }
     }
 }
