@@ -2,6 +2,6 @@ package com.dida.mypage
 
 interface MypageActionHandler {
     fun onWalletClicked()
-    fun onMypageNftTypeClicked(type : MyPageViewModel.MypageNftType)
+    fun onMypageNftTypeClicked(type : MyPageViewModel.CardSortType)
     fun onSettingsClicked()
 }

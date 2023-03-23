@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.dida.mypage.MyPageViewModel.MypageNftType"/>
+        <import type="com.dida.mypage.MyPageViewModel.CardSortType"/>
         <variable
             name="vm"
             type="com.dida.mypage.MyPageViewModel" />
@@ -232,9 +232,9 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.NEWEST)}"
+                            app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(CardSortType.NEWEST)}"
                             android:text="@string/mypage_nft_type_newest_text"
-                            android:textColor="@{vm.mypageNftTypeState==MypageNftType.NEWEST? @color/brand_lemon : @color/surface6}"
+                            android:textColor="@{vm.cardSortTypeState==CardSortType.NEWEST? @color/brand_lemon : @color/surface6}"
                             android:textSize="14dp" />
 
                         <ImageView
@@ -250,9 +250,9 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(MypageNftType.OLDEST)}"
+                            app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(CardSortType.OLDEST)}"
                             android:text="@string/mypage_nft_type_oldest_text"
-                            android:textColor="@{vm.mypageNftTypeState==MypageNftType.OLDEST? @color/brand_lemon : @color/surface6}"
+                            android:textColor="@{vm.cardSortTypeState==CardSortType.OLDEST? @color/brand_lemon : @color/surface6}"
                             android:textSize="14dp" />
 
                     </LinearLayout>
