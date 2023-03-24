@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
-import com.dida.common.base.DefaultAlertDialog
 import com.dida.common.base.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
