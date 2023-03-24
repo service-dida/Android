@@ -45,19 +45,19 @@ class MyPageViewModel @Inject constructor(
     val hasMyNftState: StateFlow<UiState<List<UserNft>>> = _hasMyNftState
 
 
-    enum class MypageNftType{
-        NEWEST,
-        OLDEST
+    enum class CardSortType{
+        NEWEST, OLDEST
     }
-    private val _mypageNftTypeState: MutableStateFlow<MypageNftType> = MutableStateFlow<MypageNftType>(MypageNftType.NEWEST)
-    val mypageNftTypeState: StateFlow<MypageNftType> = _mypageNftTypeState
+
+    private val _cardSortTypeState: MutableStateFlow<CardSortType> = MutableStateFlow<CardSortType>(CardSortType.NEWEST)
+    val cardSortTypeState: StateFlow<CardSortType> = _cardSortTypeState
 
     fun getMypage() {
         baseViewModelScope.launch {
             userNftAPI()
                 .onSuccess {
-                    val list = it.sortedByDescending { it.cardId }
-                    _hasMyNftState.value = UiState.Success(list)
+                    _hasMyNftState.value = UiState.Success(it)
+                    setCardSort(type = cardSortTypeState.value)
                 }
                 .flatMap {
                     userProfileAPI()
@@ -71,13 +71,13 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun changeMyNftListType(type : MypageNftType){
-        if(type==MypageNftType.NEWEST){
-            _hasMyNftState.value = UiState.Success(hasMyNftState.value.successOrNull()!!.sortedByDescending { it.cardId })
-        }else{
-            _hasMyNftState.value = UiState.Success(hasMyNftState.value.successOrNull()!!.sortedBy { it.cardId })
+    private fun setCardSort(type: CardSortType) {
+        when(type) {
+            CardSortType.NEWEST -> _hasMyNftState.value = UiState.Success(hasMyNftState.value.successOrNull()!!.sortedByDescending { it.cardId })
+            CardSortType.OLDEST -> _hasMyNftState.value = UiState.Success(hasMyNftState.value.successOrNull()!!.sortedBy { it.cardId })
         }
     }
+
     override fun onWalletClicked() {
         baseViewModelScope.launch {
             if (hasWalletState.value) {
@@ -105,9 +105,9 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onMypageNftTypeClicked(type: MypageNftType) {
-        _mypageNftTypeState.value = type
-        changeMyNftListType(type)
+    override fun onMypageNftTypeClicked(type: CardSortType) {
+        _cardSortTypeState.value = type
+        setCardSort(type)
     }
 
     override fun onSettingsClicked() {
