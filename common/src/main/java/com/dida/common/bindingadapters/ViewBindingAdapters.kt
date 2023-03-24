@@ -19,3 +19,10 @@ fun CompoundButton.bindOnSingleCheckedChangeListener(checkedChangeListener: Comp
         setOnCheckedChangeListener(OnSingleCheckedChangeListener(it))
     } ?: setOnCheckedChangeListener(null)
 }
+
+@BindingAdapter("onSingleClick")
+fun View.setOnSingleClickListener(clickListener: View.OnClickListener?) {
+    clickListener?.also {
+        setOnClickListener(OnSingleClickListener(it))
+    } ?: setOnClickListener(null)
+}

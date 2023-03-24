@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_dialog_margin">18dp</dimen>
+    <dimen name="default_dialog_padding_start">38dp</dimen>
+    <dimen name="default_dialog_padding_top">28dp</dimen>
+    <dimen name="default_dialog_padding_end">38dp</dimen>
+    <dimen name="default_dialog_padding_bottom">9dp</dimen>
+    <dimen name="default_dialog_title_margin_bottom">18dp</dimen>
+    <dimen name="default_dialog_message_margin_bottom">8dp</dimen>
+    <dimen name="default_dialog_message_line_spacing_extra">4dp</dimen>
+    <dimen name="default_dialog_message_type2_margin_bottom">10dp</dimen>
+    <dimen name="default_dialog_button_padding">20dp</dimen>
+</resources>
