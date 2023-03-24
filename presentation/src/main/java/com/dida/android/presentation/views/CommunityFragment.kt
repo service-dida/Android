@@ -67,6 +67,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override fun onResume() {
         super.onResume()
+        communityPagingAdapter.refresh()
         getLastScrollY()
     }
 
