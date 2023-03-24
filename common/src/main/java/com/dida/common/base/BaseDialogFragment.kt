@@ -2,21 +2,24 @@ package com.dida.common.base
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Point
 import android.util.DisplayMetrics
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 
 open class BaseDialogFragment : DialogFragment() {
 
-    override fun onStart() {
-        super.onStart()
-        val displayMetrics = DisplayMetrics()
-        dialog?.window?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-        val widthResizeRequired = isLandscape(requireContext())
-        val displayWidth = displayMetrics.widthPixels
-        val width = if (widthResizeRequired) (displayWidth * 0.6f).toInt() else ViewGroup.LayoutParams.MATCH_PARENT
-        val height = ViewGroup.LayoutParams.WRAP_CONTENT
-        dialog?.window?.setLayout(width,height)
+    override fun onResume() {
+        super.onResume()
+        val windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
+        val deviceWidth = size.x
+        params?.width = (deviceWidth * 0.9).toInt()
+        dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
 
     private fun isLandscape(context: Context): Boolean {

@@ -67,12 +67,6 @@ class DefaultDialogFragment : BaseDialogFragment() {
 
         messageTextView.isVisible = !message.isNullOrBlank()
         messageTextView.text = message
-        val messageTextColor = if (isMessageOnly) {
-            ContextCompat.getColor(requireContext(), R.color.default_dialog_message_type2_text)
-        } else {
-            ContextCompat.getColor(requireContext(), R.color.default_dialog_message_type1_text)
-        }
-        messageTextView.setTextColor(messageTextColor)
 
         viewLifecycleOwner.repeatOnCreated {
             contents?.let {
