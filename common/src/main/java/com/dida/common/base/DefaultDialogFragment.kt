@@ -11,7 +11,6 @@ import android.view.Window
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.dida.common.R
 import com.dida.common.bindingadapters.setOnSingleClickListener

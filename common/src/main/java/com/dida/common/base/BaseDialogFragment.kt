@@ -3,7 +3,6 @@ package com.dida.common.base
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Point
-import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
