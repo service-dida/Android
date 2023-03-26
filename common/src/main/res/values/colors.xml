@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="default_dialog_title_text">@color/white</color>
+    <color name="default_dialog_text">@color/white</color>
+    <color name="default_dialog_message_type1_text">@color/mainblack</color>
+    <color name="default_dialog_message_type2_text">@color/white</color>
+    <color name="default_dialog_positive_button_text">@color/mainblack</color>
+    <color name="default_dialog_negative_button_text">@color/white</color>
+
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="trans_parents">#00000000</color>

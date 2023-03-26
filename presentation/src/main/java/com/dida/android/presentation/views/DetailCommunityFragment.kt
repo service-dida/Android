@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
-import com.dida.common.base.DefaultAlertDialog
+import com.dida.common.base.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.community_detail.DetailCommunityBottomSheetDialog
 import com.dida.community_detail.DetailCommunityNavigationAction
@@ -103,18 +103,17 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     private fun deletePostAlert() {
-        val res = com.dida.common.base.AlertModel(
-            title = requireContext().getString(com.dida.common.R.string.delete_post_title),
-            description = requireContext().getString(com.dida.common.R.string.delete_post_description),
-            noButtonTitle = requireContext().getString(com.dida.common.R.string.cancel),
-            yesButtonTitle = requireContext().getString(com.dida.common.R.string.ok)
-        )
-        val dialog = DefaultAlertDialog(
-            alertModel = res,
-            clickNegative = {},
-            clickPositive = { viewModel.deleteCommunity() }
-        )
-        dialog.show(requireActivity().supportFragmentManager, dialog.tag)
+        DefaultDialogFragment.Builder()
+            .title(getString(com.dida.common.R.string.delete_post_title))
+            .message(getString(com.dida.common.R.string.delete_post_description))
+            .positiveButton(getString(com.dida.common.R.string.ok), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.deleteCommunity()
+                }
+            })
+            .negativeButton(getString(com.dida.common.R.string.cancel))
+            .build()
+            .show(childFragmentManager, "delete_post_dialog")
     }
 
     private fun commentMoreBottomSheet(commentId: Long) {
@@ -128,18 +127,17 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     private fun deleteCommentAlert(commentId: Long) {
-        val res = com.dida.common.base.AlertModel(
-            title = requireContext().getString(com.dida.common.R.string.delete_comment_title),
-            description = requireContext().getString(com.dida.common.R.string.delete_comment_description),
-            noButtonTitle = requireContext().getString(com.dida.common.R.string.cancel),
-            yesButtonTitle = requireContext().getString(com.dida.common.R.string.ok)
-        )
-        val dialog = DefaultAlertDialog(
-            alertModel = res,
-            clickNegative = {},
-            clickPositive = { viewModel.deleteComment(commentId = commentId) }
-        )
-        dialog.show(requireActivity().supportFragmentManager, dialog.tag)
+        DefaultDialogFragment.Builder()
+            .title(getString(com.dida.common.R.string.delete_comment_title))
+            .message(getString(com.dida.common.R.string.delete_comment_description))
+            .positiveButton(getString(com.dida.common.R.string.ok), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.deleteComment(commentId = commentId)
+                }
+            })
+            .negativeButton(getString(com.dida.common.R.string.cancel))
+            .build()
+            .show(childFragmentManager, "delete_comment_dialog")
     }
 
     private fun keyboardHide() {
