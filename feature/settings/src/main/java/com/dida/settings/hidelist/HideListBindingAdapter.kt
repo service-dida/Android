@@ -4,7 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.domain.model.nav.hide.HideCard
+import com.dida.domain.model.main.HideCard
 
 @BindingAdapter("hideListItem")
 fun RecyclerView.bindHideListItem(uiState: UiState<List<HideCard>>) {

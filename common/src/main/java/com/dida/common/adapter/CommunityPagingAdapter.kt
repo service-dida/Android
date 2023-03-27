@@ -49,6 +49,6 @@ class CommunityPagingAdapter(
             oldItem.postId == newItem.postId
 
         override fun areContentsTheSame(oldItem: Posts, newItem: Posts) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

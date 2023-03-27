@@ -6,7 +6,7 @@ import com.dida.domain.model.main.Nickname
 import com.dida.domain.model.main.HotCard
 import com.dida.domain.model.main.RandomNumber
 import com.dida.domain.model.main.DetailNft
-import com.dida.domain.model.nav.hide.HideCard
+import com.dida.domain.model.main.HideCard
 import com.dida.domain.model.main.Home
 import com.dida.domain.model.main.HotSellerMore
 import com.dida.domain.model.main.HotUser

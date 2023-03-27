@@ -46,9 +46,9 @@ class HotSellerAdapter(
 
     internal object HotSellerItemDiffCallback : DiffUtil.ItemCallback<HotSeller>() {
         override fun areItemsTheSame(oldItem: HotSeller, newItem: HotSeller) =
-            oldItem == newItem
+            oldItem.userId == newItem.userId
 
         override fun areContentsTheSame(oldItem: HotSeller, newItem: HotSeller) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

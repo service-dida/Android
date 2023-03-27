@@ -3,7 +3,7 @@ package com.dida.data.mapper
 import com.dida.data.model.response.*
 import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.main.*
-import com.dida.domain.model.nav.hide.HideCard
+import com.dida.domain.model.main.HideCard
 
 fun GetMainResponse.toDomain(): Home {
     return Home(

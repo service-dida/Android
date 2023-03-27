@@ -47,7 +47,7 @@ class HotCardAdapter(
 
     internal object ActivieNftDiffCallback : DiffUtil.ItemCallback<HotCard>() {
         override fun areItemsTheSame(oldItem: HotCard, newItem: HotCard) =
-            oldItem == newItem
+            oldItem.cardId == newItem.cardId
 
         override fun areContentsTheSame(oldItem: HotCard, newItem: HotCard) =
             oldItem == newItem

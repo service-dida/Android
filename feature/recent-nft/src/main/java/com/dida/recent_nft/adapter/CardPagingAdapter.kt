@@ -41,7 +41,7 @@ class CardPagingAdapter(
 
     internal object CardItemDiffCallback : DiffUtil.ItemCallback<UserNft>() {
         override fun areItemsTheSame(oldItem: UserNft, newItem: UserNft) =
-            oldItem.cardId == newItem.cardId
+            oldItem.cardId == newItem.cardId && oldItem.liked == newItem.liked
 
         override fun areContentsTheSame(oldItem: UserNft, newItem: UserNft) =
             oldItem == newItem

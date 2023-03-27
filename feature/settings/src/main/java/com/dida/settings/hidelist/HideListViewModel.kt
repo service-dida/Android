@@ -2,7 +2,7 @@ package com.dida.settings.hidelist
 
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.UiState
-import com.dida.domain.model.nav.hide.HideCard
+import com.dida.domain.model.main.HideCard
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HideCancelNftAPI

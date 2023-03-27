@@ -46,9 +46,9 @@ class PostCommentsAdapter(
 
     internal object CommentsDiffCallback : DiffUtil.ItemCallback<PostComments>() {
         override fun areItemsTheSame(oldItem: PostComments, newItem: PostComments) =
-            oldItem == newItem
+            oldItem.commentId == newItem.commentId
 
         override fun areContentsTheSame(oldItem: PostComments, newItem: PostComments) =
-            oldItem.equals(newItem)
+            oldItem == newItem
     }
 }

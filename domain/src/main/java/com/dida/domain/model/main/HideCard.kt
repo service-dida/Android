@@ -1,4 +1,4 @@
-package com.dida.domain.model.nav.hide
+package com.dida.domain.model.main
 
 data class HideCard(
     val cardId: Long,
