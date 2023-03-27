@@ -89,32 +89,30 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     init {
         lifecycleScope.launch {
-            repeatOnStarted {
-                launch {
-                    exception?.collectLatest { exception ->
-                        sendException(exception)
-                        showToastMessage(exception)
-                    }
+            launch {
+                exception?.collectLatest { exception ->
+                    sendException(exception)
+                    showToastMessage(exception)
                 }
+            }
 
-                launch {
-                    viewModel.errorEvent.collectLatest { e ->
-                        sendException(e)
-                        dismissLoadingDialog()
-                        showToastMessage(e)
-                    }
+            launch {
+                viewModel.errorEvent.collectLatest { e ->
+                    sendException(e)
+                    dismissLoadingDialog()
+                    showToastMessage(e)
                 }
+            }
 
-                launch {
-                    viewModel.loadingEvent.collectLatest {
-                        if(it) showLoadingDialog()
-                        else dismissLoadingDialog()
-                    }
+            launch {
+                viewModel.loadingEvent.collectLatest {
+                    if(it) showLoadingDialog()
+                    else dismissLoadingDialog()
                 }
+            }
 
-                launch {
-                    viewModel.needLoginEvent.collectLatest { loginCheck() }
-                }
+            launch {
+                viewModel.needLoginEvent.collectLatest { loginCheck() }
             }
         }
     }
