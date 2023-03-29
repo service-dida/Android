@@ -68,7 +68,15 @@ class CirclePagerIndicatorDecoration(
 
         // find active page (which should be highlighted)
         val layoutManager = parent.layoutManager as? LinearLayoutManager
-        val activePosition = layoutManager?.findFirstVisibleItemPosition() ?: RecyclerView.NO_POSITION
+
+        val activePosition = if (isInfiniteScroll) {
+            val firstItem = (layoutManager?.findFirstVisibleItemPosition()) ?: RecyclerView.NO_POSITION
+            val lastItem = (layoutManager?.findLastVisibleItemPosition()) ?: RecyclerView.NO_POSITION
+            (firstItem + lastItem)/2
+        } else {
+            layoutManager?.findFirstVisibleItemPosition() ?: RecyclerView.NO_POSITION
+        }
+
         if (activePosition == RecyclerView.NO_POSITION) {
             return
         }
