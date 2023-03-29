@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.*
 import com.dida.common.util.context
 import com.dida.common.widget.CirclePagerIndicatorDecoration
@@ -86,7 +87,9 @@ class HotsContainerViewHolder(
         }
 
         override fun onChildViewDetachedFromWindow(view: View) {
-            handler.removeMessages(MSG_START_SCROLL)
+            if (view.isShown) {
+                handler.removeMessages(MSG_START_SCROLL)
+            }
         }
     }
 

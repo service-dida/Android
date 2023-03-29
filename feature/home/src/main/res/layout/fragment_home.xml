@@ -63,7 +63,6 @@
                             android:layout_marginTop="8dp"
                             android:nestedScrollingEnabled="false"
                             android:overScrollMode="never"
-                            android:orientation="horizontal"
                             app:rv_endLoading="@{vm.homeState}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:listitem="@layout/holder_hots"/>
