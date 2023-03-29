@@ -127,7 +127,7 @@ class HotsContainerViewHolder(
         if (msg?.what != MSG_START_SCROLL) return
 
         if (this.itemView.isShown) {
-            val visibleItem = (binding.hotsRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            val visibleItem = (binding.hotsRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
             targetPosition = if (contentSize <= targetPosition) 0 else visibleItem+1
             val scroller = if (targetPosition == 0) endToStartSmoothScroller else smoothScroller
             scroller.targetPosition = targetPosition
