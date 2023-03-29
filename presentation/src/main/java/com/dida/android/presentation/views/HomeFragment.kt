@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.widget.LinearLayout
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.os.bundleOf
@@ -15,8 +14,8 @@ import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
-import com.dida.common.util.DidaIntent
-import com.dida.common.util.addSnapPagerScroll
+import com.dida.common.util.*
+import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeNavigationAction
 import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
@@ -35,6 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         get() = com.dida.home.R.layout.fragment_home
 
     override val viewModel: HomeViewModel by viewModels()
+    private val hotsContainerAdapter by lazy { HotsContainerAdapter(viewModel) }
 
     private val permissionManager = PermissionManagerImpl(this)
     private val notificationPermissionRequest: PermissionRequester =
@@ -76,6 +76,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 }
             }
         }
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.homeState.collectLatest {
+                it.successOrNull()?.let { home ->
+                    val item = if (home.getHotItems.isNotEmpty()) listOf(HotItems.Contents(home.getHotItems)) else emptyList()
+                    hotsContainerAdapter.submitList(item)
+                }
+            }
+        }
     }
 
     override fun initAfterBinding() {
@@ -101,11 +110,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private fun initAdapter() {
         val adapterConfig = ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
 
-        binding.hotsRecycler.apply {
-            adapter = HotsAdapter(viewModel)
-            addSnapPagerScroll()
-        }
-        binding.hotsRecycler.adapter = HotsAdapter(viewModel)
+        binding.hotsRecycler.adapter = hotsContainerAdapter
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
 

@@ -13,4 +13,6 @@
 
     <dimen name="line_indicator_view_corner_radius">2dp</dimen>
     <dimen name="default_card_view_radius">3dp</dimen>
+
+    <dimen name="hots_indicator_height">6dp</dimen>
 </resources>

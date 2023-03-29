@@ -1,5 +1,7 @@
 package com.dida.home
 
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -7,14 +9,20 @@ import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.main.Home
+import com.dida.domain.model.main.Hots
 import com.dida.domain.model.main.SoldOut
 import com.dida.home.adapter.*
 
-@BindingAdapter("hotsItem")
-fun RecyclerView.bindHotsItems(uiState: UiState<Home>) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is HotsAdapter) {
-        boundAdapter.submitList(uiState.successOrNull()?.getHotItems)
+@BindingAdapter(value = ["hotsItem", "eventListener"], requireAll = true)
+fun RecyclerView.bindHotsItems(banners: List<Hots>?, eventListener : HomeActionHandler?) {
+    val recyclerView = this
+    if (!banners.isNullOrEmpty() && eventListener != null) {
+        recyclerView.isVisible = true
+        recyclerView.adapter = (recyclerView.adapter as? HotsAdapter ?: HotsAdapter(eventListener)).apply {
+            submitList(banners)
+        }
+    } else {
+        recyclerView.isGone = true
     }
 }
 
