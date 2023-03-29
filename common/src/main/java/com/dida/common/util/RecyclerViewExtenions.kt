@@ -15,3 +15,9 @@ val RecyclerView.ViewHolder.resources: Resources
 fun invalidViewTypeError(): Nothing = error("invalid view type")
 
 fun invalidViewItemError(): Nothing = error("invalid view item")
+
+fun RecyclerView.scrollBy(width: Int) {
+    this.postDelayed({
+        this.scrollBy(width, 0)
+    }, 0)
+}

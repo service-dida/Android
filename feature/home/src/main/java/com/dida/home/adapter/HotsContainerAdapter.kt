@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.*
 import com.dida.common.util.context
+import com.dida.common.util.scrollBy
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeActionHandler
@@ -68,6 +69,7 @@ class HotsContainerViewHolder(
     private var contentSize = 0
 
     private val handler = HotsContainerViewHandler(this)
+    private val width = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_item_width)
 
     private val smoothScroller
         get() = object : LinearSmoothScroller(context) {
@@ -113,7 +115,7 @@ class HotsContainerViewHolder(
         if (hotItems.contents.size > 1) {
             contentSize = hotItems.contents.size + 2
             binding.holderModel = HotItems.Contents(listOf(hotItems.contents.last()) + hotItems.contents + hotItems.contents.first())
-            binding.hotsRecyclerView.scrollToPosition(1)
+            binding.hotsRecyclerView.scrollBy(width = width)
         } else {
             contentSize = hotItems.contents.size
             binding.holderModel = hotItems

@@ -15,4 +15,5 @@
     <dimen name="default_card_view_radius">3dp</dimen>
 
     <dimen name="hots_indicator_height">6dp</dimen>
+    <dimen name="hot_item_width">252dp</dimen>
 </resources>
