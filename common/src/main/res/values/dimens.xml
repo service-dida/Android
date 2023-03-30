@@ -16,5 +16,5 @@
 
     <dimen name="hots_indicator_height">6dp</dimen>
     <dimen name="hot_item_width">252dp</dimen>
-    <dimen name="hot_item_interval">64dp</dimen>
+    <dimen name="hot_item_interval">65dp</dimen>
 </resources>
