@@ -8,16 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.*
 import com.dida.common.util.context
 import com.dida.common.util.scrollBy
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeActionHandler
-import com.dida.home.R
 import com.dida.home.databinding.HolderHotsContainerBinding
 import java.lang.ref.WeakReference
+
 
 class HotsContainerAdapter(
     private val eventListener: HomeActionHandler
@@ -70,6 +69,7 @@ class HotsContainerViewHolder(
 
     private val handler = HotsContainerViewHandler(this)
     private val width = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_item_width)
+    private val interval = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_item_interval)
 
     private val smoothScroller
         get() = object : LinearSmoothScroller(context) {
@@ -99,9 +99,9 @@ class HotsContainerViewHolder(
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if (!recyclerView.canScrollHorizontally(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                recyclerView.scrollToPosition(contentSize - 2)
+                (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(contentSize - 2, 0)
             } else if (!recyclerView.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                recyclerView.scrollToPosition(1)
+                (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(1, interval)
             }
         }
     }
