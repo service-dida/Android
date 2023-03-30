@@ -15,14 +15,6 @@
         android:layout_height="match_parent"
         android:background="@color/mainblack">
 
-        <Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_community_write"
             android:layout_width="wrap_content"
@@ -48,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:nsv_endLoading="@{vm.hotCardState}">
 
@@ -60,6 +52,7 @@
                     android:id="@+id/active_community_Text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="?actionBarSize"
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:gravity="start"
@@ -83,9 +76,9 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/active_community_RecyclerView"
+                    style="@style/Dida.Padding.16dp"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="15dp"
                     android:overScrollMode="never"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="82dp"
+                    android:layout_marginTop="40dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:gravity="left"
                     android:text="@string/community_recent_title_text"

@@ -11,7 +11,6 @@
         android:layout_width="126dp"
         android:layout_height="174dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="14dp"
         app:onSingleClick="@{() -> eventListener.onHotSellerMoreClicked()}">
         
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +27,7 @@
                 android:src="@drawable/ic_next"
                 android:background="@drawable/custom_surface3_radius100"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
