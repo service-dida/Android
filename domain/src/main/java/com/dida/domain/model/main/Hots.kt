@@ -11,3 +11,9 @@ data class Hots(
         return heartCount
     }
 }
+
+sealed class HotItems {
+    data class Contents(
+        val contents: List<Hots>
+    ) : HotItems()
+}

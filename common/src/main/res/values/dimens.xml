@@ -10,4 +10,11 @@
     <dimen name="default_dialog_message_line_spacing_extra">4dp</dimen>
     <dimen name="default_dialog_message_type2_margin_bottom">10dp</dimen>
     <dimen name="default_dialog_button_padding">20dp</dimen>
+
+    <dimen name="line_indicator_view_corner_radius">2dp</dimen>
+    <dimen name="default_card_view_radius">3dp</dimen>
+
+    <dimen name="hots_indicator_height">6dp</dimen>
+    <dimen name="hot_item_width">252dp</dimen>
+    <dimen name="hot_item_interval">65dp</dimen>
 </resources>
