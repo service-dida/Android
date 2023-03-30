@@ -21,6 +21,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 apply("kotlin-parcelize")
                 apply("com.google.gms.google-services")
                 apply("com.google.firebase.crashlytics")
+                apply("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
             }
 
             val properties = Properties()
@@ -37,10 +38,9 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                     targetSdk = 33
                     minSdk = 24
-                    buildConfigField("String", "KLAYTN_HEADER_AUTHORIZATION", properties["klaytn_header_authorization"].toString())
+                    buildConfigField("String", "KLAYTN_HEADER_AUTHORIZATION", properties["KLAYTN_HEADER_AUTHORIZATION"].toString())
                     /* Hide Key (Must In Local.Properties)*/
                     buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao_native_app_key"].toString())
-                    manifestPlaceholders["KAKAO_NATIVE_APP_KEY_FOR_MANIFEST"] = properties.getProperty("kakao_native_app_key_for_manifest")
                 }
 
                 buildFeatures {
