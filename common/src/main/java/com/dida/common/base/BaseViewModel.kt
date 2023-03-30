@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dida.data.DataApplication
 import com.dida.data.model.HaveNotJwtTokenException
+import com.dida.data.model.InvalidJwtTokenException
+import com.dida.data.model.InvalidKakaoAccessTokenException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -33,7 +35,7 @@ abstract class BaseViewModel : ViewModel() {
         viewModelScope.launch(errorHandler) {
             e?.let { exception ->
                 when (exception) {
-                    is HaveNotJwtTokenException -> {
+                    is HaveNotJwtTokenException, is InvalidKakaoAccessTokenException -> {
                         DataApplication.dataStorePreferences.removeAccountToken()
                         _needLoginEvent.emit(true)
                     }

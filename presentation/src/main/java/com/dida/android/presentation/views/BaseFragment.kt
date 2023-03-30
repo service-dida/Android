@@ -111,7 +111,10 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 }
 
                 launch {
-                    viewModel.needLoginEvent.collectLatest { loginCheck() }
+                    viewModel.needLoginEvent.collectLatest {
+                        dismissLoadingDialog()
+                        loginCheck()
+                    }
                 }
             }
         }
