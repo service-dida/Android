@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    private val postsAPI: PostsAPI,
+    postsAPI: PostsAPI,
     private val hotCardAPI: HotCardAPI
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler {
 
@@ -38,7 +38,7 @@ class CommunityViewModel @Inject constructor(
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
 
     val postsState: Flow<PagingData<Posts>> = createPostsPager(postsAPI = postsAPI)
-    .flow.cachedIn(baseViewModelScope)
+        .flow.cachedIn(baseViewModelScope)
 
     private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
     val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
@@ -68,11 +68,7 @@ class CommunityViewModel @Inject constructor(
     // 나의 게시물일 경우 More 버튼, 아닐경우 Clip 버튼
     override fun onClipOrMoreClicked(postId: Long) {
         baseViewModelScope.launch {
-            if(myWriteState.value) {
-                _moreEvent.emit(Unit)
-            } else {
-
-            }
+            if (myWriteState.value) _moreEvent.emit(Unit)
         }
     }
 

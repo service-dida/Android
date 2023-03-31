@@ -37,33 +37,25 @@ class BearerInterceptor : Interceptor {
                 runBlocking {
                     //토큰 갱신 api 호출
                     DataApplication.dataStorePreferences.getRefreshToken()?.let {
-                        val result = handleApi {
+                        handleApi {
                             Retrofit.Builder()
                                 .baseUrl(BASE_URL)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build()
                                 .create(MainAPIService::class.java).refreshtokenAPIServer(it)
-                        }
-
-                        result.onSuccess { response ->
+                        }.onSuccess { response ->
                             response.accessToken?.let { token ->
-                                DataApplication.dataStorePreferences.setAccessToken(
-                                    token,
-                                    response.refreshToken
-                                )
+                                DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
                                 accessToken = token
                             }
+                        }.onError {
+                            DataApplication.dataStorePreferences.removeAccountToken()
+                            accessToken = ""
                         }
-                            .onError {
-                                DataApplication.dataStorePreferences.removeAccountToken()
-                                accessToken = ""
-                            }
                     }
                 }
 
-                val newRequest =
-                    chain.request().newBuilder().addHeader("Authorization", accessToken)
-                        .build()
+                val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()
                 return chain.proceed(newRequest)
             } else {
                 errorException?.let { throw it }
