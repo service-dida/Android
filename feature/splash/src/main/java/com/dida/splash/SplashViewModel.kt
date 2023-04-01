@@ -46,12 +46,13 @@ class SplashViewModel @Inject constructor(
                     deviceTokenAPI(deviceToken = deviceToken)
                         .onSuccess { dataStorePreferences.setFcmToken(token = deviceToken) }
                         .flatMap { userProfileAPI() }
-                        .onSuccess { dataStorePreferences.setUserId(it.userId) }
+                        .onSuccess {
+                            dataStorePreferences.setUserId(it.userId)
+                            _navigateToHome.emit(true)
+                            _splashScreenGone.emit(true) }
                         .onError { e -> catchError(e) }
                 }
             }
-            _navigateToHome.emit(true)
-            _splashScreenGone.emit(true)
         }
     }
 }
