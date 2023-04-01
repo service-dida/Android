@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
 import com.dida.common.base.BaseViewModel
+import com.dida.common.base.DefaultDialogFragment
 import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.*
 import com.dida.data.model.InternalServerErrorException
@@ -91,7 +92,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 launch {
                     exception?.collectLatest { exception ->
                         sendException(exception)
-                        showToastMessage(exception)
                     }
                 }
 
@@ -257,6 +257,29 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
         }
         return false
+    }
+
+    private fun defaultDialogBuilder(
+        title: Int,
+        message: Int,
+        positiveClick: () -> Unit,
+        negativeClick: () -> Unit
+    ) {
+        DefaultDialogFragment.Builder()
+            .title(getString(title))
+            .message(getString(message))
+            .positiveButton(getString(com.dida.common.R.string.ok), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    positiveClick.invoke()
+                }
+            })
+            .negativeButton(getString(com.dida.common.R.string.cancel), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    negativeClick.invoke()
+                }
+            })
+            .build()
+            .show(childFragmentManager, "delete_post_dialog")
     }
 }
 
