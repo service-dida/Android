@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:name=".presentation.di.PresentationApplication"
         android:theme="@style/Theme.DIDA">
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="${crashlyticsCollectionEnabled}" />
         <service
             android:name=".util.MyFirebaseMessagingService"
             android:stopWithTask="false"
