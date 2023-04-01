@@ -97,15 +97,15 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
                 launch {
                     viewModel.errorEvent.collectLatest { e ->
-                        sendException(e)
                         dismissLoadingDialog()
                         showToastMessage(e)
+                        showErrorDialog(e)
                     }
                 }
 
                 launch {
                     viewModel.loadingEvent.collectLatest {
-                        if(it) showLoadingDialog()
+                        if (it) showLoadingDialog()
                         else dismissLoadingDialog()
                     }
                 }
@@ -259,25 +259,19 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         return false
     }
 
-    private fun defaultDialogBuilder(
-        title: Int,
-        message: Int,
-        positiveClick: () -> Unit,
-        negativeClick: () -> Unit
-    ) {
+    private fun showErrorDialog(e: Throwable) {
+        when (e) {
+            is InternalServerErrorException -> defaultTitleDialogBuilder(title = com.dida.android.R.string.unknown_error)
+            is ServerNotFoundException -> defaultTitleDialogBuilder(title = com.dida.android.R.string.unknown_error)
+            else -> defaultTitleDialogBuilder(title = com.dida.android.R.string.network_error)
+        }
+    }
+
+    private fun defaultTitleDialogBuilder(title: Int) {
         DefaultDialogFragment.Builder()
             .title(getString(title))
-            .message(getString(message))
-            .positiveButton(getString(com.dida.common.R.string.ok), object : DefaultDialogFragment.OnClickListener {
-                override fun onClick() {
-                    positiveClick.invoke()
-                }
-            })
-            .negativeButton(getString(com.dida.common.R.string.cancel), object : DefaultDialogFragment.OnClickListener {
-                override fun onClick() {
-                    negativeClick.invoke()
-                }
-            })
+            .positiveButton(getString(com.dida.common.R.string.ok))
+            .negativeButton(getString(com.dida.common.R.string.cancel))
             .build()
             .show(childFragmentManager, "delete_post_dialog")
     }
