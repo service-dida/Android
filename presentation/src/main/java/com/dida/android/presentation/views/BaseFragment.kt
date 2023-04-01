@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -23,13 +25,17 @@ import com.dida.common.base.BaseViewModel
 import com.dida.common.base.DefaultDialogFragment
 import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.*
+import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
+import com.dida.data.model.InvalidKakaoAccessTokenException
 import com.dida.data.model.ServerNotFoundException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.net.ConnectException
+import javax.net.ssl.SSLHandshakeException
 
 abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : Fragment(layoutId) {
 
@@ -86,6 +92,8 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      */
     protected var analytics: FirebaseAnalytics? = null
 
+    protected var navigationHost: NavigationHost? = null
+
     init {
         lifecycleScope.launch {
             repeatOnResumed {
@@ -99,7 +107,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                     viewModel.errorEvent.collectLatest { e ->
                         dismissLoadingDialog()
                         showToastMessage(e)
-                        showErrorDialog(e)
+                        onError(e)
                     }
                 }
 
@@ -131,6 +139,13 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         initDataBinding()
         initAfterBinding()
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is NavigationHost) {
+            navigationHost = context
+        }
     }
 
     override fun onDestroy() {
@@ -259,21 +274,68 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         return false
     }
 
-    private fun showErrorDialog(e: Throwable) {
-        when (e) {
-            is InternalServerErrorException -> defaultTitleDialogBuilder(title = com.dida.android.R.string.unknown_error)
-            is ServerNotFoundException -> defaultTitleDialogBuilder(title = com.dida.android.R.string.unknown_error)
-            else -> defaultTitleDialogBuilder(title = com.dida.android.R.string.network_error)
+    /**
+     * 추후 Dialog 텍스트 정해지면 그에 따라서 수정
+     * */
+    // Error 관련
+    private fun onError(throwable: Throwable) {
+        when (throwable) {
+            is ConnectException -> {
+                sendException(throwable)
+                showNetworkErrorDialog()
+            }
+            is ServerNotFoundException -> {
+                sendException(throwable)
+                showServiceErrorDialog(throwable)
+            }
+            is InternalServerErrorException -> {
+                sendException(throwable)
+                showServiceErrorFragment(throwable)
+            }
+            else -> Unit
         }
     }
 
-    private fun defaultTitleDialogBuilder(title: Int) {
+    // 일반적인 에러
+    private fun showServiceErrorDialog(throwable: Throwable) {
+        val message = throwable.cause?.message ?: getString(com.dida.android.R.string.unknown_error_message)
+        showErrorDialog(message) { findNavController().navigateUp() }
+    }
+
+    // 네트워크 오류
+    private fun showNetworkErrorDialog() {
         DefaultDialogFragment.Builder()
-            .title(getString(title))
-            .positiveButton(getString(com.dida.common.R.string.ok))
-            .negativeButton(getString(com.dida.common.R.string.cancel))
+            .message(getString(com.dida.android.R.string.network_error_message))
+            .positiveButton(getString(com.dida.android.R.string.retry), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    navigationHost?.onApplicationRelaunchRequired()
+                }
+            })
+            .negativeButton(getString(com.dida.android.R.string.exit), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    requireActivity().finish()
+                }
+            })
+            .cancelable(false)
             .build()
-            .show(childFragmentManager, "delete_post_dialog")
+            .show(childFragmentManager, "network_error_dialog")
+    }
+
+    private fun showErrorDialog(message: String, callback: Invoker = {}) {
+        DefaultDialogFragment.Builder()
+            .message(message)
+            .positiveButton(getString(com.dida.android.R.string.ok_text), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    callback.invoke()
+                }
+            })
+            .cancelable(false)
+            .build()
+            .show(childFragmentManager, "error_dialog")
+    }
+
+    private fun showServiceErrorFragment(throwable: Throwable) {
+        showErrorDialog(throwable.cause?.message ?: "") { findNavController().navigateUp() }
     }
 }
 
