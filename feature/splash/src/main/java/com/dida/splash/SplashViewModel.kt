@@ -1,8 +1,8 @@
 package com.dida.splash
 
-import androidx.lifecycle.viewModelScope
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
+import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckVersionAPI
@@ -31,36 +31,28 @@ class SplashViewModel @Inject constructor(
     private val _navigateToHome: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val navigateToHome: SharedFlow<Boolean> = _navigateToHome.asSharedFlow()
 
-
     fun checkVersion() {
-        viewModelScope.launch {
+        baseViewModelScope.launch {
             versionAPI()
                 .onSuccess { _appVersion.emit(it.version) }
                 .onError { e -> catchError(e) }
         }
     }
 
-    fun setDeviceToken(token: String) {
+    fun setDeviceToken(deviceToken: String) {
         baseViewModelScope.launch {
-            launch {
-                dataStorePreferences.getAccessToken()?.let {
-                    if(it != "") {
-                        deviceTokenAPI(token)
-                            .onSuccess { dataStorePreferences.setFcmToken(token) }
-                            .onError { e -> catchError(e) }
-                    }
-                }
-            }
-
-            launch {
-                dataStorePreferences.getAccessToken()?.let {
-                    userProfileAPI()
-                        .onSuccess { dataStorePreferences.setUserId(it.userId) }
+            dataStorePreferences.getAccessToken()?.let { accessToken ->
+                if (accessToken.isNotBlank()) {
+                    deviceTokenAPI(deviceToken = deviceToken)
+                        .onSuccess { dataStorePreferences.setFcmToken(token = deviceToken) }
+                        .flatMap { userProfileAPI() }
+                        .onSuccess {
+                            dataStorePreferences.setUserId(it.userId)
+                            _navigateToHome.emit(true)
+                            _splashScreenGone.emit(true) }
                         .onError { e -> catchError(e) }
                 }
             }
-            _navigateToHome.emit(true)
-            _splashScreenGone.emit(true)
         }
     }
 }
