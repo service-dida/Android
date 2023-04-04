@@ -13,7 +13,7 @@ import com.dida.domain.model.main.HotCard
 
 class HotCardAdapter(
     private val eventListener: HotCardActionHandler
-) : ListAdapter<HotCard, HotCardAdapter.ViewHolder>(ActivieNftDiffCallback) {
+) : ListAdapter<HotCard, HotCardAdapter.ViewHolder>(HotCardDiffCallback) {
 
     init { setHasStableIds(true) }
 
@@ -45,7 +45,7 @@ class HotCardAdapter(
         }
     }
 
-    internal object ActivieNftDiffCallback : DiffUtil.ItemCallback<HotCard>() {
+    internal object HotCardDiffCallback : DiffUtil.ItemCallback<HotCard>() {
         override fun areItemsTheSame(oldItem: HotCard, newItem: HotCard) =
             oldItem.cardId == newItem.cardId
 
