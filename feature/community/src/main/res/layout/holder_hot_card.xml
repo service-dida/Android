@@ -21,7 +21,6 @@
         app:cardCornerRadius="10dp"
         android:layout_marginRight="14dp">
 
-
             <ImageView
                 android:id="@+id/nft_ImageView"
                 android:layout_width="match_parent"

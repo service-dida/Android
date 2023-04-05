@@ -6,7 +6,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.HotCards" />
+            type="com.dida.domain.model.main.HotCards.Contents" />
 
         <variable
             name="eventListener"
@@ -19,17 +19,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hot_cards_recycler_view"
+            style="@style/Dida.Padding.16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             android:scrollbars="none"
             app:eventListener="@{eventListener}"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
-            app:hotCardsItem="@{holderModel.Contents}"
+            app:hotCardsItem="@{holderModel.contents}"
             tools:listitem="@layout/holder_hot_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
