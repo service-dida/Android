@@ -25,10 +25,9 @@ class HotCardsContainerAdapter(
         viewType: Int
     ): HotCardsContainerViewHolder {
         return HotCardsContainerViewHolder(
-            HolderHotCardsContainerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                .apply {
-                    eventListener = this@HotCardsContainerAdapter.eventListener
-                }
+            HolderHotCardsContainerBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
+                eventListener = this@HotCardsContainerAdapter.eventListener
+            }
         )
     }
 
@@ -52,7 +51,7 @@ class HotCardsContainerViewHolder(
     }
 
     fun bind(hotCards: HotCards.Contents) {
-        contentSize = hotCards.contents.size*2
+        contentSize = hotCards.contents.size * 2
         binding.holderModel = HotCards.Contents(hotCards.contents + hotCards.contents)
         binding.executePendingBindings()
     }
