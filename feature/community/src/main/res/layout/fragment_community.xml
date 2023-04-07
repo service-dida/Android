@@ -78,11 +78,11 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="15dp"
                     android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/active_community_Text2"
                     tools:itemCount="3"
-                    android:orientation="horizontal"
                     tools:listitem="@layout/holder_hot_cards_container"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

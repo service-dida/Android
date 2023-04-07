@@ -58,10 +58,11 @@ class HotCardsContainerViewHolder(
     private val binding: HolderHotCardsContainerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var contentSize = 0
     private val repeatIntervalMs = 2850L
     private val rollingIntervalMs = 150L
+
     private var targetPosition = 0
+    private var contentSize = 0
 
     private val handler = HotCardsContainerViewHandler(this)
     private val width = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_card_item_width)

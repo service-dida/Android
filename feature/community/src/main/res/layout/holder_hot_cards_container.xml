@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:scrollbars="none"
+            android:nestedScrollingEnabled="false"
             app:eventListener="@{eventListener}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
