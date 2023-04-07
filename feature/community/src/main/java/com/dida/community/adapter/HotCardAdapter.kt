@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.common.util.context
 import com.dida.community.HotCardActionHandler
 import com.dida.community.R
 import com.dida.community.databinding.HolderHotCardBinding
@@ -41,6 +42,7 @@ class HotCardAdapter(
 
         fun bind(item: HotCard) {
             binding.holderModel = item
+            binding.nftImageView.setColorFilter(context.getColor(com.dida.common.R.color.dim_black_50))
             binding.executePendingBindings()
         }
     }
