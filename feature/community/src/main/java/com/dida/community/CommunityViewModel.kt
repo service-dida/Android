@@ -72,9 +72,9 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onHotCardClicked(cardId: Long) {
+    override fun onHotCardClicked(postId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CommunityNavigationAction.NavigateToNftDetail(cardId = cardId))
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToDetail(postId = postId))
         }
     }
 }

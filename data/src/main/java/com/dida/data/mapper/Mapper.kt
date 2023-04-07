@@ -232,6 +232,7 @@ fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
         HotCard(
             cardId = it.cardId,
             cardImgUrl = it.cardImgUrl,
+            postId = it.postId,
             title = it.title,
             comments = it.comments
         )

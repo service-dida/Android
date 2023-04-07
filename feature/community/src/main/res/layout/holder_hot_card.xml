@@ -22,7 +22,7 @@
         android:layout_marginStart="9dp"
         android:layout_marginEnd="9dp"
         android:layout_marginBottom="13dp"
-        app:onSingleClick="@{() -> eventListener.onHotCardClicked(holderModel.cardId)}">
+        app:onSingleClick="@{() -> eventListener.onHotCardClicked(holderModel.postId)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
