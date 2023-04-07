@@ -25,7 +25,7 @@
             android:orientation="horizontal"
             android:scrollbars="none"
             app:eventListener="@{eventListener}"
-            app:layoutManager="LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             app:hotCardsItem="@{holderModel.contents}"
             tools:listitem="@layout/holder_hot_card" />

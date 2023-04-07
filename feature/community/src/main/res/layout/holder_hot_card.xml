@@ -15,12 +15,18 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="114dp"
-        android:layout_height="114dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/surface1"
         app:cardCornerRadius="10dp"
-        android:layout_marginRight="14dp">
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="13dp"
+        app:onSingleClick="@{() -> eventListener.onHotCardClicked(holderModel.cardId)}">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/nft_ImageView"
                 android:layout_width="match_parent"
@@ -30,9 +36,23 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/nft_example_image"
-                app:onSingleClick="@{() -> eventListener.onHotCardClicked(holderModel.cardId)}"/>
+                app:srcCompat="@drawable/nft_example_image" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:text="글 제목 여기 글 제목 여기 글 제목 여기  여기 글 제목 여기 여기 글 제목 여기"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="14dp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 </layout>

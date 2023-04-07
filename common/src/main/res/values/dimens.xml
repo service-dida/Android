@@ -17,4 +17,7 @@
     <dimen name="hots_indicator_height">6dp</dimen>
     <dimen name="hot_item_width">252dp</dimen>
     <dimen name="hot_item_interval">65dp</dimen>
+
+    <dimen name="hot_card_item_width">162dp</dimen>
+    <dimen name="hot_card_item_interval">100dp</dimen>
 </resources>
