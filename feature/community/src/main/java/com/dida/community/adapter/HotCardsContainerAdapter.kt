@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.dida.common.util.context
 import com.dida.common.widget.CirclePagerIndicatorDecoration
+import com.dida.common.widget.smoothScrollToPosition
 import com.dida.community.HotCardActionHandler
 import com.dida.community.databinding.HolderHotCardsContainerBinding
 import com.dida.domain.model.main.HotCards
@@ -36,15 +39,15 @@ class HotCardsContainerAdapter(
                 val indicatorHeight = parent.context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hots_indicator_height)
                 val activeColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.white)
                 val inactiveColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.surface6)
-                hotCardsRecyclerView.addItemDecoration(
+                hotCardsViewpager.addItemDecoration(
                     CirclePagerIndicatorDecoration(
+                        isViewPager = true,
                         isInfiniteScroll = true,
                         activeColor = activeColor,
                         inactiveColor = inactiveColor,
                         indicatorHeight = indicatorHeight
                     )
                 )
-//                PagerSnapHelper().apply { attachToRecyclerView(hotCardsRecyclerView) }
             }
         )
     }
@@ -61,14 +64,12 @@ class HotCardsContainerViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val repeatIntervalMs = 2850L
-    private val rollingIntervalMs = 150L
+    private val rollingIntervalMs = repeatIntervalMs/3
 
     private var targetPosition = 0
     private var contentSize = 0
 
     private val handler = HotCardsContainerViewHandler(this)
-    private val width = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_card_item_width)
-    private val interval = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_card_item_interval)
 
     private val compositePageTransformer = CompositePageTransformer().apply {
         addTransformer { page, position ->
@@ -77,51 +78,41 @@ class HotCardsContainerViewHolder(
         }
     }
 
-    private val smoothScroller
-        get() = object : LinearSmoothScroller(context) {
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float =
-                rollingIntervalMs / displayMetrics.densityDpi.toFloat()
-        }
-
-    private val endToStartSmoothScroller
-        get() = object : LinearSmoothScroller(context) {
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float =
-                (rollingIntervalMs / contentSize) / displayMetrics.densityDpi.toFloat()
-        }
-
-    private val childAttachStateChangeListener = object : RecyclerView.OnChildAttachStateChangeListener {
-        override fun onChildViewAttachedToWindow(view: View) {
+    private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            handler.removeMessages(MSG_START_SCROLL)
             handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
         }
 
-        override fun onChildViewDetachedFromWindow(view: View) {
-            if (view.isShown) {
-                handler.removeMessages(MSG_START_SCROLL)
-            }
-        }
-    }
-
-    private val scrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            if (!recyclerView.canScrollHorizontally(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(contentSize - 2, 0)
-            } else if (!recyclerView.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(1, interval)
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            if ((position == contentSize - 2)) {
+                binding.hotCardsViewpager.setCurrentItem(2, false)
+            } else if ((position == 1) && (positionOffset <= 0.001633987f)) {
+                binding.hotCardsViewpager.setCurrentItem(contentSize - 3, false)
             }
         }
     }
 
     init {
-//        binding.hotCardsRecyclerView.addOnChildAttachStateChangeListener(childAttachStateChangeListener)
-//        binding.hotCardsRecyclerView.addOnScrollListener(scrollListener)
+        binding.hotCardsViewpager.registerOnPageChangeCallback(onPageChangeCallback)
+        handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
     }
 
     fun bind(hotCardsItem: HotCards.Contents) {
         if (hotCardsItem.contents.size > 1) {
-            contentSize = hotCardsItem.contents.size + 2
-            binding.holderModel = HotCards.Contents(listOf(hotCardsItem.contents.last()) + hotCardsItem.contents + hotCardsItem.contents.first())
-            binding.hotCardsRecyclerView.apply {
+            contentSize = hotCardsItem.contents.size + 4
+            val items = listOf(
+                hotCardsItem.contents[hotCardsItem.contents.size-2],
+                hotCardsItem.contents.last()
+            ) + hotCardsItem.contents + hotCardsItem.contents.first() + hotCardsItem.contents[1]
+            binding.holderModel = HotCards.Contents(items)
+            binding.hotCardsViewpager.apply {
                 clipToPadding = false
                 clipChildren = false
                 offscreenPageLimit = 3
@@ -131,22 +122,23 @@ class HotCardsContainerViewHolder(
         } else {
             contentSize = hotCardsItem.contents.size
             binding.holderModel = hotCardsItem
-//            binding.hotCardsRecyclerView.removeOnChildAttachStateChangeListener(childAttachStateChangeListener)
-//            binding.hotCardsRecyclerView.removeOnScrollListener(scrollListener)
         }
         binding.executePendingBindings()
+        if (hotCardsItem.contents.size > 1) binding.hotCardsViewpager.setCurrentItem(2, false)
     }
 
     fun handleMessage(msg: Message?) {
         if (msg?.what != MSG_START_SCROLL) return
 
-//        if (this.itemView.isShown) {
-//            val visibleItem = (binding.hotCardsRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-//            targetPosition = if (contentSize <= targetPosition) 0 else visibleItem+1
-//            val scroller = if (targetPosition == 0) endToStartSmoothScroller else smoothScroller
-//            scroller.targetPosition = targetPosition
-//            if (!(targetPosition == contentSize || targetPosition == 0)) binding.hotCardsRecyclerView.layoutManager?.startSmoothScroll(scroller)
-//        }
+        if (this.itemView.isShown) {
+            val nextPosition = binding.hotCardsViewpager.currentItem + 1
+            targetPosition = if (contentSize <= targetPosition) 0 else nextPosition
+            binding.hotCardsViewpager.smoothScrollToPosition(
+                item = targetPosition,
+                duration = rollingIntervalMs,
+                pagePxWidth = this.itemView.width/2
+            )
+        }
     }
 
     private class HotCardsContainerViewHandler(viewHolder: HotCardsContainerViewHolder) : Handler(Looper.getMainLooper()) {
