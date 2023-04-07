@@ -2,7 +2,9 @@ package com.dida.domain.model.main
 
 data class HotCard(
     val cardId: Long,
-    val cardImgUrl: String
+    val cardImgUrl: String,
+    val title: String,
+    val comments: Long
 )
 
 sealed class HotCards {

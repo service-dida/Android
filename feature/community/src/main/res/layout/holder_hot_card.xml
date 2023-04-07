@@ -38,6 +38,39 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/nft_example_image" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingStart="11dp"
+                android:paddingEnd="11dp"
+                android:background="@drawable/custom_surface0_radius11">
+                <ImageView
+                    android:id="@+id/img_chat_count"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@mipmap/ic_chat_count_foreground"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_chat_count"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:textSize="14dp"
+                    android:text="@{String.valueOf(holderModel.comments)}"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +78,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:textSize="16dp"
                 android:textColor="@color/white"
-                android:text="글 제목 여기 글 제목 여기 글 제목 여기  여기 글 제목 여기 여기 글 제목 여기"
+                android:text="@{holderModel.title}"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="14dp"

@@ -231,7 +231,9 @@ fun List<GetHotCardsResponse>.toDomain(): List<HotCard> {
     return map {
         HotCard(
             cardId = it.cardId,
-            cardImgUrl = it.cardImgUrl
+            cardImgUrl = it.cardImgUrl,
+            title = it.title,
+            comments = it.comments
         )
     }
 }
