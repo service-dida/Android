@@ -9,14 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import com.dida.common.util.context
-import com.dida.common.util.scrollBy
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.community.HotCardActionHandler
 import com.dida.community.databinding.HolderHotCardsContainerBinding
 import com.dida.domain.model.main.HotCards
-import com.dida.domain.model.main.HotItems
 import java.lang.ref.WeakReference
+import kotlin.math.abs
+
 
 class HotCardsContainerAdapter(
     private val eventListener: HotCardActionHandler
@@ -42,7 +44,7 @@ class HotCardsContainerAdapter(
                         indicatorHeight = indicatorHeight
                     )
                 )
-                PagerSnapHelper().apply { attachToRecyclerView(hotCardsRecyclerView) }
+//                PagerSnapHelper().apply { attachToRecyclerView(hotCardsRecyclerView) }
             }
         )
     }
@@ -67,6 +69,13 @@ class HotCardsContainerViewHolder(
     private val handler = HotCardsContainerViewHandler(this)
     private val width = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_card_item_width)
     private val interval = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_card_item_interval)
+
+    private val compositePageTransformer = CompositePageTransformer().apply {
+        addTransformer { page, position ->
+            val r = 1 - abs(position)
+            page.scaleY = 0.85f + r * 0.15f
+        }
+    }
 
     private val smoothScroller
         get() = object : LinearSmoothScroller(context) {
@@ -104,20 +113,26 @@ class HotCardsContainerViewHolder(
     }
 
     init {
-        binding.hotCardsRecyclerView.addOnChildAttachStateChangeListener(childAttachStateChangeListener)
-        binding.hotCardsRecyclerView.addOnScrollListener(scrollListener)
+//        binding.hotCardsRecyclerView.addOnChildAttachStateChangeListener(childAttachStateChangeListener)
+//        binding.hotCardsRecyclerView.addOnScrollListener(scrollListener)
     }
 
     fun bind(hotCardsItem: HotCards.Contents) {
         if (hotCardsItem.contents.size > 1) {
             contentSize = hotCardsItem.contents.size + 2
             binding.holderModel = HotCards.Contents(listOf(hotCardsItem.contents.last()) + hotCardsItem.contents + hotCardsItem.contents.first())
-            binding.hotCardsRecyclerView.scrollBy(width = width)
+            binding.hotCardsRecyclerView.apply {
+                clipToPadding = false
+                clipChildren = false
+                offscreenPageLimit = 3
+                getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+                setPageTransformer(compositePageTransformer)
+            }
         } else {
             contentSize = hotCardsItem.contents.size
             binding.holderModel = hotCardsItem
-            binding.hotCardsRecyclerView.removeOnChildAttachStateChangeListener(childAttachStateChangeListener)
-            binding.hotCardsRecyclerView.removeOnScrollListener(scrollListener)
+//            binding.hotCardsRecyclerView.removeOnChildAttachStateChangeListener(childAttachStateChangeListener)
+//            binding.hotCardsRecyclerView.removeOnScrollListener(scrollListener)
         }
         binding.executePendingBindings()
     }
@@ -125,13 +140,13 @@ class HotCardsContainerViewHolder(
     fun handleMessage(msg: Message?) {
         if (msg?.what != MSG_START_SCROLL) return
 
-        if (this.itemView.isShown) {
-            val visibleItem = (binding.hotCardsRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-            targetPosition = if (contentSize <= targetPosition) 0 else visibleItem+1
-            val scroller = if (targetPosition == 0) endToStartSmoothScroller else smoothScroller
-            scroller.targetPosition = targetPosition
-            if (!(targetPosition == contentSize || targetPosition == 0)) binding.hotCardsRecyclerView.layoutManager?.startSmoothScroll(scroller)
-        }
+//        if (this.itemView.isShown) {
+//            val visibleItem = (binding.hotCardsRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+//            targetPosition = if (contentSize <= targetPosition) 0 else visibleItem+1
+//            val scroller = if (targetPosition == 0) endToStartSmoothScroller else smoothScroller
+//            scroller.targetPosition = targetPosition
+//            if (!(targetPosition == contentSize || targetPosition == 0)) binding.hotCardsRecyclerView.layoutManager?.startSmoothScroll(scroller)
+//        }
     }
 
     private class HotCardsContainerViewHandler(viewHolder: HotCardsContainerViewHolder) : Handler(Looper.getMainLooper()) {

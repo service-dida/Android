@@ -13,24 +13,23 @@
             type="com.dida.community.HotCardActionHandler" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/hot_cards_recycler_view"
             style="@style/Dida.Padding.16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:scrollbars="none"
             android:nestedScrollingEnabled="false"
             app:eventListener="@{eventListener}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
             app:hotCardsItem="@{holderModel.contents}"
-            tools:listitem="@layout/holder_hot_card" />
+            android:paddingStart="78dp"
+            android:paddingEnd="78dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </layout>
