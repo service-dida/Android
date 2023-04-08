@@ -23,6 +23,7 @@
     <color name="brand_ivory">#FFFFE8</color>
 
     <color name="dim_black_50">#80000000</color>
+
     <color name="surface0">#80121212</color>
     <color name="surface1">#252525</color>
     <color name="line_surface1">#80dadada</color>

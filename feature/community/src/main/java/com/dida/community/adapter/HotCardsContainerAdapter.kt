@@ -3,17 +3,14 @@ package com.dida.community.adapter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.dida.common.util.context
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
 import com.dida.community.HotCardActionHandler
@@ -21,7 +18,6 @@ import com.dida.community.databinding.HolderHotCardsContainerBinding
 import com.dida.domain.model.main.HotCards
 import java.lang.ref.WeakReference
 import kotlin.math.abs
-
 
 class HotCardsContainerAdapter(
     private val eventListener: HotCardActionHandler
@@ -64,17 +60,19 @@ class HotCardsContainerViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val repeatIntervalMs = 2850L
-    private val rollingIntervalMs = repeatIntervalMs/3
+    private val rollingIntervalMs = 750L
 
     private var targetPosition = 0
     private var contentSize = 0
+
+    private val scrollFinishOffset = 0.001633987f
 
     private val handler = HotCardsContainerViewHandler(this)
 
     private val compositePageTransformer = CompositePageTransformer().apply {
         addTransformer { page, position ->
             val r = 1 - abs(position)
-            page.scaleY = 0.85f + r * 0.15f
+            page.scaleY = 0.78f + r * 0.22f
         }
     }
 
@@ -93,7 +91,7 @@ class HotCardsContainerViewHolder(
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             if ((position == contentSize - 2)) {
                 binding.hotCardsViewpager.setCurrentItem(2, false)
-            } else if ((position == 1) && (positionOffset <= 0.001633987f)) {
+            } else if ((position == 1) && (positionOffset <= scrollFinishOffset)) {
                 binding.hotCardsViewpager.setCurrentItem(contentSize - 3, false)
             }
         }
@@ -107,10 +105,9 @@ class HotCardsContainerViewHolder(
     fun bind(hotCardsItem: HotCards.Contents) {
         if (hotCardsItem.contents.size > 1) {
             contentSize = hotCardsItem.contents.size + 4
-            val items = listOf(
-                hotCardsItem.contents[hotCardsItem.contents.size-2],
-                hotCardsItem.contents.last()
-            ) + hotCardsItem.contents + hotCardsItem.contents.first() + hotCardsItem.contents[1]
+            val items = with(hotCardsItem.contents) {
+                this.slice(this.size -2 until this.size) + this + this.slice(0 until 2)
+            }
             binding.holderModel = HotCards.Contents(items)
             binding.hotCardsViewpager.apply {
                 clipToPadding = false
@@ -136,7 +133,7 @@ class HotCardsContainerViewHolder(
             binding.hotCardsViewpager.smoothScrollToPosition(
                 item = targetPosition,
                 duration = rollingIntervalMs,
-                pagePxWidth = this.itemView.width/2
+                pagePxWidth = this.itemView.width / 2
             )
         }
     }
