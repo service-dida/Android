@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.max
 
 class CirclePagerIndicatorDecoration(
+    private val isViewPager: Boolean = false,
     private val isInfiniteScroll: Boolean = false,
     private val activeColor: Int,
     private val inactiveColor: Int,
@@ -90,7 +91,10 @@ class CirclePagerIndicatorDecoration(
         // interpolate offset for smooth animation
         val progress = interpolator.getInterpolation(left * -1 / width.toFloat())
 
-        if (isInfiniteScroll && itemCount > 1) {
+        if (isInfiniteScroll && isViewPager && itemCount > 1) {
+            drawInfiniteViewPagerInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount)
+            drawInfiniteViewPagerHighlights(c, indicatorStartX, indicatorPosY, activePosition)
+        } else if (isInfiniteScroll && itemCount > 1) {
             drawInfiniteInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount)
             drawInfiniteHighlights(c, indicatorStartX, indicatorPosY, activePosition)
         } else {
@@ -137,6 +141,26 @@ class CirclePagerIndicatorDecoration(
         }
     }
 
+    private fun drawInfiniteViewPagerInactiveIndicators(
+        c: Canvas,
+        indicatorStartX: Float,
+        indicatorPosY: Float,
+        itemCount: Int
+    ) {
+        paint.color = inactiveColor
+
+        // width of item indicator including padding
+        val itemWidth = indicatorItemLength + indicatorItemPadding
+        var start = indicatorStartX
+
+        for (i in 0 until itemCount) {
+            if (i == 0 || i == 1 || i == (itemCount - 1) || i == (itemCount - 2)) c.drawCircle(start, indicatorPosY, indicatorItemLength / 2f, transParentPaint)
+            else c.drawCircle(start, indicatorPosY, indicatorItemLength / 2f, paint)
+            if (indicatorStrokeColor > 0) c.drawCircle(start, indicatorPosY, indicatorItemLength.toFloat(), strokePaint)
+            start += itemWidth
+        }
+    }
+
     private fun drawHighlights(
         c: Canvas,
         indicatorStartX: Float,
@@ -164,6 +188,21 @@ class CirclePagerIndicatorDecoration(
         val itemWidth = indicatorItemLength + indicatorItemPadding
         val highlightStart = indicatorStartX + itemWidth * highlightPosition
         if (!(highlightPosition == 0 && isInfiniteScroll)) c.drawCircle(highlightStart, indicatorPosY, indicatorItemLength / 2f, paint)
+        if (indicatorStrokeColor > 0) c.drawCircle(highlightStart, indicatorPosY, indicatorItemLength.toFloat(), strokePaint)
+    }
+
+    private fun drawInfiniteViewPagerHighlights(
+        c: Canvas,
+        indicatorStartX: Float,
+        indicatorPosY: Float,
+        highlightPosition: Int
+    ) {
+        paint.color = activeColor
+
+        // width of item indicator including padding
+        val itemWidth = indicatorItemLength + indicatorItemPadding
+        val highlightStart = indicatorStartX + itemWidth * highlightPosition
+        if (!((highlightPosition == 0 || highlightPosition == 1) && isInfiniteScroll)) c.drawCircle(highlightStart, indicatorPosY, indicatorItemLength / 2f, paint)
         if (indicatorStrokeColor > 0) c.drawCircle(highlightStart, indicatorPosY, indicatorItemLength.toFloat(), strokePaint)
     }
 

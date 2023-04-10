@@ -8,7 +8,11 @@ import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardAdapter
+import com.dida.community.adapter.HotCardsContainerAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
+import com.dida.domain.model.main.HotCards
+import com.dida.domain.model.main.HotItems
+import com.dida.home.adapter.HotsContainerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -22,7 +26,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         get() = com.dida.community.R.layout.fragment_community
 
     override val viewModel : CommunityViewModel by viewModels()
-    private val hotCardAdapter by lazy { HotCardAdapter(viewModel) }
+//    private val hotCardAdapter by lazy { HotCardAdapter(viewModel) }
+    private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
     private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
 
     private var lastScrollY = 0
@@ -56,7 +61,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.hotCardState.collectLatest {
-                    hotCardAdapter.submitList(it.successOrNull())
+                    it.successOrNull()?.let { hotCards ->
+                        val item = if (hotCards.isNotEmpty()) listOf(HotCards.Contents(hotCards)) else emptyList()
+                        hotCardsContainerAdapter.submitList(item)
+                    }
                 }
             }
         }
@@ -77,7 +85,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     private fun initRecyclerView(){
-        binding.activeCommunityRecyclerView.adapter = hotCardAdapter
+        binding.activeCommunityRecyclerView.adapter = hotCardsContainerAdapter
         binding.communityRecyclerView.adapter = communityPagingAdapter
     }
 
@@ -86,7 +94,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     private fun getLastScrollY() {
-        if(lastScrollY > 0) {
+        if (lastScrollY > 0) {
             binding.communityScroll.scrollTo(0, lastScrollY)
             lastScrollY = 0
         }

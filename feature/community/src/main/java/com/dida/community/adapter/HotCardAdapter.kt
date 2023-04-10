@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dida.common.util.context
 import com.dida.community.HotCardActionHandler
 import com.dida.community.R
 import com.dida.community.databinding.HolderHotCardBinding
@@ -13,7 +14,7 @@ import com.dida.domain.model.main.HotCard
 
 class HotCardAdapter(
     private val eventListener: HotCardActionHandler
-) : ListAdapter<HotCard, HotCardAdapter.ViewHolder>(ActivieNftDiffCallback) {
+) : ListAdapter<HotCard, HotCardAdapter.ViewHolder>(HotCardDiffCallback) {
 
     init { setHasStableIds(true) }
 
@@ -41,11 +42,12 @@ class HotCardAdapter(
 
         fun bind(item: HotCard) {
             binding.holderModel = item
+            binding.nftImageView.setColorFilter(context.getColor(com.dida.common.R.color.dim_black_50))
             binding.executePendingBindings()
         }
     }
 
-    internal object ActivieNftDiffCallback : DiffUtil.ItemCallback<HotCard>() {
+    internal object HotCardDiffCallback : DiffUtil.ItemCallback<HotCard>() {
         override fun areItemsTheSame(oldItem: HotCard, newItem: HotCard) =
             oldItem.cardId == newItem.cardId
 
