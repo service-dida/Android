@@ -7,6 +7,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CheckVersionAPI
 import com.dida.domain.usecase.main.DeviceTokenAPI
+import com.dida.domain.usecase.main.RefreshTokenAPI
 import com.dida.domain.usecase.main.UserProfileAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val versionAPI: CheckVersionAPI,
     private val deviceTokenAPI: DeviceTokenAPI,
-    private val userProfileAPI: UserProfileAPI
+    private val userProfileAPI: UserProfileAPI,
+    private val refreshTokenAPI: RefreshTokenAPI,
 ) : BaseViewModel() {
 
     private val TAG = "SplashViewModel"
@@ -42,18 +44,27 @@ class SplashViewModel @Inject constructor(
     fun setDeviceToken(deviceToken: String) {
         baseViewModelScope.launch {
             val accessToken = dataStorePreferences.getAccessToken()
-            if (accessToken == null) {
-                _navigateToHome.emit(true)
-                _splashScreenGone.emit(true)
-            } else {
-                deviceTokenAPI(deviceToken = deviceToken)
-                    .onSuccess { dataStorePreferences.setFcmToken(token = deviceToken) }
+            val refreshToken = dataStorePreferences.getRefreshToken()
+            refreshToken?.let {
+                refreshTokenAPI.invoke(request = it)
+                    .onSuccess { response ->
+                        dataStorePreferences.setAccessToken(
+                            accessToken = response.accessToken ?: "",
+                            refreshToken = response.refreshToken ?: ""
+                        )
+                    }
+                    .flatMap { deviceTokenAPI(deviceToken = deviceToken) }
                     .flatMap { userProfileAPI() }
                     .onSuccess {
                         dataStorePreferences.setUserId(it.userId)
                         _navigateToHome.emit(true)
-                        _splashScreenGone.emit(true) }
+                        _splashScreenGone.emit(true)
+                    }
                     .onError { e -> catchError(e) }
+            }
+            if (accessToken == null) {
+                _navigateToHome.emit(true)
+                _splashScreenGone.emit(true)
             }
         }
     }
