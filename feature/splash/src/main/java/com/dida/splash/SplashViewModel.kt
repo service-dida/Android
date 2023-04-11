@@ -41,17 +41,19 @@ class SplashViewModel @Inject constructor(
 
     fun setDeviceToken(deviceToken: String) {
         baseViewModelScope.launch {
-            dataStorePreferences.getAccessToken()?.let { accessToken ->
-                if (accessToken.isNotBlank()) {
-                    deviceTokenAPI(deviceToken = deviceToken)
-                        .onSuccess { dataStorePreferences.setFcmToken(token = deviceToken) }
-                        .flatMap { userProfileAPI() }
-                        .onSuccess {
-                            dataStorePreferences.setUserId(it.userId)
-                            _navigateToHome.emit(true)
-                            _splashScreenGone.emit(true) }
-                        .onError { e -> catchError(e) }
-                }
+            val accessToken = dataStorePreferences.getAccessToken()
+            if (accessToken == null) {
+                _navigateToHome.emit(true)
+                _splashScreenGone.emit(true)
+            } else {
+                deviceTokenAPI(deviceToken = deviceToken)
+                    .onSuccess { dataStorePreferences.setFcmToken(token = deviceToken) }
+                    .flatMap { userProfileAPI() }
+                    .onSuccess {
+                        dataStorePreferences.setUserId(it.userId)
+                        _navigateToHome.emit(true)
+                        _splashScreenGone.emit(true) }
+                    .onError { e -> catchError(e) }
             }
         }
     }
