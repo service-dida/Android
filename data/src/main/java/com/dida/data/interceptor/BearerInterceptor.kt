@@ -43,16 +43,18 @@ class BearerInterceptor : Interceptor {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build()
                                 .create(MainAPIService::class.java).refreshtokenAPIServer(it)
-                        }.onSuccess { response ->
-                            response.accessToken?.let { token ->
-                                DataApplication.dataStorePreferences.setAccessToken(token, response.refreshToken)
-                                accessToken = token
-                            }
-                        }.onError {
-                            DataApplication.dataStorePreferences.removeAccountToken()
-                            accessToken = ""
                         }
                     }
+                }?.onSuccess {
+                    runBlocking {
+                        DataApplication.dataStorePreferences.setAccessToken(it.accessToken ?: "", it.refreshToken ?: "")
+                    }
+                    accessToken = it.accessToken ?: ""
+                }?.onError {
+                    runBlocking {
+                        DataApplication.dataStorePreferences.removeAccountToken()
+                    }
+                    accessToken = ""
                 }
 
                 val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()
