@@ -10,13 +10,13 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.dida.common.R
-import com.dida.common.databinding.CustomSnackBarBinding
+import com.dida.common.databinding.MessageSnackBarBinding
 import com.google.android.material.snackbar.Snackbar
 
-class CustomSnackBar(view: View, private val message: String) {
+class MessageSnackBar(view: View, private val message: String) {
 
     companion object {
-        fun make(view: View, message: String) = CustomSnackBar(view, message)
+        fun make(view: View, message: String) = MessageSnackBar(view, message)
     }
 
     private val context = view.context
@@ -24,8 +24,8 @@ class CustomSnackBar(view: View, private val message: String) {
     private val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
     private val inflater = LayoutInflater.from(context)
-    private val snackBarBinding: CustomSnackBarBinding =
-        DataBindingUtil.inflate(inflater, R.layout.custom_snack_bar, null, false)
+    private val binding: MessageSnackBarBinding =
+        DataBindingUtil.inflate(inflater, R.layout.message_snack_bar, null, false)
 
     init {
         initView()
@@ -46,15 +46,15 @@ class CustomSnackBar(view: View, private val message: String) {
 
             layoutParams.gravity = Gravity.BOTTOM
             removeAllViews()
-            setPadding(20, 0, 20, 100)
+            setPadding(20, 0, 20, 200)
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
-            addView(snackBarBinding.root, 0)
+            addView(binding.root, 0)
         }
 
     }
 
     private fun initData() {
-        snackBarBinding.message.text = message
+        binding.message.text = message
     }
 
     fun show() {

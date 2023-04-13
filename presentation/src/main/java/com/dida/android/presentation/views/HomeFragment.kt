@@ -15,7 +15,9 @@ import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.*
-import com.dida.common.widget.CustomSnackBar
+import com.dida.common.widget.ActionSnackBar
+import com.dida.common.widget.MessageSnackBar
+import com.dida.domain.model.main.Home
 import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeMessageAction
 import com.dida.home.HomeNavigationAction
@@ -83,8 +85,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             launch {
                 viewModel.messageEvent.collectLatest {
                     when(it) {
-                        is HomeMessageAction.UserFollowMessage -> showSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
-                        is HomeMessageAction.UserUnFollowMessage -> showSnackBar(getString(R.string.user_unfollow_message))
+                        is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
+                        is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
+                        is HomeMessageAction.AddCardBookmarkMessage -> {
+                            showActionSnackBar(
+                                getString(R.string.add_bookmark_message),
+                                getString(R.string.add_bookmark_action_title_message)
+                            ) {}
+                        }
+                        is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
 
                 }
@@ -186,7 +195,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         }
     }
 
-    private fun showSnackBar(message: String) {
-        CustomSnackBar.make(binding.root, message).show()
+    private fun showMessageSnackBar(message: String) {
+        MessageSnackBar.make(binding.root, message).show()
+    }
+
+    private fun showActionSnackBar(message: String, actionTitle: String, onClick: () -> Unit) {
+        ActionSnackBar.make(binding.root, message = message, actionTitle = actionTitle, onClick = onClick).show()
     }
 }

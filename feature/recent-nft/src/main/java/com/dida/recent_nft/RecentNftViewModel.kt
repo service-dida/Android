@@ -37,7 +37,7 @@ class RecentNftViewModel @Inject constructor(
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Long) {
+    override fun onLikeBtnClicked(nftId: Long, liked: Boolean) {
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId)

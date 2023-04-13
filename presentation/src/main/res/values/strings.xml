@@ -137,5 +137,8 @@
     <!-- Snack Bar-->
     <string name="user_follow_message">%s님을 팔로우 했어요</string>
     <string name="user_unfollow_message">팔로우를 취소했어요</string>
+    <string name="delete_bookmark_message">찜한 아이템에서 삭제했어요</string>
+    <string name="add_bookmark_message">찜한 아이템에 추가했어요</string>
+    <string name="add_bookmark_action_title_message">보러라기</string>
     
 </resources>

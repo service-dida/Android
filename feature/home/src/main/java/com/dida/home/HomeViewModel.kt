@@ -144,11 +144,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Long) {
+    override fun onLikeBtnClicked(nftId: Long, liked: Boolean) {
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId)
-                .onSuccess { getMain() }
+                .onSuccess {
+                    if (liked) _messageEvent.emit(HomeMessageAction.DeleteCardBookmarkMessage)
+                    else _messageEvent.emit(HomeMessageAction.AddCardBookmarkMessage)
+                    getMain()
+                }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
