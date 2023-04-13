@@ -15,7 +15,9 @@ import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.*
+import com.dida.common.widget.CustomSnackBar
 import com.dida.domain.model.main.HotItems
+import com.dida.home.HomeMessageAction
 import com.dida.home.HomeNavigationAction
 import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
@@ -62,17 +64,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when (it) {
-                    is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
-                    is HomeNavigationAction.NavigateToHotSeller -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
-                    is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
-                    is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId))
-                    is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
-                    is HomeNavigationAction.NavigateToHotSellerMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
-                    is HomeNavigationAction.NavigateToSoldOutMore -> Unit
-                    is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
-                    is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
+                        is HomeNavigationAction.NavigateToHotSeller -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
+                        is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
+                        is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId))
+                        is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
+                        is HomeNavigationAction.NavigateToHotSellerMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
+                        is HomeNavigationAction.NavigateToSoldOutMore -> Unit
+                        is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
+                        is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
+                    }
+                }
+            }
+
+            launch {
+                viewModel.messageEvent.collectLatest {
+                    when(it) {
+                        is HomeMessageAction.UserFollowMessage -> CustomSnackBar.make(binding.root, "${it.nickname}님을 팔로우 했어요").show()
+                        is HomeMessageAction.UserUnFollowMessage -> CustomSnackBar.make(binding.root, "팔로우를 취소했어요").show()
+                    }
+
                 }
             }
         }

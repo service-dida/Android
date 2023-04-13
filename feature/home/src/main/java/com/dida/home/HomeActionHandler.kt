@@ -6,7 +6,7 @@ interface HomeActionHandler {
     fun onSoldOutItemClicked(cardId: Long)
     fun onCollectionItemClicked(userId: Long)
     fun onSoldOutDayClicked(day: Int)
-    fun onUserFollowClicked(userId: Long)
+    fun onUserFollowClicked(user: com.dida.domain.model.main.Collection)
     fun onHotSellerMoreClicked()
     fun onSoldOutMoreClicked()
     fun onRecentMoreNftClicked()

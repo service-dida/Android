@@ -1,6 +1,5 @@
 package com.dida.common.widget
 
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
@@ -41,14 +40,13 @@ class CustomSnackBar(view: View, private val message: String) {
             val snackBarHideAnim = AnimationUtils.loadAnimation(context, R.anim.hide_snack_bar)
             this.startAnimation(snackBarShowAnim)
 
-            Handler(Looper.getMainLooper()).postDelayed(
-                {
-                    this.startAnimation(snackBarHideAnim)
-                }, 2000L
-            )
+            Handler(Looper.getMainLooper()).postDelayed({
+                this.startAnimation(snackBarHideAnim)
+            }, 2000L)
 
             layoutParams.gravity = Gravity.BOTTOM
             removeAllViews()
+            setPadding(20, 0, 20, 100)
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
             addView(snackBarBinding.root, 0)
         }
