@@ -141,5 +141,7 @@
     <string name="add_bookmark_message">찜한 아이템에 추가했어요</string>
     <string name="add_bookmark_action_title_message">보러라기</string>
     <string name="update_profile_message">프로필 수정이 완료되었어요</string>
+    <string name="delete_post_message">게시글이 삭제되었어요</string>
+    <string name="delete_reply_message">댓글이 삭제되었어요</string>
     
 </resources>
