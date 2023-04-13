@@ -47,7 +47,7 @@ class MessageSnackBar(view: View, private val message: String, private val hasNa
             layoutParams.gravity = Gravity.BOTTOM
             removeAllViews()
             hasNavigation?.let {
-                if (it) setPadding(20, 0, 20, 200)
+                if (it) setPadding(20, 0, 20, 215)
                 else setPadding(20, 0, 20, 10)
             }
 
