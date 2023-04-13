@@ -83,8 +83,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             launch {
                 viewModel.messageEvent.collectLatest {
                     when(it) {
-                        is HomeMessageAction.UserFollowMessage -> CustomSnackBar.make(binding.root, "${it.nickname}님을 팔로우 했어요").show()
-                        is HomeMessageAction.UserUnFollowMessage -> CustomSnackBar.make(binding.root, "팔로우를 취소했어요").show()
+                        is HomeMessageAction.UserFollowMessage -> showSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
+                        is HomeMessageAction.UserUnFollowMessage -> showSnackBar(getString(R.string.user_unfollow_message))
                     }
 
                 }
@@ -184,5 +184,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 notificationPermissionRequest.request()
             }
         }
+    }
+
+    private fun showSnackBar(message: String) {
+        CustomSnackBar.make(binding.root, message).show()
     }
 }

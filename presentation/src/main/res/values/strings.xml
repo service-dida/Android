@@ -133,5 +133,9 @@
     <!--지갑 화면-->
     <string name="wallet_title_text">내 지갑</string>
     <string name="wallet_deal_title_text">NFT 거래 내역</string>
+
+    <!-- Snack Bar-->
+    <string name="user_follow_message">%s님을 팔로우 했어요</string>
+    <string name="user_unfollow_message">팔로우를 취소했어요</string>
     
 </resources>
