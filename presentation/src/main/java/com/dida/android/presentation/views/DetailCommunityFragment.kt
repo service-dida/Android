@@ -15,10 +15,8 @@ import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.base.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
-import com.dida.community_detail.DetailCommunityBottomSheetDialog
-import com.dida.community_detail.DetailCommunityNavigationAction
-import com.dida.community_detail.DetailCommunityViewModel
-import com.dida.community_detail.MoreState
+import com.dida.common.widget.MessageSnackBar
+import com.dida.community_detail.*
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -54,14 +52,25 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
-                    is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
-                    is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
-                    is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
-                    is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when(it) {
+                        is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
+                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
+                        is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
+                        is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
+                        is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
+                        is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.messageEvent.collectLatest {
+                    when(it) {
+                        is DetailCommunityMessageAction.DeletePostMessage -> showMessageSnackBar(getString(R.string.delete_post_message))
+                        is DetailCommunityMessageAction.DeleteReplyMessage -> showMessageSnackBar(getString(R.string.delete_reply_message))
+                    }
                 }
             }
         }
@@ -106,12 +115,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_post_title))
             .message(getString(com.dida.common.R.string.delete_post_description))
-            .positiveButton(getString(com.dida.common.R.string.ok), object : DefaultDialogFragment.OnClickListener {
+            .positiveButton(getString(com.dida.common.R.string.delete_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
                     viewModel.deleteCommunity()
                 }
             })
-            .negativeButton(getString(com.dida.common.R.string.cancel))
+            .negativeButton(getString(com.dida.common.R.string.delete_post_negative))
             .build()
             .show(childFragmentManager, "delete_post_dialog")
     }
@@ -130,12 +139,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_comment_title))
             .message(getString(com.dida.common.R.string.delete_comment_description))
-            .positiveButton(getString(com.dida.common.R.string.ok), object : DefaultDialogFragment.OnClickListener {
+            .positiveButton(getString(com.dida.common.R.string.delete_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
                     viewModel.deleteComment(commentId = commentId)
                 }
             })
-            .negativeButton(getString(com.dida.common.R.string.cancel))
+            .negativeButton(getString(com.dida.common.R.string.delete_post_negative))
             .build()
             .show(childFragmentManager, "delete_comment_dialog")
     }
@@ -150,5 +159,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         Handler(Looper.getMainLooper()).post {
             binding.detailCommunityScroll.fullScroll(ScrollView.FOCUS_DOWN)
         }
+    }
+
+    private fun showMessageSnackBar(message: String) {
+        MessageSnackBar.make(binding.root, message).show()
     }
 }

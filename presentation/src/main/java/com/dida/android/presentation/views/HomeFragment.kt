@@ -15,7 +15,11 @@ import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.*
+import com.dida.common.widget.ActionSnackBar
+import com.dida.common.widget.MessageSnackBar
+import com.dida.domain.model.main.Home
 import com.dida.domain.model.main.HotItems
+import com.dida.home.HomeMessageAction
 import com.dida.home.HomeNavigationAction
 import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
@@ -62,17 +66,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when (it) {
-                    is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
-                    is HomeNavigationAction.NavigateToHotSeller -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
-                    is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
-                    is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId))
-                    is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
-                    is HomeNavigationAction.NavigateToHotSellerMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
-                    is HomeNavigationAction.NavigateToSoldOutMore -> Unit
-                    is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
-                    is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        is HomeNavigationAction.NavigateToHotItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
+                        is HomeNavigationAction.NavigateToHotSeller -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
+                        is HomeNavigationAction.NavigateToSoldOut -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.cardId))
+                        is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId))
+                        is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
+                        is HomeNavigationAction.NavigateToHotSellerMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
+                        is HomeNavigationAction.NavigateToSoldOutMore -> Unit
+                        is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
+                        is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
+                    }
+                }
+            }
+
+            launch {
+                viewModel.messageEvent.collectLatest {
+                    when(it) {
+                        is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
+                        is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
+                        is HomeMessageAction.AddCardBookmarkMessage -> {
+                            showActionSnackBar(
+                                getString(R.string.add_bookmark_message),
+                                getString(R.string.add_bookmark_action_title_message)
+                            ) {}
+                        }
+                        is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
+                    }
+
                 }
             }
         }
@@ -170,5 +193,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 notificationPermissionRequest.request()
             }
         }
+    }
+
+    private fun showMessageSnackBar(message: String) {
+        MessageSnackBar.make(binding.root, message).show()
+    }
+
+    private fun showActionSnackBar(message: String, actionTitle: String, onClick: () -> Unit) {
+        ActionSnackBar.make(binding.root, message = message, actionTitle = actionTitle, onClick = onClick).show()
     }
 }

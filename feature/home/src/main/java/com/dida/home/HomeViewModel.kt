@@ -33,6 +33,9 @@ class HomeViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<HomeNavigationAction> = MutableSharedFlow<HomeNavigationAction>()
     val navigationEvent: SharedFlow<HomeNavigationAction> = _navigationEvent.asSharedFlow()
 
+    private val _messageEvent: MutableSharedFlow<HomeMessageAction> = MutableSharedFlow<HomeMessageAction>()
+    val messageEvent: SharedFlow<HomeMessageAction> = _messageEvent.asSharedFlow()
+
     private val _homeState: MutableStateFlow<UiState<Home>> = MutableStateFlow(UiState.Loading)
     val homeState: StateFlow<UiState<Home>> = _homeState.asStateFlow()
 
@@ -74,11 +77,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onUserFollowClicked(userId: Long) {
+    override fun onUserFollowClicked(user: com.dida.domain.model.main.Collection) {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userId)
-                .onSuccess { getMain() }
+            postUserFollowAPI(user.userId)
+                .onSuccess {
+                    if (user.follow) _messageEvent.emit(HomeMessageAction.UserUnFollowMessage)
+                    else _messageEvent.emit(HomeMessageAction.UserFollowMessage(user.userName))
+                    getMain()
+                }
                 .onError { e -> catchError(e) }
         }
     }
@@ -137,11 +144,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onLikeBtnClicked(nftId: Long) {
+    override fun onLikeBtnClicked(nftId: Long, liked: Boolean) {
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId)
-                .onSuccess { getMain() }
+                .onSuccess {
+                    if (liked) _messageEvent.emit(HomeMessageAction.DeleteCardBookmarkMessage)
+                    else _messageEvent.emit(HomeMessageAction.AddCardBookmarkMessage)
+                    getMain()
+                }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

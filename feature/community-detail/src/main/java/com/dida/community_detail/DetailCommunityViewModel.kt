@@ -27,6 +27,9 @@ class DetailCommunityViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<DetailCommunityNavigationAction> = MutableSharedFlow<DetailCommunityNavigationAction>()
     val navigationEvent: SharedFlow<DetailCommunityNavigationAction> = _navigationEvent.asSharedFlow()
 
+    private val _messageEvent: MutableSharedFlow<DetailCommunityMessageAction> = MutableSharedFlow<DetailCommunityMessageAction>()
+    val messageEvent: SharedFlow<DetailCommunityMessageAction> = _messageEvent.asSharedFlow()
+
     private val _postState: MutableStateFlow<Post?> = MutableStateFlow(null)
     val postState: StateFlow<Post?> = _postState.asStateFlow()
 
@@ -60,7 +63,9 @@ class DetailCommunityViewModel @Inject constructor(
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
             deleteCommentAPI(commentId = commentId)
-                .onSuccess { getPost(postId = postState.value!!.postId) }
+                .onSuccess {
+                    _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
+                    getPost(postId = postState.value!!.postId) }
                 .onError { e -> catchError(e) }
         }
     }
@@ -69,7 +74,9 @@ class DetailCommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             deletePostAPI.invoke(postState.value!!.postId)
-                .onSuccess { _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
+                .onSuccess {
+                    _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
+                    _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

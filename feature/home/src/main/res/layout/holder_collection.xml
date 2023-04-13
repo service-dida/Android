@@ -84,7 +84,7 @@
             android:textColor="@{holderModel.follow ? @color/mainblack : @color/white}"
             android:background="@{holderModel.follow ? @drawable/custom_brandlemon_radius100 : @drawable/custom_brandlemon_empty_radius100}"
             android:fontFamily="@font/pretendard_regular"
-            app:onSingleClick="@{() ->  eventListener.onUserFollowClicked(holderModel.userId)}">
+            app:onSingleClick="@{() ->  eventListener.onUserFollowClicked(holderModel)}">
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
