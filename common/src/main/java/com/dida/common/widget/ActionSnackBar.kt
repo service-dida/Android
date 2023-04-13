@@ -17,11 +17,18 @@ class ActionSnackBar(
     view: View,
     private val message: String,
     private val actionTitle: String,
+    private val hasNavigation: Boolean? = true,
     val onClick: () -> Unit,
 ) {
 
     companion object {
-        fun make(view: View, message: String, actionTitle: String, onClick: () -> Unit) = ActionSnackBar(view, message, actionTitle, onClick)
+        fun make(
+            view: View,
+            message: String,
+            actionTitle: String,
+            hasNavigation: Boolean? = true,
+            onClick: () -> Unit
+        ) = ActionSnackBar(view, message, actionTitle, hasNavigation, onClick)
     }
 
     private val context = view.context
@@ -51,7 +58,11 @@ class ActionSnackBar(
 
             layoutParams.gravity = Gravity.BOTTOM
             removeAllViews()
-            setPadding(20, 0, 20, 200)
+            hasNavigation?.let {
+                if (it) setPadding(20, 0, 20, 200)
+                else setPadding(20, 0, 20, 10)
+            }
+
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
             addView(binding.root, 0)
         }

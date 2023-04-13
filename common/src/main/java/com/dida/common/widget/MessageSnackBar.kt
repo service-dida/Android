@@ -13,10 +13,10 @@ import com.dida.common.R
 import com.dida.common.databinding.MessageSnackBarBinding
 import com.google.android.material.snackbar.Snackbar
 
-class MessageSnackBar(view: View, private val message: String) {
+class MessageSnackBar(view: View, private val message: String, private val hasNavigation: Boolean? = true) {
 
     companion object {
-        fun make(view: View, message: String) = MessageSnackBar(view, message)
+        fun make(view: View, message: String, hasNavigation: Boolean? = true) = MessageSnackBar(view, message, hasNavigation)
     }
 
     private val context = view.context
@@ -46,7 +46,11 @@ class MessageSnackBar(view: View, private val message: String) {
 
             layoutParams.gravity = Gravity.BOTTOM
             removeAllViews()
-            setPadding(20, 0, 20, 200)
+            hasNavigation?.let {
+                if (it) setPadding(20, 0, 20, 200)
+                else setPadding(20, 0, 20, 10)
+            }
+
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
             addView(binding.root, 0)
         }

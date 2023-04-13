@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.util.uriToFile
 import com.dida.common.ui.ImageBottomSheet
 import com.dida.common.util.DidaIntent
+import com.dida.common.widget.MessageSnackBar
 import com.dida.update.profile.R
 import com.dida.update.profile.UpdateProfileNavigationAction
 import com.dida.update.profile.UpdateProfileViewModel
@@ -84,7 +85,10 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    is UpdateProfileNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is UpdateProfileNavigationAction.NavigateToBack -> {
+                        MessageSnackBar.make(binding.root, getString(com.dida.android.R.string.update_profile_message), false).show()
+                        navController.popBackStack()
+                    }
                 }
             }
         }
