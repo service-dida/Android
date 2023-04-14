@@ -9,7 +9,7 @@ import com.dida.buy.nft.BuyNftNavigationAction
 import com.dida.buy.nft.BuyNftViewModel
 import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuyNftBinding
-import com.dida.common.base.DefaultDialogFragment
+import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

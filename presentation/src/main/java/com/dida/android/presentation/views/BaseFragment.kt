@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -22,12 +21,11 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
 import com.dida.common.base.BaseViewModel
-import com.dida.common.base.DefaultDialogFragment
+import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.*
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
-import com.dida.data.model.InvalidKakaoAccessTokenException
 import com.dida.data.model.ServerNotFoundException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -35,7 +33,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.net.ConnectException
-import javax.net.ssl.SSLHandshakeException
 
 abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: Int) : Fragment(layoutId) {
 
