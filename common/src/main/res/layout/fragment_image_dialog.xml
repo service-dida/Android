@@ -12,8 +12,9 @@
         android:id="@+id/dialog_image_view"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/dialog_title_text"

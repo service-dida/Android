@@ -51,7 +51,7 @@ class ImageDialogFragment : BaseDialogFragment() {
     ): View? {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val root = inflater.inflate(R.layout.fragment_Image_dialog, container, false)
+        val root = inflater.inflate(R.layout.fragment_image_dialog, container, false)
 
         imageView = root.findViewById(R.id.dialog_image_view)
         titleTextView = root.findViewById(R.id.dialog_title_text)
@@ -131,7 +131,7 @@ class ImageDialogFragment : BaseDialogFragment() {
         fun message(message: String) = apply { this.message = message }
 
         fun contents(contents: View) = apply { this.contents = contents }
-        
+
         fun positiveButton(label: String, listener: OnClickListener? = null) = apply {
             this.positiveButtonLabel = label
             this.positiveButtonListener = listener
