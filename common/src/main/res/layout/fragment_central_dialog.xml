@@ -6,7 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_surface2_radius16"
-    android:padding="24dp">
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="12dp">
 
     <TextView
         android:id="@+id/dialog_title_text"
@@ -14,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/dialog_message_text"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -22,31 +26,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        app:layout_goneMarginTop="8dp"
         android:lineSpacingExtra="@dimen/default_dialog_message_line_spacing_extra"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_contents_layout"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/dialog_title_text" />
-
-    <FrameLayout
-        android:id="@+id/dialog_contents_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_message_type2_margin_view"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_message_text" />
-
-    <View
-        android:id="@+id/dialog_message_type2_margin_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/default_dialog_message_type2_margin_bottom"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_button_view"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_contents_layout" />
 
     <LinearLayout
         android:id="@+id/dialog_button_view"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="14dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_message_type2_margin_view"
+        app:layout_constraintTop_toBottomOf="@id/dialog_message_text"
         tools:layout_editor_absoluteX="24dp">
 
         <android.widget.Button
@@ -56,7 +47,7 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:fontFamily="@font/pretendard_bold"
-            style="@style/Button_transparents_regular_16_white"
+            style="@style/Button_transparents_regular_14_white"
             app:layout_constraintBottom_toBottomOf="@id/dialog_neutral_button"
             app:layout_constraintEnd_toStartOf="@id/dialog_neutral_button"
             app:layout_constraintTop_toTopOf="@id/dialog_neutral_button"/>
@@ -68,7 +59,7 @@
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:fontFamily="@font/pretendard_bold"
-            style="@style/Button_transparents_regular_16_brand_lemnon"
+            style="@style/Button_transparents_regular_14_brand_lemnon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_message_type2_margin_view" />
