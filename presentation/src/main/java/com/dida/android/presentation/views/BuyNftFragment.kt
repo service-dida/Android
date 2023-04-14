@@ -10,6 +10,7 @@ import com.dida.buy.nft.BuyNftViewModel
 import com.dida.buy.nft.R
 import com.dida.buy.nft.databinding.FragmentBuyNftBinding
 import com.dida.common.dialog.DefaultDialogFragment
+import com.dida.common.dialog.ImageDialogFragment
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -81,10 +82,11 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     }
 
     private fun failBuyAlert() {
-        DefaultDialogFragment.Builder()
+        ImageDialogFragment.Builder()
             .title(getString(R.string.buy_fail_main_title))
             .message(getString(R.string.buy_fail_sub_title))
-            .positiveButton(getString(R.string.buy_fail_ok_btn), object : DefaultDialogFragment.OnClickListener {
+            .image(com.dida.common.R.drawable.ic_dida_dialog_foreground)
+            .positiveButton(getString(R.string.buy_fail_ok_btn), object : ImageDialogFragment.OnClickListener {
                 override fun onClick() {
                     navController.navigate(BuyNftFragmentDirections.actionBuyNftFragmentToSwapFragment())
                 }

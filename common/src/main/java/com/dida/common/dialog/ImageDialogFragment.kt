@@ -66,7 +66,9 @@ class ImageDialogFragment : BaseDialogFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageRes?.let { imageView.setImageResource(it) }
+        imageRes?.let {
+            imageView.setImageResource(it)
+        }
 
         titleTextView.isVisible = !title.isNullOrBlank()
         titleTextView.text = title
@@ -155,6 +157,7 @@ class ImageDialogFragment : BaseDialogFragment() {
             it.title = title
             it.message = message
             it.contents = contents
+            it.imageRes = imageRes
             it.positiveButtonLabel = positiveButtonLabel
             it.neutralButtonLabel = neutralButtonLabel
             it.negativeButtonLabel = negativeButtonLabel
