@@ -6,9 +6,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.dida.android.R
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.repeatOnCreated
+import com.dida.common.widget.ActionSnackBar
+import com.dida.common.widget.MessageSnackBar
 import com.dida.data.DataApplication.Companion.dataStorePreferences
+import com.dida.home.HomeMessageAction
+import com.dida.user_profile.UserMessageAction
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
 import com.dida.user_profile.databinding.FragmentUserProfileBinding
@@ -42,9 +47,28 @@ class UserProfileFragment :
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when (it) {
-                    is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.messageEvent.collectLatest {
+                    when(it) {
+                        is UserMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
+                        is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
+                        is UserMessageAction.AddCardBookmarkMessage -> {
+                            showActionSnackBar(
+                                getString(R.string.add_bookmark_message),
+                                getString(R.string.add_bookmark_action_title_message)
+                            ) {}
+                        }
+                        is UserMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
+                    }
+
                 }
             }
         }
@@ -78,5 +102,13 @@ class UserProfileFragment :
             this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
+    }
+
+    private fun showMessageSnackBar(message: String) {
+        MessageSnackBar.make(binding.root, message).show()
+    }
+
+    private fun showActionSnackBar(message: String, actionTitle: String, onClick: () -> Unit) {
+        ActionSnackBar.make(binding.root, message = message, actionTitle = actionTitle, onClick = onClick).show()
     }
 }
