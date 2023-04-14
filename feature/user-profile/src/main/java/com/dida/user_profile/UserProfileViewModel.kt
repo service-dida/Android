@@ -33,6 +33,9 @@ class UserProfileViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<UserProfileNavigationAction> = MutableSharedFlow<UserProfileNavigationAction>()
     val navigationEvent: SharedFlow<UserProfileNavigationAction> = _navigationEvent.asSharedFlow()
 
+    private val _messageEvent: MutableSharedFlow<UserMessageAction> = MutableSharedFlow<UserMessageAction>()
+    val messageEvent: SharedFlow<UserMessageAction> = _messageEvent.asSharedFlow()
+
     enum class CardSortType{
         NEWEST, OLDEST
     }
@@ -78,7 +81,11 @@ class UserProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postLikeAPI(nftId)
-                .onSuccess { getUserProfile() }
+                .onSuccess {
+                    if (liked) _messageEvent.emit(UserMessageAction.DeleteCardBookmarkMessage)
+                    else _messageEvent.emit(UserMessageAction.AddCardBookmarkMessage)
+                    getUserProfile()
+                }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
@@ -88,7 +95,12 @@ class UserProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postUserFollowAPI(userId = userIdState.value)
-                .onSuccess { getUserProfile() }
+                .onSuccess {
+                    val profile = userProfileState.value.successOrNull()!!
+                    if (profile.followed) _messageEvent.emit(UserMessageAction.UserUnFollowMessage)
+                    else _messageEvent.emit(UserMessageAction.UserFollowMessage(profile.nickname))
+                    getUserProfile()
+                }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
