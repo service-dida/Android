@@ -135,6 +135,8 @@
     <string name="logout_dialog_positive">로그아웃</string>
     <string name="logout_dialog_negative">취소</string>
 
+    <string name="create_post_dialog_message">게시글 작성이\n완료되었어요</string>
+
     <!-- Snack Bar-->
     <string name="user_follow_message">%s님을 팔로우 했어요</string>
     <string name="user_unfollow_message">팔로우를 취소했어요</string>

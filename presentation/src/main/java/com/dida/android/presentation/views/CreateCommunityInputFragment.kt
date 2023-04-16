@@ -6,6 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
+import com.dida.common.dialog.CentralDialogFragment
+import com.dida.common.dialog.CompleteDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.create_community_input.CreateCommunityInputNavigationAction
 import com.dida.create_community_input.CreateCommunityInputViewModel
@@ -43,7 +45,10 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
+                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> {
+                        showCreateCompleteDialog()
+                        navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
+                    }
                 }
             }
         }
@@ -65,5 +70,12 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
+    }
+
+    private fun showCreateCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.create_post_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
     }
 }

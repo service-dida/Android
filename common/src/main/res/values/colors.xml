@@ -33,6 +33,8 @@
     <color name="surface5">#414141</color>
     <color name="surface6">#595959</color>
 
+    <color name="surface4_opacity80">#cc383838</color>
+
     <color name="shimmer_color">#ffaaaaaa</color>
 
     <color name="n1">#111111</color>
