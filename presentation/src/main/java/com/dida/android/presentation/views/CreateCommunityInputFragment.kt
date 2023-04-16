@@ -45,10 +45,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> {
-                        showCreateCompleteDialog()
-                        navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
-                    }
+                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> showCreateCompleteDialog()
                 }
             }
         }
@@ -75,6 +72,11 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
     private fun showCreateCompleteDialog() {
         CompleteDialogFragment.Builder()
             .message(getString(R.string.create_post_dialog_message))
+            .dismissListener(object :  CompleteDialogFragment.OnDismissListener {
+                override fun onDismiss() {
+                    navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
+                }
+            })
             .build()
             .show(childFragmentManager, "complete_dialog")
     }

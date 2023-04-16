@@ -1,5 +1,6 @@
 package com.dida.common.dialog
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -20,6 +21,7 @@ class CompleteDialogFragment : BaseDialogFragment() {
     private var message: String? = null
 
     private lateinit var messageTextView: TextView
+    private var dismissListener: OnDismissListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,23 +48,36 @@ class CompleteDialogFragment : BaseDialogFragment() {
         }
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        dismissListener?.onDismiss()
+    }
+
     data class Builder(
         private var message: String? = null,
-        private var cancelable: Boolean = true
+        private var cancelable: Boolean = true,
+        private var dismissListener: OnDismissListener? = null,
     ) {
 
         fun message(message: String) = apply { this.message = message }
+
+        fun dismissListener(listener: OnDismissListener) = apply { this.dismissListener = listener }
 
         fun cancelable(cancelable: Boolean) = apply { this.cancelable = cancelable }
 
         fun build() = CompleteDialogFragment().also {
             it.message = message
             it.isCancelable = cancelable
+            it.dismissListener = dismissListener
         }
     }
 
     interface OnClickListener {
         fun onClick()
+    }
+
+    interface OnDismissListener {
+        fun onDismiss()
     }
 
 }
