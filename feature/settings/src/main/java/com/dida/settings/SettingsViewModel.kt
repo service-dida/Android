@@ -54,10 +54,14 @@ class SettingsViewModel @Inject constructor() : BaseViewModel(), SettingsActionH
 
     override fun onLogoutClicked() {
         baseViewModelScope.launch {
-            baseViewModelScope.launch {
-                DataApplication.dataStorePreferences.removeAccountToken()
-                _navigationEvent.emit(SettingsNavigationAction.NavigateToLogout)
-            }
+            _navigationEvent.emit(SettingsNavigationAction.NavigateToLogout)
+        }
+    }
+
+    fun logOut() {
+        baseViewModelScope.launch {
+            DataApplication.dataStorePreferences.removeAccountToken()
+            _navigationEvent.emit(SettingsNavigationAction.NavigateToLogoutComplete)
         }
     }
 }

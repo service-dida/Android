@@ -5,6 +5,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
+import com.dida.common.dialog.CentralDialogFragment
+import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.settings.SettingsNavigationAction
 import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding
@@ -42,10 +44,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     is SettingsNavigationAction.NavigateToAccountInformation -> Unit
                     is SettingsNavigationAction.NavigateToNotification -> Unit
                     is SettingsNavigationAction.NavigateToHideList -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
-                    is SettingsNavigationAction.NavigateToLogout -> {
-                        toastMessage("로그아웃 하였습니다.")
-                        navigate(SettingsFragmentDirections.actionMainFragment())
-                    }
+                    is SettingsNavigationAction.NavigateToLogout -> logOutDialog()
+                    is SettingsNavigationAction.NavigateToLogoutComplete -> navigate(SettingsFragmentDirections.actionMainFragment())
                 }
             }
         }
@@ -59,5 +59,18 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
+    }
+
+    private fun logOutDialog() {
+        CentralDialogFragment.Builder()
+            .message(getString(R.string.logout_dialog_message))
+            .positiveButton(getString(R.string.logout_dialog_positive), object : CentralDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.logOut()
+                }
+            })
+            .negativeButton(getString(R.string.logout_dialog_negative))
+            .build()
+            .show(childFragmentManager, "log_out_dialog")
     }
 }

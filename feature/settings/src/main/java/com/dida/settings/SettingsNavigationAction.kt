@@ -8,4 +8,5 @@ sealed class SettingsNavigationAction {
     object NavigateToNotification: SettingsNavigationAction()
     object NavigateToHideList: SettingsNavigationAction()
     object NavigateToLogout: SettingsNavigationAction()
+    object NavigateToLogoutComplete: SettingsNavigationAction()
 }
