@@ -26,7 +26,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         get() = com.dida.community.R.layout.fragment_community
 
     override val viewModel : CommunityViewModel by viewModels()
-//    private val hotCardAdapter by lazy { HotCardAdapter(viewModel) }
     private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
     private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
 
@@ -84,7 +83,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         setLastScrollY()
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
         binding.activeCommunityRecyclerView.adapter = hotCardsContainerAdapter
         binding.communityRecyclerView.adapter = communityPagingAdapter
     }

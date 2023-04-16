@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import com.dida.common.R
 import com.dida.common.base.BaseDialogFragment
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import kotlinx.coroutines.delay
 
@@ -39,8 +40,8 @@ class CompleteDialogFragment : BaseDialogFragment() {
         messageTextView.isVisible = !message.isNullOrBlank()
         messageTextView.text = message
 
-        viewLifecycleOwner.repeatOnResumed {
-            delay(1000L)
+        viewLifecycleOwner.repeatOnCreated {
+            delay(1500L)
             dismissAllowingStateLoss()
         }
     }
