@@ -56,8 +56,8 @@ class UserProfileFragment :
             launch {
                 viewModel.messageEvent.collectLatest {
                     when(it) {
-                        is UserMessageAction.UserFollowMessage -> showMessageSnackBar(message = String.format(getString(R.string.user_follow_message), it.nickname))
-                        is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(message = getString(R.string.user_unfollow_message))
+                        is UserMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
+                        is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
                         is UserMessageAction.AddCardBookmarkMessage -> {
                             showActionSnackBar(
                                 message = getString(R.string.add_bookmark_message),

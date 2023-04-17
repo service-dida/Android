@@ -86,7 +86,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is UpdateProfileNavigationAction.NavigateToBack -> {
-                        showMessageSnackBar(message = getString(com.dida.android.R.string.update_profile_message))
+                        showMessageSnackBar(getString(com.dida.android.R.string.update_profile_message))
                         navController.popBackStack()
                     }
                 }

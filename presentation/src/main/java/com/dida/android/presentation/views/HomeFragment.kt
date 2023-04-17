@@ -83,8 +83,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             launch {
                 viewModel.messageEvent.collectLatest {
                     when(it) {
-                        is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(message = String.format(getString(R.string.user_follow_message), it.nickname))
-                        is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(message = getString(R.string.user_unfollow_message))
+                        is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
+                        is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
                         is HomeMessageAction.AddCardBookmarkMessage -> {
                             showActionSnackBar(
                                 message = getString(R.string.add_bookmark_message),
@@ -94,7 +94,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                                 }
                             )
                         }
-                        is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(message = getString(R.string.delete_bookmark_message))
+                        is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
 
                 }
