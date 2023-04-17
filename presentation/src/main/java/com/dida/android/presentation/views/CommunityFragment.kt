@@ -1,8 +1,11 @@
 package com.dida.android.presentation.views
 
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.dida.android.R
 import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.dialog.CompleteDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
@@ -69,11 +72,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
     override fun onResume() {
         super.onResume()
+        setFragmentResultListener("createDialogCheck") { _, bundle ->
+            val isCreated = bundle.getBoolean("isCreated")
+            if (isCreated) showCreateCompleteDialog()
+        }
+
         communityPagingAdapter.refresh()
         getLastScrollY()
     }
@@ -97,5 +104,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             binding.communityScroll.scrollTo(0, lastScrollY)
             lastScrollY = 0
         }
+    }
+
+    private fun showCreateCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.create_post_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
     }
 }
