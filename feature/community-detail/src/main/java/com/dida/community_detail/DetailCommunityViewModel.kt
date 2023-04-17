@@ -1,7 +1,11 @@
 package com.dida.community_detail
 
 import com.dida.common.actionhandler.CommentActionHandler
+import com.dida.common.actionhandler.ReportActionHandler
+import com.dida.common.actionhandler.UpdateActionHandler
+import com.dida.common.ballon.UpdateBalloon
 import com.dida.common.base.BaseViewModel
+import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.main.Comments
 import com.dida.domain.model.main.Post
@@ -20,7 +24,7 @@ class DetailCommunityViewModel @Inject constructor(
     private val commentAPI: CommentAPI,
     private val deleteCommentAPI: DeleteCommentAPI,
     private val deletePostAPI: DeletePostAPI
-) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler {
+) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler, ReportActionHandler, UpdateActionHandler {
 
     private val TAG = "DetailCommunityViewModel"
 
@@ -54,12 +58,6 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun updateCommunity() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdateCommunity(postId = postState.value!!.postId))
-        }
-    }
-
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
             deleteCommentAPI(commentId = commentId)
@@ -67,18 +65,6 @@ class DetailCommunityViewModel @Inject constructor(
                     _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
                     getPost(postId = postState.value!!.postId) }
                 .onError { e -> catchError(e) }
-        }
-    }
-
-    fun deleteCommunity() {
-        baseViewModelScope.launch {
-            showLoading()
-            deletePostAPI.invoke(postState.value!!.postId)
-                .onSuccess {
-                    _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
-                    _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
-                .onError { e -> catchError(e) }
-            dismissLoading()
         }
     }
 
@@ -96,9 +82,13 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onCommunityMoreClicked() {
+    override fun onCommunityMoreClicked(userId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCommunityMore)
+            if (DataApplication.dataStorePreferences.getUserId() != userId) {
+                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCommunityMore(userId))
+            } else {
+                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToMyMore)
+            }
         }
     }
 
@@ -123,6 +113,36 @@ class DetailCommunityViewModel @Inject constructor(
     override fun onCardClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = postState.value!!.cardId))
+        }
+    }
+
+    override fun onReportClicked(userId: Long) {
+    }
+
+    override fun onBlockClicked(userId: Long) {
+    }
+
+    override fun onUpdateClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdateCommunity(postId = postState.value!!.postId))
+        }
+    }
+
+    fun onDeletePost() {
+        baseViewModelScope.launch {
+            showLoading()
+            deletePostAPI.invoke(postState.value!!.postId)
+                .onSuccess {
+                    _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
+                    _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
+                .onError { e -> catchError(e) }
+            dismissLoading()
+        }
+    }
+
+    override fun onDeleteClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToDelete)
         }
     }
 }

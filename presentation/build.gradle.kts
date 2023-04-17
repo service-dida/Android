@@ -34,6 +34,6 @@ android {
 }
 
 dependencies {
-    // Firebase Push
     implementation(platform(libs.firebase.bom))
+    implementation(libs.skydoves.ballon)
 }

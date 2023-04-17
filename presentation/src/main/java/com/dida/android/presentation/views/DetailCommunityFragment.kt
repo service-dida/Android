@@ -3,21 +3,26 @@ package com.dida.android.presentation.views
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearSmoothScroller
-import androidx.recyclerview.widget.RecyclerView
 import com.dida.android.R
+import com.dida.common.actionhandler.ReportActionHandler
+import com.dida.common.actionhandler.UpdateActionHandler
 import com.dida.common.adapter.CommentsAdapter
+import com.dida.common.ballon.ReportBalloon
+import com.dida.common.ballon.UpdateBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.MessageSnackBar
 import com.dida.community_detail.*
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
+import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -35,11 +40,6 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private val args: DetailCommunityFragmentArgs by navArgs()
     private val commentsAdapter by lazy { CommentsAdapter(viewModel) }
 
-    val smoothScroller: RecyclerView.SmoothScroller by lazy { object : LinearSmoothScroller(requireContext()) {
-            override fun getVerticalSnapPreference() = SNAP_TO_START
-        }
-    }
-
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -56,11 +56,13 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
-                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> communityMoreBottomSheet()
+                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> showReportBalloon(userId = it.userId, viewModel, binding.moreButton)
+                        is DetailCommunityNavigationAction.NavigateToMyMore -> showUpdateBalloon(viewModel, binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
+                        is DetailCommunityNavigationAction.NavigateToDelete -> deletePostAlert()
                     }
                 }
             }
@@ -101,38 +103,18 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         binding.detailCommunityMain.adapter = commentsAdapter
     }
 
-    private fun communityMoreBottomSheet() {
-        val morDialog = DetailCommunityBottomSheetDialog {
-            when (it) {
-                is MoreState.Update -> viewModel.updateCommunity()
-                is MoreState.Delete -> deletePostAlert()
-            }
-        }
-        morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
-    }
-
     private fun deletePostAlert() {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_post_title))
             .message(getString(com.dida.common.R.string.delete_post_description))
             .positiveButton(getString(com.dida.common.R.string.delete_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.deleteCommunity()
+                    viewModel.onDeletePost()
                 }
             })
             .negativeButton(getString(com.dida.common.R.string.delete_post_negative))
             .build()
             .show(childFragmentManager, "delete_post_dialog")
-    }
-
-    private fun commentMoreBottomSheet(commentId: Long) {
-        val morDialog = DetailCommunityBottomSheetDialog {
-            when (it) {
-                is MoreState.Update -> {}
-                is MoreState.Delete -> deleteCommentAlert(commentId = commentId)
-            }
-        }
-        morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
     }
 
     private fun deleteCommentAlert(commentId: Long) {
@@ -163,5 +145,34 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun showMessageSnackBar(message: String) {
         MessageSnackBar.make(binding.root, message).show()
+    }
+
+    private fun showReportBalloon(
+        userId: Long,
+        eventListener: ReportActionHandler,
+        view: View
+    ) {
+        val balloon = ReportBalloon(userId = userId, eventListener = eventListener)
+            .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
+        view.showAlignBottom(balloon)
+    }
+
+    private fun showUpdateBalloon(
+        eventListener: UpdateActionHandler,
+        view: View
+    ) {
+        val balloon = UpdateBalloon(eventListener = eventListener)
+            .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
+        view.showAlignBottom(balloon)
+    }
+
+    private fun commentMoreBottomSheet(commentId: Long) {
+        val morDialog = DetailCommunityBottomSheetDialog {
+            when (it) {
+                is MoreState.Update -> {}
+                is MoreState.Delete -> deleteCommentAlert(commentId = commentId)
+            }
+        }
+        morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
     }
 }
