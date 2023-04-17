@@ -86,7 +86,12 @@ class DefaultSnackBar {
         }
     }
 
-    private fun show() = snackBar?.show()
+    private fun show() {
+        initialize()
+        initView()
+        initData()
+        snackBar?.show()
+    }
 
     data class Builder(
         private var view: View? = null,
@@ -113,10 +118,6 @@ class DefaultSnackBar {
             it.hasBottomMargin = hasBottomMargin
             it.actionButtonLabel = actionButtonLabel
             it.actionButtonListener = actionButtonListener
-
-            it.initialize()
-            it.initView()
-            it.initData()
             it.show()
         }
     }
