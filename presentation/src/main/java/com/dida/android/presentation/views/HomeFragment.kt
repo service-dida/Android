@@ -16,6 +16,7 @@ import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.*
 import com.dida.common.widget.ActionSnackBar
+import com.dida.common.widget.DefaultSnackBar
 import com.dida.common.widget.MessageSnackBar
 import com.dida.domain.model.main.Home
 import com.dida.domain.model.main.HotItems
@@ -85,15 +86,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             launch {
                 viewModel.messageEvent.collectLatest {
                     when(it) {
-                        is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
-                        is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
+                        is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(message = String.format(getString(R.string.user_follow_message), it.nickname))
+                        is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(message = getString(R.string.user_unfollow_message))
                         is HomeMessageAction.AddCardBookmarkMessage -> {
                             showActionSnackBar(
-                                getString(R.string.add_bookmark_message),
-                                getString(R.string.add_bookmark_action_title_message)
-                            ) {}
+                                message = getString(R.string.add_bookmark_message),
+                                label = getString(R.string.add_bookmark_action_title_message),
+                                onClickListener = object : DefaultSnackBar.OnClickListener {
+                                    override fun onClick() {}
+                                }
+                            )
                         }
-                        is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
+                        is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(message = getString(R.string.delete_bookmark_message))
                     }
 
                 }
@@ -196,10 +200,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     }
 
     private fun showMessageSnackBar(message: String) {
-        MessageSnackBar.make(binding.root, message).show()
+        DefaultSnackBar.Builder()
+            .view(binding.root)
+            .message(message)
+            .build()
     }
 
-    private fun showActionSnackBar(message: String, actionTitle: String, onClick: () -> Unit) {
-        ActionSnackBar.make(binding.root, message = message, actionTitle = actionTitle, onClick = onClick).show()
+    private fun showActionSnackBar(message: String, label: String, onClickListener: DefaultSnackBar.OnClickListener) {
+        DefaultSnackBar.Builder()
+            .view(binding.root)
+            .message(message)
+            .actionButton(label, onClickListener)
+            .build()
     }
 }

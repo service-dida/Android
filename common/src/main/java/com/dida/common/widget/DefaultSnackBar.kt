@@ -34,13 +34,6 @@ class DefaultSnackBar {
     private val isMessageOnly: Boolean
         get() = (actionButtonListener == null) && actionButtonLabel.isNullOrBlank()
 
-    init {
-        initialize()
-        initView()
-        initData()
-        show()
-    }
-
     private fun initialize() {
         context = view?.context
         snackBar = Snackbar.make(view!! , "", 1500)
@@ -115,6 +108,11 @@ class DefaultSnackBar {
             it.hasBottomMargin = hasBottomMargin
             it.actionButtonLabel = actionButtonLabel
             it.actionButtonListener = actionButtonListener
+
+            it.initialize()
+            it.initView()
+            it.initData()
+            it.show()
         }
     }
 
