@@ -52,7 +52,7 @@ class DefaultSnackBar {
 
             Handler(Looper.getMainLooper()).postDelayed({
                 layout.startAnimation(snackBarHideAnim)
-            }, 2000L)
+            }, 1500L)
 
             layoutParams.gravity = Gravity.BOTTOM
             layout.removeAllViews()
@@ -75,8 +75,10 @@ class DefaultSnackBar {
             it.messageTextView.text = message
             it.centeralMessageTextView.text = message
             it.actionButtonTextView.text = actionButtonLabel
+
             it.actionButton.setOnSingleClickListener {
                 actionButtonListener?.onClick()
+                snackBarLayout?.removeAllViews()
             }
         }
     }
