@@ -15,7 +15,7 @@ import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
-import com.dida.common.widget.MessageSnackBar
+import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.*
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -162,6 +162,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     private fun showMessageSnackBar(message: String) {
-        MessageSnackBar.make(binding.root, message).show()
+        DefaultSnackBar.Builder()
+            .view(binding.root)
+            .message(message)
+            .build()
     }
 }

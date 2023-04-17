@@ -15,10 +15,7 @@ import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.*
-import com.dida.common.widget.ActionSnackBar
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.common.widget.MessageSnackBar
-import com.dida.domain.model.main.Home
 import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeMessageAction
 import com.dida.home.HomeNavigationAction
