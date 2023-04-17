@@ -1,13 +1,13 @@
 package com.dida.android.presentation.views
 
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
-import com.dida.common.dialog.CentralDialogFragment
-import com.dida.common.dialog.CompleteDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.create_community_input.CreateCommunityInputNavigationAction
 import com.dida.create_community_input.CreateCommunityInputViewModel
@@ -45,7 +45,10 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> showCreateCompleteDialog()
+                    is CreateCommunityInputNavigationAction.NavigateToCommunity -> {
+                        setFragmentResult("createDialogCheck", bundleOf("isCreated" to true))
+                        navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
+                    }
                 }
             }
         }
@@ -67,17 +70,5 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
             this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
-    }
-
-    private fun showCreateCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.create_post_dialog_message))
-            .dismissListener(object :  CompleteDialogFragment.OnDismissListener {
-                override fun onDismiss() {
-                    navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
-                }
-            })
-            .build()
-            .show(childFragmentManager, "complete_dialog")
     }
 }
