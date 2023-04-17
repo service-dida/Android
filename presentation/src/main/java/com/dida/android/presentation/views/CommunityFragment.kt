@@ -77,10 +77,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     override fun onResume() {
         super.onResume()
         setFragmentResultListener("createDialogCheck") { _, bundle ->
-            val isCreated = bundle.getBoolean("isCreated")
-            if (isCreated) showCreateCompleteDialog()
+            if (bundle.getBoolean("isCreated")) showCreateCompleteDialog()
         }
-
         communityPagingAdapter.refresh()
         getLastScrollY()
     }
