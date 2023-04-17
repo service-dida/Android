@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.repeatOnCreated
-import com.dida.common.widget.ActionSnackBar
-import com.dida.common.widget.MessageSnackBar
+import com.dida.common.widget.DefaultSnackBar
 import com.dida.data.DataApplication.Companion.dataStorePreferences
-import com.dida.home.HomeMessageAction
 import com.dida.user_profile.UserMessageAction
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
@@ -62,9 +60,12 @@ class UserProfileFragment :
                         is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
                         is UserMessageAction.AddCardBookmarkMessage -> {
                             showActionSnackBar(
-                                getString(R.string.add_bookmark_message),
-                                getString(R.string.add_bookmark_action_title_message)
-                            ) {}
+                                message = getString(R.string.add_bookmark_message),
+                                label = getString(R.string.add_bookmark_action_title_message),
+                                onClickListener = object : DefaultSnackBar.OnClickListener {
+                                    override fun onClick() {}
+                                }
+                            )
                         }
                         is UserMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
@@ -99,16 +100,25 @@ class UserProfileFragment :
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
+            this.setNavigationIcon(R.drawable.ic_back)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
 
     private fun showMessageSnackBar(message: String) {
-        MessageSnackBar.make(binding.root, message).show()
+        DefaultSnackBar.Builder()
+            .view(binding.root)
+            .message(message)
+            .hasBottomMargin(false)
+            .build()
     }
 
-    private fun showActionSnackBar(message: String, actionTitle: String, onClick: () -> Unit) {
-        ActionSnackBar.make(binding.root, message = message, actionTitle = actionTitle, onClick = onClick).show()
+    private fun showActionSnackBar(message: String, label: String, onClickListener: DefaultSnackBar.OnClickListener) {
+        DefaultSnackBar.Builder()
+            .view(binding.root)
+            .message(message)
+            .actionButton(label, onClickListener)
+            .hasBottomMargin(false)
+            .build()
     }
 }
