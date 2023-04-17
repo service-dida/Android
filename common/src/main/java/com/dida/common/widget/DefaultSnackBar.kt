@@ -1,8 +1,6 @@
 package com.dida.common.widget
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +13,10 @@ import com.dida.common.R
 import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.DefaultSnackBarBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class DefaultSnackBar {
 
@@ -50,9 +52,10 @@ class DefaultSnackBar {
             val snackBarHideAnim = AnimationUtils.loadAnimation(context, R.anim.hide_snack_bar)
             layout.startAnimation(snackBarShowAnim)
 
-            Handler(Looper.getMainLooper()).postDelayed({
+            CoroutineScope(Dispatchers.Default).launch {
+                delay(1500L)
                 layout.startAnimation(snackBarHideAnim)
-            }, 1500L)
+            }
 
             layoutParams.gravity = Gravity.BOTTOM
             layout.removeAllViews()
