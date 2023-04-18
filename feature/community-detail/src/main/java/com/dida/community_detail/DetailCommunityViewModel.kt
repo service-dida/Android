@@ -22,7 +22,7 @@ class DetailCommunityViewModel @Inject constructor(
     private val commentAPI: CommentAPI,
     private val deleteCommentAPI: DeleteCommentAPI,
     private val deletePostAPI: DeletePostAPI
-) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler, UpdateActionHandler {
+) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler {
 
     private val TAG = "DetailCommunityViewModel"
 
@@ -114,7 +114,7 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onUpdateClicked() {
+    fun onUpdateClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdateCommunity(postId = postState.value!!.postId))
         }
@@ -132,7 +132,7 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onDeleteClicked() {
+    fun onDeleteClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToDelete)
         }

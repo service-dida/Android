@@ -56,7 +56,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                     when(it) {
                         is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
                         is DetailCommunityNavigationAction.NavigateToCommunityMore -> showReportBalloon(userId = it.userId, view = binding.moreButton)
-                        is DetailCommunityNavigationAction.NavigateToMyMore -> showUpdateBalloon(viewModel, binding.moreButton)
+                        is DetailCommunityNavigationAction.NavigateToMyMore -> showUpdateBalloon(binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
@@ -172,11 +172,21 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         view.showAlignBottom(balloon)
     }
 
-    private fun showUpdateBalloon(
-        eventListener: UpdateActionHandler,
-        view: View
-    ) {
-        val balloon = UpdateBalloon(eventListener = eventListener)
+    private fun showUpdateBalloon(view: View) {
+        val balloon = DefaultBalloon.Builder()
+            .firstButton(
+                label = getString(com.dida.common.R.string.update_message_balloon),
+                icon = com.dida.common.R.drawable.ic_profile_edit,
+                listener = object : DefaultBalloon.OnClickListener {
+                    override fun onClick() = viewModel.onUpdateClicked()
+                })
+            .secondButton(
+                label = getString(com.dida.common.R.string.delete_message_balloon),
+                icon = com.dida.common.R.drawable.ic_delete,
+                listener = object : DefaultBalloon.OnClickListener {
+                    override fun onClick() = viewModel.onDeleteClicked()
+                })
+            .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
         view.showAlignBottom(balloon)
     }
