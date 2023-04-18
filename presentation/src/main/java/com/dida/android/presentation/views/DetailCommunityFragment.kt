@@ -12,10 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
-import com.dida.common.actionhandler.ReportActionHandler
 import com.dida.common.actionhandler.UpdateActionHandler
 import com.dida.common.adapter.CommentsAdapter
-import com.dida.common.ballon.ReportBalloon
+import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.ballon.UpdateBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
@@ -56,7 +55,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
-                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> showReportBalloon(userId = it.userId, viewModel, binding.moreButton)
+                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> showReportBalloon(userId = it.userId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToMyMore -> showUpdateBalloon(viewModel, binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
@@ -152,11 +151,24 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun showReportBalloon(
         userId: Long,
-        eventListener: ReportActionHandler,
         view: View
     ) {
-        val balloon = ReportBalloon(userId = userId, eventListener = eventListener)
+        val balloon = DefaultBalloon.Builder()
+            .firstButton(
+                label = getString(com.dida.common.R.string.report_message_balloon),
+                icon = com.dida.common.R.drawable.ic_report,
+                listener = object : DefaultBalloon.OnClickListener {
+                    override fun onClick() {}
+                })
+            .secondButton(
+                label = getString(com.dida.common.R.string.block_message_balloon),
+                icon = com.dida.common.R.drawable.ic_block,
+                listener = object : DefaultBalloon.OnClickListener {
+                    override fun onClick() {}
+                })
+            .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
+
         view.showAlignBottom(balloon)
     }
 

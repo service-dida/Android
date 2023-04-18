@@ -1,9 +1,7 @@
 package com.dida.community_detail
 
 import com.dida.common.actionhandler.CommentActionHandler
-import com.dida.common.actionhandler.ReportActionHandler
 import com.dida.common.actionhandler.UpdateActionHandler
-import com.dida.common.ballon.UpdateBalloon
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.domain.flatMap
@@ -24,7 +22,7 @@ class DetailCommunityViewModel @Inject constructor(
     private val commentAPI: CommentAPI,
     private val deleteCommentAPI: DeleteCommentAPI,
     private val deletePostAPI: DeletePostAPI
-) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler, ReportActionHandler, UpdateActionHandler {
+) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler, UpdateActionHandler {
 
     private val TAG = "DetailCommunityViewModel"
 
@@ -114,12 +112,6 @@ class DetailCommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = postState.value!!.cardId))
         }
-    }
-
-    override fun onReportClicked(userId: Long) {
-    }
-
-    override fun onBlockClicked(userId: Long) {
     }
 
     override fun onUpdateClicked() {

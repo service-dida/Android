@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import com.dida.common.actionhandler.ReportActionHandler
 import com.dida.common.actionhandler.UpdateActionHandler
 import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.skydoves.balloon.*
