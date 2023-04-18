@@ -135,7 +135,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:drawableEnd="@drawable/ic_baseline_close_14_warning"
                         android:hint="@string/profile_description_hint"
                         android:text="@={vm.descriptionState}"
                         android:inputType="textMultiLine" />

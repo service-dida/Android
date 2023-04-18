@@ -3,6 +3,7 @@ package com.dida.common.customview
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
@@ -25,21 +26,22 @@ class CustomEditText @JvmOverloads constructor(
         }
 
         //텍스트 삭제
-        setOnTouchListener(object : OnTouchListener {
-            @SuppressLint("ClickableViewAccessibility")
-            override fun onTouch(v: View, motionEvent: MotionEvent): Boolean {
-                val view = v as EditText
-                if (motionEvent.action == MotionEvent.ACTION_UP) {
-                    if(motionEvent.rawX >= view.right - view.compoundDrawables[2].bounds.width()) {
-                        setText("")
-                        return true
+        if(maxLines ==1){
+            val imgDrawable = ContextCompat.getDrawable(context, R.drawable.ic_remove_text)
+            setCompoundDrawablesWithIntrinsicBounds(null, null, imgDrawable, null)
+            setOnTouchListener(object : OnTouchListener {
+                @SuppressLint("ClickableViewAccessibility")
+                override fun onTouch(v: View, motionEvent: MotionEvent): Boolean {
+                    val view = v as EditText
+                    if (motionEvent.action == MotionEvent.ACTION_UP) {
+                        if(motionEvent.rawX >= view.right - view.compoundDrawables[2].bounds.width()) {
+                            setText("")
+                            return true
+                        }
                     }
+                    return false
                 }
-                return false
-            }
-        })
-
-        val imgDrawable = ContextCompat.getDrawable(context, R.drawable.ic_remove_text)
-        setCompoundDrawablesWithIntrinsicBounds(null, null, imgDrawable, null)
+            })
+        }
     }
 }
