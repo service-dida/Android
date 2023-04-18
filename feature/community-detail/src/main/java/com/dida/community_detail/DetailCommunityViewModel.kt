@@ -57,34 +57,38 @@ class DetailCommunityViewModel @Inject constructor(
 
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
+            showLoading()
             deleteCommentAPI(commentId = commentId)
                 .onSuccess {
                     _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
                     getPost(postId = postState.value!!.postId) }
                 .onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 
-    override fun onCommentClicked() {
+    override fun onCommentClicked(postId: Long) {
         baseViewModelScope.launch {
+            showLoading()
             if(commentState.value.isNotBlank()) {
-                commentAPI(postId = postState.value!!.postId, content = commentState.value)
+                commentAPI(postId = postId, content = commentState.value)
                     .onSuccess { commentState.value = "" }
-                    .flatMap { commentsPostIdAPI.invoke(postId = postState.value!!.postId) }
+                    .flatMap { commentsPostIdAPI(postId = postId) }
                     .onSuccess {
                         isWrite.value = true
                         _commentList.value = it }
                     .onError { e -> catchError(e) }
             }
+            dismissLoading()
         }
     }
 
-    override fun onCommunityMoreClicked(userId: Long) {
+    override fun onCommunityMoreClicked(userId: Long, postId: Long) {
         baseViewModelScope.launch {
             if (DataApplication.dataStorePreferences.getUserId() != userId) {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCommunityMore(userId))
+                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(userId))
             } else {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToMyMore)
+                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToWriterMore(postId))
             }
         }
     }
@@ -101,39 +105,27 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onUserProfileClicked() {
+    override fun onUserProfileClicked(userId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserProfile(userId = postState.value!!.userId))
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserProfile(userId = userId))
         }
     }
 
-    override fun onCardClicked() {
+    override fun onCardClicked(cardId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = postState.value!!.cardId))
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = cardId))
         }
     }
 
-    fun onUpdateClicked() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdateCommunity(postId = postState.value!!.postId))
-        }
-    }
-
-    fun onDeletePost() {
+    fun onDeletePost(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            deletePostAPI.invoke(postState.value!!.postId)
+            deletePostAPI.invoke(postId)
                 .onSuccess {
                     _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
                     _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
                 .onError { e -> catchError(e) }
             dismissLoading()
-        }
-    }
-
-    fun onDeleteClicked() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToDelete)
         }
     }
 }

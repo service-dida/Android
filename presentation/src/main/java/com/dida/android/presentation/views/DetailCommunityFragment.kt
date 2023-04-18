@@ -53,13 +53,11 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
                         is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
-                        is DetailCommunityNavigationAction.NavigateToCommunityMore -> showReportBalloon(userId = it.userId, view = binding.moreButton)
-                        is DetailCommunityNavigationAction.NavigateToMyMore -> showUpdateBalloon(binding.moreButton)
+                        is DetailCommunityNavigationAction.NavigateToNotWriterMore -> showReportBalloon(userId = it.userId, view = binding.moreButton)
+                        is DetailCommunityNavigationAction.NavigateToWriterMore -> showUpdateBalloon(postId = it.postId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
-                        is DetailCommunityNavigationAction.NavigateToUpdateCommunity -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = it.postId))
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
-                        is DetailCommunityNavigationAction.NavigateToDelete -> deletePostAlert()
                     }
                 }
             }
@@ -100,13 +98,13 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         binding.detailCommunityMain.adapter = commentsAdapter
     }
 
-    private fun deletePostAlert() {
+    private fun deletePostAlert(postId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_post_title))
             .message(getString(com.dida.common.R.string.delete_post_description))
             .positiveButton(getString(com.dida.common.R.string.delete_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.onDeletePost()
+                    viewModel.onDeletePost(postId)
                 }
             })
             .negativeButton(getString(com.dida.common.R.string.delete_post_negative))
@@ -170,19 +168,26 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         view.showAlignBottom(balloon)
     }
 
-    private fun showUpdateBalloon(view: View) {
+    private fun showUpdateBalloon(
+        postId: Long,
+        view: View
+    ) {
         val balloon = DefaultBalloon.Builder()
             .firstButton(
                 label = getString(com.dida.common.R.string.update_message_balloon),
                 icon = com.dida.common.R.drawable.ic_profile_edit,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() = viewModel.onUpdateClicked()
+                    override fun onClick() {
+                        navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToCommunityCommunityInputFragment(cardId = 0, createState = false, postId = postId))
+                    }
                 })
             .secondButton(
                 label = getString(com.dida.common.R.string.delete_message_balloon),
                 icon = com.dida.common.R.drawable.ic_delete,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() = viewModel.onDeleteClicked()
+                    override fun onClick() {
+                        deletePostAlert(postId)
+                    }
                 })
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())

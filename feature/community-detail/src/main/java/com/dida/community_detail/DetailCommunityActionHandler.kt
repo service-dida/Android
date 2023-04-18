@@ -1,8 +1,8 @@
 package com.dida.community_detail
 
 interface DetailCommunityActionHandler {
-    fun onCommentClicked()
-    fun onCommunityMoreClicked(userId: Long)
-    fun onUserProfileClicked()
-    fun onCardClicked()
+    fun onCommentClicked(postId: Long)
+    fun onCommunityMoreClicked(userId: Long, postId: Long)
+    fun onUserProfileClicked(userId: Long)
+    fun onCardClicked(cardId: Long)
 }
