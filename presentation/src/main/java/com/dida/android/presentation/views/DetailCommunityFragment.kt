@@ -52,12 +52,15 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
-                        is DetailCommunityNavigationAction.NavigateToCommentMore -> commentMoreBottomSheet(it.commentId)
                         is DetailCommunityNavigationAction.NavigateToNotWriterMore -> showReportBalloon(userId = it.userId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToWriterMore -> showUpdateBalloon(postId = it.postId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
+                        is DetailCommunityNavigationAction.NavigateToReport -> {}
+                        is DetailCommunityNavigationAction.NavigateToBlock -> {}
+                        is DetailCommunityNavigationAction.NavigateToUpdate -> {}
+                        is DetailCommunityNavigationAction.NavigateToDelete -> deleteCommentAlert(commentId = it.commentId)
                     }
                 }
             }
@@ -192,15 +195,5 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
         view.showAlignBottom(balloon)
-    }
-
-    private fun commentMoreBottomSheet(commentId: Long) {
-        val morDialog = DetailCommunityBottomSheetDialog {
-            when (it) {
-                is MoreState.Update -> {}
-                is MoreState.Delete -> deleteCommentAlert(commentId = commentId)
-            }
-        }
-        morDialog.show(requireActivity().supportFragmentManager, morDialog.tag)
     }
 }

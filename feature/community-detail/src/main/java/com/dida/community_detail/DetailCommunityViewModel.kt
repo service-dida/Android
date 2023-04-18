@@ -57,26 +57,25 @@ class DetailCommunityViewModel @Inject constructor(
 
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
-            showLoading()
             deleteCommentAPI(commentId = commentId)
                 .onSuccess {
-                    _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
+                    _messageEvent.emit(DetailCommunityMessageAction.DeleteReplyMessage)
                     getPost(postId = postState.value!!.postId) }
                 .onError { e -> catchError(e) }
-            dismissLoading()
         }
     }
 
     override fun onCommentClicked(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            if(commentState.value.isNotBlank()) {
+            if (commentState.value.isNotBlank()) {
                 commentAPI(postId = postId, content = commentState.value)
                     .onSuccess { commentState.value = "" }
                     .flatMap { commentsPostIdAPI(postId = postId) }
                     .onSuccess {
                         isWrite.value = true
-                        _commentList.value = it }
+                        _commentList.value = it
+                    }
                     .onError { e -> catchError(e) }
             }
             dismissLoading()
@@ -93,15 +92,33 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onCommentMoreClicked(commentId: Long) {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCommentMore(commentId = commentId))
-        }
-    }
-
     override fun onCommentUserProfileClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserProfile(userId = userId))
+        }
+    }
+
+    override fun onReportClicked(userId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToReport(userId = userId))
+        }
+    }
+
+    override fun onBlockClicked(userId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBlock(userId = userId))
+        }
+    }
+
+    override fun onDeleteClicked(commentId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToDelete(commentId = commentId))
+        }
+    }
+
+    override fun onUpdateClicked(commentId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdate(commentId = commentId))
         }
     }
 
@@ -123,7 +140,8 @@ class DetailCommunityViewModel @Inject constructor(
             deletePostAPI.invoke(postId)
                 .onSuccess {
                     _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
-                    _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack) }
+                    _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack)
+                }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

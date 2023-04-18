@@ -79,9 +79,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_more_surface"
-            app:isMyComments="@{holderModel.type}"
-            app:onSingleClick="@{() -> eventListener.onCommentMoreClicked(holderModel.commentId)}">
+            android:src="@drawable/ic_more_surface">
         </ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
