@@ -30,8 +30,10 @@ class DefaultBalloon : Balloon.Factory() {
     private lateinit var secondButtonImageView: ImageView
     private lateinit var secondButton: ConstraintLayout
 
+    lateinit var balloon: Balloon
+
     override fun create(context: Context, lifecycle: LifecycleOwner?): Balloon {
-        val balloon = createBalloon(context) {
+        balloon = createBalloon(context) {
             setLayout(com.dida.common.R.layout.balloon_default)
             setIsVisibleArrow(false)
             setWidth(220)
@@ -69,10 +71,12 @@ class DefaultBalloon : Balloon.Factory() {
     private fun initView() {
         firstButton.setOnSingleClickListener {
             firstButtonClickListener?.onClick()
+            balloon.dismiss()
         }
 
         secondButton.setOnSingleClickListener {
             secondButtonClickListener?.onClick()
+            balloon.dismiss()
         }
     }
 
