@@ -12,10 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
-import com.dida.common.actionhandler.UpdateActionHandler
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.ballon.DefaultBalloon
-import com.dida.common.ballon.UpdateBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar

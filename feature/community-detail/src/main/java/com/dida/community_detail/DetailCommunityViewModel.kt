@@ -1,7 +1,6 @@
 package com.dida.community_detail
 
 import com.dida.common.actionhandler.CommentActionHandler
-import com.dida.common.actionhandler.UpdateActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.domain.flatMap
