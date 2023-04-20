@@ -15,6 +15,7 @@ import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
+import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.*
@@ -57,7 +58,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
-                        is DetailCommunityNavigationAction.NavigateToReport -> {}
+                        is DetailCommunityNavigationAction.NavigateToReport -> showReportDialog(it.userId)
                         is DetailCommunityNavigationAction.NavigateToBlock -> {}
                         is DetailCommunityNavigationAction.NavigateToUpdate -> {}
                         is DetailCommunityNavigationAction.NavigateToDelete -> deleteCommentAlert(commentId = it.commentId)
@@ -157,7 +158,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 label = getString(com.dida.common.R.string.report_message_balloon),
                 icon = com.dida.common.R.drawable.ic_report,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() {}
+                    override fun onClick() = viewModel.onReportClicked(userId = userId)
                 })
             .secondButton(
                 label = getString(com.dida.common.R.string.block_message_balloon),
@@ -195,5 +196,11 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
         view.showAlignBottom(balloon)
+    }
+
+    private fun showReportDialog(userId: Long) {
+        ReportBottomSheet(userId = userId) {
+
+        }.show(childFragmentManager, "Report Dialog")
     }
 }
