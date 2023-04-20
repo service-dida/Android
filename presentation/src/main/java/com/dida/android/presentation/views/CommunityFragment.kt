@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.common.adapter.CommunityPagingAdapter
 import com.dida.common.dialog.CompleteDialogFragment
+import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
@@ -50,7 +51,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                     is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
                     is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
                     is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
-                    is CommunityNavigationAction.NavigateToReport -> {}
+                    is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.userId)
                     is CommunityNavigationAction.NavigateToBlock -> {}
                     is CommunityNavigationAction.NavigateToUpdate -> {}
                     is CommunityNavigationAction.NavigateToDelete -> {}
@@ -113,5 +114,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             .message(getString(R.string.create_post_dialog_message))
             .build()
             .show(childFragmentManager, "complete_dialog")
+    }
+
+    private fun showReportDialog(userId: Long) {
+        ReportBottomSheet(userId = userId) {
+
+        }.show(childFragmentManager, "Report Dialog")
     }
 }
