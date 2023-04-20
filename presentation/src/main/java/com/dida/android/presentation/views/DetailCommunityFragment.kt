@@ -6,6 +6,8 @@ import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +19,7 @@ import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
-import com.dida.common.util.repeatOnStarted
+import com.dida.common.util.*
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.*
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
@@ -89,12 +91,14 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
             launch {
                 viewModel.navigateToReportSuccessEvent.collectLatest {
+                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
                     navController.popBackStack()
                 }
             }
 
             launch {
                 viewModel.navigateToBlockSuccessEvent.collectLatest {
+                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.BLOCK to true))
                     navController.popBackStack()
                 }
             }

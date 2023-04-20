@@ -7,3 +7,13 @@ object Constants {
     const val MIN_AMOUNT = 0.01
     const val MIN_AMOUNT_TEXT = "0.01"
 }
+
+object SCREEN {
+    const val COMMUNITY = "COMMUNITY"
+}
+
+object EVENT {
+    const val REPORT = "REPORT"
+    const val BLOCK = "BLOCK"
+    const val CREATE = "CREATE"
+}
