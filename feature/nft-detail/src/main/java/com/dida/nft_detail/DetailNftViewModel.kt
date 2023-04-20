@@ -1,8 +1,11 @@
 package com.dida.nft_detail
 
+import androidx.lifecycle.viewModelScope
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.ui.report.ReportType
+import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
@@ -27,8 +30,10 @@ class DetailNftViewModel @Inject constructor(
     private val postsCardCardIdAPI: PostsCardCardIdAPI,
     private val sellNftAPI: SellNftAPI,
     private val hideNftAPI: HideNftAPI,
-    private val deleteNftAPI: DeleteNftAPI
-) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
+    private val deleteNftAPI: DeleteNftAPI,
+    private val reportViewModelDelegate: ReportViewModelDelegate
+) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler,
+    ReportViewModelDelegate by reportViewModelDelegate {
 
     private val TAG = "DetailNftViewModel"
 
@@ -104,6 +109,10 @@ class DetailNftViewModel @Inject constructor(
                 }
                 .onError { e -> catchError(e) }
         }
+    }
+
+    fun onReport(type: ReportType, reportId: Long, content: String) {
+        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
     }
 
     private fun setDetailOwnerType(detailNFT: DetailNft) {

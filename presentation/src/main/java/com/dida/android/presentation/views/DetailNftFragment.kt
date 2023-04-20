@@ -1,12 +1,21 @@
 package com.dida.android.presentation.views
 
+import android.view.View
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
+import com.dida.common.ballon.DefaultBalloon
+import com.dida.common.ui.report.ReportBottomSheet
+import com.dida.common.ui.report.ReportType
+import com.dida.common.util.EVENT
+import com.dida.common.util.SCREEN
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.nft.sale.AddSaleNftBottomSheet
@@ -16,6 +25,7 @@ import com.dida.nft_detail.bottom.DetailNftBottomSheet
 import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
+import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -74,8 +84,16 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.communityState.collectLatest {
-                communityAdapter.submitList(it)
+            launch {
+                viewModel.communityState.collectLatest {
+                    communityAdapter.submitList(it)
+                }
+            }
+
+            launch {
+                viewModel.navigateToReportSuccessEvent.collectLatest {
+                    navController.popBackStack()
+                }
             }
         }
     }
@@ -89,16 +107,15 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                 when (it.itemId) {
                     com.dida.nft_detail.R.id.action_heart -> viewModel.postlikeNft(args.cardId)
                     com.dida.nft_detail.R.id.action_more -> {
-                        val dialog = DetailNftBottomSheet(viewModel.detailOwnerTypeState.value) { type ->
-                            when(type){
-                                DetailNftMenuType.SELL ->{ showSellNftDialog() }
-                                DetailNftMenuType.CANCEL ->{}
-                                DetailNftMenuType.REMOVE ->{showDeleteNftDialog()}
-                                DetailNftMenuType.HIDE ->{ viewModel.hideNft(args.cardId) }
-                                DetailNftMenuType.REPORT ->{}
+                        DetailNftBottomSheet(viewModel.detailOwnerTypeState.value) { type ->
+                            when (type) {
+                                DetailNftMenuType.SELL -> showSellNftDialog()
+                                DetailNftMenuType.CANCEL -> {}
+                                DetailNftMenuType.REMOVE -> showDeleteNftDialog()
+                                DetailNftMenuType.HIDE -> viewModel.hideNft(args.cardId)
+                                DetailNftMenuType.REPORT -> showReportDialog(args.cardId)
                             }
-                        }
-                        dialog.show(childFragmentManager, TAG)
+                        }.show(childFragmentManager, TAG)
                     }
                 }
                 true
@@ -115,14 +132,13 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     private fun showSellNftDialog(){
-        val dialog = AddSaleNftBottomSheet { price ->
+        AddSaleNftBottomSheet { price ->
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
                     viewModel.sellNft(password,args.cardId,price.toDouble())
                 }
             }.show(childFragmentManager,"DetailNftBottomSheet")
-        }
-        dialog.show(childFragmentManager, "DetailNftFragment")
+        }.show(childFragmentManager, "DetailNftFragment")
     }
 
     private fun showDeleteNftDialog(){
@@ -135,5 +151,15 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         } else {
             toastMessage("마켓에 올라가 있는 NFT는 삭제 할 수 없습니다.")
         }
+    }
+
+    private fun showReportDialog(cardId: Long) {
+        ReportBottomSheet { confirm, content ->
+            if (confirm) viewModel.onReport(
+                type = ReportType.USER,
+                reportId = cardId,
+                content = content
+            )
+        }.show(childFragmentManager, "Report Dialog")
     }
 }
