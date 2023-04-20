@@ -199,4 +199,12 @@ interface MainAPIService {
     // 핫 셀러 더보기
     @GET("/hot/seller/{page}")
     suspend fun getHotSeller(@Path("page") page: Int): List<GetHotSellerResponse>
+
+    // 유저 신고하기
+    @POST("/report/user")
+    suspend fun postReportUser(@Body body: PostReportRequest): Unit
+
+    // 게시글 신고하기
+    @POST("/report/post")
+    suspend fun postReportPost(@Body body: PostReportRequest): Unit
 }

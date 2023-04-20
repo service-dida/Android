@@ -117,8 +117,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     private fun showReportDialog(userId: Long) {
-        ReportBottomSheet(userId = userId) {
-
+        ReportBottomSheet(isUserReport = true, reportId = userId) {
         }.show(childFragmentManager, "Report Dialog")
     }
 }

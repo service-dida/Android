@@ -271,5 +271,15 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getHotSeller(page: Int): NetworkResult<List<HotSellerMore>> {
         return handleApi { mainAPIService.getHotSeller(page = page).toDomain() }
     }
+
+    override suspend fun postReportUser(userId: Long, content: String): NetworkResult<Unit> {
+        val request = PostReportRequest(reportedId = userId, content = content)
+        return handleApi { mainAPIService.postReportUser(request) }
+    }
+
+    override suspend fun postReportPost(postId: Long, content: String): NetworkResult<Unit> {
+        val request = PostReportRequest(reportedId = postId, content = content)
+        return handleApi { mainAPIService.postReportPost(request) }
+    }
 }
 

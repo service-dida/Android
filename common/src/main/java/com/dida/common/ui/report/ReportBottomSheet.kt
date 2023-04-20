@@ -3,14 +3,14 @@ package com.dida.common.ui.report
 import androidx.fragment.app.viewModels
 import com.dida.common.R
 import com.dida.common.base.BaseBottomSheetDialogFragment
-import com.dida.common.databinding.DialogBottomImageBinding
 import com.dida.common.databinding.DialogBottomReportBinding
 import com.dida.common.util.repeatOnResumed
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class ReportBottomSheet(
-    val userId: Long,
+    private val isUserReport: Boolean,
+    private val reportId: Long,
     val callback: (isReport: Boolean) -> Unit
 ) : BaseBottomSheetDialogFragment<DialogBottomReportBinding, ReportBottomSheetViewModel>() {
     override val layoutResourceId: Int
@@ -33,7 +33,7 @@ class ReportBottomSheet(
             ReportCode.PRIVACY,
             ReportCode.OTHER
         )
-        viewModel.setUserId(userId)
+        viewModel.setReports(reportId, isUserReport)
         viewModel.setReportCode(reportCodes)
     }
 
