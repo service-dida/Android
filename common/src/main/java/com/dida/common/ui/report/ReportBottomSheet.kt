@@ -59,5 +59,5 @@ class ReportBottomSheet(
 }
 
 enum class ReportType {
-    USER, POST
+    USER, POST, CARD
 }

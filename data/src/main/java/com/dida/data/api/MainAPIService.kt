@@ -207,4 +207,8 @@ interface MainAPIService {
     // 게시글 신고하기
     @POST("/report/post")
     suspend fun postReportPost(@Body body: PostReportRequest): Unit
+
+    // 카드 신고하기
+    @POST("/report/card")
+    suspend fun postReportCard(@Body body: PostReportRequest): Unit
 }

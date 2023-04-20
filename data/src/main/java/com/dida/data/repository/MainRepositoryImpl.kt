@@ -281,5 +281,10 @@ class MainRepositoryImpl @Inject constructor(
         val request = PostReportRequest(reportedId = postId, content = content)
         return handleApi { mainAPIService.postReportPost(request) }
     }
+
+    override suspend fun postReportCard(cardId: Long, content: String): NetworkResult<Unit> {
+        val request = PostReportRequest(reportedId = cardId, content = content)
+        return handleApi { mainAPIService.postReportCard(request) }
+    }
 }
 

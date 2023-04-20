@@ -135,4 +135,6 @@ interface  MainRepository {
     suspend fun postReportUser(userId: Long, content: String): NetworkResult<Unit>
 
     suspend fun postReportPost(postId: Long, content: String): NetworkResult<Unit>
+
+    suspend fun postReportCard(cardId: Long, content: String): NetworkResult<Unit>
 }
