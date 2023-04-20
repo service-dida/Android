@@ -41,10 +41,6 @@
     <string name="bottom_community">커뮤니티</string>
     <string name="bottom_my">마이페이지</string>
 
-    <!--Bottom Sheet 관련-->
-    <string name="bottom_sheet_update">수정하기</string>
-    <string name="bottom_sheet_delete">삭제하기</string>
-
     <!--홈 화면-->
     <string name="home_hotitem">HOT Item \uD83D\uDD25</string>
     <string name="home_soldout">Sold Out \uD83D\uDC8E</string>
@@ -144,4 +140,13 @@
     <!--마이페이지 화면-->
     <string name="mypage_nft_type_newest_text">최신 순</string>
     <string name="mypage_nft_type_oldest_text">오래된 순</string>
+
+    <!--더보기 Balloon-->
+    <string name="report_message_balloon">신고하기</string>
+    <string name="block_message_balloon">차단하기</string>
+    <string name="not_sale_card_message_balloon">마켓에서 내리기</string>
+    <string name="delete_card_message_balloon">NFT 삭제하기</string>
+    <string name="sale_card_message_balloon">판매하기</string>
+    <string name="update_message_balloon">수정하기</string>
+    <string name="delete_message_balloon">삭제하기</string>
 </resources>

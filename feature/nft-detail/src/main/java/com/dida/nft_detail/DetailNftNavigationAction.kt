@@ -10,4 +10,8 @@ sealed class DetailNftNavigationAction {
     class NavigateToUserProfile(val userId: Long): DetailNftNavigationAction()
     object NavigateToBack : DetailNftNavigationAction()
     object NavigateToSell : DetailNftNavigationAction()
+    class NavigateToReport(val userId: Long): DetailNftNavigationAction()
+    class NavigateToBlock(val userId: Long): DetailNftNavigationAction()
+    class NavigateToUpdate(val postId: Long): DetailNftNavigationAction()
+    class NavigateToDelete(val postId: Long): DetailNftNavigationAction()
 }

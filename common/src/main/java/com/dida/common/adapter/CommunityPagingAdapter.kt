@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.CommunityActionHandler
+import com.dida.common.ballon.showReportCommentBalloon
+import com.dida.common.ballon.showReportPostBalloon
+import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommunityBinding
 import com.dida.domain.model.main.Posts
 
@@ -40,6 +43,10 @@ class CommunityPagingAdapter(
             binding.holderModel = item
             adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
+            // TODO: 내 게시글 인지 아닌지에 대한 판별 추가하기
+            binding.moreBtn.setOnSingleClickListener {
+                it.showReportPostBalloon(userId = 0, listener = binding.eventListener!!)
+            }
             binding.executePendingBindings()
         }
     }
