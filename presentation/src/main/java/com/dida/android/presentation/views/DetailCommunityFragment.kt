@@ -61,7 +61,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToReport -> showReportDialog(it.userId)
                         is DetailCommunityNavigationAction.NavigateToBlock -> {}
                         is DetailCommunityNavigationAction.NavigateToUpdate -> {}
-                        is DetailCommunityNavigationAction.NavigateToDelete -> deleteCommentAlert(commentId = it.commentId)
+                        is DetailCommunityNavigationAction.NavigateToDelete -> showDeleteCommentDialog(commentId = it.commentId)
                     }
                 }
             }
@@ -102,7 +102,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         binding.detailCommunityMain.adapter = commentsAdapter
     }
 
-    private fun deletePostAlert(postId: Long) {
+    private fun showDeleteDialog(postId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_post_title))
             .message(getString(com.dida.common.R.string.delete_post_description))
@@ -116,7 +116,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .show(childFragmentManager, "delete_post_dialog")
     }
 
-    private fun deleteCommentAlert(commentId: Long) {
+    private fun showDeleteCommentDialog(commentId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_comment_title))
             .message(getString(com.dida.common.R.string.delete_comment_description))
@@ -190,7 +190,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 icon = com.dida.common.R.drawable.ic_delete,
                 listener = object : DefaultBalloon.OnClickListener {
                     override fun onClick() {
-                        deletePostAlert(postId)
+                        showDeleteDialog(postId)
                     }
                 })
             .build()
