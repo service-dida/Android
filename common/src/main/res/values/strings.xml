@@ -157,4 +157,6 @@
     <string name="report_message3">음란물 또는 성적인 내용</string>
     <string name="report_message4">개인정보 노출</string>
     <string name="report_message5">기타</string>
+    <string name="report_hint">직접 작성하기</string>
 </resources>
+
