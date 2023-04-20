@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.CommentActionHandler
-import com.dida.common.ballon.showReportBalloon
-import com.dida.common.ballon.showUpdateBalloon
+import com.dida.common.ballon.showReportCommentBalloon
+import com.dida.common.ballon.showEditCommentBalloon
 import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommentsBinding
 import com.dida.domain.model.main.Comments
@@ -46,8 +46,8 @@ class CommentsAdapter(
         fun bind(item: Comments) {
             binding.holderModel = item
             binding.moreBtn.setOnSingleClickListener {
-                if (item.type == "MINE") it.showUpdateBalloon(commentId = item.commentId, listener = binding.eventListener!!)
-                else it.showReportBalloon(userId = item.userId, listener = binding.eventListener!!)
+                if (item.type == "MINE") it.showEditCommentBalloon(commentId = item.commentId, listener = binding.eventListener!!)
+                else it.showReportCommentBalloon(userId = item.userId, listener = binding.eventListener!!)
             }
             binding.executePendingBindings()
         }

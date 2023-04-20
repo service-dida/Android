@@ -72,6 +72,31 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    // TODO : 신고 및 차단 & 수정 삭제 플로우 추가하기
+    override fun onReportClicked(userId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToReport(userId))
+        }
+    }
+
+    override fun onBlockClicked(userId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToBlock(userId))
+        }
+    }
+
+    override fun onUpdateClicked(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToUpdate(postId))
+        }
+    }
+
+    override fun onDeleteClicked(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToDelete(postId))
+        }
+    }
+
     override fun onHotCardClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(CommunityNavigationAction.NavigateToDetail(postId = postId))

@@ -35,21 +35,31 @@
                 android:layout_height="36dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:image_from_url_circle="@{holderModel.userImgUrl}"/>
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/user_img"
                 app:layout_constraintBottom_toBottomOf="@id/user_img"
-                app:layout_constraintLeft_toRightOf="@id/user_img"
+                app:layout_constraintStart_toEndOf="@id/user_img"
                 android:text="@{holderModel.userName}"
                 android:textSize="15dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/pretendard_bold"
                 android:layout_marginLeft="12dp"/>
+
+            <ImageView
+                android:id="@+id/more_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                app:layout_constraintTop_toTopOf="@id/user_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_more_surface">
+            </ImageView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clip_or_more_btn"
@@ -80,7 +90,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 app:layout_constraintTop_toBottomOf="@id/user_img"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:text="@{holderModel.title}"
                 android:textColor="@color/white"
                 android:textSize="16dp"
@@ -92,7 +101,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/contents_name"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:text="@{holderModel.content}"
                 android:lineSpacingMultiplier="1.3"
                 android:textColor="@color/white"
@@ -111,18 +119,19 @@
                 android:id="@+id/nft_img"
                 android:layout_width="79dp"
                 android:layout_height="79dp"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line1"
                 app:nft_img_rounded="@{holderModel.cardImgUrl}"
                 android:layout_marginTop="16dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/nft_contents"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/nft_img"
                 app:layout_constraintBottom_toBottomOf="@id/nft_img"
-                app:layout_constraintLeft_toRightOf="@id/nft_img"
+                app:layout_constraintStart_toEndOf="@id/nft_img"
+                app:layout_constraintEnd_toStartOf="@id/next_btn"
                 android:layout_marginLeft="16dp">
 
                 <TextView
@@ -141,18 +150,19 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:background="@drawable/custom_brandlemon_fill_radius100"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/nft_name"
                     android:src="@mipmap/img_dida_logo_foreground"
                     android:layout_marginTop="8dp"/>
 
                 <TextView
                     android:id="@+id/dida_price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/dida_img"
                     app:layout_constraintBottom_toBottomOf="@id/dida_img"
-                    app:layout_constraintLeft_toRightOf="@id/dida_img"
+                    app:layout_constraintStart_toEndOf="@id/dida_img"
+                    app:layout_constraintEnd_toEndOf="parent"
                     decimalPrice="@{holderModel.price}"
                     android:maxLines="1"
                     android:ellipsize="end"
@@ -169,7 +179,7 @@
                 android:padding="6dp"
                 app:layout_constraintTop_toBottomOf="@id/line1"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_next"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

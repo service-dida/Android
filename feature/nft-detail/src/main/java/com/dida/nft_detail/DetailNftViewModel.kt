@@ -177,7 +177,32 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    // 클립 버튼으로 처리
+    // TODO : 클립 버튼으로 처리
     override fun onClipOrMoreClicked(postId: Long) {
+    }
+
+    // TODO : 신고 및 차단 & 수정 삭제 플로우 추가하기
+    override fun onReportClicked(userId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToReport(userId))
+        }
+    }
+
+    override fun onBlockClicked(userId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToBlock(userId))
+        }
+    }
+
+    override fun onUpdateClicked(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToUpdate(postId))
+        }
+    }
+
+    override fun onDeleteClicked(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToDelete(postId))
+        }
     }
 }

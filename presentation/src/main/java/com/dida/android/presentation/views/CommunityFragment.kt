@@ -50,6 +50,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                     is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
                     is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
                     is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
+                    is CommunityNavigationAction.NavigateToReport -> {}
+                    is CommunityNavigationAction.NavigateToBlock -> {}
+                    is CommunityNavigationAction.NavigateToUpdate -> {}
+                    is CommunityNavigationAction.NavigateToDelete -> {}
                 }
             }
         }
