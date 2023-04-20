@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.CommunityActionHandler
-import com.dida.common.ballon.showReportCommentBalloon
 import com.dida.common.ballon.showReportPostBalloon
 import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommunityBinding

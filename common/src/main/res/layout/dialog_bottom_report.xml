@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.dida.common.ui.report.ReportBottomSheetViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_bottom_sheet"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/close_btn"
+            app:layout_constraintBottom_toBottomOf="@id/close_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/report_title"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_bold"/>
+
+        <ImageView
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_close"
+            android:padding="4dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/report_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:scrollbarStyle="insideOverlay"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/close_btn"
+            app:layout_constraintBottom_toTopOf="@id/report_confirm_button"/>
+
+        <TextView
+            android:id="@+id/report_confirm_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/report_title"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:padding="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:onSingleClick="@{() -> vm.onReportConfirmButtonClicked()}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
