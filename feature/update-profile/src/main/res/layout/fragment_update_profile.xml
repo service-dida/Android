@@ -97,13 +97,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/profile_nickname_text" />
-                    <EditText
+
+                    <com.dida.common.customview.CustomEditText
                         android:id="@+id/nickname_et"
                         style="@style/EditText_surface2_radius10_solid_surface5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:drawableEnd="@drawable/ic_baseline_close_14_warning"
                         android:hint="@string/profile_nickname_hint"
                         android:text="@={vm.nickNameState}"
                         android:inputType="text"
@@ -129,13 +129,12 @@
                         android:layout_marginTop="28dp"
                         android:text="@string/profile_description_text" />
 
-                    <EditText
+                    <com.dida.common.customview.CustomEditText
                         android:id="@+id/description_et"
                         style="@style/EditText_surface2_radius10_solid_surface5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:drawableEnd="@drawable/ic_baseline_close_14_warning"
                         android:hint="@string/profile_description_hint"
                         android:text="@={vm.descriptionState}"
                         android:inputType="textMultiLine" />

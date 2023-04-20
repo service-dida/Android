@@ -78,54 +78,32 @@
                     android:id="@+id/NFT_title_length_Textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text='@{vm.titleLengthState.toString()+"/20"}'
+                    tools:text="0/20"
                     android:textColor="@color/surface6"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/NFT_title_Textview"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NFT_add_ImageView" />
+                    app:layout_constraintTop_toTopOf="@+id/NFT_title_Textview" />
 
-                <LinearLayout
-                    android:id="@+id/title_LinearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_noradius_surface1_square"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NFT_title_Textview">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/surface5" />
-
-                    <EditText
+                    <com.dida.common.customview.CustomEditText
                         android:id="@+id/title_EditText"
+                        style="@style/EditText_surface2_radius10_solid_surface5"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
-                        android:background="@null"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:layout_marginEnd="16dp"
                         android:hint="@string/add_nft_title_hint"
                         android:text="@={vm.titleTextState}"
                         android:maxLength="20"
-                        android:textColor="@color/white"
                         android:maxLines="1"
                         android:inputType="text"
-                        android:textColorHint="@color/surface6"
-                        android:textSize="14dp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/surface5" />
-                </LinearLayout>
-
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/NFT_title_Textview"/>
 
                 <TextView
                     android:id="@+id/NFT_description_Textview"
@@ -138,66 +116,42 @@
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title_LinearLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/title_EditText" />
 
                 <TextView
                     android:id="@+id/NFT_description_length_Textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text='@{vm.descriptionLengthState.toString()+"/300"}'
+                    tools:text="0/300"
                     android:textColor="@color/surface6"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/NFT_description_Textview"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title_LinearLayout"/>
+                    app:layout_constraintTop_toTopOf="@+id/NFT_description_Textview" />
 
-                <LinearLayout
-                    android:id="@+id/description_LinearLayout"
+                <com.dida.common.customview.CustomEditText
+                    android:id="@+id/description_EditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="296dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="61dp"
-                    android:background="@drawable/custom_noradius_surface1_square"
-                    android:orientation="vertical"
+                    style="@style/EditText_surface2_radius10_solid_surface5"
+                    android:gravity="top"
+                    android:hint="@string/add_nft_description_hint"
+                    android:inputType="textMultiLine"
+                    android:maxLength="300"
+                    android:maxLines="30"
+                    android:text="@={vm.descriptionTextState}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NFT_description_length_Textview">
+                    app:layout_constraintTop_toBottomOf="@+id/NFT_description_Textview" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/surface5" />
-
-                    <EditText
-                        android:id="@+id/description_EditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="296dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@null"
-                        android:fontFamily="@font/pretendard_regular"
-                        android:gravity="top"
-                        android:text="@={vm.descriptionTextState}"
-                        android:hint="@string/add_nft_description_hint"
-                        android:inputType="textMultiLine"
-                        android:maxLength="300"
-                        android:maxLines="30"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/surface6"
-                        android:textSize="14dp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/surface5" />
-
-                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
