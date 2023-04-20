@@ -1,7 +1,10 @@
 package com.dida.community_detail
 
+import androidx.lifecycle.viewModelScope
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.ui.report.ReportType
+import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.main.Comments
@@ -20,8 +23,10 @@ class DetailCommunityViewModel @Inject constructor(
     private val commentsPostIdAPI: CommentsPostIdAPI,
     private val commentAPI: CommentAPI,
     private val deleteCommentAPI: DeleteCommentAPI,
-    private val deletePostAPI: DeletePostAPI
-) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler {
+    private val deletePostAPI: DeletePostAPI,
+    private val reportViewModelDelegate: ReportViewModelDelegate
+) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler,
+    ReportViewModelDelegate by reportViewModelDelegate {
 
     private val TAG = "DetailCommunityViewModel"
 
@@ -85,7 +90,7 @@ class DetailCommunityViewModel @Inject constructor(
     override fun onCommunityMoreClicked(userId: Long, postId: Long) {
         baseViewModelScope.launch {
             if (DataApplication.dataStorePreferences.getUserId() != userId) {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(userId))
+                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(postId))
             } else {
                 _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToWriterMore(postId))
             }
@@ -98,15 +103,27 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
+    fun onPostReport(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostReport(postId = postId))
+        }
+    }
+
+    fun onPostBlock(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostBlock(postId = postId))
+        }
+    }
+
     override fun onReportClicked(userId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToReport(userId = userId))
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserReport(userId = userId))
         }
     }
 
     override fun onBlockClicked(userId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBlock(userId = userId))
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserBlock(userId = userId))
         }
     }
 
@@ -132,6 +149,10 @@ class DetailCommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = cardId))
         }
+    }
+
+    fun onReport(type: ReportType, reportId: Long, content: String) {
+        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
     }
 
     fun onDeletePost(postId: Long) {

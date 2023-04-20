@@ -56,7 +56,7 @@ fun View.showEditCommentBalloon(
 
 
 fun View.showReportPostBalloon(
-    userId: Long,
+    postId: Long,
     listener: CommunityActionHandler
 ) {
     val view = this
@@ -65,13 +65,13 @@ fun View.showReportPostBalloon(
             label = context.getString(R.string.report_message_balloon),
             icon = R.drawable.ic_report,
             listener = object : DefaultBalloon.OnClickListener {
-                override fun onClick() = listener.onReportClicked(userId = userId)
+                override fun onClick() = listener.onReportClicked(postId = postId)
             })
         .secondButton(
             label = context.getString(R.string.block_message_balloon),
             icon = R.drawable.ic_block,
             listener = object : DefaultBalloon.OnClickListener {
-                override fun onClick() = listener.onBlockClicked(userId = userId)
+                override fun onClick() = listener.onBlockClicked(postId = postId)
             })
         .build()
         .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())

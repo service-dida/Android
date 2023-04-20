@@ -68,8 +68,7 @@
             android:gravity="center"
             android:textSize="16dp"
             android:padding="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:onSingleClick="@{() -> vm.onReportConfirmButtonClicked()}" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

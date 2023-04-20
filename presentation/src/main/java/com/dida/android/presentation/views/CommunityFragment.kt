@@ -7,6 +7,7 @@ import com.dida.android.R
 import com.dida.common.adapter.CommunityPagingAdapter
 import com.dida.common.dialog.CompleteDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
+import com.dida.common.ui.report.ReportType
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
@@ -51,7 +52,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                     is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
                     is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
                     is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
-                    is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.userId)
+                    is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
                     is CommunityNavigationAction.NavigateToBlock -> {}
                     is CommunityNavigationAction.NavigateToUpdate -> {}
                     is CommunityNavigationAction.NavigateToDelete -> {}
@@ -72,6 +73,18 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                         val item = if (hotCards.isNotEmpty()) listOf(HotCards.Contents(hotCards)) else emptyList()
                         hotCardsContainerAdapter.submitList(item)
                     }
+                }
+            }
+
+            launch {
+                viewModel.navigateToReportSuccessEvent.collectLatest {
+                    communityPagingAdapter.refresh()
+                }
+            }
+
+            launch {
+                viewModel.navigateToBlockSuccessEvent.collectLatest {
+                    communityPagingAdapter.refresh()
                 }
             }
         }
@@ -116,8 +129,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             .show(childFragmentManager, "complete_dialog")
     }
 
-    private fun showReportDialog(userId: Long) {
-        ReportBottomSheet(isUserReport = true, reportId = userId) {
+    private fun showReportDialog(postId: Long) {
+        ReportBottomSheet { confirm, content ->
+            if (confirm) viewModel.onReport(
+                type = ReportType.POST,
+                reportId = postId,
+                content = content
+            )
         }.show(childFragmentManager, "Report Dialog")
     }
 }

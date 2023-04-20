@@ -9,9 +9,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class ReportBottomSheet(
-    private val isUserReport: Boolean,
-    private val reportId: Long,
-    val callback: (isReport: Boolean) -> Unit
+    val callback: (reportConfirm: Boolean, content: String) -> Unit
 ) : BaseBottomSheetDialogFragment<DialogBottomReportBinding, ReportBottomSheetViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.dialog_bottom_report
@@ -26,15 +24,7 @@ class ReportBottomSheet(
             this.vm
             this.lifecycleOwner = viewLifecycleOwner
         }
-        val reportCodes = listOf<ReportCode>(
-            ReportCode.SPAM,
-            ReportCode.ADVISE,
-            ReportCode.SEXUAL,
-            ReportCode.PRIVACY,
-            ReportCode.OTHER
-        )
-        viewModel.setReports(reportId, isUserReport)
-        viewModel.setReportCode(reportCodes)
+        binding.reportRecyclerView.adapter = reportCodeAdapter
     }
 
     override fun initDataBinding() {
@@ -46,24 +36,28 @@ class ReportBottomSheet(
             }
 
             launch {
-                viewModel.reportSuccess.collectLatest {
-                    dismissAllowingStateLoss()
-                }
-            }
-
-            launch {
                 viewModel.hasSelectedReportCode.collectLatest {
                     binding.reportConfirmButton.setReportEnabled(it)
                 }
             }
         }
-
     }
 
     override fun initAfterBinding() {
-        binding.reportRecyclerView.adapter = reportCodeAdapter
         binding.closeBtn.setOnClickListener {
+            callback.invoke(false, viewModel.contents.value)
             dismissAllowingStateLoss()
         }
+
+        binding.reportConfirmButton.setOnClickListener {
+            if (viewModel.hasSelectedReportCode.value) {
+                callback.invoke(true, viewModel.contents.value)
+                dismissAllowingStateLoss()
+            }
+        }
     }
+}
+
+enum class ReportType {
+    USER, POST
 }

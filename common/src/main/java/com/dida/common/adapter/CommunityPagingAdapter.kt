@@ -44,7 +44,7 @@ class CommunityPagingAdapter(
             binding.commentRecycler.adapter = adapter
             // TODO: 내 게시글 인지 아닌지에 대한 판별 추가하기
             binding.moreBtn.setOnSingleClickListener {
-                it.showReportPostBalloon(userId = 0, listener = binding.eventListener!!)
+                it.showReportPostBalloon(postId = 0, listener = binding.eventListener!!)
             }
             binding.executePendingBindings()
         }

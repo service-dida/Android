@@ -16,6 +16,7 @@ import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
+import com.dida.common.ui.report.ReportType
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.*
@@ -53,15 +54,17 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
-                        is DetailCommunityNavigationAction.NavigateToNotWriterMore -> showReportBalloon(userId = it.userId, view = binding.moreButton)
+                        is DetailCommunityNavigationAction.NavigateToNotWriterMore -> showReportBalloon(postId = it.postId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToWriterMore -> showUpdateBalloon(postId = it.postId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
-                        is DetailCommunityNavigationAction.NavigateToReport -> showReportDialog(it.userId)
-                        is DetailCommunityNavigationAction.NavigateToBlock -> {}
+                        is DetailCommunityNavigationAction.NavigateToUserReport -> showReportDialog(it.userId)
+                        is DetailCommunityNavigationAction.NavigateToUserBlock -> {}
                         is DetailCommunityNavigationAction.NavigateToUpdate -> {}
                         is DetailCommunityNavigationAction.NavigateToDelete -> showDeleteCommentDialog(commentId = it.commentId)
+                        is DetailCommunityNavigationAction.NavigateToPostReport -> showPostReportDialog(postId = it.postId)
+                        is DetailCommunityNavigationAction.NavigateToPostBlock -> {}
                     }
                 }
             }
@@ -77,10 +80,25 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.commentList.collectLatest {
-                commentsAdapter.submitList(it)
-                if (viewModel.isWrite.value) keyboardHide()
+            launch {
+                viewModel.commentList.collectLatest {
+                    commentsAdapter.submitList(it)
+                    if (viewModel.isWrite.value) keyboardHide()
+                }
             }
+
+            launch {
+                viewModel.navigateToReportSuccessEvent.collectLatest {
+                    navController.popBackStack()
+                }
+            }
+
+            launch {
+                viewModel.navigateToBlockSuccessEvent.collectLatest {
+                    navController.popBackStack()
+                }
+            }
+
         }
     }
 
@@ -150,7 +168,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     private fun showReportBalloon(
-        userId: Long,
+        postId: Long,
         view: View
     ) {
         val balloon = DefaultBalloon.Builder()
@@ -158,13 +176,13 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 label = getString(com.dida.common.R.string.report_message_balloon),
                 icon = com.dida.common.R.drawable.ic_report,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() = viewModel.onReportClicked(userId = userId)
+                    override fun onClick() = viewModel.onPostReport(postId = postId)
                 })
             .secondButton(
                 label = getString(com.dida.common.R.string.block_message_balloon),
                 icon = com.dida.common.R.drawable.ic_block,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() {}
+                    override fun onClick() = viewModel.onPostBlock(postId = postId)
                 })
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
@@ -199,7 +217,22 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     }
 
     private fun showReportDialog(userId: Long) {
-        ReportBottomSheet(isUserReport = true, reportId = userId) {
+        ReportBottomSheet { confirm, content ->
+            if (confirm) viewModel.onReport(
+                type = ReportType.USER,
+                reportId = userId,
+                content = content
+            )
+        }.show(childFragmentManager, "Report Dialog")
+    }
+
+    private fun showPostReportDialog(postId: Long) {
+        ReportBottomSheet { confirm, content ->
+            if (confirm) viewModel.onReport(
+                type = ReportType.POST,
+                reportId = postId,
+                content = content
+            )
         }.show(childFragmentManager, "Report Dialog")
     }
 }

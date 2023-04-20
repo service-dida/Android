@@ -1,10 +1,13 @@
 package com.dida.community
 
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.ui.report.ReportType
+import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.community.adapter.createPostsPager
@@ -22,17 +25,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    postsAPI: PostsAPI,
-    private val hotCardAPI: HotCardAPI
-) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler {
+    private val postsAPI: PostsAPI,
+    private val hotCardAPI: HotCardAPI,
+    private val reportViewModelDelegate: ReportViewModelDelegate
+) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
+    ReportViewModelDelegate by reportViewModelDelegate {
 
     private val TAG = "CommunityViewModel"
-
-    private val _myWriteState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
-    val myWriteState: StateFlow<Boolean> = _myWriteState
-
-    private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val moreEvent: SharedFlow<Unit> = _moreEvent
 
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
@@ -42,6 +41,7 @@ class CommunityViewModel @Inject constructor(
 
     private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
     val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
+
 
     init {
         baseViewModelScope.launch {
@@ -65,23 +65,16 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    // 나의 게시물일 경우 More 버튼, 아닐경우 Clip 버튼
-    override fun onClipOrMoreClicked(postId: Long) {
-        baseViewModelScope.launch {
-            if (myWriteState.value) _moreEvent.emit(Unit)
-        }
-    }
-
     // TODO : 신고 및 차단 & 수정 삭제 플로우 추가하기
-    override fun onReportClicked(userId: Long) {
+    override fun onReportClicked(postId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CommunityNavigationAction.NavigateToReport(userId))
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToReport(postId))
         }
     }
 
-    override fun onBlockClicked(userId: Long) {
+    override fun onBlockClicked(postId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CommunityNavigationAction.NavigateToBlock(userId))
+            _navigationEvent.emit(CommunityNavigationAction.NavigateToBlock(postId))
         }
     }
 
@@ -101,5 +94,9 @@ class CommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationEvent.emit(CommunityNavigationAction.NavigateToDetail(postId = postId))
         }
+    }
+
+    fun onReport(type: ReportType, reportId: Long, content: String) {
+        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
     }
 }
