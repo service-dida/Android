@@ -18,6 +18,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/report_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
@@ -38,7 +39,7 @@
             android:id="@+id/report_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{code.message}"
+            android:text="@{code.title}"
             android:fontFamily="@font/pretendard_regular"
             android:textColor="@color/white"
             android:textSize="16dp"
@@ -46,6 +47,21 @@
             app:layout_constraintEnd_toStartOf="@id/report_radio_button"
             app:layout_constraintTop_toTopOf="@id/report_radio_button"
             app:layout_constraintBottom_toBottomOf="@id/report_radio_button"/>
+
+        <com.dida.common.customview.CustomEditText
+            android:id="@+id/report_contents"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            style="@style/EditText_surface2_radius10_solid_surface5"
+            android:gravity="top"
+            android:hint="@string/report_hint"
+            android:inputType="textMultiLine"
+            android:maxLength="300"
+            android:maxLines="3"
+            app:reportContentVisible="@{code}"
+            android:text="@={code.message}"
+            app:layout_constraintTop_toBottomOf="@id/report_title"
+            android:layout_marginTop="20dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

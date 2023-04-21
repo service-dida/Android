@@ -57,20 +57,8 @@
             android:scrollbarStyle="insideOverlay"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/close_btn"
-            app:layout_constraintBottom_toTopOf="@id/report_contents"/>
-
-        <com.dida.common.customview.CustomEditText
-            android:id="@+id/report_contents"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            style="@style/EditText_surface2_radius10_solid_surface5"
-            android:gravity="top"
-            android:hint="@string/report_hint"
-            android:inputType="textMultiLine"
-            android:maxLength="300"
-            android:maxLines="3"
-            android:text="@={vm.contents}"
-            app:layout_constraintTop_toBottomOf="@id/report_recycler_view"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingBottom="80dp"/>
 
         <TextView
             android:id="@+id/report_confirm_button"
@@ -81,9 +69,7 @@
             android:gravity="center"
             android:textSize="16dp"
             android:padding="18dp"
-            app:layout_constraintTop_toBottomOf="@id/report_contents"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="18dp" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
