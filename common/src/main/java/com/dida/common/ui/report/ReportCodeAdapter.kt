@@ -50,24 +50,15 @@ internal class ReviewReportCodeViewHolder(
     fun bind(code: ReportCode, checked: Boolean, callback: (Int?) -> Unit) {
         binding.code = code
         binding.isChecked = checked
-        if (!checked) binding.reportContents.clearFocus()
         binding.executePendingBindings()
 
         binding.reportRadioButton.setOnSingleClickListener {
             binding.reportRadioButton.isChecked = true
-            binding.reportContents.requestFocus()
             callback(bindingAdapterPosition)
         }
 
         binding.reportTitle.setOnSingleClickListener {
             binding.reportRadioButton.isChecked = true
-            binding.reportContents.requestFocus()
-            callback(bindingAdapterPosition)
-        }
-
-        binding.reportContents.setOnClickListener {
-            binding.reportRadioButton.isChecked = true
-            binding.reportContents.requestFocus()
             callback(bindingAdapterPosition)
         }
     }

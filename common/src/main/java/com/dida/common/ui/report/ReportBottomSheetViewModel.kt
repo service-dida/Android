@@ -11,8 +11,8 @@ class ReportBottomSheetViewModel @Inject constructor() : BaseViewModel(), Report
     private val TAG = "ImageBottomSheetViewModel"
 
     private val _reportCodes: MutableStateFlow<List<ReportCode>> =
-        MutableStateFlow<List<ReportCode>>(
-            listOf<ReportCode>(
+        MutableStateFlow(
+            listOf(
                 ReportCode.SPAM,
                 ReportCode.ADVISE,
                 ReportCode.SEXUAL,
@@ -22,16 +22,20 @@ class ReportBottomSheetViewModel @Inject constructor() : BaseViewModel(), Report
         )
     val reportCodes: StateFlow<List<ReportCode>> = _reportCodes.asStateFlow()
 
-    private var _selectedReportCode: MutableStateFlow<ReportCode>? = null
+    private var _selectedReportCode: MutableStateFlow<ReportCode> = MutableStateFlow(ReportCode.SPAM)
+    val selectedReportCode: StateFlow<ReportCode> = _selectedReportCode.asStateFlow()
 
     private val _hasSelectedReportCode: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
     val hasSelectedReportCode: StateFlow<Boolean> = _hasSelectedReportCode
 
     val contents: MutableStateFlow<String> = MutableStateFlow("")
 
+    fun setEnableConfirm(enable: Boolean) {
+        _hasSelectedReportCode.value = enable
+    }
+
     override fun onReportCodeSelected(code: ReportCode) {
-        _selectedReportCode?.value = code
+        _selectedReportCode.value = code
         contents.value = code.message
-        _hasSelectedReportCode.value = true
     }
 }
