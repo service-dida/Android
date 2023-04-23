@@ -126,17 +126,17 @@
         android:label="CreateCommunityInputFragment">
         <argument
             android:name="cardId"
-            app:argType="long">
-        </argument>
+            app:argType="long"/>
+
         <argument
             android:name="createState"
-            app:argType="boolean">
-        </argument>
+            app:argType="boolean"/>
+
         <argument
             android:name="postId"
             app:argType="long"
-            android:defaultValue="0L">
-        </argument>
+
+            android:defaultValue="0L"/>
         <action
             android:id="@+id/action_communityCommunityInputFragment_to_communityFragment"
             app:destination="@id/communityFragment"
@@ -145,7 +145,6 @@
             app:popUpToInclusive="true"
             app:popUpTo="@+id/communityFragment"/>
     </fragment>
-
 
     <fragment
         android:id="@+id/communityDetailFragment"
