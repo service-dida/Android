@@ -153,7 +153,7 @@
         <argument
             android:name="postId"
             app:argType="long"/>
-        
+
         <action
             android:id="@+id/action_communityDetailFragment_to_communityCommunityInputFragment"
             app:destination="@id/communityCommunityInputFragment"
@@ -341,7 +341,7 @@
             app:argType="float" />
         <argument
             android:name="swapType"
-            app:argType="com.dida.swap.SwapViewModel$SwapType"
+            app:argType="com.dida.swap.SwapType"
             android:defaultValue="KLAY_TO_DIDA" />
         <action
             android:id="@+id/action_swapLoadingFragment_to_swapSuccessFragment"
@@ -364,7 +364,7 @@
             app:popUpTo="@+id/swapFragment"/>
         <argument
             android:name="swapType"
-            app:argType="com.dida.swap.SwapViewModel$SwapType" />
+            app:argType="com.dida.swap.SwapType" />
     </fragment>
 
     <fragment

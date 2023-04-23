@@ -4,12 +4,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.dida.common.util.repeatOnStarted
+import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.dida.swap.databinding.FragmentSwapLoadingBinding
 import com.dida.swap.loading.SwapLoadingNavigationAction
 import com.dida.swap.loading.SwapLoadingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoadingViewModel>(com.dida.swap.R.layout.fragment_swap_loading) {
@@ -19,7 +21,16 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
     override val layoutResourceId: Int
         get() = com.dida.swap.R.layout.fragment_swap_loading
 
-    override val viewModel : SwapLoadingViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: SwapLoadingViewModel.AssistedFactory
+    override val viewModel: SwapLoadingViewModel by viewModels {
+        SwapLoadingViewModel.provideFactory(
+            assistedFactory,
+            swapType = args.swapType,
+            password = args.password,
+            amount = args.amount
+        )
+    }
 
     private val args: SwapLoadingFragmentArgs by navArgs()
 
@@ -29,7 +40,6 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.initLoadingData(args.swapType)
     }
 
     override fun initDataBinding() {
@@ -38,12 +48,6 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
                 when (it) {
                     SwapLoadingNavigationAction.NavigateToSuccess -> navigate(SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment(args.swapType))
                 }
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.swapTypeState.collectLatest {
-                viewModel.swap(swapType = args.swapType, password = args.password, amount = args.amount.toDouble())
             }
         }
     }

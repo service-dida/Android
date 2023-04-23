@@ -6,6 +6,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.WalletAmountAPI
 import com.dida.domain.usecase.main.WalletExistedAPI
+import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,11 +22,6 @@ class SwapViewModel @Inject constructor(
 ) : BaseViewModel(), SwapActionHandler {
 
     private val TAG = "SwapViewModel"
-
-    enum class SwapType {
-        KLAY_TO_DIDA,
-        DIDA_TO_KLAY
-    }
 
     private val _navigationEvent: MutableSharedFlow<SwapNavigationAction> = MutableSharedFlow<SwapNavigationAction>()
     val navigationEvent: SharedFlow<SwapNavigationAction> = _navigationEvent
@@ -92,4 +88,9 @@ class SwapViewModel @Inject constructor(
             setWalletAmount()
         }
     }
+}
+
+enum class SwapType {
+    KLAY_TO_DIDA,
+    DIDA_TO_KLAY
 }
