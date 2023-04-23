@@ -18,11 +18,9 @@ import com.dida.domain.usecase.main.UserCardUserIdAPI
 import com.dida.domain.usecase.main.UserUserIdAPI
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class UserProfileViewModel @AssistedInject constructor(
     @Assisted("userId") val userId: Long,

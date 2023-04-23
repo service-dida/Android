@@ -3,7 +3,6 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.dida.swap.databinding.FragmentSwapSuccessBinding
 import com.dida.swap.success.SwapSuccessNavigationAction
 import com.dida.swap.success.SwapSuccessViewModel

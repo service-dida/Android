@@ -18,11 +18,9 @@ import com.dida.domain.usecase.main.*
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Named
 
 class DetailNftViewModel @AssistedInject constructor(
     @Assisted("cardId") val cardId: Long,

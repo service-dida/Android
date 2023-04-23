@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    postsAPI: PostsAPI,
+    private val postsAPI: PostsAPI,
     private val hotCardAPI: HotCardAPI
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler {
 
@@ -34,13 +34,15 @@ class CommunityViewModel @Inject constructor(
     private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val moreEvent: SharedFlow<Unit> = _moreEvent
 
-    private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> =
+        MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent
 
     val postsState: Flow<PagingData<Posts>> = createPostsPager(postsAPI = postsAPI)
         .flow.cachedIn(baseViewModelScope)
 
-    private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
+    private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> =
+        MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
     val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
 
     init {
@@ -48,7 +50,8 @@ class CommunityViewModel @Inject constructor(
             hotCardAPI.invoke()
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    _hotCardState.value = UiState.Success(it) }
+                    _hotCardState.value = UiState.Success(it)
+                }
                 .onError { e -> catchError(e) }
         }
     }

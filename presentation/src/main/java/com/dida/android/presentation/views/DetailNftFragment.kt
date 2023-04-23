@@ -9,7 +9,6 @@ import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
-import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel

@@ -17,9 +17,10 @@ import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.community_detail.*
+import com.dida.community_detail.DetailCommunityMessageAction
+import com.dida.community_detail.DetailCommunityNavigationAction
+import com.dida.community_detail.DetailCommunityViewModel
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
-import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

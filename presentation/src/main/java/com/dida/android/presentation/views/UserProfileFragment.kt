@@ -10,7 +10,6 @@ import com.dida.android.R
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserMessageAction
 import com.dida.user_profile.UserProfileNavigationAction
