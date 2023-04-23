@@ -212,62 +212,60 @@
                     android:layout_marginTop="30dp"
                     android:text="@string/buy_nft_price_info_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/view2" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/price_text_view"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    app:layout_constraintTop_toBottomOf="@id/textView3"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3">
+                    android:text="@string/buy_nft_price_text"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    priceText="@{vm.detailNftState}"
+                    app:layout_constraintTop_toTopOf="@id/price_text_view"
+                    app:layout_constraintBottom_toBottomOf="@id/price_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/price_text_view"
+                    tools:text="324.91 dida" />
 
-                        <TextView
-                            android:id="@+id/price_tv"
-                            style="@style/TextView_regular_18_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="결제 금액" />
+                <TextView
+                    android:id="@+id/fee_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    app:layout_constraintTop_toBottomOf="@id/price_text_view"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/buy_nft_fee_text"/>
 
-                        <TextView
-                            style="@style/TextView_regular_18_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            priceText="@{vm.detailNftState}"
-                            tools:text="324.91 dida" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/TextView_regular_18_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/buy_nft_fee_text"/>
-
-                        <TextView
-                            android:id="@+id/fee_tv"
-                            style="@style/TextView_regular_18_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            tools:text="123(??%) dida" />
-                    </LinearLayout>
-                </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    app:layout_constraintTop_toTopOf="@id/fee_text_view"
+                    app:layout_constraintBottom_toBottomOf="@id/fee_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/fee_text_view"
+                    app:feeText="@{vm.detailNftState}"
+                    android:text="123(??%) dida" />
 
                 <View
                     android:id="@+id/view3"
@@ -277,7 +275,7 @@
                     android:background="@color/brand_lemon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+                    app:layout_constraintTop_toBottomOf="@id/fee_text_view"/>
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
@@ -301,7 +299,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        tools:text="522.12 dida" />
+                        app:totalPrice="@{vm.detailNftState}"
+                        android:text="522.12 dida" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -336,7 +335,7 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginEnd="6dp"
                 android:gravity="start"
-                android:text="@{vm.detailNftState.price}"
+                app:totalPrice="@{vm.detailNftState}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/buy_btn"
                 app:layout_constraintStart_toEndOf="@+id/price_iv"

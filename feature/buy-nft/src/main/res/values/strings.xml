@@ -4,6 +4,7 @@
     <string name="buy_nft_change_owner_text">소유권 변동</string>
     <string name="buy_nft_price_info_text">가격 정보</string>
     <string name="buy_nft_total_price_text">총액</string>
+    <string name="buy_nft_price_text">결재 금액</string>
     <string name="buy_nft_fee_text">수수료</string>
 
     <string name="buy_fail_main_title">dida 코인이 부족해요</string>
