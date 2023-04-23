@@ -152,8 +152,8 @@
         android:label="DetailCommunityFragment">
         <argument
             android:name="postId"
-            app:argType="long">
-        </argument>
+            app:argType="long"/>
+        
         <action
             android:id="@+id/action_communityDetailFragment_to_communityCommunityInputFragment"
             app:destination="@id/communityCommunityInputFragment"
