@@ -1,5 +1,7 @@
 package com.dida.user_profile
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
@@ -14,14 +16,16 @@ import com.dida.domain.usecase.main.PostLikeAPI
 import com.dida.domain.usecase.main.PostUserFollowAPI
 import com.dida.domain.usecase.main.UserCardUserIdAPI
 import com.dida.domain.usecase.main.UserUserIdAPI
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class UserProfileViewModel @Inject constructor(
+class UserProfileViewModel @AssistedInject constructor(
+    @Assisted("userId") val userId: Long,
     private val postLikeAPI: PostLikeAPI,
     private val userUserIdAPI: UserUserIdAPI,
     private val postUserFollowAPI: PostUserFollowAPI,
@@ -43,25 +47,17 @@ class UserProfileViewModel @Inject constructor(
     private val _cardSortTypeState: MutableStateFlow<CardSortType> = MutableStateFlow<CardSortType>(CardSortType.NEWEST)
     val cardSortTypeState: StateFlow<CardSortType> = _cardSortTypeState.asStateFlow()
 
-    private val _userIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
-    val userIdState: StateFlow<Long> = _userIdState.asStateFlow()
-
     private val _userProfileState: MutableStateFlow<UiState<OtherUserProfie>> = MutableStateFlow<UiState<OtherUserProfie>>(UiState.Loading)
     val userProfileState: StateFlow<UiState<OtherUserProfie>> = _userProfileState.asStateFlow()
 
     private val _userCardState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow<UiState<List<UserNft>>>(UiState.Loading)
     val userCardState: StateFlow<UiState<List<UserNft>>> = _userCardState.asStateFlow()
 
-    fun setUserId(userId: Long) {
-        baseViewModelScope.launch {
-            _userIdState.value = userId
-        }
-    }
     fun getUserProfile() {
         baseViewModelScope.launch {
-            userUserIdAPI(userId = userIdState.value)
+            userUserIdAPI(userId = userId)
                 .onSuccess { _userProfileState.value = UiState.Success(it) }
-                .flatMap { userCardUserIdAPI(userId = userIdState.value) }
+                .flatMap { userCardUserIdAPI(userId = userId) }
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _userCardState.value = UiState.Success(it)
@@ -94,7 +90,7 @@ class UserProfileViewModel @Inject constructor(
     override fun onFollowClicked() {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(userId = userIdState.value)
+            postUserFollowAPI(userId = userId)
                 .onSuccess {
                     val profile = userProfileState.value.successOrNull()!!
                     if (profile.followed) _messageEvent.emit(UserMessageAction.UserUnFollowMessage)
@@ -115,6 +111,25 @@ class UserProfileViewModel @Inject constructor(
         when(type) {
             CardSortType.NEWEST -> _userCardState.value = UiState.Success(userCardState.value.successOrNull()!!.sortedByDescending { it.cardId })
             CardSortType.OLDEST -> _userCardState.value = UiState.Success(userCardState.value.successOrNull()!!.sortedBy { it.cardId })
+        }
+    }
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedFactory{
+        fun create(
+            @Assisted("userId") userId: Long
+        ): UserProfileViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: AssistedFactory,
+            userId: Long
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(userId) as T
+            }
         }
     }
 }

@@ -21,8 +21,7 @@ class SwapSuccessViewModel @AssistedInject constructor(
 
     private val TAG = "SwapSuccessViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<SwapSuccessNavigationAction> =
-        MutableSharedFlow<SwapSuccessNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<SwapSuccessNavigationAction> = MutableSharedFlow<SwapSuccessNavigationAction>()
     val navigationEvent: SharedFlow<SwapSuccessNavigationAction> = _navigationEvent
 
     override fun onSwapConfirm() {
