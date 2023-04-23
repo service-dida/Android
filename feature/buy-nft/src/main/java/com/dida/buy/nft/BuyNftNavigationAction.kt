@@ -1,6 +1,6 @@
 package com.dida.buy.nft
 
 sealed class BuyNftNavigationAction {
-    object NavigateToSuccess: BuyNftNavigationAction()
+    class NavigateToSuccess(val cardId: Long): BuyNftNavigationAction()
     object NavigateToFailAlert: BuyNftNavigationAction()
 }

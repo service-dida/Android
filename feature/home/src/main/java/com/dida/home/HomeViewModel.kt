@@ -4,7 +4,6 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
-import com.dida.common.util.successOrNull
 import com.dida.domain.flatMap
 import com.dida.domain.model.main.Home
 import com.dida.domain.model.main.SoldOut

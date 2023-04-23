@@ -1,18 +1,21 @@
 package com.dida.nickname
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.CreateUserAPI
 import com.dida.domain.usecase.main.NicknameCheckAPI
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class NicknameViewModel @Inject constructor(
+
+class NicknameViewModel @AssistedInject constructor(
+    @Assisted("email") val email: String,
     private val createUserAPI: CreateUserAPI,
     private val nicknameCheckAPI: NicknameCheckAPI,
 ) : BaseViewModel(), NicknameActionHandler {
@@ -22,9 +25,7 @@ class NicknameViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<NicknameNavigationAction> = MutableSharedFlow<NicknameNavigationAction>()
     val navigationEvent: SharedFlow<NicknameNavigationAction> = _navigationEvent
 
-    val emailState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val userInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
-
 
     init {
         baseViewModelScope.launch {
@@ -89,7 +90,26 @@ class NicknameViewModel @Inject constructor(
 
     override fun onCreateItemClicked() {
         if(!nickNameCheckState.value){
-            createUserAPIServer(emailState.value, userInputState.value)
+            createUserAPIServer(email, userInputState.value)
+        }
+    }
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedFactory{
+        fun create(
+            @Assisted("email") email: String
+        ): NicknameViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: AssistedFactory,
+            email: String
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(email) as T
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ import com.dida.user_profile.databinding.FragmentUserProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UserProfileFragment :
@@ -28,7 +29,15 @@ class UserProfileFragment :
     override val layoutResourceId: Int
         get() = com.dida.user_profile.R.layout.fragment_user_profile
 
-    override val viewModel: UserProfileViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: UserProfileViewModel.AssistedFactory
+    override val viewModel: UserProfileViewModel by viewModels {
+        UserProfileViewModel.provideFactory(
+            assistedFactory,
+            userId = args.userId
+        )
+    }
+
     private val navController: NavController by lazy { findNavController() }
     private val args: UserProfileFragmentArgs by navArgs()
 
@@ -40,7 +49,6 @@ class UserProfileFragment :
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
-        viewModel.setUserId(args.userId)
     }
 
     override fun initDataBinding() {

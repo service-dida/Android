@@ -126,17 +126,17 @@
         android:label="CreateCommunityInputFragment">
         <argument
             android:name="cardId"
-            app:argType="long">
-        </argument>
+            app:argType="long"/>
+
         <argument
             android:name="createState"
-            app:argType="boolean">
-        </argument>
+            app:argType="boolean"/>
+
         <argument
             android:name="postId"
             app:argType="long"
-            android:defaultValue="0L">
-        </argument>
+
+            android:defaultValue="0L"/>
         <action
             android:id="@+id/action_communityCommunityInputFragment_to_communityFragment"
             app:destination="@id/communityFragment"
@@ -146,15 +146,14 @@
             app:popUpTo="@+id/communityFragment"/>
     </fragment>
 
-
     <fragment
         android:id="@+id/communityDetailFragment"
         android:name="com.dida.android.presentation.views.DetailCommunityFragment"
         android:label="DetailCommunityFragment">
         <argument
             android:name="postId"
-            app:argType="long">
-        </argument>
+            app:argType="long"/>
+
         <action
             android:id="@+id/action_communityDetailFragment_to_communityCommunityInputFragment"
             app:destination="@id/communityCommunityInputFragment"
@@ -342,7 +341,7 @@
             app:argType="float" />
         <argument
             android:name="swapType"
-            app:argType="com.dida.swap.SwapViewModel$SwapType"
+            app:argType="com.dida.swap.SwapType"
             android:defaultValue="KLAY_TO_DIDA" />
         <action
             android:id="@+id/action_swapLoadingFragment_to_swapSuccessFragment"
@@ -365,7 +364,7 @@
             app:popUpTo="@+id/swapFragment"/>
         <argument
             android:name="swapType"
-            app:argType="com.dida.swap.SwapViewModel$SwapType" />
+            app:argType="com.dida.swap.SwapType" />
     </fragment>
 
     <fragment

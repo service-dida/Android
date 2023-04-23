@@ -35,7 +35,6 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.getSendEmail()
     }
 
     override fun initDataBinding() {

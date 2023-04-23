@@ -1,5 +1,7 @@
 package com.dida.create_community_input
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
@@ -7,13 +9,13 @@ import com.dida.domain.usecase.main.DetailNftAPI
 import com.dida.domain.usecase.main.PostCardIdAPI
 import com.dida.domain.usecase.main.PostIdAPI
 import com.dida.domain.usecase.main.UpdatePostAPI
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class CreateCommunityInputViewModel @Inject constructor(
+class CreateCommunityInputViewModel @AssistedInject constructor(
+    @Assisted("createdState") val createdState: Boolean,
     private val detailNftAPI: DetailNftAPI,
     private val postCardIdAPI: PostCardIdAPI,
     private val postIdAPI: PostIdAPI,
@@ -24,8 +26,6 @@ class CreateCommunityInputViewModel @Inject constructor(
 
     private val _navigationEvent: MutableSharedFlow<CreateCommunityInputNavigationAction> = MutableSharedFlow<CreateCommunityInputNavigationAction>()
     val navigationEvent: SharedFlow<CreateCommunityInputNavigationAction> = _navigationEvent.asSharedFlow()
-
-    val createState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     private val _cardIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
 
@@ -41,8 +41,7 @@ class CreateCommunityInputViewModel @Inject constructor(
     private val _cardTitleState: MutableStateFlow<String> = MutableStateFlow<String>("")
     val cardTitleState: StateFlow<String> = _cardTitleState.asStateFlow()
 
-    val isNewCreate: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(true)
-    val postIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
+    private val postIdState: MutableStateFlow<Long> = MutableStateFlow<Long>(0)
 
     private val _createBtnState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
     val createBtnState: StateFlow<Boolean> = _createBtnState.asStateFlow()
@@ -69,10 +68,6 @@ class CreateCommunityInputViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun isNewCreate(isCreate: Boolean) {
-        isNewCreate.value = isCreate
     }
 
     fun getPostDetail(postId: Long) {
@@ -105,7 +100,7 @@ class CreateCommunityInputViewModel @Inject constructor(
 
     override fun onBackButtonClicked() {
         baseViewModelScope.launch {
-            if (isNewCreate.value) _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
+            if (createdState) _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
         }
     }
 
@@ -113,7 +108,7 @@ class CreateCommunityInputViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             if(titleState.value.isNotBlank() && descriptionState.value.isNotBlank()) {
-                if (isNewCreate.value) {
+                if (createdState) {
                     postCardIdAPI(cardId = _cardIdState.value, title = titleState.value, content = descriptionState.value)
                         .onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
                         .onError { e -> catchError(e) }
@@ -124,6 +119,25 @@ class CreateCommunityInputViewModel @Inject constructor(
                 }
             }
             dismissLoading()
+        }
+    }
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedFactory{
+        fun create(
+            @Assisted("createdState") isCreated: Boolean
+        ): CreateCommunityInputViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: AssistedFactory,
+            createdState: Boolean
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(createdState) as T
+            }
         }
     }
 
