@@ -6,6 +6,8 @@ import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +17,10 @@ import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
+import com.dida.common.ui.report.ReportBottomSheet
+import com.dida.common.ui.report.ReportType
+import com.dida.common.util.EVENT
+import com.dida.common.util.SCREEN
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.DetailCommunityMessageAction
@@ -25,7 +31,6 @@ import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(com.dida.community_detail.R.layout.fragment_detail_community) {
@@ -35,14 +40,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     override val layoutResourceId: Int
         get() = com.dida.community_detail.R.layout.fragment_detail_community
 
-    @Inject
-    lateinit var assistedFactory: DetailCommunityViewModel.AssistedFactory
-    override val viewModel: DetailCommunityViewModel by viewModels {
-        DetailCommunityViewModel.provideFactory(
-            assistedFactory,
-            postId = args.postId
-        )
-    }
+    override val viewModel: DetailCommunityViewModel by viewModels()
     private val navController by lazy { findNavController() }
     private val args: DetailCommunityFragmentArgs by navArgs()
     private val commentsAdapter by lazy { CommentsAdapter(viewModel) }
@@ -62,15 +60,17 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when(it) {
-                        is DetailCommunityNavigationAction.NavigateToNotWriterMore -> showReportBalloon(userId = it.userId, view = binding.moreButton)
+                        is DetailCommunityNavigationAction.NavigateToNotWriterMore -> showReportBalloon(postId = it.postId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToWriterMore -> showUpdateBalloon(postId = it.postId, view = binding.moreButton)
                         is DetailCommunityNavigationAction.NavigateToBack -> navController.popBackStack()
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
-                        is DetailCommunityNavigationAction.NavigateToReport -> {}
-                        is DetailCommunityNavigationAction.NavigateToBlock -> {}
+                        is DetailCommunityNavigationAction.NavigateToUserReport -> showReportDialog(it.userId)
+                        is DetailCommunityNavigationAction.NavigateToUserBlock -> {}
                         is DetailCommunityNavigationAction.NavigateToUpdate -> {}
-                        is DetailCommunityNavigationAction.NavigateToDelete -> deleteCommentAlert(commentId = it.commentId)
+                        is DetailCommunityNavigationAction.NavigateToDelete -> showDeleteCommentDialog(commentId = it.commentId)
+                        is DetailCommunityNavigationAction.NavigateToPostReport -> showPostReportDialog(postId = it.postId)
+                        is DetailCommunityNavigationAction.NavigateToPostBlock -> {}
                     }
                 }
             }
@@ -86,10 +86,27 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.commentList.collectLatest {
-                commentsAdapter.submitList(it)
-                if (viewModel.isWrite.value) keyboardHide()
+            launch {
+                viewModel.commentList.collectLatest {
+                    commentsAdapter.submitList(it)
+                    if (viewModel.isWrite.value) keyboardHide()
+                }
             }
+
+            launch {
+                viewModel.navigateToReportSuccessEvent.collectLatest {
+                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
+                    navController.popBackStack()
+                }
+            }
+
+            launch {
+                viewModel.navigateToBlockSuccessEvent.collectLatest {
+                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.BLOCK to true))
+                    navController.popBackStack()
+                }
+            }
+
         }
     }
 
@@ -97,7 +114,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     override fun onResume() {
         super.onResume()
-        viewModel.getPost()
+        viewModel.getPost(args.postId)
     }
 
     private fun initToolbar(){
@@ -111,7 +128,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         binding.detailCommunityMain.adapter = commentsAdapter
     }
 
-    private fun deletePostAlert(postId: Long) {
+    private fun showDeleteDialog(postId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_post_title))
             .message(getString(com.dida.common.R.string.delete_post_description))
@@ -125,7 +142,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .show(childFragmentManager, "delete_post_dialog")
     }
 
-    private fun deleteCommentAlert(commentId: Long) {
+    private fun showDeleteCommentDialog(commentId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.delete_comment_title))
             .message(getString(com.dida.common.R.string.delete_comment_description))
@@ -156,11 +173,11 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .view(binding.root)
             .message(message)
             .build()
-        viewModel.getPost()
+        viewModel.getPost(args.postId)
     }
 
     private fun showReportBalloon(
-        userId: Long,
+        postId: Long,
         view: View
     ) {
         val balloon = DefaultBalloon.Builder()
@@ -168,13 +185,13 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 label = getString(com.dida.common.R.string.report_message_balloon),
                 icon = com.dida.common.R.drawable.ic_report,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() {}
+                    override fun onClick() = viewModel.onPostReport(postId = postId)
                 })
             .secondButton(
                 label = getString(com.dida.common.R.string.block_message_balloon),
                 icon = com.dida.common.R.drawable.ic_block,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() {}
+                    override fun onClick() = viewModel.onPostBlock(postId = postId)
                 })
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
@@ -200,11 +217,31 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 icon = com.dida.common.R.drawable.ic_delete,
                 listener = object : DefaultBalloon.OnClickListener {
                     override fun onClick() {
-                        deletePostAlert(postId)
+                        showDeleteDialog(postId)
                     }
                 })
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
         view.showAlignBottom(balloon)
+    }
+
+    private fun showReportDialog(userId: Long) {
+        ReportBottomSheet { confirm, content ->
+            if (confirm) viewModel.onReport(
+                type = ReportType.USER,
+                reportId = userId,
+                content = content
+            )
+        }.show(childFragmentManager, "Report Dialog")
+    }
+
+    private fun showPostReportDialog(postId: Long) {
+        ReportBottomSheet { confirm, content ->
+            if (confirm) viewModel.onReport(
+                type = ReportType.POST,
+                reportId = postId,
+                content = content
+            )
+        }.show(childFragmentManager, "Report Dialog")
     }
 }

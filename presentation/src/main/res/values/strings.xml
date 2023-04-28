@@ -136,6 +136,8 @@
     <string name="logout_dialog_negative">취소</string>
 
     <string name="create_post_dialog_message">게시글 작성이\n완료되었어요</string>
+    <string name="report_dialog_message">게시글 신고가\n완료되었어요</string>
+    <string name="block_dialog_message">게시글 차단이\n완료되었어요</string>
 
     <!-- Snack Bar-->
     <string name="user_follow_message">%s님을 팔로우 했어요</string>

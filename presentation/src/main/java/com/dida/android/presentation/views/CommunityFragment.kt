@@ -6,16 +6,14 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.common.adapter.CommunityPagingAdapter
 import com.dida.common.dialog.CompleteDialogFragment
-import com.dida.common.util.repeatOnStarted
-import com.dida.common.util.successOrNull
+import com.dida.common.ui.report.ReportBottomSheet
+import com.dida.common.ui.report.ReportType
+import com.dida.common.util.*
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
-import com.dida.community.adapter.HotCardAdapter
 import com.dida.community.adapter.HotCardsContainerAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.model.main.HotCards
-import com.dida.domain.model.main.HotItems
-import com.dida.home.adapter.HotsContainerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -50,7 +48,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                     is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
                     is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
                     is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
-                    is CommunityNavigationAction.NavigateToReport -> {}
+                    is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
                     is CommunityNavigationAction.NavigateToBlock -> {}
                     is CommunityNavigationAction.NavigateToUpdate -> {}
                     is CommunityNavigationAction.NavigateToDelete -> {}
@@ -73,6 +71,18 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                     }
                 }
             }
+
+            launch {
+                viewModel.navigateToReportSuccessEvent.collectLatest {
+                    communityPagingAdapter.refresh()
+                }
+            }
+
+            launch {
+                viewModel.navigateToBlockSuccessEvent.collectLatest {
+                    communityPagingAdapter.refresh()
+                }
+            }
         }
     }
 
@@ -80,8 +90,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override fun onResume() {
         super.onResume()
-        setFragmentResultListener("createDialogCheck") { _, bundle ->
-            if (bundle.getBoolean("isCreated")) showCreateCompleteDialog()
+        setFragmentResultListener(SCREEN.COMMUNITY) { _, bundle ->
+            if (bundle.getBoolean(EVENT.CREATE)) showCreateCompleteDialog()
+            if (bundle.getBoolean(EVENT.REPORT)) showReportCompleteDialog()
+            if (bundle.getBoolean(EVENT.BLOCK)) showBlockCompleteDialog()
         }
         communityPagingAdapter.refresh()
         getLastScrollY()
@@ -113,5 +125,29 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             .message(getString(R.string.create_post_dialog_message))
             .build()
             .show(childFragmentManager, "complete_dialog")
+    }
+
+    private fun showReportCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.report_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
+    }
+
+    private fun showBlockCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.block_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
+    }
+
+    private fun showReportDialog(postId: Long) {
+        ReportBottomSheet { confirm, content ->
+            if (confirm) viewModel.onReport(
+                type = ReportType.POST,
+                reportId = postId,
+                content = content
+            )
+        }.show(childFragmentManager, "Report Dialog")
     }
 }

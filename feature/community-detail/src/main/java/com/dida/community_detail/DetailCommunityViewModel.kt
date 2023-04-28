@@ -1,9 +1,10 @@
 package com.dida.community_detail
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.ui.report.ReportType
+import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.main.Comments
@@ -11,21 +12,21 @@ import com.dida.domain.model.main.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DetailCommunityViewModel @AssistedInject constructor(
-    @Assisted("postId") val postId: Long,
+@HiltViewModel
+class DetailCommunityViewModel @Inject constructor(
     private val postIdAPI: PostIdAPI,
     private val commentsPostIdAPI: CommentsPostIdAPI,
     private val commentAPI: CommentAPI,
     private val deleteCommentAPI: DeleteCommentAPI,
-    private val deletePostAPI: DeletePostAPI
-) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler {
+    private val deletePostAPI: DeletePostAPI,
+    reportViewModelDelegate: ReportViewModelDelegate
+) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler,
+    ReportViewModelDelegate by reportViewModelDelegate {
 
     private val TAG = "DetailCommunityViewModel"
 
@@ -45,7 +46,7 @@ class DetailCommunityViewModel @AssistedInject constructor(
 
     val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
 
-    fun getPost() {
+    fun getPost(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postIdAPI.invoke(postId = postId)
@@ -87,7 +88,7 @@ class DetailCommunityViewModel @AssistedInject constructor(
     override fun onCommunityMoreClicked(userId: Long, postId: Long) {
         baseViewModelScope.launch {
             if (DataApplication.dataStorePreferences.getUserId() != userId) {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(userId))
+                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(postId))
             } else {
                 _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToWriterMore(postId))
             }
@@ -100,15 +101,27 @@ class DetailCommunityViewModel @AssistedInject constructor(
         }
     }
 
+    fun onPostReport(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostReport(postId = postId))
+        }
+    }
+
+    fun onPostBlock(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostBlock(postId = postId))
+        }
+    }
+
     override fun onReportClicked(userId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToReport(userId = userId))
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserReport(userId = userId))
         }
     }
 
     override fun onBlockClicked(userId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBlock(userId = userId))
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserBlock(userId = userId))
         }
     }
 
@@ -136,6 +149,10 @@ class DetailCommunityViewModel @AssistedInject constructor(
         }
     }
 
+    fun onReport(type: ReportType, reportId: Long, content: String) {
+        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
+    }
+
     fun onDeletePost(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
@@ -146,25 +163,6 @@ class DetailCommunityViewModel @AssistedInject constructor(
                 }
                 .onError { e -> catchError(e) }
             dismissLoading()
-        }
-    }
-
-    @dagger.assisted.AssistedFactory
-    interface AssistedFactory{
-        fun create(
-            @Assisted("postId") postId: Long
-        ): DetailCommunityViewModel
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: AssistedFactory,
-            postId: Long
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(postId) as T
-            }
         }
     }
 }

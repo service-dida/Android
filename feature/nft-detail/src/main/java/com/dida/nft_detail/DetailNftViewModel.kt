@@ -1,10 +1,11 @@
 package com.dida.nft_detail
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.ui.report.ReportType
+import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
@@ -16,21 +17,23 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
 import com.dida.nft_detail.bottom.DetailOwnerType
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailNftViewModel @AssistedInject constructor(
-    @Assisted("cardId") val cardId: Long,
+@HiltViewModel
+class DetailNftViewModel @Inject constructor(
     private val detailNftAPI: DetailNftAPI,
     private val postLikeAPI: PostLikeAPI,
     private val postsCardCardIdAPI: PostsCardCardIdAPI,
     private val sellNftAPI: SellNftAPI,
     private val hideNftAPI: HideNftAPI,
-    private val deleteNftAPI: DeleteNftAPI
-) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler {
+    private val deleteNftAPI: DeleteNftAPI,
+    reportViewModelDelegate: ReportViewModelDelegate
+) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler,
+    ReportViewModelDelegate by reportViewModelDelegate {
 
     private val TAG = "DetailNftViewModel"
 
@@ -45,14 +48,17 @@ class DetailNftViewModel @AssistedInject constructor(
 
     val detailOwnerTypeState: NoCompareMutableStateFlow<DetailOwnerType> = NoCompareMutableStateFlow(DetailOwnerType.ALL)
 
-    init {
+    private val cardIdState: MutableStateFlow<Long> = MutableStateFlow(0)
+
+    fun setCardId(cardId: Long) {
+        cardIdState.value = cardId
         onGetDetailCard()
         onGetCommunity()
     }
 
     private fun onGetDetailCard() {
         baseViewModelScope.launch {
-            detailNftAPI(cardId)
+            detailNftAPI(cardIdState.value)
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _detailNftState.value = UiState.Success(it)
@@ -65,7 +71,7 @@ class DetailNftViewModel @AssistedInject constructor(
 
     private fun onGetCommunity() {
         baseViewModelScope.launch {
-            postsCardCardIdAPI(cardId = cardId)
+            postsCardCardIdAPI(cardId = cardIdState.value)
                 .onSuccess { _communityState.value = it }
                 .onError { e -> catchError(e) }
         }
@@ -74,7 +80,7 @@ class DetailNftViewModel @AssistedInject constructor(
     fun onLikePost() {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(cardId)
+            postLikeAPI(cardIdState.value)
                 .onSuccess { onGetDetailCard() }
                 .onError { e -> catchError(e) }
         }
@@ -83,7 +89,7 @@ class DetailNftViewModel @AssistedInject constructor(
     fun onSellCard(payPwd: String, price: Double) {
         baseViewModelScope.launch {
             showLoading()
-            sellNftAPI(payPwd, cardId, price)
+            sellNftAPI(payPwd, cardIdState.value, price)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
@@ -94,7 +100,7 @@ class DetailNftViewModel @AssistedInject constructor(
     fun onHideCard() {
         baseViewModelScope.launch {
             showLoading()
-            hideNftAPI(cardId)
+            hideNftAPI(cardIdState.value)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
                 }
@@ -105,12 +111,16 @@ class DetailNftViewModel @AssistedInject constructor(
     fun deleteNft(password : String) {
         baseViewModelScope.launch {
             showLoading()
-            deleteNftAPI(cardId, password)
+            deleteNftAPI(cardIdState.value, password)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }
                 .onError { e -> catchError(e) }
         }
+    }
+
+    fun onReport(type: ReportType, reportId: Long, content: String) {
+        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
     }
 
     private fun setDetailOwnerType(detailNFT: DetailNft) {
@@ -192,10 +202,6 @@ class DetailNftViewModel @AssistedInject constructor(
         }
     }
 
-    // TODO : 클립 버튼으로 처리
-    override fun onClipOrMoreClicked(postId: Long) {
-    }
-
     // TODO : 신고 및 차단 & 수정 삭제 플로우 추가하기
     override fun onReportClicked(userId: Long) {
         baseViewModelScope.launch {
@@ -218,25 +224,6 @@ class DetailNftViewModel @AssistedInject constructor(
     override fun onDeleteClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToDelete(postId))
-        }
-    }
-
-    @dagger.assisted.AssistedFactory
-    interface AssistedFactory{
-        fun create(
-            @Assisted("cardId") cardId: Long
-        ): DetailNftViewModel
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: AssistedFactory,
-            cardId: Long
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(cardId) as T
-            }
         }
     }
 }

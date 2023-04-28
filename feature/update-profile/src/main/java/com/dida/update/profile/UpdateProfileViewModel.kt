@@ -76,19 +76,19 @@ class UpdateProfileViewModel @Inject constructor(
             }
             launch {
                 nickNameState.debounce(500).collect {
-                    if(it == currentNickname){
+                    if (it == currentNickname) {
                         setNicknameVerify(4)
                         _nickNameCheckState.value = false
                     } else {
-                        if(it.isEmpty()) { setNicknameVerify(0) }
-                        else if(it.length > 8) { setNicknameVerify(1) }
-                        else { nicknameAPIServer(it) }
+                        if (it.isEmpty()) setNicknameVerify(0)
+                        else if (it.length > 8) setNicknameVerify(1)
+                        else nicknameAPIServer(it)
                     }
                 }
             }
 
             launch {
-                descriptionState.collect{
+                descriptionState.collect {
                     _descriptionCheckState.value = it.length <= 30
                     updateCheck()
                 }
@@ -101,8 +101,8 @@ class UpdateProfileViewModel @Inject constructor(
             nicknameCheckAPI(nickName)
                 .onSuccess {
                     _nickNameCheckState.value = it.used
-                    if(it.used) { setNicknameVerify(2) }
-                    else { setNicknameVerify(3) }
+                    if (it.used) setNicknameVerify(2)
+                    else setNicknameVerify(3)
                 }.onError { e ->
                     setNicknameVerify(0)
                     _nickNameCheckState.value = true
@@ -136,17 +136,17 @@ class UpdateProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             val deferreds : MutableList<Deferred<NetworkResult<Unit>>> = mutableListOf()
-            if(currentProfileImage != profileImageState.value){
+            if (currentProfileImage != profileImageState.value) {
                 deferreds.add(async {
                     updateProfileImageAPI(profileImageMultipartState.value!!).onError { e -> catchError(e) }
                 })
             }
-            if(currentNickname != nickNameState.value) {
+            if (currentNickname != nickNameState.value) {
                 deferreds.add(async {
                     updateProfileNicknameAPI(nickname = nickNameState.value).onError { e -> catchError(e) }
                 })
             }
-            if(currentDescription != descriptionState.value) {
+            if (currentDescription != descriptionState.value) {
                 deferreds.add(async {
                     updateProfileDescriptionAPI(description = descriptionState.value).onError { e -> catchError(e) }
                 })

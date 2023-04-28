@@ -131,4 +131,10 @@ interface  MainRepository {
     suspend fun getHotUser(page: Int): NetworkResult<List<HotUser>>
 
     suspend fun getHotSeller(page: Int): NetworkResult<List<HotSellerMore>>
+
+    suspend fun postReportUser(userId: Long, content: String): NetworkResult<Unit>
+
+    suspend fun postReportPost(postId: Long, content: String): NetworkResult<Unit>
+
+    suspend fun postReportCard(cardId: Long, content: String): NetworkResult<Unit>
 }

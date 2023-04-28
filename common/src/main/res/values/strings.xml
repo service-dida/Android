@@ -149,4 +149,15 @@
     <string name="sale_card_message_balloon">판매하기</string>
     <string name="update_message_balloon">수정하기</string>
     <string name="delete_message_balloon">삭제하기</string>
+
+    <!-- 신고하기 -->
+    <string name="report_title">신고하기</string>
+    <string name="report_message1">스팸 및 도배 내용</string>
+    <string name="report_message2">광고 및 홍보 내용</string>
+    <string name="report_message3">음란물 또는 성적인 내용</string>
+    <string name="report_message4">개인정보 노출</string>
+    <string name="report_message5">기타</string>
+    <string name="report_caution_message">허위 신고 시 서비스 이용에 제한을 받을 수 있습니다.</string>
+    <string name="report_hint">직접 작성하기</string>
 </resources>
+
