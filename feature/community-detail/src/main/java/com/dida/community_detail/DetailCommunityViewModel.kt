@@ -1,6 +1,8 @@
 package com.dida.community_detail
 
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.ui.report.ReportType
@@ -12,13 +14,15 @@ import com.dida.domain.model.main.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class DetailCommunityViewModel @Inject constructor(
+class DetailCommunityViewModel @AssistedInject constructor(
+    @Assisted("postId") val postId: Long,
     private val postIdAPI: PostIdAPI,
     private val commentsPostIdAPI: CommentsPostIdAPI,
     private val commentAPI: CommentAPI,
@@ -46,7 +50,7 @@ class DetailCommunityViewModel @Inject constructor(
 
     val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
 
-    fun getPost(postId: Long) {
+    fun getPost() {
         baseViewModelScope.launch {
             showLoading()
             postIdAPI.invoke(postId = postId)
@@ -63,9 +67,7 @@ class DetailCommunityViewModel @Inject constructor(
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
             deleteCommentAPI(commentId = commentId)
-                .onSuccess {
-                    _messageEvent.emit(DetailCommunityMessageAction.DeleteReplyMessage)
-                    getPost(postId = postState.value!!.postId) }
+                .onSuccess { _messageEvent.emit(DetailCommunityMessageAction.DeleteReplyMessage) }
                 .onError { e -> catchError(e) }
         }
     }
@@ -165,6 +167,25 @@ class DetailCommunityViewModel @Inject constructor(
                 }
                 .onError { e -> catchError(e) }
             dismissLoading()
+        }
+    }
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedFactory{
+        fun create(
+            @Assisted("postId") postId: Long
+        ): DetailCommunityViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: AssistedFactory,
+            postId: Long
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(postId) as T
+            }
         }
     }
 }

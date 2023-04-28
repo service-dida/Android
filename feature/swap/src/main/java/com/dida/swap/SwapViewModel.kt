@@ -22,11 +22,6 @@ class SwapViewModel @Inject constructor(
 
     private val TAG = "SwapViewModel"
 
-    enum class SwapType {
-        KLAY_TO_DIDA,
-        DIDA_TO_KLAY
-    }
-
     private val _navigationEvent: MutableSharedFlow<SwapNavigationAction> = MutableSharedFlow<SwapNavigationAction>()
     val navigationEvent: SharedFlow<SwapNavigationAction> = _navigationEvent
 
@@ -92,4 +87,9 @@ class SwapViewModel @Inject constructor(
             setWalletAmount()
         }
     }
+}
+
+enum class SwapType {
+    KLAY_TO_DIDA,
+    DIDA_TO_KLAY
 }

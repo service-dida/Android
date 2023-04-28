@@ -17,7 +17,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 
-
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,

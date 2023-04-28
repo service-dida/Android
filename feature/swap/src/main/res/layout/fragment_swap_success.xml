@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.dida.swap.SwapViewModel.SwapType" />
+        <import type="com.dida.swap.SwapType" />
         <variable
             name="vm"
             type="com.dida.swap.success.SwapSuccessViewModel" />
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:gravity="center"
-            android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klaytoDida_success_text : @string/swap_DidaToKlay_success_text}"
+            android:text="@{vm.swapType==SwapType.KLAY_TO_DIDA? @string/swap_klaytoDida_success_text : @string/swap_DidaToKlay_success_text}"
             tools:text="@string/swap_klaytoDida_success_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

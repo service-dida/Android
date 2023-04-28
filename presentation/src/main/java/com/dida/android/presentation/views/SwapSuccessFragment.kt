@@ -9,6 +9,7 @@ import com.dida.swap.success.SwapSuccessViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccessViewModel>(com.dida.swap.R.layout.fragment_swap_success) {
@@ -18,7 +19,14 @@ class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccess
     override val layoutResourceId: Int
         get() = com.dida.swap.R.layout.fragment_swap_success
 
-    override val viewModel : SwapSuccessViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: SwapSuccessViewModel.AssistedFactory
+    override val viewModel: SwapSuccessViewModel by viewModels {
+        SwapSuccessViewModel.provideFactory(
+            assistedFactory,
+            swapType = args.swapType
+        )
+    }
 
     private val args: SwapSuccessFragmentArgs by navArgs()
     override fun initStartView() {
@@ -27,7 +35,6 @@ class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccess
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        viewModel.initSuccessData(args.swapType)
     }
 
     override fun initDataBinding() {

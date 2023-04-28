@@ -10,16 +10,27 @@ import com.dida.nickname.databinding.FragmentNicknameBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel>(com.dida.nickname.R.layout.fragment_nickname) {
+class NicknameFragment :
+    BaseFragment<FragmentNicknameBinding, NicknameViewModel>(com.dida.nickname.R.layout.fragment_nickname) {
 
     private val TAG = "NicknameFragment"
 
     override val layoutResourceId: Int
         get() = com.dida.nickname.R.layout.fragment_nickname // get() : 커스텀 접근자, 코틀린 문법
 
-    override val viewModel : NicknameViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: NicknameViewModel.AssistedFactory
+    override val viewModel: NicknameViewModel by viewModels {
+        NicknameViewModel.provideFactory(
+            assistedFactory,
+            email = args.email
+        )
+    }
+
+    private val args: NicknameFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {
@@ -27,8 +38,7 @@ class NicknameFragment : BaseFragment<FragmentNicknameBinding, NicknameViewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        val args: NicknameFragmentArgs by navArgs()
-        viewModel.emailState.value = args.email
+
     }
 
     override fun initDataBinding() {

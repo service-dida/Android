@@ -17,6 +17,7 @@ import com.dida.create_community_input.databinding.FragmentCreateCommunityInputB
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBinding, CreateCommunityInputViewModel>(com.dida.create_community_input.R.layout.fragment_create_community_input) {
@@ -26,7 +27,15 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
     override val layoutResourceId: Int
         get() = com.dida.create_community_input.R.layout.fragment_create_community_input
 
-    override val viewModel : CreateCommunityInputViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: CreateCommunityInputViewModel.AssistedFactory
+    override val viewModel: CreateCommunityInputViewModel by viewModels {
+        CreateCommunityInputViewModel.provideFactory(
+            assistedFactory,
+            createdState = args.createState
+        )
+    }
+
     private val navController by lazy { findNavController() }
     private val args: CreateCommunityInputFragmentArgs by navArgs()
 
@@ -37,9 +46,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
         }
         exception = viewModel.errorEvent
         initToolbar()
-        viewModel.createState.value = args.createState
-        viewModel.isNewCreate(isCreate = args.createState)
-
+        initView()
     }
 
     override fun initDataBinding() {
@@ -54,16 +61,14 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
                 }
             }
         }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.isNewCreate.collectLatest {
-                if(it) viewModel.getCardDetail(cardId = args.cardId)
-                else viewModel.getPostDetail(postId = args.postId)
-            }
-        }
     }
 
     override fun initAfterBinding() {
+    }
+
+    private fun initView() {
+        if(viewModel.createdState) viewModel.getCardDetail(cardId = args.cardId)
+        else viewModel.getPostDetail(postId = args.postId)
     }
 
     private fun initToolbar() {

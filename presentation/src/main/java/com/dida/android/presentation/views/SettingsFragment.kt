@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.common.dialog.CentralDialogFragment
-import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.settings.SettingsNavigationAction
 import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding

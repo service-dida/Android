@@ -21,12 +21,15 @@ import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
 import com.dida.common.util.*
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.community_detail.*
+import com.dida.community_detail.DetailCommunityMessageAction
+import com.dida.community_detail.DetailCommunityNavigationAction
+import com.dida.community_detail.DetailCommunityViewModel
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
 import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(com.dida.community_detail.R.layout.fragment_detail_community) {
@@ -36,7 +39,14 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     override val layoutResourceId: Int
         get() = com.dida.community_detail.R.layout.fragment_detail_community
 
-    override val viewModel : DetailCommunityViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: DetailCommunityViewModel.AssistedFactory
+    override val viewModel: DetailCommunityViewModel by viewModels {
+        DetailCommunityViewModel.provideFactory(
+            assistedFactory,
+            postId = args.postId
+        )
+    }
     private val navController by lazy { findNavController() }
     private val args: DetailCommunityFragmentArgs by navArgs()
     private val commentsAdapter by lazy { CommentsAdapter(viewModel) }
@@ -110,7 +120,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     override fun onResume() {
         super.onResume()
-        viewModel.getPost(args.postId)
+        viewModel.getPost()
     }
 
     private fun initToolbar(){
@@ -169,6 +179,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .view(binding.root)
             .message(message)
             .build()
+        viewModel.getPost()
     }
 
     private fun showReportBalloon(

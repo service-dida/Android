@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{vm.createState ? @string/create_community_title : @string/create_community_input_update}" />
+                android:text="@{vm.createdState ? @string/create_community_title : @string/create_community_input_update}" />
         </Toolbar>
 
         <TextView

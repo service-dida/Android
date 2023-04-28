@@ -33,6 +33,7 @@ class EmailViewModel @Inject constructor(
                 verifyNumberCheck(it)
             }
         }
+        getSendEmail()
     }
 
     // 비밀번호 받아오기

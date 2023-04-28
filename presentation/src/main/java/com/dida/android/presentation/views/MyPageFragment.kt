@@ -2,8 +2,6 @@ package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
 import com.dida.mypage.MyPageViewModel
