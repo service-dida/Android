@@ -9,9 +9,10 @@ import com.dida.common.R
 import com.dida.common.base.BaseBottomSheetDialogFragment
 import com.dida.common.databinding.DialogBottomReportBinding
 import com.dida.common.util.repeatOnResumed
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 
 class ReportBottomSheet(
     val callback: (reportConfirm: Boolean, content: String) -> Unit
@@ -23,6 +24,17 @@ class ReportBottomSheet(
 
     private val reportCodeAdapter: ReportCodeAdapter by lazy {
         ReportCodeAdapter(viewModel, viewLifecycleOwner)
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+        override fun afterTextChanged(s: Editable?) {
+            binding.reportContents.let {
+                if (!it.text.isNullOrBlank()) viewModel.setEnableConfirm(true)
+                else viewModel.setEnableConfirm(false)
+            }
+        }
     }
 
     override fun initStartView() {
@@ -71,30 +83,7 @@ class ReportBottomSheet(
             }
         }
 
-        binding.reportContents.addTextChangedListener(
-            object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) = Unit
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
-                    Unit
-
-                override fun afterTextChanged(s: Editable?) {
-                    binding.reportContents.let {
-                        if (!it.text.isNullOrBlank()) viewModel.setEnableConfirm(true)
-                        else viewModel.setEnableConfirm(false)
-                    }
-                }
-            }
-        )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
+        binding.reportContents.addTextChangedListener(textWatcher)
     }
 
     private fun setReportContentsEnable(enable: Boolean) {
@@ -107,7 +96,7 @@ class ReportBottomSheet(
 
         if (enable) {
             Handler(Looper.getMainLooper()).post {
-                binding.reportScrollView.smoothScrollTo(0, binding.reportPaddingView.scrollY)
+                binding.reportScrollView.smoothScrollTo(0, binding.reportPaddingView.bottom)
             }
         }
     }
