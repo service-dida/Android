@@ -1,8 +1,6 @@
 package com.dida.community_detail
 
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.ui.report.ReportType
@@ -14,21 +12,19 @@ import com.dida.domain.model.main.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.*
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DetailCommunityViewModel @AssistedInject constructor(
-    @Assisted("postId") val postId: Long,
+@HiltViewModel
+class DetailCommunityViewModel @Inject constructor(
     private val postIdAPI: PostIdAPI,
     private val commentsPostIdAPI: CommentsPostIdAPI,
     private val commentAPI: CommentAPI,
     private val deleteCommentAPI: DeleteCommentAPI,
     private val deletePostAPI: DeletePostAPI,
-    private val reportViewModelDelegate: ReportViewModelDelegate
+    reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
 
@@ -50,7 +46,7 @@ class DetailCommunityViewModel @AssistedInject constructor(
 
     val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
 
-    fun getPost() {
+    fun getPost(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
             postIdAPI.invoke(postId = postId)
@@ -167,25 +163,6 @@ class DetailCommunityViewModel @AssistedInject constructor(
                 }
                 .onError { e -> catchError(e) }
             dismissLoading()
-        }
-    }
-
-    @dagger.assisted.AssistedFactory
-    interface AssistedFactory{
-        fun create(
-            @Assisted("postId") postId: Long
-        ): DetailCommunityViewModel
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: AssistedFactory,
-            postId: Long
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(postId) as T
-            }
         }
     }
 }

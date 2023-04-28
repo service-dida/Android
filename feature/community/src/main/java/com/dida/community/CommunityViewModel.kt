@@ -25,28 +25,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    private val postsAPI: PostsAPI,
+    postsAPI: PostsAPI,
     private val hotCardAPI: HotCardAPI,
-    private val reportViewModelDelegate: ReportViewModelDelegate
+    reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
 
     private val TAG = "CommunityViewModel"
 
-    private val _myWriteState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
-    val myWriteState: StateFlow<Boolean> = _myWriteState
-
-    private val _moreEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val moreEvent: SharedFlow<Unit> = _moreEvent
-
-    private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> =
-        MutableSharedFlow<CommunityNavigationAction>()
+    private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
+    val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent.asSharedFlow()
 
     val postsState: Flow<PagingData<Posts>> = createPostsPager(postsAPI = postsAPI)
         .flow.cachedIn(baseViewModelScope)
 
-    private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> =
-        MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
+    private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
     val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
 
 

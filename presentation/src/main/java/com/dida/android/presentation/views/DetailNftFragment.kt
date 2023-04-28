@@ -1,21 +1,14 @@
 package com.dida.android.presentation.views
 
-import android.view.View
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
-import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
-import com.dida.common.util.EVENT
-import com.dida.common.util.SCREEN
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.nft.sale.AddSaleNftBottomSheet
@@ -25,11 +18,9 @@ import com.dida.nft_detail.bottom.DetailNftBottomSheet
 import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
-import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.nft_detail.R.layout.fragment_detail_nft) {
@@ -39,14 +30,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     override val layoutResourceId: Int
         get() = com.dida.nft_detail.R.layout.fragment_detail_nft
 
-    @Inject
-    lateinit var assistedFactory: DetailNftViewModel.AssistedFactory
-    override val viewModel: DetailNftViewModel by viewModels {
-        DetailNftViewModel.provideFactory(
-            assistedFactory,
-            cardId = args.cardId
-        )
-    }
+    override val viewModel: DetailNftViewModel by viewModels()
 
     private val navController: NavController by lazy { findNavController() }
     private val args: DetailNftFragmentArgs by navArgs()
@@ -58,6 +42,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        viewModel.setCardId(args.cardId)
         initToolbar()
         initAdapter()
     }
