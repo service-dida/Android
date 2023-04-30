@@ -3,6 +3,7 @@ package com.dida.android.presentation.views
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -51,6 +52,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
                 when (it) {
                     is WalletNavigationAction.NavigateToBack -> navController.popBackStack()
                     is WalletNavigationAction.NavigateToSwapHistory -> navigate(WalletFragmentDirections.actionWalletFragmentToSwapHistoryFragment())
+                    is WalletNavigationAction.NavigateToHotCard -> {}
                 }
             }
         }
@@ -64,6 +66,8 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
 
             launch {
                 viewModel.currentHistoryState.collectLatest {
+                    binding.emptyView.isVisible = it.isEmpty()
+                    binding.nftHistoryRecyclerView.isVisible = it.isNotEmpty()
                     walletHistoryAdapter.submitList(it)
                 }
             }
