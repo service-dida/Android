@@ -97,7 +97,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/create_community_empty_create_button_text"/>
+                android:text="@string/create_community_empty_create_button_text"
+                app:onSingleClick="@{() -> vm.onCreateButtonClicked()}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
