@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -81,6 +82,8 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.communityState.collectLatest {
+                    binding.emptyView.isVisible = it.isEmpty()
+                    binding.communityRecycler.isVisible = it.isNotEmpty()
                     communityAdapter.submitList(it)
                 }
             }
