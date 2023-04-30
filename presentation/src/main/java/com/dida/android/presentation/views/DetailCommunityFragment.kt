@@ -7,6 +7,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.findViewTreeLifecycleOwner
@@ -88,6 +90,8 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.commentList.collectLatest {
+                    binding.emptyView.isVisible = it.isEmpty()
+//                    binding.detailCommunityMain.isVisible = it.isNotEmpty()
                     commentsAdapter.submitList(it)
                     if (viewModel.isWrite.value) keyboardHide()
                 }
