@@ -48,4 +48,16 @@ class CreateCommunityViewModel @Inject constructor(
             _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToSelectNft(cardId = cardId))
         }
     }
+
+    override fun onLikeButtonClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToCreate)
+        }
+    }
+
+    override fun onCreateButtonClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToLike)
+        }
+    }
 }
