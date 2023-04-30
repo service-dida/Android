@@ -34,6 +34,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:fillViewport="true"
             android:clipToPadding="false"
             android:overScrollMode="never">
 
@@ -279,7 +280,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/constraintLayout"
-                    android:paddingTop="100dp">
+                    android:paddingTop="100dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/empty_title"

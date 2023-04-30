@@ -53,6 +53,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             viewModel.hasMyNftState.collectLatest {
                 it.successOrNull()?.let { userCards ->
                     binding.emptyView.isVisible = userCards.isEmpty()
+                    binding.rvUserNft.isVisible = userCards.isNotEmpty()
                 }
             }
         }
