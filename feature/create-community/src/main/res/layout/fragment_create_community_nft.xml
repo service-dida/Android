@@ -22,8 +22,85 @@
             android:paddingVertical="24dp"
             android:clipToPadding="false"
             tools:listitem="@layout/holder_create_community_nft"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
-        </androidx.recyclerview.widget.RecyclerView>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/like_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/empty_like_button"
+                android:text="@string/create_community_like_empty_text"
+                android:textColor="@color/white_50"
+                android:textSize="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:id="@+id/empty_like_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:textColor="@color/mainblack"
+                android:background="@drawable/custom_brandlemon_radius10"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/create_community_empty_like_button_text"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/create_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/empty_create_button"
+                android:text="@string/create_community_create_empty_text"
+                android:textColor="@color/white_50"
+                android:textSize="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:id="@+id/empty_create_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:textColor="@color/mainblack"
+                android:background="@drawable/custom_brandlemon_radius10"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/create_community_empty_create_button_text"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -75,7 +75,7 @@ class CreateCommunityInputViewModel @AssistedInject constructor(
             postIdState.value = postId
             postIdAPI(postId = postId)
                 .onSuccess {
-                    _cardIdState.value = it.cardId.toLong()
+                    _cardIdState.value = it.cardId
                     _cardImgState.value = it.cardImgUrl
                     _cardTitleState.value = it.title
                     _userImgState.value = it.userImgUrl
