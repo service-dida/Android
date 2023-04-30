@@ -5,4 +5,5 @@ sealed class MypageNavigationAction {
     object NavigateToEmail: MypageNavigationAction()
     object NavigateToWallet : MypageNavigationAction()
     class NavigateToDetailNft(val cardId: Long) : MypageNavigationAction()
+    object NavigateToCreate: MypageNavigationAction()
 }

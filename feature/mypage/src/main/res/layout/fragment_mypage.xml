@@ -258,7 +258,6 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!--TODO : NFT아이템 비율 맞춰야함-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_userNft"
                     rv_endLoading="@{vm.myPageState}"
@@ -274,6 +273,60 @@
                     android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/holder_mypage_user_cards"
                     app:userNftItem="@{vm.hasMyNftState}" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayout"
+                    android:paddingTop="100dp">
+
+                    <TextView
+                        android:id="@+id/empty_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@id/empty_description"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/empty_text_message"
+                        android:textColor="@color/white_50"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:layout_marginBottom="18dp"/>
+
+                    <TextView
+                        android:id="@+id/empty_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@id/empty_create_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/empty_text_description"
+                        android:textColor="@color/surface6"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:layout_marginBottom="18dp"/>
+
+                    <TextView
+                        android:id="@+id/empty_create_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/empty_create_button_text"
+                        android:textSize="18dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:textColor="@color/mainblack"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="14dp"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:background="@drawable/custom_brandlemon_radius10"
+                        app:onSingleClick="@{() -> vm.onCreateButtonClicked()}"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/user_shimmer"

@@ -1,9 +1,12 @@
 package com.dida.android.presentation.views
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.RecentNftAdapter
+import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.successOrNull
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
@@ -13,8 +16,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPageFragment :
-    BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
+class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
 
     private val TAG = "MyPageFragment"
 
@@ -42,6 +44,15 @@ class MyPageFragment :
                     is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToWalletFragment())
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
+                    is MypageNavigationAction.NavigateToCreate -> navigate(MyPageFragmentDirections.actionMyPageFragmentToAddFragment())
+                }
+            }
+        }
+
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.hasMyNftState.collectLatest {
+                it.successOrNull()?.let { userCards ->
+                    binding.emptyView.isVisible = userCards.isEmpty()
                 }
             }
         }

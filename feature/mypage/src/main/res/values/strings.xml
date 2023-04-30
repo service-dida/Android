@@ -3,4 +3,8 @@
     <!--마이페이지 화면-->
     <string name="mypage_nft_type_newest_text">최신 순</string>
     <string name="mypage_nft_type_oldest_text">오래된 순</string>
+
+    <string name="empty_create_button_text">내 NFT 민팅하기</string>
+    <string name="empty_text_message">아직 소유한 NFT가 없어요</string>
+    <string name="empty_text_description">NFT를 소유해보세요!</string>
 </resources>
