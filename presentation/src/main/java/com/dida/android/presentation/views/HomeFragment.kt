@@ -13,7 +13,7 @@ import com.dida.android.R
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
-import com.dida.common.adapter.RecentNftAdapter
+import com.dida.home.adapter.RecentNftAdapter
 import com.dida.common.util.*
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.domain.model.main.HotItems

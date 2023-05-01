@@ -1,4 +1,4 @@
-package com.dida.common.adapter
+package com.dida.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +31,7 @@ class RecentNftAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).cardId.toLong() * -1
+    override fun getItemId(position: Int): Long = getItem(position).cardId * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_mypage_user_cards
 
