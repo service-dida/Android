@@ -16,6 +16,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.base.BaseBottomSheetDialogFragment
@@ -90,15 +92,7 @@ class PasswordDialog(
         }
     }
 
-    override fun initAfterBinding() {
-        binding.emailEt.setOnFocusChangeListener { view, b ->
-            if(b){
-                binding.tableLayout.visibility = View.GONE
-            }else{
-                binding.tableLayout.visibility = View.VISIBLE
-            }
-        }
-    }
+    override fun initAfterBinding() {}
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
@@ -159,12 +153,14 @@ class PasswordDialog(
             val animation =
                 AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
             binding.passwordDialLayout.startAnimation(animation)
-            binding.subTitle = "비밀번호가 일치하지 않아요.\n" + "다시 입력해주세요."
+            binding.mainTitleTv.text = "비밀번호가 일치하지 않아요\n" + "다시 눌러주세요"
+            binding.subTitleTv.visibility = View.GONE
 
         } else {
             makePasswordDial()
             binding.passwordDialLayout.clearAnimation()
-            binding.subTitle = subTitleStr
+            binding.mainTitleTv.text = mainTitleStr
+            binding.subTitleTv.visibility = View.VISIBLE
         }
     }
 

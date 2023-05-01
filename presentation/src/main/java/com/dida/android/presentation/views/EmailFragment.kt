@@ -75,9 +75,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
     }
 
     private fun makePassword(){
-        PasswordDialog(6,"비밀번호 설정","6자리를 입력해주세요.",true){ success, firstPassword ->
+        PasswordDialog(6,"지갑 비밀번호 설정","NFT 거래 시 사용할 비밀번호를 설정해주세요. ",true){ success, firstPassword ->
             if (success) {
-                PasswordDialog(6,"비밀번호 확인","6자리를 입력해주세요.",true) { success, secondPassword ->
+                PasswordDialog(6,"비밀번호 확인","비밀번호를 다시 한번 입력해주세요.",true) { success, secondPassword ->
                     viewModel.postCreateWallet(firstPassword, secondPassword)
                 }
             }
