@@ -63,8 +63,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.refreshtokenAPIServer(request) }
     }
 
-    override suspend fun getUserCardsAPI(): NetworkResult<List<UserNft>> {
-        return handleApi { mainAPIService.getUserCards() }
+    override suspend fun getUserCardsAPI(page: Int): NetworkResult<List<UserNft>> {
+        return handleApi { mainAPIService.getUserCards(page = page) }
     }
 
     override suspend fun getSendEmailAPI(): NetworkResult<RandomNumber> {

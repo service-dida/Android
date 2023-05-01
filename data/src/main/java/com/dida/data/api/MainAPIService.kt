@@ -28,8 +28,8 @@ interface MainAPIService {
     @GET("/login/refresh")
     suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Token
 
-    @GET("/user/cards")
-    suspend fun getUserCards(): List<UserNft>
+    @GET("/user/cards/{page}")
+    suspend fun getUserCards(@Path("page") page: Int): List<UserNft>
 
     @GET("/auth/mail")
     suspend fun getSendEmail(): SendEmailResponse

@@ -272,8 +272,7 @@
                     tools:itemCount="2"
                     android:orientation="vertical"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/holder_mypage_user_cards"
-                    app:userNftItem="@{vm.hasMyNftState}" />
+                    tools:listitem="@layout/holder_mypage_user_cards" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/empty_view"

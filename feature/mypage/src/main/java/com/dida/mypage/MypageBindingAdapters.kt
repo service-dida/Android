@@ -58,14 +58,6 @@ fun TextView.bindUserFollwerCount(uiState: UiState<UserProfile>) {
     this.text = uiState.successOrNull()?.followerCnt.toString()
 }
 
-@BindingAdapter("userNftItem")
-fun RecyclerView.bindRecentNftItem(uiState: UiState<List<UserNft>>) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is RecentNftAdapter) {
-        boundAdapter.submitList(uiState.successOrNull())
-    }
-}
-
 @BindingAdapter("userToolBar")
 fun androidx.appcompat.widget.Toolbar.bindUserToolBar(uiState: UiState<UserProfile>) {
     visibility = if (uiState is UiState.Success) View.VISIBLE else View.INVISIBLE

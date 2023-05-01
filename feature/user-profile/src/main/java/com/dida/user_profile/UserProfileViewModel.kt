@@ -85,6 +85,8 @@ class UserProfileViewModel @AssistedInject constructor(
         }
     }
 
+    override fun onCreateButtonClicked() {}
+
     override fun onFollowClicked() {
         baseViewModelScope.launch {
             showLoading()

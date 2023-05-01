@@ -38,7 +38,7 @@ interface  MainRepository {
 
     suspend fun refreshTokenAPI(request: String): NetworkResult<Token>
 
-    suspend fun getUserCardsAPI() : NetworkResult<List<UserNft>>
+    suspend fun getUserCardsAPI(page: Int) : NetworkResult<List<UserNft>>
 
     suspend fun getSendEmailAPI() : NetworkResult<RandomNumber>
 
