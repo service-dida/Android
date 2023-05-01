@@ -1,0 +1,7 @@
+<resources>
+    <string name="create_community_like_empty_text">아직 좋아요한 NFT가 없어요</string>
+    <string name="create_community_empty_like_button_text">지금 핫한 NFT 보러가기</string>
+    <string name="create_community_create_empty_text">아직 소유한 NFT가 없어요</string>
+    <string name="create_community_empty_create_button_text">내 NFT 민팅하기</string>
+    
+</resources>

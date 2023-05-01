@@ -109,6 +109,12 @@ class WalletViewModel @Inject constructor(
         //TODO : 추후에 클릭 상황에 따라 구현해야함
     }
 
+    override fun onHotCardButtonClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(WalletNavigationAction.NavigateToHotCard)
+        }
+    }
+
     fun onBack() {
         baseViewModelScope.launch {
             _navigationEvent.emit(WalletNavigationAction.NavigateToBack)

@@ -105,6 +105,12 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
+    override fun onCreateButtonClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MypageNavigationAction.NavigateToCreate)
+        }
+    }
+
     override fun onMypageNftTypeClicked(type: CardSortType) {
         _cardSortTypeState.value = type
         setCardSort(type)
