@@ -38,7 +38,7 @@ interface  MainRepository {
 
     suspend fun refreshTokenAPI(request: String): NetworkResult<Token>
 
-    suspend fun getUserCardsAPI() : NetworkResult<List<UserNft>>
+    suspend fun getUserCardsAPI(page: Int) : NetworkResult<List<UserNft>>
 
     suspend fun getSendEmailAPI() : NetworkResult<RandomNumber>
 
@@ -124,7 +124,7 @@ interface  MainRepository {
 
     suspend fun getUserUserId(userId: Long) : NetworkResult<OtherUserProfie>
 
-    suspend fun getUserCardsUserId(userId: Long) : NetworkResult<List<UserNft>>
+    suspend fun getUserCardsUserId(userId: Long, page: Int) : NetworkResult<List<UserNft>>
 
     suspend fun patchDeleteNft(cardId: Long,payPwd : String) : NetworkResult<Long>
 

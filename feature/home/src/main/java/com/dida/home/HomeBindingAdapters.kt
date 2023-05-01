@@ -5,7 +5,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.common.adapter.RecentNftAdapter
+import com.dida.home.adapter.RecentNftAdapter
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.main.Home

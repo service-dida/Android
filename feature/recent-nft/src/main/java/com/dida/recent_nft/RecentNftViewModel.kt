@@ -46,4 +46,6 @@ class RecentNftViewModel @Inject constructor(
             dismissLoading()
         }
     }
+
+    override fun onCreateButtonClicked() {}
 }

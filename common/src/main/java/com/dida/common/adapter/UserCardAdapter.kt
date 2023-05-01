@@ -3,17 +3,17 @@ package com.dida.common.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.databinding.HolderMypageUserCardsBinding
 import com.dida.domain.model.main.UserNft
 
-class RecentNftAdapter(
+class UserCardAdapter(
     private val eventListener: NftActionHandler
-) : ListAdapter<UserNft, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
+) : PagingDataAdapter<UserNft, UserCardAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderMypageUserCardsBinding =
@@ -28,10 +28,8 @@ class RecentNftAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { holder.bind(it) }
     }
-
-    override fun getItemId(position: Int): Long = getItem(position).cardId.toLong() * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_mypage_user_cards
 

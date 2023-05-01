@@ -3,10 +3,10 @@ package com.dida.android.presentation.views
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import com.dida.common.adapter.RecentNftAdapter
+import com.dida.common.adapter.UserCardAdapter
 import com.dida.common.util.repeatOnResumed
-import com.dida.common.util.successOrNull
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
@@ -24,6 +24,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         get() = R.layout.fragment_mypage
 
     override val viewModel: MyPageViewModel by viewModels()
+    private val userCardAdapter: UserCardAdapter by lazy { UserCardAdapter(viewModel) }
 
     private var lastScrollY = 0
 
@@ -45,16 +46,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
                     is MypageNavigationAction.NavigateToCreate -> navigate(MyPageFragmentDirections.actionMyPageFragmentToAddFragment())
+                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.refresh()
                 }
             }
         }
 
         viewLifecycleOwner.repeatOnResumed {
-            viewModel.hasMyNftState.collectLatest {
-                it.successOrNull()?.let { userCards ->
-                    binding.emptyView.isVisible = userCards.isEmpty()
-                    binding.rvUserNft.isVisible = userCards.isNotEmpty()
-                }
+            viewModel.userCardState.collectLatest {
+                userCardAdapter.submitData(it)
             }
         }
     }
@@ -64,7 +63,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     override fun onResume() {
         super.onResume()
-        viewModel.getMypage()
+        viewModel.getUserInfo()
         getLastScrollY()
     }
 
@@ -80,8 +79,18 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     private fun initAdapter() {
         binding.rvUserNft.apply {
-            adapter = RecentNftAdapter(viewModel)
+            adapter = userCardAdapter
             layoutManager = GridLayoutManager(context, 2)
+        }
+
+        userCardAdapter.addLoadStateListener {
+            when(it.refresh) {
+                is LoadState.NotLoading -> {
+                    binding.emptyView.isVisible = userCardAdapter.snapshot().items.isEmpty()
+                    binding.rvUserNft.isVisible = userCardAdapter.snapshot().items.isNotEmpty()
+                }
+                else -> {}
+            }
         }
     }
 

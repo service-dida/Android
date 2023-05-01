@@ -28,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:constraint_endLoading="@{vm.userCardState}"
+            app:constraint_endLoading="@{vm.userProfileState}"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -300,7 +300,6 @@
                         tools:itemCount="2"
                         android:orientation="vertical"
                         android:nestedScrollingEnabled="false"
-                        app:otherUserCardItem="@{vm.userCardState}"
                         tools:listitem="@layout/holder_mypage_user_cards" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
@@ -310,7 +309,7 @@
             android:id="@+id/user_shimmer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startLoading="@{vm.userCardState}"
+            app:startLoading="@{vm.userProfileState}"
             tools:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             android:layout_marginTop="9dp">

@@ -156,4 +156,6 @@ class HomeViewModel @Inject constructor(
             dismissLoading()
         }
     }
+
+    override fun onCreateButtonClicked() {}
 }

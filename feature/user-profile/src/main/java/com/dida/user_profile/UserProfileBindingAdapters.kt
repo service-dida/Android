@@ -5,15 +5,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.dida.common.adapter.RecentNftAdapter
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.main.OtherUserProfie
-import com.dida.domain.model.main.UserNft
 
 @BindingAdapter("otherUserProfile")
 fun ImageView.bindOtherUserProfile(uiState: UiState<OtherUserProfie>) {
@@ -57,14 +54,6 @@ fun TextView.bindOtherUserFollwingCount(uiState: UiState<OtherUserProfie>) {
 @BindingAdapter("otherUserFollwerCount")
 fun TextView.bindOtherUserFollwerCount(uiState: UiState<OtherUserProfie>) {
     this.text = uiState.successOrNull()?.followerCnt.toString()
-}
-
-@BindingAdapter("otherUserCardItem")
-fun RecyclerView.bindOtherUserCardItem(uiState: UiState<List<UserNft>>) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is RecentNftAdapter) {
-        boundAdapter.submitList(uiState.successOrNull())
-    }
 }
 
 @RequiresApi(Build.VERSION_CODES.M)

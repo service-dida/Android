@@ -7,8 +7,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
-import com.dida.common.adapter.RecentNftAdapter
+import com.dida.common.adapter.UserCardAdapter
 import com.dida.common.util.repeatOnCreated
+import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserMessageAction
@@ -40,6 +41,7 @@ class UserProfileFragment :
 
     private val navController: NavController by lazy { findNavController() }
     private val args: UserProfileFragmentArgs by navArgs()
+    private val userCardAdapter by lazy { UserCardAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -56,6 +58,7 @@ class UserProfileFragment :
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
+                        is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
                     }
                 }
@@ -82,11 +85,15 @@ class UserProfileFragment :
             }
         }
 
-        lifecycleScope.launch {
-            repeatOnCreated {
-                if(args.userId == dataStorePreferences.getUserId()) {
-                    navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
-                }
+        viewLifecycleOwner.repeatOnCreated {
+            if(args.userId == dataStorePreferences.getUserId()) {
+                navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
+            }
+        }
+
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.userCardState.collectLatest {
+                userCardAdapter.submitData(it)
             }
         }
     }
@@ -101,7 +108,7 @@ class UserProfileFragment :
 
     private fun initAdapter() {
         binding.rvUserNft.apply {
-            adapter = RecentNftAdapter(viewModel)
+            adapter = userCardAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
     }

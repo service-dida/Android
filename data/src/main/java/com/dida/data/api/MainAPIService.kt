@@ -28,8 +28,8 @@ interface MainAPIService {
     @GET("/login/refresh")
     suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Token
 
-    @GET("/user/cards")
-    suspend fun getUserCards(): List<UserNft>
+    @GET("/user/cards/{page}")
+    suspend fun getUserCards(@Path("page") page: Int): List<UserNft>
 
     @GET("/auth/mail")
     suspend fun getSendEmail(): SendEmailResponse
@@ -186,8 +186,8 @@ interface MainAPIService {
     suspend fun getUserUserId(@Path("userId") userId: Long): GetUserUserIdResponse
 
     // 타 유저 카드 조회
-    @GET("/user/cards/{userId}")
-    suspend fun getUserCardsUserId(@Path("userId") userId: Long) : List<RecentCardResponse>
+    @GET("/user/cards/{userId}/{page}")
+    suspend fun getUserCardsUserId(@Path("userId") userId: Long, @Path("page") page: Int) : List<RecentCardResponse>
 
     @PATCH("/card/status")
     suspend fun patchDeleteNft(@Body body : PatchNftRemoveRequest): Long
