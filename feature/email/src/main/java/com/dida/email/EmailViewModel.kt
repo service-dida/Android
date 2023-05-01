@@ -19,22 +19,11 @@ class EmailViewModel @Inject constructor(
 
     private val TAG = "EmailViewModel"
 
-    private val _sendEmailState: MutableStateFlow<String?> = MutableStateFlow<String?>(null)
-    val sendEmailState: StateFlow<String?> = _sendEmailState
-
     private val _retryEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val retryEvent: SharedFlow<Unit> = _retryEvent
 
     val userInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
-
-    init {
-        baseViewModelScope.launch {
-            userInputState.debounce(100).collect {
-                verifyNumberCheck(it)
-            }
-        }
-        getSendEmail()
-    }
+    var verifyNumberValue = ""
 
     // 비밀번호 받아오기
     fun getSendEmail() {
@@ -42,20 +31,14 @@ class EmailViewModel @Inject constructor(
             showLoading()
             sendEmailAPI()
                 .onSuccess {
-                    _verifyCheckState.value = false
-                    _sendEmailState.value = it.random
+                    verifyNumberValue = it.random
                     dismissLoading() }
                 .onError { e -> catchError(e) }
         }
     }
 
-    // 비밀번호 체크
-    private val _verifyCheckState = MutableStateFlow<Boolean>(false)
-    val verifyCheckState: StateFlow<Boolean> = _verifyCheckState
-
-    private fun verifyNumberCheck(number: String){
-        if(number == _sendEmailState.value) { _verifyCheckState.value = true }
-        else { _verifyCheckState.value = false }
+    fun verifyNumberCheck() : Boolean{
+        return userInputState.value == verifyNumberValue
     }
 
     private val _createWalletState = MutableStateFlow<Boolean>(false)

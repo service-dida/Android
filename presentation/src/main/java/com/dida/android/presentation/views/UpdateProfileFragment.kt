@@ -94,11 +94,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun initAfterBinding() {
-        binding.nicknameEt.setOnTouchListener(clearTextListener)
-        binding.descriptionEt.setOnTouchListener(clearTextListener)
-    }
+    override fun initAfterBinding() {}
 
     private fun initToolbar() {
         binding.toolbar.apply {
@@ -176,23 +172,6 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
         viewModel.profileImageMultipartState.value = requestBody
         viewModel.selectProfileImage(uri, requestBody)
-    }
-
-    val clearTextListener = object : OnTouchListener {
-        @SuppressLint("ClickableViewAccessibility")
-        override fun onTouch(v: View, motionEvent: MotionEvent): Boolean {
-            val view = v as EditText
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                if(motionEvent.rawX >= view.right - view.compoundDrawables[2].bounds.width()) {
-                    when (v.id) {
-                        R.id.nickname_et -> viewModel.clearNickname()
-                        R.id.description_et -> viewModel.clearDescription()
-                    }
-                    return true
-                }
-            }
-            return false
-        }
     }
 
     private fun showMessageSnackBar(message: String) {
