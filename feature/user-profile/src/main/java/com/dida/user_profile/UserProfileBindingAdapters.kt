@@ -59,14 +59,6 @@ fun TextView.bindOtherUserFollwerCount(uiState: UiState<OtherUserProfie>) {
     this.text = uiState.successOrNull()?.followerCnt.toString()
 }
 
-@BindingAdapter("otherUserCardItem")
-fun RecyclerView.bindOtherUserCardItem(uiState: UiState<List<UserNft>>) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is RecentNftAdapter) {
-        boundAdapter.submitList(uiState.successOrNull())
-    }
-}
-
 @RequiresApi(Build.VERSION_CODES.M)
 @BindingAdapter("otherUserFollowBtn")
 fun TextView.bindOtherUserFollowBtn(uiState: UiState<OtherUserProfie>) {

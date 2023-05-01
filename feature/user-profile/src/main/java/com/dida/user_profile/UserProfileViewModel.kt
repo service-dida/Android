@@ -2,6 +2,8 @@ package com.dida.user_profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
@@ -27,7 +29,7 @@ class UserProfileViewModel @AssistedInject constructor(
     private val postLikeAPI: PostLikeAPI,
     private val userUserIdAPI: UserUserIdAPI,
     private val postUserFollowAPI: PostUserFollowAPI,
-    private val userCardUserIdAPI: UserCardUserIdAPI,
+    userCardUserIdAPI: UserCardUserIdAPI,
 ) : BaseViewModel(), UserProfileActionHandler, NftActionHandler {
 
     private val TAG = "UserProfileViewModel"
@@ -48,19 +50,17 @@ class UserProfileViewModel @AssistedInject constructor(
     private val _userProfileState: MutableStateFlow<UiState<OtherUserProfie>> = MutableStateFlow<UiState<OtherUserProfie>>(UiState.Loading)
     val userProfileState: StateFlow<UiState<OtherUserProfie>> = _userProfileState.asStateFlow()
 
-    private val _userCardState: MutableStateFlow<UiState<List<UserNft>>> = MutableStateFlow<UiState<List<UserNft>>>(UiState.Loading)
-    val userCardState: StateFlow<UiState<List<UserNft>>> = _userCardState.asStateFlow()
+    val userCardState: Flow<PagingData<UserNft>> = createUserCardPager(userId = userId, userCardUserIdAPI = userCardUserIdAPI)
+        .flow.cachedIn(baseViewModelScope)
 
     fun getUserProfile() {
         baseViewModelScope.launch {
             userUserIdAPI(userId = userId)
-                .onSuccess { _userProfileState.value = UiState.Success(it) }
-                .flatMap { userCardUserIdAPI(userId = userId) }
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    _userCardState.value = UiState.Success(it)
-                    setCardSort(type = cardSortTypeState.value) }
-                .onError { e -> catchError(e) }
+                    setCardSort(type = cardSortTypeState.value)
+                    _userProfileState.value = UiState.Success(it)
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -78,6 +78,7 @@ class UserProfileViewModel @AssistedInject constructor(
                 .onSuccess {
                     if (liked) _messageEvent.emit(UserMessageAction.DeleteCardBookmarkMessage)
                     else _messageEvent.emit(UserMessageAction.AddCardBookmarkMessage)
+                    _navigationEvent.emit(UserProfileNavigationAction.NavigateToCardLikeButtonClicked)
                     getUserProfile()
                 }
                 .onError { e -> catchError(e) }
@@ -109,8 +110,8 @@ class UserProfileViewModel @AssistedInject constructor(
 
     private fun setCardSort(type: CardSortType) {
         when(type) {
-            CardSortType.NEWEST -> _userCardState.value = UiState.Success(userCardState.value.successOrNull()!!.sortedByDescending { it.cardId })
-            CardSortType.OLDEST -> _userCardState.value = UiState.Success(userCardState.value.successOrNull()!!.sortedBy { it.cardId })
+            CardSortType.NEWEST -> {}
+            CardSortType.OLDEST -> {}
         }
     }
 
