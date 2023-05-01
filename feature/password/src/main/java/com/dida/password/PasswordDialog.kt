@@ -21,6 +21,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.base.BaseBottomSheetDialogFragment
+import com.dida.common.dialog.CentralDialogFragment
+import com.dida.common.dialog.VerticalDialogFragment
 import com.dida.password.databinding.DialogPasswordBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,15 +86,31 @@ class PasswordDialog(
 
             launch {
                 viewModel.dismissEvent.collectLatest {
-                    Toast.makeText(requireContext(),"비밀번호를 5회이상 틀렸습니다.\n재발급 받아주세요",Toast.LENGTH_SHORT).show()
-                    result.invoke(false,"")
-                    dismiss()
+                    VerticalDialogFragment.Builder()
+                        .title(getString(R.string.wrong_password_mainTitle))
+                        .message(getString(R.string.wrong_password_subTitle))
+                        .positiveButton(getString(R.string.wrong_password_positive), object : VerticalDialogFragment.OnClickListener {
+                            override fun onClick() {
+                                //TODO : 비밀번호 재발급으로 이동
+                            }
+                        })
+                        .negativeButton(getString(R.string.wrong_password_negative), object : VerticalDialogFragment.OnClickListener {
+                            override fun onClick() {
+                                result.invoke(false,"")
+                            }
+                        })
+                        .build()
+                        .show(childFragmentManager, "log_out_dialog")
                 }
             }
         }
     }
 
-    override fun initAfterBinding() {}
+    override fun initAfterBinding() {
+        binding.findPasswordBtn.setOnClickListener {
+            //TODO : 비밀번호 재설정으로 이동
+        }
+    }
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
