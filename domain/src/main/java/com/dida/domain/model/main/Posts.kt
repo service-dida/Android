@@ -11,5 +11,6 @@ data class Posts(
     val cardImgUrl: String,
     val price: String,
     val cardOwnerImgUrl: String,
-    val commentList: List<PostComments>
+    val commentList: List<PostComments>,
+    val type: String,
 )

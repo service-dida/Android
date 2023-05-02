@@ -163,6 +163,7 @@ fun List<GetPostsResponse>.toDomain(): List<Posts> {
             cardImgUrl = it.cardImgUrl,
             price = it.price,
             cardOwnerImgUrl = it.cardOwnerImgUrl,
+            type = it.type,
             commentList = it.commentsList.toDomain()
         )
     }

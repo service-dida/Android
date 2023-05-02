@@ -13,5 +13,6 @@ data class GetPostsResponse(
     @SerializedName("cardImgUrl") val cardImgUrl: String,
     @SerializedName("price") val price: String,
     @SerializedName("cardOwnerImgUrl") val cardOwnerImgUrl: String,
-    @SerializedName("commentsList") val commentsList: List<GetPostsCommentsResponse>
+    @SerializedName("commentsList") val commentsList: List<GetPostsCommentsResponse>,
+    @SerializedName("type") val type: String
 )
