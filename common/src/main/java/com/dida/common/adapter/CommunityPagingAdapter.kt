@@ -12,6 +12,7 @@ import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.ballon.showReportPostBalloon
 import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommunityBinding
+import com.dida.domain.model.main.PostType
 import com.dida.domain.model.main.Posts
 
 class CommunityPagingAdapter(
@@ -44,7 +45,7 @@ class CommunityPagingAdapter(
             adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
             when(item.type) {
-                "NOT MINE" -> binding.moreBtn.isVisible = true
+                PostType.NOT_MINE -> binding.moreBtn.isVisible = true
                 else -> binding.moreBtn.isVisible = false
             }
             binding.moreBtn.setOnSingleClickListener {

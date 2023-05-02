@@ -12,5 +12,9 @@ data class Posts(
     val price: String,
     val cardOwnerImgUrl: String,
     val commentList: List<PostComments>,
-    val type: String,
+    val type: PostType,
 )
+
+enum class PostType {
+    NOT_MINE, NEED_LOGIN, MINE, NONE
+}

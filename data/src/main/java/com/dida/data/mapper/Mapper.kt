@@ -163,7 +163,12 @@ fun List<GetPostsResponse>.toDomain(): List<Posts> {
             cardImgUrl = it.cardImgUrl,
             price = it.price,
             cardOwnerImgUrl = it.cardOwnerImgUrl,
-            type = it.type,
+            type = when (it.type) {
+                "NOT MINE" -> PostType.NOT_MINE
+                "NEED LOGIN" -> PostType.NEED_LOGIN
+                "MINE" -> PostType.MINE
+                else -> PostType.NONE
+            },
             commentList = it.commentsList.toDomain()
         )
     }
