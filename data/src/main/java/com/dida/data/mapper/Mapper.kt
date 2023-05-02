@@ -40,8 +40,11 @@ fun SendEmailResponse.toDomain(): RandomNumber {
     return RandomNumber(random = random)
 }
 
-fun PostCheckPasswordResponse.toDomain(): Boolean {
-    return flag
+fun PostCheckPasswordResponse.toDomain(): PasswordVerify {
+    return PasswordVerify(
+        flag =flag,
+        wrongCount = wrongCount
+    )
 }
 
 @JvmName("toDomainHotItemResponse")

@@ -7,27 +7,7 @@ import com.dida.data.model.request.*
 import com.dida.data.model.response.PostLikeRequest
 import com.dida.data.model.response.PostSellNftRequest
 import com.dida.domain.NetworkResult
-import com.dida.domain.model.main.Token
-import com.dida.domain.model.main.Nickname
-import com.dida.domain.model.main.HotCard
-import com.dida.domain.model.main.RandomNumber
-import com.dida.domain.model.main.DetailNft
-import com.dida.domain.model.main.HideCard
-import com.dida.domain.model.main.Home
-import com.dida.domain.model.main.HotSellerMore
-import com.dida.domain.model.main.HotUser
-import com.dida.domain.model.main.SoldOut
-import com.dida.domain.model.main.TradeHistory
-import com.dida.domain.model.main.OtherUserProfie
-import com.dida.domain.model.main.UserNft
-import com.dida.domain.model.main.UserProfile
-import com.dida.domain.model.main.CardPost
-import com.dida.domain.model.main.Comments
-import com.dida.domain.model.main.Post
-import com.dida.domain.model.main.Posts
-import com.dida.domain.model.main.WalletAmount
-import com.dida.domain.model.main.SwapHistory
-import com.dida.domain.model.main.AppVersion
+import com.dida.domain.model.main.*
 import com.dida.domain.repository.MainRepository
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -93,7 +73,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getWalletExists().existed }
     }
 
-    override suspend fun getCheckPasswordAPI(password: String): NetworkResult<Boolean> {
+    override suspend fun getCheckPasswordAPI(password: String): NetworkResult<PasswordVerify> {
         val request = PostCheckPasswordRequest(password)
         return handleApi { mainAPIService.postCheckPassword(request).toDomain() }
     }

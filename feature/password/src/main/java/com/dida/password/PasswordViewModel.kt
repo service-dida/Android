@@ -76,7 +76,7 @@ class PasswordViewModel @Inject constructor(
     private suspend fun checkPassword(password : String){
         passwordAPI(password)
             .onSuccess {
-                if (it) {
+                if (it.flag) {
                     _completeEvent.emit(password)
                 } else {
                     isClickable = false

@@ -1,27 +1,7 @@
 package com.dida.domain.repository
 
 import com.dida.domain.NetworkResult
-import com.dida.domain.model.main.Token
-import com.dida.domain.model.main.Nickname
-import com.dida.domain.model.main.HotCard
-import com.dida.domain.model.main.RandomNumber
-import com.dida.domain.model.main.DetailNft
-import com.dida.domain.model.main.HideCard
-import com.dida.domain.model.main.Home
-import com.dida.domain.model.main.HotSellerMore
-import com.dida.domain.model.main.HotUser
-import com.dida.domain.model.main.SoldOut
-import com.dida.domain.model.main.TradeHistory
-import com.dida.domain.model.main.OtherUserProfie
-import com.dida.domain.model.main.UserNft
-import com.dida.domain.model.main.UserProfile
-import com.dida.domain.model.main.CardPost
-import com.dida.domain.model.main.Comments
-import com.dida.domain.model.main.Post
-import com.dida.domain.model.main.Posts
-import com.dida.domain.model.main.WalletAmount
-import com.dida.domain.model.main.SwapHistory
-import com.dida.domain.model.main.AppVersion
+import com.dida.domain.model.main.*
 import okhttp3.MultipartBody
 
 interface  MainRepository {
@@ -46,7 +26,7 @@ interface  MainRepository {
 
     suspend fun getWalletExistsAPI() : NetworkResult<Boolean>
 
-    suspend fun getCheckPasswordAPI(password: String) : NetworkResult<Boolean>
+    suspend fun getCheckPasswordAPI(password: String) : NetworkResult<PasswordVerify>
 
     suspend fun postChangePasswordAPI(beforePassword: String, afterPassword: String) : NetworkResult<Unit>
 
