@@ -173,12 +173,14 @@ class PasswordDialog(
             binding.passwordDialLayout.startAnimation(animation)
             binding.mainTitleTv.text = "비밀번호가 일치하지 않아요\n" + "다시 눌러주세요"
             binding.subTitleTv.visibility = View.GONE
+            binding.worngCountTv.visibility = View.VISIBLE
 
         } else {
             makePasswordDial()
             binding.passwordDialLayout.clearAnimation()
             binding.mainTitleTv.text = mainTitleStr
             binding.subTitleTv.visibility = View.VISIBLE
+            binding.worngCountTv.visibility = View.GONE
         }
     }
 

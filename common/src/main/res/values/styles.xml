@@ -390,6 +390,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextView_regular_20_notice" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/notice_red</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextView_regular_24_lemon" parent="@style/Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
