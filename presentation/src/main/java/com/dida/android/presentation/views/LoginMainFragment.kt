@@ -2,9 +2,31 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import coil.compose.AsyncImage
+import com.dida.android.R
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
 import com.dida.login.LoginMainViewModel
@@ -58,6 +80,18 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     override fun initAfterBinding() {
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding.composeView.apply {
+            setContent {
+                LoginScreen(
+                    onKakaoLoginClicked = { },
+                    onKakakoWebLoginClicked = {}
+                )
+            }
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //TODO: back key 이벤트 시 필요한 코드 추가
@@ -97,6 +131,64 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
             UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = kakaoCallback)
         } else {
             UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)
+        }
+    }
+
+    @Composable
+    fun LoginScreen(onKakaoLoginClicked: () -> Unit, onKakakoWebLoginClicked: () -> Unit) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                LogoImage()
+                Spacer(modifier = Modifier.weight(1f))
+                KakaoTalkButton(onKakaoLoginClicked)
+                KakaoWebButton(onKakakoWebLoginClicked)
+            }
+        }
+    }
+
+    @Composable
+    fun LogoImage() {
+        AsyncImage(
+                modifier = Modifier.width(128.dp).height(128.dp),
+                model = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground),
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+        )
+    }
+
+    @Composable
+    fun KakaoTalkButton(onKakaoLoginClicked: () -> Unit) {
+        Button(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            onClick = onKakaoLoginClicked
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+            ) {
+                AsyncImage(
+                    modifier = Modifier.wrapContentSize(),
+                    model = painterResource(id = R.drawable.kakao_logo_1),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    text = requireContext().getString(R.string.kakao_login),
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun KakaoWebButton(onKakakoWebLoginClicked: () -> Unit) {
+        Button(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            onClick = onKakakoWebLoginClicked
+        ) {
+            Text(
+                text = requireContext().getString(R.string.kakao_login_web),
+                fontSize = 15.sp,
+            )
         }
     }
 }

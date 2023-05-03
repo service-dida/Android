@@ -13,6 +13,11 @@
         android:layout_height="match_parent"
         android:background="@color/mainblack">
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <ImageView
             android:id="@+id/app_logo"
             android:scaleType="centerCrop"
