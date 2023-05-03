@@ -68,6 +68,7 @@ fun createErrorException(
         124 -> EmptyDeviceTokenException(Throwable(errorResponse.message), url, 124)
         125 -> AlreadyUseWallet(Throwable(errorResponse.message), url, 125)
         127 -> NeedMoreKlay(Throwable(errorResponse.message), url, 127)
+        128 -> NeedLogin(Throwable(errorResponse.message), url, 128)
         200 -> InvalidLengthException(Throwable(errorResponse.message), url, 200)
         404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
         500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)

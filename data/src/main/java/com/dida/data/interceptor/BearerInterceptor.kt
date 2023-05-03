@@ -27,7 +27,7 @@ class BearerInterceptor : Interceptor {
         var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
-        if (response.code == 400 || response.code == 403) {
+        if (response.code in (400..403)) {
 
             val requestUrl = request.url.toString()
             val errorResponse = response.body?.string()?.let { createErrorResponse(it) }

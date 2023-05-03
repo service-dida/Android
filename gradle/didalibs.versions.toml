@@ -138,6 +138,7 @@ kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin",ver
 
 androidx-paging = { module = "androidx.paging:paging-runtime-ktx",version.ref = "paging" }
 
+# Compose
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
