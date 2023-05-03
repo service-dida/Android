@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.load.engine.Engine.LoadStatus
 import com.dida.android.R
 import com.dida.common.adapter.UserCardAdapter
 import com.dida.common.util.repeatOnCreated
