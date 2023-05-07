@@ -26,3 +26,4 @@ class AlreadyUseWallet(e: Throwable?, val url: String? = null, code: Int?) : IOE
 class NeedMoreKlay(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 보유한 클레이가 부족. 127
 class NeedLogin(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 보유한 클레이가 부족. 127
 class InvalidLengthException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 닉네임 길이 & 비밀번호 길이가 잘못 되었습니다. 200
+class AlreadyReport(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 이미 신고되었습니다. 204
