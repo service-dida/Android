@@ -43,7 +43,7 @@ fun SendEmailResponse.toDomain(): RandomNumber {
 fun PostCheckPasswordResponse.toDomain(): PasswordVerify {
     return PasswordVerify(
         flag =flag,
-        wrongCount = wrongCount
+        wrongCnt = wrongCnt
     )
 }
 

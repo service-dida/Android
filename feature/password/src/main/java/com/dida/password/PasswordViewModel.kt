@@ -83,7 +83,7 @@ class PasswordViewModel @Inject constructor(
                     _completeEvent.emit(password)
                 } else {
                     isClickable = false
-                    _wrongCountState.emit("${it.wrongCount}/5")
+                    _wrongCountState.emit("${it.wrongCnt}/5")
                     _failEvent.emit(true)
 
                     stack.clear()

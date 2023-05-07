@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class PostCheckPasswordResponse(
     @SerializedName("flag") val flag: Boolean,
-    @SerializedName("wrongCount") val wrongCount: Int
+    @SerializedName("wrongCnt") val wrongCnt: Int
 
 )
