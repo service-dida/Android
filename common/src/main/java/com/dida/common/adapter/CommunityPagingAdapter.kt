@@ -49,7 +49,7 @@ class CommunityPagingAdapter(
                 else -> binding.moreBtn.isVisible = false
             }
             binding.moreBtn.setOnSingleClickListener {
-                it.showReportPostBalloon(postId = 0, listener = binding.eventListener!!)
+                it.showReportPostBalloon(postId = item.postId, listener = binding.eventListener!!)
             }
             binding.executePendingBindings()
         }

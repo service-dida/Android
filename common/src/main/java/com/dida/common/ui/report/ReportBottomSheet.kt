@@ -31,8 +31,12 @@ class ReportBottomSheet(
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
         override fun afterTextChanged(s: Editable?) {
             binding.reportContents.let {
-                if (!it.text.isNullOrBlank()) viewModel.setEnableConfirm(true)
-                else viewModel.setEnableConfirm(false)
+                viewModel.setEnableConfirm(!it.text.isNullOrBlank())
+                if (!it.text.isNullOrBlank()) {
+                    viewModel.contents.value = it.text.toString()
+                } else {
+                    viewModel.contents.value = ""
+                }
             }
         }
     }
