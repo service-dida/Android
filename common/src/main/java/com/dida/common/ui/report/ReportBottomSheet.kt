@@ -50,7 +50,7 @@ class ReportBottomSheet(
     }
 
     override fun initDataBinding() {
-        repeatOnResumed {
+        viewLifecycleOwner.repeatOnResumed {
             launch {
                 viewModel.reportCodes.collectLatest {
                     reportCodeAdapter.submitList(it)
