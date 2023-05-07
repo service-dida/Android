@@ -7,7 +7,6 @@ import com.dida.domain.usecase.main.ReportPostAPI
 import com.dida.domain.usecase.main.ReportUserAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +14,7 @@ interface ReportViewModelDelegate {
 
     val navigateToReportSuccessEvent: MutableSharedFlow<Unit>
     val navigateToBlockSuccessEvent: MutableSharedFlow<Unit>
+    val navigateToErrorEvent: MutableSharedFlow<String>
 
     fun onReportDelegate(
         coroutineScope: CoroutineScope,
@@ -37,12 +37,16 @@ class DefaultReportViewModelDelegate @Inject constructor(
 
     private val _navigateToReportEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
     private val _navigateToBlockEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
+    private val _navigateToErrorEvent: MutableSharedFlow<String> = MutableSharedFlow()
 
     override val navigateToBlockSuccessEvent: MutableSharedFlow<Unit>
         get() = _navigateToBlockEvent
 
     override val navigateToReportSuccessEvent: MutableSharedFlow<Unit>
         get() = _navigateToReportEvent
+
+    override val navigateToErrorEvent: MutableSharedFlow<String>
+        get() = _navigateToErrorEvent
 
     override fun onReportDelegate(
         coroutineScope: CoroutineScope,
@@ -55,9 +59,8 @@ class DefaultReportViewModelDelegate @Inject constructor(
                 ReportType.USER -> reportUserAPI(userId = reportId, content = content)
                 ReportType.POST -> reportPostAPI(postId = reportId, content = content)
                 ReportType.CARD -> reportCardAPI(cardId = reportId, content = content)
-            }.onSuccess {
-                _navigateToReportEvent.emit(Unit)
-            }.onError { e -> throw e }
+            }.onSuccess { _navigateToReportEvent.emit(Unit)
+            }.onError { _navigateToErrorEvent.emit(it.message ?: "알 수 없는 에러가 발생 했어요") }
         }
     }
 
