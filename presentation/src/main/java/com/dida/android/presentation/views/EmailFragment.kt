@@ -6,11 +6,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.dida.common.util.repeatOnCreated
+import com.dida.email.R
+import com.dida.common.util.maskEmail
 import com.dida.common.util.repeatOnResumed
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
 import com.dida.password.PasswordDialog
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,6 +36,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
+        getMaskingEmail()
         exception = viewModel.errorEvent
     }
 
@@ -110,5 +113,18 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
         }
         // timer 실행
         timer.schedule(timerTask, 0, 1000)
+    }
+    private fun getMaskingEmail(){
+        UserApiClient.instance.me { user, error ->
+            if (error != null) {
+                toastMessage("사용자 정보 요청 실패")
+            } else if (user != null) {
+                if(user.kakaoAccount?.email.isNullOrEmpty()){
+                    binding.emailMaskingTv.text = "이메일을 불러올 수 없습니다."
+                }else{
+                    binding.emailMaskingTv.text = "회원가입시 입력한 ${maskEmail(user.kakaoAccount?.email!!)}으로 인증번호가 전송됩니다."
+                }
+            }
+        }
     }
 }

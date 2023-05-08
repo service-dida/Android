@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--이메일 화면-->
+    <string name="email_main_text">비밀번호 재설정을 위해\n인증번호 6자리를 입력해주세요.</string>
+    <string name="email_check_hint">6자리 숫자</string>
+    <string name="email_masking_hint">회원가입시 입력한 tmdg****@*****.***으로\n인증번호가 전송됩니다.</string>
+    <string name="email_send">인증번호 전송</string>
+    <string name="email_resend">다시 전송하기</string>
+</resources>
