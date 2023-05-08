@@ -80,7 +80,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     }
                 } else {
                     toastMessage("지갑을 생성해야 합니다!")
-                    navigate(AddFragmentDirections.actionAddFragmentToEmailFragment())
+                    navigate(AddFragmentDirections.actionAddFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
                 }
             }
         }

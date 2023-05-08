@@ -41,7 +41,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    is MypageNavigationAction.NavigateToEmail -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment())
+                    is MypageNavigationAction.NavigateToEmail -> navigate(MyPageFragmentDirections.actionMyPageFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
                     is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToWalletFragment())
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())

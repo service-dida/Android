@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dida.email.R
 import com.dida.common.util.maskEmail
 import com.dida.common.util.repeatOnResumed
@@ -18,18 +19,25 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
 
+enum class RequestEmailType{
+    MAKE_WALLET,
+    RESET_PASSWORD
+}
+
 @AndroidEntryPoint
-class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.dida.email.R.layout.fragment_email) {
+class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layout.fragment_email) {
 
     private val TAG = "EmailFragment"
 
     override val layoutResourceId: Int
-        get() = com.dida.email.R.layout.fragment_email // get() : 커스텀 접근자, 코틀린 문법
+        get() = R.layout.fragment_email // get() : 커스텀 접근자, 코틀린 문법
 
     var timer = Timer()
 
     override val viewModel : EmailViewModel by viewModels()
     val navController: NavController by lazy { findNavController() }
+
+    private val args: EmailFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {
@@ -53,7 +61,6 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
         viewLifecycleOwner.repeatOnResumed {
             viewModel.retryEvent.collectLatest {
                 toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
-                makePassword()
             }
         }
     }
@@ -63,7 +70,12 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
         binding.okBtn.setOnClickListener {
             timer.cancel()
             if(viewModel.verifyNumberCheck()) {
-                makePassword()
+                if(args.requestEmailType == RequestEmailType.MAKE_WALLET){
+                    makeWallet()
+                }else if(args.requestEmailType == RequestEmailType.RESET_PASSWORD){
+                    resetPassword()
+                }
+
             }
         }
 
@@ -73,7 +85,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
         }
     }
 
-    private fun makePassword(){
+    private fun makeWallet(){
         PasswordDialog(6,"지갑 비밀번호 설정","NFT 거래 시 사용할 비밀번호를 설정해주세요. ",true){ success, firstPassword ->
             if (success) {
                 PasswordDialog(6,"비밀번호 확인","비밀번호를 다시 한번 입력해주세요.",true) { success, secondPassword ->
@@ -82,6 +94,17 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
             }
         }.show(childFragmentManager,"EmailFragment")
     }
+
+    private fun resetPassword(){
+        PasswordDialog(6,"새로운 비밀번호 입력","지갑 비밀번호 변경을 위해 입력해주세요 ",true){ success, firstPassword ->
+            if (success) {
+                PasswordDialog(6,"비밀번호 확인","비밀번호를 다시 한번 입력해주세요.",true) { success, secondPassword ->
+                    //TODO : 비밀번호 변경 API 호출
+                }
+            }
+        }.show(childFragmentManager,"EmailFragment")
+    }
+
     private fun timeOver() {
         timer.cancel()
         lifecycleScope.launch {
