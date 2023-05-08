@@ -150,7 +150,7 @@ class DetailCommunityViewModel @Inject constructor(
     }
 
     fun onReport(type: ReportType, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
+        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
     }
 
     fun onDeletePost(postId: Long) {
