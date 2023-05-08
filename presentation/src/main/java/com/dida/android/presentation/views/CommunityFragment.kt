@@ -74,12 +74,14 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.navigateToReportSuccessEvent.collectLatest {
+                    showReportCompleteDialog()
                     communityPagingAdapter.refresh()
                 }
             }
 
             launch {
                 viewModel.navigateToBlockSuccessEvent.collectLatest {
+                    showBlockCompleteDialog()
                     communityPagingAdapter.refresh()
                 }
             }
