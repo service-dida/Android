@@ -1,5 +1,6 @@
 package com.dida.common.ui.report
 
+import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.ReportCardAPI
@@ -7,7 +8,6 @@ import com.dida.domain.usecase.main.ReportPostAPI
 import com.dida.domain.usecase.main.ReportUserAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class DefaultReportViewModelDelegate @Inject constructor(
     private val reportUserAPI: ReportUserAPI,
     private val reportPostAPI: ReportPostAPI,
     private val reportCardAPI: ReportCardAPI
-): ReportViewModelDelegate {
+): ReportViewModelDelegate, BaseViewModel() {
 
     private val _navigateToReportEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
     private val _navigateToBlockEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
@@ -55,9 +55,8 @@ class DefaultReportViewModelDelegate @Inject constructor(
                 ReportType.USER -> reportUserAPI(userId = reportId, content = content)
                 ReportType.POST -> reportPostAPI(postId = reportId, content = content)
                 ReportType.CARD -> reportCardAPI(cardId = reportId, content = content)
-            }.onSuccess {
-                _navigateToReportEvent.emit(Unit)
-            }.onError { e -> throw e }
+            }.onSuccess { _navigateToReportEvent.emit(Unit)
+            }.onError { e -> catchError(e) }
         }
     }
 

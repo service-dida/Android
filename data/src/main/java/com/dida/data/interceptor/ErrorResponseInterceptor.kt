@@ -70,6 +70,7 @@ fun createErrorException(
         127 -> NeedMoreKlay(Throwable(errorResponse.message), url, 127)
         128 -> NeedLogin(Throwable(errorResponse.message), url, 128)
         200 -> InvalidLengthException(Throwable(errorResponse.message), url, 200)
+        204 -> AlreadyReport(Throwable(errorResponse.message), url, 204)
         404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
         500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
         else -> {
