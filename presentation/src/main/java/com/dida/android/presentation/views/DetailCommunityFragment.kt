@@ -98,16 +98,22 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             }
 
             launch {
-                viewModel.navigateToReportSuccessEvent.collectLatest {
-                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
-                    navController.popBackStack()
+                viewModel.navigateToReportEvent.collectLatest {
+                    if (it) {
+                        setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
+                        navController.popBackStack()
+                    } else {
+                        toastMessage(requireContext().getString(R.string.already_report_message))
+                    }
                 }
             }
 
             launch {
-                viewModel.navigateToBlockSuccessEvent.collectLatest {
-                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.BLOCK to true))
-                    navController.popBackStack()
+                viewModel.navigateToBlockEvent.collectLatest {
+                    if (it) {
+                        setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.BLOCK to true))
+                        navController.popBackStack()
+                    }
                 }
             }
 

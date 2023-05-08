@@ -1,6 +1,5 @@
 package com.dida.community_detail
 
-import androidx.lifecycle.viewModelScope
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.ui.report.ReportType
@@ -11,9 +10,18 @@ import com.dida.domain.model.main.Comments
 import com.dida.domain.model.main.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.*
+import com.dida.domain.usecase.main.CommentAPI
+import com.dida.domain.usecase.main.CommentsPostIdAPI
+import com.dida.domain.usecase.main.DeleteCommentAPI
+import com.dida.domain.usecase.main.DeletePostAPI
+import com.dida.domain.usecase.main.PostIdAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
