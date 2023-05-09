@@ -89,8 +89,9 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             }
 
             launch {
-                viewModel.navigateToReportSuccessEvent.collectLatest {
-                    navController.popBackStack()
+                viewModel.navigateToReportEvent.collectLatest {
+                    if (it) navController.popBackStack()
+                    else toastMessage(requireContext().getString(R.string.already_report_message))
                 }
             }
         }

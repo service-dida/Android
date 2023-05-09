@@ -73,14 +73,23 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             }
 
             launch {
-                viewModel.navigateToReportSuccessEvent.collectLatest {
-                    communityPagingAdapter.refresh()
+                viewModel.navigateToReportEvent.collectLatest {
+                    if (it) {
+                        showReportCompleteDialog()
+                        communityPagingAdapter.refresh()
+                    } else {
+                        toastMessage(requireContext().getString(R.string.already_report_message))
+                    }
+
                 }
             }
 
             launch {
-                viewModel.navigateToBlockSuccessEvent.collectLatest {
-                    communityPagingAdapter.refresh()
+                viewModel.navigateToBlockEvent.collectLatest {
+                    if (it) {
+                        showBlockCompleteDialog()
+                        communityPagingAdapter.refresh()
+                    }
                 }
             }
         }
