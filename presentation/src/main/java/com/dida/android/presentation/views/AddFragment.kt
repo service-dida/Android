@@ -79,7 +79,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                         }.show(childFragmentManager, "AddFragment")
                     }
                 } else {
-                    toastMessage("지갑을 생성해야 합니다!")
+                    showToastMessage("지갑을 생성해야 합니다!")
                     navigate(AddFragmentDirections.actionAddFragmentToEmailFragment())
                 }
             }
@@ -104,7 +104,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                         if (checkImageSize(uri!!)) {
                             viewModel.setNFTImage(uri)
                         } else {
-                            toastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
+                            showToastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
                             getImageToGallery()
                         }
                     }
@@ -130,10 +130,10 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     R.id.add_next_step -> {
                         if (viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0) {
                             isSelected = false
-                            toastMessage("제목과 설명을 모두 입력해주세요.")
+                            showToastMessage("제목과 설명을 모두 입력해주세요.")
                         } else if (viewModel.nftImageState.value == "") {
                             isSelected = false
-                            toastMessage("NFT에 사용할 이미지를 골라주세요.")
+                            showToastMessage("NFT에 사용할 이미지를 골라주세요.")
                         } else {
                             isSelected = true
                             //사진,제목, 설명 이동

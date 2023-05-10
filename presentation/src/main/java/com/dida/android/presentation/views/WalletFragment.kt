@@ -91,7 +91,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
             val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("label", viewModel.walletAddressState.value)
             clipboard.setPrimaryClip(clip)
-            toastMessage("텍스트가 복사 되었습니다.")
+            showToastMessage("텍스트가 복사 되었습니다.")
         }
     }
 

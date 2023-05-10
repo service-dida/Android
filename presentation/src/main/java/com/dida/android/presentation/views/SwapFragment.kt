@@ -68,7 +68,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                 if (it) {
                     viewModel.initWalletAmount()
                 } else {
-                    toastMessage("지갑을 생성해야 합니다!")
+                    showToastMessage("지갑을 생성해야 합니다!")
                     navigate(SwapFragmentDirections.actionSwapFragmentToEmailFragment())
                 }
             }

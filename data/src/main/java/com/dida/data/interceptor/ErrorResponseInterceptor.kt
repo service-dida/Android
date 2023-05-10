@@ -50,7 +50,7 @@ fun createErrorException(
     url: String?,
     httpCode: Int,
     errorResponse: ErrorResponseImpl?
-): Exception? =
+): Exception =
     when (errorResponse?.code) {
         100 -> HaveNotJwtTokenException(Throwable(errorResponse.message), url, 100)
         102 -> InvalidJwtTokenException(Throwable(errorResponse.message), url, 102)
@@ -71,13 +71,11 @@ fun createErrorException(
         128 -> NeedLogin(Throwable(errorResponse.message), url, 128)
         200 -> InvalidLengthException(Throwable(errorResponse.message), url, 200)
         204 -> AlreadyReport(Throwable(errorResponse.message), url, 204)
-        404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
-        500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
         else -> {
             when (httpCode) {
                 404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
                 500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
-                else -> null
+                else -> UnknownException(Throwable("알 수 없는 에러가 발생했어요."), url, 999)
             }
         }
     }
