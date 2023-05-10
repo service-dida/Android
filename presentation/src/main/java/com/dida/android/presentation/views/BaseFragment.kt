@@ -26,6 +26,7 @@ import com.dida.common.util.*
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
+import com.dida.data.model.UnknownException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.flow.SharedFlow
@@ -90,8 +91,29 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     protected var navigationHost: NavigationHost? = null
 
-    init {
-        viewLifecycleOwner.repeatOnCreated {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        initStartView()
+        initDataBinding()
+        initAfterBinding()
+        return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is NavigationHost) {
+            navigationHost = context
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.repeatOnResumed {
             launch {
                 exception?.collectLatest { exception ->
                     sendException(exception)
@@ -119,26 +141,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                     loginCheck()
                 }
             }
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        initStartView()
-        initDataBinding()
-        initAfterBinding()
-        return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is NavigationHost) {
-            navigationHost = context
         }
     }
 
@@ -170,6 +172,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         val exception = when (throwable) {
             is ServerNotFoundException -> Exception("url -> ${throwable.url}", throwable)
             is InternalServerErrorException -> Exception("url -> ${throwable.url}", throwable)
+            is UnknownException -> Exception("url -> ${throwable.url}", throwable)
             else -> Exception(throwable)
         }
         FirebaseCrashlytics.getInstance().recordException(exception)
@@ -285,6 +288,10 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             is InternalServerErrorException -> {
                 sendException(throwable)
                 showServiceErrorFragment(throwable)
+            }
+            is UnknownException -> {
+                sendException(throwable)
+                showNetworkErrorDialog()
             }
             else -> Unit
         }
