@@ -1,6 +1,8 @@
 package com.example.convention
 
 import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.gradle.LibraryExtension
+import com.example.convention.project.configureComposeAndroid
 import com.example.convention.project.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -29,6 +31,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
+                configureComposeAndroid(this)
 
                 defaultConfig {
                     applicationId = "com.dida.android"
