@@ -31,8 +31,8 @@ class ReportBottomSheet(
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
         override fun afterTextChanged(s: Editable?) {
             binding.reportContents.let {
-                if (!it.text.isNullOrBlank()) viewModel.setEnableConfirm(true)
-                else viewModel.setEnableConfirm(false)
+                viewModel.setEnableConfirm(!it.text.isNullOrBlank())
+                viewModel.contents.value = if (!it.text.isNullOrBlank()) it.text.toString() else ""
             }
         }
     }
@@ -46,7 +46,7 @@ class ReportBottomSheet(
     }
 
     override fun initDataBinding() {
-        repeatOnResumed {
+        viewLifecycleOwner.repeatOnResumed {
             launch {
                 viewModel.reportCodes.collectLatest {
                     reportCodeAdapter.submitList(it)

@@ -24,8 +24,10 @@ internal inline fun <T> handleApi(transform: () -> T): NetworkResult<T> = try {
         is AlreadyUseWallet -> NetworkResult.Error(AlreadyUseWallet(e.cause, e.url, 125))
         is NeedMoreKlay -> NetworkResult.Error(NeedMoreKlay(e.cause, e.url, 127))
         is InvalidLengthException -> NetworkResult.Error(InvalidLengthException(e.cause, e.url, 200))
+        is AlreadyReport -> NetworkResult.Error(AlreadyReport(e.cause, e.url, 204))
         is ServerNotFoundException -> NetworkResult.Error(ServerNotFoundException(e.cause, e.url, 404))
         is InternalServerErrorException -> NetworkResult.Error(InternalServerErrorException(e.cause, e.url, 500))
+        is UnknownException -> NetworkResult.Error(UnknownException(e.cause, e.url, 999))
         else -> NetworkResult.Error(e)
     }
 }

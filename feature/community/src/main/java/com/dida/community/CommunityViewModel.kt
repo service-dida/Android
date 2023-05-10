@@ -1,6 +1,5 @@
 package com.dida.community
 
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dida.common.actionhandler.CommunityActionHandler
@@ -19,7 +18,13 @@ import com.dida.domain.usecase.main.HotCardAPI
 import com.dida.domain.usecase.main.PostsAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -98,6 +103,6 @@ class CommunityViewModel @Inject constructor(
     }
 
     fun onReport(type: ReportType, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
+        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
     }
 }

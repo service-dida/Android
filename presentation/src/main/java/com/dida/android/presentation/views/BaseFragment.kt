@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.DialogFragmentNavigator
@@ -27,6 +26,7 @@ import com.dida.common.util.*
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
+import com.dida.data.model.UnknownException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.flow.SharedFlow
@@ -91,40 +91,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     protected var navigationHost: NavigationHost? = null
 
-    init {
-        lifecycleScope.launch {
-            repeatOnResumed {
-                launch {
-                    exception?.collectLatest { exception ->
-                        sendException(exception)
-                    }
-                }
-
-                launch {
-                    viewModel.errorEvent.collectLatest { e ->
-                        dismissLoadingDialog()
-                        showToastMessage(e)
-                        onError(e)
-                    }
-                }
-
-                launch {
-                    viewModel.loadingEvent.collectLatest {
-                        if (it) showLoadingDialog()
-                        else dismissLoadingDialog()
-                    }
-                }
-
-                launch {
-                    viewModel.needLoginEvent.collectLatest {
-                        dismissLoadingDialog()
-                        loginCheck()
-                    }
-                }
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -142,6 +108,39 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         super.onAttach(context)
         if (context is NavigationHost) {
             navigationHost = context
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.repeatOnResumed {
+            launch {
+                exception?.collectLatest { exception ->
+                    sendException(exception)
+                }
+            }
+
+            launch {
+                viewModel.errorEvent.collectLatest { e ->
+                    dismissLoadingDialog()
+                    showErrorToastMessage(e)
+                    onError(e)
+                }
+            }
+
+            launch {
+                viewModel.loadingEvent.collectLatest {
+                    if (it) showLoadingDialog()
+                    else dismissLoadingDialog()
+                }
+            }
+
+            launch {
+                viewModel.needLoginEvent.collectLatest {
+                    dismissLoadingDialog()
+                    loginCheck()
+                }
+            }
         }
     }
 
@@ -173,6 +172,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         val exception = when (throwable) {
             is ServerNotFoundException -> Exception("url -> ${throwable.url}", throwable)
             is InternalServerErrorException -> Exception("url -> ${throwable.url}", throwable)
+            is UnknownException -> Exception("url -> ${throwable.url}", throwable)
             else -> Exception(throwable)
         }
         FirebaseCrashlytics.getInstance().recordException(exception)
@@ -195,13 +195,13 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     }
 
     // Toast Message 관련 함수
-    protected fun showToastMessage(e: Throwable?) {
+    private fun showErrorToastMessage(e: Throwable?) {
         toast?.cancel()
         toast = Toast.makeText(requireContext(), e?.cause?.message ?: "알 수 없는 에러가 발생했습니다.", Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수
-    protected fun toastMessage(message: String) {
+    protected fun showToastMessage(message: String) {
         toast?.cancel()
         toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)?.apply { show() }
     }
@@ -288,6 +288,10 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             is InternalServerErrorException -> {
                 sendException(throwable)
                 showServiceErrorFragment(throwable)
+            }
+            is UnknownException -> {
+                sendException(throwable)
+                showNetworkErrorDialog()
             }
             else -> Unit
         }

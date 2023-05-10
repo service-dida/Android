@@ -7,7 +7,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import androidx.core.os.bundleOf
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -98,16 +97,22 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             }
 
             launch {
-                viewModel.navigateToReportSuccessEvent.collectLatest {
-                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
-                    navController.popBackStack()
+                viewModel.navigateToReportEvent.collectLatest {
+                    if (it) {
+                        setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
+                        navController.popBackStack()
+                    } else {
+                        showToastMessage(requireContext().getString(R.string.already_report_message))
+                    }
                 }
             }
 
             launch {
-                viewModel.navigateToBlockSuccessEvent.collectLatest {
-                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.BLOCK to true))
-                    navController.popBackStack()
+                viewModel.navigateToBlockEvent.collectLatest {
+                    if (it) {
+                        setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.BLOCK to true))
+                        navController.popBackStack()
+                    }
                 }
             }
 
