@@ -24,9 +24,6 @@ internal fun Project.configureKotlinAndroid(
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
-        composeOptions {
-            kotlinCompilerExtensionVersion = "1.3.2"
-        }
     }
 }
 

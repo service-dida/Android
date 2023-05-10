@@ -136,10 +136,6 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                     // Paging
                     add("implementation", libs.findLibrary("androidx-paging").get())
-
-                    // Compose
-                    add("implementation", libs.findBundle("compose").get())
-                    add("implementation", libs.findLibrary("compose-paging").get())
                 }
             }
         }

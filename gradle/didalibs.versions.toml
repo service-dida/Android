@@ -54,11 +54,16 @@ navigationCompose = "2.5.1"
 
 paging = "3.0.1"
 
-compose = "1.3.2"
-pagingCompose = "1.0.0-alpha16"
-coil = "2.1.0"
-viewModelCompose = "2.5.1"
-composeMaterial = "1.3.0"
+# Compose Version
+composeUiVersion = "1.2.0"
+composeActivityVersion = "1.3.1"
+composeMaterial3 = "1.0.1"
+composeCoil = "2.1.0"
+composePaging = "1.0.0-alpha15"
+composeViewModel = "2.5.1"
+composeConstraint = "1.0.1"
+composeNavigation = "2.5.1"
+composeNavigationHilt = "1.0.0"
 
 ballon = "1.5.2"
 
@@ -139,15 +144,22 @@ kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin",ver
 androidx-paging = { module = "androidx.paging:paging-runtime-ktx",version.ref = "paging" }
 
 # Compose
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
-compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-paging = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewModelCompose" }
-compose-material = { module = "androidx.compose.material:material", version.ref = "composeMaterial" }
+androix-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivityVersion" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeUiVersion" }
+androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeUiVersion" }
+androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "composeUiVersion" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
+androidx-compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "composeUiVersion" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeUiVersion" }
+androidx-compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeUiVersion" }
+
+io-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "composeCoil" }
+androidx-compose-paging = { module = "androidx.paging:paging-compose", version.ref = "composePaging" }
+androidx-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "composeViewModel" }
+androidx-compose-constraint = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "composeConstraint" }
+
+androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+androidx-compose-naivgation-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeNavigationHilt" }
 
 skydoves-ballon = { module = "com.github.skydoves:balloon", version.ref = "ballon" }
 
@@ -160,4 +172,5 @@ room = ["androidx-room-runtime", "androidx-room"]
 moshi = ["converter-moshi", "moshi-moshi", "moshi-kotlin"]
 gson = ["gson-gson", "converter-gson"]
 datastore = ["datastore-preference", "datastore-core"]
-compose = ["compose-ui", "compose-ui-preview", "compose-material", "compose-ui-test", "compose-ui-tooling", "compose-ui-manifest", "compose-coil", "compose-viewmodel", "navigation-compose"]
+compose = ["androix-compose-activity", "androidx-compose-ui", "androidx-compose-ui-preview", "androidx-compose-material", "androidx-compose-material3", "androidx-compose-viewmodel", "androidx-compose-constraint"]
+compose-navigation = ["androidx-compose-naivgation-hilt", "androidx-compose-navigation"]

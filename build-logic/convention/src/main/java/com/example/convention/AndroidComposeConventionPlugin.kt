@@ -20,12 +20,19 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 33
                 buildFeatures.compose = true
+                composeOptions.kotlinCompilerExtensionVersion = "1.4.0-alpha01"
 
                 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
                 dependencies {
                     // Compose
                     add("implementation", libs.findBundle("compose").get())
-                    add("implementation", libs.findLibrary("compose-paging").get())
+                    add("implementation", libs.findBundle("compose-navigation").get())
+                    add("implementation", libs.findLibrary("io-coil-compose").get())
+
+
+                    add("androidTestImplementation", libs.findLibrary("androidx-compose-ui-test").get())
+                    add("debugImplementation", libs.findLibrary("androidx-compose-ui-tooling").get())
+                    add("debugImplementation", libs.findLibrary("androidx-compose-ui-manifest").get())
                 }
             }
         }
