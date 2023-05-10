@@ -60,7 +60,8 @@ class DefaultReportViewModelDelegate @Inject constructor(
             }.onSuccess { _navigateToReportEvent.emit(true)
             }.onError { e ->
                 catchError(e)
-                _navigateToReportEvent.emit(false) }
+                _navigateToReportEvent.emit(true)
+            }
         }
     }
 

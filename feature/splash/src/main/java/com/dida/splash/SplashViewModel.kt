@@ -52,15 +52,13 @@ class SplashViewModel @Inject constructor(
                             accessToken = response.accessToken ?: "",
                             refreshToken = response.refreshToken ?: ""
                         )
-                    }
-                    .flatMap { deviceTokenAPI(deviceToken = deviceToken) }
+                    }.flatMap { deviceTokenAPI(deviceToken = deviceToken) }
                     .flatMap { userProfileAPI() }
                     .onSuccess {
                         dataStorePreferences.setUserId(it.userId)
                         _navigateToHome.emit(true)
                         _splashScreenGone.emit(true)
-                    }
-                    .onError { e -> catchError(e) }
+                    }.onError { e -> catchError(e) }
             }
             if (accessToken == null) {
                 _navigateToHome.emit(true)

@@ -30,8 +30,7 @@ class SwapHistoryViewModel @Inject constructor(
                 .onSuccess {
                     _swapHistoryState.emit(it)
                     _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 

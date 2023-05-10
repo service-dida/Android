@@ -48,8 +48,8 @@ class LoginMainViewModel @Inject constructor(
                         dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
                         _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
                     }
-                    dismissLoading() }
-                .onError { e ->
+                    dismissLoading()
+                }.onError { e ->
                     catchError(e)
                     _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
                     dataStorePreferences.removeAccountToken()

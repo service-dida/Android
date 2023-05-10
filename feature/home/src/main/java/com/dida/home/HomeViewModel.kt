@@ -151,8 +151,7 @@ class HomeViewModel @Inject constructor(
                     if (liked) _messageEvent.emit(HomeMessageAction.DeleteCardBookmarkMessage)
                     else _messageEvent.emit(HomeMessageAction.AddCardBookmarkMessage)
                     getMain()
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
             dismissLoading()
         }
     }
