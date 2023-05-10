@@ -93,24 +93,21 @@ class AddPurposeViewModel @Inject constructor(
             val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
             val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-           uploadAssetAPI(requestBody)
-               .onSuccess {  }
-                .onError { e->catchError(e) }
+            uploadAssetAPI(requestBody)
+                .onSuccess { }
+                .onError { e -> catchError(e) }
                 .flatMap {
-                    mintNftAPI(password,titleState.value,descriptionState.value,it.uri)
+                    mintNftAPI(password, titleState.value, descriptionState.value, it.uri)
                 }
-                .onSuccess {cardId ->
-                    if(type == AddNftType.NOT_SALE){
-                        _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-                    }else{
-                        sellNft(password,cardId,price)
-                    }
+                .onSuccess { cardId ->
+                    if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                    else sellNft(password, cardId, price)
                 }
-                .onError { e->catchError(e) }
+                .onError { e -> catchError(e) }
         }
     }
 
-    fun sellNft(payPwd : String, cardId: Long, price : Double){
+    private fun sellNft(payPwd : String, cardId: Long, price : Double){
         baseViewModelScope.launch {
             sellNftAPI(payPwd,cardId,price)
                 .onSuccess {

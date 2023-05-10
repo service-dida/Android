@@ -7,7 +7,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import androidx.core.os.bundleOf
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -103,7 +102,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
                         navController.popBackStack()
                     } else {
-                        toastMessage(requireContext().getString(R.string.already_report_message))
+                        showToastMessage(requireContext().getString(R.string.already_report_message))
                     }
                 }
             }

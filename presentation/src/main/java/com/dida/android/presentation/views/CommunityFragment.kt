@@ -78,7 +78,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                         showReportCompleteDialog()
                         communityPagingAdapter.refresh()
                     } else {
-                        toastMessage(requireContext().getString(R.string.already_report_message))
+                        showToastMessage(requireContext().getString(R.string.already_report_message))
                     }
 
                 }

@@ -91,7 +91,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             launch {
                 viewModel.navigateToReportEvent.collectLatest {
                     if (it) navController.popBackStack()
-                    else toastMessage(requireContext().getString(R.string.already_report_message))
+                    else showToastMessage(requireContext().getString(R.string.already_report_message))
                 }
             }
         }
@@ -148,7 +148,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                 }
             }.show(childFragmentManager, "DetailNftBottomSheet")
         } else {
-            toastMessage("마켓에 올라가 있는 NFT는 삭제 할 수 없습니다.")
+            showToastMessage("마켓에 올라가 있는 NFT는 삭제 할 수 없습니다.")
         }
     }
 

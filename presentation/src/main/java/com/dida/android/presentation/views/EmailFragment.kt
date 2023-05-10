@@ -55,7 +55,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
 
         viewLifecycleOwner.repeatOnResumed {
             viewModel.retryEvent.collectLatest {
-                toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
+                showToastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
                 makePassword()
             }
         }
@@ -86,7 +86,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(com.did
     private fun timeOver() {
         timer.cancel()
         lifecycleScope.launch {
-            toastMessage("시간이 초과되어 다시 인증번호 전송을 합니다.")
+            showToastMessage("시간이 초과되어 다시 인증번호 전송을 합니다.")
             viewModel.getSendEmail()
         }
     }
