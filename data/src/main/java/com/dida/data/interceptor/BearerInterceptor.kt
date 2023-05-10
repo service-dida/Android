@@ -4,6 +4,8 @@ import com.dida.data.DataApplication
 import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
+import com.dida.data.model.InvalidJwtTokenException
+import com.dida.data.model.InvalidKakaoAccessTokenException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import kotlinx.coroutines.runBlocking
@@ -27,45 +29,39 @@ class BearerInterceptor : Interceptor {
         var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
-        if (response.code in (400..500)) {
 
-            val requestUrl = request.url.toString()
-            val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
-            val errorException = createErrorException(requestUrl, response.code, errorResponse)
+        when(response.code) {
+            in 400 .. 500 -> {
+                val requestUrl = request.url.toString()
+                val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
+                val errorException = createErrorException(requestUrl, response.code, errorResponse)
 
-            if (errorResponse?.code == 102) {
-                runBlocking {
-                    //토큰 갱신 api 호출
-                    DataApplication.dataStorePreferences.getRefreshToken()?.let {
-                        handleApi {
-                            Retrofit.Builder()
-                                .baseUrl(BASE_URL)
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build()
-                                .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                if (errorException is InvalidJwtTokenException) {
+                    runBlocking {
+                        //토큰 갱신 api 호출
+                        DataApplication.dataStorePreferences.getRefreshToken()?.let {
+                            handleApi {
+                                Retrofit.Builder()
+                                    .baseUrl(BASE_URL)
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build()
+                                    .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                            }
+                        }?.onSuccess {
+                            DataApplication.dataStorePreferences.setAccessToken(it.accessToken ?: "", it.refreshToken ?: "")
+                            accessToken = it.accessToken ?: ""
+                        }?.onError {
+                            DataApplication.dataStorePreferences.removeAccountToken()
+                            accessToken = ""
                         }
                     }
-                }?.onSuccess {
-                    runBlocking {
-                        DataApplication.dataStorePreferences.setAccessToken(it.accessToken ?: "", it.refreshToken ?: "")
-                    }
-                    accessToken = it.accessToken ?: ""
-                }?.onError {
-                    runBlocking {
-                        DataApplication.dataStorePreferences.removeAccountToken()
-                    }
-                    accessToken = ""
+                    return chain.proceed(chain.request().newBuilder().addHeader("Authorization", accessToken).build())
+                } else {
+                    errorException.let { throw it }
                 }
-
-                val newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()
-                return chain.proceed(newRequest)
-            } else {
-                errorException?.let { throw it }
-                return response
             }
-        } else {
-            return response
-        }
 
+            else -> return response
+        }
     }
 }
