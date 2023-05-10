@@ -76,20 +76,7 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         }
     }
 
-    override fun initAfterBinding() {
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding.composeView.apply {
-            setContent {
-                LoginScreen(
-                    onKakaoLoginClicked = { },
-                    onKakakoWebLoginClicked = {}
-                )
-            }
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    override fun initAfterBinding() {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -100,6 +87,15 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false
+        }
+
+        binding.composeView.apply {
+            setContent {
+                LoginScreen(
+                    onKakaoLoginClicked = { },
+                    onKakakoWebLoginClicked = {}
+                )
+            }
         }
     }
 
