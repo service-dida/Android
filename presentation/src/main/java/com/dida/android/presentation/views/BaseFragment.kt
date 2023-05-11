@@ -123,7 +123,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             launch {
                 viewModel.errorEvent.collectLatest { e ->
                     dismissLoadingDialog()
-                    showErrorToastMessage(e)
                     onError(e)
                 }
             }
@@ -293,7 +292,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 sendException(throwable)
                 showNetworkErrorDialog()
             }
-            else -> Unit
+            else -> showErrorToastMessage(throwable)
         }
     }
 
