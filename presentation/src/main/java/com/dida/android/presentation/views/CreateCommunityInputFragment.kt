@@ -9,9 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.util.DIDAINTENT
-import com.dida.common.util.EVENT
-import com.dida.common.util.SCREEN
-import com.dida.common.util.repeatOnStarted
 import com.dida.create_community_input.CreateCommunityInputNavigationAction
 import com.dida.create_community_input.CreateCommunityInputViewModel
 import com.dida.create_community_input.databinding.FragmentCreateCommunityInputBinding
@@ -56,7 +53,7 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
                 when (it) {
                     is CreateCommunityInputNavigationAction.NavigateToBack -> navController.popBackStack()
                     is CreateCommunityInputNavigationAction.NavigateToCommunity -> {
-                        setFragmentResult(DIDAINTENT.COMMUNITY_SCREEN, bundleOf(DIDAINTENT.CREATE to true))
+                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CREATE to true))
                         navigate(CreateCommunityInputFragmentDirections.actionCommunityCommunityInputFragmentToCommunityFragment())
                     }
                 }

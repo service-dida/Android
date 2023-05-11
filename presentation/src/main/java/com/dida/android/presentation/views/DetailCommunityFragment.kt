@@ -21,8 +21,6 @@ import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
 import com.dida.common.util.DIDAINTENT
-import com.dida.common.util.EVENT
-import com.dida.common.util.SCREEN
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.DetailCommunityMessageAction
@@ -100,7 +98,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             launch {
                 viewModel.navigateToReportEvent.collectLatest {
                     if (it) {
-                        setFragmentResult(DIDAINTENT.COMMUNITY_SCREEN, bundleOf(DIDAINTENT.REPORT to true))
+                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_REPORT to true))
                         navController.popBackStack()
                     } else {
                         showToastMessage(requireContext().getString(R.string.already_report_message))
@@ -111,7 +109,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             launch {
                 viewModel.navigateToBlockEvent.collectLatest {
                     if (it) {
-                        setFragmentResult(DIDAINTENT.COMMUNITY_SCREEN, bundleOf(DIDAINTENT.BLOCK to true))
+                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_BLOCK to true))
                         navController.popBackStack()
                     }
                 }
