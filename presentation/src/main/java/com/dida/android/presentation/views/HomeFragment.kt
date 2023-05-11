@@ -41,12 +41,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private val permissionManager = PermissionManagerImpl(this)
     private val notificationPermissionRequest: PermissionRequester =
         permissionManager.forPermission(Permissions.PostNotification)
-            .onGranted {
-                setFragmentResult(
-                    DIDAINTENT.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED,
-                    bundleOf(DIDAINTENT.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED to true)
-                )
-            }
             .subscribe(this)
 
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
@@ -189,10 +183,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     }
 
     private fun initNotificationPermission() {
-        lifecycleScope.launch {
-            if (NotificationManagerCompat.from(requireContext()).areNotificationsEnabled().not()) {
-                notificationPermissionRequest.request()
-            }
+        if (NotificationManagerCompat.from(requireContext()).areNotificationsEnabled().not()) {
+            notificationPermissionRequest.request()
         }
     }
 
