@@ -43,8 +43,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         permissionManager.forPermission(Permissions.PostNotification)
             .onGranted {
                 setFragmentResult(
-                    DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED,
-                    bundleOf(DidaIntent.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED to true)
+                    DIDAINTENT.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED,
+                    bundleOf(DIDAINTENT.RESULT_KEY_POST_NOTIFICATION_PERMISSION_GRANTED to true)
                 )
             }
             .subscribe(this)
