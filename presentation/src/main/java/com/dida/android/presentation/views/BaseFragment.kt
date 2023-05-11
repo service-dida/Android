@@ -116,14 +116,9 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         viewLifecycleOwner.repeatOnResumed {
             launch {
                 exception?.collectLatest { exception ->
-                    sendException(exception)
-                }
-            }
-
-            launch {
-                viewModel.errorEvent.collectLatest { e ->
                     dismissLoadingDialog()
-                    onError(e)
+                    onError(exception)
+                    sendException(exception)
                 }
             }
 
