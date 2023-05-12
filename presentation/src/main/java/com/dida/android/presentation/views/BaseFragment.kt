@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
 import com.dida.common.base.BaseViewModel
+import com.dida.common.base.ErrorWithRetry
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.*
@@ -29,6 +30,7 @@ import com.dida.data.model.ServerNotFoundException
 import com.dida.data.model.UnknownException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -117,8 +119,10 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             launch {
                 exception?.collectLatest { exception ->
                     dismissLoadingDialog()
-                    onError(exception)
-                    sendException(exception)
+                    when(exception) {
+                        is ErrorWithRetry -> onErrorRetry(exception, exception.retry, exception.retryScope)
+                        else -> onError(exception)
+                    }
                 }
             }
 
@@ -269,25 +273,49 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * 추후 Dialog 텍스트 정해지면 그에 따라서 수정
      * */
     // Error 관련
-    private fun onError(throwable: Throwable) {
-        when (throwable) {
+    private fun onError(exception: Throwable) {
+        sendException(exception)
+        when (exception) {
             is ConnectException -> {
-                sendException(throwable)
+                sendException(exception)
                 showNetworkErrorDialog()
             }
             is ServerNotFoundException -> {
-                sendException(throwable)
-                showServiceErrorDialog(throwable)
+                sendException(exception)
+                showServiceErrorDialog(exception)
             }
             is InternalServerErrorException -> {
-                sendException(throwable)
-                showServiceErrorFragment(throwable)
+                sendException(exception)
+                showServiceErrorFragment(exception)
             }
             is UnknownException -> {
-                sendException(throwable)
+                sendException(exception)
                 showNetworkErrorDialog()
             }
-            else -> showErrorToastMessage(throwable)
+            else -> showErrorToastMessage(exception)
+        }
+    }
+
+    private fun onErrorRetry(exception: Throwable, retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
+        sendException(exception)
+        when (exception) {
+            is ConnectException -> {
+                sendException(exception)
+                showNetworkErrorDialog()
+            }
+            is ServerNotFoundException -> {
+                sendException(exception)
+                showServiceErrorDialog(exception)
+            }
+            is InternalServerErrorException -> {
+                sendException(exception)
+                showServiceErrorFragment(exception)
+            }
+            is UnknownException -> {
+                sendException(exception)
+                showNetworkErrorDialog()
+            }
+            else -> showServiceErrorDialog(retry, retryScope)
         }
     }
 
@@ -295,6 +323,14 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     private fun showServiceErrorDialog(throwable: Throwable) {
         val message = throwable.cause?.message ?: getString(com.dida.android.R.string.unknown_error_message)
         showErrorDialog(message) { findNavController().navigateUp() }
+    }
+
+    private fun showServiceErrorDialog(retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
+        if (requireActivity().isDestroyed) return
+        retryScope?.let { coroutineScope ->
+            val message = getString(com.dida.android.R.string.network_retry_error_message)
+            showErrorDialog(message) { coroutineScope.launch {retry.invoke() } }
+        }
     }
 
     // 네트워크 오류
