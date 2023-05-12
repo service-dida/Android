@@ -72,8 +72,7 @@ class DetailNftViewModel @Inject constructor(
                     _detailNftState.value = UiState.Success(it)
                     setDetailOwnerType(it)
                     dismissLoading()
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -100,8 +99,7 @@ class DetailNftViewModel @Inject constructor(
             sellNftAPI(payPwd, cardIdState.value, price)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -111,8 +109,7 @@ class DetailNftViewModel @Inject constructor(
             hideNftAPI(cardIdState.value)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -122,8 +119,7 @@ class DetailNftViewModel @Inject constructor(
             deleteNftAPI(cardIdState.value, password)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 

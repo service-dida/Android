@@ -46,8 +46,7 @@ class SwapViewModel @Inject constructor(
                     klayAmount = it.klay.toString()
                     didaAmount = it.dida.toString()
                     setWalletAmount()
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -64,8 +63,8 @@ class SwapViewModel @Inject constructor(
             showLoading()
             walletExistedAPI()
                 .onSuccess {
-                    _walletExistsState.emit(it) }
-                .onError { e ->
+                    _walletExistsState.emit(it)
+                }.onError { e ->
                     if (e is NeedToWalletException) _walletExistsState.emit(false)
                     else catchError(e) }
             dismissLoading()

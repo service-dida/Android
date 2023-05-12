@@ -48,11 +48,12 @@ class MyPageViewModel @Inject constructor(
 
     fun getUserInfo() {
         baseViewModelScope.launch {
-            userProfileAPI().onSuccess {
-                delay(SHIMMER_TIME)
-                _myPageState.value = UiState.Success(it)
-                hasWalletState.value = it.getWallet
-            }.onError { e -> catchError(e) }
+            userProfileAPI()
+                .onSuccess {
+                    delay(SHIMMER_TIME)
+                    _myPageState.value = UiState.Success(it)
+                    hasWalletState.value = it.getWallet
+                }.onError { e -> catchError(e) }
         }
     }
 

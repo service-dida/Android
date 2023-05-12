@@ -53,7 +53,7 @@ class UpdateProfileViewModel @Inject constructor(
                     currentProfileImage = it.profileUrl
                     currentNickname = it.nickname
                     currentDescription = it.description
-                }
+                }.onError { e -> catchError(e) }
         }
     }
 
