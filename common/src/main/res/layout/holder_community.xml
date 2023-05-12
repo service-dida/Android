@@ -16,7 +16,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:onSingleClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/community_main"
@@ -26,8 +27,7 @@
             android:background="@color/surface1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="20dp"
-            app:onSingleClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
+            android:paddingBottom="20dp">
 
             <ImageView
                 android:id="@+id/user_img"
@@ -168,8 +168,20 @@
             android:padding="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            tools:listitem="@layout/holder_comments">
-        </androidx.recyclerview.widget.RecyclerView>
+            tools:listitem="@layout/holder_comments"/>
+
+        <TextView
+            android:id="@+id/reply_more_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/comment_recycler"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="79dp"
+            android:textSize="14dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="#939393"
+            android:text="@string/reply_more"
+            android:paddingBottom="40dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
