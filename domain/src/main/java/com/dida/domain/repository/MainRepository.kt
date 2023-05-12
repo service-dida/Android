@@ -28,7 +28,7 @@ interface  MainRepository {
 
     suspend fun getCheckPasswordAPI(password: String) : NetworkResult<PasswordVerify>
 
-    suspend fun postChangePasswordAPI(beforePassword: String, afterPassword: String) : NetworkResult<Unit>
+    suspend fun postChangePasswordAPI(nowPwd: String, checkPwd: String) : NetworkResult<Unit>
 
     suspend fun getTempPasswordAPI() : NetworkResult<Unit>
 

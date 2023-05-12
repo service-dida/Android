@@ -10,9 +10,12 @@ import androidx.navigation.fragment.navArgs
 import com.dida.email.R
 import com.dida.common.util.maskEmail
 import com.dida.common.util.repeatOnResumed
+import com.dida.common.widget.DefaultSnackBar
+import com.dida.email.EmailNavigationAction
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
 import com.dida.password.PasswordDialog
+import com.dida.settings.SettingsNavigationAction
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -50,17 +53,23 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.createWalletState.collect { result ->
-                if(result) {
-                    setFragmentResult("walletCheck", bundleOf("hasWallet" to true))
-                    navController.popBackStack()
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    is EmailNavigationAction.SuccessCreateWallet -> {
+                        navController.popBackStack()
+                    }
+                    is EmailNavigationAction.SuccessResetPassword -> {
+                        //TODO : Custom 토스트메시지로 바꿔야함
+                        toastMessage("비밀번호 변경이 완료되었습니다.")
+                        navController.popBackStack()
+                    }
                 }
             }
-        }
 
-        viewLifecycleOwner.repeatOnResumed {
-            viewModel.retryEvent.collectLatest {
-                toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
+            viewLifecycleOwner.repeatOnResumed {
+                viewModel.retryEvent.collectLatest {
+                    toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
+                }
             }
         }
     }
@@ -75,7 +84,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
                 }else if(args.requestEmailType == RequestEmailType.RESET_PASSWORD){
                     resetPassword()
                 }
-
+            }else{
+                //TODO : 커스텀 토스트로 바꿔야함
+                toastMessage("인증번호가 일치하지 않습니다.")
             }
         }
 
@@ -90,7 +101,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             if (success) {
                 PasswordDialog(6,"비밀번호 확인","비밀번호를 다시 한번 입력해주세요.",true) { success, secondPassword ->
                     viewModel.postCreateWallet(firstPassword, secondPassword)
-                }
+                }.show(childFragmentManager,"EmailFragment")
             }
         }.show(childFragmentManager,"EmailFragment")
     }
@@ -99,8 +110,8 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
         PasswordDialog(6,"새로운 비밀번호 입력","지갑 비밀번호 변경을 위해 입력해주세요 ",true){ success, firstPassword ->
             if (success) {
                 PasswordDialog(6,"비밀번호 확인","비밀번호를 다시 한번 입력해주세요.",true) { success, secondPassword ->
-                    //TODO : 비밀번호 변경 API 호출
-                }
+                    viewModel.changePassword(firstPassword,secondPassword)
+                }.show(childFragmentManager,"EmailFragment")
             }
         }.show(childFragmentManager,"EmailFragment")
     }

@@ -4,6 +4,7 @@ import com.dida.common.base.BaseViewModel
 import com.dida.data.model.NotCorrectPasswordException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.ChangePasswordAPI
 import com.dida.domain.usecase.main.CreateWalletAPI
 import com.dida.domain.usecase.main.SendEmailAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,10 +15,14 @@ import javax.inject.Inject
 @HiltViewModel
 class EmailViewModel @Inject constructor(
     private val sendEmailAPI: SendEmailAPI,
-    private val createWalletAPI: CreateWalletAPI
+    private val createWalletAPI: CreateWalletAPI,
+    private val changePasswordAPI: ChangePasswordAPI
 ) : BaseViewModel() {
 
     private val TAG = "EmailViewModel"
+
+    private val _navigationEvent: MutableSharedFlow<EmailNavigationAction> = MutableSharedFlow<EmailNavigationAction>()
+    val navigationEvent: SharedFlow<EmailNavigationAction> = _navigationEvent.asSharedFlow()
 
     private val _retryEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val retryEvent: SharedFlow<Unit> = _retryEvent
@@ -41,15 +46,12 @@ class EmailViewModel @Inject constructor(
         return userInputState.value == verifyNumberValue
     }
 
-    private val _createWalletState = MutableStateFlow<Boolean>(false)
-    val createWalletState: StateFlow<Boolean> = _createWalletState
-
     fun postCreateWallet(password: String, passwordCheck: String) {
         baseViewModelScope.launch {
             showLoading()
             createWalletAPI(password, passwordCheck)
                 .onSuccess {
-                    _createWalletState.value = true
+                    _navigationEvent.emit(EmailNavigationAction.SuccessCreateWallet)
                     dismissLoading() }
                 .onError { e ->
                     when(e) {
@@ -60,6 +62,19 @@ class EmailViewModel @Inject constructor(
         }
     }
 
+    fun changePassword(nowPwd : String, checkPwd : String){
+        baseViewModelScope.launch {
+            showLoading()
+            changePasswordAPI(nowPwd = nowPwd, checkPwd = checkPwd)
+                .onSuccess {
+                    _navigationEvent.emit(EmailNavigationAction.SuccessResetPassword)
+                }
+                .onError {
+                        e -> catchError(e)
+                }
+            dismissLoading()
+        }
+    }
     var timeState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
     fun timeToString(minute: Int, second: Int) {

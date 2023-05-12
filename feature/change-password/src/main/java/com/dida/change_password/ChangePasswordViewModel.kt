@@ -29,7 +29,7 @@ class ChangePasswordViewModel @Inject constructor(
     override fun onOkBtnClicked() {
         baseViewModelScope.launch {
             showLoading()
-            changePasswordAPI(beforePassword = beforePasswordState.value, afterPassword = newPasswordState.value)
+            changePasswordAPI(nowPwd = beforePasswordState.value, checkPwd = newPasswordState.value)
                 .onSuccess { _navigationEvent.emit(Unit) }
                 .onError { e -> catchError(e) }
             dismissLoading()
