@@ -325,6 +325,8 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         showErrorDialog(message) { findNavController().navigateUp() }
     }
 
+    // 에러 재시도 관련
+    /** TODO : 추후 디자인에 따라서 Dialog 수정 필요 (현 상황이라면 서버 에러시 무한으로 서버 찌르게 됨) */
     private fun showServiceErrorDialog(retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
         if (requireActivity().isDestroyed) return
         retryScope?.let { coroutineScope ->
