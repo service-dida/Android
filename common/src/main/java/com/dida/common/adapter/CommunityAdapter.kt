@@ -51,10 +51,6 @@ class CommunityAdapter(
             if (item.commentList.size > 2) adapter.submitList(item.commentList.slice(0 until 2))
             else adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
-            binding.moreBtn.isVisible = item.type == PostType.NOT_MINE
-            binding.moreBtn.setOnSingleClickListener {
-                it.showReportPostBalloon(postId = item.postId, listener = binding.eventListener!!)
-            }
             binding.executePendingBindings()
         }
     }
