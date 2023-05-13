@@ -41,13 +41,8 @@ class CommunityPagingAdapter(
 
         fun bind(item: Posts) {
             binding.holderModel = item
-            if (item.commentList.size > 2) {
-                binding.replyMoreBtn.isVisible = true
-                adapter.submitList(item.commentList.slice(0 until 2))
-            } else {
-                binding.replyMoreBtn.isVisible = false
-                adapter.submitList(item.commentList)
-            }
+            if (item.commentList.size > 2) adapter.submitList(item.commentList.slice(0 until 2))
+            else adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
             binding.moreBtn.isVisible = item.type == PostType.NOT_MINE
             binding.moreBtn.setOnSingleClickListener {

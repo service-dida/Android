@@ -2,13 +2,17 @@ package com.dida.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.actionhandler.CommunityActionHandler
+import com.dida.common.ballon.showReportPostBalloon
+import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommunityBinding
+import com.dida.domain.model.main.PostType
 import com.dida.domain.model.main.Posts
 
 class CommunityAdapter(
@@ -44,8 +48,13 @@ class CommunityAdapter(
 
         fun bind(item: Posts) {
             binding.holderModel = item
-            adapter.submitList(item.commentList)
+            if (item.commentList.size > 2) adapter.submitList(item.commentList.slice(0 until 2))
+            else adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
+            binding.moreBtn.isVisible = item.type == PostType.NOT_MINE
+            binding.moreBtn.setOnSingleClickListener {
+                it.showReportPostBalloon(postId = item.postId, listener = binding.eventListener!!)
+            }
             binding.executePendingBindings()
         }
     }

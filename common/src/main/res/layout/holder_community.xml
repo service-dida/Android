@@ -178,6 +178,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="79dp"
             android:textSize="14dp"
+            app:goneUnless="@{holderModel.commentList.size() > 2}"
             android:fontFamily="@font/pretendard_medium"
             android:textColor="#939393"
             android:text="@string/reply_more"
