@@ -38,8 +38,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is SettingsNavigationAction.NavigateToProfileEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToUpdateProfileFragment())
-                    is SettingsNavigationAction.NavigateToTempPassword -> navigate(SettingsFragmentDirections.actionSettingFragmentToEmailFragment(RequestEmailType.RESET_PASSWORD))
-                    is SettingsNavigationAction.NavigateToPasswordEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToChangePasswordFragment())
+                    is SettingsNavigationAction.NavigateToPasswordEdit ->  navigate(SettingsFragmentDirections.actionSettingFragmentToEmailFragment(RequestEmailType.RESET_PASSWORD))
                     is SettingsNavigationAction.NavigateToAccountInformation -> Unit
                     is SettingsNavigationAction.NavigateToNotification -> Unit
                     is SettingsNavigationAction.NavigateToHideList -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())

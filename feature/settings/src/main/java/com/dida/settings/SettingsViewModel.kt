@@ -22,12 +22,6 @@ class SettingsViewModel @Inject constructor() : BaseViewModel(), SettingsActionH
         }
     }
 
-    override fun onTempPasswordClicked() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(SettingsNavigationAction.NavigateToTempPassword)
-        }
-    }
-
     override fun onPasswordEditClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(SettingsNavigationAction.NavigateToPasswordEdit)
