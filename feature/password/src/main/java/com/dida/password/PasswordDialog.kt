@@ -35,6 +35,7 @@ class PasswordDialog(
     private val mainTitleStr: String,
     private val subTitleStr: String,
     private val settingYn : Boolean = false,
+    private val showFindPwdBtn : Boolean = true,
     private val result: (Boolean, String) -> Unit
 ) : BaseBottomSheetDialogFragment<DialogPasswordBinding, PasswordViewModel>() {
 
@@ -51,6 +52,12 @@ class PasswordDialog(
             this.lifecycleOwner = viewLifecycleOwner
             this.mainTitle = mainTitleStr
             this.subTitle = subTitleStr
+            this.findPasswordBtn.visibility =
+                if(showFindPwdBtn){
+                    View.VISIBLE
+                }else {
+                    View.GONE
+                }
         }
         exception = viewModel.errorEvent
         viewModel.initPwdInfo(size, settingYn)

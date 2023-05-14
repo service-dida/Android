@@ -56,11 +56,11 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is EmailNavigationAction.SuccessCreateWallet -> {
-                        toastMessage(getString(R.string.success_create_wallet))
+                        showMessageSnackBar(getString(R.string.success_create_wallet))
                         navController.popBackStack()
                     }
                     is EmailNavigationAction.SuccessResetPassword -> {
-                        toastMessage(getString(R.string.success_reset_password))
+                        showMessageSnackBar(getString(R.string.success_reset_password))
                         navController.popBackStack()
                     }
                 }
@@ -68,7 +68,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
 
             viewLifecycleOwner.repeatOnResumed {
                 viewModel.retryEvent.collectLatest {
-                    toastMessage(getString(R.string.fail_notCorrect_password))
+                    showMessageSnackBar(getString(R.string.fail_notCorrect_password))
                 }
             }
         }
@@ -96,9 +96,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     }
 
     private fun makeWallet(){
-        PasswordDialog(6,getString(R.string.create_wallet_title),getString(R.string.create_wallet_subTitle),true){ success, firstPassword ->
+        PasswordDialog(6,getString(R.string.create_wallet_title),getString(R.string.create_wallet_subTitle),true,false){ success, firstPassword ->
             if (success) {
-                PasswordDialog(6,getString(R.string.reconfirm_password_title),getString(R.string.reconfirm_password_sibTitle),true) { success, secondPassword ->
+                PasswordDialog(6,getString(R.string.reconfirm_password_title),getString(R.string.reconfirm_password_sibTitle),true,false) { success, secondPassword ->
                     viewModel.postCreateWallet(firstPassword, secondPassword)
                 }.show(childFragmentManager,"EmailFragment")
             }
@@ -106,9 +106,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     }
 
     private fun resetPassword(){
-        PasswordDialog(6,getString(R.string.reset_password_title),getString(R.string.reset_password_subTitle),true){ success, firstPassword ->
+        PasswordDialog(6,getString(R.string.reset_password_title),getString(R.string.reset_password_subTitle),true,false){ success, firstPassword ->
             if (success) {
-                PasswordDialog(6,getString(R.string.reconfirm_password_title),getString(R.string.reconfirm_password_sibTitle),true) { success, secondPassword ->
+                PasswordDialog(6,getString(R.string.reconfirm_password_title),getString(R.string.reconfirm_password_sibTitle),true,false) { success, secondPassword ->
                     viewModel.changePassword(firstPassword,secondPassword)
                 }.show(childFragmentManager,"EmailFragment")
             }
