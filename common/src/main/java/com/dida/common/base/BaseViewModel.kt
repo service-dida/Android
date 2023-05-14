@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dida.data.DataApplication
 import com.dida.data.model.HaveNotJwtTokenException
 import com.dida.data.model.InvalidKakaoAccessTokenException
+import com.dida.data.model.InvalidTokenException
 import com.dida.data.model.NeedLogin
 import com.dida.domain.NetworkResult
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -40,6 +41,7 @@ abstract class BaseViewModel : ViewModel() {
                 DataApplication.dataStorePreferences.removeAccountToken()
                 _needLoginEvent.emit(true)
             }
+            is InvalidTokenException -> DataApplication.dataStorePreferences.removeAccountToken()
             else -> _errorEvent.emit(exception)
         }
     }
