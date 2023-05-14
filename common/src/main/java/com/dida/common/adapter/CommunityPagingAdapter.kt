@@ -36,18 +36,15 @@ class CommunityPagingAdapter(
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_community
 
-    class ViewHolder(private val binding: HolderCommunityBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val adapter = PostCommentsAdapter()
+    class ViewHolder(private val binding: HolderCommunityBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val adapter = PostCommentsAdapter()
 
         fun bind(item: Posts) {
             binding.holderModel = item
-            adapter.submitList(item.commentList)
+            if (item.commentList.size > 2) adapter.submitList(item.commentList.slice(0 until 2))
+            else adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
-            when(item.type) {
-                PostType.NOT_MINE -> binding.moreBtn.isVisible = true
-                else -> binding.moreBtn.isVisible = false
-            }
+            binding.moreBtn.isVisible = item.type == PostType.NOT_MINE
             binding.moreBtn.setOnSingleClickListener {
                 it.showReportPostBalloon(postId = item.postId, listener = binding.eventListener!!)
             }
