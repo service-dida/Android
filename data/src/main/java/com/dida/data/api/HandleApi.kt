@@ -13,6 +13,7 @@ internal inline fun <T> handleApi(transform: () -> T): NetworkResult<T> = try {
         is NotUseNicknameException -> NetworkResult.Error(NotUseNicknameException(e.cause, e.url, 109))
         is AlreadyEmailException -> NetworkResult.Error(AlreadyEmailException(e.cause, e.url, 110))
         is InvalidUserException -> NetworkResult.Error(InvalidUserException(e.cause, e.url, 111))
+        is InvalidTokenException -> NetworkResult.Error(InvalidTokenException(e.cause, e.url, 113))
         is InvalidPasswordException -> NetworkResult.Error(InvalidPasswordException(e.cause, e.url, 114))
         is InvalidNftException -> NetworkResult.Error(InvalidNftException(e.cause, e.url, 115))
         is AlreadyWalletException -> NetworkResult.Error(AlreadyWalletException(e.cause, e.url, 117))

@@ -16,6 +16,7 @@ class EmptyDeviceTokenException(e: Throwable?, val url: String? = null, code: In
 class NotUseNicknameException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 사용할 수 없는 닉네임 109
 class AlreadyEmailException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 이미 사용중인 이메일 110
 class InvalidUserException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 올바르지 않은 사용자 111
+class InvalidTokenException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 올바르지 않은 토큰입니다 113
 class InvalidPasswordException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 비밀번호가 올바르지 않습니다 114
 class InvalidNftException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 유효하지 않은 NFT 115
 class AlreadyWalletException(e: Throwable?, val url: String? = null, code: Int?) : IOException(e) // 이미 지갑이 존재 117
