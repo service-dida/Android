@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/hots_recycler_view"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/hots_view_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
@@ -27,7 +27,6 @@
             android:paddingEnd="8dp"
             android:scrollbars="none"
             app:eventListener="@{eventListener}"
-            app:layoutManager="LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             app:hotsItem="@{holderModel.Contents}"
             tools:listitem="@layout/holder_hots" />

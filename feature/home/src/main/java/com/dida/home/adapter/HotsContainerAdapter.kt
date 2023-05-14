@@ -9,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
+import androidx.viewpager2.widget.ViewPager2
 import com.dida.common.util.context
 import com.dida.common.util.scrollBy
 import com.dida.common.widget.CirclePagerIndicatorDecoration
+import com.dida.common.widget.smoothScrollToPosition
+import com.dida.domain.model.main.HotCards
 import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeActionHandler
 import com.dida.home.databinding.HolderHotsContainerBinding
@@ -37,7 +40,7 @@ class HotsContainerAdapter(
                     val indicatorHeight = parent.context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hots_indicator_height)
                     val activeColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.brand_lemon)
                     val inactiveColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.surface6)
-                    hotsRecyclerView.addItemDecoration(
+                    hotsViewPager.addItemDecoration(
                         CirclePagerIndicatorDecoration(
                             isInfiniteScroll = true,
                             activeColor = activeColor,
@@ -45,7 +48,6 @@ class HotsContainerAdapter(
                             indicatorHeight = indicatorHeight
                         )
                     )
-                    PagerSnapHelper().apply { attachToRecyclerView(hotsRecyclerView) }
                 }
         )
     }
@@ -67,73 +69,68 @@ class HotsContainerViewHolder(
     private var targetPosition = 0
     private var contentSize = 0
 
+    private val scrollFinishOffset = 0.001633987f
+
     private val handler = HotsContainerViewHandler(this)
-    private val width = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_item_width)
-    private val interval = context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hot_item_interval)
 
-    private val smoothScroller
-        get() = object : LinearSmoothScroller(context) {
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float =
-                rollingIntervalMs / displayMetrics.densityDpi.toFloat()
-        }
-
-    private val endToStartSmoothScroller
-        get() = object : LinearSmoothScroller(context) {
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float =
-                (rollingIntervalMs / contentSize) / displayMetrics.densityDpi.toFloat()
-        }
-
-    private val childAttachStateChangeListener = object : RecyclerView.OnChildAttachStateChangeListener {
-        override fun onChildViewAttachedToWindow(view: View) {
+    private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            handler.removeMessages(MSG_START_SCROLL)
             handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
         }
 
-        override fun onChildViewDetachedFromWindow(view: View) {
-            if (view.isShown) {
-                handler.removeMessages(MSG_START_SCROLL)
-            }
-        }
-    }
-
-    private val scrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            if (!recyclerView.canScrollHorizontally(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(contentSize - 2, 0)
-            } else if (!recyclerView.canScrollHorizontally(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(1, interval)
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            if ((position == contentSize - 2)) {
+                binding.hotsViewPager.setCurrentItem(2, false)
+            } else if ((position == 1) && (positionOffset <= scrollFinishOffset)) {
+                binding.hotsViewPager.setCurrentItem(contentSize - 3, false)
             }
         }
     }
 
     init {
-        binding.hotsRecyclerView.addOnChildAttachStateChangeListener(childAttachStateChangeListener)
-        binding.hotsRecyclerView.addOnScrollListener(scrollListener)
+        binding.hotsViewPager.registerOnPageChangeCallback(onPageChangeCallback)
+        handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
     }
 
     fun bind(hotItems: HotItems.Contents) {
         if (hotItems.contents.size > 1) {
-            contentSize = hotItems.contents.size + 2
-            binding.holderModel = HotItems.Contents(listOf(hotItems.contents.last()) + hotItems.contents + hotItems.contents.first())
-            binding.hotsRecyclerView.scrollBy(width = width)
+            contentSize = hotItems.contents.size + 4
+            val items = with(hotItems.contents) {
+                this.slice(this.size -2 until this.size) + this + this.slice(0 until 2)
+            }
+            binding.holderModel = HotItems.Contents(items)
+            binding.hotsViewPager.apply {
+                clipToPadding = false
+                clipChildren = false
+                offscreenPageLimit = 3
+                getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            }
         } else {
             contentSize = hotItems.contents.size
             binding.holderModel = hotItems
-            binding.hotsRecyclerView.removeOnChildAttachStateChangeListener(childAttachStateChangeListener)
-            binding.hotsRecyclerView.removeOnScrollListener(scrollListener)
         }
         binding.executePendingBindings()
+        if (hotItems.contents.size > 1) binding.hotsViewPager.setCurrentItem(2, false)
     }
 
     fun handleMessage(msg: Message?) {
         if (msg?.what != MSG_START_SCROLL) return
 
         if (this.itemView.isShown) {
-            val visibleItem = (binding.hotsRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-            targetPosition = if (contentSize <= targetPosition) 0 else visibleItem+1
-            val scroller = if (targetPosition == 0) endToStartSmoothScroller else smoothScroller
-            scroller.targetPosition = targetPosition
-            if (!(targetPosition == contentSize || targetPosition == 0)) binding.hotsRecyclerView.layoutManager?.startSmoothScroll(scroller)
+            val nextPosition = binding.hotsViewPager.currentItem + 1
+            targetPosition = if (contentSize <= targetPosition) 0 else nextPosition
+            binding.hotsViewPager.smoothScrollToPosition(
+                item = targetPosition,
+                duration = rollingIntervalMs,
+                pagePxWidth = this.itemView.width / 2
+            )
         }
     }
 
