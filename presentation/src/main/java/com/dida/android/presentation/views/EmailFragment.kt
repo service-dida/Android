@@ -56,11 +56,11 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is EmailNavigationAction.SuccessCreateWallet -> {
+                        toastMessage(getString(R.string.success_create_wallet))
                         navController.popBackStack()
                     }
                     is EmailNavigationAction.SuccessResetPassword -> {
-                        //TODO : Custom 토스트메시지로 바꿔야함
-                        toastMessage("비밀번호 변경이 완료되었습니다.")
+                        toastMessage(getString(R.string.success_reset_password))
                         navController.popBackStack()
                     }
                 }
@@ -68,7 +68,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
 
             viewLifecycleOwner.repeatOnResumed {
                 viewModel.retryEvent.collectLatest {
-                    toastMessage("두 비밀번호가 일치하지않습니다. 다시입력해주세요.")
+                    toastMessage(getString(R.string.fail_notCorrect_password))
                 }
             }
         }
@@ -85,8 +85,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
                     resetPassword()
                 }
             }else{
-                //TODO : 커스텀 토스트로 바꿔야함
-                toastMessage("인증번호가 일치하지 않습니다.")
+                showMessageSnackBar(getString(R.string.email_response_not_correct))
             }
         }
 
@@ -97,9 +96,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     }
 
     private fun makeWallet(){
-        PasswordDialog(6,"지갑 비밀번호 설정","NFT 거래 시 사용할 비밀번호를 설정해주세요. ",true){ success, firstPassword ->
+        PasswordDialog(6,getString(R.string.create_wallet_title),getString(R.string.create_wallet_subTitle),true){ success, firstPassword ->
             if (success) {
-                PasswordDialog(6,"비밀번호 확인","비밀번호를 다시 한번 입력해주세요.",true) { success, secondPassword ->
+                PasswordDialog(6,getString(R.string.reconfirm_password_title),getString(R.string.reconfirm_password_sibTitle),true) { success, secondPassword ->
                     viewModel.postCreateWallet(firstPassword, secondPassword)
                 }.show(childFragmentManager,"EmailFragment")
             }
@@ -107,9 +106,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     }
 
     private fun resetPassword(){
-        PasswordDialog(6,"새로운 비밀번호 입력","지갑 비밀번호 변경을 위해 입력해주세요 ",true){ success, firstPassword ->
+        PasswordDialog(6,getString(R.string.reset_password_title),getString(R.string.reset_password_subTitle),true){ success, firstPassword ->
             if (success) {
-                PasswordDialog(6,"비밀번호 확인","비밀번호를 다시 한번 입력해주세요.",true) { success, secondPassword ->
+                PasswordDialog(6,getString(R.string.reconfirm_password_title),getString(R.string.reconfirm_password_sibTitle),true) { success, secondPassword ->
                     viewModel.changePassword(firstPassword,secondPassword)
                 }.show(childFragmentManager,"EmailFragment")
             }
@@ -160,5 +159,13 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
                 }
             }
         }
+    }
+
+    private fun showMessageSnackBar(message: String) {
+        DefaultSnackBar.Builder()
+            .view(binding.root)
+            .message(message)
+            .hasBottomMargin(false)
+            .build()
     }
 }

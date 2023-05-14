@@ -6,4 +6,19 @@
     <string name="email_masking_hint">회원가입시 입력한 tmdg****@*****.***으로\n인증번호가 전송됩니다.</string>
     <string name="email_send">인증번호 전송</string>
     <string name="email_resend">다시 전송하기</string>
+    <string name="email_response_not_correct">인증번호가 일치하지 않습니다.</string>
+    
+    <!--지갑 생성 및 비밀번호 재설정 화면-->
+    <string name="create_wallet_title">지갑 비밀번호 설정</string>
+    <string name="create_wallet_subTitle">NFT 거래 시 사용할 비밀번호를 설정해주세요.</string>
+    <string name="reset_password_title">지갑 비밀번호 설정</string>
+    <string name="reset_password_subTitle">지갑 비밀번호 변경을 위해 입력해주세요</string>
+    <string name="reconfirm_password_title">비밀번호 확인</string>
+    <string name="reconfirm_password_sibTitle">비밀번호를 다시 한번 입력해주세요.</string>
+    <string name="success_reset_password">비밀번호 변경이 완료되었습니다.</string>
+    <string name="fail_notCorrect_password">두 비밀번호가 일치하지않습니다. 다시입력해주세요.</string>
+    <string name="success_create_wallet">지갑발급에 성공하였습니다.</string>
+    
+    
+    
 </resources>
