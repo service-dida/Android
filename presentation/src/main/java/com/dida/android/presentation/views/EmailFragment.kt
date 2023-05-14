@@ -67,8 +67,16 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             }
 
             viewLifecycleOwner.repeatOnResumed {
-                viewModel.retryEvent.collectLatest {
-                    showMessageSnackBar(getString(R.string.fail_notCorrect_password))
+                launch {
+                    viewModel.retryEvent.collectLatest {
+                        showMessageSnackBar(getString(R.string.fail_notCorrect_password))
+                    }
+                }
+
+                launch {
+                    viewModel.sendEvent.collectLatest {
+                        timeCheck()
+                    }
                 }
             }
         }
@@ -91,7 +99,6 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
 
         binding.sendBtn.setOnClickListener {
             viewModel.getSendEmail()
-            timeCheck()
         }
     }
 

@@ -24,6 +24,9 @@ class EmailViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<EmailNavigationAction> = MutableSharedFlow<EmailNavigationAction>()
     val navigationEvent: SharedFlow<EmailNavigationAction> = _navigationEvent.asSharedFlow()
 
+    private val _sendEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val sendEvent: SharedFlow<Unit> = _sendEvent
+
     private val _retryEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val retryEvent: SharedFlow<Unit> = _retryEvent
 
@@ -37,6 +40,7 @@ class EmailViewModel @Inject constructor(
             sendEmailAPI()
                 .onSuccess {
                     verifyNumberValue = it.random
+                    _sendEvent.emit(Unit)
                     dismissLoading() }
                 .onError { e -> catchError(e) }
         }
