@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
+import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.dida.common.util.context
 import com.dida.common.util.scrollBy
@@ -19,6 +20,7 @@ import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeActionHandler
 import com.dida.home.databinding.HolderHotsContainerBinding
 import java.lang.ref.WeakReference
+import kotlin.math.abs
 
 
 class HotsContainerAdapter(
@@ -38,10 +40,11 @@ class HotsContainerAdapter(
                 .apply {
                     eventListener = this@HotsContainerAdapter.eventListener
                     val indicatorHeight = parent.context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hots_indicator_height)
-                    val activeColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.brand_lemon)
+                    val activeColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.white)
                     val inactiveColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.surface6)
                     hotsViewPager.addItemDecoration(
                         CirclePagerIndicatorDecoration(
+                            isViewPager = true,
                             isInfiniteScroll = true,
                             activeColor = activeColor,
                             inactiveColor = inactiveColor,
@@ -72,6 +75,13 @@ class HotsContainerViewHolder(
     private val scrollFinishOffset = 0.001633987f
 
     private val handler = HotsContainerViewHandler(this)
+
+    private val compositePageTransformer = CompositePageTransformer().apply {
+        addTransformer { page, position ->
+            val r = 1 - abs(position)
+            page.scaleX = 0.9f + r * 0.1f
+        }
+    }
 
     private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -111,6 +121,7 @@ class HotsContainerViewHolder(
                 clipChildren = false
                 offscreenPageLimit = 3
                 getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+                setPageTransformer(compositePageTransformer)
             }
         } else {
             contentSize = hotItems.contents.size

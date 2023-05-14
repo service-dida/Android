@@ -16,9 +16,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/custom_surface2_radius14"
         android:id="@+id/hots_main"
-        android:layout_marginStart="7dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="18dp"
         app:onSingleClick="@{() -> eventListener.onHotItemClicked(holderModel.cardId)}">
 
         <ImageView

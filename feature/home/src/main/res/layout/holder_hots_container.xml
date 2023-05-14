@@ -13,7 +13,7 @@
             type="com.dida.home.HomeActionHandler" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -23,14 +23,15 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:paddingStart="54dp"
+            android:paddingEnd="54dp"
+            android:paddingBottom="12dp"
             android:scrollbars="none"
             app:eventListener="@{eventListener}"
             app:layout_constraintTop_toTopOf="parent"
             app:hotsItem="@{holderModel.Contents}"
             tools:listitem="@layout/holder_hots" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </layout>
