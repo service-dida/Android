@@ -78,8 +78,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.postCheckPassword(request).toDomain() }
     }
 
-    override suspend fun postChangePasswordAPI(beforePassword: String, afterPassword: String): NetworkResult<Unit> {
-        val request = PostPasswordChangeRequest(nowPwd = beforePassword, changePwd = afterPassword)
+    override suspend fun postChangePasswordAPI(nowdPwd: String, checkPwd: String): NetworkResult<Unit> {
+        val request = PostPasswordChangeRequest(nowPwd = nowdPwd, checkPwd = checkPwd)
         return handleApi { mainAPIService.postPasswordChange(request) }
     }
 

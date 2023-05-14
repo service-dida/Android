@@ -264,7 +264,11 @@
     <fragment
         android:id="@+id/emailFragment"
         android:name="com.dida.android.presentation.views.EmailFragment"
-        android:label="EmailFragment" />
+        android:label="EmailFragment" >
+        <argument
+            android:name="requestEmailType"
+            app:argType="com.dida.android.presentation.views.RequestEmailType" />
+    </fragment>
 
     <fragment
         android:id="@+id/addPurposeFragment"

@@ -69,7 +69,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                     viewModel.initWalletAmount()
                 } else {
                     toastMessage("지갑을 생성해야 합니다!")
-                    navigate(SwapFragmentDirections.actionSwapFragmentToEmailFragment())
+                    navigate(SwapFragmentDirections.actionSwapFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
                 }
             }
         }
