@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.DialogFragmentNavigator
@@ -21,14 +20,17 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
 import com.dida.common.base.BaseViewModel
+import com.dida.common.base.ErrorWithRetry
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.base.LoadingDialogFragment
 import com.dida.common.util.*
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
+import com.dida.data.model.UnknownException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -91,40 +93,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     protected var navigationHost: NavigationHost? = null
 
-    init {
-        lifecycleScope.launch {
-            repeatOnResumed {
-                launch {
-                    exception?.collectLatest { exception ->
-                        sendException(exception)
-                    }
-                }
-
-                launch {
-                    viewModel.errorEvent.collectLatest { e ->
-                        dismissLoadingDialog()
-                        showToastMessage(e)
-                        onError(e)
-                    }
-                }
-
-                launch {
-                    viewModel.loadingEvent.collectLatest {
-                        if (it) showLoadingDialog()
-                        else dismissLoadingDialog()
-                    }
-                }
-
-                launch {
-                    viewModel.needLoginEvent.collectLatest {
-                        dismissLoadingDialog()
-                        loginCheck()
-                    }
-                }
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -142,6 +110,35 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         super.onAttach(context)
         if (context is NavigationHost) {
             navigationHost = context
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.repeatOnResumed {
+            launch {
+                exception?.collectLatest { exception ->
+                    dismissLoadingDialog()
+                    when(exception) {
+                        is ErrorWithRetry -> onErrorRetry(exception, exception.retry, exception.retryScope)
+                        else -> onError(exception)
+                    }
+                }
+            }
+
+            launch {
+                viewModel.loadingEvent.collectLatest {
+                    if (it) showLoadingDialog()
+                    else dismissLoadingDialog()
+                }
+            }
+
+            launch {
+                viewModel.needLoginEvent.collectLatest {
+                    dismissLoadingDialog()
+                    loginCheck()
+                }
+            }
         }
     }
 
@@ -173,6 +170,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         val exception = when (throwable) {
             is ServerNotFoundException -> Exception("url -> ${throwable.url}", throwable)
             is InternalServerErrorException -> Exception("url -> ${throwable.url}", throwable)
+            is UnknownException -> Exception("url -> ${throwable.url}", throwable)
             else -> Exception(throwable)
         }
         FirebaseCrashlytics.getInstance().recordException(exception)
@@ -195,13 +193,13 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     }
 
     // Toast Message 관련 함수
-    protected fun showToastMessage(e: Throwable?) {
+    private fun showErrorToastMessage(e: Throwable?) {
         toast?.cancel()
         toast = Toast.makeText(requireContext(), e?.cause?.message ?: "알 수 없는 에러가 발생했습니다.", Toast.LENGTH_SHORT)?.apply { show() }
     }
 
     // Toast Message 관련 함수
-    protected fun toastMessage(message: String) {
+    protected fun showToastMessage(message: String) {
         toast?.cancel()
         toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)?.apply { show() }
     }
@@ -275,21 +273,49 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * 추후 Dialog 텍스트 정해지면 그에 따라서 수정
      * */
     // Error 관련
-    private fun onError(throwable: Throwable) {
-        when (throwable) {
+    private fun onError(exception: Throwable) {
+        sendException(exception)
+        when (exception) {
             is ConnectException -> {
-                sendException(throwable)
+                sendException(exception)
                 showNetworkErrorDialog()
             }
             is ServerNotFoundException -> {
-                sendException(throwable)
-                showServiceErrorDialog(throwable)
+                sendException(exception)
+                showServiceErrorDialog(exception)
             }
             is InternalServerErrorException -> {
-                sendException(throwable)
-                showServiceErrorFragment(throwable)
+                sendException(exception)
+                showServiceErrorFragment(exception)
             }
-            else -> Unit
+            is UnknownException -> {
+                sendException(exception)
+                showNetworkErrorDialog()
+            }
+            else -> showErrorToastMessage(exception)
+        }
+    }
+
+    private fun onErrorRetry(exception: Throwable, retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
+        sendException(exception)
+        when (exception) {
+            is ConnectException -> {
+                sendException(exception)
+                showNetworkErrorDialog()
+            }
+            is ServerNotFoundException -> {
+                sendException(exception)
+                showServiceErrorDialog(exception)
+            }
+            is InternalServerErrorException -> {
+                sendException(exception)
+                showServiceErrorFragment(exception)
+            }
+            is UnknownException -> {
+                sendException(exception)
+                showNetworkErrorDialog()
+            }
+            else -> showServiceErrorDialog(retry, retryScope)
         }
     }
 
@@ -297,6 +323,16 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     private fun showServiceErrorDialog(throwable: Throwable) {
         val message = throwable.cause?.message ?: getString(com.dida.android.R.string.unknown_error_message)
         showErrorDialog(message) { findNavController().navigateUp() }
+    }
+
+    // 에러 재시도 관련
+    /** TODO : 추후 디자인에 따라서 Dialog 수정 필요 (현 상황이라면 서버 에러시 무한으로 서버 찌르게 됨) */
+    private fun showServiceErrorDialog(retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
+        if (requireActivity().isDestroyed) return
+        retryScope?.let { coroutineScope ->
+            val message = getString(com.dida.android.R.string.network_retry_error_message)
+            showErrorDialog(message) { coroutineScope.launch {retry.invoke() } }
+        }
     }
 
     // 네트워크 오류

@@ -36,6 +36,7 @@ class ReportBottomSheetViewModel @Inject constructor() : BaseViewModel(), Report
 
     override fun onReportCodeSelected(code: ReportCode) {
         _selectedReportCode.value = code
+        _hasSelectedReportCode.value = true
         contents.value = code.message
     }
 }

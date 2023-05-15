@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dida.data.DataApplication
 import com.dida.data.model.HaveNotJwtTokenException
-import com.dida.data.model.InvalidJwtTokenException
 import com.dida.data.model.InvalidKakaoAccessTokenException
+import com.dida.data.model.InvalidTokenException
+import com.dida.data.model.NeedLogin
+import com.dida.domain.NetworkResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,21 +30,29 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
+    protected val baseViewModelScope: CoroutineScope = viewModelScope + errorHandler
+
     private val _needLoginEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
     val needLoginEvent: SharedFlow<Boolean> = _needLoginEvent
 
-    fun catchError(e: Throwable?) {
-        viewModelScope.launch(errorHandler) {
-            e?.let { exception ->
-                when (exception) {
-                    is HaveNotJwtTokenException, is InvalidKakaoAccessTokenException -> {
-                        DataApplication.dataStorePreferences.removeAccountToken()
-                        _needLoginEvent.emit(true)
-                    }
-                    else -> _errorEvent.emit(exception)
-                }
+    protected suspend fun catchError(exception: Throwable) {
+        when(exception) {
+            is HaveNotJwtTokenException, is InvalidKakaoAccessTokenException, is NeedLogin -> {
+                DataApplication.dataStorePreferences.removeAccountToken()
+                _needLoginEvent.emit(true)
             }
+            is InvalidTokenException -> DataApplication.dataStorePreferences.removeAccountToken()
+            else -> _errorEvent.emit(exception)
         }
+    }
+
+    protected fun <T> NetworkResult<T>.throwWithRetry(retry: suspend () -> Unit) {
+        if (this is NetworkResult.Error)
+            throw ErrorWithRetry(exception, baseViewModelScope, retry)
+    }
+
+    protected fun throwWithRetry(exception: Throwable, retry: suspend () -> Unit) {
+        throw ErrorWithRetry(exception, baseViewModelScope, retry)
     }
 
     fun showLoading() {
@@ -57,5 +67,12 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    protected val baseViewModelScope: CoroutineScope = viewModelScope + errorHandler
+
 }
+
+data class ErrorWithRetry(
+    val exception: Throwable,
+    val retryScope: CoroutineScope,
+    val retry: suspend () -> Unit
+) : Exception()
+

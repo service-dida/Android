@@ -12,7 +12,7 @@ import java.util.*
 class AndroidDataConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
+            pluginManager.apply {
                 apply("android.library")
                 apply("android.hilt")
                 apply("org.jetbrains.kotlin.android")

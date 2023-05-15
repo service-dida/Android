@@ -1,6 +1,5 @@
 package com.dida.nft_detail
 
-import androidx.lifecycle.viewModelScope
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
@@ -15,11 +14,20 @@ import com.dida.domain.model.main.DetailNft
 import com.dida.domain.model.main.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.*
+import com.dida.domain.usecase.main.DeleteNftAPI
+import com.dida.domain.usecase.main.DetailNftAPI
+import com.dida.domain.usecase.main.HideNftAPI
+import com.dida.domain.usecase.main.PostLikeAPI
+import com.dida.domain.usecase.main.PostsCardCardIdAPI
+import com.dida.domain.usecase.main.SellNftAPI
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -64,8 +72,7 @@ class DetailNftViewModel @Inject constructor(
                     _detailNftState.value = UiState.Success(it)
                     setDetailOwnerType(it)
                     dismissLoading()
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -92,8 +99,7 @@ class DetailNftViewModel @Inject constructor(
             sellNftAPI(payPwd, cardIdState.value, price)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -103,8 +109,7 @@ class DetailNftViewModel @Inject constructor(
             hideNftAPI(cardIdState.value)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -114,13 +119,12 @@ class DetailNftViewModel @Inject constructor(
             deleteNftAPI(cardIdState.value, password)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
     fun onReport(type: ReportType, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = viewModelScope, type = type, reportId = reportId, content = content)
+        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
     }
 
     private fun setDetailOwnerType(detailNFT: DetailNft) {

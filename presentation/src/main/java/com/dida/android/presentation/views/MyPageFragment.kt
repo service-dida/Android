@@ -84,7 +84,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         }
 
         userCardAdapter.addLoadStateListener {
-            when(it.refresh) {
+            when(it.append) {
                 is LoadState.NotLoading -> {
                     binding.emptyView.isVisible = userCardAdapter.snapshot().items.isEmpty()
                     binding.rvUserNft.isVisible = userCardAdapter.snapshot().items.isNotEmpty()

@@ -1,10 +1,12 @@
 package com.dida.android.presentation.views
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.common.adapter.UserCardAdapter
@@ -110,6 +112,16 @@ class UserProfileFragment :
         binding.rvUserNft.apply {
             adapter = userCardAdapter
             layoutManager = GridLayoutManager(context, 2)
+        }
+
+        userCardAdapter.addLoadStateListener {
+            when(it.append) {
+                is LoadState.NotLoading -> {
+                    binding.emptyView.isVisible = userCardAdapter.snapshot().items.isEmpty()
+                    binding.rvUserNft.isVisible = userCardAdapter.snapshot().items.isNotEmpty()
+                }
+                else -> {}
+            }
         }
     }
 

@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.util.uriToFile
 import com.dida.common.ui.ImageBottomSheet
-import com.dida.common.util.DidaIntent
+import com.dida.common.util.DIDAINTENT
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.update.profile.R
 import com.dida.update.profile.UpdateProfileNavigationAction
@@ -53,9 +53,9 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     // 권한을 허용하도록 요청
     private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         results.forEach {
-            if (!it.value) toastMessage("권한 허용이 필요합니다.")
+            if (!it.value) showToastMessage("권한 허용이 필요합니다.")
             if (!it.value) {
-                toastMessage("권한 허용이 필요합니다.")
+                showToastMessage("권한 허용이 필요합니다.")
             } else {
                 val dialog = ImageBottomSheet { getGallery ->
                     if (getGallery) getGalleryImage()
@@ -119,7 +119,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private fun initRegisterForActivityResult() {
         requestUpdateProfile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            val isUpdateProfile = activityResult.data?.getBooleanExtra(DidaIntent.RESULT_KEY_UPDATE_PROFILE, false) ?: false
+            val isUpdateProfile = activityResult.data?.getBooleanExtra(DIDAINTENT.RESULT_KEY_UPDATE_PROFILE, false) ?: false
             if (!isUpdateProfile) {
                 val intent = activityResult.data
                 if (intent != null) {

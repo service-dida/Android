@@ -81,7 +81,8 @@ class CreateCommunityInputViewModel @AssistedInject constructor(
                     _userImgState.value = it.userImgUrl
                     _nicknameState.value = it.userName
                     titleState.value = it.title
-                    descriptionState.value = it.content }
+                    descriptionState.value = it.content
+                }.onError { e -> catchError(e) }
         }
     }
 

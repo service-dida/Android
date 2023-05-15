@@ -73,14 +73,23 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             }
 
             launch {
-                viewModel.navigateToReportSuccessEvent.collectLatest {
-                    communityPagingAdapter.refresh()
+                viewModel.navigateToReportEvent.collectLatest {
+                    if (it) {
+                        showReportCompleteDialog()
+                        communityPagingAdapter.refresh()
+                    } else {
+                        showToastMessage(requireContext().getString(R.string.already_report_message))
+                    }
+
                 }
             }
 
             launch {
-                viewModel.navigateToBlockSuccessEvent.collectLatest {
-                    communityPagingAdapter.refresh()
+                viewModel.navigateToBlockEvent.collectLatest {
+                    if (it) {
+                        showBlockCompleteDialog()
+                        communityPagingAdapter.refresh()
+                    }
                 }
             }
         }
@@ -90,10 +99,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override fun onResume() {
         super.onResume()
-        setFragmentResultListener(SCREEN.COMMUNITY) { _, bundle ->
-            if (bundle.getBoolean(EVENT.CREATE)) showCreateCompleteDialog()
-            if (bundle.getBoolean(EVENT.REPORT)) showReportCompleteDialog()
-            if (bundle.getBoolean(EVENT.BLOCK)) showBlockCompleteDialog()
+        setFragmentResultListener(DIDAINTENT.RESULT_SCREEN_COMMUNITY) { _, bundle ->
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_CREATE)) showCreateCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_REPORT)) showReportCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_BLOCK)) showBlockCompleteDialog()
         }
         communityPagingAdapter.refresh()
         getLastScrollY()

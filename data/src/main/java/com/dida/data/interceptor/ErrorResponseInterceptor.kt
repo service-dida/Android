@@ -50,7 +50,7 @@ fun createErrorException(
     url: String?,
     httpCode: Int,
     errorResponse: ErrorResponseImpl?
-): Exception? =
+): Exception =
     when (errorResponse?.code) {
         100 -> HaveNotJwtTokenException(Throwable(errorResponse.message), url, 100)
         102 -> InvalidJwtTokenException(Throwable(errorResponse.message), url, 102)
@@ -58,6 +58,7 @@ fun createErrorException(
         109 -> NotUseNicknameException(Throwable(errorResponse.message), url, 109)
         110 -> AlreadyEmailException(Throwable(errorResponse.message), url, 110)
         111 -> InvalidUserException(Throwable(errorResponse.message), url, 111)
+        113 -> InvalidTokenException(Throwable(errorResponse.message), url, 113)
         114 -> InvalidPasswordException(Throwable(errorResponse.message), url, 114)
         115 -> InvalidNftException(Throwable(errorResponse.message), url, 115)
         117 -> AlreadyWalletException(Throwable(errorResponse.message), url, 117)
@@ -68,14 +69,14 @@ fun createErrorException(
         124 -> EmptyDeviceTokenException(Throwable(errorResponse.message), url, 124)
         125 -> AlreadyUseWallet(Throwable(errorResponse.message), url, 125)
         127 -> NeedMoreKlay(Throwable(errorResponse.message), url, 127)
+        128 -> NeedLogin(Throwable(errorResponse.message), url, 128)
         200 -> InvalidLengthException(Throwable(errorResponse.message), url, 200)
-        404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
-        500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
+        204 -> AlreadyReport(Throwable(errorResponse.message), url, 204)
         else -> {
             when (httpCode) {
                 404 -> ServerNotFoundException(Throwable(errorResponse?.message), url, 404)
                 500 -> InternalServerErrorException(Throwable(errorResponse?.message), url, 500)
-                else -> null
+                else -> UnknownException(Throwable("알 수 없는 에러가 발생했어요."), url, 999)
             }
         }
     }

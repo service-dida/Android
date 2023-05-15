@@ -59,7 +59,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
 
-            launch{
+            launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
                         is EmailNavigationAction.SuccessCreateWallet -> {
@@ -79,10 +79,10 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
                     startTimer()
                 }
             }
-            launch {
-                viewModel.retryEvent.collectLatest {
-                    showMessageSnackBar(getString(R.string.fail_notCorrect_password))
-                }
+        }
+        viewLifecycleOwner.repeatOnResumed {
+            viewModel.retryEvent.collectLatest {
+                showMessageSnackBar(getString(R.string.fail_notCorrect_password))
             }
         }
     }
@@ -148,7 +148,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     private fun getMaskingEmail(){
         UserApiClient.instance.me { user, error ->
             if (error != null) {
-                toastMessage("사용자 정보 요청 실패")
+                showToastMessage("사용자 정보 요청 실패")
             } else if (user != null) {
                 if(user.kakaoAccount?.email.isNullOrEmpty()){
                     binding.emailMaskingTv.text = "이메일을 불러올 수 없습니다."

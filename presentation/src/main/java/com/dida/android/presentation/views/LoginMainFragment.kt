@@ -39,14 +39,13 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it){
-                    is LoginNavigationAction.NavigateToLoginFail -> toastMessage("로그인에 실패하였습니다.")
+                    is LoginNavigationAction.NavigateToLoginFail -> showToastMessage("로그인에 실패하였습니다.")
                     is LoginNavigationAction.NavigateToNickname -> {
-                        toastMessage("회원가입이 필요합니다.")
-                        val action = LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email)
-                        navigate(action)
+                        showToastMessage("회원가입이 필요합니다.")
+                        navigate(LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email))
                     }
                     is LoginNavigationAction.NavigateToHome -> {
-                        toastMessage("로그인에 성공하였습니다.")
+                        showToastMessage("로그인에 성공하였습니다.")
                         this@LoginMainFragment.toLoginSuccess()
                     }
                     is LoginNavigationAction.NavigateToLogin -> kakaoLogin()
@@ -75,15 +74,15 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
             // 로그인 실패
             if (error != null) {
                 when {
-                    error.toString() == AuthErrorCause.AccessDenied.toString() -> toastMessage("접근이 거부 됨(동의 취소)")
-                    error.toString() == AuthErrorCause.InvalidClient.toString() -> toastMessage("유효하지 않은 앱")
-                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> toastMessage("인증 수단이 유효하지 않아 인증할 수 없는 상태")
-                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> toastMessage("요청 파라미터 오류")
-                    error.toString() == AuthErrorCause.InvalidScope.toString() -> toastMessage("유효하지 않은 scope ID")
-                    error.toString() == AuthErrorCause.Misconfigured.toString() -> toastMessage("설정이 올바르지 않음(android key hash)")
-                    error.toString() == AuthErrorCause.ServerError.toString() -> toastMessage("서버 내부 에러")
-                    error.toString() == AuthErrorCause.Unauthorized.toString() -> toastMessage("앱이 요청 권한이 없음")
-                    else -> toastMessage("카카오톡의 미로그인")
+                    error.toString() == AuthErrorCause.AccessDenied.toString() -> showToastMessage("접근이 거부 됨(동의 취소)")
+                    error.toString() == AuthErrorCause.InvalidClient.toString() -> showToastMessage("유효하지 않은 앱")
+                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> showToastMessage("인증 수단이 유효하지 않아 인증할 수 없는 상태")
+                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> showToastMessage("요청 파라미터 오류")
+                    error.toString() == AuthErrorCause.InvalidScope.toString() -> showToastMessage("유효하지 않은 scope ID")
+                    error.toString() == AuthErrorCause.Misconfigured.toString() -> showToastMessage("설정이 올바르지 않음(android key hash)")
+                    error.toString() == AuthErrorCause.ServerError.toString() -> showToastMessage("서버 내부 에러")
+                    error.toString() == AuthErrorCause.Unauthorized.toString() -> showToastMessage("앱이 요청 권한이 없음")
+                    else -> showToastMessage("카카오톡의 미로그인")
                 }
             }
             //로그인 성공

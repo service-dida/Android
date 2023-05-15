@@ -91,8 +91,7 @@ class PasswordViewModel @Inject constructor(
                     _failEvent.emit(false)
                     isClickable = true
                 }
-            }
-            .onError { e ->
+            }.onError { e ->
                 if (e is WrongPassword5TimesException) {
                     _dismissEvent.emit(true)
                 } else {

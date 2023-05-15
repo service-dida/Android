@@ -2,6 +2,7 @@ package com.dida.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -45,6 +46,7 @@ class CommentsAdapter(
 
         fun bind(item: Comments) {
             binding.holderModel = item
+            binding.moreBtn.isVisible = !(item.type == "MINE" || item.type == "NEED LOGIN")
             binding.moreBtn.setOnSingleClickListener {
                 if (item.type == "MINE") it.showEditCommentBalloon(commentId = item.commentId, listener = binding.eventListener!!)
                 else it.showReportCommentBalloon(userId = item.userId, listener = binding.eventListener!!)

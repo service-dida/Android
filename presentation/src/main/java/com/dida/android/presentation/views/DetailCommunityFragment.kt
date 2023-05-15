@@ -7,7 +7,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import androidx.core.os.bundleOf
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -21,8 +20,7 @@ import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
-import com.dida.common.util.EVENT
-import com.dida.common.util.SCREEN
+import com.dida.common.util.DIDAINTENT
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.DetailCommunityMessageAction
@@ -98,16 +96,22 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             }
 
             launch {
-                viewModel.navigateToReportSuccessEvent.collectLatest {
-                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.REPORT to true))
-                    navController.popBackStack()
+                viewModel.navigateToReportEvent.collectLatest {
+                    if (it) {
+                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_REPORT to true))
+                        navController.popBackStack()
+                    } else {
+                        showToastMessage(requireContext().getString(R.string.already_report_message))
+                    }
                 }
             }
 
             launch {
-                viewModel.navigateToBlockSuccessEvent.collectLatest {
-                    setFragmentResult(SCREEN.COMMUNITY, bundleOf(EVENT.BLOCK to true))
-                    navController.popBackStack()
+                viewModel.navigateToBlockEvent.collectLatest {
+                    if (it) {
+                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_BLOCK to true))
+                        navController.popBackStack()
+                    }
                 }
             }
 

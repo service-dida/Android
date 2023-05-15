@@ -2,6 +2,7 @@ package com.dida.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -11,11 +12,12 @@ import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.ballon.showReportPostBalloon
 import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommunityBinding
+import com.dida.domain.model.main.PostType
 import com.dida.domain.model.main.Posts
 
 class CommunityPagingAdapter(
     private val eventListener: CommunityActionHandler
-) : PagingDataAdapter<Posts, CommunityPagingAdapter.ViewHolder>(CommuityDiffCallback) {
+) : PagingDataAdapter<Posts, CommunityPagingAdapter.ViewHolder>(CommunityDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(
@@ -34,23 +36,23 @@ class CommunityPagingAdapter(
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_community
 
-    class ViewHolder(private val binding: HolderCommunityBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val adapter = PostCommentsAdapter()
+    class ViewHolder(private val binding: HolderCommunityBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val adapter = PostCommentsAdapter()
 
         fun bind(item: Posts) {
             binding.holderModel = item
-            adapter.submitList(item.commentList)
+            if (item.commentList.size > 2) adapter.submitList(item.commentList.slice(0 until 2))
+            else adapter.submitList(item.commentList)
             binding.commentRecycler.adapter = adapter
-            // TODO: 내 게시글 인지 아닌지에 대한 판별 추가하기
+            binding.moreBtn.isVisible = item.type == PostType.NOT_MINE
             binding.moreBtn.setOnSingleClickListener {
-                it.showReportPostBalloon(postId = 0, listener = binding.eventListener!!)
+                it.showReportPostBalloon(postId = item.postId, listener = binding.eventListener!!)
             }
             binding.executePendingBindings()
         }
     }
 
-    internal object CommuityDiffCallback : DiffUtil.ItemCallback<Posts>() {
+    internal object CommunityDiffCallback : DiffUtil.ItemCallback<Posts>() {
         override fun areItemsTheSame(oldItem: Posts, newItem: Posts) =
             oldItem.postId == newItem.postId
 
