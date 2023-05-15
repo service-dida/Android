@@ -19,6 +19,7 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
+import com.dida.common.base.BaseNavigationAction
 import com.dida.common.base.BaseViewModel
 import com.dida.common.base.ErrorWithRetry
 import com.dida.common.dialog.DefaultDialogFragment
@@ -93,6 +94,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     protected var navigationHost: NavigationHost? = null
 
+    private val registerForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == 0) navigateToHomeFragment(null)
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -134,9 +140,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-                viewModel.needLoginEvent.collectLatest {
+                viewModel.navigationEvent.collectLatest {
                     dismissLoadingDialog()
-                    loginCheck()
+                    when(it) {
+                        is BaseNavigationAction.NavigateToLogin -> registerForActivityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
+                        is BaseNavigationAction.NavigateToHome -> navigateToHomeFragment()
+                    }
                 }
             }
         }
@@ -224,17 +233,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
         }
     }
-
-    // 미 로그인시 로그인 로직
-    private fun loginCheck() {
-        val intent = Intent(requireActivity(), LoginActivity::class.java)
-        registerForActivityResult.launch(intent)
-    }
-
-    private val registerForActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == 0) navigateToHomeFragment(null)
-        }
 
     // DeepLink Handler
     protected fun handelDeepLinkInternal(deepLink: String, navOptions: NavOptions? = null): Boolean {

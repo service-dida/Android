@@ -32,16 +32,19 @@ abstract class BaseViewModel : ViewModel() {
 
     protected val baseViewModelScope: CoroutineScope = viewModelScope + errorHandler
 
-    private val _needLoginEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
-    val needLoginEvent: SharedFlow<Boolean> = _needLoginEvent
+    private val _navigationEvent: MutableSharedFlow<BaseNavigationAction> = MutableSharedFlow<BaseNavigationAction>()
+    val navigationEvent: SharedFlow<BaseNavigationAction> = _navigationEvent
 
     protected suspend fun catchError(exception: Throwable) {
         when(exception) {
             is HaveNotJwtTokenException, is InvalidKakaoAccessTokenException, is NeedLogin -> {
                 DataApplication.dataStorePreferences.removeAccountToken()
-                _needLoginEvent.emit(true)
+                _navigationEvent.emit(BaseNavigationAction.NavigateToLogin)
             }
-            is InvalidTokenException -> DataApplication.dataStorePreferences.removeAccountToken()
+            is InvalidTokenException -> {
+                DataApplication.dataStorePreferences.removeAccountToken()
+                _navigationEvent.emit(BaseNavigationAction.NavigateToHome)
+            }
             else -> _errorEvent.emit(exception)
         }
     }
