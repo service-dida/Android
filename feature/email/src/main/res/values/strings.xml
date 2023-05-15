@@ -7,6 +7,7 @@
     <string name="email_send">인증번호 전송</string>
     <string name="email_resend">다시 전송하기</string>
     <string name="email_response_not_correct">인증번호가 일치하지 않습니다.</string>
+    <string name="email_timeover_text">시간이 만료되었습니다. 다시 시도해주세요.</string>
     
     <!--지갑 생성 및 비밀번호 재설정 화면-->
     <string name="create_wallet_title">지갑 비밀번호 설정</string>

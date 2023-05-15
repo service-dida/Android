@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.dida.common.R
+import kotlinx.coroutines.delay
 
 
 class CustomEditText @JvmOverloads constructor(
@@ -58,5 +59,10 @@ class CustomEditText @JvmOverloads constructor(
     private fun hideKeyBoard() {
         val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
+    }
+
+    fun errorEvent(){
+        hideKeyBoard()
+        this.setBackgroundResource(R.drawable.custom_noticered_radius10_surface5_width1)
     }
 }

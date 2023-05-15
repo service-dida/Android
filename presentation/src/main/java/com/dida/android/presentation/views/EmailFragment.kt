@@ -1,6 +1,11 @@
 package com.dida.android.presentation.views
 
+import android.os.CountDownTimer
+import android.view.View
+import android.view.WindowManager.LayoutParams
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.email.R
 import com.dida.common.util.maskEmail
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.email.EmailNavigationAction
@@ -35,11 +41,9 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     override val layoutResourceId: Int
         get() = R.layout.fragment_email // get() : 커스텀 접근자, 코틀린 문법
 
-    var timer = Timer()
-
     override val viewModel : EmailViewModel by viewModels()
-    val navController: NavController by lazy { findNavController() }
-
+    private val navController: NavController by lazy { findNavController() }
+    private var countDownTimer :CountDownTimer? = null
     private val args: EmailFragmentArgs by navArgs()
 
     override fun initStartView() {
@@ -48,35 +52,36 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             this.lifecycleOwner = viewLifecycleOwner
         }
         getMaskingEmail()
+        requireActivity().window.setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
         exception = viewModel.errorEvent
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when (it) {
-                    is EmailNavigationAction.SuccessCreateWallet -> {
-                        showMessageSnackBar(getString(R.string.success_create_wallet))
-                        navController.popBackStack()
-                    }
-                    is EmailNavigationAction.SuccessResetPassword -> {
-                        showMessageSnackBar(getString(R.string.success_reset_password))
-                        navController.popBackStack()
+
+            launch{
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        is EmailNavigationAction.SuccessCreateWallet -> {
+                            showMessageSnackBar(getString(R.string.success_create_wallet))
+                            navController.popBackStack()
+                        }
+                        is EmailNavigationAction.SuccessResetPassword -> {
+                            showMessageSnackBar(getString(R.string.success_reset_password))
+                            navController.popBackStack()
+                        }
                     }
                 }
             }
 
-            viewLifecycleOwner.repeatOnResumed {
-                launch {
-                    viewModel.retryEvent.collectLatest {
-                        showMessageSnackBar(getString(R.string.fail_notCorrect_password))
-                    }
+            launch {
+                viewModel.sendEvent.collectLatest {
+                    startTimer()
                 }
-
-                launch {
-                    viewModel.sendEvent.collectLatest {
-                        timeCheck()
-                    }
+            }
+            launch {
+                viewModel.retryEvent.collectLatest {
+                    showMessageSnackBar(getString(R.string.fail_notCorrect_password))
                 }
             }
         }
@@ -85,7 +90,6 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     override fun initAfterBinding() {
 
         binding.okBtn.setOnClickListener {
-            timer.cancel()
             if(viewModel.verifyNumberCheck()) {
                 if(args.requestEmailType == RequestEmailType.MAKE_WALLET){
                     makeWallet()
@@ -98,6 +102,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
         }
 
         binding.sendBtn.setOnClickListener {
+            binding.sendBtn.text = getString(R.string.email_resend)
             viewModel.getSendEmail()
         }
     }
@@ -121,39 +126,25 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             }
         }.show(childFragmentManager,"EmailFragment")
     }
+    private fun startTimer(){
+        binding.timeoverTv.visibility = View.GONE
+        binding.emailCheck.setBackgroundResource(com.dida.common.R.drawable.custom_brandlemon_radius10_surface5_width1)
 
-    private fun timeOver() {
-        timer.cancel()
-        lifecycleScope.launch {
-            //TODO : 비밀번호 다시 전송하기로 ui 변경
-        }
-    }
-
-    private fun timeCheck() {
-        var minute = 4
-        var second = 60
-        timer = Timer()
-
-        val timerTask: TimerTask = object : TimerTask() {
-            override fun run() {
-                // 반복실행할 구문
-                second -= 1
-                if(second == 0){
-                    second = 60
-                    minute -= 1
-                }
-                lifecycleScope.launch {
-                    viewModel.timeToString(minute, second)
-                }
-                if (minute < 0) {
-                    timer.cancel()
-                    timeOver()
-                }
+        countDownTimer = object : CountDownTimer(300000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = millisUntilFinished / 1000 / 60
+                val seconds = millisUntilFinished / 1000 % 60
+                viewModel.timeToString(minutes.toInt(),seconds.toInt())
             }
-        }
-        // timer 실행
-        timer.schedule(timerTask, 0, 1000)
+
+            override fun onFinish() {
+                binding.timeoverTv.visibility = View.VISIBLE
+                binding.emailCheck.errorEvent()
+                binding.emailCheck.text?.clear()
+            }
+        }.start()
     }
+
     private fun getMaskingEmail(){
         UserApiClient.instance.me { user, error ->
             if (error != null) {
@@ -174,5 +165,10 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             .message(message)
             .hasBottomMargin(false)
             .build()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countDownTimer?.cancel()
     }
 }

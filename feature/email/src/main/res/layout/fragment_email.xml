@@ -64,23 +64,33 @@
             android:text="@{vm.timeState}"
             android:textColor="@color/white"
             android:textSize="14dp"
-
             app:layout_constraintBottom_toTopOf="@+id/email_check"
             app:layout_constraintEnd_toEndOf="@+id/email_check"
             tools:text="05:00" />
 
         <TextView
+            android:id="@+id/timeover_tv"
+            style="@style/TextView_regular_14_notice_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/email_timeover_text"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_check" />
+
+        <TextView
             android:id="@+id/email_masking_tv"
+            style="@style/TextView_regular_14_white50"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/email_check"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="@string/email_masking_hint"
-            android:lineSpacingExtra="20px"
-            style="@style/TextView_regular_14_white50"
+            android:layout_marginTop="18dp"
             android:fontFamily="@font/pretendard_regular"
-            android:layout_marginTop="18dp">
-        </TextView>
+            android:lineSpacingExtra="20px"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeover_tv"
+            tools:text="@string/email_masking_hint"></TextView>
 
         <TextView
             android:id="@+id/ok_btn"
