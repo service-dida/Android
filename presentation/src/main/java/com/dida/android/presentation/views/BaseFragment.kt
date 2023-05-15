@@ -226,7 +226,8 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     // Home 화면으로 이동
     protected fun navigateToHomeFragment(navOptions: NavOptions? = null) {
         val mainFragmentId = com.dida.android.R.id.homeFragment
-        if (findNavController().currentDestination?.id != mainFragmentId) {
+        val splashFragmentId = com.dida.android.R.id.splashFragment
+        if (findNavController().currentDestination?.id != mainFragmentId && findNavController().currentDestination?.id != splashFragmentId) {
             val result = findNavController().popBackStack(mainFragmentId, false)
             if (!result) {
                 findNavController().navigate(NavigationGraphDirections.actionMainFragment(), navOptions)
