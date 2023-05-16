@@ -22,9 +22,12 @@ import com.dida.android.presentation.activities.LoginActivity
 import com.dida.common.base.BaseNavigationAction
 import com.dida.common.base.BaseViewModel
 import com.dida.common.base.ErrorWithRetry
-import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.base.LoadingDialogFragment
-import com.dida.common.util.*
+import com.dida.common.dialog.DefaultDialogFragment
+import com.dida.common.util.Invoker
+import com.dida.common.util.Scheme
+import com.dida.common.util.SchemeUtils
+import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
@@ -226,8 +229,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     // Home 화면으로 이동
     protected fun navigateToHomeFragment(navOptions: NavOptions? = null) {
         val mainFragmentId = com.dida.android.R.id.homeFragment
-        val splashFragmentId = com.dida.android.R.id.splashFragment
-        if (findNavController().currentDestination?.id != mainFragmentId && findNavController().currentDestination?.id != splashFragmentId) {
+        if (findNavController().currentDestination?.id != mainFragmentId) {
             val result = findNavController().popBackStack(mainFragmentId, false)
             if (!result) {
                 findNavController().navigate(NavigationGraphDirections.actionMainFragment(), navOptions)
@@ -370,7 +372,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     // 타기기 앱 중복 로그인
     private fun showDuplicateLoginDialog() {
         val message = getString(com.dida.android.R.string.duplicate_login_error_message)
-        showErrorDialog(message) { navigateToHomeFragment() }
+        val splashFragmentId = com.dida.android.R.id.splashFragment
+        if (findNavController().currentDestination?.id != splashFragmentId) {
+            showErrorDialog(message) { navigateToHomeFragment() }
+        } else {
+            navigateToHomeFragment()
+        }
     }
 
     private fun showServiceErrorFragment(throwable: Throwable) {

@@ -5,8 +5,6 @@ import com.dida.data.api.ApiClient.BASE_URL
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.model.InvalidJwtTokenException
-import com.dida.data.model.InvalidKakaoAccessTokenException
-import com.dida.data.model.InvalidTokenException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import kotlinx.coroutines.runBlocking
@@ -38,12 +36,6 @@ class BearerInterceptor : Interceptor {
                 val errorException = createErrorException(requestUrl, response.code, errorResponse)
 
                 when(errorException) {
-                    is InvalidTokenException -> {
-                        runBlocking {
-                            DataApplication.dataStorePreferences.removeAccountToken()
-                        }
-                        return chain.proceed(chain.request().newBuilder().addHeader("Authorization", accessToken).build())
-                    }
                     is InvalidJwtTokenException -> {
                         runBlocking {
                             //토큰 갱신 api 호출
