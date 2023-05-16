@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.dida.common.util.SLIDETYPE
 import com.dida.common.util.context
 import com.dida.common.util.scrollBy
 import com.dida.common.widget.CirclePagerIndicatorDecoration
@@ -44,8 +45,7 @@ class HotsContainerAdapter(
                     val inactiveColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.surface6)
                     hotsViewPager.addItemDecoration(
                         CirclePagerIndicatorDecoration(
-                            isViewPager = true,
-                            isInfiniteScroll = true,
+                            slideType = SLIDETYPE.CAROUSEL,
                             activeColor = activeColor,
                             inactiveColor = inactiveColor,
                             indicatorHeight = indicatorHeight
