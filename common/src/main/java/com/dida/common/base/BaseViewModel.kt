@@ -43,7 +43,7 @@ abstract class BaseViewModel : ViewModel() {
             }
             is InvalidTokenException -> {
                 DataApplication.dataStorePreferences.removeAccountToken()
-                _baseNavigationEvent.emit(BaseNavigationAction.NavigateToHome)
+                _baseNavigationEvent.emit(BaseNavigationAction.NavigateToDuplicateLogin)
             }
             else -> _errorEvent.emit(exception)
         }

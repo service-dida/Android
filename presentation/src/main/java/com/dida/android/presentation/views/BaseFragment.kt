@@ -144,7 +144,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                     dismissLoadingDialog()
                     when (it) {
                         is BaseNavigationAction.NavigateToLogin -> registerForActivityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
-                        is BaseNavigationAction.NavigateToHome -> navigateToHomeFragment()
+                        is BaseNavigationAction.NavigateToDuplicateLogin -> showDuplicateLoginDialog()
                     }
                 }
             }
@@ -365,6 +365,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             .cancelable(false)
             .build()
             .show(childFragmentManager, "error_dialog")
+    }
+
+    // 타기기 앱 중복 로그인
+    private fun showDuplicateLoginDialog() {
+        val message = getString(com.dida.android.R.string.duplicate_login_error_message)
+        showErrorDialog(message) { navigateToHomeFragment() }
     }
 
     private fun showServiceErrorFragment(throwable: Throwable) {
