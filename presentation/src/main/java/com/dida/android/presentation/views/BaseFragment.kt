@@ -140,9 +140,9 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-                viewModel.navigationEvent.collectLatest {
+                viewModel.baseNavigationEvent.collectLatest {
                     dismissLoadingDialog()
-                    when(it) {
+                    when (it) {
                         is BaseNavigationAction.NavigateToLogin -> registerForActivityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
                         is BaseNavigationAction.NavigateToHome -> navigateToHomeFragment()
                     }
@@ -330,7 +330,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         if (requireActivity().isDestroyed) return
         retryScope?.let { coroutineScope ->
             val message = getString(com.dida.android.R.string.network_retry_error_message)
-            showErrorDialog(message) { coroutineScope.launch {retry.invoke() } }
+            showErrorDialog(message) { coroutineScope.launch { retry.invoke() } }
         }
     }
 
@@ -353,6 +353,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             .show(childFragmentManager, "network_error_dialog")
     }
 
+    // Error Dialog
     private fun showErrorDialog(message: String, callback: Invoker = {}) {
         DefaultDialogFragment.Builder()
             .message(message)
