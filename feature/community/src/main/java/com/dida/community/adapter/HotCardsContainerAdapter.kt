@@ -130,7 +130,7 @@ class HotCardsContainerViewHolder(
             targetPosition = if (contentSize <= targetPosition) 0 else nextPosition
             binding.hotCardsViewpager.smoothScrollToPosition(
                 item = targetPosition,
-                duration = Constants.REPEAT_INTERVAL_MS,
+                duration = Constants.ROLLING_INTERVAL_MS,
                 pagePxWidth = this.itemView.width / 2
             )
         }
