@@ -33,7 +33,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.
     }
 
     override fun initStartView() {
-        viewModel.checkVersion()
+        viewModel.onVersionCheck()
     }
 
     override fun initDataBinding() {
@@ -63,7 +63,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.
             }
             // Get new FCM registration token
             val token = task.result
-            viewModel.setDeviceToken(token)
+            viewModel.onAppSetUp(token)
             AppLog.e("Fetching FCM registration token Success", token)
         })
     }

@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
     private val _navigateToHome: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val navigateToHome: SharedFlow<Boolean> = _navigateToHome.asSharedFlow()
 
-    fun checkVersion() {
+    fun onVersionCheck() {
         baseViewModelScope.launch {
             versionAPI()
                 .onSuccess { _appVersion.emit(it.version) }
@@ -41,11 +41,10 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    fun setDeviceToken(deviceToken: String) {
+    fun onAppSetUp(deviceToken: String) {
         baseViewModelScope.launch {
-            val refreshToken = dataStorePreferences.getRefreshToken()
-            refreshToken?.let {
-                refreshTokenAPI.invoke(request = it)
+            dataStorePreferences.getRefreshToken()?.let { token ->
+                refreshTokenAPI.invoke(request = token)
                     .onSuccess { response ->
                         dataStorePreferences.setAccessToken(
                             accessToken = response.accessToken ?: "",
@@ -53,8 +52,8 @@ class SplashViewModel @Inject constructor(
                         )
                     }.flatMap { deviceTokenAPI(deviceToken = deviceToken) }
                     .flatMap { userProfileAPI() }
-                    .onSuccess {
-                        dataStorePreferences.setUserId(it.userId)
+                    .onSuccess { userProfile ->
+                        dataStorePreferences.setUserId(userProfile.userId)
                         _navigateToHome.emit(true)
                         _splashScreenGone.emit(true)
                     }.onError { e -> catchError(e) }
