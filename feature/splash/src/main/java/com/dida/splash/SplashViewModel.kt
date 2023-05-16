@@ -43,7 +43,6 @@ class SplashViewModel @Inject constructor(
 
     fun setDeviceToken(deviceToken: String) {
         baseViewModelScope.launch {
-            val accessToken = dataStorePreferences.getAccessToken()
             val refreshToken = dataStorePreferences.getRefreshToken()
             refreshToken?.let {
                 refreshTokenAPI.invoke(request = it)
@@ -60,7 +59,7 @@ class SplashViewModel @Inject constructor(
                         _splashScreenGone.emit(true)
                     }.onError { e -> catchError(e) }
             }
-            if (accessToken == null) {
+            if (dataStorePreferences.getAccessToken() == null) {
                 _navigateToHome.emit(true)
                 _splashScreenGone.emit(true)
             }
