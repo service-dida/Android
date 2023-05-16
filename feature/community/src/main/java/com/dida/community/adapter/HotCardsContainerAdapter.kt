@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.dida.common.util.SLIDETYPE
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
 import com.dida.community.HotCardActionHandler
@@ -37,8 +38,7 @@ class HotCardsContainerAdapter(
                 val inactiveColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.surface6)
                 hotCardsViewpager.addItemDecoration(
                     CirclePagerIndicatorDecoration(
-                        isViewPager = true,
-                        isInfiniteScroll = true,
+                        slideType = SLIDETYPE.CAROUSEL,
                         activeColor = activeColor,
                         inactiveColor = inactiveColor,
                         indicatorHeight = indicatorHeight
