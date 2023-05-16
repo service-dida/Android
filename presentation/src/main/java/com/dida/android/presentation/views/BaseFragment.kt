@@ -376,6 +376,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         if (findNavController().currentDestination?.id != splashFragmentId) {
             showErrorDialog(message) { navigateToHomeFragment() }
         } else {
+            showToastMessage(message)
             navigateToHomeFragment()
         }
     }
