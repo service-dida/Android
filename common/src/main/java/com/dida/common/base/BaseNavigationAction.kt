@@ -1,6 +1,6 @@
 package com.dida.common.base
 
 sealed class BaseNavigationAction {
-    object NavigateToHome : BaseNavigationAction()
+    object NavigateToDuplicateLogin : BaseNavigationAction()
     object NavigateToLogin : BaseNavigationAction()
 }
