@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.dida.common.util.Constants
 import com.dida.common.util.SLIDETYPE
 import com.dida.common.util.context
 import com.dida.common.util.scrollBy
@@ -66,9 +67,6 @@ class HotsContainerViewHolder(
     private val binding: HolderHotsContainerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val repeatIntervalMs = 2850L
-    private val rollingIntervalMs = 150L
-
     private var targetPosition = 0
     private var contentSize = 0
 
@@ -87,7 +85,7 @@ class HotsContainerViewHolder(
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             handler.removeMessages(MSG_START_SCROLL)
-            handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
+            handler.sendEmptyMessageDelayed(MSG_START_SCROLL, Constants.REPEAT_INTERVAL_MS)
         }
 
         override fun onPageScrolled(
@@ -106,7 +104,7 @@ class HotsContainerViewHolder(
 
     init {
         binding.hotsViewPager.registerOnPageChangeCallback(onPageChangeCallback)
-        handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
+        handler.sendEmptyMessageDelayed(MSG_START_SCROLL, Constants.REPEAT_INTERVAL_MS)
     }
 
     fun bind(hotItems: HotItems.Contents) {
@@ -139,7 +137,7 @@ class HotsContainerViewHolder(
             targetPosition = if (contentSize <= targetPosition) 0 else nextPosition
             binding.hotsViewPager.smoothScrollToPosition(
                 item = targetPosition,
-                duration = rollingIntervalMs,
+                duration = Constants.ROLLING_INTERVAL_MS,
                 pagePxWidth = this.itemView.width / 2
             )
         }

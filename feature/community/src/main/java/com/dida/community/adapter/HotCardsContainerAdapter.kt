@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.dida.common.util.Constants
 import com.dida.common.util.SLIDETYPE
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
@@ -59,9 +60,6 @@ class HotCardsContainerViewHolder(
     private val binding: HolderHotCardsContainerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val repeatIntervalMs = 2850L
-    private val rollingIntervalMs = 750L
-
     private var targetPosition = 0
     private var contentSize = 0
 
@@ -80,7 +78,7 @@ class HotCardsContainerViewHolder(
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             handler.removeMessages(MSG_START_SCROLL)
-            handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
+            handler.sendEmptyMessageDelayed(MSG_START_SCROLL, Constants.REPEAT_INTERVAL_MS)
         }
 
         override fun onPageScrolled(
@@ -99,7 +97,7 @@ class HotCardsContainerViewHolder(
 
     init {
         binding.hotCardsViewpager.registerOnPageChangeCallback(onPageChangeCallback)
-        handler.sendEmptyMessageDelayed(MSG_START_SCROLL, repeatIntervalMs)
+        handler.sendEmptyMessageDelayed(MSG_START_SCROLL, Constants.REPEAT_INTERVAL_MS)
     }
 
     fun bind(hotCardsItem: HotCards.Contents) {
@@ -132,7 +130,7 @@ class HotCardsContainerViewHolder(
             targetPosition = if (contentSize <= targetPosition) 0 else nextPosition
             binding.hotCardsViewpager.smoothScrollToPosition(
                 item = targetPosition,
-                duration = rollingIntervalMs,
+                duration = Constants.REPEAT_INTERVAL_MS,
                 pagePxWidth = this.itemView.width / 2
             )
         }
