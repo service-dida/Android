@@ -98,7 +98,7 @@ class PasswordDialog(
                         .message(getString(R.string.wrong_password_subTitle))
                         .positiveButton(getString(R.string.wrong_password_positive), object : VerticalDialogFragment.OnClickListener {
                             override fun onClick() {
-                                //TODO : 비밀번호 재발급으로 이동
+                                result.invoke(false,"reset")
                             }
                         })
                         .negativeButton(getString(R.string.wrong_password_negative), object : VerticalDialogFragment.OnClickListener {
@@ -115,7 +115,7 @@ class PasswordDialog(
 
     override fun initAfterBinding() {
         binding.findPasswordBtn.setOnClickListener {
-            //TODO : 비밀번호 재설정으로 이동
+            result.invoke(false,"reset")
         }
     }
 

@@ -135,6 +135,10 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
                 if(success){
                     viewModel.onSellCard(password, price.toDouble())
+                }else {
+                    if (password == "reset") {
+                        navigate(DetailNftFragmentDirections.actionDetailNftFragmentToSettingFragment())
+                    }
                 }
             }.show(childFragmentManager,"DetailNftBottomSheet")
         }.show(childFragmentManager, "DetailNftFragment")
@@ -145,6 +149,10 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
                 if (success) {
                     viewModel.deleteNft(password)
+                }else {
+                    if (password == "reset") {
+                        navigate(DetailNftFragmentDirections.actionDetailNftFragmentToSettingFragment())
+                    }
                 }
             }.show(childFragmentManager, "DetailNftBottomSheet")
         } else {

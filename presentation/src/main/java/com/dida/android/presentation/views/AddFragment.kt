@@ -73,9 +73,16 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                 // 지갑이 없는 경우 지갑 생성
                 if (it) {
                     if (!isSelected) {
-                        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, _ ->
-                            if (success) getImageToGallery()
-                            else navController.popBackStack()
+                        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
+                            if(success){
+                                getImageToGallery()
+                            }else{
+                                if(msg=="reset"){
+                                    navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
+                                }else{
+                                    navController.popBackStack()
+                                }
+                            }
                         }.show(childFragmentManager, "AddFragment")
                     }
                 } else {

@@ -68,7 +68,13 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     override fun initAfterBinding() {
         binding.buyBtn.setOnClickListener {
             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
-                if (success) viewModel.buyNft(password)
+                if (success) {
+                    viewModel.buyNft(password)
+                }else {
+                    if (password == "reset") {
+                        navigate(BuyNftFragmentDirections.actionBuyNftFragmentToSettingFragment())
+                    }
+                }
             }.show(childFragmentManager, "BuyNftFragment")
         }
     }

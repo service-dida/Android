@@ -19,7 +19,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeViewModel>(R.layout.fragment_add_purpose) {
+class AddPurposeFragment :
+    BaseFragment<FragmentAddPurposeBinding, AddPurposeViewModel>(R.layout.fragment_add_purpose) {
 
     private val TAG = "AddPurposeFragment"
 
@@ -47,7 +48,9 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
                 when (it) {
                     is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
                     is AddPurposeNavigationAction.NavigateToSaled -> isSaled()
-                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
+                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(
+                        AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()
+                    )
                 }
             }
         }
@@ -67,6 +70,10 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
                 if (success) {
                     viewModel.mintNFT(password, AddPurposeViewModel.AddNftType.NOT_SALE, 0.0)
+                } else {
+                    if (password == "reset") {
+                        navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToSettingFragment())
+                    }
                 }
             }.show(childFragmentManager, "AddNftBottomSheet")
         }.show(childFragmentManager, "AddPurposeFragment")
@@ -75,7 +82,17 @@ class AddPurposeFragment : BaseFragment<FragmentAddPurposeBinding, AddPurposeVie
     private fun isSaled() {
         val dialog = AddSaleNftBottomSheet {
             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
-                if (success) viewModel.mintNFT(password, AddPurposeViewModel.AddNftType.SALE, it.toDouble())
+                if (success) {
+                    viewModel.mintNFT(
+                        password,
+                        AddPurposeViewModel.AddNftType.SALE,
+                        it.toDouble()
+                    )
+                }else {
+                    if (password == "reset") {
+                        navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToSettingFragment())
+                    }
+                }
             }.show(childFragmentManager, "AddNftBottomSheet")
         }
         dialog.show(childFragmentManager, "AddPurposeFragment")

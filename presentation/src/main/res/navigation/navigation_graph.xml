@@ -64,6 +64,14 @@
         <action
             android:id="@+id/action_swapFragment_to_emailFragment"
             app:destination="@id/emailFragment" />
+
+        <action
+            android:id="@+id/action_swapFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -79,6 +87,14 @@
             android:id="@+id/action_addFragment_to_addPurposeFragment"
             app:destination="@id/addPurposeFragment"
             app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"/>
+
+        <action
+            android:id="@+id/action_addFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"
             app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
@@ -259,6 +275,14 @@
             app:destination="@id/userProfileFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
+
+        <action
+            android:id="@+id/action_detailNftFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment
@@ -290,6 +314,14 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/addFragment"/>
+
+        <action
+            android:id="@+id/action_addPurposeFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
     <fragment
         android:id="@+id/updateProfileFragment"
@@ -460,6 +492,14 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/homeFragment"/>
+
+        <action
+            android:id="@+id/action_buyNftFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
     <fragment
@@ -505,6 +545,14 @@
         <argument
             android:name="nftId"
             app:argType="long" />
+
+        <action
+            android:id="@+id/action_buySuccessFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/homeFragment"
+            app:enterAnim="@anim/enter_from_right"/>
     </fragment>
 
 </navigation>
