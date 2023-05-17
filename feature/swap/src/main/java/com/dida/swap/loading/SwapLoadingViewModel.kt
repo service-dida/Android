@@ -29,23 +29,18 @@ class SwapLoadingViewModel @AssistedInject constructor(
     val navigationEvent: SharedFlow<SwapLoadingNavigationAction> = _navigationEvent
 
     init {
+        //TODO : 실패 시 로직 구현해야함
         baseViewModelScope.launch {
             when (swapType) {
                 SwapType.KLAY_TO_DIDA -> {
                     swapKlayToDidaApi(password, amount.toDouble())
                         .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
-                        .onError { e ->
-                            //TODO : 실패 시 로직 구현해야함
-                            catchError(e)
-                        }
+                        .onError { e -> catchError(e) }
                 }
                 else -> {
                     swapDidaToKlayAPI(password, amount.toDouble())
                         .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
-                        .onError { e ->
-                            //TODO : 실패 시 로직 구현해야함
-                            catchError(e)
-                        }
+                        .onError { e -> catchError(e) }
                 }
             }
         }

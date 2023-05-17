@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.util.uriToFile
 import com.dida.common.ui.ImageBottomSheet
-import com.dida.common.util.DidaIntent
+import com.dida.common.util.DIDAINTENT
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.update.profile.R
 import com.dida.update.profile.UpdateProfileNavigationAction
@@ -123,7 +123,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private fun initRegisterForActivityResult() {
         requestUpdateProfile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            val isUpdateProfile = activityResult.data?.getBooleanExtra(DidaIntent.RESULT_KEY_UPDATE_PROFILE, false) ?: false
+            val isUpdateProfile = activityResult.data?.getBooleanExtra(DIDAINTENT.RESULT_KEY_UPDATE_PROFILE, false) ?: false
             if (!isUpdateProfile) {
                 val intent = activityResult.data
                 if (intent != null) {

@@ -54,8 +54,7 @@ class BuyNftViewModel @AssistedInject constructor(
                     } else {
                         _navigationEvent.emit(BuyNftNavigationAction.NavigateToFailAlert)
                     }
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
             dismissLoading()
         }
     }

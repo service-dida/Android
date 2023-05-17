@@ -1,6 +1,7 @@
 package com.example.convention
 
 import com.android.build.gradle.LibraryExtension
+import com.example.convention.project.configureCommonAndroid
 import com.example.convention.project.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -22,6 +23,7 @@ class AndroidCommonConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
+                configureCommonAndroid(this)
                 defaultConfig.targetSdk = 33
                 buildFeatures.dataBinding = true
             }
@@ -35,9 +37,6 @@ class AndroidCommonConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx-core").get())
                 add("implementation", libs.findLibrary("androidx-appcompat").get())
                 add("implementation", libs.findLibrary("android-material").get())
-                add("implementation", libs.findLibrary("junit-junit").get())
-                add("implementation", libs.findLibrary("androidx-test-junit").get())
-                add("implementation", libs.findLibrary("androidx-test-espresso").get())
 
                 // Android Ui 관련
                 add("implementation", libs.findLibrary("androidx-constraintlayout").get())

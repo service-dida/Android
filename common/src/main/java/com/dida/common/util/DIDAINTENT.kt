@@ -1,0 +1,11 @@
+package com.dida.common.util
+
+object DIDAINTENT {
+    const val RESULT_KEY_UPDATE_PROFILE = "RESULT_KEY_UPDATE_PROFILE"
+
+    const val RESULT_SCREEN_COMMUNITY = "RESULT_SCREEN_COMMUNITY"
+
+    const val RESULT_KEY_REPORT = "RESULT_KEY_REPORT"
+    const val RESULT_KEY_BLOCK = "RESULT_KEY_BLOCK"
+    const val RESULT_KEY_CREATE = "RESULT_KEY_CREATE"
+}

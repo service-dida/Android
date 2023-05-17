@@ -1,6 +1,10 @@
 package com.dida.common.ui.report
 
 import com.dida.common.base.BaseViewModel
+import com.dida.data.model.AlreadyReport
+import com.dida.data.model.HaveNotJwtTokenException
+import com.dida.data.model.InvalidKakaoAccessTokenException
+import com.dida.data.model.NeedLogin
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.ReportCardAPI
@@ -58,9 +62,12 @@ class DefaultReportViewModelDelegate @Inject constructor(
                 ReportType.POST -> reportPostAPI(postId = reportId, content = content)
                 ReportType.CARD -> reportCardAPI(cardId = reportId, content = content)
             }.onSuccess { _navigateToReportEvent.emit(true)
-            }.onError { e ->
-                catchError(e)
-                _navigateToReportEvent.emit(false) }
+            }.onError {
+                when(it) {
+                    is AlreadyReport -> _navigateToReportEvent.emit(false)
+                    else -> catchError(it)
+                }
+            }
         }
     }
 

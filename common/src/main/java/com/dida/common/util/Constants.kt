@@ -6,14 +6,11 @@ object Constants {
 
     const val MIN_AMOUNT = 0.01
     const val MIN_AMOUNT_TEXT = "0.01"
+
+    const val ROLLING_INTERVAL_MS = 750L
+    const val REPEAT_INTERVAL_MS = 2850L
 }
 
-object SCREEN {
-    const val COMMUNITY = "COMMUNITY"
-}
-
-object EVENT {
-    const val REPORT = "REPORT"
-    const val BLOCK = "BLOCK"
-    const val CREATE = "CREATE"
+enum class SLIDETYPE {
+    CAROUSEL, INFINITE, NORMAL
 }

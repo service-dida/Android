@@ -80,8 +80,7 @@ class UserProfileViewModel @AssistedInject constructor(
                     else _messageEvent.emit(UserMessageAction.AddCardBookmarkMessage)
                     _navigationEvent.emit(UserProfileNavigationAction.NavigateToCardLikeButtonClicked)
                     getUserProfile()
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
             dismissLoading()
         }
     }
@@ -97,8 +96,7 @@ class UserProfileViewModel @AssistedInject constructor(
                     if (profile.followed) _messageEvent.emit(UserMessageAction.UserUnFollowMessage)
                     else _messageEvent.emit(UserMessageAction.UserFollowMessage(profile.nickname))
                     getUserProfile()
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
             dismissLoading()
         }
     }

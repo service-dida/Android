@@ -19,16 +19,22 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.dida.android.NavigationGraphDirections
 import com.dida.android.presentation.activities.LoginActivity
+import com.dida.common.base.BaseNavigationAction
 import com.dida.common.base.BaseViewModel
-import com.dida.common.dialog.DefaultDialogFragment
+import com.dida.common.base.ErrorWithRetry
 import com.dida.common.base.LoadingDialogFragment
-import com.dida.common.util.*
+import com.dida.common.dialog.DefaultDialogFragment
+import com.dida.common.util.Invoker
+import com.dida.common.util.Scheme
+import com.dida.common.util.SchemeUtils
+import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
 import com.dida.data.model.UnknownException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -91,6 +97,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     protected var navigationHost: NavigationHost? = null
 
+    private val registerForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == 0) navigateToHomeFragment(null)
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -116,15 +127,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         viewLifecycleOwner.repeatOnResumed {
             launch {
                 exception?.collectLatest { exception ->
-                    sendException(exception)
-                }
-            }
-
-            launch {
-                viewModel.errorEvent.collectLatest { e ->
                     dismissLoadingDialog()
-                    showErrorToastMessage(e)
-                    onError(e)
+                    when(exception) {
+                        is ErrorWithRetry -> onErrorRetry(exception, exception.retry, exception.retryScope)
+                        else -> onError(exception)
+                    }
                 }
             }
 
@@ -136,9 +143,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-                viewModel.needLoginEvent.collectLatest {
+                viewModel.baseNavigationEvent.collectLatest {
                     dismissLoadingDialog()
-                    loginCheck()
+                    when (it) {
+                        is BaseNavigationAction.NavigateToLogin -> registerForActivityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
+                        is BaseNavigationAction.NavigateToDuplicateLogin -> showDuplicateLoginDialog()
+                    }
                 }
             }
         }
@@ -227,17 +237,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         }
     }
 
-    // 미 로그인시 로그인 로직
-    private fun loginCheck() {
-        val intent = Intent(requireActivity(), LoginActivity::class.java)
-        registerForActivityResult.launch(intent)
-    }
-
-    private val registerForActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == 0) navigateToHomeFragment(null)
-        }
-
     // DeepLink Handler
     protected fun handelDeepLinkInternal(deepLink: String, navOptions: NavOptions? = null): Boolean {
         when (SchemeUtils.getAppScheme(deepLink)) {
@@ -275,25 +274,49 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * 추후 Dialog 텍스트 정해지면 그에 따라서 수정
      * */
     // Error 관련
-    private fun onError(throwable: Throwable) {
-        when (throwable) {
+    private fun onError(exception: Throwable) {
+        sendException(exception)
+        when (exception) {
             is ConnectException -> {
-                sendException(throwable)
+                sendException(exception)
                 showNetworkErrorDialog()
             }
             is ServerNotFoundException -> {
-                sendException(throwable)
-                showServiceErrorDialog(throwable)
+                sendException(exception)
+                showServiceErrorDialog(exception)
             }
             is InternalServerErrorException -> {
-                sendException(throwable)
-                showServiceErrorFragment(throwable)
+                sendException(exception)
+                showServiceErrorFragment(exception)
             }
             is UnknownException -> {
-                sendException(throwable)
+                sendException(exception)
                 showNetworkErrorDialog()
             }
-            else -> Unit
+            else -> showErrorToastMessage(exception)
+        }
+    }
+
+    private fun onErrorRetry(exception: Throwable, retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
+        sendException(exception)
+        when (exception) {
+            is ConnectException -> {
+                sendException(exception)
+                showNetworkErrorDialog()
+            }
+            is ServerNotFoundException -> {
+                sendException(exception)
+                showServiceErrorDialog(exception)
+            }
+            is InternalServerErrorException -> {
+                sendException(exception)
+                showServiceErrorFragment(exception)
+            }
+            is UnknownException -> {
+                sendException(exception)
+                showNetworkErrorDialog()
+            }
+            else -> showServiceErrorDialog(retry, retryScope)
         }
     }
 
@@ -301,6 +324,16 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     private fun showServiceErrorDialog(throwable: Throwable) {
         val message = throwable.cause?.message ?: getString(com.dida.android.R.string.unknown_error_message)
         showErrorDialog(message) { findNavController().navigateUp() }
+    }
+
+    // 에러 재시도 관련
+    /** TODO : 추후 디자인에 따라서 Dialog 수정 필요 (현 상황이라면 서버 에러시 무한으로 서버 찌르게 됨) */
+    private fun showServiceErrorDialog(retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
+        if (requireActivity().isDestroyed) return
+        retryScope?.let { coroutineScope ->
+            val message = getString(com.dida.android.R.string.network_retry_error_message)
+            showErrorDialog(message) { coroutineScope.launch { retry.invoke() } }
+        }
     }
 
     // 네트워크 오류
@@ -322,6 +355,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             .show(childFragmentManager, "network_error_dialog")
     }
 
+    // Error Dialog
     private fun showErrorDialog(message: String, callback: Invoker = {}) {
         DefaultDialogFragment.Builder()
             .message(message)
@@ -333,6 +367,18 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             .cancelable(false)
             .build()
             .show(childFragmentManager, "error_dialog")
+    }
+
+    // 타기기 앱 중복 로그인
+    private fun showDuplicateLoginDialog() {
+        val message = getString(com.dida.android.R.string.duplicate_login_error_message)
+        val splashFragmentId = com.dida.android.R.id.splashFragment
+        if (findNavController().currentDestination?.id != splashFragmentId) {
+            showErrorDialog(message) { navigateToHomeFragment() }
+        } else {
+            showToastMessage(message)
+            navigateToHomeFragment()
+        }
     }
 
     private fun showServiceErrorFragment(throwable: Throwable) {

@@ -58,6 +58,7 @@ fun createErrorException(
         109 -> NotUseNicknameException(Throwable(errorResponse.message), url, 109)
         110 -> AlreadyEmailException(Throwable(errorResponse.message), url, 110)
         111 -> InvalidUserException(Throwable(errorResponse.message), url, 111)
+        113 -> InvalidTokenException(Throwable(errorResponse.message), url, 113)
         114 -> InvalidPasswordException(Throwable(errorResponse.message), url, 114)
         115 -> InvalidNftException(Throwable(errorResponse.message), url, 115)
         117 -> AlreadyWalletException(Throwable(errorResponse.message), url, 117)
