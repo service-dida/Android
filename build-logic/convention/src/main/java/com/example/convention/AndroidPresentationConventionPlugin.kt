@@ -2,6 +2,7 @@ package com.example.convention
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.LibraryExtension
+import com.example.convention.project.configureCommonAndroid
 import com.example.convention.project.configureComposeAndroid
 import com.example.convention.project.configureKotlinAndroid
 import org.gradle.api.Plugin
@@ -30,6 +31,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
             properties.load(project.rootProject.file("local.properties").inputStream())
 
             extensions.configure<ApplicationExtension> {
+                configureCommonAndroid(this)
                 configureKotlinAndroid(this)
                 configureComposeAndroid(this)
 
@@ -88,9 +90,6 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx-core").get())
                 add("implementation", libs.findLibrary("androidx-appcompat").get())
                 add("implementation", libs.findLibrary("android-material").get())
-                add("implementation", libs.findLibrary("junit-junit").get())
-                add("implementation", libs.findLibrary("androidx-test-junit").get())
-                add("implementation", libs.findLibrary("androidx-test-espresso").get())
 
                 // Android Ui 관련
                 add("implementation", libs.findLibrary("androidx-constraintlayout").get())
