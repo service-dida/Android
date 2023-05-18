@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         app:onSingleClick="@{() -> eventListener.onCommunityItemClicked(holderModel.postId)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -166,7 +167,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/community_main"
-            android:padding="16dp"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             tools:listitem="@layout/holder_comments"/>
@@ -182,8 +185,7 @@
             app:goneUnless="@{holderModel.commentList.size() > 2}"
             android:fontFamily="@font/pretendard_medium"
             android:textColor="#939393"
-            android:text="@string/reply_more"
-            android:paddingBottom="40dp"/>
+            android:text="@string/reply_more" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
