@@ -25,6 +25,7 @@
         android:roundIcon="@mipmap/ic_dida_logo_round"
         android:supportsRtl="true"
         android:name=".presentation.di.PresentationApplication"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DIDA">
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"

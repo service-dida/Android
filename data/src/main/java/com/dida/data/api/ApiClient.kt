@@ -1,8 +1,8 @@
 package com.dida.data.api
 
 object ApiClient {
-    // TEST & MAIN
-    const val BASE_URL = "https://service-dida.shop/"
+    //테스트 서버
+    const val BASE_URL = "http://52.79.231.166:8000/"
 
     //클레이튼
     const val KLAYTN_URL = "https://www.klaytnapi.com/"
