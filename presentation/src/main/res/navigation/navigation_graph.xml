@@ -344,11 +344,6 @@
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
         <action
-            android:id="@+id/action_settingFragment_to_tempPasswordFragment"
-            app:destination="@id/tempPasswordFragment"
-            app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right" />
-        <action
             android:id="@+id/action_settingFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment"
             app:popExitAnim="@anim/exit_to_right"
@@ -358,19 +353,14 @@
             app:destination="@id/emailFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/tempPasswordFragment"
-        android:name="com.dida.android.presentation.views.TempPasswordFragment"
-        android:label="TempPasswordFragment" >
         <action
-            android:id="@+id/action_tempPasswordFragment_to_changePasswordFragment"
-            app:destination="@id/changePasswordFragment"
+            android:id="@+id/action_settingFragment_to_mypageFragment"
+            app:destination="@id/myPageFragment"
             app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/settingFragment"/>
+            app:popUpTo="@+id/homeFragment"
+            app:enterAnim="@anim/enter_from_right"/>
+
     </fragment>
 
     <fragment
