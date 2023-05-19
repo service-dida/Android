@@ -46,7 +46,7 @@ class CommentsAdapter(
 
         fun bind(item: Comments) {
             binding.holderModel = item
-            binding.moreBtn.isVisible = !(item.type == "MINE" || item.type == "NEED LOGIN")
+            binding.moreBtn.isVisible = item.type != "NEED LOGIN"
             binding.moreBtn.setOnSingleClickListener {
                 if (item.type == "MINE") it.showEditCommentBalloon(commentId = item.commentId, listener = binding.eventListener!!)
                 else it.showReportCommentBalloon(userId = item.userId, listener = binding.eventListener!!)
