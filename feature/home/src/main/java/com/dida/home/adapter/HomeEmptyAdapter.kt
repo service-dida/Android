@@ -8,21 +8,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.home.HomeActionHandler
 import com.dida.home.R
-import com.dida.home.databinding.HolderHotsellerEmptyBinding
-import com.dida.home.databinding.HolderHotsellerMoreBinding
+import com.dida.home.databinding.HolderHomeEmptyBinding
 
-class HotSellerEmptyAdapter(
+class HomeEmptyAdapter(
     val eventListener: HomeActionHandler
-) : ListAdapter<HotSellerEmptyItem, HotSellerEmptyViewHolder>(HotSellerEmptyItemDiffCallback) {
+) : ListAdapter<HomeEmptyItem, HotSellerEmptyViewHolder>(HomeEmptyItemDiffCallback) {
 
     init {
         setHasStableIds(true)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotSellerEmptyViewHolder {
-        val viewDataBinding: HolderHotsellerEmptyBinding = DataBindingUtil.inflate(
+        val viewDataBinding: HolderHomeEmptyBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.holder_hotseller_empty,
+            R.layout.holder_home_empty,
             parent,
             false
         )
@@ -36,12 +35,12 @@ class HotSellerEmptyAdapter(
 
     override fun getItemId(position: Int): Long = getItem(position)?.hashCode()?.toLong() ?: -1
 
-    override fun getItemViewType(position: Int): Int = R.layout.holder_hotseller_empty
+    override fun getItemViewType(position: Int): Int = R.layout.holder_home_empty
 
 }
 
 class HotSellerEmptyViewHolder(
-    private val binding: HolderHotsellerEmptyBinding
+    private val binding: HolderHomeEmptyBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind() {
@@ -49,15 +48,15 @@ class HotSellerEmptyViewHolder(
     }
 }
 
-internal object HotSellerEmptyItemDiffCallback : DiffUtil.ItemCallback<HotSellerEmptyItem>() {
-    override fun areItemsTheSame(oldItem: HotSellerEmptyItem, newItem: HotSellerEmptyItem) =
+internal object HomeEmptyItemDiffCallback : DiffUtil.ItemCallback<HomeEmptyItem>() {
+    override fun areItemsTheSame(oldItem: HomeEmptyItem, newItem: HomeEmptyItem) =
         oldItem.index == newItem.index
 
-    override fun areContentsTheSame(oldItem: HotSellerEmptyItem, newItem: HotSellerEmptyItem) =
+    override fun areContentsTheSame(oldItem: HomeEmptyItem, newItem: HomeEmptyItem) =
         oldItem == newItem
 }
 
-data class HotSellerEmptyItem(
+data class HomeEmptyItem(
     val index: Int
 )
 

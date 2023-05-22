@@ -32,7 +32,7 @@
             app:layout_constraintTop_toBottomOf="@id/empty_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/custom_brandlemon_radius16"
+            android:background="@drawable/custom_brandlemon_radius10"
             android:text="@string/create_nft_message"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="@color/mainblack"
