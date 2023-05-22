@@ -129,7 +129,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
             this.inflateMenu(R.menu.menu_add_toolbar)
             this.setOnMenuItemClickListener {

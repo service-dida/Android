@@ -127,7 +127,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }

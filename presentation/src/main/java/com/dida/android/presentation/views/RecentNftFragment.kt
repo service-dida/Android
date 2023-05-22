@@ -61,7 +61,7 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
