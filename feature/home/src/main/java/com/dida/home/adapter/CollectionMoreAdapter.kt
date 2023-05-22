@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.home.HomeActionHandler
 import com.dida.home.R
 import com.dida.home.databinding.HolderCollectionMoreBinding
-import com.dida.home.databinding.HolderHotsellerMoreBinding
 
 class CollectionMoreAdapter(
     val eventListener: HomeActionHandler
