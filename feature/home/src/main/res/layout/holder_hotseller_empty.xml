@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="eventListener"
+            type="com.dida.home.HomeActionHandler" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="62dp"
+        android:paddingBottom="18dp">
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/home_empty_text"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="16dp"
+            android:textColor="@color/white_50"/>
+
+        <TextView
+            android:id="@+id/create_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/empty_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/custom_brandlemon_radius16"
+            android:text="@string/create_nft_message"
+            android:fontFamily="@font/pretendard_bold"
+            android:textColor="@color/mainblack"
+            android:textSize="18dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:paddingStart="60dp"
+            android:paddingEnd="60dp"
+            android:layout_marginTop="18dp"
+            app:onSingleClick="@{() -> eventListener.onAddCardClicked()}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

@@ -45,6 +45,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
 
+    private val hotSellerMoreAdapter by lazy { HotSellerMoreAdapter(viewModel) }
+    private val hotSellerEmptyAdapter by lazy { HotSellerEmptyAdapter(viewModel) }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -70,6 +73,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                         is HomeNavigationAction.NavigateToSoldOutMore -> Unit
                         is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
                         is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
+                        is HomeNavigationAction.NavigateToCreateCard -> navigate(HomeFragmentDirections.actionAddFragment())
                     }
                 }
             }
@@ -100,6 +104,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 it.successOrNull()?.let { home ->
                     val item = if (home.getHotItems.isNotEmpty()) listOf(HotItems.Contents(home.getHotItems)) else emptyList()
                     hotsContainerAdapter.submitList(item)
+
+                    if (home.getHotSellers.isNotEmpty()) hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
+                    else hotSellerEmptyAdapter.submitList(listOf(HotSellerEmptyItem(0)))
                 }
             }
         }
@@ -132,14 +139,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
         binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
 
-        val hotSellerMoreAdapter = HotSellerMoreAdapter(viewModel)
-        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
         val hotSellerAdapter = HotSellerAdapter(viewModel)
         hotSellerConcatAdapter = ConcatAdapter(
             adapterConfig,
             hotSellerAdapter,
-            hotSellerMoreAdapter
+            hotSellerMoreAdapter,
+            hotSellerEmptyAdapter
         )
+
         binding.hotSellerRecycler.adapter = hotSellerConcatAdapter
         binding.recentnftRecycler.apply {
             adapter = RecentNftAdapter(viewModel)

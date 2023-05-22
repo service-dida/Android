@@ -113,6 +113,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    override fun onAddCardClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(HomeNavigationAction.NavigateToCreateCard)
+        }
+    }
+
     override fun onHotItemClicked(cardId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(HomeNavigationAction.NavigateToHotItem(cardId))
