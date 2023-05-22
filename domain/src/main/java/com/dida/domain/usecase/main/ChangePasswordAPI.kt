@@ -7,7 +7,7 @@ import javax.inject.Inject
 class ChangePasswordAPI @Inject constructor(
     private val repository: MainRepository
 ){
-    suspend operator fun invoke(beforePassword: String, afterPassword: String) : NetworkResult<Unit> {
-        return repository.postChangePasswordAPI(beforePassword, afterPassword)
+    suspend operator fun invoke(nowPwd: String, checkPwd: String) : NetworkResult<Unit> {
+        return repository.postChangePasswordAPI(nowPwd, checkPwd)
     }
 }

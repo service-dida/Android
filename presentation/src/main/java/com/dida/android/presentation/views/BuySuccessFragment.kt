@@ -50,7 +50,13 @@ class BuySuccessFragment : BaseFragment<FragmentBuySuccessBinding, BuySuccessVie
                     is BuySuccessNavigationAction.NavigateToSaleNft -> {
                         val dialog = AddSaleNftBottomSheet { price ->
                             PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                                if (success) viewModel.sellNft(password, price.toDouble())
+                                if (success) {
+                                    viewModel.sellNft(password, price.toDouble())
+                                }else {
+                                    if (password == "reset") {
+                                        navigate(BuySuccessFragmentDirections.actionBuySuccessFragmentToSettingFragment())
+                                    }
+                                }
                             }.show(childFragmentManager,"DetailNftBottomSheet")
                         }
                         dialog.show(childFragmentManager, "DetailNftFragment")

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="findPassword">비밀번호를 몰라요</string>
+
+    <string name="wrong_password_mainTitle">새로운 비밀번호가 필요해요</string>
+    <string name="wrong_password_subTitle">5번의 비밀번호 오류가 있어\n새로운 비밀번호로 재설정해야 합니다.</string>
+    <string name="wrong_password_positive">비밀번호 재설정</string>
+    <string name="wrong_password_negative">취소</string>
+
+    <string name="number1">1</string>
+    <string name="number2">2</string>
+    <string name="number3">3</string>
+    <string name="number4">4</string>
+    <string name="number5">5</string>
+    <string name="number6">6</string>
+    <string name="number7">7</string>
+    <string name="number8">8</string>
+    <string name="number9">9</string>
+    <string name="number0">0</string>
+
+</resources>
