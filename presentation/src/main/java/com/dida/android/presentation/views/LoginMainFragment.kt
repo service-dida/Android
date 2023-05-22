@@ -55,6 +55,9 @@ class LoginMainFragment : BaseFragment<FragmentLoginmainBinding, LoginMainViewMo
     }
 
     override fun initAfterBinding() {
+        binding.closeBtn.setOnClickListener {
+            this@LoginMainFragment.toLoginFailure()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
