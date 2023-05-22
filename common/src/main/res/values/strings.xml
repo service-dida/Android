@@ -63,6 +63,9 @@
     <string name="user_follow">팔로우</string>
     <string name="user_following">팔로잉</string>
 
+    <string name="home_empty_text">아직 아무도 없어요</string>
+    <string name="create_nft_message">NFT 생성하기</string>
+
     <!--닉네임 화면-->
     <string name="nickname_main_yourname">당신의 이름은?</string>
     <string name="nickname_main_text">닉네임</string>
