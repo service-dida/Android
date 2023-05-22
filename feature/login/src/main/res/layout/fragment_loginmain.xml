@@ -14,6 +14,16 @@
         android:background="@color/mainblack">
 
         <ImageView
+            android:id="@+id/close_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_margin="6dp"
+            android:src="@drawable/ic_close_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
             android:id="@+id/app_logo"
             android:scaleType="centerCrop"
             android:layout_width="128dp"
