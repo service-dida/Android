@@ -4,6 +4,7 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
+import com.dida.data.DataApplication
 import com.dida.domain.flatMap
 import com.dida.domain.model.main.Home
 import com.dida.domain.model.main.SoldOut
@@ -50,19 +51,23 @@ class HomeViewModel @Inject constructor(
                 .onSuccess { _soldoutState.value = UiState.Success(it) }
                 .flatMap { homeAPI() }
                 .onSuccess {
+                    val userId = DataApplication.dataStorePreferences.getUserId()
+                    it.getHotUsers.forEach { collection ->
+                        if (collection.userId == userId) collection.isMine = true
+                    }
                     delay(SHIMMER_TIME)
-                    _homeState.value = UiState.Success(it) }
+                    _homeState.value = UiState.Success(it)
+                }
                 .onError { e -> catchError(e) }
         }
     }
 
     private fun getMain() {
         baseViewModelScope.launch {
-            homeAPI()
-                .onSuccess {
-                    _homeState.value = UiState.Success(it)
-                    dismissLoading() }
-                .onError { e -> catchError(e) }
+            homeAPI().onSuccess {
+                _homeState.value = UiState.Success(it)
+                dismissLoading()
+            }.onError { e -> catchError(e) }
         }
     }
 

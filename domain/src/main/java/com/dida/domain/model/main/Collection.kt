@@ -5,5 +5,6 @@ data class Collection(
     val userImg: String,
     val userName: String,
     val userDetail: String,
-    val follow: Boolean
+    val follow: Boolean,
+    var isMine: Boolean = false
 )
