@@ -17,6 +17,7 @@
             app:cardElevation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/snackbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -40,12 +41,14 @@
                     android:id="@+id/message_text_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Hello World!"
                     android:gravity="center_vertical"
+                    android:text="Hello World!"
                     android:textColor="@color/white"
                     android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/action_button"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/action_button"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/action_button"

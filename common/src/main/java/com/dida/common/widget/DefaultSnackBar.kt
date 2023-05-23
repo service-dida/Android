@@ -60,8 +60,9 @@ class DefaultSnackBar {
             layoutParams.gravity = Gravity.BOTTOM
             layout.removeAllViews()
             hasBottomMargin?.let {
-                if (it) layout.setPadding(20, 0, 20, 215)
-                else layout.setPadding(20, 0, 20, 10)
+                val density: Float = context!!.resources.displayMetrics.density
+                val paddingInPx = (56 * density + 0.5f).toInt()
+                layout.setPadding(20, 0, 20, paddingInPx)
             }
 
             layout.setBackgroundColor(ContextCompat.getColor(context!!, android.R.color.transparent))
@@ -83,6 +84,21 @@ class DefaultSnackBar {
                 actionButtonListener?.onClick()
                 snackBarLayout?.removeAllViews()
             }
+
+            //두줄이상일때는 padding = 16, gravity = center
+            if (!it.centeralMessageTextView.isLaidOut) {
+                val postTextView = it.centeralMessageTextView
+                it.centeralMessageTextView.post {
+                    if (postTextView.lineCount >= 2) {
+                        it.centeralMessageTextView.gravity = Gravity.LEFT
+
+                        val density: Float = context!!.resources.displayMetrics.density
+                        val paddingInPx = (16 * density + 0.5f).toInt()
+                        it.snackbarLayout.setPadding(paddingInPx, paddingInPx, paddingInPx, paddingInPx)
+                    }
+                }
+            }
+
         }
     }
 
