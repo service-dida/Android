@@ -23,7 +23,25 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+            <TextView
+                android:id="@+id/follow_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="end"
+                android:textSize="12dp"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:otherUserFollowBtn="@{vm.userProfileState}"
+                android:fontFamily="@font/pretendard_regular"
+                app:onSingleClick="@{() ->  vm.onFollowClicked()}"/>
+
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -56,25 +74,10 @@
                         android:layout_height="90dp"
                         android:layout_marginTop="14dp"
                         android:scaleType="centerCrop"
-                        app:otherUserProfile="@{vm.userProfileState}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/follow_btn"/>
-
-                    <TextView
-                        android:id="@+id/follow_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:textSize="12dp"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="6dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        app:otherUserFollowBtn="@{vm.userProfileState}"
-                        android:fontFamily="@font/pretendard_regular"
-                        app:onSingleClick="@{() ->  vm.onFollowClicked()}"/>
+                        app:otherUserProfile="@{vm.userProfileState}" />
 
                     <TextView
                         android:id="@+id/user_name_text_view"
