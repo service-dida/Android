@@ -44,8 +44,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
     private lateinit var collectionConcatAdapter: ConcatAdapter
 
+    private val hotSellerAdapter by lazy { HotSellerAdapter(viewModel) }
     private val hotSellerMoreAdapter by lazy { HotSellerMoreAdapter(viewModel) }
     private val homeEmptyAdapter by lazy { HomeEmptyAdapter(viewModel) }
+    private val collectionAdapter by lazy { CollectionAdapter(viewModel) }
     private val collectionMoreAdapter by lazy { CollectionMoreAdapter(viewModel) }
     private val collectionEmptyAdapter by lazy { HomeEmptyAdapter(viewModel) }
 
@@ -106,11 +108,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                     val item = if (home.getHotItems.isNotEmpty()) listOf(HotItems.Contents(home.getHotItems)) else emptyList()
                     hotsContainerAdapter.submitList(item)
 
-                    if (home.getHotSellers.isNotEmpty()) hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
-                    else homeEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
+                    if (home.getHotSellers.isNotEmpty()) {
+                        hotSellerAdapter.submitList(home.getHotSellers)
+                        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
+                    } else {
+                        homeEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
+                    }
 
-                    if (home.getHotUsers.isNotEmpty()) collectionMoreAdapter.submitList(listOf(CollectionMoreItem(0)))
-                    else collectionEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
+                    if (home.getHotUsers.isNotEmpty()) {
+                        collectionAdapter.submitList(home.getHotUsers)
+                        collectionMoreAdapter.submitList(listOf(CollectionMoreItem(0)))
+                    } else {
+                        collectionEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
+                    }
                 }
             }
         }
@@ -141,14 +151,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
         hotSellerConcatAdapter = ConcatAdapter(
             adapterConfig,
-            HotSellerAdapter(viewModel),
+            hotSellerAdapter,
             hotSellerMoreAdapter,
             homeEmptyAdapter
         )
 
         collectionConcatAdapter = ConcatAdapter(
             adapterConfig,
-            CollectionAdapter(viewModel),
+            collectionAdapter,
             collectionMoreAdapter,
             collectionEmptyAdapter
         )
