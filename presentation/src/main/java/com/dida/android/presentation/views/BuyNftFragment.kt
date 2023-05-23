@@ -82,7 +82,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setTitleTextColor(ContextCompat.getColor(requireContext(), com.dida.android.R.color.white))
-            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
