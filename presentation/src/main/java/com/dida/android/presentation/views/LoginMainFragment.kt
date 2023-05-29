@@ -56,6 +56,24 @@ class LoginMainFragment :
 
     override val viewModel: LoginMainViewModel by viewModels()
 
+    private val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            when (error.toString()) {
+                AuthErrorCause.AccessDenied.toString() -> showToastMessage("접근이 거부 됨(동의 취소)")
+                AuthErrorCause.InvalidClient.toString() -> showToastMessage("유효하지 않은 앱")
+                AuthErrorCause.InvalidGrant.toString() -> showToastMessage("인증 수단이 유효하지 않아 인증할 수 없는 상태")
+                AuthErrorCause.InvalidRequest.toString() -> showToastMessage("요청 파라미터 오류")
+                AuthErrorCause.InvalidScope.toString() -> showToastMessage("유효하지 않은 scope ID")
+                AuthErrorCause.Misconfigured.toString() -> showToastMessage("설정이 올바르지 않음(android key hash)")
+                AuthErrorCause.ServerError.toString() -> showToastMessage("서버 내부 에러")
+                AuthErrorCause.Unauthorized.toString() -> showToastMessage("앱이 요청 권한이 없음")
+                else -> showToastMessage("카카오톡의 미로그인")
+            }
+        } else if (token != null) {
+            viewModel.loginAPIServer(token.accessToken)
+        }
+    }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -70,19 +88,12 @@ class LoginMainFragment :
                 when (it) {
                     is LoginNavigationAction.NavigateToNickname -> {
                         showToastMessage("회원가입이 필요합니다.")
-                        navigate(
-                            LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(
-                                it.email
-                            )
-                        )
+                        navigate(LoginMainFragmentDirections.actionLoginMainFragmentToNicknameFragment(it.email))
                     }
-
                     is LoginNavigationAction.NavigateToHome -> {
                         showToastMessage("로그인에 성공하였습니다.")
                         this@LoginMainFragment.toLoginSuccess()
                     }
-
-                    is LoginNavigationAction.NavigateToLogin -> onKakaoLogin()
                 }
             }
         }
@@ -104,42 +115,24 @@ class LoginMainFragment :
         binding.composeView.apply {
             setContent {
                 LoginScreen(
-                    onKakaoLoginClicked = { onKakaoLogin() },
-                    onKakakoWebLoginClicked = { onKakaoLogin() },
+                    onKakaoLoginClicked = { onKakaoTalkLogin() },
+                    onKakakoWebLoginClicked = { onKakaoWebLogin() },
                     onCloseButtonClicked = { this@LoginMainFragment.toLoginFailure() }
                 )
             }
         }
     }
 
-    private fun onKakaoLogin() {
-        val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            if (error != null) {
-                when (error.toString()) {
-                    AuthErrorCause.AccessDenied.toString() -> showToastMessage("접근이 거부 됨(동의 취소)")
-                    AuthErrorCause.InvalidClient.toString() -> showToastMessage("유효하지 않은 앱")
-                    AuthErrorCause.InvalidGrant.toString() -> showToastMessage("인증 수단이 유효하지 않아 인증할 수 없는 상태")
-                    AuthErrorCause.InvalidRequest.toString() -> showToastMessage("요청 파라미터 오류")
-                    AuthErrorCause.InvalidScope.toString() -> showToastMessage("유효하지 않은 scope ID")
-                    AuthErrorCause.Misconfigured.toString() -> showToastMessage("설정이 올바르지 않음(android key hash)")
-                    AuthErrorCause.ServerError.toString() -> showToastMessage("서버 내부 에러")
-                    AuthErrorCause.Unauthorized.toString() -> showToastMessage("앱이 요청 권한이 없음")
-                    else -> showToastMessage("카카오톡의 미로그인")
-                }
-            } else if (token != null) {
-                viewModel.loginAPIServer(token.accessToken)
-            }
-        }
-
-        // 카카오톡 설치여부 확인
-        if (viewModel.kakaoTalkLoginState.value && UserApiClient.instance.isKakaoTalkLoginAvailable(
-                requireContext()
-            )
-        ) {
+    private fun onKakaoTalkLogin() {
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = kakaoCallback)
         } else {
             UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)
         }
+    }
+
+    private fun onKakaoWebLogin() {
+        UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)
     }
 }
 
@@ -150,7 +143,9 @@ fun LoginScreen(
     onCloseButtonClicked: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().background(Color(0xFF121212))
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF121212))
     ) {
         Image(
             modifier = Modifier
@@ -159,7 +154,9 @@ fun LoginScreen(
             painter = painterResource(id = com.dida.common.R.drawable.ic_close_white),
             contentDescription = "닫기 버튼"
         )
-        Spacer(modifier = Modifier.fillMaxWidth().height(187.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(187.dp))
         Image(
             modifier = Modifier
                 .size(132.dp)
@@ -175,7 +172,9 @@ fun LoginScreen(
             color = Color.White,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.fillMaxWidth().height(16.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(16.dp))
         onKakaoLoginButton(onKakaoLoginClicked)
         Spacer(modifier = Modifier.fillMaxWidth().height(16.dp))
         onKakaoWebLoginButton(onKakakoWebLoginClicked)
@@ -195,7 +194,9 @@ fun onKakaoLoginButton(onKakaoLoginClicked: () -> Unit) {
         onClick = { onKakaoLoginClicked() }
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
         ) {
             Spacer(modifier = Modifier.weight(1f))
             Image(painter = painterResource(id = R.drawable.kakao_logo_1), contentDescription = "카카오 로고")
@@ -225,7 +226,9 @@ fun onKakaoWebLoginButton(onKakakoWebLoginClicked: () -> Unit) {
         onClick = { onKakakoWebLoginClicked() }
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
             text = "카카오계정 직접 입력하기",
             style = DidaTypography.h3,
             fontSize = 15.sp,
