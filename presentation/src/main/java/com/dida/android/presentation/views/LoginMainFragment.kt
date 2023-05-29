@@ -211,7 +211,10 @@ fun onKakaoLoginButton(onKakaoLoginClicked: () -> Unit) {
                 .padding(vertical = 16.dp)
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            Image(painter = painterResource(id = R.drawable.kakao_logo_1), contentDescription = "카카오 로고")
+            Image(
+                painter = painterResource(id = R.drawable.kakao_logo_1),
+                contentDescription = "카카오 로고"
+            )
             Spacer(modifier = Modifier.size(14.dp))
             Text(
                 text = "카카오톡으로 시작하기",
