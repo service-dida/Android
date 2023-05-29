@@ -38,6 +38,9 @@ class PasswordViewModel @Inject constructor(
     private val _stackSizeState = MutableStateFlow<Int>(0)
     val stackSizeState: StateFlow<Int> = _stackSizeState
 
+    private val _wrongCountState = MutableStateFlow<String>("")
+    val wrongCountState: StateFlow<String> = _wrongCountState
+
     fun addStack(num: Int) {
         if (isClickable) {
             if (stack.size < stackSize) {
@@ -76,11 +79,13 @@ class PasswordViewModel @Inject constructor(
     private suspend fun checkPassword(password : String){
         passwordAPI(password)
             .onSuccess {
-                if (it) {
+                if (it.flag) {
                     _completeEvent.emit(password)
                 } else {
                     isClickable = false
+                    _wrongCountState.emit("${it.wrongCnt}/5")
                     _failEvent.emit(true)
+
                     stack.clear()
                     delay(1000)
                     _failEvent.emit(false)

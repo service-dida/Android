@@ -3,8 +3,6 @@ package com.dida.android.presentation.views
 import android.annotation.SuppressLint
 import android.widget.LinearLayout
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
@@ -44,6 +42,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             .subscribe(this)
 
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
+    private lateinit var collectionConcatAdapter: ConcatAdapter
+
+    private val hotSellerAdapter by lazy { HotSellerAdapter(viewModel) }
+    private val hotSellerMoreAdapter by lazy { HotSellerMoreAdapter(viewModel) }
+    private val homeEmptyAdapter by lazy { HomeEmptyAdapter(viewModel) }
+    private val collectionAdapter by lazy { CollectionAdapter(viewModel) }
+    private val collectionMoreAdapter by lazy { CollectionMoreAdapter(viewModel) }
+    private val collectionEmptyAdapter by lazy { HomeEmptyAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -70,6 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                         is HomeNavigationAction.NavigateToSoldOutMore -> Unit
                         is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
                         is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
+                        is HomeNavigationAction.NavigateToCreateCard -> navigate(HomeFragmentDirections.actionAddFragment())
                     }
                 }
             }
@@ -100,6 +107,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 it.successOrNull()?.let { home ->
                     val item = if (home.getHotItems.isNotEmpty()) listOf(HotItems.Contents(home.getHotItems)) else emptyList()
                     hotsContainerAdapter.submitList(item)
+
+                    if (home.getHotSellers.isNotEmpty()) {
+                        hotSellerAdapter.submitList(home.getHotSellers)
+                        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
+                    } else {
+                        homeEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
+                    }
+
+                    if (home.getHotUsers.isNotEmpty()) {
+                        collectionAdapter.submitList(home.getHotUsers)
+                        collectionMoreAdapter.submitList(listOf(CollectionMoreItem(0)))
+                    } else {
+                        collectionEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
+                    }
                 }
             }
         }
@@ -128,19 +149,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private fun initAdapter() {
         val adapterConfig = ConcatAdapter.Config.Builder().setIsolateViewTypes(false).build()
 
-        binding.hotsRecycler.adapter = hotsContainerAdapter
-        binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
-        binding.collectionRecycler.adapter = CollectionAdapter(viewModel)
-
-        val hotSellerMoreAdapter = HotSellerMoreAdapter(viewModel)
-        hotSellerMoreAdapter.submitList(listOf(HotSellerMoreItem(0)))
-        val hotSellerAdapter = HotSellerAdapter(viewModel)
         hotSellerConcatAdapter = ConcatAdapter(
             adapterConfig,
             hotSellerAdapter,
-            hotSellerMoreAdapter
+            hotSellerMoreAdapter,
+            homeEmptyAdapter
         )
+
+        collectionConcatAdapter = ConcatAdapter(
+            adapterConfig,
+            collectionAdapter,
+            collectionMoreAdapter,
+            collectionEmptyAdapter
+        )
+
         binding.hotSellerRecycler.adapter = hotSellerConcatAdapter
+        binding.hotsRecycler.adapter = hotsContainerAdapter
+        binding.soldoutRecycler.adapter = SoldOutAdapter(viewModel)
+        binding.collectionRecycler.adapter = collectionConcatAdapter
+
         binding.recentnftRecycler.apply {
             adapter = RecentNftAdapter(viewModel)
             layoutManager = GridLayoutManager(context, 2)

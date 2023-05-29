@@ -25,6 +25,7 @@
         android:roundIcon="@mipmap/ic_dida_logo_round"
         android:supportsRtl="true"
         android:name=".presentation.di.PresentationApplication"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DIDA">
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
@@ -40,6 +41,7 @@
         <activity
             android:name=".presentation.activities.NavHostActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.DIDA.Launch"
             android:launchMode="singleInstance">
@@ -50,7 +52,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.activities.LoginActivity"
+        <activity
+            android:name=".presentation.activities.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:launchMode="singleInstance">
@@ -58,6 +62,7 @@
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

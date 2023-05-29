@@ -27,27 +27,11 @@ fun ViewPager2.bindHotsItems(banners: List<Hots>?, eventListener : HomeActionHan
     }
 }
 
-@BindingAdapter("hotSellerItem")
-fun RecyclerView.bindHotSellerItem(uiState: UiState<Home>) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is ConcatAdapter) {
-        (boundAdapter.adapters.get(0) as HotSellerAdapter).submitList(uiState.successOrNull()?.getHotSellers)
-    }
-}
-
 @BindingAdapter("recentNftItem")
 fun RecyclerView.bindRecentNftItem(uiState: UiState<Home>) {
     val boundAdapter = this.adapter
     if (boundAdapter is RecentNftAdapter) {
         boundAdapter.submitList(uiState.successOrNull()?.getRecentCards)
-    }
-}
-
-@BindingAdapter("collectionsItem")
-fun RecyclerView.bindCollectionItem(uiState: UiState<Home>) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is CollectionAdapter) {
-        boundAdapter.submitList(uiState.successOrNull()?.getHotUsers)
     }
 }
 

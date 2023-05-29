@@ -59,7 +59,6 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":domain"))
                 add("implementation", project(":data"))
                 add("implementation", project(":common"))
-
                 add("implementation", project(":feature:splash"))
                 add("implementation", project(":feature:nft-detail"))
                 add("implementation", project(":feature:nft-sale"))
@@ -85,7 +84,6 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:buy-nft"))
                 add("implementation", project(":feature:compose"))
                 add("implementation", project(":feature:user-profile"))
-                add("implementation", project(":feature:temp-password"))
                 add("implementation", project(":feature:change-password"))
 
                 // Android Common

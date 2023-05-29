@@ -63,6 +63,9 @@
     <string name="user_follow">팔로우</string>
     <string name="user_following">팔로잉</string>
 
+    <string name="home_empty_text">아직 아무도 없어요</string>
+    <string name="create_nft_message">NFT 생성하기</string>
+
     <!--닉네임 화면-->
     <string name="nickname_main_yourname">당신의 이름은?</string>
     <string name="nickname_main_text">닉네임</string>
@@ -88,11 +91,6 @@
     <string name="add_nft_bottom_title">언제든 마켓에 판매할 수 있어요!</string>
     <string name="add_nft_bottom_sub_title">· 마이페이지 > NFT 상세 > 판매하기</string>
     <string name="add_nft_bottom_ok_btn_text">NFT 생성하기</string>
-
-    <!--이메일 화면-->
-    <string name="email_main_text">이메일로 전송된 \n인증번호 6자리를 입력해주세요.</string>
-    <string name="email_check_hint">6자리 숫자</string>
-    <string name="email_validation_resend">인증번호 다시 보내기</string>
 
     <!--비밀번호 다이어로그-->
     <string name="dialog_title1">비밀번호 설정</string>

@@ -43,17 +43,12 @@ class LoginMainViewModel @Inject constructor(
                 .onSuccess {
                     if(it.refreshToken.isNullOrEmpty()) {
                         _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.accessToken!!))
-                    }
-                    else {
+                    } else {
                         dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
                         _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
                     }
                     dismissLoading()
-                }.onError { e ->
-                    catchError(e)
-                    _navigationEvent.emit(LoginNavigationAction.NavigateToLoginFail)
-                    dataStorePreferences.removeAccountToken()
-                }
+                }.onError { e -> catchError(e) }
         }
     }
 

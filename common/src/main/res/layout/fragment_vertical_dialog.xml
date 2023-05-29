@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_surface2_radius16"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="12dp">
+
+    <TextView
+        android:id="@+id/dialog_title_text"
+        style="@style/TextView_bold_16_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/dialog_message_text"
+        android:gravity="center"
+        tools:text="mainTitle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_message_text"
+        style="@style/TextView_regular_12_white50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_goneMarginTop="8dp"
+        android:lineSpacingExtra="@dimen/default_dialog_message_line_spacing_extra"
+        android:gravity="center"
+        tools:text="subTitle"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_title_text" />
+
+    <LinearLayout
+        android:id="@+id/dialog_button_view"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/dialog_message_text"
+        tools:layout_editor_absoluteX="24dp">
+
+        <android.widget.Button
+            android:id="@+id/dialog_positive_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_bold"
+            style="@style/Button_lemon_regular_16_black"
+            tools:text="positive_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_message_type2_margin_view" />
+
+        <android.widget.Button
+            android:id="@+id/dialog_negative_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_bold"
+            tools:text="negative_button"
+            style="@style/Button_transparents_regular_16_white"
+            app:layout_constraintBottom_toBottomOf="@id/dialog_neutral_button"
+            app:layout_constraintEnd_toStartOf="@id/dialog_neutral_button"
+            app:layout_constraintTop_toTopOf="@id/dialog_neutral_button"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

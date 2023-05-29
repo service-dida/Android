@@ -66,7 +66,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }

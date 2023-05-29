@@ -69,7 +69,7 @@ class HideListFragment : BaseFragment<FragmentHideListBinding, HideListViewModel
 
     private fun initToolbar() {
         with(binding.toolbar) {
-            this.setNavigationIcon(com.dida.android.R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }

@@ -10,4 +10,5 @@ sealed class HomeNavigationAction {
     object NavigateToSoldOutMore : HomeNavigationAction()
     object NavigateToRecentNftMore : HomeNavigationAction()
     object NavigateToCollectionMore : HomeNavigationAction()
+    object NavigateToCreateCard: HomeNavigationAction()
 }

@@ -11,4 +11,5 @@ interface HomeActionHandler {
     fun onSoldOutMoreClicked()
     fun onRecentMoreNftClicked()
     fun onCollectionMoreClicked()
+    fun onAddCardClicked()
 }

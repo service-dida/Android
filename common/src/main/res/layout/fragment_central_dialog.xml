@@ -59,7 +59,7 @@
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:fontFamily="@font/pretendard_bold"
-            style="@style/Button_transparents_regular_14_brand_lemnon"
+            style="@style/Button_transparents_regular_14_brand_lemon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_message_type2_margin_view" />

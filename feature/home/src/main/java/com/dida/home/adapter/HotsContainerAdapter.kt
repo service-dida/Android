@@ -3,27 +3,23 @@ package com.dida.home.adapter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.dida.common.util.Constants
 import com.dida.common.util.SLIDETYPE
-import com.dida.common.util.context
-import com.dida.common.util.scrollBy
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
-import com.dida.domain.model.main.HotCards
 import com.dida.domain.model.main.HotItems
 import com.dida.home.HomeActionHandler
 import com.dida.home.databinding.HolderHotsContainerBinding
 import java.lang.ref.WeakReference
 import kotlin.math.abs
-
 
 class HotsContainerAdapter(
     private val eventListener: HomeActionHandler

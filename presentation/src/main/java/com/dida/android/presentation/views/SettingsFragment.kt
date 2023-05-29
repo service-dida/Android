@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -31,6 +32,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         }
         exception = viewModel.errorEvent
         initToolbar()
+        setOnBackPressedEvent()
     }
 
     override fun initDataBinding() {
@@ -38,8 +40,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is SettingsNavigationAction.NavigateToProfileEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToUpdateProfileFragment())
-                    is SettingsNavigationAction.NavigateToTempPassword -> navigate(SettingsFragmentDirections.actionSettingFragmentToTempPasswordFragment())
-                    is SettingsNavigationAction.NavigateToPasswordEdit -> navigate(SettingsFragmentDirections.actionSettingFragmentToChangePasswordFragment())
+                    is SettingsNavigationAction.NavigateToPasswordEdit ->  navigate(SettingsFragmentDirections.actionSettingFragmentToEmailFragment(RequestEmailType.RESET_PASSWORD))
                     is SettingsNavigationAction.NavigateToAccountInformation -> Unit
                     is SettingsNavigationAction.NavigateToNotification -> Unit
                     is SettingsNavigationAction.NavigateToHideList -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
@@ -50,12 +51,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
     private fun initToolbar(){
         binding.toolbar.apply {
-            this.setNavigationIcon(R.drawable.ic_back)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
@@ -71,5 +71,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             .negativeButton(getString(R.string.logout_dialog_negative))
             .build()
             .show(childFragmentManager, "log_out_dialog")
+    }
+
+    private fun setOnBackPressedEvent(){
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigate(SettingsFragmentDirections.actionSettingFragmentToMypageFragment())
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 }

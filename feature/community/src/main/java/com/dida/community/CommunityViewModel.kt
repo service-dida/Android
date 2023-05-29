@@ -10,6 +10,8 @@ import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.community.adapter.createPostsPager
+import com.dida.data.DataApplication
+import com.dida.data.model.NeedLogin
 import com.dida.domain.model.main.HotCard
 import com.dida.domain.model.main.Posts
 import com.dida.domain.onError
@@ -26,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,12 +53,10 @@ class CommunityViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            hotCardAPI.invoke()
-                .onSuccess {
-                    delay(SHIMMER_TIME)
-                    _hotCardState.value = UiState.Success(it)
-                }
-                .onError { e -> catchError(e) }
+            hotCardAPI().onSuccess {
+                delay(SHIMMER_TIME)
+                _hotCardState.value = UiState.Success(it)
+            }.onError { e -> catchError(e) }
         }
     }
 
@@ -67,7 +68,11 @@ class CommunityViewModel @Inject constructor(
 
     override fun onCommunityWriteClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
+            if (DataApplication.dataStorePreferences.getAccessToken() == null) {
+                catchError(NeedLogin(e = IOException(), code = 127))
+            } else {
+                _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
+            }
         }
     }
 
