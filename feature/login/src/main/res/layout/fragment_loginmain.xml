@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -8,132 +9,10 @@
             type="com.dida.login.LoginMainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/mainblack">
-
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/compose_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <ImageView
-            android:id="@+id/close_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="10dp"
-            android:layout_margin="6dp"
-            android:src="@drawable/ic_close_white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <ImageView
-            android:id="@+id/app_logo"
-            android:scaleType="centerCrop"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="120dp"
-            android:src="@mipmap/img_dida_logo_foreground">
-        </ImageView>
-
-        <TextView
-            android:id="@+id/login_description_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@color/mainblack"
-            android:text="@string/login_description"
-            android:textSize="14dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/kakao_login_button"
-            app:layout_constraintEnd_toEndOf="@+id/kakao_login_button"
-            app:layout_constraintStart_toStartOf="@+id/kakao_login_button" />
-
-
-
-        <!--버튼 이미지 파일 변경해야함-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/kakao_login_button"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/custom_kakaologin"
-            android:contentDescription="@string/kakao_login"
-            app:layout_constraintBottom_toTopOf="@id/kakao_web_login_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:onSingleClick="@{() -> vm.onKakaoLoginClicked()}">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/img_kakao"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/kakao_logo_1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:textSize="15dp"
-                    android:textColor="@color/kakao_login_text_color"
-                    android:text="@string/kakao_login"
-                    android:layout_marginStart="10dp"/>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/kakao_web_login_button"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
-            android:contentDescription="@string/kakao_login_web"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:onSingleClick="@{() -> vm.onKakaoWebLoginClicked()}">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:textSize="15dp"
-                    android:textColor="@color/white"
-                    android:text="@string/kakao_login_web"
-                    android:layout_marginStart="10dp"/>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"/>
 
 </layout>
 
