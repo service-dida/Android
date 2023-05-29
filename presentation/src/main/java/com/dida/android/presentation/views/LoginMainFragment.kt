@@ -154,9 +154,11 @@ fun LoginScreen(
             painter = painterResource(id = com.dida.common.R.drawable.ic_close_white),
             contentDescription = "닫기 버튼"
         )
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(187.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(187.dp)
+        )
         Image(
             modifier = Modifier
                 .size(132.dp)
@@ -172,13 +174,23 @@ fun LoginScreen(
             color = Color.White,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(16.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+        )
         onKakaoLoginButton(onKakaoLoginClicked)
-        Spacer(modifier = Modifier.fillMaxWidth().height(16.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+        )
         onKakaoWebLoginButton(onKakakoWebLoginClicked)
-        Spacer(modifier = Modifier.fillMaxWidth().height(32.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(32.dp)
+        )
     }
 }
 
