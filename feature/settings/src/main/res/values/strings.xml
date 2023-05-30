@@ -7,4 +7,5 @@
     <string name="account_information_title">계정 정보</string>
     <string name="notification_title">공지사항</string>
     <string name="invisible_title">숨김 목록</string>
+    <string name="block_title">차단된 유저</string>
 </resources>
