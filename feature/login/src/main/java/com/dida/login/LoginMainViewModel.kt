@@ -16,15 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginMainViewModel @Inject constructor(
     private val loginAPI: LoginAPI
-) : BaseViewModel(), LoginMainActionHandler {
+) : BaseViewModel() {
 
     private val TAG = "LoginMainViewModel"
 
     private val _navigationEvent: MutableSharedFlow<LoginNavigationAction> = MutableSharedFlow<LoginNavigationAction>()
     val navigationEvent: SharedFlow<LoginNavigationAction> = _navigationEvent
-
-    private val _kakaoTalkLoginState: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
-    val kakaoTalkLoginState: StateFlow<Boolean> = _kakaoTalkLoginState
 
     /** 카카오 로그인 결과
      * refreshToken ->
@@ -49,20 +46,6 @@ class LoginMainViewModel @Inject constructor(
                     }
                     dismissLoading()
                 }.onError { e -> catchError(e) }
-        }
-    }
-
-    override fun onKakaoLoginClicked() {
-        baseViewModelScope.launch {
-            _kakaoTalkLoginState.value = true
-            _navigationEvent.emit(LoginNavigationAction.NavigateToLogin)
-        }
-    }
-
-    override fun onKakaoWebLoginClicked() {
-        baseViewModelScope.launch {
-            _kakaoTalkLoginState.value = false
-            _navigationEvent.emit(LoginNavigationAction.NavigateToLogin)
         }
     }
 }
