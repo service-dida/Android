@@ -154,11 +154,7 @@ fun LoginScreen(
             painter = painterResource(id = com.dida.common.R.drawable.ic_close_white),
             contentDescription = "닫기 버튼"
         )
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(187.dp)
-        )
+        Spacer(modifier = Modifier.weight(1f))
         Image(
             modifier = Modifier
                 .size(132.dp)
