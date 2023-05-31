@@ -119,144 +119,144 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
-}
 
-@Composable
-fun SettingScreen(
-    onClicked: (type: SETTINGS) -> Unit,
-    onLogOutClicked: () -> Unit
-) {
-    val settings = listOf(
-        SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.ACCOUNT,
-        SETTINGS.NOTIFICATION, SETTINGS.INVISIBLE_CARD, SETTINGS.BLOCK_USER
-    )
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF121212))
+    @Composable
+    fun SettingScreen(
+        onClicked: (type: SETTINGS) -> Unit,
+        onLogOutClicked: () -> Unit
     ) {
-        settings.forEach {
-            SettingType(type = it, onClicked = onClicked)
-        }
-        Spacer(
+        val settings = listOf(
+            SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.ACCOUNT,
+            SETTINGS.NOTIFICATION, SETTINGS.INVISIBLE_CARD, SETTINGS.BLOCK_USER
+        )
+
+        Column(
             modifier = Modifier
-            .fillMaxWidth()
-            .height(16.dp)
-        )
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringResource(id = com.dida.common.R.string.app_version_string),
-            style = DidaTypography.body1,
-            fontSize = 14.sp,
-            color = Color(0x80DADADA)
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Surface(
-            modifier = Modifier.clickable { onLogOutClicked() },
-            color = Color(0xFF121212)
+                .fillMaxSize()
+                .background(Color(0xFF121212))
         ) {
+            settings.forEach {
+                SettingType(type = it, onClicked = onClicked)
+            }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+            )
             Text(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                text = stringResource(id = com.dida.common.R.string.logout_text),
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = stringResource(id = com.dida.common.R.string.app_version_string),
                 style = DidaTypography.body1,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Start,
-                color = Color(0xFFE8625B)
+                fontSize = 14.sp,
+                color = Color(0x80DADADA)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Surface(
+                modifier = Modifier.clickable { onLogOutClicked() },
+                color = Color(0xFF121212)
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    text = stringResource(id = com.dida.common.R.string.logout_text),
+                    style = DidaTypography.body1,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Start,
+                    color = Color(0xFFE8625B)
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp)
             )
         }
-        Spacer(
-            modifier = Modifier
-            .fillMaxWidth()
-            .height(48.dp)
-        )
     }
-}
 
-@Composable
-fun SettingType(
-    type: SETTINGS,
-    onClicked: (type: SETTINGS) -> Unit
-) {
-    when (type) {
-        SETTINGS.EDIT_PROFILE ->
-            SettingItem(
-                iconRes = com.dida.common.R.drawable.ic_profile_edit,
-                message = stringResource(id = com.dida.settings.R.string.profile_edit_title)
-            ) {
-                onClicked(SETTINGS.EDIT_PROFILE)
-            }
-        SETTINGS.EDIT_PASSWORD ->
-            SettingItem(
-                iconRes = com.dida.common.R.drawable.ic_password_edit,
-                message = stringResource(id = com.dida.settings.R.string.password_edit_title)
-            ) {
-                onClicked(SETTINGS.EDIT_PASSWORD)
-            }
-        SETTINGS.ACCOUNT ->
-            SettingItem(
-                iconRes = com.dida.common.R.drawable.ic_account_information,
-                message = stringResource(id = com.dida.settings.R.string.account_information_title)
-            ) {
-                onClicked(SETTINGS.ACCOUNT)
-            }
-        SETTINGS.NOTIFICATION ->
-            SettingItem(
-                iconRes = com.dida.common.R.drawable.ic_notification,
-                message = stringResource(id = com.dida.settings.R.string.notification_title)
-            ) {
-                onClicked(SETTINGS.NOTIFICATION)
-            }
-        SETTINGS.INVISIBLE_CARD ->
-            SettingItem(
-                iconRes = com.dida.common.R.drawable.ic_invisible,
-                message = stringResource(id = com.dida.settings.R.string.invisible_title)
-            ) {
-                onClicked(SETTINGS.INVISIBLE_CARD)
-            }
-        SETTINGS.BLOCK_USER ->
-            SettingItem(
-                iconRes = com.dida.common.R.drawable.ic_invisible,
-                message = stringResource(id = com.dida.settings.R.string.block_title)
-            ) {
-                onClicked(SETTINGS.BLOCK_USER)
-            }
-    }
-}
-
-@Composable
-fun SettingItem(
-    iconRes: Int,
-    message: String,
-    onClicked: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClicked() }
+    @Composable
+    private fun SettingType(
+        type: SETTINGS,
+        onClicked: (type: SETTINGS) -> Unit
     ) {
-        Row(
+        when (type) {
+            SETTINGS.EDIT_PROFILE ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_profile_edit,
+                    message = stringResource(id = com.dida.settings.R.string.profile_edit_title)
+                ) {
+                    onClicked(SETTINGS.EDIT_PROFILE)
+                }
+            SETTINGS.EDIT_PASSWORD ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_password_edit,
+                    message = stringResource(id = com.dida.settings.R.string.password_edit_title)
+                ) {
+                    onClicked(SETTINGS.EDIT_PASSWORD)
+                }
+            SETTINGS.ACCOUNT ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_account_information,
+                    message = stringResource(id = com.dida.settings.R.string.account_information_title)
+                ) {
+                    onClicked(SETTINGS.ACCOUNT)
+                }
+            SETTINGS.NOTIFICATION ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_notification,
+                    message = stringResource(id = com.dida.settings.R.string.notification_title)
+                ) {
+                    onClicked(SETTINGS.NOTIFICATION)
+                }
+            SETTINGS.INVISIBLE_CARD ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_invisible,
+                    message = stringResource(id = com.dida.settings.R.string.invisible_title)
+                ) {
+                    onClicked(SETTINGS.INVISIBLE_CARD)
+                }
+            SETTINGS.BLOCK_USER ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_invisible,
+                    message = stringResource(id = com.dida.settings.R.string.block_title)
+                ) {
+                    onClicked(SETTINGS.BLOCK_USER)
+                }
+        }
+    }
+
+    @Composable
+    private fun SettingItem(
+        iconRes: Int,
+        message: String,
+        onClicked: () -> Unit
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .clickable { onClicked() }
         ) {
-            Image(painter = painterResource(id = iconRes), contentDescription = "설정 아이템 아이콘")
-            Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = message,
-                style = DidaTypography.button,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                fontSize = 18.sp
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Image(painter = painterResource(id = iconRes), contentDescription = "설정 아이템 아이콘")
+                Spacer(modifier = Modifier.size(16.dp))
+                Text(
+                    text = message,
+                    style = DidaTypography.button,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    fontSize = 18.sp
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .padding(horizontal = 16.dp)
+                    .background(Color(0x80DADADA))
             )
         }
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .padding(horizontal = 16.dp)
-                .background(Color(0x80DADADA))
-        )
     }
 }
 
@@ -268,7 +268,7 @@ enum class SETTINGS {
 @Composable
 fun SettingPreview() {
     DIDA_THEME {
-        SettingScreen(
+        SettingsFragment().SettingScreen(
             onClicked = {},
             onLogOutClicked = {}
         )
