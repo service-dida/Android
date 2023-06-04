@@ -25,6 +25,10 @@ interface MainAPIService {
     @POST("/user")
     suspend fun postUser(@Body request: PostCreateUserRequest): Token
 
+    /** 계정 삭제 **/
+    @DELETE("/member")
+    suspend fun deleteMember(): Unit
+
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
 

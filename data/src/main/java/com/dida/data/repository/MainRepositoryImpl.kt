@@ -35,6 +35,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.postUser(request) }
     }
 
+    override suspend fun deleteMember(): NetworkResult<Unit> {
+        return handleApi { mainAPIService.deleteMember() }
+    }
+
     override suspend fun getUserProfileAPI(): NetworkResult<UserProfile> {
         return handleApi { mainAPIService.getUserProfile().toDomain() }
     }
