@@ -10,8 +10,10 @@ import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface MainAPIService {
-    @GET("/app/version")
-    suspend fun checkVersion(): AppVersion
+
+    /**
+     * 로그인 및 회원가입 관련
+     **/
 
     /** 소셜 로그인(카카오) **/
     @POST("/kakao/login")
@@ -29,25 +31,13 @@ interface MainAPIService {
     @DELETE("/member")
     suspend fun deleteMember(): Unit
 
-    @GET("/user")
-    suspend fun getUserProfile(): UserProfileResponse
-
     /** 토큰 리프래쉬 **/
     @PATCH("/common/refresh")
     suspend fun patchCommonRefresh(@Header("refreshToken") request: String): Token
 
-    @GET("/user/cards/{page}")
-    suspend fun getUserCards(@Path("page") page: Int): List<UserNft>
-
     /** 인증 메일 보내기 **/
     @GET("/visitor/auth")
     suspend fun getVisitorAuth(): SendEmailResponse
-
-    @GET("/main")
-    suspend fun getMain(): GetMainResponse
-
-    @GET("/main/{term}")
-    suspend fun getSoldOut(@Path("term") term: Int): List<GetSoldOutResponse>
 
     /** 지갑 발급하기 **/
     @POST("/visitor/wallet")
@@ -56,6 +46,30 @@ interface MainAPIService {
     /** 지갑 존재여부 판단하기 **/
     @GET("/common/wallet")
     suspend fun getCommonWallet(): GetWalletExistsResponse
+
+    /** DeviceToken 바꾸기 **/
+    @PATCH("/member/device")
+    suspend fun patchMemberDevice(@Body request: PutDeviceTokenRequest): Unit
+
+
+
+
+    @GET("/app/version")
+    suspend fun checkVersion(): AppVersion
+
+    @GET("/user")
+    suspend fun getUserProfile(): UserProfileResponse
+
+    @GET("/user/cards/{page}")
+    suspend fun getUserCards(@Path("page") page: Int): List<UserNft>
+    
+    @GET("/main")
+    suspend fun getMain(): GetMainResponse
+
+    @GET("/main/{term}")
+    suspend fun getSoldOut(@Path("term") term: Int): List<GetSoldOutResponse>
+
+
 
     @POST("/user/wallet/pwd/check")
     suspend fun postCheckPassword(@Body request: PostCheckPasswordRequest): PostCheckPasswordResponse
@@ -89,9 +103,7 @@ interface MainAPIService {
     @GET("/card/{cardId}")
     suspend fun getDetailNFT(@Path("cardId") cardId: String): GetDetailNFTResponse
 
-    /** DeviceToken 바꾸기 **/
-    @PATCH("/member/device")
-    suspend fun patchMemberDevice(@Body request: PutDeviceTokenRequest): Unit
+
 
     @POST("/market/card")
     suspend fun postBuyNft(@Body request: PostBuyNftRequest): Unit
