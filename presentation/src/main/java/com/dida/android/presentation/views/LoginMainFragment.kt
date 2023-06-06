@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -134,118 +135,118 @@ class LoginMainFragment :
     private fun onKakaoWebLogin() {
         UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)
     }
-}
 
-@Composable
-fun LoginScreen(
-    onKakaoLoginClicked: () -> Unit,
-    onKakakoWebLoginClicked: () -> Unit,
-    onCloseButtonClicked: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF121212))
+    @Composable
+    fun LoginScreen(
+        onKakaoLoginClicked: () -> Unit,
+        onKakakoWebLoginClicked: () -> Unit,
+        onCloseButtonClicked: () -> Unit
     ) {
-        Image(
+        Column(
             modifier = Modifier
-                .padding(16.dp)
-                .clickable { onCloseButtonClicked() },
-            painter = painterResource(id = com.dida.common.R.drawable.ic_close_white),
-            contentDescription = "닫기 버튼"
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Image(
-            modifier = Modifier
-                .size(132.dp)
-                .align(Alignment.CenterHorizontally),
-            painter = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground),
-            contentDescription = "디다 로고"
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "빠르게 로그인하기",
-            style = DidaTypography.caption,
-            color = Color.White,
-            textAlign = TextAlign.Center
-        )
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(16.dp)
-        )
-        onKakaoLoginButton(onKakaoLoginClicked)
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(16.dp)
-        )
-        onKakaoWebLoginButton(onKakakoWebLoginClicked)
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp)
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun onKakaoLoginButton(onKakaoLoginClicked: () -> Unit) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        color = Color(0xFFFEE500),
-        shape = RoundedCornerShape(8.dp),
-        onClick = { onKakaoLoginClicked() }
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
+                .fillMaxSize()
+                .background(Color(0xFF121212))
         ) {
+            Image(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable { onCloseButtonClicked() },
+                painter = painterResource(id = com.dida.common.R.drawable.ic_close_white),
+                contentDescription = "닫기 버튼"
+            )
             Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.kakao_logo_1),
-                contentDescription = "카카오 로고"
-            )
-            Spacer(modifier = Modifier.size(14.dp))
-            Text(
-                text = "카카오톡으로 시작하기",
-                style = DidaTypography.h3,
-                fontSize = 15.sp,
-                color = Color.Black,
-                textAlign = TextAlign.Center
+                modifier = Modifier
+                    .size(132.dp)
+                    .align(Alignment.CenterHorizontally),
+                painter = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground),
+                contentDescription = "디다 로고"
             )
             Spacer(modifier = Modifier.weight(1f))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.login_description),
+                style = DidaTypography.caption,
+                color = Color.White,
+                textAlign = TextAlign.Center
+            )
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+            )
+            onKakaoLoginButton(onKakaoLoginClicked)
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+            )
+            onKakaoWebLoginButton(onKakakoWebLoginClicked)
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(32.dp)
+            )
         }
     }
-}
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun onKakaoWebLoginButton(onKakakoWebLoginClicked: () -> Unit) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(horizontal = 16.dp),
-        color = Color(0xFF121212),
-        shape = RoundedCornerShape(8.dp),
-        onClick = { onKakakoWebLoginClicked() }
-    ) {
-        Text(
+    @OptIn(ExperimentalMaterialApi::class)
+    @Composable
+    private fun onKakaoLoginButton(onKakaoLoginClicked: () -> Unit) {
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            text = "카카오계정 직접 입력하기",
-            style = DidaTypography.h3,
-            fontSize = 15.sp,
-            color = Color.White,
-            textAlign = TextAlign.Center
-        )
+                .padding(horizontal = 16.dp),
+            color = Color(0xFFFEE500),
+            shape = RoundedCornerShape(8.dp),
+            onClick = { onKakaoLoginClicked() }
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+            ) {
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.kakao_logo_1),
+                    contentDescription = "카카오 로고"
+                )
+                Spacer(modifier = Modifier.size(14.dp))
+                Text(
+                    text = stringResource(id = R.string.kakao_login),
+                    style = DidaTypography.h3,
+                    fontSize = 15.sp,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
+        }
+    }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    @Composable
+    private fun onKakaoWebLoginButton(onKakakoWebLoginClicked: () -> Unit) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(horizontal = 16.dp),
+            color = Color(0xFF121212),
+            shape = RoundedCornerShape(8.dp),
+            onClick = { onKakakoWebLoginClicked() }
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                text = stringResource(id = R.string.kakao_login_web),
+                style = DidaTypography.h3,
+                fontSize = 15.sp,
+                color = Color.White,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
@@ -254,7 +255,7 @@ fun onKakaoWebLoginButton(onKakakoWebLoginClicked: () -> Unit) {
 @Composable
 fun LoginPreview() {
     DIDA_THEME {
-        LoginScreen(
+        LoginMainFragment().LoginScreen(
             onKakaoLoginClicked = {},
             onKakakoWebLoginClicked = {},
             onCloseButtonClicked = {}

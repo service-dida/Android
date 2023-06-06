@@ -3,10 +3,6 @@ package com.dida.android.presentation.views
 import android.os.CountDownTimer
 import android.view.View
 import android.view.WindowManager.LayoutParams
-import androidx.core.os.bundleOf
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -14,19 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.email.R
 import com.dida.common.util.maskEmail
-import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.email.EmailNavigationAction
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
 import com.dida.password.PasswordDialog
-import com.dida.settings.SettingsNavigationAction
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.*
 
 enum class RequestEmailType{
     MAKE_WALLET,
