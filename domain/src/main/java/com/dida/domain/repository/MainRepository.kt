@@ -14,8 +14,6 @@ interface  MainRepository {
 
     suspend fun createUserAPI(email: String, nickName: String): NetworkResult<Token>
 
-    suspend fun deleteMember(): NetworkResult<Unit>
-
     suspend fun getUserProfileAPI() : NetworkResult<UserProfile>
 
     suspend fun refreshTokenAPI(request: String): NetworkResult<Token>
