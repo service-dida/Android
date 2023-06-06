@@ -22,17 +22,21 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loginAPI(idToken: String): NetworkResult<Token> {
-        return handleApi { mainAPIService.loginAPIServer(idToken = idToken) }
+        return handleApi { mainAPIService.postKakaoLogin(idToken = idToken) }
     }
 
     override suspend fun nicknameAPI(nickName: String): NetworkResult<Nickname> {
         val request = PostNicknameRequest(nickName)
-        return handleApi { mainAPIService.nicknameAPIServer(request) }
+        return handleApi { mainAPIService.postCheckNickname(request) }
     }
 
     override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<Token> {
         val request = PostCreateUserRequest(email, nickName)
-        return handleApi { mainAPIService.createuserAPIServer(request) }
+        return handleApi { mainAPIService.postUser(request) }
+    }
+
+    override suspend fun deleteMember(): NetworkResult<Unit> {
+        return handleApi { mainAPIService.deleteMember() }
     }
 
     override suspend fun getUserProfileAPI(): NetworkResult<UserProfile> {
@@ -40,7 +44,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshTokenAPI(request: String): NetworkResult<Token> {
-        return handleApi { mainAPIService.refreshtokenAPIServer(request) }
+        return handleApi { mainAPIService.patchCommonRefresh(request) }
     }
 
     override suspend fun getUserCardsAPI(page: Int): NetworkResult<List<UserNft>> {
@@ -48,7 +52,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSendEmailAPI(): NetworkResult<RandomNumber> {
-        return handleApi { mainAPIService.getSendEmail().toDomain() }
+        return handleApi { mainAPIService.getVisitorAuth().toDomain() }
     }
 
     override suspend fun getMainAPI(): NetworkResult<Home> {
@@ -66,11 +70,11 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun postCreateWalletAPI(password: String, passwordCheck: String, ): NetworkResult<Unit> {
         val request = PostCreateWalletRequest(password, passwordCheck)
-        return handleApi { mainAPIService.postCreateWallet(request) }
+        return handleApi { mainAPIService.postVisitorWallet(request) }
     }
 
     override suspend fun getWalletExistsAPI(): NetworkResult<Boolean> {
-        return handleApi { mainAPIService.getWalletExists().existed }
+        return handleApi { mainAPIService.getCommonWallet().existed }
     }
 
     override suspend fun getCheckPasswordAPI(password: String): NetworkResult<PasswordVerify> {
@@ -117,7 +121,7 @@ class MainRepositoryImpl @Inject constructor(
     }
     override suspend fun putDeviceTokenAPI(deviceToken: String): NetworkResult<Unit> {
         val request = PutDeviceTokenRequest(deviceToken)
-        return handleApi { mainAPIService.putDeviceToken(request) }
+        return handleApi { mainAPIService.patchMemberDevice(request) }
     }
 
     override suspend fun postBuyNftAPI(password: String, nftId: Long): NetworkResult<Unit> {

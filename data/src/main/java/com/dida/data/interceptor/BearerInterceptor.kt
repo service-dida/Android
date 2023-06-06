@@ -45,7 +45,7 @@ class BearerInterceptor : Interceptor {
                                         .baseUrl(BASE_URL)
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build()
-                                        .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                                        .create(MainAPIService::class.java).patchCommonRefresh(it)
                                 }
                             }?.onSuccess {
                                 DataApplication.dataStorePreferences.setAccessToken(it.accessToken ?: "", it.refreshToken ?: "")

@@ -10,41 +10,66 @@ import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface MainAPIService {
+
+    /**
+     * 로그인 및 회원가입 관련
+     **/
+
+    /** 소셜 로그인(카카오) **/
+    @POST("/kakao/login")
+    suspend fun postKakaoLogin(@Body idToken: String): Token
+
+    /** 닉네임 중복 체크 **/
+    @POST("/nickname")
+    suspend fun postCheckNickname(@Body postNicknameRequest: PostNicknameRequest): Nickname
+
+    /** 회원가입 **/
+    @POST("/user")
+    suspend fun postUser(@Body request: PostCreateUserRequest): Token
+
+    /** 계정 삭제 **/
+    @DELETE("/member")
+    suspend fun deleteMember(): Unit
+
+    /** 토큰 리프래쉬 **/
+    @PATCH("/common/refresh")
+    suspend fun patchCommonRefresh(@Header("refreshToken") request: String): Token
+
+    /** 인증 메일 보내기 **/
+    @GET("/visitor/auth")
+    suspend fun getVisitorAuth(): SendEmailResponse
+
+    /** 지갑 발급하기 **/
+    @POST("/visitor/wallet")
+    suspend fun postVisitorWallet(@Body request: PostCreateWalletRequest)
+
+    /** 지갑 존재여부 판단하기 **/
+    @GET("/common/wallet")
+    suspend fun getCommonWallet(): GetWalletExistsResponse
+
+    /** DeviceToken 바꾸기 **/
+    @PATCH("/member/device")
+    suspend fun patchMemberDevice(@Body request: PutDeviceTokenRequest): Unit
+
+
+
+
     @GET("/app/version")
     suspend fun checkVersion(): AppVersion
-
-    @POST("/kakao/login")
-    suspend fun loginAPIServer(@Body idToken: String): Token
-
-    @POST("/user/nickname")
-    suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): Nickname
-
-    @POST("/new/user")
-    suspend fun createuserAPIServer(@Body request: PostCreateUserRequest): Token
 
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
 
-    @GET("/login/refresh")
-    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Token
-
     @GET("/user/cards/{page}")
     suspend fun getUserCards(@Path("page") page: Int): List<UserNft>
-
-    @GET("/auth/mail")
-    suspend fun getSendEmail(): SendEmailResponse
-
+    
     @GET("/main")
     suspend fun getMain(): GetMainResponse
 
     @GET("/main/{term}")
     suspend fun getSoldOut(@Path("term") term: Int): List<GetSoldOutResponse>
 
-    @POST("/user/wallet")
-    suspend fun postCreateWallet(@Body request: PostCreateWalletRequest)
 
-    @GET("/user/wallet")
-    suspend fun getWalletExists(): GetWalletExistsResponse
 
     @POST("/user/wallet/pwd/check")
     suspend fun postCheckPassword(@Body request: PostCheckPasswordRequest): PostCheckPasswordResponse
@@ -78,8 +103,7 @@ interface MainAPIService {
     @GET("/card/{cardId}")
     suspend fun getDetailNFT(@Path("cardId") cardId: String): GetDetailNFTResponse
 
-    @PUT("/device/token")
-    suspend fun putDeviceToken(@Body request: PutDeviceTokenRequest): Unit
+
 
     @POST("/market/card")
     suspend fun postBuyNft(@Body request: PostBuyNftRequest): Unit
