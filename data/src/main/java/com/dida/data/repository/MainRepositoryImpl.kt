@@ -266,5 +266,17 @@ class MainRepositoryImpl @Inject constructor(
         val request = PostReportRequest(reportedId = cardId, content = content)
         return handleApi { mainAPIService.postReportCard(request) }
     }
+
+    override suspend fun postUserHide(userId: Long): NetworkResult<Unit> {
+        return handleApi { mainAPIService.postUserHide(userId = userId) }
+    }
+
+    override suspend fun getUserHideList(): NetworkResult<List<UserHide>> {
+        return handleApi { mainAPIService.getUserHideList().toDomain() }
+    }
+
+    override suspend fun deleteUserHide(userId: Long): NetworkResult<Unit> {
+        return handleApi { mainAPIService.deleteUserHide(userId = userId) }
+    }
 }
 
