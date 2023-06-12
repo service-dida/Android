@@ -220,7 +220,15 @@ interface MainAPIService {
     @GET("/user/hide")
     suspend fun getUserHideList(): List<GetUserHideResponse>
 
-    //유저차단 해제
+    // 유저차단 해제
     @DELETE("/user/hide")
     suspend fun deleteUserHide(@Body userId: Long): Unit
+
+    // 게시글 차단하기
+    @POST("/post/hide")
+    suspend fun postPostHide(@Body postId: Long): Unit
+
+    // 댓글 신고하기
+    @POST("/report/comment")
+    suspend fun postReportComment(@Body body: PostReportCommentRequest): Unit
 }
