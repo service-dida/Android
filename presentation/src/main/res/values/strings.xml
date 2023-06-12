@@ -150,6 +150,7 @@
     <string name="update_profile_message">프로필 수정이 완료되었어요</string>
     <string name="delete_post_message">게시글이 삭제되었어요</string>
     <string name="delete_reply_message">댓글이 삭제되었어요</string>
+    <string name="block_post_message">게시물이 차단되었어요</string>
 
     <!-- 신고 관련-->
     <string name="already_report_message">이미 신고했어요</string>

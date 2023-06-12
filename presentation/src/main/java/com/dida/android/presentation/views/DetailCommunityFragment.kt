@@ -70,7 +70,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToUpdate -> {}
                         is DetailCommunityNavigationAction.NavigateToDelete -> showDeleteCommentDialog(commentId = it.commentId)
                         is DetailCommunityNavigationAction.NavigateToPostReport -> showPostReportDialog(postId = it.postId)
-                        is DetailCommunityNavigationAction.NavigateToPostBlock -> {}
+                        is DetailCommunityNavigationAction.NavigateToPostBlock -> showBlockPostDialog(postId = it.postId)
                     }
                 }
             }
@@ -80,6 +80,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                     when(it) {
                         is DetailCommunityMessageAction.DeletePostMessage -> showMessageSnackBar(getString(R.string.delete_post_message))
                         is DetailCommunityMessageAction.DeleteReplyMessage -> showMessageSnackBar(getString(R.string.delete_reply_message))
+                        is DetailCommunityMessageAction.PostBlockMessage -> showMessageSnackBar(getString(R.string.block_post_message))
                     }
                 }
             }
@@ -164,6 +165,21 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .show(childFragmentManager, "delete_comment_dialog")
     }
 
+    private fun showBlockPostDialog(postId: Long) {
+        DefaultDialogFragment.Builder()
+            .title(getString(com.dida.community_detail.R.string.block_post_title))
+            .message(getString(com.dida.community_detail.R.string.block_post_description))
+            .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.onPostBlock(postId)
+                }
+            })
+            .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
+            .build()
+            .show(childFragmentManager, "block_post_dialog")
+
+    }
+
     private fun keyboardHide() {
         (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(binding.editComments.windowToken, 0)
@@ -199,7 +215,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 label = getString(com.dida.common.R.string.block_message_balloon),
                 icon = com.dida.common.R.drawable.ic_block,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() = viewModel.onPostBlock(postId = postId)
+                    override fun onClick() = viewModel.onPostBlockClicked(postId = postId)
                 })
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())
