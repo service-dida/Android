@@ -441,4 +441,13 @@
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
+    <style name="TextView_regular_16_surface10" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/surface10</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
 </resources>
