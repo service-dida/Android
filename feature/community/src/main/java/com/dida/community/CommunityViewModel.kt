@@ -17,6 +17,7 @@ import com.dida.domain.model.main.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HotCardAPI
+import com.dida.domain.usecase.main.PostPostHideAPI
 import com.dida.domain.usecase.main.PostsAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -35,6 +36,7 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     postsAPI: PostsAPI,
     private val hotCardAPI: HotCardAPI,
+    private val postPostHideAPI: PostPostHideAPI,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -43,6 +45,9 @@ class CommunityViewModel @Inject constructor(
 
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent.asSharedFlow()
+
+    private val _blockEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val blockEvent: SharedFlow<Unit> = _blockEvent.asSharedFlow()
 
     val postsState: Flow<PagingData<Posts>> = createPostsPager(postsAPI = postsAPI)
         .flow.cachedIn(baseViewModelScope)
@@ -86,6 +91,18 @@ class CommunityViewModel @Inject constructor(
     override fun onBlockClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(CommunityNavigationAction.NavigateToBlock(postId))
+        }
+    }
+
+    fun onPostBlock(postId: Long){
+        baseViewModelScope.launch {
+            postPostHideAPI.invoke(postId = postId)
+                .onSuccess {
+                    _blockEvent.emit(Unit)
+                    _navigationEvent.emit(CommunityNavigationAction.NavigateToRefresh)
+                }.onError { e ->
+                    catchError(e)
+                }
         }
     }
 
