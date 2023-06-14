@@ -68,7 +68,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.blockEvent.collectLatest {
-                    showMessageSnackBar(getString(R.string.delete_reply_message))
+                    showMessageSnackBar(getString(R.string.block_post_message))
                 }
             }
         }
