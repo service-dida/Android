@@ -36,7 +36,6 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     postsAPI: PostsAPI,
     private val hotCardAPI: HotCardAPI,
-    private val postPostHideAPI: PostPostHideAPI,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -94,15 +93,9 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostBlock(postId: Long){
+    fun onPostBlock(type: ReportType, blockId: Long){
         baseViewModelScope.launch {
-            postPostHideAPI.invoke(postId = postId)
-                .onSuccess {
-                    _blockEvent.emit(Unit)
-                    _navigationEvent.emit(CommunityNavigationAction.NavigateToRefresh)
-                }.onError { e ->
-                    catchError(e)
-                }
+            onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
         }
     }
 

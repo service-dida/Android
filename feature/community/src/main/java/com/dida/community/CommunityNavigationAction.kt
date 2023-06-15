@@ -6,7 +6,6 @@ sealed class CommunityNavigationAction {
     class NavigateToNftDetail(val cardId: Long): CommunityNavigationAction()
     class NavigateToReport(val postId: Long): CommunityNavigationAction()
     class NavigateToBlock(val postId: Long): CommunityNavigationAction()
-    object NavigateToRefresh: CommunityNavigationAction()
     class NavigateToUpdate(val postId: Long): CommunityNavigationAction()
     class NavigateToDelete(val postId: Long): CommunityNavigationAction()
 }

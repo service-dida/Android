@@ -60,7 +60,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                         is CommunityNavigationAction.NavigateToBlock -> showBlockPostDialog(postId = it.postId)
                         is CommunityNavigationAction.NavigateToUpdate -> {}
                         is CommunityNavigationAction.NavigateToDelete -> {}
-                        is CommunityNavigationAction.NavigateToRefresh -> communityPagingAdapter.retry()
                     }
                 }
             }
@@ -166,12 +165,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             .message(getString(com.dida.community_detail.R.string.block_post_description))
             .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.onPostBlock(postId)
+                    viewModel.onPostBlock(type = ReportType.POST, blockId = postId)
                 }
             })
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
             .build()
-            .show(childFragmentManager, "block_post_dialog")
+            .show(childFragmentManager, "block_user_dialog")
 
     }
 
