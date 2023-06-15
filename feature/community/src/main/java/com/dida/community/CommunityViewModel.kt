@@ -17,7 +17,6 @@ import com.dida.domain.model.main.Posts
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.HotCardAPI
-import com.dida.domain.usecase.main.PostPostHideAPI
 import com.dida.domain.usecase.main.PostsAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

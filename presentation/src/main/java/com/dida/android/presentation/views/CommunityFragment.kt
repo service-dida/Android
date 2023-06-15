@@ -1,7 +1,5 @@
 package com.dida.android.presentation.views
 
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,13 +11,10 @@ import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
 import com.dida.common.util.*
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.community.CommunityMessageAction
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardsContainerAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
-import com.dida.community_detail.DetailCommunityMessageAction
-import com.dida.community_detail.DetailCommunityNavigationAction
 import com.dida.domain.model.main.HotCards
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
