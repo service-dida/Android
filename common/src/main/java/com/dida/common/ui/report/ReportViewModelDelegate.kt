@@ -7,6 +7,8 @@ import com.dida.data.model.InvalidKakaoAccessTokenException
 import com.dida.data.model.NeedLogin
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.main.PostPostHideAPI
+import com.dida.domain.usecase.main.PostUserHideAPI
 import com.dida.domain.usecase.main.ReportCardAPI
 import com.dida.domain.usecase.main.ReportPostAPI
 import com.dida.domain.usecase.main.ReportUserAPI
@@ -38,17 +40,17 @@ interface ReportViewModelDelegate {
 class DefaultReportViewModelDelegate @Inject constructor(
     private val reportUserAPI: ReportUserAPI,
     private val reportPostAPI: ReportPostAPI,
-    private val reportCardAPI: ReportCardAPI
+    private val reportCardAPI: ReportCardAPI,
+    private val postUserHideAPI: PostUserHideAPI,
+    private val postPostHideAPI: PostPostHideAPI
 ): ReportViewModelDelegate, BaseViewModel() {
 
     private val _navigateToReportEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
     private val _navigateToBlockEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
 
-    override val navigateToReportEvent: SharedFlow<Boolean>
-        get() = _navigateToReportEvent.asSharedFlow()
+    override val navigateToReportEvent: SharedFlow<Boolean> = _navigateToReportEvent.asSharedFlow()
 
-    override val navigateToBlockEvent: SharedFlow<Boolean>
-        get() = _navigateToBlockEvent.asSharedFlow()
+    override val navigateToBlockEvent: SharedFlow<Boolean> = _navigateToBlockEvent.asSharedFlow()
 
     override fun onReportDelegate(
         coroutineScope: CoroutineScope,
@@ -73,6 +75,13 @@ class DefaultReportViewModelDelegate @Inject constructor(
 
     // TODO : 차단 API 추가 연결하기
     override fun onBlockDelegate(coroutineScope: CoroutineScope, type: ReportType, blockId: Long) {
+        coroutineScope.launch {
+            when (type) {
+                ReportType.POST -> postPostHideAPI(postId = blockId)
+                else -> postUserHideAPI(userId = blockId)
+            }.onSuccess { _navigateToBlockEvent.emit(true)
+            }.onError { _navigateToBlockEvent.emit(false) }
+        }
     }
 
 }

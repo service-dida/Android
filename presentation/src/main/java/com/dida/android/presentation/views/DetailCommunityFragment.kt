@@ -66,7 +66,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
                         is DetailCommunityNavigationAction.NavigateToUserReport -> showReportDialog(it.userId)
-                        is DetailCommunityNavigationAction.NavigateToUserBlock -> {}
+                        is DetailCommunityNavigationAction.NavigateToUserBlock -> showBlockUserDialog(userId = it.userId)
                         is DetailCommunityNavigationAction.NavigateToUpdate -> {}
                         is DetailCommunityNavigationAction.NavigateToDelete -> showDeleteCommentDialog(commentId = it.commentId)
                         is DetailCommunityNavigationAction.NavigateToPostReport -> showPostReportDialog(postId = it.postId)
@@ -80,7 +80,6 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                     when(it) {
                         is DetailCommunityMessageAction.DeletePostMessage -> showMessageSnackBar(getString(R.string.delete_post_message))
                         is DetailCommunityMessageAction.DeleteReplyMessage -> showMessageSnackBar(getString(R.string.delete_reply_message))
-                        is DetailCommunityMessageAction.PostBlockMessage -> showMessageSnackBar(getString(R.string.block_post_message))
                     }
                 }
             }
@@ -171,12 +170,27 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .message(getString(com.dida.community_detail.R.string.block_post_description))
             .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.onPostBlock(postId)
+                    viewModel.onPostBlock(type = ReportType.POST, blockId = postId)
                 }
             })
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
             .build()
             .show(childFragmentManager, "block_post_dialog")
+
+    }
+
+    private fun showBlockUserDialog(userId: Long) {
+        DefaultDialogFragment.Builder()
+            .title(getString(com.dida.community_detail.R.string.block_user_title))
+            .message(getString(com.dida.community_detail.R.string.block_user_description))
+            .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.onPostBlock(type = ReportType.USER, blockId = userId)
+                }
+            })
+            .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
+            .build()
+            .show(childFragmentManager, "block_user_dialog")
 
     }
 

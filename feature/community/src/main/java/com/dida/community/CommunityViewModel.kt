@@ -127,4 +127,8 @@ class CommunityViewModel @Inject constructor(
     fun onReport(type: ReportType, reportId: Long, content: String) {
         onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
     }
+
+    fun onBlock(type: ReportType, blockId: Long) {
+        onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
+    }
 }

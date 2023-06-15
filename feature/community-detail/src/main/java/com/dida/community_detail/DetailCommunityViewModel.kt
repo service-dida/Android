@@ -28,7 +28,6 @@ class DetailCommunityViewModel @Inject constructor(
     private val commentAPI: CommentAPI,
     private val deleteCommentAPI: DeleteCommentAPI,
     private val deletePostAPI: DeletePostAPI,
-    private val postPostHideAPI: PostPostHideAPI,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -169,16 +168,7 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostBlock(postId: Long){
-        baseViewModelScope.launch {
-             postPostHideAPI.invoke(postId = postId)
-                .onSuccess {
-                    _messageEvent.emit(DetailCommunityMessageAction.PostBlockMessage)
-                    _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack)
-                }
-                .onError {
-                        e -> catchError(e)
-                }
-        }
+    fun onPostBlock(type: ReportType, blockId: Long){
+        onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
     }
 }
