@@ -314,3 +314,15 @@ fun List<GetHotSellerResponse>.toDomain(): List<HotSellerMore> {
     }
 }
 
+@JvmName("toDomainGetUserHideResponse")
+fun List<GetUserHideResponse>.toDomain(): List<UserHide> {
+    return map {
+        UserHide(
+            userId = it.userId,
+            userName = it.userName,
+            imgUrl = it.imgUrl
+        )
+    }
+}
+
+

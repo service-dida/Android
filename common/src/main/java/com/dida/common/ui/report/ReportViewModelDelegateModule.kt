@@ -1,5 +1,7 @@
 package com.dida.common.ui.report
 
+import com.dida.domain.usecase.main.PostPostHideAPI
+import com.dida.domain.usecase.main.PostUserHideAPI
 import com.dida.domain.usecase.main.ReportCardAPI
 import com.dida.domain.usecase.main.ReportPostAPI
 import com.dida.domain.usecase.main.ReportUserAPI
@@ -16,10 +18,12 @@ class ReportViewModelDelegateModule {
     fun provideReportViewModelDelegate(
         reportUserAPI: ReportUserAPI,
         reportPostAPI: ReportPostAPI,
-        reportCardAPI: ReportCardAPI
+        reportCardAPI: ReportCardAPI,
+        postUserHideAPI: PostUserHideAPI,
+        postPostHideAPI: PostPostHideAPI
     ): ReportViewModelDelegate {
         return DefaultReportViewModelDelegate(
-            reportUserAPI, reportPostAPI, reportCardAPI
+            reportUserAPI, reportPostAPI, reportCardAPI, postUserHideAPI, postPostHideAPI
         )
     }
 
