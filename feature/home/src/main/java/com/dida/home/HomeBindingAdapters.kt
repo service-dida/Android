@@ -3,10 +3,8 @@ package com.dida.home
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.dida.home.adapter.RecentNftAdapter
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.model.main.Home
