@@ -21,8 +21,8 @@ import javax.inject.Inject
 
 interface ReportViewModelDelegate {
 
-    val navigateToReportEvent: SharedFlow<Boolean>
-    val navigateToBlockEvent: SharedFlow<Boolean>
+    val navigateToReportEvent: SharedFlow<Pair<ReportType, Boolean>>
+    val navigateToBlockEvent: SharedFlow<Pair<ReportType, Boolean>>
 
     fun onReportDelegate(
         coroutineScope: CoroutineScope,
@@ -45,12 +45,11 @@ class DefaultReportViewModelDelegate @Inject constructor(
     private val postPostHideAPI: PostPostHideAPI
 ): ReportViewModelDelegate, BaseViewModel() {
 
-    private val _navigateToReportEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
-    private val _navigateToBlockEvent: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    private val _navigateToReportEvent: MutableSharedFlow<Pair<ReportType, Boolean>> = MutableSharedFlow()
+    override val navigateToReportEvent: SharedFlow<Pair<ReportType, Boolean>> = _navigateToReportEvent.asSharedFlow()
 
-    override val navigateToReportEvent: SharedFlow<Boolean> = _navigateToReportEvent.asSharedFlow()
-
-    override val navigateToBlockEvent: SharedFlow<Boolean> = _navigateToBlockEvent.asSharedFlow()
+    private val _navigateToBlockEvent: MutableSharedFlow<Pair<ReportType, Boolean>> = MutableSharedFlow()
+    override val navigateToBlockEvent: SharedFlow<Pair<ReportType, Boolean>> = _navigateToBlockEvent.asSharedFlow()
 
     override fun onReportDelegate(
         coroutineScope: CoroutineScope,
@@ -63,10 +62,10 @@ class DefaultReportViewModelDelegate @Inject constructor(
                 ReportType.USER -> reportUserAPI(userId = reportId, content = content)
                 ReportType.POST -> reportPostAPI(postId = reportId, content = content)
                 ReportType.CARD -> reportCardAPI(cardId = reportId, content = content)
-            }.onSuccess { _navigateToReportEvent.emit(true)
+            }.onSuccess { _navigateToReportEvent.emit(Pair(type, true))
             }.onError {
                 when(it) {
-                    is AlreadyReport -> _navigateToReportEvent.emit(false)
+                    is AlreadyReport -> _navigateToReportEvent.emit(Pair(type, false))
                     else -> catchError(it)
                 }
             }
@@ -79,8 +78,8 @@ class DefaultReportViewModelDelegate @Inject constructor(
             when (type) {
                 ReportType.POST -> postPostHideAPI(postId = blockId)
                 else -> postUserHideAPI(userId = blockId)
-            }.onSuccess { _navigateToBlockEvent.emit(true)
-            }.onError { _navigateToBlockEvent.emit(false) }
+            }.onSuccess { _navigateToBlockEvent.emit(Pair(type, true))
+            }.onError { _navigateToBlockEvent.emit(Pair(type, false)) }
         }
     }
 
