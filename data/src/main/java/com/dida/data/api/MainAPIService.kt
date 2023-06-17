@@ -222,7 +222,7 @@ interface MainAPIService {
 
     // 유저차단 해제
     @DELETE("/user/hide")
-    suspend fun deleteUserHide(@Body userId: Long): Unit
+    suspend fun deleteUserHide(@Body body: DeleteUserHideRequest): Unit
 
     // 게시글 차단하기
     @POST("/post/hide")
