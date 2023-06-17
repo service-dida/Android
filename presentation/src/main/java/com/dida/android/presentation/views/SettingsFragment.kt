@@ -85,7 +85,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                             SETTINGS.ACCOUNT -> Unit
                             SETTINGS.NOTIFICATION -> Unit
                             SETTINGS.INVISIBLE_CARD -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
-                            SETTINGS.BLOCK_USER -> Unit
+                            SETTINGS.BLOCK_USER -> navigate(SettingsFragmentDirections.actionSettingFragmentToBlockFragment())
                             SETTINGS.PRIVACY -> onWebView(getString(com.dida.common.R.string.privacy_url))
                             SETTINGS.SERVICE -> onWebView(getString(com.dida.common.R.string.service_url))
                         }
