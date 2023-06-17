@@ -36,6 +36,9 @@
     <string name="get_gallery">갤러리에서 선택하기</string>
     <string name="get_capture">사진 찍기</string>
 
+    <string name="privacy_url">https://dida-nft.tistory.com/m/2</string>
+    <string name="service_url">https://dida-nft.tistory.com/m/1</string>
+
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
     <string name="bottom_community">커뮤니티</string>

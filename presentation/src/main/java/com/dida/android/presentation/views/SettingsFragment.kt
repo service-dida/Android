@@ -1,5 +1,7 @@
 package com.dida.android.presentation.views
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -38,6 +40,7 @@ import com.dida.settings.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>(com.dida.settings.R.layout.fragment_settings) {
@@ -83,6 +86,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                             SETTINGS.NOTIFICATION -> Unit
                             SETTINGS.INVISIBLE_CARD -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
                             SETTINGS.BLOCK_USER -> Unit
+                            SETTINGS.PRIVACY -> onWebView(getString(com.dida.common.R.string.privacy_url))
+                            SETTINGS.SERVICE -> onWebView(getString(com.dida.common.R.string.service_url))
                         }
                     },
                     onLogOutClicked = { logOutDialog() }
@@ -111,6 +116,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             .show(childFragmentManager, "log_out_dialog")
     }
 
+    private fun onWebView(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+    }
+
     private fun setOnBackPressedEvent(){
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -127,7 +137,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     ) {
         val settings = listOf(
             SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.ACCOUNT,
-            SETTINGS.NOTIFICATION, SETTINGS.INVISIBLE_CARD, SETTINGS.BLOCK_USER
+            SETTINGS.NOTIFICATION, SETTINGS.INVISIBLE_CARD, SETTINGS.BLOCK_USER,
+            SETTINGS.PRIVACY, SETTINGS.SERVICE
         )
 
         Column(
@@ -156,7 +167,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 color = Color(0xFF121212)
             ) {
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     text = stringResource(id = com.dida.common.R.string.logout_text),
                     style = DidaTypography.body1,
                     fontSize = 16.sp,
@@ -215,10 +228,24 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 }
             SETTINGS.BLOCK_USER ->
                 SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_invisible,
+                    iconRes = com.dida.common.R.drawable.ic_block,
                     message = stringResource(id = com.dida.settings.R.string.block_title)
                 ) {
                     onClicked(SETTINGS.BLOCK_USER)
+                }
+            SETTINGS.PRIVACY ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_privacy,
+                    message = stringResource(id = com.dida.settings.R.string.privacy)
+                ) {
+                    onClicked(SETTINGS.PRIVACY)
+                }
+            SETTINGS.SERVICE ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_service,
+                    message = stringResource(id = com.dida.settings.R.string.service)
+                ) {
+                    onClicked(SETTINGS.SERVICE)
                 }
         }
     }
@@ -261,7 +288,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 }
 
 enum class SETTINGS {
-    EDIT_PROFILE, EDIT_PASSWORD, ACCOUNT, NOTIFICATION, INVISIBLE_CARD, BLOCK_USER
+    EDIT_PROFILE, EDIT_PASSWORD, ACCOUNT, NOTIFICATION, INVISIBLE_CARD, BLOCK_USER, PRIVACY, SERVICE
 }
 
 @Preview
