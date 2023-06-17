@@ -276,7 +276,8 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteUserHide(userId: Long): NetworkResult<Unit> {
-        return handleApi { mainAPIService.deleteUserHide(userId = userId) }
+        val request = DeleteUserHideRequest(userId = userId)
+        return handleApi { mainAPIService.deleteUserHide(body = request) }
     }
 
     override suspend fun postPostHide(postId: Long): NetworkResult<Unit> {

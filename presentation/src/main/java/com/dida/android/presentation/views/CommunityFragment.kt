@@ -85,8 +85,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.navigateToReportEvent.collectLatest {
-                    if (it) {
-                        showReportCompleteDialog()
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.USER -> showReportUserCompleteDialog()
+                            ReportType.POST -> showReportCompleteDialog()
+                            else -> {}
+                        }
                         communityPagingAdapter.refresh()
                     } else {
                         showToastMessage(requireContext().getString(R.string.already_report_message))
@@ -97,8 +101,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.navigateToBlockEvent.collectLatest {
-                    if (it) {
-                        showBlockCompleteDialog()
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.USER -> showBlockUserCompleteDialog()
+                            ReportType.POST -> showBlockCompleteDialog()
+                            else -> {}
+                        }
                         communityPagingAdapter.refresh()
                     }
                 }
@@ -112,8 +120,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         super.onResume()
         setFragmentResultListener(DIDAINTENT.RESULT_SCREEN_COMMUNITY) { _, bundle ->
             if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_CREATE)) showCreateCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_REPORT)) showReportCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_BLOCK)) showBlockCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_REPORT)) showReportCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_REPORT)) showReportUserCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_BLOCK)) showBlockCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showBlockUserCompleteDialog()
         }
         communityPagingAdapter.refresh()
         getLastScrollY()
@@ -154,6 +164,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             .show(childFragmentManager, "complete_dialog")
     }
 
+    private fun showReportUserCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.report_user_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
+    }
+
     private fun showBlockPostDialog(postId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.community_detail.R.string.block_post_title))
@@ -172,6 +189,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     private fun showBlockCompleteDialog() {
         CompleteDialogFragment.Builder()
             .message(getString(R.string.block_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
+    }
+
+    private fun showBlockUserCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.block_user_dialog_message))
             .build()
             .show(childFragmentManager, "complete_dialog")
     }

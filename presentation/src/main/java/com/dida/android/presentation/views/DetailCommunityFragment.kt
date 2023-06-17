@@ -97,8 +97,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
             launch {
                 viewModel.navigateToReportEvent.collectLatest {
-                    if (it) {
-                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_REPORT to true))
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_REPORT to true))
+                            ReportType.USER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_REPORT to true))
+                            ReportType.CARD -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_REPORT to true))
+                        }
                         navController.popBackStack()
                     } else {
                         showToastMessage(requireContext().getString(R.string.already_report_message))
@@ -108,8 +112,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
             launch {
                 viewModel.navigateToBlockEvent.collectLatest {
-                    if (it) {
-                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_BLOCK to true))
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_BLOCK to true))
+                            ReportType.USER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_BLOCK to true))
+                            ReportType.CARD -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_BLOCK to true))
+                        }
                         navController.popBackStack()
                     }
                 }

@@ -53,9 +53,9 @@ class PasswordDialog(
             this.mainTitle = mainTitleStr
             this.subTitle = subTitleStr
             this.findPasswordBtn.visibility =
-                if(showFindPwdBtn){
+                if (showFindPwdBtn) {
                     View.VISIBLE
-                }else {
+                } else {
                     View.GONE
                 }
         }
@@ -117,6 +117,11 @@ class PasswordDialog(
         binding.findPasswordBtn.setOnClickListener {
             result.invoke(false,"reset")
         }
+
+        binding.closeBtn.setOnClickListener {
+            result.invoke(false, "")
+            dismissAllowingStateLoss()
+        }
     }
 
     override fun onCancel(dialog: DialogInterface) {
@@ -175,13 +180,11 @@ class PasswordDialog(
             imageViewList.forEach {
                 it.setImageResource(R.drawable.ic_password_fail)
             }
-            val animation =
-                AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
+            val animation = AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
             binding.passwordDialLayout.startAnimation(animation)
             binding.mainTitleTv.text = "비밀번호가 일치하지 않아요\n" + "다시 눌러주세요"
             binding.subTitleTv.visibility = View.GONE
             binding.worngCountTv.visibility = View.VISIBLE
-
         } else {
             makePasswordDial()
             binding.passwordDialLayout.clearAnimation()
@@ -191,14 +194,14 @@ class PasswordDialog(
         }
     }
 
-    private fun buttonVibrator(){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val vibratorManager = activity?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                val vibrator = vibratorManager.defaultVibrator
-                vibrator.vibrate(VibrationEffect.createOneShot(50, 50));
-            } else {
-                val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                vibrator.vibrate(1000);
-            }
+    private fun buttonVibrator() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = activity?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            val vibrator = vibratorManager.defaultVibrator
+            vibrator.vibrate(VibrationEffect.createOneShot(50, 50))
+        } else {
+            val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            vibrator.vibrate(1000)
+        }
     }
 }

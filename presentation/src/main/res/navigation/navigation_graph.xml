@@ -370,8 +370,19 @@
             app:popUpToInclusive="true"
             app:popUpTo="@+id/homeFragment"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_settingFragment_to_blockFragment"
+            app:destination="@id/blockFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/enter_from_right"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/blockFragment"
+        android:name="com.dida.android.presentation.views.BlockFragment"
+        android:label="BlockFragment" />
 
     <fragment
         android:id="@+id/changePasswordFragment"
