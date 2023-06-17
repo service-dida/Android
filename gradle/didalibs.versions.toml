@@ -67,6 +67,8 @@ composeNavigationHilt = "1.0.0"
 
 ballon = "1.5.2"
 
+swiperefreshlayout = "1.1.0"
+
 [plugins]
 hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "safeargs" }
@@ -162,6 +164,9 @@ androidx-compose-navigation = { module = "androidx.navigation:navigation-compose
 androidx-compose-naivgation-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeNavigationHilt" }
 
 skydoves-ballon = { module = "com.github.skydoves:balloon", version.ref = "ballon" }
+
+androidx-swipe-refresh-layout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+
 
 [bundles]
 # Define bundles/groups of libraries
