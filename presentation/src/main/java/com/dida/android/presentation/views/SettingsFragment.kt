@@ -228,7 +228,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 }
             SETTINGS.BLOCK_USER ->
                 SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_invisible,
+                    iconRes = com.dida.common.R.drawable.ic_block,
                     message = stringResource(id = com.dida.settings.R.string.block_title)
                 ) {
                     onClicked(SETTINGS.BLOCK_USER)
