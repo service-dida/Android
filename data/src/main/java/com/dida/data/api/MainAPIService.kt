@@ -221,7 +221,8 @@ interface MainAPIService {
     suspend fun getUserHideList(): List<GetUserHideResponse>
 
     // 유저차단 해제
-    @DELETE("/user/hide")
+
+    @HTTP(method = "DELETE", path="/user/hide", hasBody = true)
     suspend fun deleteUserHide(@Body body: DeleteUserHideRequest): Unit
 
     // 게시글 차단하기

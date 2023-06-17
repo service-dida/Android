@@ -1,19 +1,13 @@
 package com.dida.block
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.DataApplication
-import com.dida.domain.model.main.HideCard
 import com.dida.domain.model.main.UserHide
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.main.DeleteUserHideAPI
-import com.dida.domain.usecase.main.HideListAPI
 import com.dida.domain.usecase.main.UserHideListAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
