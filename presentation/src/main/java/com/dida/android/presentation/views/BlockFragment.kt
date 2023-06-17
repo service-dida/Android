@@ -120,10 +120,11 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                 ) {
                     AsyncImage(
                         modifier = Modifier.fillMaxSize(),
-                        model = user.imgUrl.ifBlank { painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground) },
+                        model = user.imgUrl,
                         contentDescription = "유저 이미지",
                         contentScale = ContentScale.Crop,
-                        error = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground)
+                        error = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground),
+                        placeholder = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground)
                     )
                 }
                 Divider12()
