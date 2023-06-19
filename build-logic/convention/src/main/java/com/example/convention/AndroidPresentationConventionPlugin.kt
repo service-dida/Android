@@ -139,6 +139,9 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                 // Paging
                 add("implementation", libs.findLibrary("androidx-paging").get())
+
+                // Swipe Refresh Layout
+                add("implementation", libs.findLibrary("androidx-swipe-refresh-layout").get())
             }
         }
     }
