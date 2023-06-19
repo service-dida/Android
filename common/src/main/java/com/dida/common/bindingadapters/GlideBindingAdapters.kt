@@ -16,7 +16,6 @@ object GlideBindingAdapters {
             if (it.isNotBlank()) {
                 Glide.with(imageView.context)
                     .load(imageURL)
-                    .override(1024, 1024)
                     .transform(CenterCrop())
                     .placeholder(R.mipmap.img_dida_logo_foreground)
                     .error(R.mipmap.img_dida_logo_foreground)
@@ -24,7 +23,6 @@ object GlideBindingAdapters {
             } else {
                 Glide.with(imageView.context)
                     .load(R.mipmap.img_dida_logo_foreground)
-                    .override(1024, 1024)
                     .transform(CenterCrop())
                     .into(imageView)
             }
