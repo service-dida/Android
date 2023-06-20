@@ -82,7 +82,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserInfo()
-            userCardAdapter.retry()
+            userCardAdapter.refresh()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

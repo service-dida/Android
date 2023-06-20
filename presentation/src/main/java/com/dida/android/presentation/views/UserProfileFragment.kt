@@ -53,6 +53,7 @@ class UserProfileFragment :
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -88,7 +89,7 @@ class UserProfileFragment :
         }
 
         viewLifecycleOwner.repeatOnCreated {
-            if(args.userId == dataStorePreferences.getUserId()) {
+            if (args.userId == dataStorePreferences.getUserId()) {
                 navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
             }
         }
@@ -106,6 +107,14 @@ class UserProfileFragment :
     override fun onResume() {
         super.onResume()
         viewModel.getUserProfile()
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getUserProfile()
+            userCardAdapter.refresh()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initAdapter() {
