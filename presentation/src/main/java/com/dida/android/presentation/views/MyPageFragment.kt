@@ -35,6 +35,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         }
         exception = viewModel.errorEvent
         initMyPage()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -76,6 +77,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     private fun initMyPage() {
         initToolbar()
         initAdapter()
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getUserInfo()
+            userCardAdapter.retry()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initAdapter() {
