@@ -51,7 +51,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             }
         }
 
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userCardState.collectLatest {
                 userCardAdapter.submitData(it)
             }
@@ -63,6 +63,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     override fun onResume() {
         super.onResume()
+        userCardAdapter.retry()
         viewModel.getUserInfo()
         getLastScrollY()
     }

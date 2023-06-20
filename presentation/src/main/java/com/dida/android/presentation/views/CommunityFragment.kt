@@ -41,6 +41,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
         exception = viewModel.errorEvent
         initRecyclerView()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -127,6 +128,14 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
         communityPagingAdapter.refresh()
         getLastScrollY()
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getHotCards()
+            communityPagingAdapter.refresh()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun onPause() {
