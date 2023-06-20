@@ -102,7 +102,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp">
 
                 <TextView
@@ -114,7 +114,6 @@
                     android:text="@string/wallet_deal_title_text"
                     android:textColor="@color/white"
                     android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -181,6 +180,62 @@
                         android:textColor="@{vm.typeHistoryState==2? @color/brand_lemon : @color/surface6}"
                         android:textSize="13dp" />
                 </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/nft_history_textview"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    android:layout_marginTop="94dp">
+
+                    <TextView
+                        android:id="@+id/empty_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@id/empty_description"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/wallet_empty_title"
+                        android:textColor="@color/white_50"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:layout_marginBottom="18dp"/>
+
+                    <TextView
+                        android:id="@+id/empty_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@id/empty_create_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/wallet_empty_message"
+                        android:textColor="@color/surface6"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:layout_marginBottom="18dp"/>
+
+                    <TextView
+                        android:id="@+id/empty_create_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/wallet_empty_button_text"
+                        android:textSize="18dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:textColor="@color/mainblack"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="14dp"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:background="@drawable/custom_brandlemon_radius10"
+                        app:onSingleClick="@{() -> vm.onHotCardButtonClicked()}"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -200,61 +255,6 @@
             tools:listitem="@layout/holder_wallet_nft_history"
             android:background="@color/mainblack"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/nft_history_textview"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/empty_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/empty_description"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/wallet_empty_title"
-                android:textColor="@color/white_50"
-                android:textSize="20dp"
-                android:fontFamily="@font/pretendard_bold"
-                android:layout_marginBottom="18dp"/>
-
-            <TextView
-                android:id="@+id/empty_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/empty_create_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/wallet_empty_message"
-                android:textColor="@color/surface6"
-                android:textSize="16dp"
-                android:fontFamily="@font/pretendard_bold"
-                android:layout_marginBottom="18dp"/>
-
-            <TextView
-                android:id="@+id/empty_create_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/wallet_empty_button_text"
-                android:textSize="18dp"
-                android:fontFamily="@font/pretendard_bold"
-                android:textColor="@color/mainblack"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:background="@drawable/custom_brandlemon_radius10"
-                app:onSingleClick="@{() -> vm.onHotCardButtonClicked()}"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
