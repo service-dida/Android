@@ -48,6 +48,7 @@ class MyPageViewModel @Inject constructor(
 
     fun getUserInfo() {
         baseViewModelScope.launch {
+            _myPageState.value = UiState.Loading
             userProfileAPI()
                 .onSuccess {
                     delay(SHIMMER_TIME)

@@ -54,6 +54,7 @@ class UserProfileViewModel @AssistedInject constructor(
         .flow.cachedIn(baseViewModelScope)
 
     fun getUserProfile() {
+        _userProfileState.value = UiState.Loading
         baseViewModelScope.launch {
             userUserIdAPI(userId = userId)
                 .onSuccess {
