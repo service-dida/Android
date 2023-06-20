@@ -63,6 +63,16 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    fun getHotCards() {
+        baseViewModelScope.launch {
+            _hotCardState.value = UiState.Loading
+            hotCardAPI().onSuccess {
+                delay(SHIMMER_TIME)
+                _hotCardState.value = UiState.Success(it)
+            }.onError { e -> catchError(e) }
+        }
+    }
+
     override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(CommunityNavigationAction.NavigateToDetail(postId))
