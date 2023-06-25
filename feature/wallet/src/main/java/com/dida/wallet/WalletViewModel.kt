@@ -60,6 +60,29 @@ class WalletViewModel @Inject constructor(
         }
     }
 
+    fun getWallet() {
+        baseViewModelScope.launch {
+            launch {
+                walletAmountAPI()
+                    .onSuccess {
+                        _walletListState.value = listOf(
+                            Wallet(amount = it.dida.toString(), type = "DIDA"),
+                            Wallet(amount = it.klay.toString(), type = "KLAY")
+                        )
+                        _walletAddressState.value = it.address
+                    }.onError { e -> catchError(e) }
+            }
+
+            launch {
+                when (typeHistoryState.value) {
+                    0 -> historyAll()
+                    1 -> historyBuy()
+                    2 -> historySell()
+                }
+            }
+        }
+    }
+
     override fun onHistoryTypeClicked(type: Int) {
         baseViewModelScope.launch {
             _typeHistoryState.value = type

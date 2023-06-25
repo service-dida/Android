@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home),
-    AppBarLayout.OnOffsetChangedListener{
+    AppBarLayout.OnOffsetChangedListener {
 
     private val TAG = "HomeFragment"
 

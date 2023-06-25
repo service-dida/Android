@@ -17,13 +17,15 @@ import com.dida.wallet.WalletViewModel
 import com.dida.wallet.adapter.WalletAdapter
 import com.dida.wallet.adapter.WalletHistoryAdapter
 import com.dida.wallet.databinding.FragmentWalletBinding
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.layout.fragment_wallet) {
+class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.layout.fragment_wallet),
+    AppBarLayout.OnOffsetChangedListener {
 
     private val TAG = "WalletFragment"
 
@@ -44,6 +46,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -79,7 +82,27 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
 
     override fun onResume() {
         super.onResume()
+        binding.walletAppbar.addOnOffsetChangedListener(this)
         viewModel.getHistory()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.walletAppbar.removeOnOffsetChangedListener(this)
+    }
+
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        val isExpanded = verticalOffset == 0
+        if (isExpanded != binding.swipeRefreshLayout.isEnabled) {
+            binding.swipeRefreshLayout.isEnabled = isExpanded
+        }
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getWallet()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initToolbar() {
