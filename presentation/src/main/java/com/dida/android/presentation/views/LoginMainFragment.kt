@@ -36,6 +36,9 @@ import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
 import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
+import com.dida.compose.theme.KakaoYellow
+import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.White
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.dida.login.databinding.FragmentLoginmainBinding
@@ -167,7 +170,7 @@ class LoginMainFragment :
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.login_description),
                 style = DidaTypography.caption,
-                color = Color.White,
+                color = White,
                 textAlign = TextAlign.Center
             )
             Spacer(
@@ -192,12 +195,14 @@ class LoginMainFragment :
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    private fun onKakaoLoginButton(onKakaoLoginClicked: () -> Unit) {
+    private fun onKakaoLoginButton(
+        onKakaoLoginClicked: () -> Unit
+    ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            color = Color(0xFFFEE500),
+            color = KakaoYellow,
             shape = RoundedCornerShape(8.dp),
             onClick = { onKakaoLoginClicked() }
         ) {
@@ -216,7 +221,7 @@ class LoginMainFragment :
                     text = stringResource(id = R.string.kakao_login),
                     style = DidaTypography.h3,
                     fontSize = 15.sp,
-                    color = Color.Black,
+                    color = MainBlack,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -232,7 +237,7 @@ class LoginMainFragment :
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(horizontal = 16.dp),
-            color = Color(0xFF121212),
+            color = MainBlack,
             shape = RoundedCornerShape(8.dp),
             onClick = { onKakakoWebLoginClicked() }
         ) {
@@ -243,7 +248,7 @@ class LoginMainFragment :
                 text = stringResource(id = R.string.kakao_login_web),
                 style = DidaTypography.h3,
                 fontSize = 15.sp,
-                color = Color.White,
+                color = White,
                 textAlign = TextAlign.Center
             )
         }
