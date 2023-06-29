@@ -87,8 +87,13 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
         viewLifecycleOwner.repeatOnStarted {
             launch {
+                viewModel.commentEmpty.collectLatest {
+                    binding.replyEmptyTextView.isVisible = it
+                }
+            }
+
+            launch {
                 viewModel.commentList.collectLatest {
-                    binding.replyEmptyTextView.isVisible = it.isEmpty()
                     binding.detailCommunityMain.isVisible = it.isNotEmpty()
                     commentsAdapter.submitList(it)
                     if (viewModel.isWrite.value) keyboardHide()

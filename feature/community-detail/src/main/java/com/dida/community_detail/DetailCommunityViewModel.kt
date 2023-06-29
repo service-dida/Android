@@ -46,6 +46,9 @@ class DetailCommunityViewModel @Inject constructor(
     private val _commentList: MutableStateFlow<List<Comments>> = MutableStateFlow(emptyList())
     val commentList: StateFlow<List<Comments>> = _commentList.asStateFlow()
 
+    private val _commentEmpty: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val commentEmpty: StateFlow<Boolean> = _commentEmpty.asStateFlow()
+
     val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
     val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
@@ -58,6 +61,7 @@ class DetailCommunityViewModel @Inject constructor(
                 .flatMap { commentsPostIdAPI.invoke(postId = postId) }
                 .onSuccess {
                     _commentList.value = it
+                    _commentEmpty.value = it.isEmpty()
                     isWrite.value = false }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -82,6 +86,7 @@ class DetailCommunityViewModel @Inject constructor(
                     .onSuccess {
                         isWrite.value = true
                         _commentList.value = it
+                        _commentEmpty.value = it.isEmpty()
                     }
                     .onError { e -> catchError(e) }
             }
