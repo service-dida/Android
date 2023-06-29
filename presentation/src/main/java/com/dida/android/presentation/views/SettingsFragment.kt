@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -35,6 +37,7 @@ import com.dida.android.R
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
+import com.dida.settings.SETTINGS
 import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -135,17 +138,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         onClicked: (type: SETTINGS) -> Unit,
         onLogOutClicked: () -> Unit
     ) {
-        val settings = listOf(
-            SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.ACCOUNT,
-            SETTINGS.NOTIFICATION, SETTINGS.INVISIBLE_CARD, SETTINGS.BLOCK_USER,
-            SETTINGS.PRIVACY, SETTINGS.SERVICE
-        )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFF121212))
         ) {
+            val settings by viewModel.settings.collectAsState()
+
             settings.forEach {
                 SettingType(type = it, onClicked = onClicked)
             }
@@ -285,10 +285,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             )
         }
     }
-}
-
-enum class SETTINGS {
-    EDIT_PROFILE, EDIT_PASSWORD, ACCOUNT, NOTIFICATION, INVISIBLE_CARD, BLOCK_USER, PRIVACY, SERVICE
 }
 
 @Preview
