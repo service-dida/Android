@@ -1,4 +1,5 @@
 package com.dida.nft_detail
+import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -90,6 +91,14 @@ fun TextView.bindTokenId(uiState: UiState<DetailNft>) {
 @BindingAdapter("NftPrice")
 fun TextView.bindPrice(uiState: UiState<DetailNft>) {
     this.text = uiState.successOrNull()?.price
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("NftDidaPrice")
+fun TextView.bindNftDidaPrice(uiState: UiState<DetailNft>) {
+    val price = uiState.successOrNull()?.price
+    if (price == "NOT SALE") this.text = price
+    else this.text = "$price dida"
 }
 
 @BindingAdapter("NftPriceLayout")
