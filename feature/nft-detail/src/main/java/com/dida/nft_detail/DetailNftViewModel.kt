@@ -194,6 +194,11 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
+    // TODO : 추후 Contract 주소 & 소유권 내역 관련 추가
+    override fun onContractLinkClicked() = Unit
+
+    override fun onOwnerShipClicked() = Unit
+
     override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToItemCommunity(postId = postId))

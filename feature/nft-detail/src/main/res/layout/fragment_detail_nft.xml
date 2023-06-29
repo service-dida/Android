@@ -169,19 +169,19 @@
                     app:layout_constraintTop_toBottomOf="@id/line1" />
 
                 <TextView
-                    android:id="@+id/user_link_txt"
+                    android:id="@+id/price_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="@string/detail_nft_link_title"
+                    android:text="@string/detail_nft_price_title"
                     android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintLeft_toLeftOf="@id/detail_txt"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="@id/detail_txt"
                     app:layout_constraintTop_toBottomOf="@id/detail_txt" />
 
                 <TextView
-                    android:id="@+id/user_link"
+                    android:id="@+id/price_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
@@ -190,13 +190,13 @@
                     android:gravity="end"
                     android:maxLines="1"
                     android:textColor="@color/brand_lemon"
-                    android:textSize="18dp"
-                    app:NftContract="@{vm.detailNftState}"
-                    app:layout_constraintBottom_toBottomOf="@id/user_link_txt"
+                    android:textSize="14dp"
+                    app:NftDidaPrice="@{vm.detailNftState}"
+                    app:layout_constraintTop_toTopOf="@id/price_title"
+                    app:layout_constraintBottom_toBottomOf="@id/price_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/user_link_txt"
-                    app:layout_constraintTop_toTopOf="@id/user_link_txt"
-                    tools:text="DEg251...127" />
+                    app:layout_constraintStart_toEndOf="@id/price_title"
+                    tools:text="11111111" />
 
                 <TextView
                     android:id="@+id/user_token_txt"
@@ -206,23 +206,132 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/detail_nft_token_title"
                     android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintLeft_toLeftOf="@id/detail_txt"
-                    app:layout_constraintTop_toBottomOf="@id/user_link_txt" />
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="@id/detail_txt"
+                    app:layout_constraintTop_toBottomOf="@id/price_title" />
 
                 <TextView
                     android:id="@+id/user_token"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:textColor="@color/brand_lemon"
-                    android:textSize="18dp"
+                    android:textSize="14dp"
+                    android:gravity="end"
                     app:NftTokenId="@{vm.detailNftState}"
                     app:layout_constraintBottom_toBottomOf="@id/user_token_txt"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/user_token_txt"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/user_token_txt"
                     tools:text="Ox01" />
+
+                <TextView
+                    android:id="@+id/user_link_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@string/detail_nft_link_title"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="@id/detail_txt"
+                    app:layout_constraintTop_toBottomOf="@id/user_token_txt" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/user_link_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/user_link_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/user_link_txt"
+                android:background="@drawable/custom_surface2_radius8"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:onSingleClick="@{() -> vm.onContractLinkClicked()}"
+                android:gravity="end">
+                <TextView
+                    android:id="@+id/user_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:maxLines="1"
+                    android:textColor="@color/brand_lemon"
+                    android:textSize="14dp"
+                    app:NftContract="@{vm.detailNftState}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="DEg251...127" />
+
+                <ImageView
+                    android:id="@+id/user_link_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/user_link"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_user_link"
+                    android:layout_marginStart="4dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/ownership_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@string/detail_nft_ownership_title"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="@id/detail_txt"
+                    app:layout_constraintTop_toBottomOf="@id/user_link_txt" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ownership_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/ownership_title"
+                    app:layout_constraintBottom_toBottomOf="@id/ownership_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@drawable/custom_surface2_radius8"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:layout_marginEnd="16dp"
+                    app:onSingleClick="@{() -> vm.onOwnerShipClicked()}">
+
+                    <TextView
+                        android:id="@+id/ownership_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:textColor="@color/brand_lemon"
+                        android:textSize="14dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/detail_nft_ownership_message" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ownership_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:src="@drawable/ic_ownership_details"
+                        android:layout_marginStart="4dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:id="@+id/line2"
@@ -230,7 +339,7 @@
                     android:layout_height="8dp"
                     android:layout_marginTop="32dp"
                     android:background="@color/surface1"
-                    app:layout_constraintTop_toBottomOf="@id/user_token_txt" />
+                    app:layout_constraintTop_toBottomOf="@id/ownership_title" />
 
                 <TextView
                     android:id="@+id/community_txt"
@@ -242,7 +351,7 @@
                     android:text="@string/detail_nft_community_title"
                     android:textColor="@color/white"
                     android:textSize="20dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/line2" />
 
                 <TextView
@@ -330,7 +439,7 @@
             <TextView
                 android:id="@+id/price_txt"
                 style="@style/TextView_bold_22_white"
-                NftPrice="@{vm.detailNftState}"
+                app:NftPrice="@{vm.detailNftState}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

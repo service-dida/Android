@@ -4,9 +4,12 @@
     <string name="detail_nft_title">제목</string>
     <string name="detail_nft_who_text">소유권 내역</string>
     <string name="detail_nft_detail_title">상세정보 📎</string>
+    <string name="detail_nft_price_title">가격</string>
     <string name="detail_nft_link_title">컨트랙트 링크 주소</string>
     <string name="detail_nft_token_title">토큰 ID</string>
+    <string name="detail_nft_ownership_title">소유권 내역</string>
     <string name="detail_nft_community_title">커뮤니티 ✋</string>
+    <string name="detail_nft_ownership_message">자세히 보기</string>
     
     <!--NFT 상세 Bottom Sheet-->
     <string name="detail_nft_sell">판매하기</string>
