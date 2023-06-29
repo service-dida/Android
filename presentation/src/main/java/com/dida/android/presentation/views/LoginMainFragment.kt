@@ -231,7 +231,9 @@ class LoginMainFragment :
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    private fun onKakaoWebLoginButton(onKakakoWebLoginClicked: () -> Unit) {
+    private fun onKakaoWebLoginButton(
+        onKakakoWebLoginClicked: () -> Unit
+    ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
