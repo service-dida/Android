@@ -441,8 +441,7 @@
             app:LoginCheck="@{vm.detailNftState}"
             app:layout_constraintBottom_toTopOf="@id/price_main"
             app:layout_constraintEnd_toEndOf="parent"
-            app:onSingleClick="@{() -> vm.onCommunityWriteClicked()}"
-            tools:visibility="visible" />
+            app:onSingleClick="@{() -> vm.onWritePostClicked()}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/price_main"

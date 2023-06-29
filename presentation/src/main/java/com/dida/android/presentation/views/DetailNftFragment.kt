@@ -75,6 +75,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     is DetailNftNavigationAction.NavigateToBlock -> {}
                     is DetailNftNavigationAction.NavigateToUpdate -> {}
                     is DetailNftNavigationAction.NavigateToDelete -> {}
+                    is DetailNftNavigationAction.NavigateToWritePost -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityCommunityInputFragment(args.cardId, true))
                 }
             }
         }

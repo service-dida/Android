@@ -198,7 +198,11 @@ class DetailNftViewModel @Inject constructor(
     override fun onContractLinkClicked() = Unit
 
     override fun onOwnerShipClicked() = Unit
-    override fun onWritePostClicked() = Unit
+    override fun onWritePostClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToWritePost)
+        }
+    }
 
     override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {
