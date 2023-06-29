@@ -194,10 +194,11 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    // TODO : 추후 Contract 주소 & 소유권 내역 관련 추가
+    // TODO : 추후 Contract 주소 & 소유권 내역 관련 추가 & NFT 글쓰러 가기 내용 추가
     override fun onContractLinkClicked() = Unit
 
     override fun onOwnerShipClicked() = Unit
+    override fun onWritePostClicked() = Unit
 
     override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {

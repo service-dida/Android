@@ -18,7 +18,8 @@
     <string name="detail_nft_hide">NFT 숨기기</string>
     <string name="detail_nft_report">NFT 신고하기</string>
 
-    <string name="community_empty_text">NFT에 대한\n게시글을 작성해보세요</string>
+    <string name="community_empty_text">이 NFT에 대한\n이야기를 나눠보세요</string>
+    <string name="community_empty_write_button">이 NFT에 대해 글쓰기</string>
 
 
 </resources>
