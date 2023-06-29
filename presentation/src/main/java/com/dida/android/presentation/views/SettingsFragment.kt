@@ -37,6 +37,10 @@ import com.dida.android.R
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
+import com.dida.compose.theme.LineSurface
+import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.NoticeRed
+import com.dida.compose.theme.White
 import com.dida.settings.SETTINGS
 import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding
@@ -142,7 +146,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF121212))
+                .background(MainBlack)
         ) {
             val settings by viewModel.settings.collectAsState()
 
@@ -159,12 +163,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 text = stringResource(id = com.dida.common.R.string.app_version_string),
                 style = DidaTypography.body1,
                 fontSize = 14.sp,
-                color = Color(0x80DADADA)
+                color = LineSurface
             )
             Spacer(modifier = Modifier.weight(1f))
             Surface(
                 modifier = Modifier.clickable { onLogOutClicked() },
-                color = Color(0xFF121212)
+                color = MainBlack
             ) {
                 Text(
                     modifier = Modifier
@@ -174,7 +178,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     style = DidaTypography.body1,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Start,
-                    color = Color(0xFFE8625B)
+                    color = NoticeRed
                 )
             }
             Spacer(
@@ -271,7 +275,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 Text(
                     text = message,
                     style = DidaTypography.button,
-                    color = Color.White,
+                    color = White,
                     textAlign = TextAlign.Center,
                     fontSize = 18.sp
                 )
@@ -281,7 +285,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     .fillMaxWidth()
                     .height(1.dp)
                     .padding(horizontal = 16.dp)
-                    .background(Color(0x80DADADA))
+                    .background(LineSurface)
             )
         }
     }
