@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -34,6 +35,7 @@ import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Surface1
+import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.Divider12
 import com.dida.compose.utils.clickableSingle
@@ -71,17 +73,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
             setContent {
                 DIDA_THEME {
                     val userList = viewModel.userListState.collectAsState()
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
-                        items(userList.value) { user ->
-                            BlockUserItem(
-                                user = user
-                            ) {
-                                viewModel.onBlockCancel(it)
-                            }
-                        }
-                    }
+                    BlockScreen(userList.value)
                 }
             }
         }
@@ -91,6 +83,23 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
+        }
+    }
+
+    @Composable
+    fun BlockScreen(
+        userList: List<UserHide>
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            items(userList) { user ->
+                BlockUserItem(
+                    user = user
+                ) {
+                    viewModel.onBlockCancel(it)
+                }
+            }
         }
     }
 
@@ -135,7 +144,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                     fontSize = dpToSp(dp = 16.dp),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    color = Color.White
+                    color = White
                 )
                 Divider12()
                 Surface(
@@ -151,11 +160,21 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                         text = "차단 해제",
                         style = DidaTypography.caption,
                         fontSize = dpToSp(dp = 12.dp),
-                        color = Color.White,
+                        color = White
                     )
                 }
             }
         }
 
+    }
+}
+
+@Preview
+@Composable
+fun BlockPreview() {
+    DIDA_THEME {
+        BlockFragment().BlockScreen(
+            userList = emptyList()
+        )
     }
 }
