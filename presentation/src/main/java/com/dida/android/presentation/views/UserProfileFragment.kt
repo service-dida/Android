@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -90,7 +91,7 @@ class UserProfileFragment :
 
         viewLifecycleOwner.repeatOnCreated {
             if (args.userId == dataStorePreferences.getUserId()) {
-                navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
+                binding.followBtn.visibility = View.GONE
             }
         }
 
