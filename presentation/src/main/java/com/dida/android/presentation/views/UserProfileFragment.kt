@@ -84,7 +84,6 @@ class UserProfileFragment :
                         }
                         is UserMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
-
                 }
             }
         }
