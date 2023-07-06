@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import coil.compose.AsyncImage
 import com.dida.android.R
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
+import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.KakaoYellow
@@ -214,13 +216,41 @@ class UserFollowedFragment :
             modifier = Modifier
                 .padding(vertical = 8.dp, horizontal = 16.dp)
                 .clickableSingle { onFollowButtonClicked() }
+                .border(
+                    width = 1.dp,
+                    color = BrandLemon,
+                    shape = RoundedCornerShape(size = 100.dp)
+                )
         ) {
             Text(
                 modifier = Modifier,
                 style = DidaTypography.body1,
                 color = White,
                 fontSize = dpToSp(dp = 12.dp),
-                text = "",
+                text = "팔로우",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+    }
+
+    @Composable
+    fun CancelFollowButton(
+        onFollowButtonClicked: () -> Unit
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(vertical = 8.dp, horizontal = 16.dp)
+                .clickableSingle { onFollowButtonClicked() },
+            shape = RoundedCornerShape(100.dp),
+            color = BrandLemon
+        ) {
+            Text(
+                modifier = Modifier,
+                style = DidaTypography.body1,
+                color = MainBlack,
+                fontSize = dpToSp(dp = 12.dp),
+                text = "팔로잉",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
