@@ -19,3 +19,7 @@ class UserFollowedViewModel @Inject constructor(
 
     private val TAG = "UserFollowedViewModel"
 }
+
+enum class Follow(val str: String) {
+    FOLLOWER("팔로워"), FOLLOWING("팔로잉")
+}
