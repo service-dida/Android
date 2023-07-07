@@ -33,6 +33,7 @@ import com.dida.common.widget.DefaultSnackBar
 import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.Surface6
 import com.dida.compose.theme.TextGray
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
@@ -114,7 +115,9 @@ class UserFollowedFragment :
                             },
                             text = {
                                 Text(text = tab.str)
-                            }
+                            },
+                            selectedContentColor = BrandLemon,
+                            unselectedContentColor = Surface6
                         )
                     }
                 }
