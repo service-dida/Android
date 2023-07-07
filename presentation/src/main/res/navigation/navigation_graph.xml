@@ -545,7 +545,22 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@id/userProfileFragment"/>
+        <action
+            android:id="@+id/action_userProfileFragment_to_userFollowedFragment"
+            app:destination="@id/userFollowedFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/userFollowedFragment"
+        android:name="com.dida.android.presentation.views.UserFollowedFragment"
+        android:label="UserFollowedFragment" >
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
     <fragment
         android:id="@+id/buySuccessFragment"
         android:name="com.dida.android.presentation.views.BuySuccessFragment"

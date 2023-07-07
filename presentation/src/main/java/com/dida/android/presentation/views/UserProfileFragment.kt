@@ -64,6 +64,7 @@ class UserProfileFragment :
                     when (it) {
                         is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
+                        is UserProfileNavigationAction.NavigateToUserFollowed -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToUserFollowedFragment(it.userId))
                     }
                 }
             }

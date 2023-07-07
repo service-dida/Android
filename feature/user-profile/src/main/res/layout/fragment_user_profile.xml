@@ -167,7 +167,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                app:onSingleClick="@{() ->  vm.onUserFollowedClicked()}">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -202,7 +203,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                app:onSingleClick="@{() ->  vm.onUserFollowedClicked()}">
 
                                 <TextView
                                     app:otherUserFollwingCount="@{vm.userProfileState}"

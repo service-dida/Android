@@ -107,6 +107,12 @@ class UserProfileViewModel @AssistedInject constructor(
         setCardSort(type = cardSortTypeState.value)
     }
 
+    override fun onUserFollowedClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId))
+        }
+    }
+
     private fun setCardSort(type: CardSortType) {
         when(type) {
             CardSortType.NEWEST -> {}
