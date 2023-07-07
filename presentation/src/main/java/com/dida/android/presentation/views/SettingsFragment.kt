@@ -142,7 +142,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         onClicked: (type: SETTINGS) -> Unit,
         onLogOutClicked: () -> Unit
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxSize()

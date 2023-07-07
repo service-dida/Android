@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.dida.android.R
 import com.dida.common.widget.DefaultSnackBar
@@ -62,7 +64,7 @@ class UserFollowedFragment :
         get() = com.dida.user_followed.R.layout.fragment_userfollowed // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel: UserFollowedViewModel by viewModels()
-
+    private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
         binding.apply {
@@ -70,6 +72,7 @@ class UserFollowedFragment :
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        initToolbar()
     }
 
     override fun initDataBinding() {
@@ -84,6 +87,13 @@ class UserFollowedFragment :
     }
 
     override fun initAfterBinding() {}
+
+    private fun initToolbar() {
+        binding.toolbar.apply {
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
+            this.setNavigationOnClickListener { navController.popBackStack() }
+        }
+    }
 
     @OptIn(ExperimentalPagerApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,9 +112,10 @@ class UserFollowedFragment :
                 )
                 val tabIndex = pagerState.currentPage
                 val coroutineScope = rememberCoroutineScope()
-
-                TabRow(selectedTabIndex = tabIndex,
-                    modifier = Modifier.padding(top = 20.dp)) {
+                TabRow(
+                    selectedTabIndex = tabIndex,
+                    indicator = {}
+                ) {
                     tabs.forEachIndexed { index, tab ->
                         Tab(
                             selected = tabIndex == index,
@@ -123,11 +134,11 @@ class UserFollowedFragment :
                 }
 
                 HorizontalPager(
+                    modifier = Modifier.fillMaxWidth(),
                     state = pagerState
                 ) { index ->
                     Column(
                         modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         FollowedColumn(state = tabs[index], userList = userList)
