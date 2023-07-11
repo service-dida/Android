@@ -48,6 +48,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
                     is MypageNavigationAction.NavigateToCreate -> navigate(MyPageFragmentDirections.actionMyPageFragmentToAddFragment())
                     is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.refresh()
+                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId))
                 }
             }
         }

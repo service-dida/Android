@@ -86,6 +86,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:user-profile"))
                 add("implementation", project(":feature:change-password"))
                 add("implementation", project(":feature:block"))
+                add("implementation", project(":feature:user-followed"))
 
 
                 // Android Common

@@ -6,6 +6,7 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
+import com.dida.common.util.successOrNull
 import com.dida.domain.model.main.UserNft
 import com.dida.domain.model.main.UserProfile
 import com.dida.domain.onError
@@ -106,6 +107,12 @@ class MyPageViewModel @Inject constructor(
     override fun onSettingsClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(MypageNavigationAction.NavigateToSettings)
+        }
+    }
+
+    override fun onUserFollowedClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MypageNavigationAction.NavigateToUserFollowedClicked(myPageState.value.successOrNull()?.userId ?: 0))
         }
     }
 }
