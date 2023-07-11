@@ -2,10 +2,7 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,7 +44,6 @@ import com.dida.compose.utils.Divider12
 import com.dida.compose.utils.Divider8
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.clickableSingle
-import com.dida.compose.utils.noRippleClickable
 import com.dida.domain.model.main.Collection
 import com.dida.user_followed.Follow
 import com.dida.user_followed.UserFollowedMessageAction
