@@ -156,6 +156,7 @@ androidx-compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", vers
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeUiVersion" }
 androidx-compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeUiVersion" }
 androidx-compose-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "composePager" }
+androidx-compose-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "composePager" }
 
 io-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "composeCoil" }
 androidx-compose-paging = { module = "androidx.paging:paging-compose", version.ref = "composePaging" }
@@ -179,5 +180,5 @@ room = ["androidx-room-runtime", "androidx-room"]
 moshi = ["converter-moshi", "moshi-moshi", "moshi-kotlin"]
 gson = ["gson-gson", "converter-gson"]
 datastore = ["datastore-preference", "datastore-core"]
-compose = ["androix-compose-activity", "androidx-compose-ui", "androidx-compose-ui-preview", "androidx-compose-material", "androidx-compose-material3", "androidx-compose-viewmodel", "androidx-compose-constraint", "androidx-compose-pager"]
+compose = ["androix-compose-activity", "androidx-compose-ui", "androidx-compose-ui-preview", "androidx-compose-material", "androidx-compose-material3", "androidx-compose-viewmodel", "androidx-compose-constraint", "androidx-compose-pager", "androidx-compose-pager-indicator"]
 compose-navigation = ["androidx-compose-naivgation-hilt", "androidx-compose-navigation"]
