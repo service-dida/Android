@@ -2,24 +2,29 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
-import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +46,9 @@ import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.Divider12
 import com.dida.compose.utils.Divider8
+import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.clickableSingle
+import com.dida.compose.utils.noRippleClickable
 import com.dida.domain.model.main.Collection
 import com.dida.user_followed.Follow
 import com.dida.user_followed.UserFollowedMessageAction
@@ -49,6 +56,8 @@ import com.dida.user_followed.UserFollowedViewModel
 import com.dida.user_followed.databinding.FragmentUserfollowedBinding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -100,64 +109,92 @@ class UserFollowedFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
-
                 val tabs = listOf(Follow.FOLLOWER, Follow.FOLLOWING)
-                val userList by viewModel.userListState.collectAsState()
-
-                val pagerState = rememberPagerState(
-                    pageCount = tabs.size,
-                    initialOffscreenLimit = 2,
-                    infiniteLoop = true,
-                    initialPage = 0,
-                )
-                val tabIndex = pagerState.currentPage
-                val coroutineScope = rememberCoroutineScope()
-                TabRow(
-                    selectedTabIndex = tabIndex,
-                    indicator = {}
+                val pagerState = rememberPagerState(pageCount = tabs.size)
+                Column(
+                    modifier = Modifier.fillMaxSize(),
                 ) {
-                    tabs.forEachIndexed { index, tab ->
-                        Tab(
-                            selected = tabIndex == index,
-                            onClick = {
-                                coroutineScope.launch {
-                                    pagerState.animateScrollToPage(index)
-                                }
-                            },
-                            text = {
-                                Text(text = tab.str)
-                            },
-                            selectedContentColor = BrandLemon,
-                            unselectedContentColor = Surface6
-                        )
-                    }
-                }
-
-                HorizontalPager(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = pagerState
-                ) { index ->
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        FollowedColumn(state = tabs[index], userList = userList)
-                    }
+                    Tabs(tabs = tabs, pagerState = pagerState)
+                    TabContents(tabs = tabs, pagerState = pagerState)
                 }
             }
         }
     }
 
+    @OptIn(ExperimentalPagerApi::class)
+    @Composable
+    fun Tabs(
+        tabs: List<Follow>,
+        pagerState: PagerState
+    ) {
+        val coroutineScope = rememberCoroutineScope()
+        TabRow(
+            backgroundColor = MainBlack,
+            selectedTabIndex = pagerState.currentPage,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                    height = 3.dp,
+                    color = BrandLemon
+                )
+            }
+        ) {
+            tabs.forEachIndexed { index, tab ->
+                Tab(
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    text = { Text(text = tab.str) },
+                    selectedContentColor = BrandLemon,
+                    unselectedContentColor = Surface6,
+                    interactionSource = NoRippleInteractionSource()
+                )
+            }
+        }
+    }
+
+    @OptIn(ExperimentalPagerApi::class)
+    @Composable
+    fun TabContents(
+        tabs: List<Follow>,
+        pagerState: PagerState
+    ) {
+        val followingList = viewModel.followingListState.collectAsState()
+        val followerList = viewModel.followerListState.collectAsState()
+
+        HorizontalPager(
+            modifier = Modifier.fillMaxSize(),
+            state = pagerState
+        ) { index ->
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                when(tabs[index]) {
+                    Follow.FOLLOWER -> {
+                        if (followerList.value.isEmpty()) Spacer(modifier = Modifier.weight(1f))
+                        else FollowedColumn(items = followerList.value)
+                    }
+                    Follow.FOLLOWING -> {
+                        if (followingList.value.isEmpty()) Spacer(modifier = Modifier.weight(1f))
+                        else FollowedColumn(items = followingList.value)
+                    }
+                }
+            }
+
+        }
+    }
+
     @Composable
     fun FollowedColumn(
-        state: Follow,
-        userList: List<Collection>
+        items: List<Collection>
     ) {
-        viewModel.onGetUserFollowed(state)
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(userList) {
+            items(items) {
                 FollowUserItem(
                     item = it,
                     onUserClicked = { },

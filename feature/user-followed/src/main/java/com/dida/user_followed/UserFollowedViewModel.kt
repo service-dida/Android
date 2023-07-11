@@ -22,8 +22,11 @@ class UserFollowedViewModel @Inject constructor(
 
     private val TAG = "UserFollowedViewModel"
 
-    private val _userListState: MutableStateFlow<List<Collection>> = MutableStateFlow(emptyList())
-    val userListState: StateFlow<List<Collection>> = _userListState.asStateFlow()
+    private val _followingListState: MutableStateFlow<List<Collection>> = MutableStateFlow(emptyList())
+    val followingListState: StateFlow<List<Collection>> = _followingListState.asStateFlow()
+
+    private val _followerListState: MutableStateFlow<List<Collection>> = MutableStateFlow(emptyList())
+    val followerListState: StateFlow<List<Collection>> = _followerListState.asStateFlow()
 
     private val _messageEvent: MutableSharedFlow<UserFollowedMessageAction> = MutableSharedFlow<UserFollowedMessageAction>()
     val messageEvent: SharedFlow<UserFollowedMessageAction> = _messageEvent.asSharedFlow()
