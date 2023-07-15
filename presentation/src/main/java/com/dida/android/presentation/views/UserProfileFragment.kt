@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -53,6 +54,7 @@ class UserProfileFragment :
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -62,6 +64,7 @@ class UserProfileFragment :
                     when (it) {
                         is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
+                        is UserProfileNavigationAction.NavigateToUserFollowed -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToUserFollowedFragment(it.userId))
                     }
                 }
             }
@@ -82,14 +85,13 @@ class UserProfileFragment :
                         }
                         is UserMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
-
                 }
             }
         }
 
         viewLifecycleOwner.repeatOnCreated {
-            if(args.userId == dataStorePreferences.getUserId()) {
-                navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
+            if (args.userId == dataStorePreferences.getUserId()) {
+                binding.followBtn.visibility = View.GONE
             }
         }
 
@@ -106,6 +108,14 @@ class UserProfileFragment :
     override fun onResume() {
         super.onResume()
         viewModel.getUserProfile()
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getUserProfile()
+            userCardAdapter.refresh()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initAdapter() {

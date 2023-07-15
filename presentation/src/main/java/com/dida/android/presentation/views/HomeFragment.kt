@@ -11,7 +11,6 @@ import com.dida.android.R
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
-import com.dida.home.adapter.RecentNftAdapter
 import com.dida.common.util.*
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.domain.model.main.HotItems
@@ -21,12 +20,15 @@ import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
 import com.dida.home.databinding.FragmentHomeBinding
 import com.dida.home.smoothScrollToView
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home),
+    AppBarLayout.OnOffsetChangedListener {
 
     private val TAG = "HomeFragment"
 
@@ -59,6 +61,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initSwipeRefresh()
         initNotificationPermission()
     }
 
@@ -142,7 +145,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
 
     override fun onResume() {
         super.onResume()
+        binding.appBarLayout.addOnOffsetChangedListener(this)
         viewModel.getHome()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.appBarLayout.removeOnOffsetChangedListener(this)
+    }
+
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        val isExpanded = verticalOffset == 0
+        if (isExpanded != binding.swipeRefreshLayout.isEnabled) {
+            binding.swipeRefreshLayout.isEnabled = isExpanded
+        }
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getHome()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

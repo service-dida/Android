@@ -54,6 +54,7 @@ class UserProfileViewModel @AssistedInject constructor(
         .flow.cachedIn(baseViewModelScope)
 
     fun getUserProfile() {
+        _userProfileState.value = UiState.Loading
         baseViewModelScope.launch {
             userUserIdAPI(userId = userId)
                 .onSuccess {
@@ -104,6 +105,12 @@ class UserProfileViewModel @AssistedInject constructor(
     override fun onCardSortTypeClicked(type: CardSortType) {
         _cardSortTypeState.value = type
         setCardSort(type = cardSortTypeState.value)
+    }
+
+    override fun onUserFollowedClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId))
+        }
     }
 
     private fun setCardSort(type: CardSortType) {

@@ -66,11 +66,11 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                         is DetailCommunityNavigationAction.NavigateToUserProfile -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToUserProfileFragment(it.userId))
                         is DetailCommunityNavigationAction.NavigateToCardDetail -> navigate(DetailCommunityFragmentDirections.actionCommunityDetailFragmentToDetailNftFragment(it.cardId))
                         is DetailCommunityNavigationAction.NavigateToUserReport -> showReportDialog(it.userId)
-                        is DetailCommunityNavigationAction.NavigateToUserBlock -> {}
+                        is DetailCommunityNavigationAction.NavigateToUserBlock -> showBlockUserDialog(userId = it.userId)
                         is DetailCommunityNavigationAction.NavigateToUpdate -> {}
                         is DetailCommunityNavigationAction.NavigateToDelete -> showDeleteCommentDialog(commentId = it.commentId)
                         is DetailCommunityNavigationAction.NavigateToPostReport -> showPostReportDialog(postId = it.postId)
-                        is DetailCommunityNavigationAction.NavigateToPostBlock -> {}
+                        is DetailCommunityNavigationAction.NavigateToPostBlock -> showBlockPostDialog(postId = it.postId)
                     }
                 }
             }
@@ -87,8 +87,13 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
         viewLifecycleOwner.repeatOnStarted {
             launch {
+                viewModel.commentEmpty.collectLatest {
+                    binding.replyEmptyTextView.isVisible = it
+                }
+            }
+
+            launch {
                 viewModel.commentList.collectLatest {
-                    binding.replyEmptyTextView.isVisible = it.isEmpty()
                     binding.detailCommunityMain.isVisible = it.isNotEmpty()
                     commentsAdapter.submitList(it)
                     if (viewModel.isWrite.value) keyboardHide()
@@ -97,8 +102,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
             launch {
                 viewModel.navigateToReportEvent.collectLatest {
-                    if (it) {
-                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_REPORT to true))
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_REPORT to true))
+                            ReportType.USER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_REPORT to true))
+                            ReportType.CARD -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_REPORT to true))
+                        }
                         navController.popBackStack()
                     } else {
                         showToastMessage(requireContext().getString(R.string.already_report_message))
@@ -108,8 +117,12 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
             launch {
                 viewModel.navigateToBlockEvent.collectLatest {
-                    if (it) {
-                        setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_BLOCK to true))
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_BLOCK to true))
+                            ReportType.USER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_BLOCK to true))
+                            ReportType.CARD -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_BLOCK to true))
+                        }
                         navController.popBackStack()
                     }
                 }
@@ -164,6 +177,36 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .show(childFragmentManager, "delete_comment_dialog")
     }
 
+    private fun showBlockPostDialog(postId: Long) {
+        DefaultDialogFragment.Builder()
+            .title(getString(com.dida.community_detail.R.string.block_post_title))
+            .message(getString(com.dida.community_detail.R.string.block_post_description))
+            .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.onPostBlock(type = ReportType.POST, blockId = postId)
+                }
+            })
+            .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
+            .build()
+            .show(childFragmentManager, "block_post_dialog")
+
+    }
+
+    private fun showBlockUserDialog(userId: Long) {
+        DefaultDialogFragment.Builder()
+            .title(getString(com.dida.community_detail.R.string.block_user_title))
+            .message(getString(com.dida.community_detail.R.string.block_user_description))
+            .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.onPostBlock(type = ReportType.USER, blockId = userId)
+                }
+            })
+            .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
+            .build()
+            .show(childFragmentManager, "block_user_dialog")
+
+    }
+
     private fun keyboardHide() {
         (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(binding.editComments.windowToken, 0)
@@ -199,7 +242,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 label = getString(com.dida.common.R.string.block_message_balloon),
                 icon = com.dida.common.R.drawable.ic_block,
                 listener = object : DefaultBalloon.OnClickListener {
-                    override fun onClick() = viewModel.onPostBlock(postId = postId)
+                    override fun onClick() = viewModel.onPostBlockClicked(postId = postId)
                 })
             .build()
             .create(context = view.context, lifecycle = view.findViewTreeLifecycleOwner())

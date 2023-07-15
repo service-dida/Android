@@ -3,11 +3,8 @@ package com.dida.android.presentation.views
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -35,22 +32,6 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
-    private var isSelected = false
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // 이메일에서 인증 완료후 돌아 왔을 때
-        setFragmentResultListener("walletCheck") { _, bundle ->
-            val result = bundle.getBoolean("hasWallet")
-            if (result) {
-                viewModel.createWallet()
-                getImageToGallery()
-            }
-        }
-
-    }
-
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -63,28 +44,21 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
     override fun onResume() {
         super.onResume()
-        // User의 지갑이 있는지 체크
-        if (!viewModel.walletCheckState.value) viewModel.getWalletExists()
+        viewModel.getWalletExists()
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.walletExistsState.collectLatest {
-                // 지갑이 없는 경우 지갑 생성
-                if (it) {
-                    if (!isSelected) {
-                        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
-                            if(success){
-                                getImageToGallery()
-                            }else{
-                                if(msg=="reset"){
-                                    navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
-                                }else{
-                                    navController.popBackStack()
-                                }
-                            }
-                        }.show(childFragmentManager, "AddFragment")
-                    }
+            viewModel.walletExistsState.collectLatest { existed ->
+                if (existed) {
+                    PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
+                        if (success) {
+                            getImageToGallery()
+                        } else {
+                            if (msg == "reset") navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
+                            else navController.popBackStack()
+                        }
+                    }.show(childFragmentManager, "AddFragment")
                 } else {
                     showToastMessage("지갑을 생성해야 합니다!")
                     navigate(AddFragmentDirections.actionAddFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
@@ -159,17 +133,11 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
     }
 
-    fun checkImageSize(uri: Uri): Boolean {
+    private fun checkImageSize(uri: Uri): Boolean {
         val inputStream = requireActivity().contentResolver.openInputStream(uri)
         val bytes = inputStream?.buffered()?.use { it.readBytes() }
         val sizeInMb = bytes?.size?.toDouble()?.div(1024)?.div(1024)
 
-        if (sizeInMb != null && sizeInMb > 10) {
-            // 용량이 10MB를 초과하면 처리할 코드 작성
-            return false
-        } else {
-            // 용량이 10MB를 초과하지 않으면 처리할 코드 작성
-            return true
-        }
+        return !(sizeInMb != null && sizeInMb > 10)
     }
 }

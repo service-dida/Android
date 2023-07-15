@@ -166,7 +166,6 @@
         <argument
             android:name="postId"
             app:argType="long"
-
             android:defaultValue="0L"/>
         <action
             android:id="@+id/action_communityCommunityInputFragment_to_communityFragment"
@@ -231,6 +230,11 @@
             app:destination="@id/addFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_myPageFragment_to_userFollowedFragment"
+            app:destination="@id/userFollowedFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -293,6 +297,11 @@
             app:popUpToInclusive="true"
             app:popUpTo="@+id/homeFragment"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_detailNftFragment_to_communityCommunityInputFragment"
+            app:destination="@id/communityCommunityInputFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -370,8 +379,19 @@
             app:popUpToInclusive="true"
             app:popUpTo="@+id/homeFragment"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_settingFragment_to_blockFragment"
+            app:destination="@id/blockFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/enter_from_right"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/blockFragment"
+        android:name="com.dida.android.presentation.views.BlockFragment"
+        android:label="BlockFragment" />
 
     <fragment
         android:id="@+id/changePasswordFragment"
@@ -530,7 +550,22 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@id/userProfileFragment"/>
+        <action
+            android:id="@+id/action_userProfileFragment_to_userFollowedFragment"
+            app:destination="@id/userFollowedFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/userFollowedFragment"
+        android:name="com.dida.android.presentation.views.UserFollowedFragment"
+        android:label="UserFollowedFragment" >
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
     <fragment
         android:id="@+id/buySuccessFragment"
         android:name="com.dida.android.presentation.views.BuySuccessFragment"

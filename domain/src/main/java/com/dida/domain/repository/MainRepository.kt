@@ -117,4 +117,14 @@ interface  MainRepository {
     suspend fun postReportPost(postId: Long, content: String): NetworkResult<Unit>
 
     suspend fun postReportCard(cardId: Long, content: String): NetworkResult<Unit>
+
+    suspend fun postUserHide(userId: Long): NetworkResult<Unit>
+
+    suspend fun getUserHideList(): NetworkResult<List<UserHide>>
+
+    suspend fun deleteUserHide(userId: Long): NetworkResult<Unit>
+
+    suspend fun postPostHide(postId: Long): NetworkResult<Unit>
+
+    suspend fun postReportComment(reportedId: Long, content: String): NetworkResult<Unit>
 }

@@ -140,6 +140,8 @@
     <string name="create_post_dialog_message">게시글 작성이\n완료되었어요</string>
     <string name="report_dialog_message">게시글 신고가\n완료되었어요</string>
     <string name="block_dialog_message">게시글 차단이\n완료되었어요</string>
+    <string name="report_user_dialog_message">유저 신고가\n완료되었어요</string>
+    <string name="block_user_dialog_message">유저 차단이\n완료되었어요</string>
 
     <!-- Snack Bar-->
     <string name="user_follow_message">%s님을 팔로우 했어요</string>
@@ -150,6 +152,7 @@
     <string name="update_profile_message">프로필 수정이 완료되었어요</string>
     <string name="delete_post_message">게시글이 삭제되었어요</string>
     <string name="delete_reply_message">댓글이 삭제되었어요</string>
+    <string name="block_post_message">게시물이 차단되었어요</string>
 
     <!-- 신고 관련-->
     <string name="already_report_message">이미 신고했어요</string>

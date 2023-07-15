@@ -6,9 +6,11 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.common.adapter.CommunityPagingAdapter
 import com.dida.common.dialog.CompleteDialogFragment
+import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
 import com.dida.common.util.*
+import com.dida.common.widget.DefaultSnackBar
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardsContainerAdapter
@@ -39,19 +41,29 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
         exception = viewModel.errorEvent
         initRecyclerView()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when (it) {
-                    is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
-                    is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
-                    is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
-                    is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
-                    is CommunityNavigationAction.NavigateToBlock -> {}
-                    is CommunityNavigationAction.NavigateToUpdate -> {}
-                    is CommunityNavigationAction.NavigateToDelete -> {}
+            launch {
+                viewModel.navigationEvent.collectLatest {
+                    when (it) {
+                        is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
+                        is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
+                        is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
+                        is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
+                        is CommunityNavigationAction.NavigateToBlock -> showBlockPostDialog(postId = it.postId)
+                        is CommunityNavigationAction.NavigateToUpdate -> {}
+                        is CommunityNavigationAction.NavigateToDelete -> {}
+                    }
+                }
+            }
+
+
+            launch {
+                viewModel.blockEvent.collectLatest {
+                    showMessageSnackBar(getString(R.string.block_post_message))
                 }
             }
         }
@@ -74,8 +86,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.navigateToReportEvent.collectLatest {
-                    if (it) {
-                        showReportCompleteDialog()
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.USER -> showReportUserCompleteDialog()
+                            ReportType.POST -> showReportCompleteDialog()
+                            else -> {}
+                        }
                         communityPagingAdapter.refresh()
                     } else {
                         showToastMessage(requireContext().getString(R.string.already_report_message))
@@ -86,8 +102,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
             launch {
                 viewModel.navigateToBlockEvent.collectLatest {
-                    if (it) {
-                        showBlockCompleteDialog()
+                    if (it.second) {
+                        when (it.first) {
+                            ReportType.USER -> showBlockUserCompleteDialog()
+                            ReportType.POST -> showBlockCompleteDialog()
+                            else -> {}
+                        }
                         communityPagingAdapter.refresh()
                     }
                 }
@@ -101,11 +121,21 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         super.onResume()
         setFragmentResultListener(DIDAINTENT.RESULT_SCREEN_COMMUNITY) { _, bundle ->
             if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_CREATE)) showCreateCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_REPORT)) showReportCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_BLOCK)) showBlockCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_REPORT)) showReportCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_REPORT)) showReportUserCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_BLOCK)) showBlockCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showBlockUserCompleteDialog()
         }
         communityPagingAdapter.refresh()
         getLastScrollY()
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getHotCards()
+            communityPagingAdapter.refresh()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun onPause() {
@@ -143,6 +173,28 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             .show(childFragmentManager, "complete_dialog")
     }
 
+    private fun showReportUserCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.report_user_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
+    }
+
+    private fun showBlockPostDialog(postId: Long) {
+        DefaultDialogFragment.Builder()
+            .title(getString(com.dida.community_detail.R.string.block_post_title))
+            .message(getString(com.dida.community_detail.R.string.block_post_description))
+            .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.onPostBlock(type = ReportType.POST, blockId = postId)
+                }
+            })
+            .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
+            .build()
+            .show(childFragmentManager, "block_user_dialog")
+
+    }
+
     private fun showBlockCompleteDialog() {
         CompleteDialogFragment.Builder()
             .message(getString(R.string.block_dialog_message))
@@ -150,13 +202,27 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             .show(childFragmentManager, "complete_dialog")
     }
 
-    private fun showReportDialog(postId: Long) {
+    private fun showBlockUserCompleteDialog() {
+        CompleteDialogFragment.Builder()
+            .message(getString(R.string.block_user_dialog_message))
+            .build()
+            .show(childFragmentManager, "complete_dialog")
+    }
+
+    private fun showReportDialog(userId: Long) {
         ReportBottomSheet { confirm, content ->
             if (confirm) viewModel.onReport(
-                type = ReportType.POST,
-                reportId = postId,
+                type = ReportType.USER,
+                reportId = userId,
                 content = content
             )
         }.show(childFragmentManager, "Report Dialog")
+    }
+
+    private fun showMessageSnackBar(message: String) {
+        DefaultSnackBar.Builder()
+            .view(binding.root)
+            .message(message)
+            .build()
     }
 }

@@ -75,6 +75,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     is DetailNftNavigationAction.NavigateToBlock -> {}
                     is DetailNftNavigationAction.NavigateToUpdate -> {}
                     is DetailNftNavigationAction.NavigateToDelete -> {}
+                    is DetailNftNavigationAction.NavigateToWritePost -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityCommunityInputFragment(args.cardId, true))
                 }
             }
         }
@@ -90,7 +91,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
             launch {
                 viewModel.navigateToReportEvent.collectLatest {
-                    if (it) navController.popBackStack()
+                    if (it.second) navController.popBackStack()
                     else showToastMessage(requireContext().getString(R.string.already_report_message))
                 }
             }

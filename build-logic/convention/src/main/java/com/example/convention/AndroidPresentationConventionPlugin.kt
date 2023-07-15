@@ -85,6 +85,9 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:compose"))
                 add("implementation", project(":feature:user-profile"))
                 add("implementation", project(":feature:change-password"))
+                add("implementation", project(":feature:block"))
+                add("implementation", project(":feature:user-followed"))
+
 
                 // Android Common
                 add("implementation", libs.findLibrary("androidx-core").get())
@@ -137,6 +140,9 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                 // Paging
                 add("implementation", libs.findLibrary("androidx-paging").get())
+
+                // Swipe Refresh Layout
+                add("implementation", libs.findLibrary("androidx-swipe-refresh-layout").get())
             }
         }
     }

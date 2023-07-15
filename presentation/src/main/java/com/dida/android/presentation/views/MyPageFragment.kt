@@ -35,6 +35,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         }
         exception = viewModel.errorEvent
         initMyPage()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -47,11 +48,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
                     is MypageNavigationAction.NavigateToCreate -> navigate(MyPageFragmentDirections.actionMyPageFragmentToAddFragment())
                     is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.refresh()
+                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId))
                 }
             }
         }
 
-        viewLifecycleOwner.repeatOnResumed {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userCardState.collectLatest {
                 userCardAdapter.submitData(it)
             }
@@ -63,6 +65,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     override fun onResume() {
         super.onResume()
+        userCardAdapter.retry()
         viewModel.getUserInfo()
         getLastScrollY()
     }
@@ -75,6 +78,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     private fun initMyPage() {
         initToolbar()
         initAdapter()
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getUserInfo()
+            userCardAdapter.refresh()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initAdapter() {

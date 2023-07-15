@@ -78,3 +78,5 @@ include(":feature:compose")
 include(":feature:user-profile")
 include(":feature:change-password")
 
+include(":feature:block")
+include(":feature:user-followed")

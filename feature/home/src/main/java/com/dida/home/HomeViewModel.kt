@@ -47,6 +47,7 @@ class HomeViewModel @Inject constructor(
 
     fun getHome() {
         baseViewModelScope.launch {
+            _homeState.value = UiState.Loading
             soldOutAPI.invoke(term = termState.value)
                 .onSuccess { _soldoutState.value = UiState.Success(it) }
                 .flatMap { homeAPI() }

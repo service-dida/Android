@@ -10,11 +10,7 @@ import com.dida.domain.model.main.Comments
 import com.dida.domain.model.main.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CommentAPI
-import com.dida.domain.usecase.main.CommentsPostIdAPI
-import com.dida.domain.usecase.main.DeleteCommentAPI
-import com.dida.domain.usecase.main.DeletePostAPI
-import com.dida.domain.usecase.main.PostIdAPI
+import com.dida.domain.usecase.main.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +46,9 @@ class DetailCommunityViewModel @Inject constructor(
     private val _commentList: MutableStateFlow<List<Comments>> = MutableStateFlow(emptyList())
     val commentList: StateFlow<List<Comments>> = _commentList.asStateFlow()
 
+    private val _commentEmpty: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val commentEmpty: StateFlow<Boolean> = _commentEmpty.asStateFlow()
+
     val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
     val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
@@ -62,6 +61,7 @@ class DetailCommunityViewModel @Inject constructor(
                 .flatMap { commentsPostIdAPI.invoke(postId = postId) }
                 .onSuccess {
                     _commentList.value = it
+                    _commentEmpty.value = it.isEmpty()
                     isWrite.value = false }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -86,6 +86,7 @@ class DetailCommunityViewModel @Inject constructor(
                     .onSuccess {
                         isWrite.value = true
                         _commentList.value = it
+                        _commentEmpty.value = it.isEmpty()
                     }
                     .onError { e -> catchError(e) }
             }
@@ -115,7 +116,7 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostBlock(postId: Long) {
+    fun onPostBlockClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostBlock(postId = postId))
         }
@@ -163,14 +164,16 @@ class DetailCommunityViewModel @Inject constructor(
 
     fun onDeletePost(postId: Long) {
         baseViewModelScope.launch {
-            showLoading()
             deletePostAPI.invoke(postId)
                 .onSuccess {
                     _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
                     _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack)
                 }
                 .onError { e -> catchError(e) }
-            dismissLoading()
         }
+    }
+
+    fun onPostBlock(type: ReportType, blockId: Long){
+        onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
     }
 }
