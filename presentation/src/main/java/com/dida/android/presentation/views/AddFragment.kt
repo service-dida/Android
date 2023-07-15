@@ -40,11 +40,12 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         exception = viewModel.errorEvent
         initToolbar()
         initRegisterForActivityResult()
+        viewModel.getWalletExists()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getWalletExists()
+
     }
 
     override fun initDataBinding() {
