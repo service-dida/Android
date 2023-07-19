@@ -28,6 +28,7 @@ import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.Invoker
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.NavigationHost
@@ -111,10 +112,10 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        observerEvent()
         initStartView()
         initDataBinding()
         initAfterBinding()
-        observerEvent()
         return binding.root
     }
 
@@ -136,7 +137,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     }
 
     private fun observerEvent() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.repeatOnCreated {
             launch {
                 exception?.collectLatest { exception ->
                     dismissLoadingDialog()
@@ -148,9 +149,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-                viewModel.loadingEvent.collectLatest {
-                    if (it) showLoadingDialog()
-                    else dismissLoadingDialog()
+                viewModel.loadingEvent.collectLatest { isLoading ->
+                    if (isLoading) {
+                        showLoadingDialog()
+                    } else {
+                        dismissLoadingDialog()
+                    }
                 }
             }
 
@@ -169,7 +173,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.
     private fun showLoadingDialog() {
-        if(!mLoadingDialog.isVisible){
+        if (!mLoadingDialog.isVisible) {
             mLoadingDialog.show(childFragmentManager, LoadingDialogFragment.TAG)
         }
     }
