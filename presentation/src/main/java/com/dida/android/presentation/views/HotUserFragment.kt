@@ -11,6 +11,7 @@ import com.dida.hot_user.HotUserViewModel
 import com.dida.hot_user.adapter.HotUserPagingAdapter
 import com.dida.hot_user.databinding.FragmentHotUserBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,7 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        viewModel.showLoading()
         initToolbar()
         initAdapter()
     }
@@ -38,6 +40,7 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
     override fun initDataBinding() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.hotUserState.collectLatest {
+                viewModel.dismissLoading()
                 hotUserPagingAdapter.submitData(it)
             }
         }
@@ -52,8 +55,7 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
     private fun initToolbar(){
         binding.toolbar.apply {
