@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.DialogFragmentNavigator
@@ -28,6 +29,7 @@ import com.dida.common.util.Invoker
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
 import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
@@ -112,6 +114,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         initStartView()
         initDataBinding()
         initAfterBinding()
+        observerEvent()
         return binding.root
     }
 
@@ -122,9 +125,18 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewLifecycleOwner.repeatOnResumed {
+    override fun onDestroy() {
+        super.onDestroy()
+        toast?.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun observerEvent() {
+        viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 exception?.collectLatest { exception ->
                     dismissLoadingDialog()
@@ -152,16 +164,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        toast?.cancel()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
