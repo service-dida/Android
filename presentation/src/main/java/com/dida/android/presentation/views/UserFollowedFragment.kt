@@ -20,6 +20,7 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -30,6 +31,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import coil.compose.AsyncImage
 import com.dida.android.R
 import com.dida.common.widget.DefaultSnackBar
@@ -45,7 +47,7 @@ import com.dida.compose.utils.Divider8
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.clickableSingle
 import com.dida.domain.model.main.Collection
-import com.dida.user_followed.Follow
+import com.dida.domain.model.main.Follow
 import com.dida.user_followed.UserFollowedMessageAction
 import com.dida.user_followed.UserFollowedViewModel
 import com.dida.user_followed.databinding.FragmentUserfollowedBinding
@@ -69,6 +71,7 @@ class UserFollowedFragment :
 
     override val viewModel: UserFollowedViewModel by viewModels()
     private val navController: NavController by lazy { findNavController() }
+    private val args: UserFollowedFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {
@@ -106,6 +109,15 @@ class UserFollowedFragment :
             setContent {
                 val tabs = listOf(Follow.FOLLOWER, Follow.FOLLOWING)
                 val pagerState = rememberPagerState(pageCount = tabs.size)
+                val coroutineScope = rememberCoroutineScope()
+
+                LaunchedEffect(key1 = Unit) {
+                    when (args.type) {
+                        Follow.FOLLOWER -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
+                        Follow.FOLLOWING -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
+                    }
+                }
+
                 Column(
                     modifier = Modifier.fillMaxSize(),
                 ) {

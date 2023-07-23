@@ -10,6 +10,7 @@ import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.flatMap
+import com.dida.domain.model.main.Follow
 import com.dida.domain.model.main.OtherUserProfie
 import com.dida.domain.model.main.UserNft
 import com.dida.domain.onError
@@ -107,9 +108,15 @@ class UserProfileViewModel @AssistedInject constructor(
         setCardSort(type = cardSortTypeState.value)
     }
 
-    override fun onUserFollowedClicked() {
+    override fun onUserFollowerClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId))
+            _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId, type = Follow.FOLLOWER))
+        }
+    }
+
+    override fun onUserFollowingClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId, type = Follow.FOLLOWING))
         }
     }
 

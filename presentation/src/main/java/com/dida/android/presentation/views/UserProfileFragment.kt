@@ -30,8 +30,7 @@ class UserProfileFragment :
 
     private val TAG = "UserProfileFragment"
 
-    override val layoutResourceId: Int
-        get() = com.dida.user_profile.R.layout.fragment_user_profile
+    override val layoutResourceId: Int = com.dida.user_profile.R.layout.fragment_user_profile
 
     @Inject
     lateinit var assistedFactory: UserProfileViewModel.AssistedFactory
@@ -64,7 +63,7 @@ class UserProfileFragment :
                     when (it) {
                         is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
-                        is UserProfileNavigationAction.NavigateToUserFollowed -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToUserFollowedFragment(it.userId))
+                        is UserProfileNavigationAction.NavigateToUserFollowed -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToUserFollowedFragment(it.userId, it.type))
                     }
                 }
             }
