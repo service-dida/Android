@@ -564,6 +564,10 @@
         <argument
             android:name="userId"
             app:argType="long" />
+        <argument
+            android:name="type"
+            app:argType="com.dida.domain.model.main.Follow"
+            android:defaultValue="FOLLOWER"/>
     </fragment>
 
     <fragment
