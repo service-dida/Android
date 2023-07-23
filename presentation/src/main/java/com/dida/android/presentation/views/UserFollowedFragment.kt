@@ -57,6 +57,7 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -121,7 +122,7 @@ class UserFollowedFragment :
                 Column(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    Tabs(tabs = tabs, pagerState = pagerState)
+                    Tabs(tabs = tabs, pagerState = pagerState, coroutineScope = coroutineScope)
                     TabContents(tabs = tabs, pagerState = pagerState)
                 }
             }
@@ -132,9 +133,9 @@ class UserFollowedFragment :
     @Composable
     fun Tabs(
         tabs: List<Follow>,
-        pagerState: PagerState
+        pagerState: PagerState,
+        coroutineScope: CoroutineScope
     ) {
-        val coroutineScope = rememberCoroutineScope()
         TabRow(
             backgroundColor = MainBlack,
             selectedTabIndex = pagerState.currentPage,
