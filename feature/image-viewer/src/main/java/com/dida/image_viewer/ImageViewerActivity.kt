@@ -3,11 +3,8 @@ package com.dida.image_viewer
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.dida.common.base.BaseActivity
-import com.dida.common.util.successOrNull
 import com.dida.image_viewer.databinding.ActivityImageViewerBinding
 import dagger.hilt.android.AndroidEntryPoint
 
