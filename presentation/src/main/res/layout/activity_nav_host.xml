@@ -31,11 +31,10 @@
             android:src="@drawable/ic_custom_add_behind_background"
             app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment_container"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent" />
 
-        </ImageView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/bottom_navi_add_btn"
+            android:id="@+id/bottom_navi_floating_add_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
@@ -45,6 +44,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/bottom_navi"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/bottom_navi" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bottom_navi_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:backgroundTint="@color/surface6"
+            android:src="@drawable/ic_baseline_add_24"
+            app:borderWidth="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bottom_navi"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navi"
