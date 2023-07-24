@@ -45,11 +45,12 @@
                 <ImageView
                     android:id="@+id/nft_img"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:NftImgUrl="@{vm.detailNftState}"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/nft_example_image" />
+                    tools:src="@drawable/nft_example_image"
+                    app:onSingleClick="@{() -> vm.onImageClicked()}"/>
 
                 <TextView
                     android:id="@+id/nft_name_txt"

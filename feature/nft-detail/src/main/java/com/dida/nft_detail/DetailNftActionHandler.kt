@@ -7,4 +7,5 @@ interface DetailNftActionHandler {
     fun onContractLinkClicked()
     fun onOwnerShipClicked()
     fun onWritePostClicked()
+    fun onImageClicked()
 }

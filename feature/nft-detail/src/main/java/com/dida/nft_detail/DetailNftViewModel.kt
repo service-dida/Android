@@ -204,6 +204,18 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
+    override fun onImageClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(
+                DetailNftNavigationAction.NavigateToImageDetail(
+                    imageUrl = detailNftState.value.successOrNull()?.imgUrl,
+                    imageTitle = detailNftState.value.successOrNull()?.title,
+                    imageDescription = detailNftState.value.successOrNull()?.description
+                )
+            )
+        }
+    }
+
     override fun onCommunityItemClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToItemCommunity(postId = postId))

@@ -26,6 +26,7 @@ fun ImageView.bindImgUrl(uiState: UiState<DetailNft>) {
                 .load(uiState.successOrNull()?.imgUrl)
                 .placeholder(com.dida.common.R.mipmap.img_dida_logo_foreground)
                 .error(com.dida.common.R.mipmap.img_dida_logo_foreground)
+                .centerCrop()
                 .into(this)
         } else {
             Glide.with(context)

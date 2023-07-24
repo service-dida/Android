@@ -80,3 +80,4 @@ include(":feature:change-password")
 
 include(":feature:block")
 include(":feature:user-followed")
+include(":feature:image-viewer")
