@@ -12,6 +12,7 @@ import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
+import com.dida.image_viewer.ImageViewerActivity
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.DetailNftNavigationAction
 import com.dida.nft_detail.DetailNftViewModel
@@ -76,6 +77,10 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     is DetailNftNavigationAction.NavigateToUpdate -> {}
                     is DetailNftNavigationAction.NavigateToDelete -> {}
                     is DetailNftNavigationAction.NavigateToWritePost -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityCommunityInputFragment(args.cardId, true))
+                    is DetailNftNavigationAction.NavigateToImageDetail -> {
+                        val intent = ImageViewerActivity.starterIntent(requireContext(), it.imageUrl)
+                        startActivity(intent)
+                    }
                 }
             }
         }

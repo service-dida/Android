@@ -61,6 +61,14 @@
         </activity>
 
         <activity
+            android:name="com.dida.image_viewer.ImageViewerActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleInstance">
+        </activity>
+
+        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:screenOrientation="portrait"
             android:exported="true">
