@@ -30,6 +30,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/add" />
+            <option value="$PROJECT_DIR$/feature/block" />
             <option value="$PROJECT_DIR$/feature/buy-nft" />
             <option value="$PROJECT_DIR$/feature/change-password" />
             <option value="$PROJECT_DIR$/feature/community" />
@@ -41,6 +42,7 @@
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/hot-seller" />
             <option value="$PROJECT_DIR$/feature/hot-user" />
+            <option value="$PROJECT_DIR$/feature/image-viewer" />
             <option value="$PROJECT_DIR$/feature/login" />
             <option value="$PROJECT_DIR$/feature/mypage" />
             <option value="$PROJECT_DIR$/feature/nft-detail" />
@@ -53,6 +55,7 @@
             <option value="$PROJECT_DIR$/feature/swap" />
             <option value="$PROJECT_DIR$/feature/swap-history" />
             <option value="$PROJECT_DIR$/feature/update-profile" />
+            <option value="$PROJECT_DIR$/feature/user-followed" />
             <option value="$PROJECT_DIR$/feature/user-profile" />
             <option value="$PROJECT_DIR$/feature/wallet" />
             <option value="$PROJECT_DIR$/model" />
