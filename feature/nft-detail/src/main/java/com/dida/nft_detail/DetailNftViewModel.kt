@@ -206,7 +206,13 @@ class DetailNftViewModel @Inject constructor(
 
     override fun onImageClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailNftNavigationAction.NavigateToImageDetail(detailNftState.value.successOrNull()?.imgUrl))
+            _navigationEvent.emit(
+                DetailNftNavigationAction.NavigateToImageDetail(
+                    imageUrl = detailNftState.value.successOrNull()?.imgUrl,
+                    imageTitle = detailNftState.value.successOrNull()?.title,
+                    imageDescription = detailNftState.value.successOrNull()?.description
+                )
+            )
         }
     }
 

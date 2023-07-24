@@ -43,16 +43,26 @@ class ImageViewerActivity : BaseActivity<ActivityImageViewerBinding, ImageViewer
                 .error(com.dida.common.R.mipmap.img_dida_logo_foreground)
                 .into(binding.imageView)
         } ?: finish()
+
+        intent?.getStringExtra(KEY_IMAGE_TITLES)?.let {
+            binding.imageTitle.text = it
+        } ?: finish()
+
+        intent?.getStringExtra(KEY_IMAGE_DESCRIPTION)?.let {
+            binding.imageDescription.text = it
+        } ?: finish()
     }
 
     companion object {
         const val KEY_IMAGE_URLS = "KEY_IMAGE_URLS"
-        const val KEY_IMAGE_POSITION = "KEY_IMAGE_POSITION"
+        const val KEY_IMAGE_TITLES = "KEY_IMAGE_TITLES"
+        const val KEY_IMAGE_DESCRIPTION = "KEY_IMAGE_DESCRIPTION"
 
-        fun starterIntent(context: Context, imageUrl: String?, position: Int = 0): Intent =
+        fun starterIntent(context: Context, imageUrl: String?, imageTitle: String?, imageDescription: String?): Intent =
             Intent(context, ImageViewerActivity::class.java)
                 .putExtra(KEY_IMAGE_URLS, imageUrl)
-                .putExtra(KEY_IMAGE_POSITION, position)
+                .putExtra(KEY_IMAGE_TITLES, imageTitle)
+                .putExtra(KEY_IMAGE_DESCRIPTION, imageDescription)
 
     }
 }
