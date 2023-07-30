@@ -55,8 +55,11 @@ class AddViewModel @Inject constructor(
             walletExistedAPI()
                 .onSuccess { _walletExistsState.emit(it) }
                 .onError { e ->
-                    if(e is NeedToWalletException) _walletExistsState.emit(false)
-                    else catchError(e) }
+                    when (e) {
+                        is NeedToWalletException -> _walletExistsState.emit(false)
+                        else -> catchError(e)
+                    }
+                }
             dismissLoading()
         }
     }
