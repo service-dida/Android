@@ -94,8 +94,9 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
     }
 
     private fun hideBottomNav() {
+        binding.bottomNaviFloatingAddBtn.visibility = View.GONE
         binding.bottomNavi.visibility = View.GONE
-        binding.bottomNaviAddBtn.visibility =View.GONE
+        binding.bottomNaviAddBtn.visibility = View.GONE
         binding.bottomNaviAddBackground.visibility=View.GONE
     }
 

@@ -32,6 +32,14 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
+    override var registerForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                0 -> navigateToHomeFragment(null)
+                9001 -> viewModel.getWalletExists()
+            }
+        }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -40,10 +48,6 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         exception = viewModel.errorEvent
         initToolbar()
         initRegisterForActivityResult()
-    }
-
-    override fun onResume() {
-        super.onResume()
         viewModel.getWalletExists()
     }
 
