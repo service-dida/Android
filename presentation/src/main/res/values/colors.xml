@@ -10,18 +10,23 @@
     <color name="notice_red">#E8625B</color>
     <color name="notice_green">#73BF90</color>
 
-    <color name="brand_lemon">#FBF89B</color>
+    <color name="brand_lemon">#FFFA69</color>
     <color name="brand_lignt_lemon">#FDFBC4</color>
     <color name="brand_ivory">#FFFFE8</color>
 
-    <color name="surface1">#252525</color>
-    <color name="line_surface1">#80dadada</color>
-    <color name="surface2">#2c2c2c</color>
-    <color name="surface3">#333333</color>
-    <color name="surface4">#383838</color>
-    <color name="surface5">#414141</color>
+    <color name="surface0">#80121212</color>
+    <color name="surface1">#1C1C1E</color>
+    <color name="surface2">#2C2C2E</color>
+    <color name="surface3">#3A3A3C</color>
+    <color name="surface4">#48484A</color>
+    <color name="surface5">#636366</color>
     <color name="surface6">#595959</color>
+    <color name="surface7">#AEAEB2</color>
+    <color name="surface8">#C7C7CC</color>
+    <color name="surface9">#E5E5EA</color>
+    <color name="surface10">#F2F2F7</color>
 
+    <color name="line_surface1">#80dadada</color>
     <color name="shimmer_color">#ffaaaaaa</color>
 
     <!--텍스트 색상-->
@@ -30,7 +35,6 @@
     <color name="wallet_address_text">#AAAAAA</color>
     <color name="hots_coin_txt">#C5C5CF</color>
     <color name="text_c5c5cf">#C5C5CF</color>
-
     <color name="kakao_login_text_color">#191919</color>
 
     <!--선 색상-->
