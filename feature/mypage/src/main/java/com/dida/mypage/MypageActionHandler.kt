@@ -5,4 +5,5 @@ interface MypageActionHandler {
     fun onMypageNftTypeClicked(type : MyPageViewModel.CardSortType)
     fun onSettingsClicked()
     fun onUserFollowedClicked()
+    fun onUserFollowingClicked()
 }

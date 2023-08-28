@@ -8,4 +8,5 @@ sealed class MypageNavigationAction {
     object NavigateToCreate: MypageNavigationAction()
     object NavigateToLikeButtonClicked: MypageNavigationAction()
     class NavigateToUserFollowedClicked(val userId: Long): MypageNavigationAction()
+    class NavigateToUserFollowingClicked(val userId: Long): MypageNavigationAction()
 }
