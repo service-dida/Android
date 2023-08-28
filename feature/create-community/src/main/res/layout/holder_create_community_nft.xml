@@ -88,14 +88,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/create_community_input_select"
-            android:textSize="14dp"
+            android:textSize="12dp"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="@color/white"
-            android:background="@drawable/custom_surface6_radius8"
+            android:background="@drawable/custom_surface2_radius8"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             app:onSingleClick="@{() -> eventListener.onNftSelectClicked(holderModel.cardId)}">
         </TextView>
 
