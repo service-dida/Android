@@ -232,4 +232,8 @@ interface MainAPIService {
     // 댓글 신고하기
     @POST("/report/comment")
     suspend fun postReportComment(@Body body: PostReportCommentRequest): Unit
+
+    //알림목록 가져오기
+    @GET("/common/alarm")
+    suspend fun getCommonAlarm(@Query("page") page: Int, @Query("size") size: Int): List<GetCommonAlarmResponse>
 }

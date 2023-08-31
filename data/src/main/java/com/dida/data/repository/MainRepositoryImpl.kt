@@ -288,5 +288,9 @@ class MainRepositoryImpl @Inject constructor(
         val request = PostReportCommentRequest(reportedId = reportedId, content = content)
         return handleApi { mainAPIService.postReportComment(request) }
     }
+
+    override suspend fun getCommonAlarm(page: Int, size: Int): NetworkResult<List<CommonAlarm>> {
+        return handleApi { mainAPIService.getCommonAlarm(page = page, size = size).toDomain() }
+    }
 }
 

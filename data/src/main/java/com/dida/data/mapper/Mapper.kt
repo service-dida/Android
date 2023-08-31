@@ -325,4 +325,17 @@ fun List<GetUserHideResponse>.toDomain(): List<UserHide> {
     }
 }
 
+@JvmName("toDomainCommonAlarmResponse")
+fun List<GetCommonAlarmResponse>.toDomain(): List<CommonAlarm> {
+    return map {
+        CommonAlarm(
+            alarmId = it.alarmId,
+            type = it.type,
+            id = it.id,
+            watched = it.watched,
+            date = it.date
+        )
+    }
+}
+
 

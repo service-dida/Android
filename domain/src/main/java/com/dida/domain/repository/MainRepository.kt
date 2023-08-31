@@ -127,4 +127,6 @@ interface  MainRepository {
     suspend fun postPostHide(postId: Long): NetworkResult<Unit>
 
     suspend fun postReportComment(reportedId: Long, content: String): NetworkResult<Unit>
+
+    suspend fun getCommonAlarm(page: Int, size: Int): NetworkResult<List<CommonAlarm>>
 }
