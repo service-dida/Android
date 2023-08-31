@@ -214,7 +214,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private fun initToolbar() {
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                com.dida.common.R.id.action_alarm -> {}
+                com.dida.common.R.id.action_alarm -> {
+                    navigate(HomeFragmentDirections.actionHomeFragmentToNotificationListFragment())
+                }
             }
             true
         }

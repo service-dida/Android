@@ -20,6 +20,7 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="/usr/local/Cellar/gradle/7.1/libexec" />
+        <option name="gradleJvm" value="corretto-11" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -48,6 +49,7 @@
             <option value="$PROJECT_DIR$/feature/nft-detail" />
             <option value="$PROJECT_DIR$/feature/nft-sale" />
             <option value="$PROJECT_DIR$/feature/nickname" />
+            <option value="$PROJECT_DIR$/feature/notification-list" />
             <option value="$PROJECT_DIR$/feature/password" />
             <option value="$PROJECT_DIR$/feature/recent-nft" />
             <option value="$PROJECT_DIR$/feature/settings" />

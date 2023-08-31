@@ -59,6 +59,11 @@
             app:destination="@id/userProfileFragment"
             app:enterAnim="@anim/enter_from_right"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationListFragment"
+            app:destination="@id/notificationListFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
 
     </fragment>
     <fragment
@@ -593,5 +598,9 @@
             app:popUpTo="@+id/homeFragment"
             app:enterAnim="@anim/enter_from_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/notificationListFragment"
+        android:name="com.dida.android.presentation.views.NotificationListFragment"
+        android:label="NotificationListFragment" />
 
 </navigation>
