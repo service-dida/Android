@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -247,12 +248,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/surface6"
-            app:layout_constraintBottom_toTopOf="@id/edit_main"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/edit_main"
             android:layout_width="match_parent"
@@ -279,8 +274,7 @@
                     app:layout_constraintRight_toLeftOf="@id/send_btn"
                     android:background="@null"
                     android:text="@={vm.commentState}"
-                    android:layout_marginEnd="8dp">
-                </EditText>
+                    android:layout_marginEnd="8dp"/>
 
                 <ImageView
                     android:id="@+id/send_btn"
@@ -289,16 +283,12 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:src="@drawable/ic_send"
-                    android:padding="8dp"
-                    android:background="@drawable/custom_brandlemon_radius6"
-                    app:onSingleClick="@{() -> vm.onCommentClicked(vm.postState.postId)}">
-                </ImageView>
+                    icSendAble="@{vm.commentState}"
+                    tools:src="@drawable/ic_send_enabled"
+                    app:onSingleClick="@{() -> vm.onCommentClicked(vm.postState.postId)}"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
