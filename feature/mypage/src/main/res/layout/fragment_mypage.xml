@@ -147,12 +147,12 @@
                             app:onSingleClick="@{() -> vm.onUserFollowedClicked()}">
 
                             <TextView
+                                userFollwerCount="@{vm.myPageState}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
-                                userFollwerCount="@{vm.myPageState}"
                                 android:textColor="@color/white"
                                 android:textSize="16dp" />
 
@@ -180,7 +180,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
                             android:orientation="vertical"
-                            app:onSingleClick="@{() -> vm.onUserFollowedClicked()}">
+                            app:onSingleClick="@{() -> vm.onUserFollowingClicked()}">
 
                             <TextView
                                 userFollwingCount="@{vm.myPageState}"

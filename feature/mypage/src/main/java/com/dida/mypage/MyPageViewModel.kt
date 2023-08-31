@@ -115,4 +115,10 @@ class MyPageViewModel @Inject constructor(
             _navigationEvent.emit(MypageNavigationAction.NavigateToUserFollowedClicked(myPageState.value.successOrNull()?.userId ?: 0))
         }
     }
+
+    override fun onUserFollowingClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MypageNavigationAction.NavigateToUserFollowingClicked(myPageState.value.successOrNull()?.userId ?: 0))
+        }
+    }
 }
