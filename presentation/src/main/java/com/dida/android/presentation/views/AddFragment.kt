@@ -15,6 +15,7 @@ import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
 import com.dida.common.customview.addOnFocusListener
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnStarted
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +55,6 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         initEditText()
         initNextButton()
         initRegisterForActivityResult()
-        viewModel.getWalletExists()
     }
 
     override fun initDataBinding() {
@@ -76,8 +76,9 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
             }
         }
 
-        viewLifecycleOwner.repeatOnStarted {
+        viewLifecycleOwner.repeatOnCreated {
             viewModel.nftImageState.collectLatest {
+                if (it.isBlank()) viewModel.getWalletExists()
             }
         }
     }
