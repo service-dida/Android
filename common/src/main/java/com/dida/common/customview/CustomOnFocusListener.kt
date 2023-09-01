@@ -10,8 +10,7 @@ import androidx.core.content.ContextCompat
 import com.dida.common.R
 
 fun EditText.addOnFocusListener(
-    focus: () -> Unit,
-    leaveFocus: () -> Unit
+    focus: (Boolean) -> Unit
 ) {
     val editText = this
     editText.apply {
@@ -19,11 +18,11 @@ fun EditText.addOnFocusListener(
             if (isFocus) {
                 setBackgroundResource(R.drawable.custom_brandlemon_radius10_surface5_width1)
                 showKeyBoard()
-                focus()
+                focus(true)
             } else {
                 setBackgroundResource(R.drawable.custom_surface2_radius10_surface5_width1)
                 hideKeyBoard()
-                leaveFocus()
+                focus(false)
             }
         }
 

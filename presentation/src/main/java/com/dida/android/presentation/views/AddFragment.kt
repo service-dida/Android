@@ -148,12 +148,10 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
     private fun initEditText() {
         binding.titleEditText.addOnFocusListener(
-            focus = { handleEditTextFocus(true) },
-            leaveFocus = { handleEditTextFocus(false) }
+            focus = { handleEditTextFocus(it) }
         )
         binding.descriptionEditText.addOnFocusListener(
-            focus = { handleEditTextFocus(true) },
-            leaveFocus = { handleEditTextFocus(false) }
+            focus = { handleEditTextFocus(it) }
         )
     }
 

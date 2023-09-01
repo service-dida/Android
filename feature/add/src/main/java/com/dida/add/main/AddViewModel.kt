@@ -65,9 +65,6 @@ class AddViewModel @Inject constructor(
                     descriptionLengthState.emit(it.length)
                 }
             }
-
-
-
         }
     }
 
