@@ -52,6 +52,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         exception = viewModel.errorEvent
         initToolbar()
         initEditText()
+        initNextButton()
         initRegisterForActivityResult()
         viewModel.getWalletExists()
     }
@@ -113,30 +114,25 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
-            this.inflateMenu(R.menu.menu_add_toolbar)
-            this.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.add_next_step -> {
-                        if (viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0) {
-                            isSelected = false
-                            showToastMessage("제목과 설명을 모두 입력해주세요.")
-                        } else if (viewModel.nftImageState.value == "") {
-                            isSelected = false
-                            showToastMessage("NFT에 사용할 이미지를 골라주세요.")
-                        } else {
-                            isSelected = true
-                            //사진,제목, 설명 이동
-                            val action =
-                                AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                                    viewModel.nftImageState.value,
-                                    viewModel.titleTextState.value,
-                                    viewModel.descriptionTextState.value
-                                )
-                            navigate(action)
-                        }
-                    }
+        }
+    }
+
+    private fun initNextButton() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigateToAddPurpose.collectLatest {
+                if (!viewModel.hasNextState.value) {
+                    showToastMessage(getString(R.string.not_yet_title_and_description))
+                } else if (viewModel.nftImageState.value == "") {
+                    showToastMessage(getString(R.string.not_yet_image))
+                } else {
+                    val action =
+                        AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                            viewModel.nftImageState.value,
+                            viewModel.titleTextState.value,
+                            viewModel.descriptionTextState.value
+                        )
+                    navigate(action)
                 }
-                true
             }
         }
     }
