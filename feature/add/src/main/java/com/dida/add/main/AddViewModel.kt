@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,10 +24,10 @@ class AddViewModel @Inject constructor(
     private val TAG = "AddViewModel"
 
     private val _walletExistsState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
-    val walletExistsState: SharedFlow<Boolean> = _walletExistsState
+    val walletExistsState: SharedFlow<Boolean> = _walletExistsState.asSharedFlow()
 
     private val _nftImageState: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val nftImageState: StateFlow<String> = _nftImageState
+    val nftImageState: StateFlow<String> = _nftImageState.asStateFlow()
 
     val titleTextState: MutableStateFlow<String> = MutableStateFlow("")
     val titleLengthState: MutableStateFlow<Int> = MutableStateFlow(0)

@@ -97,7 +97,7 @@
             android:id="@+id/action_addFragment_to_addPurposeFragment"
             app:destination="@id/addPurposeFragment"
             app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right"/>
+            app:enterAnim="@anim/enter_from_right" />
 
         <action
             android:id="@+id/action_addFragment_to_settingFragment"

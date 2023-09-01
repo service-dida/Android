@@ -3,6 +3,8 @@ package com.dida.android.presentation.views
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.util.TypedValue
+import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -12,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
+import com.dida.common.customview.addOnFocusListener
 import com.dida.common.util.repeatOnStarted
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,12 +44,14 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
 
     override fun initStartView() {
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
         initToolbar()
+        initEditText()
         initRegisterForActivityResult()
         viewModel.getWalletExists()
     }
@@ -76,8 +81,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
     private fun initRegisterForActivityResult() {
         resultLauncher =
@@ -143,5 +147,30 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         val sizeInMb = bytes?.size?.toDouble()?.div(1024)?.div(1024)
 
         return !(sizeInMb != null && sizeInMb > 10)
+    }
+
+    private fun initEditText() {
+        binding.titleEditText.addOnFocusListener(
+            focus = { handleEditTextFocus(true) },
+            leaveFocus = { handleEditTextFocus(false) }
+        )
+        binding.descriptionEditText.addOnFocusListener(
+            focus = { handleEditTextFocus(true) },
+            leaveFocus = { handleEditTextFocus(false) }
+        )
+    }
+
+    private fun handleEditTextFocus(hasFocus: Boolean): Unit {
+        val contractDp = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            if (hasFocus) 122f else 162f,
+            resources.displayMetrics
+        )
+        binding.nftAddImageView.layoutParams.apply {
+            width = contractDp.toInt()
+            height = contractDp.toInt()
+            binding.nftAddImageView.layoutParams = this
+        }
+
     }
 }
