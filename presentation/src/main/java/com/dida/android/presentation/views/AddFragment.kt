@@ -52,7 +52,6 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
         exception = viewModel.errorEvent
         initToolbar()
-        initEditText()
         initNextButton()
         initRegisterForActivityResult()
     }
@@ -84,6 +83,11 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
     }
 
     override fun initAfterBinding() {}
+
+    override fun onResume() {
+        super.onResume()
+        initEditText()
+    }
 
     private fun initRegisterForActivityResult() {
         resultLauncher =
