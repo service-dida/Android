@@ -29,6 +29,6 @@ class KeywordStyleViewModel @Inject constructor(
     override fun onNextClicked() {
     }
 
-    override fun onKeywordClicked() {
+    override fun onKeywordClicked(keyword: String) {
     }
 }
