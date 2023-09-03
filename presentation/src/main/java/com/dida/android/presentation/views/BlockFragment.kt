@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
@@ -68,7 +68,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
-                val userList = viewModel.userListState.collectAsState()
+                val userList = viewModel.userListState.collectAsStateWithLifecycle()
                 BlockScreen(userList.value)
             }
         }
