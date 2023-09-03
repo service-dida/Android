@@ -21,13 +21,13 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -170,8 +170,8 @@ class UserFollowedFragment :
         tabs: List<Follow>,
         pagerState: PagerState
     ) {
-        val followingList = viewModel.followingListState.collectAsState()
-        val followerList = viewModel.followerListState.collectAsState()
+        val followingList = viewModel.followingListState.collectAsStateWithLifecycle()
+        val followerList = viewModel.followerListState.collectAsStateWithLifecycle()
 
         HorizontalPager(
             modifier = Modifier.fillMaxSize(),

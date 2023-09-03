@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -22,7 +22,6 @@ import com.dida.ai.keyword.place.KeywordPlaceViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
 import com.dida.android.presentation.views.ui.KeywordPlaceTitle
-import com.dida.android.presentation.views.ui.KeywordProductTitle
 import com.dida.android.presentation.views.ui.Keywords
 import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
@@ -83,10 +82,10 @@ class KeywordPlaceFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
-                val keywords = viewModel.keywordsState.collectAsState()
-                val selectKeyword = viewModel.selectKeywordState.collectAsState()
-                val selectedKeywords = sharedViewModel.keywords.collectAsState()
-                val hasNext = viewModel.nextState.collectAsState()
+                val keywords = viewModel.keywordsState.collectAsStateWithLifecycle()
+                val selectKeyword = viewModel.selectKeywordState.collectAsStateWithLifecycle()
+                val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
+                val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
 
                 Column(
                     modifier = Modifier
