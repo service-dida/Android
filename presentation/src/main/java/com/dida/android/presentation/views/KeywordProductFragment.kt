@@ -42,7 +42,7 @@ class KeywordProductFragment :
         get() = com.dida.ai.R.layout.fragment_keyword_product // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel: KeywordProductViewModel by viewModels()
-    private val shardViewModel: KeywordViewModel by activityViewModels()
+    private val sharedViewModel: KeywordViewModel by activityViewModels()
 
     private val navController: NavController by lazy { findNavController() }
 
@@ -59,8 +59,8 @@ class KeywordProductFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordNavigationAction.NavigateToSkip -> Unit
-                    is KeywordNavigationAction.NavigateToNext -> shardViewModel.insertKeyword(it.keyword)
+                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
+                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
                 }
                 navigate(KeywordProductFragmentDirections.actionKeywordProductFragmentToKeywordPlaceFragment())
             }
@@ -73,7 +73,7 @@ class KeywordProductFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
-                shardViewModel.deleteKeyword(viewModel.selectKeywordState.value)
+                sharedViewModel.deleteKeyword(0)
                 navController.popBackStack()
             }
         }
@@ -85,7 +85,7 @@ class KeywordProductFragment :
             setContent {
                 val keywords = viewModel.keywordsState.collectAsState()
                 val selectKeyword = viewModel.selectKeywordState.collectAsState()
-                val selectedKeywords = shardViewModel.keywords.collectAsState()
+                val selectedKeywords = sharedViewModel.keywords.collectAsState()
                 val hasNext = viewModel.nextState.collectAsState()
 
                 Column(

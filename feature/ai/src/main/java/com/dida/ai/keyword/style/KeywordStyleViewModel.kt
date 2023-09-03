@@ -1,34 +1,30 @@
 package com.dida.ai.keyword.style
 
-import com.dida.ai.keyword.KeywordActionHandler
+import com.dida.ai.keyword.KeywordViewModelDelegate
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.main.Collection
-import com.dida.domain.model.main.Follow
-import com.dida.domain.onError
-import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.PostUserFollowAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class KeywordStyleViewModel @Inject constructor(
-) : BaseViewModel(), KeywordActionHandler {
+    keywordViewModelDelegate: KeywordViewModelDelegate
+) : BaseViewModel(),
+    KeywordViewModelDelegate by keywordViewModelDelegate {
 
     private val TAG = "KeywordStyleViewModel"
 
-    override fun onSkipClicked() {
-    }
-
-    override fun onNextClicked() {
-    }
-
-    override fun onKeywordClicked(keyword: String) {
-    }
+    private val _keywordsState: MutableStateFlow<List<Pair<Int, String>>> = MutableStateFlow(
+        listOf(
+            Pair(com.dida.common.R.mipmap.img_keyword_style1_foreground, "Oil painting"),
+            Pair(com.dida.common.R.mipmap.img_keyword_style2_foreground, "Henri\nMattisse"),
+            Pair(com.dida.common.R.mipmap.img_keyword_style3_foreground, "3D art"),
+            Pair(com.dida.common.R.mipmap.img_keyword_style4_foreground, "Water\nPainting"),
+            Pair(com.dida.common.R.mipmap.img_keyword_style5_foreground, "Crayon"),
+            Pair(com.dida.common.R.mipmap.img_keyword_style6_foreground, "Sketch")
+        )
+    )
+    val keywordsState: StateFlow<List<Pair<Int, String>>> = _keywordsState.asStateFlow()
 }

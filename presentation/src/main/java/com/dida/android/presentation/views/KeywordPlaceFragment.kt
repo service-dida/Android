@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordPlaceBinding
+import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.place.KeywordPlaceViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
@@ -28,6 +30,8 @@ import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
 import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class KeywordPlaceFragment :
@@ -39,7 +43,7 @@ class KeywordPlaceFragment :
         get() = com.dida.ai.R.layout.fragment_keyword_place // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel: KeywordPlaceViewModel by viewModels()
-    private val shardViewModel: KeywordViewModel by activityViewModels()
+    private val sharedViewModel: KeywordViewModel by activityViewModels()
     private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -51,7 +55,17 @@ class KeywordPlaceFragment :
         initToolbar()
     }
 
-    override fun initDataBinding() {}
+    override fun initDataBinding() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationAction.collectLatest {
+                when (it) {
+                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
+                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
+                }
+                navigate(KeywordPlaceFragmentDirections.actionKeywordPlaceFragmentToKeywordStyleFragment())
+            }
+        }
+    }
 
     override fun initAfterBinding() {}
 
@@ -59,8 +73,8 @@ class KeywordPlaceFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
+                sharedViewModel.deleteKeyword(1)
                 navController.popBackStack()
-                shardViewModel.deleteKeyword(viewModel.selectKeywordState.value)
             }
         }
     }
@@ -71,7 +85,7 @@ class KeywordPlaceFragment :
             setContent {
                 val keywords = viewModel.keywordsState.collectAsState()
                 val selectKeyword = viewModel.selectKeywordState.collectAsState()
-                val selectedKeywords = shardViewModel.keywords.collectAsState()
+                val selectedKeywords = sharedViewModel.keywords.collectAsState()
                 val hasNext = viewModel.nextState.collectAsState()
 
                 Column(

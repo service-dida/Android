@@ -21,9 +21,9 @@ class KeywordViewModel @Inject constructor(): BaseViewModel() {
         _keywords.value = newKeywords
     }
 
-    fun deleteKeyword(keyword: String) {
+    fun deleteKeyword(index: Int) {
         val newKeywords: MutableList<String> = _keywords.value.toMutableList()
-        newKeywords.remove(keyword)
+        newKeywords.removeAt(index)
         _keywords.value = newKeywords
     }
 }
