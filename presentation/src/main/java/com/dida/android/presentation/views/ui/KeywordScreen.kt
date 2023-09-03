@@ -95,7 +95,7 @@ fun KeywordItem(
     ) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 6.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
                 .clickable { onKeywordClicked(keyword) }
         ) {
             Text(
@@ -120,7 +120,7 @@ fun SelectKeywordItem(
     ) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 6.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
                 text = keyword,

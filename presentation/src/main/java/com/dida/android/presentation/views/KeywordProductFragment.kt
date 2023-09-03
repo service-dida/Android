@@ -93,7 +93,7 @@ class KeywordProductFragment :
                         .fillMaxSize()
                         .background(MainBlack)
                 ) {
-                    CustomLinearProgressBar(progress = 0.5f)
+                    CustomLinearProgressBar(progress = 0.25f)
                     KeywordProductTitle()
                     KeywordMore(onButtonClicked = {})
                     Keywords(

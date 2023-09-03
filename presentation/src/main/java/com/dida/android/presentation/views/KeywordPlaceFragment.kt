@@ -79,7 +79,7 @@ class KeywordPlaceFragment :
                         .fillMaxSize()
                         .background(MainBlack)
                 ) {
-                    CustomLinearProgressBar(progress = 0.25f)
+                    CustomLinearProgressBar(progress = 0.5f)
                     KeywordPlaceTitle()
                     KeywordMore(onButtonClicked = {})
                     Keywords(

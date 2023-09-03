@@ -70,8 +70,7 @@ fun SelectedKeywordItem(
         shape = RoundedCornerShape(30.dp),
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 6.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
                 text = keyword,
