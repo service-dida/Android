@@ -16,7 +16,6 @@ import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
 import com.dida.common.customview.addOnFocusListener
 import com.dida.common.util.repeatOnCreated
-import com.dida.common.util.repeatOnStarted
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -58,19 +57,27 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.walletExistsState.collectLatest { existed ->
-                if (existed) {
-                    PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
-                        if (success) {
-                            getImageToGallery()
-                        } else {
-                            if (msg == "reset") navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
-                            else navController.popBackStack()
-                        }
-                    }.show(childFragmentManager, "AddFragment")
-                } else {
-                    showToastMessage("지갑을 생성해야 합니다!")
-                    navigate(AddFragmentDirections.actionAddFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
+            launch {
+                viewModel.walletExistsState.collectLatest { existed ->
+                    if (existed) {
+                        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
+                            if (success) {
+                                getImageToGallery()
+                            } else {
+                                if (msg == "reset") navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
+                                else navController.popBackStack()
+                            }
+                        }.show(childFragmentManager, "AddFragment")
+                    } else {
+                        showToastMessage("지갑을 생성해야 합니다!")
+                        navigate(AddFragmentDirections.actionAddFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.navigateToGallery.collectLatest {
+                    getImageToGallery()
                 }
             }
         }
@@ -151,12 +158,8 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
     }
 
     private fun initEditText() {
-        binding.titleEditText.addOnFocusListener(
-            focus = { handleEditTextFocus(it) }
-        )
-        binding.descriptionEditText.addOnFocusListener(
-            focus = { handleEditTextFocus(it) }
-        )
+        binding.titleEditText.addOnFocusListener(focus = { handleEditTextFocus(it) })
+        binding.descriptionEditText.addOnFocusListener(focus = { handleEditTextFocus(it) })
     }
 
     private fun handleEditTextFocus(hasFocus: Boolean): Unit {

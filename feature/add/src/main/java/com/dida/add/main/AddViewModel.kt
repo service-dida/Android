@@ -52,6 +52,9 @@ class AddViewModel @Inject constructor(
     private val _navigateToAddPurpose: MutableSharedFlow<Unit> = MutableSharedFlow()
     val navigateToAddPurpose: SharedFlow<Unit> = _navigateToAddPurpose.asSharedFlow()
 
+    private val _navigateToGallery: MutableSharedFlow<Unit> = MutableSharedFlow()
+    val navigateToGallery: SharedFlow<Unit> = _navigateToGallery.asSharedFlow()
+
     init {
         baseViewModelScope.launch {
             launch {
@@ -80,6 +83,12 @@ class AddViewModel @Inject constructor(
                     }
                 }
             dismissLoading()
+        }
+    }
+
+    fun onImageClicked() {
+        baseViewModelScope.launch {
+            _navigateToGallery.emit(Unit)
         }
     }
 
