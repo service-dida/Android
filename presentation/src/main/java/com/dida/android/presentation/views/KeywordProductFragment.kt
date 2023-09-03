@@ -59,9 +59,10 @@ class KeywordProductFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordNavigationAction.NavigateToSkip -> {}
-                    is KeywordNavigationAction.NavigateToNext -> { shardViewModel.insertKeyword(it.keyword) }
+                    is KeywordNavigationAction.NavigateToSkip -> Unit
+                    is KeywordNavigationAction.NavigateToNext -> shardViewModel.insertKeyword(it.keyword)
                 }
+                navigate(KeywordProductFragmentDirections.actionKeywordProductFragmentToKeywordPlaceFragment())
             }
         }
     }
@@ -89,7 +90,7 @@ class KeywordProductFragment :
                         .fillMaxSize()
                         .background(MainBlack)
                 ) {
-                    CustomLinearProgressBar(progress = 0.25f)
+                    CustomLinearProgressBar(progress = 0.5f)
                     KeywordProductTitle()
                     KeywordMore(onButtonClicked = {})
                     Keywords(

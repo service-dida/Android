@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views.ui
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -95,7 +96,7 @@ fun KeywordItem(
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 6.dp)
-                .clickableSingle { onKeywordClicked(keyword) }
+                .clickable { onKeywordClicked(keyword) }
         ) {
             Text(
                 text = keyword,

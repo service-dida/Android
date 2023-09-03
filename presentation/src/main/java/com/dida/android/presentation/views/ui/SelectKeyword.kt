@@ -65,6 +65,7 @@ fun SelectedKeywordItem(
     keyword: String
 ) {
     Surface(
+        modifier = Modifier.padding(vertical = 16.dp),
         color = White,
         shape = RoundedCornerShape(30.dp),
     ) {

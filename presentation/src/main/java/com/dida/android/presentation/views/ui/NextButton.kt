@@ -34,7 +34,7 @@ fun NextButton(
             .padding(horizontal = 16.dp),
         color = if (hasNext) BrandLemon else Surface4,
         shape = RoundedCornerShape(8.dp),
-        onClick = { onButtonClicked() }
+        onClick = { if (hasNext) onButtonClicked() else Unit }
     ) {
         Row(
             modifier = Modifier

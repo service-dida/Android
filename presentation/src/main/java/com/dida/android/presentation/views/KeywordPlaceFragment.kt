@@ -2,11 +2,31 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordPlaceBinding
+import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.place.KeywordPlaceViewModel
+import com.dida.android.presentation.views.ui.CustomLinearProgressBar
+import com.dida.android.presentation.views.ui.KeywordMore
+import com.dida.android.presentation.views.ui.KeywordPlaceTitle
+import com.dida.android.presentation.views.ui.KeywordProductTitle
+import com.dida.android.presentation.views.ui.Keywords
+import com.dida.android.presentation.views.ui.NextButton
+import com.dida.android.presentation.views.ui.SelectKeywordTitle
+import com.dida.android.presentation.views.ui.SelectKeywords
+import com.dida.android.presentation.views.ui.WriteKeyword
+import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +39,7 @@ class KeywordPlaceFragment :
         get() = com.dida.ai.R.layout.fragment_keyword_place // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel: KeywordPlaceViewModel by viewModels()
+    private val shardViewModel: KeywordViewModel by activityViewModels()
     private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -45,6 +66,34 @@ class KeywordPlaceFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
+                val keywords = viewModel.keywordsState.collectAsState()
+                val selectKeyword = viewModel.selectKeywordState.collectAsState()
+                val selectedKeywords = shardViewModel.keywords.collectAsState()
+                val hasNext = viewModel.nextState.collectAsState()
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MainBlack)
+                ) {
+                    CustomLinearProgressBar(progress = 0.25f)
+                    KeywordPlaceTitle()
+                    KeywordMore(onButtonClicked = {})
+                    Keywords(
+                        keywords = keywords.value,
+                        selectKeyword = selectKeyword.value,
+                        onKeywordClicked = { viewModel.onKeywordClicked(it) }
+                    )
+                    WriteKeyword(onButtonClicked = {})
+                    Spacer(modifier = Modifier.weight(1f))
+                    SelectKeywordTitle(isSelected = false)
+                    SelectKeywords(keywords = selectedKeywords.value)
+                    NextButton(
+                        hasNext = hasNext.value,
+                        onButtonClicked = { viewModel.onNextClicked() }
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }
