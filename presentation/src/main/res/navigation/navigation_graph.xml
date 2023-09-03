@@ -93,11 +93,6 @@
             app:destination="@id/emailFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
-        <action
-            android:id="@+id/action_addFragment_to_addPurposeFragment"
-            app:destination="@id/addPurposeFragment"
-            app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right" />
 
         <action
             android:id="@+id/action_addFragment_to_settingFragment"
@@ -106,6 +101,17 @@
             app:popUpToInclusive="true"
             app:popUpTo="@+id/homeFragment"
             app:enterAnim="@anim/enter_from_right"/>
+        <action
+            android:id="@+id/action_addFragment_to_keywordProductFragment"
+            app:destination="@id/keywordProductFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+
+        <action
+            android:id="@+id/action_addFragment_to_createNftFragment"
+            app:destination="@id/createNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -141,6 +147,17 @@
         <action
             android:id="@+id/action_createCommunityFragment_to_addFragment"
             app:destination="@id/addFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createNftFragment"
+        android:name="com.dida.android.presentation.views.CreateNftFragment"
+        android:label="CreateNftFragment" >
+        <action
+            android:id="@+id/action_createNftFragment_to_addPurposeFragment"
+            app:destination="@id/addPurposeFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
     </fragment>
@@ -311,6 +328,56 @@
         <argument
             android:name="requestEmailType"
             app:argType="com.dida.android.presentation.views.RequestEmailType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordProductFragment"
+        android:name="com.dida.android.presentation.views.KeywordProductFragment"
+        android:label="KeywordProductFragment" >
+        <action
+            android:id="@+id/action_keywordProductFragment_to_keywordPlaceFragment"
+            app:destination="@id/keywordPlaceFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordPlaceFragment"
+        android:name="com.dida.android.presentation.views.KeywordPlaceFragment"
+        android:label="KeywordPlaceFragment" >
+        <action
+            android:id="@+id/action_keywordPlaceFragment_to_keywordStyleFragment"
+            app:destination="@id/keywordStyleFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordStyleFragment"
+        android:name="com.dida.android.presentation.views.KeywordStyleFragment"
+        android:label="KeywordStyleFragment" >
+        <action
+            android:id="@+id/action_keywordStyleFragment_to_keywordColorFragment"
+            app:destination="@id/keywordColorFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordColorFragment"
+        android:name="com.dida.android.presentation.views.KeywordColorFragment"
+        android:label="KeywordColorFragment" >
+        <action
+            android:id="@+id/action_keywordColorFragment_to_keywordResultFragment"
+            app:destination="@id/keywordResultFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordResultFragment"
+        android:name="com.dida.android.presentation.views.KeywordResultFragment"
+        android:label="KeywordResultFragment" >
     </fragment>
 
     <fragment
