@@ -2,6 +2,14 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +19,15 @@ import com.dida.ai.databinding.FragmentKeywordProductBinding
 import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.product.KeywordProductViewModel
+import com.dida.android.presentation.views.ui.CustomLinearProgressBar
+import com.dida.android.presentation.views.ui.KeywordMore
+import com.dida.android.presentation.views.ui.KeywordProductTitle
+import com.dida.android.presentation.views.ui.Keywords
+import com.dida.android.presentation.views.ui.NextButton
+import com.dida.android.presentation.views.ui.SelectKeywordTitle
+import com.dida.android.presentation.views.ui.SelectKeywords
+import com.dida.android.presentation.views.ui.WriteKeyword
+import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -62,7 +79,34 @@ class KeywordProductFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
+                val keywords = viewModel.keywordsState.collectAsState()
+                val selectKeyword = viewModel.selectKeywordState.collectAsState()
+                val selectedKeywords = shardViewModel.keywords.collectAsState()
+                val hasNext = viewModel.nextState.collectAsState()
 
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MainBlack)
+                ) {
+                    CustomLinearProgressBar(progress = 0.25f)
+                    KeywordProductTitle()
+                    KeywordMore(onButtonClicked = {})
+                    Keywords(
+                        keywords = keywords.value,
+                        selectKeyword = selectKeyword.value,
+                        onKeywordClicked = { viewModel.onKeywordClicked(it) }
+                    )
+                    WriteKeyword(onButtonClicked = {})
+                    Spacer(modifier = Modifier.weight(1f))
+                    SelectKeywordTitle(isSelected = false)
+                    SelectKeywords(keywords = selectedKeywords.value)
+                    NextButton(
+                        hasNext = hasNext.value,
+                        onButtonClicked = { viewModel.onNextClicked() }
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }

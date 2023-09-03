@@ -1,0 +1,36 @@
+package com.dida.android.presentation.views.ui
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
+import com.dida.compose.theme.BrandLemon
+import com.dida.compose.theme.DidaTypography
+import com.dida.compose.theme.White
+import com.dida.compose.theme.dpToSp
+
+@Composable
+fun KeywordProductTitle() {
+    val annotationString = buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(color = BrandLemon)
+        ) {
+            append("무엇")
+        }
+        append("을 그려볼까요?")
+    }
+    Text(
+        text = annotationString,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 24.dp),
+        style = DidaTypography.h3,
+        fontSize = dpToSp(dp = 28.dp),
+        color = White
+    )
+}
