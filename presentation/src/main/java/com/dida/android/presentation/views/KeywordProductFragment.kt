@@ -72,7 +72,10 @@ class KeywordProductFragment :
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
-            this.setNavigationOnClickListener { navController.popBackStack() }
+            this.setNavigationOnClickListener {
+                shardViewModel.deleteKeyword(viewModel.selectKeywordState.value)
+                navController.popBackStack()
+            }
         }
     }
 

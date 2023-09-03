@@ -58,7 +58,10 @@ class KeywordPlaceFragment :
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
-            this.setNavigationOnClickListener { navController.popBackStack() }
+            this.setNavigationOnClickListener {
+                navController.popBackStack()
+                shardViewModel.deleteKeyword(viewModel.selectKeywordState.value)
+            }
         }
     }
 
