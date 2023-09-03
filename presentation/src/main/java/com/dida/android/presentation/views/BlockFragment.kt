@@ -19,11 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -32,7 +30,6 @@ import coil.compose.AsyncImage
 import com.dida.block.BlockViewModel
 import com.dida.block.databinding.FragmentBlockBinding
 import com.dida.compose.theme.BrandLemon
-import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Surface1
 import com.dida.compose.theme.White
@@ -71,10 +68,8 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
-                DIDA_THEME {
-                    val userList = viewModel.userListState.collectAsState()
-                    BlockScreen(userList.value)
-                }
+                val userList = viewModel.userListState.collectAsState()
+                BlockScreen(userList.value)
             }
         }
     }
@@ -166,15 +161,5 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
             }
         }
 
-    }
-}
-
-@Preview
-@Composable
-fun BlockPreview() {
-    DIDA_THEME {
-        BlockFragment().BlockScreen(
-            userList = emptyList()
-        )
     }
 }

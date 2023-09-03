@@ -74,7 +74,7 @@ fun WriteKeyword(
             )
             Spacer(modifier = Modifier.size(6.dp))
             Icon(
-                painter = painterResource(id = com.dida.common.R.drawable.ic_write),
+                painter = painterResource(id = com.dida.common.R.drawable.ic_write_fill),
                 contentDescription = "직접 입력 버튼",
                 tint = White
             )
