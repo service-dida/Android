@@ -1,5 +1,6 @@
 package com.dida.ai.keyword.place
 
+import com.dida.ai.keyword.KeywordActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.model.main.Collection
 import com.dida.domain.model.main.Follow
@@ -17,7 +18,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class KeywordPlaceViewModel @Inject constructor() : BaseViewModel() {
+class KeywordPlaceViewModel @Inject constructor(
+) : BaseViewModel(), KeywordActionHandler {
 
     private val TAG = "KeywordViewModel"
+
+    override fun onSkipClicked() {
+    }
+
+    override fun onNextClicked() {
+    }
+
+    override fun onKeywordClicked(keyword: String) {
+    }
 }

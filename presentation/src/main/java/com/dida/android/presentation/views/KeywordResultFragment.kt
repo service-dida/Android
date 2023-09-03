@@ -5,9 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.dida.ai.databinding.FragmentKeywordBinding
 import com.dida.ai.databinding.FragmentKeywordResultBinding
-import com.dida.ai.keyword.main.KeywordViewModel
 import com.dida.ai.keyword.result.KeywordResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
