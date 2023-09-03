@@ -92,7 +92,7 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            this.setNavigationIcon(com.dida.common.R.drawable.ic_close_white)
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
