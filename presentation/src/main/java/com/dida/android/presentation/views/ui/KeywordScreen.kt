@@ -236,7 +236,8 @@ fun StyleKeywordItem(
             modifier = modifier,
             model = imageUrl,
             contentDescription = "사진 이미지",
-            contentScale = ContentScale.FillBounds
+            contentScale = ContentScale.FillBounds,
+            alpha = 0.7f
         )
         Text(
             modifier = modifier
@@ -244,7 +245,7 @@ fun StyleKeywordItem(
                 .wrapContentHeight(Alignment.Bottom)
                 .padding(9.dp),
             text = keyword,
-            style = DidaTypography.h3,
+            style = DidaTypography.body1,
             fontSize = dpToSp(dp = 16.dp),
             color = White,
         )
@@ -271,15 +272,16 @@ fun SelectStyleKeywordItem(
         AsyncImage(
             modifier = modifier,
             model = imageUrl,
-            contentDescription = "유저 이미지",
-            contentScale = ContentScale.FillBounds
+            contentDescription = "사진 이미지",
+            contentScale = ContentScale.FillBounds,
+            alpha = 0.7f
         )
         Text(
             modifier = modifier
                 .wrapContentHeight(Alignment.Bottom)
                 .padding(9.dp),
             text = keyword,
-            style = DidaTypography.h3,
+            style = DidaTypography.body1,
             fontSize = dpToSp(dp = 16.dp),
             color = White,
         )
