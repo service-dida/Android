@@ -26,7 +26,6 @@ import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.DrawButton
 import com.dida.android.presentation.views.ui.KeywordMore
 import com.dida.android.presentation.views.ui.KeywordTitle
-import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
@@ -76,20 +75,9 @@ class KeywordColorFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
-                sharedViewModel.deleteKeyword(KeywordType.Color)
-                navController.popBackStack()
+                onPopBackStack()
             }
         }
-    }
-
-    private fun setOnBackPressedEvent() {
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                sharedViewModel.deleteKeyword(KeywordType.Color)
-                navController.popBackStack()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -129,5 +117,19 @@ class KeywordColorFragment :
                 }
             }
         }
+    }
+
+    private fun setOnBackPressedEvent() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onPopBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+    }
+
+    private fun onPopBackStack() {
+        sharedViewModel.deleteKeyword(KeywordType.Color)
+        navController.popBackStack()
     }
 }

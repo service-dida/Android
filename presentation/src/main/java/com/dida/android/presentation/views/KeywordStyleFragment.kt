@@ -79,20 +79,9 @@ class KeywordStyleFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
-                sharedViewModel.deleteKeyword(KeywordType.Style)
-                navController.popBackStack()
+                onPopBackStack()
             }
         }
-    }
-
-    private fun setOnBackPressedEvent() {
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                sharedViewModel.deleteKeyword(KeywordType.Style)
-                navController.popBackStack()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -138,5 +127,19 @@ class KeywordStyleFragment :
                 }
             }
         }
+    }
+
+    private fun setOnBackPressedEvent() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onPopBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+    }
+
+    private fun onPopBackStack() {
+        sharedViewModel.deleteKeyword(KeywordType.Style)
+        navController.popBackStack()
     }
 }

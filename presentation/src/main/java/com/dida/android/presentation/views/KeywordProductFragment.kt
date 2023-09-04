@@ -25,7 +25,6 @@ import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.product.KeywordProductViewModel
-import com.dida.android.R
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
 import com.dida.android.presentation.views.ui.KeywordTitle
@@ -35,7 +34,6 @@ import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
 import com.dida.common.dialog.CentralDialogFragment
-import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
