@@ -18,8 +18,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordColorBinding
+import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
+import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.color.KeywordColorViewModel
 import com.dida.android.presentation.views.ui.ColorKeywords
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
@@ -29,6 +31,7 @@ import com.dida.android.presentation.views.ui.KeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
+import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.utils.Divider16
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,10 +64,10 @@ class KeywordColorFragment :
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
-//                when (it) {
-//                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
-//                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
-//                }
+                when (it) {
+                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Color, BLANK)
+                    is KeywordNavigationAction.NavigateToNext -> showDrawDialog()
+                }
             }
         }
     }
@@ -131,5 +134,20 @@ class KeywordColorFragment :
     private fun onPopBackStack() {
         sharedViewModel.deleteKeyword(KeywordType.Color)
         navController.popBackStack()
+    }
+
+    // TODO : 시작하기 클릭시 로직 추가하기
+    private fun showDrawDialog() {
+        CentralDialogFragment.Builder()
+            .title(getString(com.dida.common.R.string.draw_dialog_title))
+            .message(getString(com.dida.common.R.string.draw_dialog_description))
+            .positiveButton(getString(com.dida.common.R.string.draw_dialog_positive), object : CentralDialogFragment.OnClickListener {
+                override fun onClick() {
+                    navigate(KeywordColorFragmentDirections.actionKeywordColorFragmentToKeywordResultFragment())
+                }
+            })
+            .negativeButton(getString(com.dida.common.R.string.draw_dialog_negative))
+            .build()
+            .show(childFragmentManager, "show_draw_dialog")
     }
 }
