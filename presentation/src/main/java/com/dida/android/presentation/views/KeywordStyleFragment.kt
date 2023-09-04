@@ -26,7 +26,7 @@ import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.style.KeywordStyleViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
-import com.dida.android.presentation.views.ui.KeywordStyleTitle
+import com.dida.android.presentation.views.ui.KeywordTitle
 import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
@@ -102,7 +102,7 @@ class KeywordStyleFragment :
                                 .background(MainBlack)
                         ) {
                             CustomLinearProgressBar(progress = 0.75f)
-                            KeywordStyleTitle()
+                            KeywordTitle(type = KeywordType.Style)
                             KeywordMore(onButtonClicked = {})
                             StyleKeywords(
                                 keywords = keywords.value,

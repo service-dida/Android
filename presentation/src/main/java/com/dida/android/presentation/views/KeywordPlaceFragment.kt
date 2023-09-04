@@ -26,7 +26,7 @@ import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.place.KeywordPlaceViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
-import com.dida.android.presentation.views.ui.KeywordPlaceTitle
+import com.dida.android.presentation.views.ui.KeywordTitle
 import com.dida.android.presentation.views.ui.Keywords
 import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
@@ -100,7 +100,7 @@ class KeywordPlaceFragment :
                         .background(MainBlack)
                 ) {
                     CustomLinearProgressBar(progress = 0.5f)
-                    KeywordPlaceTitle()
+                    KeywordTitle(type = KeywordType.Place)
                     KeywordMore(onButtonClicked = {})
                     Keywords(
                         keywords = keywords.value,

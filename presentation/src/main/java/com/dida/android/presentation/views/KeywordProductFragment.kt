@@ -26,7 +26,7 @@ import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.product.KeywordProductViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
-import com.dida.android.presentation.views.ui.KeywordProductTitle
+import com.dida.android.presentation.views.ui.KeywordTitle
 import com.dida.android.presentation.views.ui.Keywords
 import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
@@ -101,7 +101,7 @@ class KeywordProductFragment :
                         .background(MainBlack)
                 ) {
                     CustomLinearProgressBar(progress = 0.25f)
-                    KeywordProductTitle()
+                    KeywordTitle(type = KeywordType.Product)
                     KeywordMore(onButtonClicked = {})
                     Keywords(
                         keywords = keywords.value,

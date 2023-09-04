@@ -6,12 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -19,22 +17,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordColorBinding
-import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.color.KeywordColorViewModel
 import com.dida.android.presentation.views.ui.ColorKeywords
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
-import com.dida.android.presentation.views.ui.KeywordColorTitle
 import com.dida.android.presentation.views.ui.KeywordMore
-import com.dida.android.presentation.views.ui.KeywordPlaceTitle
-import com.dida.android.presentation.views.ui.Keywords
+import com.dida.android.presentation.views.ui.KeywordTitle
 import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
 import com.dida.compose.theme.MainBlack
-import com.dida.compose.utils.Divider12
 import com.dida.compose.utils.Divider16
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -100,7 +94,7 @@ class KeywordColorFragment :
                         .background(MainBlack)
                 ) {
                     CustomLinearProgressBar(progress = 1f)
-                    KeywordColorTitle()
+                    KeywordTitle(type = KeywordType.Color)
                     KeywordMore(onButtonClicked = {})
                     ColorKeywords(
                         selectKeyword = selectKeyword.value,
