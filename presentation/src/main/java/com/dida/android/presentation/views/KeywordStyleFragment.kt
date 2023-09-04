@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -57,6 +58,7 @@ class KeywordStyleFragment :
         }
         exception = viewModel.errorEvent
         initToolbar()
+        setOnBackPressedEvent()
     }
 
     override fun initDataBinding() {
@@ -81,6 +83,16 @@ class KeywordStyleFragment :
                 navController.popBackStack()
             }
         }
+    }
+
+    private fun setOnBackPressedEvent() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                sharedViewModel.deleteKeyword(KeywordType.Style)
+                navController.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
