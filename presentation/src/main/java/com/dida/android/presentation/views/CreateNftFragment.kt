@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.databinding.FragmentCreateNftBinding
@@ -34,6 +35,7 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
     override val viewModel: CreateNftViewModel by viewModels()
 
     private val navController: NavController by lazy { findNavController() }
+    private val args: CreateNftFragmentArgs by navArgs()
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
@@ -47,6 +49,7 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
         initToolbar()
         initNextButton()
         initRegisterForActivityResult()
+        initImage()
     }
 
     override fun initDataBinding() {
@@ -62,6 +65,14 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
     override fun onResume() {
         super.onResume()
         initEditText()
+    }
+
+    private fun initImage() {
+        if (args.imgUrl == null) {
+            getImageToGallery()
+        } else {
+            viewModel.setNFTImage(Uri.parse(args.imgUrl))
+        }
     }
 
     private fun initRegisterForActivityResult() {

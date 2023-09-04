@@ -155,6 +155,11 @@
         android:id="@+id/createNftFragment"
         android:name="com.dida.android.presentation.views.CreateNftFragment"
         android:label="CreateNftFragment" >
+        <argument
+            android:name="imgUrl"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
         <action
             android:id="@+id/action_createNftFragment_to_addPurposeFragment"
             app:destination="@id/addPurposeFragment"
