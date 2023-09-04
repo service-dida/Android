@@ -3,15 +3,18 @@ package com.dida.android.presentation.views
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordResultBinding
 import com.dida.ai.keyword.result.KeywordResultViewModel
+import com.dida.compose.theme.dpToSp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,8 +53,25 @@ class KeywordResultFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
-                Text(text = "키워드 재선택하기", modifier = Modifier.padding(16.dp).clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToKeywordProductFragment()) })
-                Text(text = "NFT 만들기", modifier = Modifier.padding(16.dp).clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment()) })
+                Column {
+                    Text(
+                        text = "키워드 재선택하기",
+                        fontSize = dpToSp(dp = 16.dp),
+                        color = Color.White,
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToKeywordProductFragment()) }
+                    )
+                    Text(
+                        text = "NFT 만들기",
+                        fontSize = dpToSp(dp = 16.dp),
+                        color = Color.White,
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment()) }
+                    )
+                }
+
             }
         }
     }
