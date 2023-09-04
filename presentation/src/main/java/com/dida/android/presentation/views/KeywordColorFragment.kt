@@ -74,6 +74,7 @@ class KeywordColorFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
+                sharedViewModel.deleteKeyword(KeywordType.Color)
                 navController.popBackStack()
             }
         }
