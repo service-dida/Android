@@ -1,13 +1,12 @@
 package com.dida.android.presentation.views.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -18,10 +17,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dida.ai.R
+import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
+import com.dida.compose.utils.Divider10
 
 @Composable
 fun SelectKeywordTitle(
@@ -38,7 +39,6 @@ fun SelectKeywordTitle(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SelectKeywords(
     keywords: List<String>
@@ -46,16 +46,17 @@ fun SelectKeywords(
     if (keywords.isEmpty()) {
         Spacer(modifier = Modifier.height(80.dp))
     } else {
-        FlowRow(
+        LazyRow(
             modifier = Modifier
-                .height(80.dp)
-                .padding(horizontal = 16.dp),
+                .height(80.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            repeat(keywords.size) { position ->
-                if (keywords[position] != "") SelectedKeywordItem(keyword = keywords[position])
+            item { Divider10() }
+            items(keywords.size) {
+                if(keywords[it] != BLANK) SelectedKeywordItem(keyword = keywords[it])
             }
+            item { Divider10() }
         }
     }
 }
