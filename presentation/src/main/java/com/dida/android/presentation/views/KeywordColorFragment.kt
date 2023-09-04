@@ -58,10 +58,10 @@ class KeywordColorFragment :
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
-                when (it) {
-                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
-                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
-                }
+//                when (it) {
+//                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
+//                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
+//                }
             }
         }
     }

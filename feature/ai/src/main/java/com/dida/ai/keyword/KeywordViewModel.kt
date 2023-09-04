@@ -10,20 +10,28 @@ import javax.inject.Inject
 @HiltViewModel
 class KeywordViewModel @Inject constructor(): BaseViewModel() {
 
-    private val _keywords: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
-    val keywords: StateFlow<List<String>> = _keywords.asStateFlow()
+    private val _keywords: MutableStateFlow<List<String>> = MutableStateFlow(listOf(BLANK, BLANK, BLANK, BLANK))
+    var keywords: StateFlow<List<String>> = _keywords.asStateFlow()
 
-    fun insertKeyword(keyword: String) {
-        val newKeywords: ArrayList<String> = ArrayList<String>().apply {
-            this.addAll(_keywords.value)
-            add(keyword)
+    fun insertKeyword(type: KeywordType, keyword: String) {
+        val insertedKeywords = _keywords.value.toMutableList().apply {
+            this[type.index] = keyword
         }
-        _keywords.value = newKeywords
+        _keywords.value = insertedKeywords
     }
 
-    fun deleteKeyword(index: Int) {
-        val newKeywords: MutableList<String> = _keywords.value.toMutableList()
-        newKeywords.removeAt(index)
-        _keywords.value = newKeywords
+    fun deleteKeyword(type: KeywordType) {
+        val deletedKeywords = _keywords.value.toMutableList().apply {
+            this[type.index] = BLANK
+        }
+        _keywords.value = deletedKeywords
     }
+
+    companion object {
+        const val BLANK = ""
+    }
+}
+
+enum class KeywordType(val index: Int) {
+    Product(0), Place(1), Style(2), Color(3)
 }

@@ -57,11 +57,11 @@ class KeywordPlaceFragment :
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
-                when (it) {
-                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
-                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
-                }
-                navigate(KeywordPlaceFragmentDirections.actionKeywordPlaceFragmentToKeywordStyleFragment())
+//                when (it) {
+//                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
+//                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
+//                }
+//                navigate(KeywordPlaceFragmentDirections.actionKeywordPlaceFragmentToKeywordStyleFragment())
             }
         }
     }
@@ -72,7 +72,7 @@ class KeywordPlaceFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
-                sharedViewModel.deleteKeyword(1)
+//                sharedViewModel.deleteKeyword(1)
                 navController.popBackStack()
             }
         }
