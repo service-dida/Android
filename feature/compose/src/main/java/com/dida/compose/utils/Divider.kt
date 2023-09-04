@@ -12,6 +12,11 @@ fun Divider8() {
 }
 
 @Composable
+fun Divider10() {
+    Spacer(modifier = Modifier.size(10.dp))
+}
+
+@Composable
 fun Divider12() {
     Spacer(modifier = Modifier.size(12.dp))
 }

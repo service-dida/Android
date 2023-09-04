@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
@@ -17,7 +20,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordStyleBinding
 import com.dida.ai.keyword.KeywordNavigationAction
+import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
+import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.style.KeywordStyleViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
@@ -57,11 +62,11 @@ class KeywordStyleFragment :
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
-//                when (it) {
-//                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword("")
-//                    is KeywordNavigationAction.NavigateToNext -> sharedViewModel.insertKeyword(viewModel.selectKeywordState.value)
-//                }
-//                navigate(KeywordStyleFragmentDirections.actionKeywordStyleFragmentToKeywordColorFragment())
+                when (it) {
+                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Style, BLANK)
+                    is KeywordNavigationAction.NavigateToNext -> {}
+                }
+                navigate(KeywordStyleFragmentDirections.actionKeywordStyleFragmentToKeywordColorFragment())
             }
         }
     }
@@ -72,7 +77,7 @@ class KeywordStyleFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
-//                sharedViewModel.deleteKeyword(2)
+                sharedViewModel.deleteKeyword(KeywordType.Style)
                 navController.popBackStack()
             }
         }
@@ -86,8 +91,10 @@ class KeywordStyleFragment :
                     setContent {
                         val keywords = viewModel.keywordsState.collectAsStateWithLifecycle()
                         val selectKeyword = viewModel.selectKeywordState.collectAsStateWithLifecycle()
-                        val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
                         val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
+
+                        val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
+                        val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it != "" } > 0 } }
 
                         Column(
                             modifier = Modifier
@@ -100,11 +107,14 @@ class KeywordStyleFragment :
                             StyleKeywords(
                                 keywords = keywords.value,
                                 selectKeyword = selectKeyword.value,
-                                onKeywordClicked = { viewModel.onKeywordClicked(it) }
+                                onKeywordClicked = {
+                                    viewModel.onKeywordClicked(it)
+                                    sharedViewModel.insertKeyword(KeywordType.Style, it)
+                                }
                             )
                             WriteKeyword(onButtonClicked = {})
                             Spacer(modifier = Modifier.weight(1f))
-                            SelectKeywordTitle(isSelected = selectedKeywords.value.isNotEmpty())
+                            SelectKeywordTitle(isSelected = selectedCount)
                             SelectKeywords(keywords = selectedKeywords.value)
                             NextButton(
                                 hasNext = hasNext.value,
