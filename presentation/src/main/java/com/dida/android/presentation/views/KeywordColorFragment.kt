@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
@@ -17,10 +20,12 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordColorBinding
 import com.dida.ai.keyword.KeywordNavigationAction
+import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.color.KeywordColorViewModel
 import com.dida.android.presentation.views.ui.ColorKeywords
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
+import com.dida.android.presentation.views.ui.KeywordColorTitle
 import com.dida.android.presentation.views.ui.KeywordMore
 import com.dida.android.presentation.views.ui.KeywordPlaceTitle
 import com.dida.android.presentation.views.ui.Keywords
@@ -29,6 +34,8 @@ import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
 import com.dida.compose.theme.MainBlack
+import com.dida.compose.utils.Divider12
+import com.dida.compose.utils.Divider16
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -82,8 +89,10 @@ class KeywordColorFragment :
         binding.composeView.apply {
             setContent {
                 val selectKeyword = viewModel.selectKeywordState.collectAsStateWithLifecycle()
-                val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
                 val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
+
+                val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
+                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it != "" } > 0 } }
 
                 Column(
                     modifier = Modifier
@@ -91,21 +100,24 @@ class KeywordColorFragment :
                         .background(MainBlack)
                 ) {
                     CustomLinearProgressBar(progress = 1f)
-                    KeywordPlaceTitle()
+                    KeywordColorTitle()
                     KeywordMore(onButtonClicked = {})
                     ColorKeywords(
                         selectKeyword = selectKeyword.value,
-                        onKeywordClicked = { viewModel.onKeywordClicked(it) }
+                        onKeywordClicked = {
+                            viewModel.onKeywordClicked(it)
+                            sharedViewModel.insertKeyword(KeywordType.Color, it)
+                        }
                     )
                     WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
-                    SelectKeywordTitle(isSelected = selectedKeywords.value.isNotEmpty())
+                    SelectKeywordTitle(isSelected = selectedCount)
                     SelectKeywords(keywords = selectedKeywords.value)
                     NextButton(
                         hasNext = hasNext.value,
                         onButtonClicked = { viewModel.onNextClicked() }
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Divider16()
                 }
             }
         }

@@ -235,7 +235,7 @@ fun StyleKeywordItem(
         AsyncImage(
             modifier = modifier,
             model = imageUrl,
-            contentDescription = "유저 이미지",
+            contentDescription = "사진 이미지",
             contentScale = ContentScale.FillBounds
         )
         Text(

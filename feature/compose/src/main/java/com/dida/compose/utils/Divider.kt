@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+
 @Composable
 fun Divider8() {
     Spacer(modifier = Modifier.size(8.dp))
@@ -19,4 +20,9 @@ fun Divider10() {
 @Composable
 fun Divider12() {
     Spacer(modifier = Modifier.size(12.dp))
+}
+
+@Composable
+fun Divider16() {
+    Spacer(modifier = Modifier.size(16.dp))
 }

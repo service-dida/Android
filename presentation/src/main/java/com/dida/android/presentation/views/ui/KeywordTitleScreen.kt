@@ -78,3 +78,24 @@ fun KeywordStyleTitle() {
         color = White
     )
 }
+
+@Composable
+fun KeywordColorTitle() {
+    val annotationString = buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(color = BrandLemon)
+        ) {
+            append("어떤 색")
+        }
+        append("의 그림으로 \n그려드릴까요?")
+    }
+    Text(
+        text = annotationString,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 24.dp),
+        style = DidaTypography.h3,
+        fontSize = dpToSp(dp = 28.dp),
+        color = White
+    )
+}
