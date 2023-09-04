@@ -17,6 +17,11 @@
     <string name="delete_comment_title">댓글을 정말로 삭제할까요?</string>
     <string name="delete_comment_description">삭제한 댓글은 되돌릴 수 없어요</string>
 
+    <string name="draw_back_dialog_title">아직 그림이 완성되지 않았어요!</string>
+    <string name="draw_back_dialog_description">디다로 그림그리기를 나가시겠어요?\n작성중이던 내용은 저장되지 않아요.</string>
+    <string name="draw_back_dialog_positive">나가기</string>
+    <string name="draw_back_dialog_negative">계속 그리기</string>
+
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
 

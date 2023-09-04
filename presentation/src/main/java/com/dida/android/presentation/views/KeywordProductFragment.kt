@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +25,7 @@ import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.product.KeywordProductViewModel
+import com.dida.android.R
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
 import com.dida.android.presentation.views.ui.KeywordTitle
@@ -32,6 +34,8 @@ import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
+import com.dida.common.dialog.CentralDialogFragment
+import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -58,6 +62,7 @@ class KeywordProductFragment :
         }
         exception = viewModel.errorEvent
         initToolbar()
+        setOnBackPressedEvent()
     }
 
     override fun initDataBinding() {
@@ -78,8 +83,7 @@ class KeywordProductFragment :
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener {
-                sharedViewModel.deleteKeyword(KeywordType.Product)
-                navController.popBackStack()
+                showDrawBackDialog()
             }
         }
     }
@@ -123,5 +127,29 @@ class KeywordProductFragment :
                 }
             }
         }
+    }
+
+    private fun setOnBackPressedEvent() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showDrawBackDialog()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+    }
+
+    private fun showDrawBackDialog() {
+        CentralDialogFragment.Builder()
+            .title(getString(com.dida.common.R.string.draw_back_dialog_title))
+            .message(getString(com.dida.common.R.string.draw_back_dialog_description))
+            .positiveButton(getString(com.dida.common.R.string.draw_back_dialog_positive), object : CentralDialogFragment.OnClickListener {
+                override fun onClick() {
+                    sharedViewModel.deleteKeyword(KeywordType.Product)
+                    navController.popBackStack()
+                }
+            })
+            .negativeButton(getString(com.dida.common.R.string.draw_back_dialog_negative))
+            .build()
+            .show(childFragmentManager, "show_draw_dialog")
     }
 }

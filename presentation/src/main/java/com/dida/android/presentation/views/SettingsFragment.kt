@@ -109,7 +109,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     private fun logOutDialog() {
         CentralDialogFragment.Builder()
-            .message(getString(R.string.logout_dialog_message))
+            .title(getString(R.string.logout_dialog_message))
             .positiveButton(getString(R.string.logout_dialog_positive), object : CentralDialogFragment.OnClickListener {
                 override fun onClick() {
                     viewModel.logOut()
