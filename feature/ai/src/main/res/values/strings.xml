@@ -2,6 +2,7 @@
     <!--AI 키워드 그리기-->
     <string name="ai_keyword_title">AI 키워드 그리기</string>
     <string name="next">다음</string>
+    <string name="draw">그리기</string>
     <string name="skip">건너뛰기</string>
     <string name="more_keyword">추천 단어 더보기</string>
     <string name="write_keyword">직접 입력</string>

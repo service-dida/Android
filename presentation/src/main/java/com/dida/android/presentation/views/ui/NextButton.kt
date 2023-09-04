@@ -53,3 +53,35 @@ fun NextButton(
         }
     }
 }
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun DrawButton(
+    hasNext: Boolean,
+    onButtonClicked: () -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        color = if (hasNext) BrandLemon else Surface4,
+        shape = RoundedCornerShape(8.dp),
+        onClick = { if (hasNext) onButtonClicked() else Unit }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(id = R.string.draw),
+                style = DidaTypography.h3,
+                fontSize = dpToSp(dp = 16.dp),
+                color = if (hasNext) MainBlack else Surface6,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}

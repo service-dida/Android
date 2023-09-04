@@ -22,6 +22,7 @@ import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.color.KeywordColorViewModel
 import com.dida.android.presentation.views.ui.ColorKeywords
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
+import com.dida.android.presentation.views.ui.DrawButton
 import com.dida.android.presentation.views.ui.KeywordMore
 import com.dida.android.presentation.views.ui.KeywordTitle
 import com.dida.android.presentation.views.ui.NextButton
@@ -107,7 +108,7 @@ class KeywordColorFragment :
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
                     SelectKeywords(keywords = selectedKeywords.value)
-                    NextButton(
+                    DrawButton(
                         hasNext = hasNext.value,
                         onButtonClicked = { viewModel.onNextClicked() }
                     )

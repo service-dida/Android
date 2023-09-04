@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,6 +26,7 @@ import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.Divider10
+import kotlinx.coroutines.launch
 
 @Composable
 fun SelectKeywordTitle(
@@ -43,6 +47,15 @@ fun SelectKeywordTitle(
 fun SelectKeywords(
     keywords: List<String>
 ) {
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = keywords) {
+        coroutineScope.launch {
+            listState.scrollToItem(keywords.size)
+        }
+    }
+
     if (keywords.isEmpty()) {
         Spacer(modifier = Modifier.height(80.dp))
     } else {
@@ -50,7 +63,8 @@ fun SelectKeywords(
             modifier = Modifier
                 .height(80.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            state = listState
         ) {
             item { Divider10() }
             items(keywords.size) {
