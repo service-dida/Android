@@ -26,19 +26,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
-import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.KakaoYellow
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.White
+import com.dida.compose.theme.dpToSp
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.dida.login.databinding.FragmentLoginmainBinding
@@ -220,7 +218,7 @@ class LoginMainFragment :
                 Text(
                     text = stringResource(id = R.string.kakao_login),
                     style = DidaTypography.h3,
-                    fontSize = 15.sp,
+                    fontSize = dpToSp(dp = 15.dp),
                     color = MainBlack,
                     textAlign = TextAlign.Center
                 )
@@ -249,23 +247,10 @@ class LoginMainFragment :
                     .padding(vertical = 16.dp),
                 text = stringResource(id = R.string.kakao_login_web),
                 style = DidaTypography.h3,
-                fontSize = 15.sp,
+                fontSize = dpToSp(dp = 15.dp),
                 color = White,
                 textAlign = TextAlign.Center
             )
         }
-    }
-}
-
-
-@Preview
-@Composable
-fun LoginPreview() {
-    DIDA_THEME {
-        LoginMainFragment().LoginScreen(
-            onKakaoLoginClicked = {},
-            onKakakoWebLoginClicked = {},
-            onCloseButtonClicked = {}
-        )
     }
 }

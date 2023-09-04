@@ -19,23 +19,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.common.dialog.CentralDialogFragment
-import com.dida.compose.theme.DIDA_THEME
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.LineSurface
 import com.dida.compose.theme.MainBlack
@@ -112,7 +109,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     private fun logOutDialog() {
         CentralDialogFragment.Builder()
-            .message(getString(R.string.logout_dialog_message))
+            .title(getString(R.string.logout_dialog_message))
             .positiveButton(getString(R.string.logout_dialog_positive), object : CentralDialogFragment.OnClickListener {
                 override fun onClick() {
                     viewModel.logOut()
@@ -147,7 +144,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 .fillMaxSize()
                 .background(MainBlack)
         ) {
-            val settings by viewModel.settings.collectAsState()
+            val settings by viewModel.settings.collectAsStateWithLifecycle()
 
             settings.forEach {
                 SettingType(type = it, onClicked = onClicked)
@@ -287,16 +284,5 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     .background(LineSurface)
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun SettingPreview() {
-    DIDA_THEME {
-        SettingsFragment().SettingScreen(
-            onClicked = {},
-            onLogOutClicked = {}
-        )
     }
 }
