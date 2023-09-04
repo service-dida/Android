@@ -2,6 +2,11 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -37,7 +42,7 @@ class KeywordResultFragment :
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_close_white)
-            this.setNavigationOnClickListener { navController.popBackStack() }
+            this.setNavigationOnClickListener { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToAddFragment()) }
         }
     }
 
@@ -45,6 +50,8 @@ class KeywordResultFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
+                Text(text = "키워드 재선택하기", modifier = Modifier.padding(16.dp).clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToKeywordProductFragment()) })
+                Text(text = "NFT 만들기", modifier = Modifier.padding(16.dp).clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment()) })
             }
         }
     }

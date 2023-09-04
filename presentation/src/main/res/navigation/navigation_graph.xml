@@ -383,6 +383,27 @@
         android:id="@+id/keywordResultFragment"
         android:name="com.dida.android.presentation.views.KeywordResultFragment"
         android:label="KeywordResultFragment" >
+        <action
+            android:id="@+id/action_keywordResultFragment_to_keywordProductFragment"
+            app:destination="@id/keywordProductFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpTo="@id/keywordProductFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_keywordResultFragment_to_createNftFragment"
+            app:destination="@id/createNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpTo="@id/keywordProductFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_keywordResultFragment_to_addFragment"
+            app:destination="@id/addFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right"
+            app:popUpTo="@id/addFragment"
+            app:popUpToInclusive="true"  />
     </fragment>
 
     <fragment

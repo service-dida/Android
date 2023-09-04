@@ -1,6 +1,7 @@
 package com.dida.android.presentation.views
 
 import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -8,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
+import com.dida.ai.keyword.KeywordViewModel
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -22,6 +24,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         get() = R.layout.fragment_add
 
     override val viewModel: AddViewModel by viewModels()
+    private val sharedViewModel: KeywordViewModel by activityViewModels()
     private val navController: NavController by lazy { findNavController() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +39,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
         exception = viewModel.errorEvent
         initToolbar()
+        sharedViewModel.initKeywords()
     }
 
     override fun initDataBinding() {
