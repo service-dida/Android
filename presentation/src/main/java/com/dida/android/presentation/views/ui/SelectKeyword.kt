@@ -54,7 +54,7 @@ fun SelectKeywords(
             verticalAlignment = Alignment.CenterVertically
         ) {
             repeat(keywords.size) { position ->
-                SelectedKeywordItem(keyword = keywords[position])
+                if (keywords[position] != "") SelectedKeywordItem(keyword = keywords[position])
             }
         }
     }

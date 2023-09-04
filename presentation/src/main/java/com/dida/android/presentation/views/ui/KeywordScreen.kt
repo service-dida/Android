@@ -3,14 +3,12 @@ package com.dida.android.presentation.views.ui
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -21,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,11 +27,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.dida.ai.R
+import com.dida.compose.theme.Blue
+import com.dida.compose.theme.BlueGreen
 import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DidaTypography
+import com.dida.compose.theme.Green
+import com.dida.compose.theme.GreenYellow
 import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.Mono
+import com.dida.compose.theme.Orange
+import com.dida.compose.theme.OrangeRed
+import com.dida.compose.theme.Red
+import com.dida.compose.theme.RedViolet
 import com.dida.compose.theme.Surface2
+import com.dida.compose.theme.Violet
+import com.dida.compose.theme.VioletBlue
 import com.dida.compose.theme.White
+import com.dida.compose.theme.Yellow
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.clickableSingle
 
@@ -69,17 +80,52 @@ fun StyleKeywords(
         repeat(keywords.size) { position ->
             if (keywords[position].second == selectKeyword) {
                 SelectStyleKeywordItem(
-                    modifier = Modifier.weight(1f).aspectRatio(0.9f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .aspectRatio(0.9f),
                     imageUrl = keywords[position].first,
                     keyword = keywords[position].second
                 )
             } else {
                 StyleKeywordItem(
-                    modifier = Modifier.weight(1f).aspectRatio(0.9f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .aspectRatio(0.9f),
                     imageUrl = keywords[position].first,
                     keyword = keywords[position].second,
                     onKeywordClicked = { onKeywordClicked(it) }
                 )
+            }
+        }
+    }
+}
+
+val colors = listOf(
+    Pair(Red, "Red"), Pair(OrangeRed, "Orange Red"), Pair(Orange, "Orange"), Pair(Yellow, "Yellow"),
+    Pair(GreenYellow, "Green Yellow"), Pair(Green, "Green"), Pair(BlueGreen, "Blue Green"), Pair(Blue, "Blue"),
+    Pair(VioletBlue, "Violet Blue"), Pair(Violet, "Violet"), Pair(RedViolet, "Red Violet"), Pair(Mono, "Mono")
+)
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun ColorKeywords(
+    keywords: List<Pair<Color, String>> = colors,
+    selectKeyword: String = "",
+    onKeywordClicked: (keyword: String) -> Unit
+) {
+    FlowRow(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        repeat(keywords.size) { position ->
+            if (selectKeyword.isBlank()) {
+                ColorKeywordItem(color = keywords[position].first, keyword = keywords[position].second, onKeywordClicked = { onKeywordClicked(it) })
+            } else {
+                if (keywords[position].second == selectKeyword) {
+                    ColorKeywordItem(color = keywords[position].first, keyword = keywords[position].second, onKeywordClicked = { })
+                } else {
+                    Surface2ColorKeyword2Item(keyword = keywords[position].second, onKeywordClicked = { onKeywordClicked(it) })
+                }
             }
         }
     }
@@ -149,6 +195,30 @@ fun KeywordItem(
 }
 
 @Composable
+fun SelectKeywordItem(
+    keyword: String
+) {
+    Surface(
+        color = BrandLemon,
+        shape = RoundedCornerShape(30.dp),
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            Text(
+                text = keyword,
+                style = DidaTypography.h3,
+                fontSize = dpToSp(dp = 16.dp),
+                color = MainBlack,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+@Composable
 fun StyleKeywordItem(
     modifier: Modifier,
     imageUrl: Int,
@@ -178,31 +248,6 @@ fun StyleKeywordItem(
             fontSize = dpToSp(dp = 16.dp),
             color = White,
         )
-    }
-}
-
-
-@Composable
-fun SelectKeywordItem(
-    keyword: String
-) {
-    Surface(
-        color = BrandLemon,
-        shape = RoundedCornerShape(30.dp),
-        modifier = Modifier.padding(vertical = 4.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-            Text(
-                text = keyword,
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 16.dp),
-                color = MainBlack,
-                textAlign = TextAlign.Center
-            )
-        }
     }
 }
 
@@ -238,5 +283,58 @@ fun SelectStyleKeywordItem(
             fontSize = dpToSp(dp = 16.dp),
             color = White,
         )
+    }
+}
+
+@Composable
+fun ColorKeywordItem(
+    color: Color,
+    keyword: String,
+    onKeywordClicked: (keyword: String) -> Unit
+) {
+    Surface(
+        color = color,
+        shape = RoundedCornerShape(30.dp),
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .clickable { onKeywordClicked(keyword) }
+        ) {
+            Text(
+                text = keyword,
+                style = DidaTypography.h3,
+                fontSize = dpToSp(dp = 16.dp),
+                color = MainBlack,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+@Composable
+fun Surface2ColorKeyword2Item(
+    keyword: String,
+    onKeywordClicked: (keyword: String) -> Unit
+) {
+    Surface(
+        color = Surface2,
+        shape = RoundedCornerShape(30.dp),
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .clickable { onKeywordClicked(keyword) }
+        ) {
+            Text(
+                text = keyword,
+                style = DidaTypography.h3,
+                fontSize = dpToSp(dp = 16.dp),
+                color = White,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

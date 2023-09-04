@@ -103,7 +103,7 @@ class KeywordProductFragment :
                     )
                     WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
-                    SelectKeywordTitle(isSelected = false)
+                    SelectKeywordTitle(isSelected = selectedKeywords.value.isNotEmpty())
                     SelectKeywords(keywords = selectedKeywords.value)
                     NextButton(
                         hasNext = hasNext.value,
