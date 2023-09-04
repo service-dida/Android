@@ -1,33 +1,28 @@
 package com.dida.common.customview
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.dida.common.R
-import kotlinx.coroutines.delay
 
-
-class CustomEditText @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : AppCompatEditText(context, attrs, defStyleAttr) {
-    init {
-        //포커스에 따라 테두리색 변경
+fun EditText.addOnFocusListener(
+    focus: (Boolean) -> Unit
+) {
+    val editText = this
+    editText.apply {
         setOnFocusChangeListener { _, isFocus ->
             if (isFocus) {
                 setBackgroundResource(R.drawable.custom_brandlemon_radius10_surface5_width1)
                 showKeyBoard()
+                focus(true)
             } else {
                 setBackgroundResource(R.drawable.custom_surface2_radius10_surface5_width1)
                 hideKeyBoard()
+                focus(false)
             }
         }
 
@@ -35,7 +30,7 @@ class CustomEditText @JvmOverloads constructor(
         if (maxLines == 1) {
             val imgDrawable = ContextCompat.getDrawable(context, R.drawable.ic_remove_text)
             setCompoundDrawablesWithIntrinsicBounds(null, null, imgDrawable, null)
-            setOnTouchListener(object : OnTouchListener {
+            setOnTouchListener(object : View.OnTouchListener {
                 @SuppressLint("ClickableViewAccessibility")
                 override fun onTouch(v: View, motionEvent: MotionEvent): Boolean {
                     val view = v as EditText
@@ -50,19 +45,22 @@ class CustomEditText @JvmOverloads constructor(
             })
         }
     }
+}
 
-    private fun showKeyBoard() {
-        val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.showSoftInput(this, 0)
-    }
+private fun EditText.showKeyBoard() {
+    val editText = this
+    val inputMethodManager = editText.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.showSoftInput(editText, 0)
+}
 
-    private fun hideKeyBoard() {
-        val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
-    }
+private fun EditText.hideKeyBoard() {
+    val editText = this
+    val inputMethodManager = editText.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
+}
 
-    fun errorEvent() {
-        hideKeyBoard()
-        this.setBackgroundResource(R.drawable.custom_noticered_radius10_surface5_width1)
-    }
+private fun EditText.errorEvent() {
+    val editText = this
+    hideKeyBoard()
+    editText.setBackgroundResource(R.drawable.custom_noticered_radius10_surface5_width1)
 }

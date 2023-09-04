@@ -3,6 +3,8 @@ package com.dida.android.presentation.views
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.util.TypedValue
+import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -12,7 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
-import com.dida.common.util.repeatOnStarted
+import com.dida.common.customview.addOnFocusListener
+import com.dida.common.util.repeatOnCreated
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -41,42 +44,56 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         }
 
     override fun initStartView() {
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
         initToolbar()
+        initNextButton()
         initRegisterForActivityResult()
-        viewModel.getWalletExists()
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.walletExistsState.collectLatest { existed ->
-                if (existed) {
-                    PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
-                        if (success) {
-                            getImageToGallery()
-                        } else {
-                            if (msg == "reset") navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
-                            else navController.popBackStack()
-                        }
-                    }.show(childFragmentManager, "AddFragment")
-                } else {
-                    showToastMessage("지갑을 생성해야 합니다!")
-                    navigate(AddFragmentDirections.actionAddFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
+            launch {
+                viewModel.walletExistsState.collectLatest { existed ->
+                    if (existed) {
+                        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
+                            if (success) {
+                                getImageToGallery()
+                            } else {
+                                if (msg == "reset") navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
+                                else navController.popBackStack()
+                            }
+                        }.show(childFragmentManager, "AddFragment")
+                    } else {
+                        showToastMessage("지갑을 생성해야 합니다!")
+                        navigate(AddFragmentDirections.actionAddFragmentToEmailFragment(RequestEmailType.MAKE_WALLET))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.navigateToGallery.collectLatest {
+                    getImageToGallery()
                 }
             }
         }
 
-        viewLifecycleOwner.repeatOnStarted {
+        viewLifecycleOwner.repeatOnCreated {
             viewModel.nftImageState.collectLatest {
+                if (it.isBlank()) viewModel.getWalletExists()
             }
         }
     }
 
-    override fun initAfterBinding() {
+    override fun initAfterBinding() {}
+
+    override fun onResume() {
+        super.onResume()
+        initEditText()
     }
 
     private fun initRegisterForActivityResult() {
@@ -109,30 +126,25 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }
-            this.inflateMenu(R.menu.menu_add_toolbar)
-            this.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.add_next_step -> {
-                        if (viewModel.titleLengthState.value == 0 || viewModel.descriptionLengthState.value == 0) {
-                            isSelected = false
-                            showToastMessage("제목과 설명을 모두 입력해주세요.")
-                        } else if (viewModel.nftImageState.value == "") {
-                            isSelected = false
-                            showToastMessage("NFT에 사용할 이미지를 골라주세요.")
-                        } else {
-                            isSelected = true
-                            //사진,제목, 설명 이동
-                            val action =
-                                AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
-                                    viewModel.nftImageState.value,
-                                    viewModel.titleTextState.value,
-                                    viewModel.descriptionTextState.value
-                                )
-                            navigate(action)
-                        }
-                    }
+        }
+    }
+
+    private fun initNextButton() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigateToAddPurpose.collectLatest {
+                if (!viewModel.hasNextState.value) {
+                    showToastMessage(getString(R.string.not_yet_title_and_description))
+                } else if (viewModel.nftImageState.value == "") {
+                    showToastMessage(getString(R.string.not_yet_image))
+                } else {
+                    val action =
+                        AddFragmentDirections.actionAddFragmentToAddPurposeFragment(
+                            viewModel.nftImageState.value,
+                            viewModel.titleTextState.value,
+                            viewModel.descriptionTextState.value
+                        )
+                    navigate(action)
                 }
-                true
             }
         }
     }
@@ -143,5 +155,24 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
         val sizeInMb = bytes?.size?.toDouble()?.div(1024)?.div(1024)
 
         return !(sizeInMb != null && sizeInMb > 10)
+    }
+
+    private fun initEditText() {
+        binding.titleEditText.addOnFocusListener(focus = { handleEditTextFocus(it) })
+        binding.descriptionEditText.addOnFocusListener(focus = { handleEditTextFocus(it) })
+    }
+
+    private fun handleEditTextFocus(hasFocus: Boolean): Unit {
+        val contractDp = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            if (hasFocus) 122f else 162f,
+            resources.displayMetrics
+        )
+        binding.nftAddImageView.layoutParams.apply {
+            width = contractDp.toInt()
+            height = contractDp.toInt()
+            binding.nftAddImageView.layoutParams = this
+        }
+
     }
 }

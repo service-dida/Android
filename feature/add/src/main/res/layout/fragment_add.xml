@@ -34,6 +34,19 @@
                 android:text="@string/add_nft_main_title"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/next_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/next_btn"
+                app:onSingleClick="@{() -> vm.onNextButtonClicked()}"
+                app:hasNext="@{vm.hasNextState}"
+                android:textSize="16dp" />
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.core.widget.NestedScrollView
@@ -50,16 +63,17 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/NFT_add_ImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/nft_add_imageView"
+                    android:layout_width="162dp"
+                    android:layout_height="162dp"
                     android:adjustViewBounds="true"
                     android:layout_marginTop="12dp"
-                    app:image_from_url_fullsize="@{vm.nftImageState}"
+                    app:image_from_url_rounded="@{vm.nftImageState}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@tools:sample/avatars"
+                    app:onSingleClick="@{() -> vm.onImageClicked()}"/>
 
                 <TextView
                     android:id="@+id/NFT_title_Textview"
@@ -72,7 +86,7 @@
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NFT_add_ImageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/nft_add_imageView" />
 
                 <TextView
                     android:id="@+id/NFT_title_length_Textview"
@@ -82,7 +96,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text='@{vm.titleLengthState.toString()+"/20"}'
                     tools:text="0/20"
-                    android:textColor="@color/surface6"
+                    android:textColor="@color/white"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/NFT_title_Textview"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +140,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text='@{vm.descriptionLengthState.toString()+"/300"}'
                     tools:text="0/300"
-                    android:textColor="@color/surface6"
+                    android:textColor="@color/white"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/NFT_description_Textview"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +149,7 @@
                 <com.dida.common.customview.CustomEditText
                     android:id="@+id/description_EditText"
                     android:layout_width="match_parent"
-                    android:layout_height="296dp"
+                    android:layout_height="212dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="16dp"
