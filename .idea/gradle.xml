@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/add" />
+            <option value="$PROJECT_DIR$/feature/ai" />
             <option value="$PROJECT_DIR$/feature/block" />
             <option value="$PROJECT_DIR$/feature/buy-nft" />
             <option value="$PROJECT_DIR$/feature/change-password" />

@@ -69,6 +69,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:swap"))
                 add("implementation", project(":feature:swap-history"))
                 add("implementation", project(":feature:add"))
+                add("implementation", project(":feature:ai"))
                 add("implementation", project(":feature:community"))
                 add("implementation", project(":feature:community-detail"))
                 add("implementation", project(":feature:create-community"))

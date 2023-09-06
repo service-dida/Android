@@ -1,14 +1,14 @@
 [versions]
 # Define the versions
-kotlin = "1.7.10"
+kotlin = "1.8.10"
 androidGradlePlugin = "7.3.0"
 pluginapplication = "7.2.0"
 pluginkotlin = "1.6.10"
 pluginhilt = "2.44"
-pluginsafeargs = "2.3.5"
+pluginsafeargs = "2.4.2"
 
 # Plugins
-safeargs = "2.3.5"
+safeargs = "2.4.2"
 
 # Domain
 kotlinStdlib = "1.7.10"
@@ -26,7 +26,7 @@ constraintLayout = "2.1.3"
 recyclerView = "1.2.1"
 shimmer = "0.5.0"
 
-navigation = "2.3.5"
+navigation = "2.4.2"
 fragmentResult = "1.5.2"
 lifecycle = "2.5.1"
 coroutines = "1.5.2"
@@ -55,15 +55,18 @@ navigationCompose = "2.5.1"
 paging = "3.0.1"
 
 # Compose Version
-composeUiVersion = "1.2.0"
-composeActivityVersion = "1.3.1"
-composeMaterial3 = "1.0.1"
-composeCoil = "2.1.0"
-composePaging = "1.0.0-alpha15"
-composeViewModel = "2.5.1"
-composeConstraint = "1.0.1"
-composeNavigation = "2.5.1"
-composeNavigationHilt = "1.0.0"
+androidxComposeBom = "2023.04.01"
+androidxComposeCompiler = "1.4.4"
+androidxComposeMaterial3 = "1.1.0-rc01"
+androidxComposeRuntimeTracing = "1.0.0-alpha03"
+
+composeActivityVersion = "1.7.0"
+composeConstraintLayoutVersion = "1.0.1"
+hiltNavigationCompose = "1.0.0"
+coilVersion = "2.2.2"
+accompanist = "0.30.0"
+androidxLifecycleVersion = "2.6.1"
+androidxNavigationVersion = "2.5.3"
 composePager = "0.12.0"
 
 ballon = "1.5.2"
@@ -96,7 +99,6 @@ androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragme
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 androidx-navigation-test = { module = "androidx.navigation:navigation-testing", version.ref = "navigation" }
 androidx-fragment-request = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentResult" }
-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
@@ -147,24 +149,33 @@ kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin",ver
 androidx-paging = { module = "androidx.paging:paging-runtime-ktx",version.ref = "paging" }
 
 # Compose
-androix-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivityVersion" }
-androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeUiVersion" }
-androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeUiVersion" }
-androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "composeUiVersion" }
-androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
-androidx-compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "composeUiVersion" }
-androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeUiVersion" }
-androidx-compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeUiVersion" }
+androidxComposeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidxComposeFoundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidxComposeFoundationLayout = { group = "androidx.compose.foundation", name = "foundation-layout" }
+androidxComposeMaterial = { group = "androidx.compose.material", name = "material" }
+androidxComposeMaterialIconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidxComposeMaterial3 = { group = "androidx.compose.material3", name = "material3",  version.ref = "androidxComposeMaterial3" }
+androidComposeMaterial3WindowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "androidxComposeMaterial3" }
+androidxComposeRuntime = {  group = "androidx.compose.runtime", name = "runtime" }
+androidxComposeRuntimeLivedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+androidxComposeRuntimeTracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version.ref = "androidxComposeRuntimeTracing" }
+androidxComposeAnimation = { group = "androidx.compose.animation", name = "animation" }
+androidxComposeUiUi = { group = "androidx.compose.ui", name = "ui" }
+androidxComposeUiTest = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidxComposeUiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidxComposeUiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidxComposeUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidxComposeUiUtil = { group = "androidx.compose.ui", name = "ui-util" }
+androidxComposeUiGoogleFonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
+androidxActivityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
+androidxConstraintLayoutCompose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "composeConstraintLayoutVersion" }
+androidxLifecycleLivedataKtx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycleVersion" }
+androidxLifecycleRuntimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycleVersion" }
+androidxLifecycleViewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycleVersion" }
 androidx-compose-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "composePager" }
 androidx-compose-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "composePager" }
-
-io-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "composeCoil" }
-androidx-compose-paging = { module = "androidx.paging:paging-compose", version.ref = "composePaging" }
-androidx-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "composeViewModel" }
-androidx-compose-constraint = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "composeConstraint" }
-
-androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
-androidx-compose-naivgation-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "composeNavigationHilt" }
+coilCompose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
+coilGifCompose = { group = "io.coil-kt", name = "coil-gif", version.ref = "coilVersion" }
 
 skydoves-ballon = { module = "com.github.skydoves:balloon", version.ref = "ballon" }
 
@@ -174,11 +185,9 @@ androidx-swipe-refresh-layout = { module = "androidx.swiperefreshlayout:swiperef
 [bundles]
 # Define bundles/groups of libraries
 kotlinx-coroutine = ["kotlin-coroutine-core", "kotlin-coroutine-android"]
-androidx-navigation = ["androidx-navigation-fragment", "androidx-navigation-ui", "navigation-compose"]
+androidx-navigation = ["androidx-navigation-fragment", "androidx-navigation-ui"]
 lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-runtime"]
 room = ["androidx-room-runtime", "androidx-room"]
 moshi = ["converter-moshi", "moshi-moshi", "moshi-kotlin"]
 gson = ["gson-gson", "converter-gson"]
 datastore = ["datastore-preference", "datastore-core"]
-compose = ["androix-compose-activity", "androidx-compose-ui", "androidx-compose-ui-preview", "androidx-compose-material", "androidx-compose-material3", "androidx-compose-viewmodel", "androidx-compose-constraint", "androidx-compose-pager", "androidx-compose-pager-indicator"]
-compose-navigation = ["androidx-compose-naivgation-hilt", "androidx-compose-navigation"]
