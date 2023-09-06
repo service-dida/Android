@@ -102,6 +102,7 @@ class KeywordColorFragment :
                     ColorKeywords(
                         onKeywordClicked = {
                             sharedViewModel.insertKeyword(KeywordType.Color, it)
+                            viewModel.onKeywordClicked(it)
                         }
                     )
                     WriteKeyword(onButtonClicked = {})

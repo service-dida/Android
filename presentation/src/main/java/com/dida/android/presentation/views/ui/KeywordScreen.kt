@@ -134,8 +134,7 @@ fun ColorKeywords(
     ) {
         if (selectedIndex == -1) {
             repeat(items.size) { position ->
-                SelectedColorKeywordItem(
-                    selected = selectedIndex == position,
+                ColorKeywordItem(
                     item = items[position],
                     onKeywordClicked = {
                         onKeywordClicked(it)
@@ -145,7 +144,8 @@ fun ColorKeywords(
             }
         } else {
             repeat(items.size) { position ->
-                ColorKeywordItem(
+                SelectedColorKeywordItem(
+                    selected = selectedIndex == position,
                     item = items[position],
                     onKeywordClicked = {
                         onKeywordClicked(it)
