@@ -23,12 +23,11 @@ import com.dida.ai.databinding.FragmentKeywordProductBinding
 import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
-import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.product.KeywordProductViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
+import com.dida.android.presentation.views.ui.DefaultKeywords
 import com.dida.android.presentation.views.ui.KeywordMore
 import com.dida.android.presentation.views.ui.KeywordTitle
-import com.dida.android.presentation.views.ui.Keywords
 import com.dida.android.presentation.views.ui.NextButton
 import com.dida.android.presentation.views.ui.SelectKeywordTitle
 import com.dida.android.presentation.views.ui.SelectKeywords
@@ -67,7 +66,7 @@ class KeywordProductFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Product, BLANK)
+                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Product)
                     is KeywordNavigationAction.NavigateToNext -> {}
                 }
                 navigate(KeywordProductFragmentDirections.actionKeywordProductFragmentToKeywordPlaceFragment())
@@ -91,11 +90,10 @@ class KeywordProductFragment :
         binding.composeView.apply {
             setContent {
                 val keywords = viewModel.keywordsState.collectAsStateWithLifecycle()
-                val selectKeyword = viewModel.selectKeywordState.collectAsStateWithLifecycle()
                 val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
 
                 val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
-                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it != "" } > 0 } }
+                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
 
                 Column(
                     modifier = Modifier
@@ -105,9 +103,8 @@ class KeywordProductFragment :
                     CustomLinearProgressBar(progress = 0.25f)
                     KeywordTitle(type = KeywordType.Product)
                     KeywordMore(onButtonClicked = {})
-                    Keywords(
+                    DefaultKeywords(
                         keywords = keywords.value,
-                        selectKeyword = selectKeyword.value,
                         onKeywordClicked = {
                             viewModel.onKeywordClicked(it)
                             sharedViewModel.insertKeyword(KeywordType.Product, it)
