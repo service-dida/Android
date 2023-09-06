@@ -1,5 +1,6 @@
 package com.dida.ai.keyword.style
 
+import com.dida.ai.keyword.Keyword
 import com.dida.ai.keyword.KeywordViewModelDelegate
 import com.dida.common.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,15 +17,15 @@ class KeywordStyleViewModel @Inject constructor(
 
     private val TAG = "KeywordStyleViewModel"
 
-    private val _keywordsState: MutableStateFlow<List<Pair<Int, String>>> = MutableStateFlow(
+    private val _keywordsState: MutableStateFlow<List<Keyword.Style>> = MutableStateFlow(
         listOf(
-            Pair(com.dida.common.R.mipmap.img_keyword_style1_foreground, "Oil painting"),
-            Pair(com.dida.common.R.mipmap.img_keyword_style2_foreground, "Henri Mattisse"),
-            Pair(com.dida.common.R.mipmap.img_keyword_style3_foreground, "3D art"),
-            Pair(com.dida.common.R.mipmap.img_keyword_style4_foreground, "Water Painting"),
-            Pair(com.dida.common.R.mipmap.img_keyword_style5_foreground, "Crayon"),
-            Pair(com.dida.common.R.mipmap.img_keyword_style6_foreground, "Sketch")
+            Keyword.Style(imageUrl = com.dida.common.R.mipmap.img_keyword_style1_foreground, word = "Oil painting"),
+            Keyword.Style(com.dida.common.R.mipmap.img_keyword_style2_foreground, "Henri Mattisse"),
+            Keyword.Style(com.dida.common.R.mipmap.img_keyword_style3_foreground, "3D art"),
+            Keyword.Style(com.dida.common.R.mipmap.img_keyword_style4_foreground, "Water Painting"),
+            Keyword.Style(com.dida.common.R.mipmap.img_keyword_style5_foreground, "Crayon"),
+            Keyword.Style(com.dida.common.R.mipmap.img_keyword_style6_foreground, "Sketch"),
         )
     )
-    val keywordsState: StateFlow<List<Pair<Int, String>>> = _keywordsState.asStateFlow()
+    val keywordsState: StateFlow<List<Keyword.Style>> = _keywordsState.asStateFlow()
 }

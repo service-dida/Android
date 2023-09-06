@@ -10,14 +10,14 @@ import javax.inject.Inject
 @HiltViewModel
 class KeywordViewModel @Inject constructor(): BaseViewModel() {
 
-    private val _keywords: MutableStateFlow<List<String>> = MutableStateFlow(listOf(BLANK, BLANK, BLANK, BLANK))
-    var keywords: StateFlow<List<String>> = _keywords.asStateFlow()
+    private val _keywords: MutableStateFlow<List<Keyword>> = MutableStateFlow(listOf(Keyword.Init, Keyword.Init, Keyword.Init, Keyword.Init))
+    var keywords: StateFlow<List<Keyword>> = _keywords.asStateFlow()
 
     fun initKeywords() {
-        _keywords.value = listOf(BLANK, BLANK, BLANK, BLANK)
+        _keywords.value = listOf(Keyword.Init, Keyword.Init, Keyword.Init, Keyword.Init)
     }
 
-    fun insertKeyword(type: KeywordType, keyword: String) {
+    fun insertKeyword(type: KeywordType, keyword: Keyword = Keyword.Init) {
         val insertedKeywords = _keywords.value.toMutableList().apply {
             this[type.index] = keyword
         }
@@ -26,13 +26,9 @@ class KeywordViewModel @Inject constructor(): BaseViewModel() {
 
     fun deleteKeyword(type: KeywordType) {
         val deletedKeywords = _keywords.value.toMutableList().apply {
-            this[type.index] = BLANK
+            this[type.index] = Keyword.Init
         }
         _keywords.value = deletedKeywords
-    }
-
-    companion object {
-        const val BLANK = ""
     }
 }
 

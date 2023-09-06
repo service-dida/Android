@@ -21,7 +21,6 @@ import com.dida.ai.databinding.FragmentKeywordColorBinding
 import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
-import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.color.KeywordColorViewModel
 import com.dida.android.presentation.views.ui.ColorKeywords
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
@@ -65,7 +64,7 @@ class KeywordColorFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Color, BLANK)
+                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Color)
                     is KeywordNavigationAction.NavigateToNext -> showDrawDialog()
                 }
             }
@@ -87,11 +86,10 @@ class KeywordColorFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setContent {
-                val selectKeyword = viewModel.selectKeywordState.collectAsStateWithLifecycle()
                 val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
 
                 val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
-                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it != "" } > 0 } }
+                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
 
                 Column(
                     modifier = Modifier
@@ -102,10 +100,9 @@ class KeywordColorFragment :
                     KeywordTitle(type = KeywordType.Color)
                     KeywordMore(onButtonClicked = {})
                     ColorKeywords(
-                        selectKeyword = selectKeyword.value,
                         onKeywordClicked = {
-                            viewModel.onKeywordClicked(it)
                             sharedViewModel.insertKeyword(KeywordType.Color, it)
+                            viewModel.onKeywordClicked(it)
                         }
                     )
                     WriteKeyword(onButtonClicked = {})

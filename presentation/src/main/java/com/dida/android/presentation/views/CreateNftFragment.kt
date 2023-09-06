@@ -40,7 +40,6 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun initStartView() {
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner

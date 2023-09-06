@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dida.ai.R
-import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
+import com.dida.ai.keyword.Keyword
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.White
@@ -45,7 +45,7 @@ fun SelectKeywordTitle(
 
 @Composable
 fun SelectKeywords(
-    keywords: List<String>
+    keywords: List<Keyword>
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -68,7 +68,7 @@ fun SelectKeywords(
         ) {
             item { Divider10() }
             items(keywords.size) {
-                if(keywords[it] != BLANK) SelectedKeywordItem(keyword = keywords[it])
+                if(keywords[it].word != "") SelectedKeywordItem(keyword = keywords[it].word)
             }
             item { Divider10() }
         }

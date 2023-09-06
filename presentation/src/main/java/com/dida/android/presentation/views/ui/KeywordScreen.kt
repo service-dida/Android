@@ -17,9 +17,12 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.dida.ai.R
+import com.dida.ai.keyword.Keyword
 import com.dida.compose.theme.Blue
 import com.dida.compose.theme.BlueGreen
 import com.dida.compose.theme.BrandLemon
@@ -49,18 +53,25 @@ import com.dida.compose.utils.clickableSingle
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun Keywords(
-    keywords: List<String>,
-    selectKeyword: String = "",
-    onKeywordClicked: (keyword: String) -> Unit
+fun DefaultKeywords(
+    keywords: List<Keyword.Default>,
+    onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
+    var selectedIndex by remember { mutableStateOf(-1) }
+
     FlowRow(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         repeat(keywords.size) { position ->
-            if (keywords[position] == selectKeyword) SelectKeywordItem(keyword = keywords[position])
-            else KeywordItem(keyword = keywords[position], onKeywordClicked = onKeywordClicked)
+            DefaultKeywordItem(
+                selected = position == selectedIndex,
+                item = keywords[position],
+                onKeywordClicked = {
+                    onKeywordClicked(it)
+                    selectedIndex = position
+                }
+            )
         }
     }
 }
@@ -68,64 +79,79 @@ fun Keywords(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun StyleKeywords(
-    keywords: List<Pair<Int, String>>,
-    selectKeyword: String = "",
-    onKeywordClicked: (keyword: String) -> Unit
+    keywords: List<Keyword.Style>,
+    onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
+    var selectedIndex by remember { mutableStateOf(-1) }
+
     FlowRow(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         maxItemsInEachRow = 3
     ) {
         repeat(keywords.size) { position ->
-            if (keywords[position].second == selectKeyword) {
-                SelectStyleKeywordItem(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(0.9f),
-                    imageUrl = keywords[position].first,
-                    keyword = keywords[position].second
-                )
-            } else {
-                StyleKeywordItem(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(0.9f),
-                    imageUrl = keywords[position].first,
-                    keyword = keywords[position].second,
-                    onKeywordClicked = { onKeywordClicked(it) }
-                )
-            }
+            StyleKeywordItem(
+                selected =  position == selectedIndex,
+                modifier = Modifier
+                    .weight(1f)
+                    .aspectRatio(0.9f),
+                item = keywords[position],
+                onKeywordClicked = {
+                    onKeywordClicked(it)
+                    selectedIndex = position
+                }
+            )
         }
     }
 }
 
 val colors = listOf(
-    Pair(Red, "Red"), Pair(OrangeRed, "Orange Red"), Pair(Orange, "Orange"), Pair(Yellow, "Yellow"),
-    Pair(GreenYellow, "Green Yellow"), Pair(Green, "Green"), Pair(BlueGreen, "Blue Green"), Pair(Blue, "Blue"),
-    Pair(VioletBlue, "Violet Blue"), Pair(Violet, "Violet"), Pair(RedViolet, "Red Violet"), Pair(Mono, "Mono")
+    Keyword.Color(color = Red, word = "Red"),
+    Keyword.Color(color = OrangeRed, word = "Orange Red"),
+    Keyword.Color(color = Orange, word ="Orange"),
+    Keyword.Color(color = Yellow, word = "Yellow"),
+    Keyword.Color(color = GreenYellow, word = "Green Yellow"),
+    Keyword.Color(color = Green, word = "Green"),
+    Keyword.Color(color = BlueGreen, word = "Blue Green"),
+    Keyword.Color(color = Blue, word = "Blue"),
+    Keyword.Color(color = VioletBlue, word = "Violet Blue"),
+    Keyword.Color(color = Violet, word = "Violet"),
+    Keyword.Color(color = RedViolet, word = "Red Violet"),
+    Keyword.Color(color = Mono, word = "Mono")
 )
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ColorKeywords(
-    keywords: List<Pair<Color, String>> = colors,
-    selectKeyword: String = "",
-    onKeywordClicked: (keyword: String) -> Unit
+    items: List<Keyword.Color> = colors,
+    onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
+    var selectedIndex by remember { mutableStateOf(-1) }
+
     FlowRow(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        repeat(keywords.size) { position ->
-            if (selectKeyword.isBlank()) {
-                ColorKeywordItem(color = keywords[position].first, keyword = keywords[position].second, onKeywordClicked = { onKeywordClicked(it) })
-            } else {
-                if (keywords[position].second == selectKeyword) {
-                    ColorKeywordItem(color = keywords[position].first, keyword = keywords[position].second, onKeywordClicked = { })
-                } else {
-                    Surface2ColorKeyword2Item(keyword = keywords[position].second, onKeywordClicked = { onKeywordClicked(it) })
-                }
+        if (selectedIndex == -1) {
+            repeat(items.size) { position ->
+                ColorKeywordItem(
+                    item = items[position],
+                    onKeywordClicked = {
+                        onKeywordClicked(it)
+                        selectedIndex = position
+                    }
+                )
+            }
+        } else {
+            repeat(items.size) { position ->
+                SelectedColorKeywordItem(
+                    selected = selectedIndex == position,
+                    item = items[position],
+                    onKeywordClicked = {
+                        onKeywordClicked(it)
+                        selectedIndex = position
+                    }
+                )
             }
         }
     }
@@ -169,49 +195,28 @@ fun WriteKeyword(
 }
 
 @Composable
-fun KeywordItem(
-    keyword: String,
-    onKeywordClicked: (keyword: String) -> Unit
+fun DefaultKeywordItem(
+    selected: Boolean,
+    item: Keyword.Default,
+    onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
+    val backgroundColor = if (selected) BrandLemon else Surface2
+    val textColor = if (selected) MainBlack else White
     Surface(
-        color = Surface2,
+        color = backgroundColor,
         shape = RoundedCornerShape(30.dp),
         modifier = Modifier.padding(vertical = 4.dp)
     ) {
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onKeywordClicked(keyword) }
+                .clickable { onKeywordClicked(item) }
         ) {
             Text(
-                text = keyword,
+                text = item.word,
                 style = DidaTypography.h3,
                 fontSize = dpToSp(dp = 16.dp),
-                color = White,
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-}
-
-@Composable
-fun SelectKeywordItem(
-    keyword: String
-) {
-    Surface(
-        color = BrandLemon,
-        shape = RoundedCornerShape(30.dp),
-        modifier = Modifier.padding(vertical = 4.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-            Text(
-                text = keyword,
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 16.dp),
-                color = MainBlack,
+                color = textColor,
                 textAlign = TextAlign.Center
             )
         }
@@ -220,21 +225,24 @@ fun SelectKeywordItem(
 
 @Composable
 fun StyleKeywordItem(
+    selected: Boolean,
     modifier: Modifier,
-    imageUrl: Int,
-    keyword: String,
-    onKeywordClicked: (keyword: String) -> Unit
+    item: Keyword.Style,
+    onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
+    val backgroundModifier = if (selected) {
+        modifier.padding(vertical = 4.dp).border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(10.dp))
+    } else {
+        modifier.padding(vertical = 4.dp).clickable { onKeywordClicked(item) }
+    }
     Surface(
         color = Surface2,
         shape = RoundedCornerShape(10.dp),
-        modifier = modifier
-            .padding(vertical = 4.dp)
-            .clickable { onKeywordClicked(keyword) }
+        modifier = backgroundModifier
     ) {
         AsyncImage(
             modifier = modifier,
-            model = imageUrl,
+            model = item.imageUrl,
             contentDescription = "사진 이미지",
             contentScale = ContentScale.FillBounds,
             alpha = 0.7f
@@ -244,43 +252,7 @@ fun StyleKeywordItem(
                 .fillMaxSize()
                 .wrapContentHeight(Alignment.Bottom)
                 .padding(9.dp),
-            text = keyword,
-            style = DidaTypography.body1,
-            fontSize = dpToSp(dp = 16.dp),
-            color = White,
-        )
-    }
-}
-
-@Composable
-fun SelectStyleKeywordItem(
-    modifier: Modifier,
-    imageUrl: Int,
-    keyword: String
-) {
-    Surface(
-        color = Surface2,
-        shape = RoundedCornerShape(10.dp),
-        modifier = modifier
-            .padding(vertical = 4.dp)
-            .border(
-                width = 1.dp,
-                color = BrandLemon,
-                shape = RoundedCornerShape(10.dp)
-            )
-    ) {
-        AsyncImage(
-            modifier = modifier,
-            model = imageUrl,
-            contentDescription = "사진 이미지",
-            contentScale = ContentScale.FillBounds,
-            alpha = 0.7f
-        )
-        Text(
-            modifier = modifier
-                .wrapContentHeight(Alignment.Bottom)
-                .padding(9.dp),
-            text = keyword,
+            text = item.word,
             style = DidaTypography.body1,
             fontSize = dpToSp(dp = 16.dp),
             color = White,
@@ -290,22 +262,21 @@ fun SelectStyleKeywordItem(
 
 @Composable
 fun ColorKeywordItem(
-    color: Color,
-    keyword: String,
-    onKeywordClicked: (keyword: String) -> Unit
+    item: Keyword.Color,
+    onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
     Surface(
-        color = color,
+        color = item.color,
         shape = RoundedCornerShape(30.dp),
         modifier = Modifier.padding(vertical = 4.dp)
     ) {
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onKeywordClicked(keyword) }
+                .clickable { onKeywordClicked(item) }
         ) {
             Text(
-                text = keyword,
+                text = item.word,
                 style = DidaTypography.h3,
                 fontSize = dpToSp(dp = 16.dp),
                 color = MainBlack,
@@ -316,22 +287,23 @@ fun ColorKeywordItem(
 }
 
 @Composable
-fun Surface2ColorKeyword2Item(
-    keyword: String,
-    onKeywordClicked: (keyword: String) -> Unit
+fun SelectedColorKeywordItem(
+    selected: Boolean,
+    item: Keyword.Color,
+    onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
     Surface(
-        color = Surface2,
+        color = if (selected) item.color else Surface2,
         shape = RoundedCornerShape(30.dp),
         modifier = Modifier.padding(vertical = 4.dp)
     ) {
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onKeywordClicked(keyword) }
+                .clickable { onKeywordClicked(item) }
         ) {
             Text(
-                text = keyword,
+                text = item.word,
                 style = DidaTypography.h3,
                 fontSize = dpToSp(dp = 16.dp),
                 color = White,

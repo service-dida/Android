@@ -1,5 +1,6 @@
 package com.dida.ai.keyword.product
 
+import com.dida.ai.keyword.Keyword
 import com.dida.ai.keyword.KeywordViewModelDelegate
 import com.dida.common.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +18,17 @@ class KeywordProductViewModel @Inject constructor(
 
     private val TAG = "KeywordProductViewModel"
 
-    private val _keywordsState: MutableStateFlow<List<String>> = MutableStateFlow(
-        listOf("blakcberry", "bacon pizza", "flower", "guitar", "computer", "chair", "TV", "dictionary", "cell phone")
+    private val _keywordsState: MutableStateFlow<List<Keyword.Default>> = MutableStateFlow(
+        listOf(
+            Keyword.Default(word = "blakcberry"),
+            Keyword.Default(word = "bacon pizza"),
+            Keyword.Default(word = "flower"),
+            Keyword.Default(word = "guitar"),
+            Keyword.Default(word = "computer"),
+            Keyword.Default(word = "chair"),
+            Keyword.Default(word = "dictionary"),
+            Keyword.Default(word = "cell phone"),
+        )
     )
-    val keywordsState: StateFlow<List<String>> = _keywordsState.asStateFlow()
+    val keywordsState: StateFlow<List<Keyword.Default>> = _keywordsState.asStateFlow()
 }

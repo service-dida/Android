@@ -23,7 +23,6 @@ import com.dida.ai.databinding.FragmentKeywordStyleBinding
 import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
-import com.dida.ai.keyword.KeywordViewModel.Companion.BLANK
 import com.dida.ai.keyword.style.KeywordStyleViewModel
 import com.dida.android.presentation.views.ui.CustomLinearProgressBar
 import com.dida.android.presentation.views.ui.KeywordMore
@@ -65,7 +64,7 @@ class KeywordStyleFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Style, BLANK)
+                    is KeywordNavigationAction.NavigateToSkip -> sharedViewModel.insertKeyword(KeywordType.Style)
                     is KeywordNavigationAction.NavigateToNext -> {}
                 }
                 navigate(KeywordStyleFragmentDirections.actionKeywordStyleFragmentToKeywordColorFragment())
@@ -91,11 +90,10 @@ class KeywordStyleFragment :
                 binding.composeView.apply {
                     setContent {
                         val keywords = viewModel.keywordsState.collectAsStateWithLifecycle()
-                        val selectKeyword = viewModel.selectKeywordState.collectAsStateWithLifecycle()
                         val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
 
                         val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
-                        val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it != "" } > 0 } }
+                        val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
 
                         Column(
                             modifier = Modifier
@@ -107,7 +105,6 @@ class KeywordStyleFragment :
                             KeywordMore(onButtonClicked = {})
                             StyleKeywords(
                                 keywords = keywords.value,
-                                selectKeyword = selectKeyword.value,
                                 onKeywordClicked = {
                                     viewModel.onKeywordClicked(it)
                                     sharedViewModel.insertKeyword(KeywordType.Style, it)

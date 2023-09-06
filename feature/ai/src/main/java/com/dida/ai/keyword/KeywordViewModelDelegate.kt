@@ -16,12 +16,11 @@ import javax.inject.Inject
 interface KeywordViewModelDelegate {
 
     val nextState: StateFlow<Boolean>
-    val selectKeywordState: StateFlow<String>
     val navigationAction: SharedFlow<KeywordNavigationAction>
 
     fun onSkipClicked()
     fun onNextClicked()
-    fun onKeywordClicked(keyword: String)
+    fun onKeywordClicked(keyword: Keyword)
 }
 
 class DefaultKeywordViewModelDelegate @Inject constructor(
@@ -31,9 +30,6 @@ class DefaultKeywordViewModelDelegate @Inject constructor(
 
     private val _nextState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val nextState: StateFlow<Boolean> = _nextState.asStateFlow()
-
-    private val _selectKeywordState: MutableStateFlow<String> = MutableStateFlow("")
-    override val selectKeywordState: StateFlow<String> = _selectKeywordState.asStateFlow()
 
     private val _navigationAction: MutableSharedFlow<KeywordNavigationAction> = MutableSharedFlow()
     override val navigationAction: SharedFlow<KeywordNavigationAction> = _navigationAction.asSharedFlow()
@@ -50,10 +46,9 @@ class DefaultKeywordViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun onKeywordClicked(keyword: String) {
+    override fun onKeywordClicked(keyword: Keyword) {
         externalScope.launch(mainDispatcher) {
             _nextState.value = true
-            _selectKeywordState.value = keyword
         }
     }
 }
