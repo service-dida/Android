@@ -19,7 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,7 +57,7 @@ fun DefaultKeywords(
     keywords: List<Keyword.Default>,
     onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
-    var selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by rememberSaveable { mutableStateOf(-1) }
 
     FlowRow(
         modifier = Modifier.padding(horizontal = 16.dp),
@@ -82,7 +82,7 @@ fun StyleKeywords(
     keywords: List<Keyword.Style>,
     onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
-    var selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by rememberSaveable { mutableStateOf(-1) }
 
     FlowRow(
         modifier = Modifier.padding(horizontal = 16.dp),
@@ -126,7 +126,7 @@ fun ColorKeywords(
     items: List<Keyword.Color> = colors,
     onKeywordClicked: (keyword: Keyword) -> Unit
 ) {
-    var selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by rememberSaveable { mutableStateOf(-1) }
 
     FlowRow(
         modifier = Modifier.padding(horizontal = 16.dp),
