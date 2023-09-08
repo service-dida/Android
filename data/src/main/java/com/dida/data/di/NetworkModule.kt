@@ -1,7 +1,8 @@
 package com.dida.data.di
 
 import com.dida.data.BuildConfig
-import com.dida.data.api.ApiClient.BASE_URL
+import com.dida.data.api.ApiClient.RELEASE_URL
+import com.dida.data.api.ApiClient.TEST_URL
 import com.dida.data.api.MainAPIService
 import com.dida.data.interceptor.BearerInterceptor
 import com.dida.data.interceptor.XAccessTokenInterceptor
@@ -45,11 +46,19 @@ object NetworkModule {
     @Singleton
     @Provides
     @Named("Main")
-    fun provideRetrofit(@Named("Main") okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(okHttpClient)
-        .build()
+    fun provideRetrofit(@Named("Main") okHttpClient: OkHttpClient): Retrofit = if (BuildConfig.DEBUG) {
+        Retrofit.Builder()
+            .baseUrl(TEST_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    } else {
+        Retrofit.Builder()
+            .baseUrl(RELEASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
 
     @Singleton
     @Provides

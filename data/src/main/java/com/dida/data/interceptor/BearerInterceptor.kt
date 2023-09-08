@@ -1,7 +1,9 @@
 package com.dida.data.interceptor
 
+import com.dida.data.BuildConfig
 import com.dida.data.DataApplication
-import com.dida.data.api.ApiClient.BASE_URL
+import com.dida.data.api.ApiClient.RELEASE_URL
+import com.dida.data.api.ApiClient.TEST_URL
 import com.dida.data.api.MainAPIService
 import com.dida.data.api.handleApi
 import com.dida.data.model.InvalidJwtTokenException
@@ -41,11 +43,19 @@ class BearerInterceptor : Interceptor {
                             //토큰 갱신 api 호출
                             DataApplication.dataStorePreferences.getRefreshToken()?.let {
                                 handleApi {
-                                    Retrofit.Builder()
-                                        .baseUrl(BASE_URL)
-                                        .addConverterFactory(GsonConverterFactory.create())
-                                        .build()
-                                        .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                                    if (BuildConfig.DEBUG) {
+                                        Retrofit.Builder()
+                                            .baseUrl(TEST_URL)
+                                            .addConverterFactory(GsonConverterFactory.create())
+                                            .build()
+                                            .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                                    } else {
+                                        Retrofit.Builder()
+                                            .baseUrl(RELEASE_URL)
+                                            .addConverterFactory(GsonConverterFactory.create())
+                                            .build()
+                                            .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                                    }
                                 }
                             }?.onSuccess {
                                 DataApplication.dataStorePreferences.setAccessToken(it.accessToken ?: "", it.refreshToken ?: "")
