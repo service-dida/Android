@@ -20,9 +20,10 @@ interface MainAPIService {
     @POST("/user/nickname")
     suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): Nickname
 
-    @POST("/new/user")
+    /** 회원가입 **/
+    @POST("/user")
     suspend fun createuserAPIServer(@Body request: PostCreateUserRequest): Token
-
+    
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
 
