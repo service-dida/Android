@@ -47,5 +47,9 @@ class MainRepositoryImpl @Inject constructor(
         val body = PatchMemberDeviceRequest(deviceToken = deviceToken)
         return handleApi { mainRemoteService.patchMemberDevice(body) }
     }
+
+    override suspend fun deleteUser(): NetworkResult<Unit> {
+        return handleApi { mainRemoteService.deleteUser() }
+    }
 }
 

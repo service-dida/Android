@@ -9,6 +9,7 @@ import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
@@ -47,4 +48,8 @@ interface MainRemoteService {
     // Device Token 바꾸기
     @PATCH("/member/device")
     suspend fun patchMemberDevice(@Body body: PatchMemberDeviceRequest): Unit
+
+    // 계정 삭제하기
+    @DELETE("/member")
+    suspend fun deleteUser(): Unit
 }
