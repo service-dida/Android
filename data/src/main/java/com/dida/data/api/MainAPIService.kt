@@ -25,17 +25,37 @@ interface MainAPIService {
     @POST("/user")
     suspend fun createuserAPIServer(@Body request: PostCreateUserRequest): Token
 
+    /** 로그인 토큰 갱신하기 **/
+    @PATCH("/common/refresh")
+    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Token
+
+    /** 인증 메일 보내기 **/
+    @GET("/visitor/auth")
+    suspend fun getSendEmail(): SendEmailResponse
+
+    // TODO: 암호화 방식 적용하기
+    /** 지갑 발급하기 **/
+    @POST("/wallet")
+    suspend fun postCreateWallet(@Body request: PostCreateWalletRequest)
+
+    /** 지갑 존재 여부 확인 **/
+    @GET("/common/wallet")
+    suspend fun getWalletExists(): GetWalletExistsResponse
+
+    /** Device Token 바꾸기 **/
+    @PUT("/member/device")
+    suspend fun putDeviceToken(@Body request: PutDeviceTokenRequest): Unit
+
+    /** 계정 삭제하기 **/
+    @DELETE("/member")
+    suspend fun deleteMember(): Unit
+
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
-
-    @GET("/login/refresh")
-    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Token
 
     @GET("/user/cards/{page}")
     suspend fun getUserCards(@Path("page") page: Int): List<UserNft>
 
-    @GET("/auth/mail")
-    suspend fun getSendEmail(): SendEmailResponse
 
     @GET("/main")
     suspend fun getMain(): GetMainResponse
@@ -43,11 +63,9 @@ interface MainAPIService {
     @GET("/main/{term}")
     suspend fun getSoldOut(@Path("term") term: Int): List<GetSoldOutResponse>
 
-    @POST("/user/wallet")
-    suspend fun postCreateWallet(@Body request: PostCreateWalletRequest)
 
-    @GET("/user/wallet")
-    suspend fun getWalletExists(): GetWalletExistsResponse
+
+
 
     @POST("/user/wallet/pwd/check")
     suspend fun postCheckPassword(@Body request: PostCheckPasswordRequest): PostCheckPasswordResponse
@@ -80,9 +98,6 @@ interface MainAPIService {
 
     @GET("/card/{cardId}")
     suspend fun getDetailNFT(@Path("cardId") cardId: String): GetDetailNFTResponse
-
-    @PUT("/device/token")
-    suspend fun putDeviceToken(@Body request: PutDeviceTokenRequest): Unit
 
     @POST("/market/card")
     suspend fun postBuyNft(@Body request: PostBuyNftRequest): Unit
