@@ -8,6 +8,8 @@ import com.dida.data.model.response.PostLikeRequest
 import com.dida.data.model.response.PostSellNftRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.main.*
+import com.dida.domain.model.main.login.Nickname
+import com.dida.domain.model.main.login.Token
 import com.dida.domain.repository.MainRepository
 import okhttp3.MultipartBody
 import javax.inject.Inject

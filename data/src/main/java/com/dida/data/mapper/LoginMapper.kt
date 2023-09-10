@@ -2,8 +2,8 @@ package com.dida.data.mapper
 
 import com.dida.data.model.response.PostNicknameResponse
 import com.dida.data.model.response.login.PostLoginResponse
-import com.dida.domain.model.main.Nickname
-import com.dida.domain.model.main.Token
+import com.dida.domain.model.main.login.Nickname
+import com.dida.domain.model.main.login.Token
 
 fun PostLoginResponse.toDomain(): Token {
     return Token(
