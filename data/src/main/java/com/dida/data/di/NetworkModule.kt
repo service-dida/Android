@@ -2,7 +2,7 @@ package com.dida.data.di
 
 import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.TEST_URL
-import com.dida.data.api.MainAPIService
+import com.dida.data.main.MainRemoteService
 import com.dida.data.interceptor.XAccessTokenInterceptor
 import dagger.Module
 import dagger.Provides
@@ -53,6 +53,6 @@ object NetworkModule {
     @Singleton
     @Provides
     @Named("Main")
-    fun provideMainAPIService(@Named("Main") retrofit: Retrofit): MainAPIService =
-        retrofit.create(MainAPIService::class.java)
+    fun provideMainAPIService(@Named("Main") retrofit: Retrofit): MainRemoteService =
+        retrofit.create(MainRemoteService::class.java)
 }

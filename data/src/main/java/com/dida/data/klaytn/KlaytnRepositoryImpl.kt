@@ -10,11 +10,11 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class KlaytnRepositoryImpl @Inject constructor(
-    @Named("Klaytn") private val klaytnAPIService: KlaytnAPIService
+    @Named("Klaytn") private val klaytnRemoteService: KlaytnRemoteService
 ) : KlaytnRepository {
 
     override suspend fun uploadAsset(file: MultipartBody.Part): NetworkResult<Asset> {
-        return handleApi { klaytnAPIService.uploadAsset(file).toDomain() }
+        return handleApi { klaytnRemoteService.uploadAsset(file).toDomain() }
     }
 }
 
