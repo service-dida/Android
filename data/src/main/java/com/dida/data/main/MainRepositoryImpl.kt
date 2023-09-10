@@ -33,5 +33,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun refreshToken(refreshToken: String): NetworkResult<LoginToken> {
         return handleApi { mainRemoteService.patchRefreshToken(request = refreshToken).toDomain() }
     }
+
+    override suspend fun emailAuth(): NetworkResult<String> {
+        return handleApi { mainRemoteService.getEmailAuth().random }
+    }
 }
 

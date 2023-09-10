@@ -1,5 +1,6 @@
 package com.dida.data.main
 
+import com.dida.data.model.login.GetEmailAuthResponse
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
@@ -31,5 +32,5 @@ interface MainRemoteService {
 
     // 인증 메일 보내기
     @GET("/visitor/auth")
-    suspend fun getEmailAuth(): PostLoginResponse
+    suspend fun getEmailAuth(): GetEmailAuthResponse
 }
