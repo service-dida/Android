@@ -5,5 +5,6 @@ import com.dida.domain.main.model.LoginToken
 
 interface  MainRepository {
 
-    suspend fun login(idToken : String): NetworkResult<LoginToken>
+    suspend fun login(idToken: String): NetworkResult<LoginToken>
+    suspend fun postUser(email: String, nickname: String): NetworkResult<LoginToken>
 }
