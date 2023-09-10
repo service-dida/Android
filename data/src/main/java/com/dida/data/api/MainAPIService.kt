@@ -13,6 +13,10 @@ interface MainAPIService {
     @GET("/app/version")
     suspend fun checkVersion(): AppVersion
 
+    /**
+     * 로그인 및 회원 가입
+     **/
+
     /** 카카오 로그인 **/
     @POST("/kakao/login")
     suspend fun loginAPIServer(@Body body: PostKakaoLoginRequest): PostKakaoLoginResponse
@@ -49,6 +53,10 @@ interface MainAPIService {
     /** 계정 삭제하기 **/
     @DELETE("/member")
     suspend fun deleteMember(): Unit
+
+    /**
+     * 프로필 관련
+     **/
 
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
