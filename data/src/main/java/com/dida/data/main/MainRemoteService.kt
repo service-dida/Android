@@ -6,6 +6,8 @@ import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
 import retrofit2.http.Body
+import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface MainRemoteService {
@@ -21,4 +23,8 @@ interface MainRemoteService {
     // 닉네임 체크
     @POST("/nickname")
     suspend fun postNickname(@Body body: PostNicknameRequest): PostNicknameResponse
+
+    // 로그인 토큰 갱신
+    @PATCH("/common/refresh")
+    suspend fun patchRefreshToken(@Header("refreshToken") request: String): PostLoginResponse
 }

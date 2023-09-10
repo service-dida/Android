@@ -29,5 +29,9 @@ class MainRepositoryImpl @Inject constructor(
         val body = PostNicknameRequest(nickname = nickname)
         return handleApi { mainRemoteService.postNickname(body).used }
     }
+
+    override suspend fun refreshToken(refreshToken: String): NetworkResult<LoginToken> {
+        return handleApi { mainRemoteService.patchRefreshToken(request = refreshToken).toDomain() }
+    }
 }
 
