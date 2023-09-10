@@ -6,6 +6,7 @@ import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -27,4 +28,8 @@ interface MainRemoteService {
     // 로그인 토큰 갱신
     @PATCH("/common/refresh")
     suspend fun patchRefreshToken(@Header("refreshToken") request: String): PostLoginResponse
+
+    // 인증 메일 보내기
+    @GET("/visitor/auth")
+    suspend fun getEmailAuth(): PostLoginResponse
 }
