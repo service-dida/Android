@@ -28,7 +28,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun nicknameAPI(nickName: String): NetworkResult<Nickname> {
         val request = PostNicknameRequest(nickName)
-        return handleApi { mainAPIService.nicknameAPIServer(request) }
+        return handleApi { mainAPIService.nicknameAPIServer(request).toDomain() }
     }
 
     override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<Token> {

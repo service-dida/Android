@@ -17,13 +17,14 @@ interface MainAPIService {
     @POST("/kakao/login")
     suspend fun loginAPIServer(@Body body: PostKakaoLoginRequest): PostKakaoLoginResponse
 
-    @POST("/user/nickname")
-    suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): Nickname
+    /** 닉네임 체크 **/
+    @POST("/nickname")
+    suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): PostNicknameResponse
 
     /** 회원가입 **/
     @POST("/user")
     suspend fun createuserAPIServer(@Body request: PostCreateUserRequest): Token
-    
+
     @GET("/user")
     suspend fun getUserProfile(): UserProfileResponse
 

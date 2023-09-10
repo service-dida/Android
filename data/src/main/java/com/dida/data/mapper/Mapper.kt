@@ -13,6 +13,12 @@ fun PostKakaoLoginResponse.toDomain(): Token {
     )
 }
 
+fun PostNicknameResponse.toDomain(): Nickname {
+    return Nickname(
+        used = this.used
+    )
+}
+
 fun GetMainResponse.toDomain(): Home {
     return Home(
         getHotItems = getHotItems.toDomain(),
