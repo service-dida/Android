@@ -7,4 +7,5 @@ interface  MainRepository {
 
     suspend fun login(idToken: String): NetworkResult<LoginToken>
     suspend fun postUser(email: String, nickname: String): NetworkResult<LoginToken>
+    suspend fun checkNickname(nickname: String): NetworkResult<Boolean>
 }

@@ -2,6 +2,7 @@ package com.dida.data.main
 
 import com.dida.data.api.handleApi
 import com.dida.data.model.login.PostLoginRequest
+import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
 import com.dida.data.model.login.toDomain
 import com.dida.domain.NetworkResult
@@ -22,6 +23,11 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postUser(email: String, nickname: String): NetworkResult<LoginToken> {
         val body = PostUserRequest(email = email, nickname = nickname)
         return handleApi { mainRemoteService.postUser(body).toDomain() }
+    }
+
+    override suspend fun checkNickname(nickname: String): NetworkResult<Boolean> {
+        val body = PostNicknameRequest(nickname = nickname)
+        return handleApi { mainRemoteService.postNickname(body).used }
     }
 }
 

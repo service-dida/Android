@@ -9,3 +9,7 @@ fun PostLoginResponse.toDomain(): LoginToken {
         refreshToken = refreshToken,
     )
 }
+
+fun PostNicknameResponse.toDomain(): CheckNickname {
+    return CheckNickname(used = used)
+}
