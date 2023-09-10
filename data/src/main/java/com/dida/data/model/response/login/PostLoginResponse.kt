@@ -1,9 +1,8 @@
-package com.dida.data.model.response
+package com.dida.data.model.response.login
 
 import com.google.gson.annotations.SerializedName
-import java.sql.Timestamp
 
-data class PostKakaoLoginResponse(
+data class PostLoginResponse(
     @SerializedName("code") val code: String?,
     @SerializedName("message") val message: String?,
     @SerializedName("timestamp") val timestamp: String?,

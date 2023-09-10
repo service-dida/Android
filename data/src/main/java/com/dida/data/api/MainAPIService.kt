@@ -2,8 +2,8 @@ package com.dida.data.api
 
 import com.dida.data.model.request.*
 import com.dida.data.model.response.*
-import com.dida.domain.model.main.Token
-import com.dida.domain.model.main.Nickname
+import com.dida.data.model.response.login.GetCommonWalletResponse
+import com.dida.data.model.response.login.PostLoginResponse
 import com.dida.domain.model.main.UserNft
 import com.dida.domain.model.main.AppVersion
 import okhttp3.MultipartBody
@@ -19,7 +19,7 @@ interface MainAPIService {
 
     /** 카카오 로그인 **/
     @POST("/kakao/login")
-    suspend fun loginAPIServer(@Body body: PostKakaoLoginRequest): PostKakaoLoginResponse
+    suspend fun loginAPIServer(@Body body: PostKakaoLoginRequest): PostLoginResponse
 
     /** 닉네임 체크 **/
     @POST("/nickname")
@@ -27,11 +27,11 @@ interface MainAPIService {
 
     /** 회원가입 **/
     @POST("/user")
-    suspend fun createuserAPIServer(@Body request: PostCreateUserRequest): Token
+    suspend fun createuserAPIServer(@Body request: PostCreateUserRequest): PostLoginResponse
 
     /** 로그인 토큰 갱신하기 **/
     @PATCH("/common/refresh")
-    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): Token
+    suspend fun refreshtokenAPIServer(@Header("refreshToken") request: String): PostLoginResponse
 
     /** 인증 메일 보내기 **/
     @GET("/visitor/auth")
@@ -44,7 +44,7 @@ interface MainAPIService {
 
     /** 지갑 존재 여부 확인 **/
     @GET("/common/wallet")
-    suspend fun getWalletExists(): GetWalletExistsResponse
+    suspend fun getWalletExists(): GetCommonWalletResponse
 
     /** Device Token 바꾸기 **/
     @PUT("/member/device")
