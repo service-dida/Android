@@ -121,6 +121,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.putDeviceToken(request) }
     }
 
+    override suspend fun deleteMember(): NetworkResult<Unit> {
+        return handleApi { mainAPIService.deleteMember() }
+    }
+
     override suspend fun postBuyNftAPI(password: String, nftId: Long): NetworkResult<Unit> {
         val request = PostBuyNftRequest(buyPwd = password, marketId = nftId)
         return handleApi { mainAPIService.postBuyNft(request) }
