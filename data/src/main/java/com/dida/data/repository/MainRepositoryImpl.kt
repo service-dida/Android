@@ -33,7 +33,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun createUserAPI(email: String, nickName: String): NetworkResult<Token> {
         val request = PostCreateUserRequest(email, nickName)
-        return handleApi { mainAPIService.createuserAPIServer(request) }
+        return handleApi { mainAPIService.createuserAPIServer(request).toDomain() }
     }
 
     override suspend fun getUserProfileAPI(): NetworkResult<UserProfile> {
@@ -41,7 +41,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshTokenAPI(request: String): NetworkResult<Token> {
-        return handleApi { mainAPIService.refreshtokenAPIServer(request) }
+        return handleApi { mainAPIService.refreshtokenAPIServer(request).toDomain() }
     }
 
     override suspend fun getUserCardsAPI(page: Int): NetworkResult<List<UserNft>> {
