@@ -8,6 +8,7 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.profile.GetCommonProfileResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -17,6 +18,7 @@ import retrofit2.http.POST
 
 interface MainRemoteService {
 
+    /** 로그인 및 회원가입 **/
     // 카카오 로그인
     @POST("/kakao/login")
     suspend fun login(@Body body: PostLoginRequest): PostLoginResponse
@@ -52,4 +54,9 @@ interface MainRemoteService {
     // 계정 삭제하기
     @DELETE("/member")
     suspend fun deleteUser(): Unit
+
+    /** 프로필 관련 **/
+    // 내 프로필 확인하기
+    @DELETE("/common/profile")
+    suspend fun getCommonProfile(): GetCommonProfileResponse
 }

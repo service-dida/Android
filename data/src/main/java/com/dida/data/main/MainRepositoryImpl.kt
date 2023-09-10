@@ -6,8 +6,10 @@ import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
 import com.dida.data.model.login.toDomain
+import com.dida.data.model.profile.toDomain
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
+import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.LoginToken
 import javax.inject.Inject
 import javax.inject.Named
@@ -50,6 +52,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun deleteUser(): NetworkResult<Unit> {
         return handleApi { mainRemoteService.deleteUser() }
+    }
+
+    override suspend fun commonProfile(): NetworkResult<CommonProfile> {
+        return handleApi { mainRemoteService.getCommonProfile().toDomain() }
     }
 }
 
