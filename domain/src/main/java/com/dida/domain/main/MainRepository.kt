@@ -10,4 +10,5 @@ interface  MainRepository {
     suspend fun checkNickname(nickname: String): NetworkResult<Boolean>
     suspend fun refreshToken(refreshToken: String): NetworkResult<LoginToken>
     suspend fun emailAuth(): NetworkResult<String>
+    suspend fun checkWallet(): NetworkResult<Boolean>
 }

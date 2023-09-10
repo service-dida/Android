@@ -37,5 +37,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun emailAuth(): NetworkResult<String> {
         return handleApi { mainRemoteService.getEmailAuth().random }
     }
+
+    override suspend fun checkWallet(): NetworkResult<Boolean> {
+        return handleApi { mainRemoteService.getCommonWallet().existed }
+    }
 }
 

@@ -1,5 +1,6 @@
 package com.dida.data.main
 
+import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostLoginResponse
@@ -30,7 +31,14 @@ interface MainRemoteService {
     @PATCH("/common/refresh")
     suspend fun patchRefreshToken(@Header("refreshToken") request: String): PostLoginResponse
 
+    // TODO : PUBLICK KEY 발급 받기 API 추가
+
     // 인증 메일 보내기
     @GET("/visitor/auth")
     suspend fun getEmailAuth(): GetEmailAuthResponse
+
+    // TODO : 지갑 발급하기 API 추가
+
+    @GET("/common/wallet")
+    suspend fun getCommonWallet(): GetCommonWalletResponse
 }
