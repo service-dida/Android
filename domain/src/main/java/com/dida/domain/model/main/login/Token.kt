@@ -1,4 +1,4 @@
-package com.dida.domain.model.main
+package com.dida.domain.model.main.login
 
 data class Token(
     val message: String?,

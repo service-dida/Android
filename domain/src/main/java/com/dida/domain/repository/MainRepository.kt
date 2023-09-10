@@ -2,6 +2,8 @@ package com.dida.domain.repository
 
 import com.dida.domain.NetworkResult
 import com.dida.domain.model.main.*
+import com.dida.domain.model.main.login.Nickname
+import com.dida.domain.model.main.login.Token
 import okhttp3.MultipartBody
 
 interface  MainRepository {
