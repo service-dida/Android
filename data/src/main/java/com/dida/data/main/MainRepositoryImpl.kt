@@ -1,6 +1,7 @@
 package com.dida.data.main
 
 import com.dida.data.api.handleApi
+import com.dida.data.model.login.PatchMemberDeviceRequest
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
@@ -40,6 +41,11 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun checkWallet(): NetworkResult<Boolean> {
         return handleApi { mainRemoteService.getCommonWallet().existed }
+    }
+
+    override suspend fun patchDeviceToken(deviceToken: String): NetworkResult<Unit> {
+        val body = PatchMemberDeviceRequest(deviceToken = deviceToken)
+        return handleApi { mainRemoteService.patchMemberDevice(body) }
     }
 }
 

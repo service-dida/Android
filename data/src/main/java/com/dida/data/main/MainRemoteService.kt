@@ -2,6 +2,7 @@ package com.dida.data.main
 
 import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
+import com.dida.data.model.login.PatchMemberDeviceRequest
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
@@ -39,6 +40,11 @@ interface MainRemoteService {
 
     // TODO : 지갑 발급하기 API 추가
 
+    // 지갑 여부 확인
     @GET("/common/wallet")
     suspend fun getCommonWallet(): GetCommonWalletResponse
+
+    // Device Token 바꾸기
+    @PATCH("/member/device")
+    suspend fun patchMemberDevice(@Body body: PatchMemberDeviceRequest): Unit
 }

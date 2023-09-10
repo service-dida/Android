@@ -11,4 +11,5 @@ interface  MainRepository {
     suspend fun refreshToken(refreshToken: String): NetworkResult<LoginToken>
     suspend fun emailAuth(): NetworkResult<String>
     suspend fun checkWallet(): NetworkResult<Boolean>
+    suspend fun patchDeviceToken(deviceToken: String): NetworkResult<Unit>
 }
