@@ -13,8 +13,9 @@ interface MainAPIService {
     @GET("/app/version")
     suspend fun checkVersion(): AppVersion
 
+    /** 카카오 로그인 **/
     @POST("/kakao/login")
-    suspend fun loginAPIServer(@Body idToken: String): Token
+    suspend fun loginAPIServer(@Body body: PostKakaoLoginRequest): PostKakaoLoginResponse
 
     @POST("/user/nickname")
     suspend fun nicknameAPIServer(@Body postNicknameRequest: PostNicknameRequest): Nickname

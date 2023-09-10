@@ -5,6 +5,14 @@ import com.dida.domain.model.klaytn.Asset
 import com.dida.domain.model.main.*
 import com.dida.domain.model.main.HideCard
 
+fun PostKakaoLoginResponse.toDomain(): Token {
+    return Token(
+        message = this.message,
+        accessToken = this.accessToken,
+        refreshToken = this.refreshToken
+    )
+}
+
 fun GetMainResponse.toDomain(): Home {
     return Home(
         getHotItems = getHotItems.toDomain(),

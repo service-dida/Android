@@ -22,7 +22,8 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loginAPI(idToken: String): NetworkResult<Token> {
-        return handleApi { mainAPIService.loginAPIServer(idToken = idToken) }
+        val body = PostKakaoLoginRequest(idToken = idToken)
+        return handleApi { mainAPIService.loginAPIServer(body = body).toDomain() }
     }
 
     override suspend fun nicknameAPI(nickName: String): NetworkResult<Nickname> {

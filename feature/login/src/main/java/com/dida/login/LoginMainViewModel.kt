@@ -38,7 +38,7 @@ class LoginMainViewModel @Inject constructor(
             showLoading()
             loginAPI(idToken)
                 .onSuccess {
-                    if(it.refreshToken.isNullOrEmpty()) {
+                    if (!it.message.isNullOrBlank()) {
                         _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.accessToken!!))
                     } else {
                         dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
