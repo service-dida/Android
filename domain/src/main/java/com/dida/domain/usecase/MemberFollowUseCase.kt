@@ -1,0 +1,14 @@
+package com.dida.domain.usecase
+
+import com.dida.domain.NetworkResult
+import com.dida.domain.main.MainRepository
+import com.dida.domain.main.model.LoginToken
+import javax.inject.Inject
+
+class MemberFollowUseCase @Inject constructor(
+    private val repository: MainRepository
+) {
+    suspend operator fun invoke(memberId: Long) : NetworkResult<Unit> {
+        return repository.memberFollow(memberId = memberId)
+    }
+}

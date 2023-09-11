@@ -84,4 +84,8 @@ interface DidaApi {
         @Query("size") size: Int,
         @Query("sort") sort: String? = "updated_desc"
     ): GetCommonProfileNftResponse
+
+    // 다른 유저 팔로우 누르기
+    @PATCH("/common/follow/{memberId}")
+    suspend fun patchMemberFollow(@Path("memberId") memberId: Long): Unit
 }
