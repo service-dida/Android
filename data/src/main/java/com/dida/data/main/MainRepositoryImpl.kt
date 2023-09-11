@@ -6,6 +6,7 @@ import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
 import com.dida.data.model.login.toDomain
+import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.toDomain
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
@@ -16,6 +17,7 @@ import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -98,6 +100,15 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun memberWallet(): NetworkResult<MemberWallet> {
         return handleApi { didaApi.getMemberWallet().toDomain() }
+    }
+
+    override suspend fun patchProfileImage(file: MultipartBody.Part): NetworkResult<Unit> {
+        return handleApi { didaApi.patchProfileImage(file) }
+    }
+
+    override suspend fun patchProfileDescription(description: String): NetworkResult<Unit> {
+        val body = PatchProfileDescriptionRequest(description)
+        return handleApi { didaApi.patchProfileDescription(body) }
     }
 }
 

@@ -13,12 +13,16 @@ import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
 import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
+import com.dida.data.model.profile.PatchProfileDescriptionRequest
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -108,4 +112,14 @@ interface DidaApi {
     // 내 지갑 확인하기
     @GET("/member/wallet")
     suspend fun getMemberWallet(): GetMemberWalletResponse
+
+    // 프로필 이미지 변경
+    @Multipart
+    @PATCH("/common/image")
+    suspend fun patchProfileImage(@Part file: MultipartBody.Part): Unit
+
+    // 프로필 설명 수정
+    @PATCH("/common/description")
+    suspend fun patchProfileDescription(@Body body: PatchProfileDescriptionRequest): Unit
+
 }

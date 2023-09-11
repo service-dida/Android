@@ -8,6 +8,7 @@ import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
+import okhttp3.MultipartBody
 
 interface MainRepository {
 
@@ -27,4 +28,6 @@ interface MainRepository {
     suspend fun commonFollow(page: Int, size: Int): NetworkResult<Contents<CommonFollow>>
     suspend fun commonFollowing(page: Int, size: Int): NetworkResult<Contents<CommonFollow>>
     suspend fun memberWallet(): NetworkResult<MemberWallet>
+    suspend fun patchProfileImage(file: MultipartBody.Part): NetworkResult<Unit>
+    suspend fun patchProfileDescription(description: String): NetworkResult<Unit>
 }
