@@ -4,6 +4,7 @@ import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.Contents
 import com.dida.domain.main.model.MemberInfo
+import com.dida.domain.main.model.MemberProfile
 
 fun GetCommonProfileResponse.toDomain(): CommonProfile {
     return CommonProfile(
@@ -23,5 +24,12 @@ fun GetCommonProfileNftResponse.toDomain(): Contents<CommonProfileNft> {
         pageSize = pageSize,
         hasNext = hasNext,
         content = response
+    )
+}
+
+fun GetMemberProfileResponse.toDomain(): MemberProfile {
+    return MemberProfile(
+        memberDetailInfo = memberDetailInfo.toDomain(),
+        followed = followed
     )
 }

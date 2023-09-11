@@ -13,6 +13,7 @@ import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.Contents
 import com.dida.domain.main.model.LoginToken
+import com.dida.domain.main.model.MemberProfile
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -66,6 +67,10 @@ class MainRepositoryImpl @Inject constructor(
         sort: String
     ): NetworkResult<Contents<CommonProfileNft>> {
         return handleApi { didaApi.getCommonProfileNft(page, size, sort).toDomain() }
+    }
+
+    override suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile> {
+        return handleApi { didaApi.getMemberProfile(memberId = memberId).toDomain() }
     }
 }
 

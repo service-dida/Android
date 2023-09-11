@@ -5,6 +5,7 @@ import com.dida.domain.NetworkResult
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.LoginToken
+import com.dida.domain.main.model.MemberProfile
 
 interface MainRepository {
 
@@ -18,4 +19,5 @@ interface MainRepository {
     suspend fun deleteUser(): NetworkResult<Unit>
     suspend fun commonProfile(): NetworkResult<CommonProfile>
     suspend fun commonProfileNft(page: Int, size: Int, sort: String): NetworkResult<Contents<CommonProfileNft>>
+    suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile>
 }

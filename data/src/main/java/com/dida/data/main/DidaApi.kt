@@ -10,12 +10,14 @@ import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
 import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
+import com.dida.data.model.profile.GetMemberProfileResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface DidaApi {
@@ -69,4 +71,8 @@ interface DidaApi {
         @Query("size") size: Int,
         @Query("sort") sort: String? = "updated_desc"
     ): GetCommonProfileNftResponse
+
+    // 다른 유저 프로필 확인
+    @GET("/profile/{memberId}")
+    suspend fun getMemberProfile(@Path("memberId") memberId: Long): GetMemberProfileResponse
 }
