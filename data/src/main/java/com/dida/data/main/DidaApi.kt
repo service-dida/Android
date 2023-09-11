@@ -127,4 +127,10 @@ interface DidaApi {
     @PATCH("/common/nickname")
     suspend fun patchProfileNickname(@Body body: PatchProfileNicknameRequest): Unit
 
+    // TODO : 결제 비밀번호 수정하기 API 추가
+
+    // 결제 비밀번호 찾기(임시 비밀번호 발급)
+    @PATCH("/member/password/tmp")
+    suspend fun patchTempMemberPassword(): Unit
+
 }

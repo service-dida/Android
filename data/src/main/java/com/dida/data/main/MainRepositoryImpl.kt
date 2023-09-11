@@ -116,5 +116,9 @@ class MainRepositoryImpl @Inject constructor(
         val body = PatchProfileNicknameRequest(nickname)
         return handleApi { didaApi.patchProfileNickname(body) }
     }
+
+    override suspend fun patchTempMemberPassword(): NetworkResult<Unit> {
+        return handleApi { didaApi.patchTempMemberPassword() }
+    }
 }
 
