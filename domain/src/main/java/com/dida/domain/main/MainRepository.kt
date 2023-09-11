@@ -30,4 +30,5 @@ interface MainRepository {
     suspend fun memberWallet(): NetworkResult<MemberWallet>
     suspend fun patchProfileImage(file: MultipartBody.Part): NetworkResult<Unit>
     suspend fun patchProfileDescription(description: String): NetworkResult<Unit>
+    suspend fun patchProfileNickname(nickname: String): NetworkResult<Unit>
 }

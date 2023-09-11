@@ -14,6 +14,7 @@ import com.dida.data.model.profile.GetCommonProfileResponse
 import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
+import com.dida.data.model.profile.PatchProfileNicknameRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -121,5 +122,9 @@ interface DidaApi {
     // 프로필 설명 수정
     @PATCH("/common/description")
     suspend fun patchProfileDescription(@Body body: PatchProfileDescriptionRequest): Unit
+
+    // 프로필 닉네임 수정
+    @PATCH("/common/nickname")
+    suspend fun patchProfileNickname(@Body body: PatchProfileNicknameRequest): Unit
 
 }

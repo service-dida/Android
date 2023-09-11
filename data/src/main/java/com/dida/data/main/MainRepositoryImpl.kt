@@ -7,6 +7,7 @@ import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
 import com.dida.data.model.login.toDomain
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
+import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.profile.toDomain
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
@@ -109,6 +110,11 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun patchProfileDescription(description: String): NetworkResult<Unit> {
         val body = PatchProfileDescriptionRequest(description)
         return handleApi { didaApi.patchProfileDescription(body) }
+    }
+
+    override suspend fun patchProfileNickname(nickname: String): NetworkResult<Unit> {
+        val body = PatchProfileNicknameRequest(nickname)
+        return handleApi { didaApi.patchProfileNickname(body) }
     }
 }
 
