@@ -46,4 +46,5 @@ interface MainRepository {
     suspend fun posts(page: Int, size: Int): NetworkResult<Contents<Post>>
     suspend fun postsFromNft(nftId: Long, page: Int, size: Int): NetworkResult<Contents<Post>>
     suspend fun postDetail(postId: Long): NetworkResult<Post>
+    suspend fun writePostComments(postId: Long, content: String): NetworkResult<Unit>
 }

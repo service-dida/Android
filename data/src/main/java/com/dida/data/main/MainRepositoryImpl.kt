@@ -13,6 +13,7 @@ import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.profile.toDomain
 import com.dida.data.model.sns.PatchCommonPostRequest
+import com.dida.data.model.sns.PostCommonCommentsRequest
 import com.dida.data.model.sns.PostCommonPostRequest
 import com.dida.data.model.sns.toDomain
 import com.dida.domain.NetworkResult
@@ -171,6 +172,11 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun postDetail(postId: Long): NetworkResult<Post> {
         return handleApi { didaApi.getPostDetail(postId).toDomain() }
+    }
+
+    override suspend fun writePostComments(postId: Long, content: String): NetworkResult<Unit> {
+        val body = PostCommonCommentsRequest(postId, content)
+        return handleApi { didaApi.writePostComments(body) }
     }
 }
 

@@ -21,6 +21,7 @@ import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.sns.GetPostDetailResponse
 import com.dida.data.model.sns.GetPostsResponse
 import com.dida.data.model.sns.PatchCommonPostRequest
+import com.dida.data.model.sns.PostCommonCommentsRequest
 import com.dida.data.model.sns.PostCommonPostRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -242,4 +243,9 @@ interface DidaApi {
     suspend fun getPostDetail(
         @Path("postId") postId: Long,
     ): GetPostDetailResponse
+
+
+    // 댓글 작성하기
+    @POST("/common/comments")
+    suspend fun writePostComments(@Body body: PostCommonCommentsRequest): Unit
 }
