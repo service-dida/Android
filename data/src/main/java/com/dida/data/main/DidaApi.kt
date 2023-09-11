@@ -273,10 +273,12 @@ interface DidaApi {
         @Query("size") size: Int,
     ): GetHotPostsResponse
 
-    // 시끌벅적 게시판 조회
+    // 내가 보유한 NFT 목록 조회
     @GET("/common/nft/own")
     suspend fun getOwnNfts(
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetOwnNftsResponse
+
+    // TODO : 내가 좋아요한 NFT 목록 조회 API 추가
 }
