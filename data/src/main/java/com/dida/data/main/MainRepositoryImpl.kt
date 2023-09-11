@@ -201,5 +201,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun hideNft(nftId: Long): NetworkResult<Unit> {
         return handleApi { didaApi.postHideNft(nftId) }
     }
+
+    override suspend fun cancelHideNft(nftId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.cancelHideNft(nftId) }
+    }
 }
 
