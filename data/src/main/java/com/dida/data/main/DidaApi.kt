@@ -314,4 +314,8 @@ interface DidaApi {
     @DELETE("/common/post/hide")
     suspend fun cancelBlockPost(@Query("postId") postId: Long): Unit
 
+    // 댓글 숨기기
+    @DELETE("/common/comment/hide")
+    suspend fun blockComments(@Query("commentId") commentId: Long): Unit
+
 }

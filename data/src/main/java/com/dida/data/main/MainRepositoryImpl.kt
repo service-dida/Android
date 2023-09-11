@@ -222,5 +222,9 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.cancelBlockPost(postId) }
     }
 
+    override suspend fun blockComment(commentId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.blockComments(commentId) }
+    }
+
 }
 
