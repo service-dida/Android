@@ -1,7 +1,9 @@
 package com.dida.data.main
 
 import com.dida.data.api.handleApi
+import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostReportRequest
+import com.dida.data.model.additional.toDomain
 import com.dida.data.model.dex.toDomain
 import com.dida.data.model.login.PatchMemberDeviceRequest
 import com.dida.data.model.login.PostLoginRequest
@@ -22,6 +24,7 @@ import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.Contents
+import com.dida.domain.main.model.AiPicture
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
@@ -230,6 +233,15 @@ class MainRepositoryImpl @Inject constructor(
             Report.POST -> handleApi { didaApi.reportPost(body) }
             Report.COMMENT -> handleApi { didaApi.reportComment(body) }
         }
+    }
+
+    override suspend fun nftLike(nftId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.postNftLike(nftId) }
+    }
+
+    override suspend fun makeAiPicture(payPwd: String, setence: String): NetworkResult<AiPicture> {
+        val body = PostMakePictureRequest(payPwd, setence)
+        return handleApi { didaApi.makeAiPicture(body).toDomain() }
     }
 
 }

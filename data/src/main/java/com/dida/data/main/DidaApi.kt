@@ -1,5 +1,7 @@
 package com.dida.data.main
 
+import com.dida.data.model.additional.PostMakePictureRequest
+import com.dida.data.model.additional.PostMakePictureResponse
 import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.dex.GetMemberSwapResponse
 import com.dida.data.model.login.GetCommonWalletResponse
@@ -338,5 +340,9 @@ interface DidaApi {
     // NFT 좋아요 누르기
     @POST("/common/nft/like")
     suspend fun postNftLike(@Query("nftId") nftId: Long): Unit
+
+    // 그림 생성하기
+    @POST("/member/picture")
+    suspend fun makeAiPicture(@Body body: PostMakePictureRequest): PostMakePictureResponse
 
 }

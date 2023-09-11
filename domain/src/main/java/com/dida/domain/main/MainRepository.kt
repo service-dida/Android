@@ -2,6 +2,7 @@ package com.dida.domain.main
 
 import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
+import com.dida.domain.main.model.AiPicture
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
@@ -98,5 +99,7 @@ interface MainRepository {
     suspend fun report(type: Report, reportedId: Long, description: String): NetworkResult<Unit>
 
     suspend fun nftLike(nftId: Long): NetworkResult<Unit>
+
+    suspend fun makeAiPicture(payPwd: String, setence: String): NetworkResult<AiPicture>
 }
 
