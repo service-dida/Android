@@ -2,6 +2,7 @@ package com.dida.domain.main
 
 import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
+import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
@@ -90,19 +91,10 @@ interface MainRepository {
 
     suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
 
-    suspend fun blockNft(nftId: Long): NetworkResult<Unit>
+    suspend fun block(type: Block, blockId: Long): NetworkResult<Unit>
 
-    suspend fun cancelBlockNft(nftId: Long): NetworkResult<Unit>
+    suspend fun cancelBlock(type: Block, blockId: Long): NetworkResult<Unit>
 
-    suspend fun blockMember(memberId: Long): NetworkResult<Unit>
-
-    suspend fun cancelBlockMember(memberId: Long): NetworkResult<Unit>
-
-    suspend fun blockPost(postId: Long): NetworkResult<Unit>
-
-    suspend fun cancelBlockPost(postId: Long): NetworkResult<Unit>
-
-    suspend fun blockComment(commentId: Long): NetworkResult<Unit>
     suspend fun report(type: Report, reportedId: Long, description: String): NetworkResult<Unit>
 }
 

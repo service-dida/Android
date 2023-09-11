@@ -4,10 +4,10 @@ import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
 import javax.inject.Inject
 
-class BlockCommentUseCase @Inject constructor(
+class CancelBlockUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(commentId: Long) : NetworkResult<Unit> {
-        return repository.blockComment(commentId)
+    suspend operator fun invoke(postId: Long) : NetworkResult<Unit> {
+        return repository.blockPost(postId)
     }
 }

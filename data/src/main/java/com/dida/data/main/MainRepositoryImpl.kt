@@ -22,6 +22,7 @@ import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.Contents
+import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.HotPost
@@ -200,34 +201,23 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.getOwnNfts(page, size).toDomain() }
     }
 
-    override suspend fun blockNft(nftId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.blockNft(nftId) }
+    override suspend fun block(type: Block, blockId: Long): NetworkResult<Unit> {
+        return when (type) {
+            Block.NFT -> handleApi { didaApi.blockNft(blockId) }
+            Block.MEMBER -> handleApi { didaApi.blockMember(blockId) }
+            Block.POST -> handleApi { didaApi.blockPost(blockId) }
+            Block.COMMENT -> handleApi { didaApi.blockComments(blockId) }
+        }
     }
 
-    override suspend fun cancelBlockNft(nftId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.cancelBlockNft(nftId) }
+    override suspend fun cancelBlock(type: Block, blockId: Long): NetworkResult<Unit> {
+        return when (type) {
+            Block.NFT -> handleApi { didaApi.cancelBlockNft(blockId) }
+            Block.MEMBER -> handleApi { didaApi.cancelBlockMember(blockId) }
+            Block.POST -> NetworkResult.Success(Unit)
+            Block.COMMENT -> NetworkResult.Success(Unit)
+        }
     }
-
-    override suspend fun blockMember(memberId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.blockMember(memberId) }
-    }
-
-    override suspend fun cancelBlockMember(memberId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.cancelBlockMember(memberId) }
-    }
-
-    override suspend fun blockPost(postId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.blockPost(postId) }
-    }
-
-    override suspend fun cancelBlockPost(postId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.cancelBlockPost(postId) }
-    }
-
-    override suspend fun blockComment(commentId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.blockComments(commentId) }
-    }
-
     override suspend fun report(
         type: Report,
         reportedId: Long,
