@@ -96,5 +96,7 @@ interface MainRepository {
     suspend fun cancelBlock(type: Block, blockId: Long): NetworkResult<Unit>
 
     suspend fun report(type: Report, reportedId: Long, description: String): NetworkResult<Unit>
+
+    suspend fun nftLike(nftId: Long): NetworkResult<Unit>
 }
 

@@ -335,4 +335,8 @@ interface DidaApi {
     @POST("/common/report/comment")
     suspend fun reportComment(@Body body: PostReportRequest): Unit
 
+    // NFT 좋아요 누르기
+    @POST("/common/nft/like")
+    suspend fun postNftLike(@Query("nftId") nftId: Long): Unit
+
 }
