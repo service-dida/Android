@@ -25,6 +25,7 @@ import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.Contents
 import com.dida.domain.main.model.AiPicture
+import com.dida.domain.main.model.Alarm
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
@@ -246,6 +247,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun readAlarm(alarmId: Long): NetworkResult<Unit> {
         return handleApi { didaApi.patchReadAlarm(alarmId) }
+    }
+
+    override suspend fun alarms(page: Int, size: Int): NetworkResult<Contents<Alarm>> {
+        return handleApi { didaApi.getAlarms(page, size).toDomain() }
     }
 
 }

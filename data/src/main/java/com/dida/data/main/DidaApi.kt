@@ -1,5 +1,6 @@
 package com.dida.data.main
 
+import com.dida.data.model.additional.GetAlarmsResponse
 import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostMakePictureResponse
 import com.dida.data.model.additional.PostReportRequest
@@ -348,5 +349,12 @@ interface DidaApi {
     // 알림 확인하기
     @PATCH("/common/alarm/{alarmId}")
     suspend fun patchReadAlarm(@Path("alarmId") alarmId: Long): Unit
+
+    // 알림 목록 조회하기
+    @GET("/common/alarm")
+    suspend fun getAlarms(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetAlarmsResponse
 
 }

@@ -3,6 +3,7 @@ package com.dida.domain.main
 import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.model.AiPicture
+import com.dida.domain.main.model.Alarm
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
@@ -103,5 +104,7 @@ interface MainRepository {
     suspend fun makeAiPicture(payPwd: String, setence: String): NetworkResult<AiPicture>
 
     suspend fun readAlarm(alarmId: Long): NetworkResult<Unit>
+
+    suspend fun alarms(page: Int, size: Int): NetworkResult<Contents<Alarm>>
 }
 
