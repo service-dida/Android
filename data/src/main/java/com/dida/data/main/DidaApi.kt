@@ -9,6 +9,7 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.main.GetRecentNftsResponse
 import com.dida.data.model.market.GetNftResponse
 import com.dida.data.model.profile.GetCommonFollowResponse
 import com.dida.data.model.profile.GetCommonProfileNftResponse
@@ -173,4 +174,31 @@ interface DidaApi {
     // NFT 상세보기
     @GET("/common/nft/{nftId}")
     suspend fun getNftDetail(nftId: Long): GetNftResponse
+
+    // TODO : 전체 거래내역 보기 API 추가
+
+    // TODO : 판매 내역 확인하기 API 추가
+
+    // TODO : 구매 내역 확인하기 API 추가
+
+    /**
+     * 메인 화면
+     **/
+
+    // TODO : 메인화면(Sold Out 제외) API 추가
+
+    // TODO : 메인 화면 Sold Out 조회 API 추가
+
+    // TODO : Sold Out 더보기 API 추가
+
+    // TODO : Hot Seller 더보기 API 추가
+
+    // 최신 NFT 더보기
+    @GET("/recent-nfts")
+    suspend fun getRecentNfts(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetRecentNftsResponse
+
+    // TODO : 활발한 활동 더보기 API 추가
 }

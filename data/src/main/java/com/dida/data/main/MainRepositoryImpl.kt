@@ -7,6 +7,7 @@ import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
 import com.dida.data.model.login.toDomain
+import com.dida.data.model.main.toDomain
 import com.dida.data.model.market.toDomain
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
@@ -21,6 +22,7 @@ import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Swap
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -135,6 +137,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun nftDetail(nftId: Long): NetworkResult<Nft> {
         return handleApi { didaApi.getNftDetail(nftId).toDomain() }
+    }
+
+    override suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>> {
+        return handleApi { didaApi.getRecentNfts(page, size).toDomain() }
     }
 }
 
