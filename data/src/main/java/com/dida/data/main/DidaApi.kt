@@ -18,6 +18,7 @@ import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.sns.GetPostsResponse
 import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonPostRequest
 import okhttp3.MultipartBody
@@ -219,4 +220,11 @@ interface DidaApi {
     // 게시글 삭제하기
     @DELETE("/common/posts/{postId}")
     suspend fun deletePost(@Path("postId") postId: Long): Unit
+
+    // 최신 게시글 조회
+    @GET("/posts")
+    suspend fun getPosts(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetPostsResponse
 }

@@ -14,6 +14,7 @@ import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.profile.toDomain
 import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonPostRequest
+import com.dida.data.model.sns.toDomain
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.CommonProfile
@@ -24,6 +25,7 @@ import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Swap
 import okhttp3.MultipartBody
@@ -157,6 +159,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun deletePost(postId: Long): NetworkResult<Unit> {
         return handleApi { didaApi.deletePost(postId) }
+    }
+
+    override suspend fun getPosts(page: Int, size: Int): NetworkResult<Contents<Post>> {
+        return handleApi { didaApi.getPosts(page, size).toDomain() }
     }
 }
 

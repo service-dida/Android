@@ -9,6 +9,7 @@ import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Swap
 import okhttp3.MultipartBody
@@ -42,4 +43,5 @@ interface MainRepository {
     suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit>
     suspend fun patchPost(postId: Long, title: String, content: String): NetworkResult<Unit>
     suspend fun deletePost(postId: Long): NetworkResult<Unit>
+    suspend fun getPosts(page: Int, size: Int): NetworkResult<Contents<Post>>
 }
