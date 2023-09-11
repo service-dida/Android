@@ -41,4 +41,5 @@ interface MainRepository {
     suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>>
     suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit>
     suspend fun patchPost(postId: Long, title: String, content: String): NetworkResult<Unit>
+    suspend fun deletePost(postId: Long): NetworkResult<Unit>
 }

@@ -215,4 +215,8 @@ interface DidaApi {
     // 게시글 수정하기
     @PATCH("/common/posts")
     suspend fun patchPost(@Body body: PatchCommonPostRequest): Unit
+
+    // 게시글 삭제하기
+    @DELETE("/common/posts/{postId}")
+    suspend fun deletePost(@Path("postId") postId: Long): Unit
 }

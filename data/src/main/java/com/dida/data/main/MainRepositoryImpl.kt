@@ -150,13 +150,13 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.writePost(body) }
     }
 
-    override suspend fun patchPost(
-        postId: Long,
-        title: String,
-        content: String
-    ): NetworkResult<Unit> {
+    override suspend fun patchPost(postId: Long, title: String, content: String): NetworkResult<Unit> {
         val body = PatchCommonPostRequest(postId, title, content)
         return handleApi { didaApi.patchPost(body) }
+    }
+
+    override suspend fun deletePost(postId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.deletePost(postId) }
     }
 }
 
