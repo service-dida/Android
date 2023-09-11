@@ -39,4 +39,5 @@ interface MainRepository {
     suspend fun memberSwap(page: Int, size: Int): NetworkResult<Contents<Swap>>
     suspend fun nftDetail(nftId: Long): NetworkResult<Nft>
     suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>>
+    suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit>
 }

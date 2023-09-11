@@ -18,6 +18,7 @@ import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.sns.PostCommonPostRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -201,4 +202,12 @@ interface DidaApi {
     ): GetRecentNftsResponse
 
     // TODO : 활발한 활동 더보기 API 추가
+
+    /**
+     * SNS 기능
+     **/
+
+    // 게시글 작성하기
+    @POST("/common/posts")
+    suspend fun writePost(@Body body: PostCommonPostRequest): Unit
 }
