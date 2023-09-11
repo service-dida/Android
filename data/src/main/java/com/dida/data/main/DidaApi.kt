@@ -1,5 +1,6 @@
 package com.dida.data.main
 
+import com.dida.data.model.dex.GetMemberSwapResponse
 import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
 import com.dida.data.model.login.PatchMemberDeviceRequest
@@ -145,7 +146,16 @@ interface DidaApi {
 
     // NFT 삭제하기
     @DELETE("/member/nft/{nftId}")
-    suspend fun deleteNft(@Part("nftId") nftId: Long): Unit
+    suspend fun deleteNft(@Path("nftId") nftId: Long): Unit
 
+    // TODO : KLAY → DIDA 스왑 API 추가
 
+    // TODO : DIDA → KLAY 스왑 스왑 API 추가
+
+    // 스왑 내역 확인하기
+    @DELETE("/member/swap")
+    suspend fun getMemberSwap(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetMemberSwapResponse
 }
