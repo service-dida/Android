@@ -28,6 +28,7 @@ import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Swap
@@ -191,6 +192,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun hotPosts(page: Int, size: Int): NetworkResult<Contents<HotPost>> {
         return handleApi { didaApi.getHotPosts(page, size).toDomain() }
+    }
+
+    override suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>> {
+        return handleApi { didaApi.getOwnNfts(page, size).toDomain() }
     }
 }
 

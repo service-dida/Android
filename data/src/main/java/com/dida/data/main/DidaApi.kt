@@ -16,6 +16,7 @@ import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
 import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
+import com.dida.data.model.sns.GetOwnNftsResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.sns.GetCommentsFromPostResponse
@@ -271,4 +272,11 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetHotPostsResponse
+
+    // 시끌벅적 게시판 조회
+    @GET("/common/nft/own")
+    suspend fun getOwnNfts(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetOwnNftsResponse
 }

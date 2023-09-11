@@ -11,6 +11,7 @@ import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Swap
@@ -52,4 +53,5 @@ interface MainRepository {
     suspend fun deletePostComments(commentId: Long): NetworkResult<Unit>
     suspend fun commentsFromPost(postId: Long, page: Int, size: Int): NetworkResult<Contents<Comment>>
     suspend fun hotPosts(page: Int, size: Int): NetworkResult<Contents<HotPost>>
+    suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
 }
