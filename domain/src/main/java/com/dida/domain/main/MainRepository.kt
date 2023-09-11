@@ -1,7 +1,9 @@
 package com.dida.domain.main
 
+import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.model.CommonProfile
+import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.LoginToken
 
 interface MainRepository {
@@ -15,4 +17,5 @@ interface MainRepository {
     suspend fun patchDeviceToken(deviceToken: String): NetworkResult<Unit>
     suspend fun deleteUser(): NetworkResult<Unit>
     suspend fun commonProfile(): NetworkResult<CommonProfile>
+    suspend fun commonProfileNft(page: Int, size: Int, sort: String): NetworkResult<Contents<CommonProfileNft>>
 }

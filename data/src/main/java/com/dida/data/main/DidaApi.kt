@@ -8,6 +8,7 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -15,8 +16,9 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Query
 
-interface MainRemoteService {
+interface DidaApi {
 
     /** 로그인 및 회원가입 **/
     // 카카오 로그인
@@ -57,6 +59,14 @@ interface MainRemoteService {
 
     /** 프로필 관련 **/
     // 내 프로필 확인하기
-    @DELETE("/common/profile")
+    @GET("/common/profile")
     suspend fun getCommonProfile(): GetCommonProfileResponse
+
+    // 내 NFT 확인하기
+    @GET("/common/profile/nft")
+    suspend fun getCommonProfileNft(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("sort") sort: String? = "updated_desc"
+    ): GetCommonProfileNftResponse
 }
