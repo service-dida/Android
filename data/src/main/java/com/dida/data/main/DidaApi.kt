@@ -154,7 +154,7 @@ interface DidaApi {
     // TODO : DIDA → KLAY 스왑 스왑 API 추가
 
     // 스왑 내역 확인하기
-    @DELETE("/member/swap")
+    @GET("/member/swap")
     suspend fun getMemberSwap(
         @Query("page") page: Int,
         @Query("size") size: Int,
@@ -171,6 +171,6 @@ interface DidaApi {
     // TODO : NFT 구매하기 API 추가
 
     // NFT 상세보기
-    @DELETE("/common/nft/{nftId}")
+    @GET("/common/nft/{nftId}")
     suspend fun getNftDetail(nftId: Long): GetNftResponse
 }
