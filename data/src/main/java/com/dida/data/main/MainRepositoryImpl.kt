@@ -72,5 +72,14 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile> {
         return handleApi { didaApi.getMemberProfile(memberId = memberId).toDomain() }
     }
+
+    override suspend fun memberProfileNFt(
+        memberId: Long,
+        page: Int,
+        size: Int,
+        sort: String
+    ): NetworkResult<Contents<CommonProfileNft>> {
+        return handleApi { didaApi.getMemberProfileNft(memberId, page, size, sort).toDomain() }
+    }
 }
 

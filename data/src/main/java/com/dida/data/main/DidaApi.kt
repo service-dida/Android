@@ -75,4 +75,13 @@ interface DidaApi {
     // 다른 유저 프로필 확인
     @GET("/profile/{memberId}")
     suspend fun getMemberProfile(@Path("memberId") memberId: Long): GetMemberProfileResponse
+
+    // 다른 유저 NFT 확인하기
+    @GET("/profile/nft/{memberId}")
+    suspend fun getMemberProfileNft(
+        @Path("memberId") memberId: Long,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("sort") sort: String? = "updated_desc"
+    ): GetCommonProfileNftResponse
 }
