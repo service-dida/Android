@@ -2,7 +2,7 @@ package com.dida.data.di
 
 import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.KLAYTN_URL
-import com.dida.data.klaytn.KlaytnRemoteService
+import com.dida.data.klaytn.KlaytnApi
 import com.dida.data.interceptor.KlaytnAuthInterceptor
 import dagger.Module
 import dagger.Provides
@@ -62,8 +62,8 @@ object KlaytnNetworkModule {
     @Singleton
     @Provides
     @Named("Klaytn")
-    fun provideKlaytnAPIService(@Named("Klaytn") retrofit: Retrofit): KlaytnRemoteService =
-        retrofit.create(KlaytnRemoteService::class.java)
+    fun provideKlaytnAPIService(@Named("Klaytn") retrofit: Retrofit): KlaytnApi =
+        retrofit.create(KlaytnApi::class.java)
 
 
 }

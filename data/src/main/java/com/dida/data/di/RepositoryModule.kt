@@ -1,6 +1,6 @@
 package com.dida.data.di
 
-import com.dida.data.klaytn.KlaytnRemoteService
+import com.dida.data.klaytn.KlaytnApi
 import com.dida.data.main.DidaApi
 import com.dida.data.klaytn.KlaytnRepositoryImpl
 import com.dida.data.main.MainRepositoryImpl
@@ -27,8 +27,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideKlaytnRepository(
-        @Named("Klaytn") klaytnRemoteService: KlaytnRemoteService
+        @Named("Klaytn") klaytnApi: KlaytnApi
     ): KlaytnRepository {
-        return KlaytnRepositoryImpl(klaytnRemoteService)
+        return KlaytnRepositoryImpl(klaytnApi)
     }
 }
