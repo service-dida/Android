@@ -8,6 +8,7 @@ import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
+import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.Swap
 import okhttp3.MultipartBody
 
@@ -35,4 +36,5 @@ interface MainRepository {
     suspend fun patchTempMemberPassword(): NetworkResult<Unit>
     suspend fun deleteNft(nftId: Long): NetworkResult<Unit>
     suspend fun memberSwap(page: Int, size: Int): NetworkResult<Contents<Swap>>
+    suspend fun nftDetail(nftId: Long): NetworkResult<Nft>
 }

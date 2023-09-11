@@ -9,6 +9,7 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.market.GetNftResponse
 import com.dida.data.model.profile.GetCommonFollowResponse
 import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
@@ -158,4 +159,18 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetMemberSwapResponse
+
+    // TODO : NFT 외부 전송하기 API 추가
+
+    // TODO : KLAY 외부 전송하기 API 추가
+
+    // TODO : NFT 판매하기 API 추가
+
+    // TODO : NFT 판매 취소하기 API 추가
+
+    // TODO : NFT 구매하기 API 추가
+
+    // NFT 상세보기
+    @DELETE("/common/nft/{nftId}")
+    suspend fun getNftDetail(nftId: Long): GetNftResponse
 }
