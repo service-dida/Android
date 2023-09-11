@@ -12,6 +12,7 @@ import com.dida.data.model.market.toDomain
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.profile.toDomain
+import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonPostRequest
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
@@ -147,6 +148,15 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit> {
         val body = PostCommonPostRequest(nftId, title, content)
         return handleApi { didaApi.writePost(body) }
+    }
+
+    override suspend fun patchPost(
+        postId: Long,
+        title: String,
+        content: String
+    ): NetworkResult<Unit> {
+        val body = PatchCommonPostRequest(postId, title, content)
+        return handleApi { didaApi.patchPost(body) }
     }
 }
 

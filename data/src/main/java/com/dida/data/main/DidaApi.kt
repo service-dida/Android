@@ -18,6 +18,7 @@ import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonPostRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -210,4 +211,8 @@ interface DidaApi {
     // 게시글 작성하기
     @POST("/common/posts")
     suspend fun writePost(@Body body: PostCommonPostRequest): Unit
+
+    // 게시글 수정하기
+    @PATCH("/common/posts")
+    suspend fun patchPost(@Body body: PatchCommonPostRequest): Unit
 }
