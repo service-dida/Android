@@ -300,5 +300,10 @@ interface DidaApi {
     @POST("/common/member/hide")
     suspend fun blockMember(@Query("memberId") memberId: Long): Unit
 
+    // 멤버 숨기기 취소
+    @DELETE("/common/member/hide")
+    suspend fun cancelBlockMember(@Query("memberId") memberId: Long): Unit
+
+    // TODO : 멤버 숨김 목록 조회 API 추가
 
 }

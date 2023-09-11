@@ -209,5 +209,10 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun blockMember(memberId: Long): NetworkResult<Unit> {
         return handleApi { didaApi.blockMember(memberId) }
     }
+
+    override suspend fun cancelBlockMember(memberId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.cancelBlockMember(memberId) }
+    }
+
 }
 
