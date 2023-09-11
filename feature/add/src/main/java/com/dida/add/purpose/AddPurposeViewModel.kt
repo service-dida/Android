@@ -4,7 +4,7 @@ import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.klaytn.UploadAssetAPI
+import com.dida.domain.klaytn.UploadAssetAPI
 import com.dida.domain.usecase.main.MintNftAPI
 import com.dida.domain.usecase.main.SellNftAPI
 import com.dida.domain.usecase.main.UserProfileAPI
