@@ -345,4 +345,8 @@ interface DidaApi {
     @POST("/member/picture")
     suspend fun makeAiPicture(@Body body: PostMakePictureRequest): PostMakePictureResponse
 
+    // 알림 확인하기
+    @PATCH("/common/alarm/{alarmId}")
+    suspend fun patchReadAlarm(@Path("alarmId") alarmId: Long): Unit
+
 }

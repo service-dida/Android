@@ -244,5 +244,9 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.makeAiPicture(body).toDomain() }
     }
 
+    override suspend fun readAlarm(alarmId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.patchReadAlarm(alarmId) }
+    }
+
 }
 
