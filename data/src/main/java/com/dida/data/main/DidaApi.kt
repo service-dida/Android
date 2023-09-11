@@ -281,4 +281,12 @@ interface DidaApi {
     ): GetOwnNftsResponse
 
     // TODO : 내가 좋아요한 NFT 목록 조회 API 추가
+
+    /**
+     * 추가 기능
+     **/
+
+    // NFT 숨기기
+    @POST("/common/nft/hide")
+    suspend fun postHideNft(@Query("nftId") nftId: Long): Unit
 }
