@@ -11,3 +11,7 @@ fun GetPostsResponse.toDomain(): Contents<Post> {
         content = response
     )
 }
+
+fun GetPostDetailResponse.toDomain(): Post {
+    return Post(postInfo, memberInfo, nftInfo, type, createdAt, comments)
+}

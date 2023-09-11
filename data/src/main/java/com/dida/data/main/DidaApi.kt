@@ -18,6 +18,7 @@ import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.sns.GetPostDetailResponse
 import com.dida.data.model.sns.GetPostsResponse
 import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonPostRequest
@@ -235,4 +236,10 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetPostsResponse
+
+    // 게시글 상세 조회
+    @GET("/posts/{postId}")
+    suspend fun getPostDetail(
+        @Path("postId") postId: Long,
+    ): GetPostDetailResponse
 }
