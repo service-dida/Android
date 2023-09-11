@@ -120,5 +120,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun patchTempMemberPassword(): NetworkResult<Unit> {
         return handleApi { didaApi.patchTempMemberPassword() }
     }
+
+    override suspend fun deleteNft(nftId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.deleteNft(nftId) }
+    }
 }
 

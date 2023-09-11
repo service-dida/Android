@@ -29,7 +29,9 @@ import retrofit2.http.Query
 
 interface DidaApi {
 
-    /** 로그인 및 회원가입 **/
+    /**
+     * 로그인 및 회원가입
+     **/
     // 카카오 로그인
     @POST("/kakao/login")
     suspend fun login(@Body body: PostLoginRequest): PostLoginResponse
@@ -66,7 +68,9 @@ interface DidaApi {
     @DELETE("/member")
     suspend fun deleteUser(): Unit
 
-    /** 프로필 관련 **/
+    /**
+     * 프로필 관련
+     **/
     // 내 프로필 확인하기
     @GET("/common/profile")
     suspend fun getCommonProfile(): GetCommonProfileResponse
@@ -132,5 +136,16 @@ interface DidaApi {
     // 결제 비밀번호 찾기(임시 비밀번호 발급)
     @PATCH("/member/password/tmp")
     suspend fun patchTempMemberPassword(): Unit
+
+    /**
+     * Dex 및 Nft
+     **/
+
+    // TODO : NFT 만들기 API 추가
+
+    // NFT 삭제하기
+    @DELETE("/member/nft/{nftId}")
+    suspend fun deleteNft(@Part("nftId") nftId: Long): Unit
+
 
 }

@@ -32,4 +32,5 @@ interface MainRepository {
     suspend fun patchProfileDescription(description: String): NetworkResult<Unit>
     suspend fun patchProfileNickname(nickname: String): NetworkResult<Unit>
     suspend fun patchTempMemberPassword(): NetworkResult<Unit>
+    suspend fun deleteNft(nftId: Long): NetworkResult<Unit>
 }
