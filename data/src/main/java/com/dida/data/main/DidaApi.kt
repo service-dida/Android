@@ -306,4 +306,12 @@ interface DidaApi {
 
     // TODO : 멤버 숨김 목록 조회 API 추가
 
+    // 게시글 숨기기
+    @POST("/common/post/hide")
+    suspend fun blockPost(@Query("postId") postId: Long): Unit
+
+    // TODO : 게시글 숨기기 취소 API
+    @DELETE("/common/post/hide")
+    suspend fun cancelBlockPost(@Query("postId") postId: Long): Unit
+
 }

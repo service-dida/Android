@@ -58,4 +58,6 @@ interface MainRepository {
     suspend fun cancelBlockNft(nftId: Long): NetworkResult<Unit>
     suspend fun blockMember(memberId: Long): NetworkResult<Unit>
     suspend fun cancelBlockMember(memberId: Long): NetworkResult<Unit>
+    suspend fun blockPost(postId: Long): NetworkResult<Unit>
+    suspend fun cancelBlockPost(postId: Long): NetworkResult<Unit>
 }
