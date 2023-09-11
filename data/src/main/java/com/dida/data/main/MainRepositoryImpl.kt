@@ -12,6 +12,7 @@ import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.Contents
+import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import javax.inject.Inject
@@ -84,6 +85,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun memberFollow(memberId: Long): NetworkResult<Unit> {
         return handleApi { didaApi.patchMemberFollow(memberId) }
+    }
+
+    override suspend fun commonFollow(page: Int, size: Int): NetworkResult<Contents<CommonFollow>> {
+        return handleApi { didaApi.getCommonFollow(page, size).toDomain() }
     }
 }
 

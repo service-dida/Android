@@ -8,6 +8,7 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.profile.GetCommonFollowResponse
 import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
 import com.dida.data.model.profile.GetMemberProfileResponse
@@ -88,4 +89,11 @@ interface DidaApi {
     // 다른 유저 팔로우 누르기
     @PATCH("/common/follow/{memberId}")
     suspend fun patchMemberFollow(@Path("memberId") memberId: Long): Unit
+
+    // 팔로우 목록 보기
+    @PATCH("/common/follow")
+    suspend fun getCommonFollow(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetCommonFollowResponse
 }

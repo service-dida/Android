@@ -4,6 +4,7 @@ import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
+import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 
@@ -22,4 +23,5 @@ interface MainRepository {
     suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile>
     suspend fun memberProfileNFt(memberId: Long, page: Int, size: Int, sort: String): NetworkResult<Contents<CommonProfileNft>>
     suspend fun memberFollow(memberId: Long): NetworkResult<Unit>
+    suspend fun commonFollow(page: Int, size: Int,): NetworkResult<Contents<CommonFollow>>
 }
