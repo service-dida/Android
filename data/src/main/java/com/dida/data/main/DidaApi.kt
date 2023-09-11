@@ -19,6 +19,7 @@ import com.dida.data.model.profile.GetMemberWalletResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.sns.GetCommentsFromPostResponse
+import com.dida.data.model.sns.GetHotPostsResponse
 import com.dida.data.model.sns.GetPostDetailResponse
 import com.dida.data.model.sns.GetPostsResponse
 import com.dida.data.model.sns.PatchCommonPostRequest
@@ -263,4 +264,11 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetCommentsFromPostResponse
+
+    // 시끌벅적 게시판 조회
+    @GET("/posts/hot")
+    suspend fun getHotPosts(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetHotPostsResponse
 }

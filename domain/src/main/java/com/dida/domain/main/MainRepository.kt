@@ -6,6 +6,7 @@ import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.CommonFollow
+import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
@@ -49,5 +50,6 @@ interface MainRepository {
     suspend fun postDetail(postId: Long): NetworkResult<Post>
     suspend fun writePostComments(postId: Long, content: String): NetworkResult<Unit>
     suspend fun deletePostComments(commentId: Long): NetworkResult<Unit>
-    suspend fun getCommentsFromPost(postId: Long, page: Int, size: Int): NetworkResult<Contents<Comment>>
+    suspend fun commentsFromPost(postId: Long, page: Int, size: Int): NetworkResult<Contents<Comment>>
+    suspend fun hotPosts(page: Int, size: Int): NetworkResult<Contents<HotPost>>
 }

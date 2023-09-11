@@ -23,6 +23,7 @@ import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.Contents
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
+import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
@@ -184,8 +185,12 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.deletePostComments(commentId) }
     }
 
-    override suspend fun getCommentsFromPost(postId: Long, page: Int, size: Int): NetworkResult<Contents<Comment>> {
+    override suspend fun commentsFromPost(postId: Long, page: Int, size: Int): NetworkResult<Contents<Comment>> {
         return handleApi { didaApi.getCommentsFromPost(postId, page, size).toDomain() }
+    }
+
+    override suspend fun hotPosts(page: Int, size: Int): NetworkResult<Contents<HotPost>> {
+        return handleApi { didaApi.getHotPosts(page, size).toDomain() }
     }
 }
 
