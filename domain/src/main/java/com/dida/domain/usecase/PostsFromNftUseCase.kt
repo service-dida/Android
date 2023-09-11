@@ -6,10 +6,10 @@ import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.Post
 import javax.inject.Inject
 
-class GetPostsFromNftUseCase @Inject constructor(
+class PostsFromNftUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend operator fun invoke(nftId: Long, page: Int, size: Int) : NetworkResult<Contents<Post>> {
-        return repository.getPostsFromNft(nftId, page, size)
+        return repository.postsFromNft(nftId, page, size)
     }
 }
