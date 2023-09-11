@@ -6,6 +6,7 @@ import com.dida.domain.Contents
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.MemberInfo
 import com.dida.domain.main.model.MemberProfile
+import com.dida.domain.main.model.MemberWallet
 
 fun GetCommonProfileResponse.toDomain(): CommonProfile {
     return CommonProfile(
@@ -42,4 +43,8 @@ fun GetCommonFollowResponse.toDomain(): Contents<CommonFollow> {
         hasNext = hasNext,
         content = response
     )
+}
+
+fun GetMemberWalletResponse.toDomain(): MemberWallet {
+    return MemberWallet(address, klay, dida)
 }

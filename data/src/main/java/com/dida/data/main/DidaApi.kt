@@ -12,6 +12,7 @@ import com.dida.data.model.profile.GetCommonFollowResponse
 import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
 import com.dida.data.model.profile.GetMemberProfileResponse
+import com.dida.data.model.profile.GetMemberWalletResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -103,4 +104,8 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetCommonFollowResponse
+
+    // 내 지갑 확인하기
+    @GET("/member/wallet")
+    suspend fun getMemberWallet(): GetMemberWalletResponse
 }

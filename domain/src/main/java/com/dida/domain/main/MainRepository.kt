@@ -7,6 +7,7 @@ import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
+import com.dida.domain.main.model.MemberWallet
 
 interface MainRepository {
 
@@ -25,4 +26,5 @@ interface MainRepository {
     suspend fun memberFollow(memberId: Long): NetworkResult<Unit>
     suspend fun commonFollow(page: Int, size: Int): NetworkResult<Contents<CommonFollow>>
     suspend fun commonFollowing(page: Int, size: Int): NetworkResult<Contents<CommonFollow>>
+    suspend fun memberWallet(): NetworkResult<MemberWallet>
 }

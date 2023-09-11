@@ -6,10 +6,10 @@ import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.CommonFollow
 import javax.inject.Inject
 
-class CommonFollowUseCase @Inject constructor(
+class CommonFollowingUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend operator fun invoke(page: Int, pageSize: Int) : NetworkResult<Contents<CommonFollow>> {
-        return repository.commonFollow(page, pageSize)
+        return repository.commonFollowing(page, pageSize)
     }
 }

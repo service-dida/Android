@@ -15,6 +15,7 @@ import com.dida.domain.Contents
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
+import com.dida.domain.main.model.MemberWallet
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -93,6 +94,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun commonFollowing(page: Int, size: Int): NetworkResult<Contents<CommonFollow>> {
         return handleApi { didaApi.getCommonFollowing(page, size).toDomain() }
+    }
+
+    override suspend fun memberWallet(): NetworkResult<MemberWallet> {
+        return handleApi { didaApi.getMemberWallet().toDomain() }
     }
 }
 
