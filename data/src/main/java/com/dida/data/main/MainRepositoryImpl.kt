@@ -90,5 +90,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun commonFollow(page: Int, size: Int): NetworkResult<Contents<CommonFollow>> {
         return handleApi { didaApi.getCommonFollow(page, size).toDomain() }
     }
+
+    override suspend fun commonFollowing(page: Int, size: Int): NetworkResult<Contents<CommonFollow>> {
+        return handleApi { didaApi.getCommonFollowing(page, size).toDomain() }
+    }
 }
 

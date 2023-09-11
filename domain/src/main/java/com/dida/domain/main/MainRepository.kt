@@ -23,5 +23,6 @@ interface MainRepository {
     suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile>
     suspend fun memberProfileNFt(memberId: Long, page: Int, size: Int, sort: String): NetworkResult<Contents<CommonProfileNft>>
     suspend fun memberFollow(memberId: Long): NetworkResult<Unit>
-    suspend fun commonFollow(page: Int, size: Int,): NetworkResult<Contents<CommonFollow>>
+    suspend fun commonFollow(page: Int, size: Int): NetworkResult<Contents<CommonFollow>>
+    suspend fun commonFollowing(page: Int, size: Int): NetworkResult<Contents<CommonFollow>>
 }

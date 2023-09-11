@@ -4,10 +4,9 @@ import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.CommonFollow
-import com.dida.domain.main.model.CommonProfileNft
 import javax.inject.Inject
 
-class CommonFollowNftUseCase @Inject constructor(
+class CommonFollowUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend operator fun invoke(page: Int, pageSize: Int) : NetworkResult<Contents<CommonFollow>> {
