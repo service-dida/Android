@@ -1,5 +1,6 @@
 package com.dida.data.main
 
+import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.dex.GetMemberSwapResponse
 import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
@@ -315,7 +316,23 @@ interface DidaApi {
     suspend fun cancelBlockPost(@Query("postId") postId: Long): Unit
 
     // 댓글 숨기기
-    @DELETE("/common/comment/hide")
+    @POST("/common/comment/hide")
     suspend fun blockComments(@Query("commentId") commentId: Long): Unit
+
+    // NFT 신고하기
+    @POST("/common/report/nft")
+    suspend fun reportNft(@Body body: PostReportRequest): Unit
+
+    // 멤버 신고하기
+    @POST("/common/report/member")
+    suspend fun reportMember(@Body body: PostReportRequest): Unit
+
+    // 게시글 신고하기
+    @POST("/common/report/post")
+    suspend fun reportPost(@Body body: PostReportRequest): Unit
+
+    // 댓글 신고하기
+    @POST("/common/report/comment")
+    suspend fun reportComment(@Body body: PostReportRequest): Unit
 
 }

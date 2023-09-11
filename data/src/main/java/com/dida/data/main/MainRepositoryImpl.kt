@@ -1,6 +1,7 @@
 package com.dida.data.main
 
 import com.dida.data.api.handleApi
+import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.dex.toDomain
 import com.dida.data.model.login.PatchMemberDeviceRequest
 import com.dida.data.model.login.PostLoginRequest
@@ -31,6 +32,7 @@ import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
+import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.Swap
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -224,6 +226,20 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun blockComment(commentId: Long): NetworkResult<Unit> {
         return handleApi { didaApi.blockComments(commentId) }
+    }
+
+    override suspend fun report(
+        type: Report,
+        reportedId: Long,
+        description: String
+    ): NetworkResult<Unit> {
+        val body = PostReportRequest(reportedId, description)
+        return when (type) {
+            Report.NFT -> handleApi { didaApi.reportNft(body) }
+            Report.MEMBER -> handleApi { didaApi.reportMember(body) }
+            Report.POST -> handleApi { didaApi.reportPost(body) }
+            Report.COMMENT -> handleApi { didaApi.reportComment(body) }
+        }
     }
 
 }

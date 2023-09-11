@@ -14,6 +14,7 @@ import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
+import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.Swap
 import okhttp3.MultipartBody
 
@@ -102,5 +103,6 @@ interface MainRepository {
     suspend fun cancelBlockPost(postId: Long): NetworkResult<Unit>
 
     suspend fun blockComment(commentId: Long): NetworkResult<Unit>
+    suspend fun report(type: Report, reportedId: Long, description: String): NetworkResult<Unit>
 }
 
