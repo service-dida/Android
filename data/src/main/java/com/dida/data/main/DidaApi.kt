@@ -227,4 +227,12 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetPostsResponse
+
+    // NFT별 최신 게시글 조회
+    @GET("/posts/nft/{nftId}")
+    suspend fun getPostsFromNft(
+        @Path("nftId") nftId: Long,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetPostsResponse
 }

@@ -44,4 +44,5 @@ interface MainRepository {
     suspend fun patchPost(postId: Long, title: String, content: String): NetworkResult<Unit>
     suspend fun deletePost(postId: Long): NetworkResult<Unit>
     suspend fun getPosts(page: Int, size: Int): NetworkResult<Contents<Post>>
+    suspend fun getPostsFromNft(nftId: Long, page: Int, size: Int): NetworkResult<Contents<Post>>
 }

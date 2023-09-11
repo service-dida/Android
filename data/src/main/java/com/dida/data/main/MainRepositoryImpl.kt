@@ -164,5 +164,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getPosts(page: Int, size: Int): NetworkResult<Contents<Post>> {
         return handleApi { didaApi.getPosts(page, size).toDomain() }
     }
+
+    override suspend fun getPostsFromNft(nftId: Long, page: Int, size: Int): NetworkResult<Contents<Post>> {
+        return handleApi { didaApi.getPostsFromNft(nftId, page, size).toDomain() }
+    }
 }
 
