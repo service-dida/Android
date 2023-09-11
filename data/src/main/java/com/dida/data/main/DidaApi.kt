@@ -248,4 +248,8 @@ interface DidaApi {
     // 댓글 작성하기
     @POST("/common/comments")
     suspend fun writePostComments(@Body body: PostCommonCommentsRequest): Unit
+
+    // 댓글 삭제하기
+    @POST("/common/comments/{commentId}")
+    suspend fun deletePostComments(@Path("commentId") commentId: Long): Unit
 }

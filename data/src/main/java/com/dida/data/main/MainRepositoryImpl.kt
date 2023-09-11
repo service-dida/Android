@@ -178,5 +178,9 @@ class MainRepositoryImpl @Inject constructor(
         val body = PostCommonCommentsRequest(postId, content)
         return handleApi { didaApi.writePostComments(body) }
     }
+
+    override suspend fun deletePostComments(commentId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.deletePostComments(commentId) }
+    }
 }
 
