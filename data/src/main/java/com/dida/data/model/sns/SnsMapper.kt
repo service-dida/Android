@@ -1,6 +1,7 @@
 package com.dida.data.model.sns
 
 import com.dida.domain.Contents
+import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.Post
 
 fun GetPostsResponse.toDomain(): Contents<Post> {
@@ -14,4 +15,13 @@ fun GetPostsResponse.toDomain(): Contents<Post> {
 
 fun GetPostDetailResponse.toDomain(): Post {
     return Post(postInfo, memberInfo, nftInfo, type, createdAt, comments)
+}
+
+fun GetCommentsFromPostResponse.toDomain(): Contents<Comment> {
+    return Contents(
+        page = page,
+        pageSize = pageSize,
+        hasNext = hasNext,
+        content = response
+    )
 }

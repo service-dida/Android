@@ -2,6 +2,7 @@ package com.dida.domain.main
 
 import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
+import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.CommonFollow
@@ -48,4 +49,5 @@ interface MainRepository {
     suspend fun postDetail(postId: Long): NetworkResult<Post>
     suspend fun writePostComments(postId: Long, content: String): NetworkResult<Unit>
     suspend fun deletePostComments(commentId: Long): NetworkResult<Unit>
+    suspend fun getCommentsFromPost(postId: Long, page: Int, size: Int): NetworkResult<Contents<Comment>>
 }

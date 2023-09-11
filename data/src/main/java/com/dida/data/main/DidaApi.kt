@@ -18,6 +18,7 @@ import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.sns.GetCommentsFromPostResponse
 import com.dida.data.model.sns.GetPostDetailResponse
 import com.dida.data.model.sns.GetPostsResponse
 import com.dida.data.model.sns.PatchCommonPostRequest
@@ -249,7 +250,17 @@ interface DidaApi {
     @POST("/common/comments")
     suspend fun writePostComments(@Body body: PostCommonCommentsRequest): Unit
 
+    // TODO : 댓글 수정하기 API 추가
+
     // 댓글 삭제하기
-    @POST("/common/comments/{commentId}")
+    @DELETE("/common/comments/{commentId}")
     suspend fun deletePostComments(@Path("commentId") commentId: Long): Unit
+
+    // 게시글 별 댓글 조회
+    @GET("/comments/{postId}")
+    suspend fun getCommentsFromPost(
+        @Path("postId") postId: Long,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetCommentsFromPostResponse
 }
