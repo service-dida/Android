@@ -288,9 +288,17 @@ interface DidaApi {
 
     // NFT 숨기기
     @POST("/common/nft/hide")
-    suspend fun postHideNft(@Query("nftId") nftId: Long): Unit
+    suspend fun blockNft(@Query("nftId") nftId: Long): Unit
 
     // NFT 숨기기 취소
     @DELETE("/common/nft/hide")
-    suspend fun cancelHideNft(@Query("nftId") nftId: Long): Unit
+    suspend fun cancelBlockNft(@Query("nftId") nftId: Long): Unit
+
+    // TODO : NFT 숨김 목록 조회 API 추가
+
+    // 멤버 숨기기
+    @POST("/common/member/hide")
+    suspend fun blockMember(@Query("memberId") memberId: Long): Unit
+
+
 }

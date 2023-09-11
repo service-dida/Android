@@ -54,6 +54,7 @@ interface MainRepository {
     suspend fun commentsFromPost(postId: Long, page: Int, size: Int): NetworkResult<Contents<Comment>>
     suspend fun hotPosts(page: Int, size: Int): NetworkResult<Contents<HotPost>>
     suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
-    suspend fun hideNft(nftId: Long): NetworkResult<Unit>
-    suspend fun cancelHideNft(nftId: Long): NetworkResult<Unit>
+    suspend fun blockNft(nftId: Long): NetworkResult<Unit>
+    suspend fun cancelBlockNft(nftId: Long): NetworkResult<Unit>
+    suspend fun blockMember(memberId: Long): NetworkResult<Unit>
 }

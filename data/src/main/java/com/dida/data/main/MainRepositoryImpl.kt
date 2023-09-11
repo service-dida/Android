@@ -198,12 +198,16 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.getOwnNfts(page, size).toDomain() }
     }
 
-    override suspend fun hideNft(nftId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.postHideNft(nftId) }
+    override suspend fun blockNft(nftId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.blockNft(nftId) }
     }
 
-    override suspend fun cancelHideNft(nftId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.cancelHideNft(nftId) }
+    override suspend fun cancelBlockNft(nftId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.cancelBlockNft(nftId) }
+    }
+
+    override suspend fun blockMember(memberId: Long): NetworkResult<Unit> {
+        return handleApi { didaApi.blockMember(memberId) }
     }
 }
 
