@@ -29,8 +29,11 @@ import com.dida.domain.main.model.Alarm
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
+import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.HotPost
+import com.dida.domain.main.model.HotSellerPage
 import com.dida.domain.main.model.LoginToken
+import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
@@ -38,7 +41,9 @@ import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
+import com.dida.domain.main.model.SoldOut
 import com.dida.domain.main.model.Swap
+import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Named
@@ -154,8 +159,40 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.getNftDetail(nftId).toDomain() }
     }
 
+    override suspend fun transactionInfos(page: Int, size: Int): NetworkResult<Contents<TransactionInfo>> {
+        return handleApi { didaApi.getTransactionInfos(page, size).toDomain() }
+    }
+
+    override suspend fun saleTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>> {
+        return handleApi { didaApi.getSaleTransactionInfos(page, size).toDomain() }
+    }
+
+    override suspend fun purchaseTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>> {
+        return handleApi { didaApi.getPurchaseTransactionInfos(page, size).toDomain() }
+    }
+
+    override suspend fun main(): NetworkResult<Main> {
+        return handleApi { didaApi.getMain().toDomain() }
+    }
+
+    override suspend fun soldOut(range: Int): NetworkResult<SoldOut> {
+        return handleApi { didaApi.getSoldOut(range).toDomain() }
+    }
+
+    override suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>> {
+        return handleApi { didaApi.getSoldOutPage(range, page, size).toDomain() }
+    }
+
     override suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>> {
         return handleApi { didaApi.getRecentNfts(page, size).toDomain() }
+    }
+
+    override suspend fun hotSellerPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>> {
+        return handleApi { didaApi.getHotSellerPage(page, size).toDomain() }
+    }
+
+    override suspend fun hotMemberPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>> {
+        return handleApi { didaApi.getHotMemberPage(page, size).toDomain() }
     }
 
     override suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit> {
@@ -203,6 +240,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>> {
         return handleApi { didaApi.getOwnNfts(page, size).toDomain() }
+    }
+
+    override suspend fun likedNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>> {
+        return handleApi { didaApi.getLikedNfts(page, size).toDomain() }
     }
 
     override suspend fun block(type: Block, blockId: Long): NetworkResult<Unit> {

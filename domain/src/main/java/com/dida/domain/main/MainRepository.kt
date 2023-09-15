@@ -9,8 +9,12 @@ import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.CommonFollow
+import com.dida.domain.main.model.DealingHistory
+import com.dida.domain.main.model.HotMember
 import com.dida.domain.main.model.HotPost
+import com.dida.domain.main.model.HotSellerPage
 import com.dida.domain.main.model.LoginToken
+import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
@@ -18,7 +22,9 @@ import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
+import com.dida.domain.main.model.SoldOut
 import com.dida.domain.main.model.Swap
+import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
 
 interface MainRepository {
@@ -69,7 +75,23 @@ interface MainRepository {
 
     suspend fun nftDetail(nftId: Long): NetworkResult<Nft>
 
+    suspend fun transactionInfos(page: Int, size: Int): NetworkResult<Contents<TransactionInfo>>
+
+    suspend fun saleTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>>
+
+    suspend fun purchaseTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>>
+
+    suspend fun main(): NetworkResult<Main>
+
+    suspend fun soldOut(range: Int): NetworkResult<SoldOut>
+
+    suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>>
+
     suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>>
+
+    suspend fun hotSellerPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>>
+
+    suspend fun hotMemberPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>>
 
     suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit>
 
@@ -92,6 +114,8 @@ interface MainRepository {
     suspend fun hotPosts(page: Int, size: Int): NetworkResult<Contents<HotPost>>
 
     suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
+
+    suspend fun likedNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
 
     suspend fun block(type: Block, blockId: Long): NetworkResult<Unit>
 
