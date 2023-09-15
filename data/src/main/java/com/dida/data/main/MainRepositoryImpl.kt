@@ -336,7 +336,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.postSwapToKlay(body) }
     }
 
-    override suspend fun sellNft(payPwd: String, nftId: Long, price: Float): NetworkResult<Unit> {
+    override suspend fun sellNft(payPwd: String, nftId: Long, price: Double): NetworkResult<Unit> {
         val body = PostSellNftRequest(payPwd, nftId, price)
         return handleApi { didaApi.postSellNft(body) }
     }

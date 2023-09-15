@@ -148,7 +148,7 @@ interface MainRepository {
 
     suspend fun swapToKlay(payPwd: String, coin: Int): NetworkResult<Unit>
 
-    suspend fun sellNft(payPwd: String, nftId: Long, price: Float): NetworkResult<Unit>
+    suspend fun sellNft(payPwd: String, nftId: Long, price: Double): NetworkResult<Unit>
 
     suspend fun cancelSellNft(pawPwd: String, marketId: Long): NetworkResult<Unit>
 

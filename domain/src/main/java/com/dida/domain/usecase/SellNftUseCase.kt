@@ -7,7 +7,7 @@ import javax.inject.Inject
 class SellNftUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(payPwd: String, nftId: Long, price: Float) : NetworkResult<Unit> {
+    suspend operator fun invoke(payPwd: String, nftId: Long, price: Double) : NetworkResult<Unit> {
         return repository.sellNft(payPwd, nftId, price)
     }
 }
