@@ -4,9 +4,14 @@ import com.dida.data.model.additional.GetAlarmsResponse
 import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostMakePictureResponse
 import com.dida.data.model.additional.PostReportRequest
+import com.dida.data.model.dex.DeleteSellNftRequest
 import com.dida.data.model.dex.GetMemberSwapResponse
 import com.dida.data.model.dex.GetTransactionInfoResponse
 import com.dida.data.model.dex.GetTransactionsResponse
+import com.dida.data.model.dex.PostBuyNftRequest
+import com.dida.data.model.dex.PostNftRequest
+import com.dida.data.model.dex.PostSellNftRequest
+import com.dida.data.model.dex.PostSwapRequest
 import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
 import com.dida.data.model.login.GetPublicKeyResponse
@@ -16,6 +21,7 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.login.PostWalletRequest
 import com.dida.data.model.main.GetHotSellerPageResponse
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetRecentNftsResponse
@@ -27,6 +33,7 @@ import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
 import com.dida.data.model.profile.GetMemberProfileResponse
 import com.dida.data.model.profile.GetMemberWalletResponse
+import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.sns.GetOwnNftsResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
@@ -41,6 +48,7 @@ import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -78,7 +86,9 @@ interface DidaApi {
     @GET("/visitor/auth")
     suspend fun getEmailAuth(): GetEmailAuthResponse
 
-    // TODO : 지갑 발급하기 API 추가
+    // 지갑 발급하기
+    @POST("/visitor/wallet")
+    suspend fun postWallet(@Body body: PostWalletRequest): Unit
 
     // 지갑 여부 확인
     @GET("/common/wallet")
@@ -155,7 +165,9 @@ interface DidaApi {
     @PATCH("/common/nickname")
     suspend fun patchProfileNickname(@Body body: PatchProfileNicknameRequest): Unit
 
-    // TODO : 결제 비밀번호 수정하기 API 추가
+    // 결제 비밀번호 수정하기
+    @PATCH("/member/password")
+    suspend fun patchMemberPassword(@Body body: PatchMemberPasswordRequest): Unit
 
     // 결제 비밀번호 찾기(임시 비밀번호 발급)
     @PATCH("/member/password/tmp")
@@ -165,15 +177,21 @@ interface DidaApi {
      * Dex 및 Nft
      **/
 
-    // TODO : NFT 만들기 API 추가
+    // NFT 만들기
+    @POST("/member/nft")
+    suspend fun postNft(@Body body: PostNftRequest): Unit
 
     // NFT 삭제하기
     @DELETE("/member/nft/{nftId}")
     suspend fun deleteNft(@Path("nftId") nftId: Long): Unit
 
-    // TODO : KLAY → DIDA 스왑 API 추가
+    // KLAY → DIDA 스왑
+    @POST("/member/klay")
+    suspend fun postSwapToDida(@Body body: PostSwapRequest): Unit
 
-    // TODO : DIDA → KLAY 스왑 스왑 API 추가
+    // DIDA → KLAY 스왑
+    @POST("/member/dida")
+    suspend fun postSwapToKlay(@Body body: PostSwapRequest): Unit
 
     // 스왑 내역 확인하기
     @GET("/member/swap")
@@ -186,11 +204,17 @@ interface DidaApi {
 
     // TODO : KLAY 외부 전송하기 API 추가
 
-    // TODO : NFT 판매하기 API 추가
+    // NFT 판매하기
+    @POST("/member/market")
+    suspend fun postSellNft(@Body body: PostSellNftRequest): Unit
 
-    // TODO : NFT 판매 취소하기 API 추가
+    // NFT 판매 취소하기
+    @HTTP(method = "DELETE", path="/member/market", hasBody = true)
+    suspend fun deleteSellNft(@Body body: DeleteSellNftRequest): Unit
 
-    // TODO : NFT 구매하기 API 추가
+    // NFT 구매하기
+    @POST("/member/market/nft")
+    suspend fun postBuyNft(@Body body: PostBuyNftRequest): Unit
 
     // NFT 상세보기
     @GET("/common/nft/{nftId}")

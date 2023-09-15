@@ -138,5 +138,21 @@ interface MainRepository {
 
     suspend fun getPublicKey(): NetworkResult<PublicKey>
 
+    suspend fun createWallet(payPwd: String, checkPwd: String): NetworkResult<Unit>
+
+    suspend fun patchPassword(nowPwd: String, changePwd: String): NetworkResult<Unit>
+
+    suspend fun createNft(payPwd: String, title: String, description: String, image: String): NetworkResult<Unit>
+
+    suspend fun swapToDida(payPwd: String, coin: Int): NetworkResult<Unit>
+
+    suspend fun swapToKlay(payPwd: String, coin: Int): NetworkResult<Unit>
+
+    suspend fun sellNft(payPwd: String, nftId: Long, price: Float): NetworkResult<Unit>
+
+    suspend fun cancelSellNft(pawPwd: String, marketId: Long): NetworkResult<Unit>
+
+    suspend fun buyNft(payPwd: String, marketId: Long): NetworkResult<Unit>
+
 }
 

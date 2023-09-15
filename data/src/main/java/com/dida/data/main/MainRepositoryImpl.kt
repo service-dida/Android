@@ -4,14 +4,21 @@ import com.dida.data.api.handleApi
 import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.additional.toDomain
+import com.dida.data.model.dex.DeleteSellNftRequest
+import com.dida.data.model.dex.PostBuyNftRequest
+import com.dida.data.model.dex.PostNftRequest
+import com.dida.data.model.dex.PostSellNftRequest
+import com.dida.data.model.dex.PostSwapRequest
 import com.dida.data.model.dex.toDomain
 import com.dida.data.model.login.PatchMemberDeviceRequest
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.login.PostWalletRequest
 import com.dida.data.model.login.toDomain
 import com.dida.data.model.main.toDomain
 import com.dida.data.model.market.toDomain
+import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
 import com.dida.data.model.profile.toDomain
@@ -297,6 +304,51 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getPublicKey(): NetworkResult<PublicKey> {
         return handleApi { didaApi.getPublicKey().toDomain() }
+    }
+
+    override suspend fun createWallet(payPwd: String, checkPwd: String): NetworkResult<Unit> {
+        val body = PostWalletRequest(payPwd, checkPwd)
+        return handleApi { didaApi.postWallet(body) }
+    }
+
+    override suspend fun patchPassword(nowPwd: String, changePwd: String): NetworkResult<Unit> {
+        val body = PatchMemberPasswordRequest(nowPwd, changePwd)
+        return handleApi { didaApi.patchMemberPassword(body) }
+    }
+
+    override suspend fun createNft(
+        payPwd: String,
+        title: String,
+        description: String,
+        image: String
+    ): NetworkResult<Unit> {
+        val body = PostNftRequest(payPwd, title, description, image)
+        return handleApi { didaApi.postNft(body) }
+    }
+
+    override suspend fun swapToDida(payPwd: String, coin: Int): NetworkResult<Unit> {
+        val body = PostSwapRequest(payPwd, coin)
+        return handleApi { didaApi.postSwapToDida(body) }
+    }
+
+    override suspend fun swapToKlay(payPwd: String, coin: Int): NetworkResult<Unit> {
+        val body = PostSwapRequest(payPwd, coin)
+        return handleApi { didaApi.postSwapToKlay(body) }
+    }
+
+    override suspend fun sellNft(payPwd: String, nftId: Long, price: Float): NetworkResult<Unit> {
+        val body = PostSellNftRequest(payPwd, nftId, price)
+        return handleApi { didaApi.postSellNft(body) }
+    }
+
+    override suspend fun cancelSellNft(pawPwd: String, marketId: Long): NetworkResult<Unit> {
+        val body = DeleteSellNftRequest(pawPwd, marketId)
+        return handleApi { didaApi.deleteSellNft(body) }
+    }
+
+    override suspend fun buyNft(payPwd: String, marketId: Long): NetworkResult<Unit> {
+        val body = PostBuyNftRequest(payPwd, marketId)
+        return handleApi { didaApi.postBuyNft(body) }
     }
 
 }
