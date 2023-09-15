@@ -3,10 +3,9 @@ package com.dida.data.model
 import com.google.gson.annotations.SerializedName
 
 data class ErrorResponseImpl(
-    @SerializedName("timestamp") override val timestamp: String?,
-    @SerializedName("status") override val status: Int?,
+    @SerializedName("code") override val code: String?,
     @SerializedName("message") override val message: String?,
-    @SerializedName("code") override val code: Int?
+    @SerializedName("timestamp") override val timestamp: String?,
 ) : ErrorResponse
 
 
