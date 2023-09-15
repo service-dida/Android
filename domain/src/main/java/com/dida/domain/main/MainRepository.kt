@@ -20,6 +20,7 @@ import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
+import com.dida.domain.main.model.SoldOut
 import com.dida.domain.main.model.Swap
 import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
@@ -79,6 +80,8 @@ interface MainRepository {
     suspend fun purchaseTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>>
 
     suspend fun main(): NetworkResult<Main>
+
+    suspend fun soldOut(range: Int): NetworkResult<SoldOut>
 
     suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>>
 

@@ -17,6 +17,7 @@ import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetRecentNftsResponse
+import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.market.GetNftResponse
 import com.dida.data.model.profile.GetCommonFollowResponse
 import com.dida.data.model.profile.GetCommonProfileNftResponse
@@ -219,8 +220,11 @@ interface DidaApi {
     @GET("/main")
     suspend fun getMain(): GetMainResponse
 
-
-    // TODO : 메인 화면 Sold Out 조회 API 추가
+    // 메인 화면 Sold Out
+    @GET("/main/sold-out")
+    suspend fun getSoldOut(
+        @Query("range") range: Int
+    ): GetSoldOutResponse
 
     // TODO : Sold Out 더보기 API 추가
 

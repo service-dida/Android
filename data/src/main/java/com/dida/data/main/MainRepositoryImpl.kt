@@ -40,6 +40,7 @@ import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
+import com.dida.domain.main.model.SoldOut
 import com.dida.domain.main.model.Swap
 import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
@@ -171,6 +172,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun main(): NetworkResult<Main> {
         return handleApi { didaApi.getMain().toDomain() }
+    }
+
+    override suspend fun soldOut(range: Int): NetworkResult<SoldOut> {
+        return handleApi { didaApi.getSoldOut(range).toDomain() }
     }
 
     override suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>> {
