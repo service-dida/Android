@@ -17,13 +17,13 @@ import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
 import com.dida.community.HotCardActionHandler
 import com.dida.community.databinding.HolderHotCardsContainerBinding
-import com.dida.domain.model.main.HotCards
+import com.dida.domain.main.model.HotPosts
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
 class HotCardsContainerAdapter(
     private val eventListener: HotCardActionHandler
-) : ListAdapter<HotCards.Contents, HotCardsContainerViewHolder>(HotCardsDiffCallback) {
+) : ListAdapter<HotPosts.Contents, HotCardsContainerViewHolder>(HotCardsDiffCallback) {
 
     init { setHasStableIds(true) }
 
@@ -100,13 +100,13 @@ class HotCardsContainerViewHolder(
         handler.sendEmptyMessageDelayed(MSG_START_SCROLL, Constants.REPEAT_INTERVAL_MS)
     }
 
-    fun bind(hotCardsItem: HotCards.Contents) {
+    fun bind(hotCardsItem: HotPosts.Contents) {
         if (hotCardsItem.contents.size > 1) {
             contentSize = hotCardsItem.contents.size + 4
             val items = with(hotCardsItem.contents) {
                 this.slice(this.size -2 until this.size) + this + this.slice(0 until 2)
             }
-            binding.holderModel = HotCards.Contents(items)
+            binding.holderModel = HotPosts.Contents(items)
             binding.hotCardsViewpager.apply {
                 clipToPadding = false
                 clipChildren = false
@@ -149,10 +149,10 @@ class HotCardsContainerViewHolder(
     }
 }
 
-internal object HotCardsDiffCallback : DiffUtil.ItemCallback<HotCards.Contents>() {
-    override fun areItemsTheSame(oldItem: HotCards.Contents, newItem: HotCards.Contents) =
+internal object HotCardsDiffCallback : DiffUtil.ItemCallback<HotPosts.Contents>() {
+    override fun areItemsTheSame(oldItem: HotPosts.Contents, newItem: HotPosts.Contents) =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: HotCards.Contents, newItem: HotCards.Contents) =
+    override fun areContentsTheSame(oldItem: HotPosts.Contents, newItem: HotPosts.Contents) =
         oldItem == newItem
 }
