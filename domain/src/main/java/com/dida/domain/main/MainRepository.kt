@@ -9,6 +9,7 @@ import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.CommonFollow
+import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
@@ -71,6 +72,10 @@ interface MainRepository {
     suspend fun nftDetail(nftId: Long): NetworkResult<Nft>
 
     suspend fun transactionInfos(page: Int, size: Int): NetworkResult<Contents<TransactionInfo>>
+
+    suspend fun saleTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>>
+
+    suspend fun purchaseTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>>
 
     suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>>
 

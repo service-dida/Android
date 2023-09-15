@@ -29,6 +29,7 @@ import com.dida.domain.main.model.Alarm
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
+import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.MemberProfile
@@ -157,6 +158,14 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun transactionInfos(page: Int, size: Int): NetworkResult<Contents<TransactionInfo>> {
         return handleApi { didaApi.getTransactionInfos(page, size).toDomain() }
+    }
+
+    override suspend fun saleTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>> {
+        return handleApi { didaApi.getSaleTransactionInfos(page, size).toDomain() }
+    }
+
+    override suspend fun purchaseTransactionInfos(page: Int, size: Int): NetworkResult<Contents<DealingHistory>> {
+        return handleApi { didaApi.getPurchaseTransactionInfos(page, size).toDomain() }
     }
 
     override suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>> {

@@ -1,6 +1,7 @@
 package com.dida.data.model.dex
 
 import com.dida.domain.Contents
+import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.Swap
 import com.dida.domain.main.model.TransactionInfo
 
@@ -14,6 +15,15 @@ fun GetMemberSwapResponse.toDomain(): Contents<Swap> {
 }
 
 fun GetTransactionInfoResponse.toDomain(): Contents<TransactionInfo> {
+    return Contents(
+        page = page,
+        pageSize = pageSize,
+        hasNext = hasNext,
+        content = response
+    )
+}
+
+fun GetTransactionsResponse.toDomain(): Contents<DealingHistory> {
     return Contents(
         page = page,
         pageSize = pageSize,
