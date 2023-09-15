@@ -15,8 +15,10 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.main.GetHotSellerPageResponse
 import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetRecentNftsResponse
+import com.dida.data.model.main.GetSoldOutPageResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.market.GetNftResponse
 import com.dida.data.model.profile.GetCommonFollowResponse
@@ -226,9 +228,20 @@ interface DidaApi {
         @Query("range") range: Int
     ): GetSoldOutResponse
 
-    // TODO : Sold Out 더보기 API 추가
+    // Sold Out 더보기
+    @GET("/sold-outs")
+    suspend fun getSoldOutPage(
+        @Query("range") range: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetSoldOutPageResponse
 
-    // TODO : Hot Seller 더보기 API 추가
+    // Hot Seller 더보기
+    @GET("/hot-sellers")
+    suspend fun getHotSellerPage(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetHotSellerPageResponse
 
     // 최신 NFT 더보기
     @GET("/recent-nfts")
@@ -237,7 +250,12 @@ interface DidaApi {
         @Query("size") size: Int,
     ): GetRecentNftsResponse
 
-    // TODO : 활발한 활동 더보기 API 추가
+    // 활발한 활동 더보기
+    @GET("/hot-members")
+    suspend fun getHotMemberPage(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetHotSellerPageResponse
 
     /**
      * SNS 기능

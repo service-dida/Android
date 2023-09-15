@@ -10,7 +10,9 @@ import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.DealingHistory
+import com.dida.domain.main.model.HotMember
 import com.dida.domain.main.model.HotPost
+import com.dida.domain.main.model.HotSellerPage
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
@@ -83,7 +85,13 @@ interface MainRepository {
 
     suspend fun soldOut(range: Int): NetworkResult<SoldOut>
 
+    suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>>
+
     suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>>
+
+    suspend fun hotSellerPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>>
+
+    suspend fun hotMemberPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>>
 
     suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit>
 

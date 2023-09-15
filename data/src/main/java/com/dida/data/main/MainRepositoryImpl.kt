@@ -31,6 +31,7 @@ import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.HotPost
+import com.dida.domain.main.model.HotSellerPage
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
@@ -178,8 +179,20 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.getSoldOut(range).toDomain() }
     }
 
+    override suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>> {
+        return handleApi { didaApi.getSoldOutPage(range, page, size).toDomain() }
+    }
+
     override suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>> {
         return handleApi { didaApi.getRecentNfts(page, size).toDomain() }
+    }
+
+    override suspend fun hotSellerPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>> {
+        return handleApi { didaApi.getHotSellerPage(page, size).toDomain() }
+    }
+
+    override suspend fun hotMemberPage(page: Int, size: Int): NetworkResult<Contents<HotSellerPage>> {
+        return handleApi { didaApi.getHotMemberPage(page, size).toDomain() }
     }
 
     override suspend fun writePost(nftId: Long, title: String, content: String): NetworkResult<Unit> {
