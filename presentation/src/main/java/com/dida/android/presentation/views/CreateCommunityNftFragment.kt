@@ -63,7 +63,7 @@ class CreateCommunityNftFragment(
         binding.recyclerNft.adapter = cardsAdapter
         binding.recyclerNft.addOnPagingListener(
             arrivedTop = { viewModel.nextPage(createNftState) },
-            arrivedBottom = {}
+            arrivedBottom = { viewModel.beforePage(createNftState) }
         )
     }
 }
