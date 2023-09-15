@@ -15,6 +15,7 @@ import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostNicknameResponse
 import com.dida.data.model.login.PostUserRequest
+import com.dida.data.model.main.GetMainResponse
 import com.dida.data.model.main.GetRecentNftsResponse
 import com.dida.data.model.market.GetNftResponse
 import com.dida.data.model.profile.GetCommonFollowResponse
@@ -214,7 +215,10 @@ interface DidaApi {
      * 메인 화면
      **/
 
-    // TODO : 메인화면(Sold Out 제외) API 추가
+    // 메인 화면(Sold Out 제외)
+    @GET("/main")
+    suspend fun getMain(): GetMainResponse
+
 
     // TODO : 메인 화면 Sold Out 조회 API 추가
 
