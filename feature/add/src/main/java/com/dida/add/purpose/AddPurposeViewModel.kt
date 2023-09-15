@@ -4,10 +4,7 @@ import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.klaytn.UploadAssetAPI
-import com.dida.domain.usecase.main.MintNftAPI
-import com.dida.domain.usecase.main.SellNftAPI
-import com.dida.domain.usecase.main.UserProfileAPI
+import com.dida.domain.klaytn.UploadAssetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -20,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
     private val mintNftAPI: MintNftAPI,
-    private val uploadAssetAPI: UploadAssetAPI,
+    private val uploadAssetUseCase: UploadAssetUseCase,
     private val userProfileAPI: UserProfileAPI,
     private val sellNftAPI: SellNftAPI
 ) : BaseViewModel(), AddPurposeActionHandler {
@@ -93,7 +90,7 @@ class AddPurposeViewModel @Inject constructor(
             val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
             val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-            uploadAssetAPI(requestBody)
+            uploadAssetUseCase(requestBody)
                 .onSuccess { }
                 .onError { e -> catchError(e) }
                 .flatMap {

@@ -1,10 +1,9 @@
 package com.dida.add.main
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.model.NeedToWalletException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.WalletExistedAPI
+import com.dida.domain.usecase.CheckWalletUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
-    private val walletExistedAPI: WalletExistedAPI,
+    private val checkWalletUseCase: CheckWalletUseCase
 ) : BaseViewModel() {
 
     private val TAG = "AddViewModel"
@@ -25,14 +24,9 @@ class AddViewModel @Inject constructor(
     fun getWalletExists() {
         baseViewModelScope.launch {
             showLoading()
-            walletExistedAPI()
+            checkWalletUseCase()
                 .onSuccess { _walletExistsState.emit(it) }
-                .onError { e ->
-                    when (e) {
-                        is NeedToWalletException -> _walletExistsState.emit(false)
-                        else -> catchError(e)
-                    }
-                }
+                .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
