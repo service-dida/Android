@@ -3,11 +3,11 @@ package com.dida.buy.nft
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.main.DetailNft
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.BuyNftAPI
-import com.dida.domain.usecase.main.WalletAmountAPI
+import com.dida.domain.ui.model.DetailNft
+import com.dida.domain.usecase.BuyNftUseCase
+import com.dida.domain.usecase.MemberWalletUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 
 class BuyNftViewModel @AssistedInject constructor(
     @Assisted("buyCard") val buyCard: BuyCard,
-    private val buyNftAPI: BuyNftAPI,
-    private val amountAPI: WalletAmountAPI
+    private val buyNftUseCase: BuyNftUseCase,
+    private val walletUseCase: MemberWalletUseCase
 ) : BaseViewModel() {
 
     private val TAG = "BuyNftViewModel"
@@ -44,10 +44,10 @@ class BuyNftViewModel @AssistedInject constructor(
     fun buyNft(password: String) {
         baseViewModelScope.launch {
             showLoading()
-            amountAPI()
+            walletUseCase()
                 .onSuccess {
                     if (it.dida >= buyCard.price.toDouble()) {
-                        buyNftAPI(password, buyCard.marketId)
+                        buyNftUseCase(password, buyCard.marketId)
                             .onSuccess { _navigationEvent.emit(BuyNftNavigationAction.NavigateToSuccess(buyCard.cardId)) }
                             .onError { e -> catchError(e) }
                         dismissLoading()

@@ -5,18 +5,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.SellNftAPI
+import com.dida.domain.usecase.SellNftUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class BuySuccessViewModel @AssistedInject constructor(
     @Assisted("cardId") val cardId: Long,
-    private val sellNftAPI: SellNftAPI
+    private val sellNftUseCase: SellNftUseCase
 ) : BaseViewModel() , BuySuccessActionHandler {
 
     private val TAG = "BuyNftSuccessViewModel"
@@ -28,7 +26,7 @@ class BuySuccessViewModel @AssistedInject constructor(
     fun sellNft(payPwd: String, price: Double) {
         baseViewModelScope.launch {
             showLoading()
-            sellNftAPI(payPwd, cardId, price)
+            sellNftUseCase(payPwd, cardId, price)
                 .onSuccess { _navigationEvent.emit(BuySuccessNavigationAction.NavigateToMypage) }
                 .onError { e -> catchError(e) }
         }
