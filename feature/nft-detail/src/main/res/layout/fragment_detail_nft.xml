@@ -92,7 +92,7 @@
 
                     <ImageView
                         android:id="@+id/user_img"
-                        NftProfileUrl="@{vm.detailNftState}"
+                        app:userProfile="@{vm.detailNftState}"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:layout_marginLeft="16dp"
@@ -102,7 +102,7 @@
 
                     <TextView
                         android:id="@+id/user_name_txt"
-                        NftNickName="@{vm.detailNftState}"
+                        app:userNickname="@{vm.detailNftState}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"

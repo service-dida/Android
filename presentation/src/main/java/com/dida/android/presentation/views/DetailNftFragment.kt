@@ -156,7 +156,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     private fun showDeleteNftDialog(){
-        if (viewModel.detailNftState.value.successOrNull()?.price == "NOT SALE") {
+        if (viewModel.detailNftState.value.successOrNull()?.nftInfo?.price == "NOT SALE") {
             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
                 if (success) {
                     viewModel.deleteNft(password)
