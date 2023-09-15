@@ -242,6 +242,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.getOwnNfts(page, size).toDomain() }
     }
 
+    override suspend fun likedNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>> {
+        return handleApi { didaApi.getLikedNfts(page, size).toDomain() }
+    }
+
     override suspend fun block(type: Block, blockId: Long): NetworkResult<Unit> {
         return when (type) {
             Block.NFT -> handleApi { didaApi.blockNft(blockId) }

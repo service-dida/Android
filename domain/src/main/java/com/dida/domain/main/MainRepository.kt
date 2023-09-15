@@ -115,6 +115,8 @@ interface MainRepository {
 
     suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
 
+    suspend fun likedNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
+
     suspend fun block(type: Block, blockId: Long): NetworkResult<Unit>
 
     suspend fun cancelBlock(type: Block, blockId: Long): NetworkResult<Unit>

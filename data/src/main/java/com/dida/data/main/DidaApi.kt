@@ -327,7 +327,12 @@ interface DidaApi {
         @Query("size") size: Int,
     ): GetOwnNftsResponse
 
-    // TODO : 내가 좋아요한 NFT 목록 조회 API 추가
+    // 내가 좋아요한 NFT 목록
+    @GET("/common/nft/like")
+    suspend fun getLikedNfts(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetOwnNftsResponse
 
     /**
      * 추가 기능
