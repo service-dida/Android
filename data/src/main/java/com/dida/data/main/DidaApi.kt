@@ -5,6 +5,7 @@ import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostMakePictureResponse
 import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.dex.GetMemberSwapResponse
+import com.dida.data.model.dex.GetTransactionInfoResponse
 import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
 import com.dida.data.model.login.PatchMemberDeviceRequest
@@ -187,7 +188,12 @@ interface DidaApi {
     @GET("/common/nft/{nftId}")
     suspend fun getNftDetail(nftId: Long): GetNftResponse
 
-    // TODO : 전체 거래내역 보기 API 추가
+    // 전체 거래 내역
+    @GET("/member/transaction")
+    suspend fun getTransactionInfos(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetTransactionInfoResponse
 
     // TODO : 판매 내역 확인하기 API 추가
 

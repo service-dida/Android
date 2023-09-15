@@ -39,6 +39,7 @@ import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.Swap
+import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Named
@@ -152,6 +153,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun nftDetail(nftId: Long): NetworkResult<Nft> {
         return handleApi { didaApi.getNftDetail(nftId).toDomain() }
+    }
+
+    override suspend fun transactionInfos(page: Int, size: Int): NetworkResult<Contents<TransactionInfo>> {
+        return handleApi { didaApi.getTransactionInfos(page, size).toDomain() }
     }
 
     override suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>> {

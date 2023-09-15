@@ -19,6 +19,7 @@ import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.Swap
+import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
 
 interface MainRepository {
@@ -68,6 +69,8 @@ interface MainRepository {
     suspend fun memberSwap(page: Int, size: Int): NetworkResult<Contents<Swap>>
 
     suspend fun nftDetail(nftId: Long): NetworkResult<Nft>
+
+    suspend fun transactionInfos(page: Int, size: Int): NetworkResult<Contents<TransactionInfo>>
 
     suspend fun recentNfts(page: Int, size: Int): NetworkResult<Contents<RecentNft>>
 
