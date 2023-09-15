@@ -20,6 +20,7 @@ import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.PublicKey
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.SoldOut
@@ -130,5 +131,12 @@ interface MainRepository {
     suspend fun readAlarm(alarmId: Long): NetworkResult<Unit>
 
     suspend fun alarms(page: Int, size: Int): NetworkResult<Contents<Alarm>>
+
+    /**
+     * 암호화 영역
+     **/
+
+    suspend fun getPublicKey(): NetworkResult<PublicKey>
+
 }
 

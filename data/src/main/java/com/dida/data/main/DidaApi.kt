@@ -9,6 +9,7 @@ import com.dida.data.model.dex.GetTransactionInfoResponse
 import com.dida.data.model.dex.GetTransactionsResponse
 import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
+import com.dida.data.model.login.GetPublicKeyResponse
 import com.dida.data.model.login.PatchMemberDeviceRequest
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostLoginResponse
@@ -69,7 +70,9 @@ interface DidaApi {
     @PATCH("/common/refresh")
     suspend fun patchRefreshToken(@Header("refreshToken") request: String): PostLoginResponse
 
-    // TODO : PUBLICK KEY 발급 받기 API 추가
+    // PUBLICK KEY 발급 받기
+    @GET("/common/key")
+    suspend fun getPublicKey(): GetPublicKeyResponse
 
     // 인증 메일 보내기
     @GET("/visitor/auth")

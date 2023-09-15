@@ -39,6 +39,7 @@ import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.PublicKey
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.SoldOut
@@ -292,6 +293,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun alarms(page: Int, size: Int): NetworkResult<Contents<Alarm>> {
         return handleApi { didaApi.getAlarms(page, size).toDomain() }
+    }
+
+    override suspend fun getPublicKey(): NetworkResult<PublicKey> {
+        return handleApi { didaApi.getPublicKey().toDomain() }
     }
 
 }

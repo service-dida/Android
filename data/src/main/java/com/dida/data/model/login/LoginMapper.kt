@@ -1,6 +1,7 @@
 package com.dida.data.model.login
 
 import com.dida.domain.main.model.LoginToken
+import com.dida.domain.main.model.PublicKey
 
 fun PostLoginResponse.toDomain(): LoginToken {
     return LoginToken(
@@ -8,4 +9,8 @@ fun PostLoginResponse.toDomain(): LoginToken {
         accessToken = accessToken,
         refreshToken = refreshToken,
     )
+}
+
+fun GetPublicKeyResponse.toDomain(): PublicKey {
+    return PublicKey(publicKey)
 }
