@@ -321,9 +321,9 @@ class MainRepositoryImpl @Inject constructor(
         title: String,
         description: String,
         image: String
-    ): NetworkResult<Unit> {
+    ): NetworkResult<Long> {
         val body = PostNftRequest(payPwd, title, description, image)
-        return handleApi { didaApi.postNft(body) }
+        return handleApi { didaApi.postNft(body).nftId }
     }
 
     override suspend fun swapToDida(payPwd: String, coin: Int): NetworkResult<Unit> {

@@ -142,7 +142,7 @@ interface MainRepository {
 
     suspend fun patchPassword(nowPwd: String, changePwd: String): NetworkResult<Unit>
 
-    suspend fun createNft(payPwd: String, title: String, description: String, image: String): NetworkResult<Unit>
+    suspend fun createNft(payPwd: String, title: String, description: String, image: String): NetworkResult<Long>
 
     suspend fun swapToDida(payPwd: String, coin: Int): NetworkResult<Unit>
 

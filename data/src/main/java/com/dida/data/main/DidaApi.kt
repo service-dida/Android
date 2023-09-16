@@ -10,6 +10,7 @@ import com.dida.data.model.dex.GetTransactionInfoResponse
 import com.dida.data.model.dex.GetTransactionsResponse
 import com.dida.data.model.dex.PostBuyNftRequest
 import com.dida.data.model.dex.PostNftRequest
+import com.dida.data.model.dex.PostNftResponse
 import com.dida.data.model.dex.PostSellNftRequest
 import com.dida.data.model.dex.PostSwapRequest
 import com.dida.data.model.login.GetCommonWalletResponse
@@ -179,7 +180,7 @@ interface DidaApi {
 
     // NFT 만들기
     @POST("/member/nft")
-    suspend fun postNft(@Body body: PostNftRequest): Unit
+    suspend fun postNft(@Body body: PostNftRequest): PostNftResponse
 
     // NFT 삭제하기
     @DELETE("/member/nft/{nftId}")

@@ -87,7 +87,6 @@ class AddPurposeViewModel @Inject constructor(
         SALE
     }
 
-    // TODO: NFT 바로 판매하는 로직 서버 Response 수정 필요
     fun mintNFT(password: String , type : AddNftType, price: Double) {
         baseViewModelScope.launch {
             showLoading()
@@ -104,7 +103,7 @@ class AddPurposeViewModel @Inject constructor(
                 }
                 .onSuccess { cardId ->
                     if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-//                    else sellNft(password, cardId, price)
+                    else sellNft(password, cardId, price)
                 }
                 .onError { e -> catchError(e) }
         }
