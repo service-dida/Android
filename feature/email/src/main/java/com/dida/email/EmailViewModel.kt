@@ -1,22 +1,24 @@
 package com.dida.email
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.model.NotCorrectPasswordException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.ChangePasswordAPI
-import com.dida.domain.usecase.main.CreateWalletAPI
-import com.dida.domain.usecase.main.SendEmailAPI
+import com.dida.domain.usecase.CreateWalletUseCase
+import com.dida.domain.usecase.EmailAuthUseCase
+import com.dida.domain.usecase.PatchPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EmailViewModel @Inject constructor(
-    private val sendEmailAPI: SendEmailAPI,
-    private val createWalletAPI: CreateWalletAPI,
-    private val changePasswordAPI: ChangePasswordAPI
+    private val emailAuthUseCase: EmailAuthUseCase,
+    private val createWalletUseCase: CreateWalletUseCase,
+    private val patchPasswordUseCase: PatchPasswordUseCase,
 ) : BaseViewModel() {
 
     private val TAG = "EmailViewModel"
@@ -37,9 +39,9 @@ class EmailViewModel @Inject constructor(
     fun getSendEmail() {
         baseViewModelScope.launch {
             showLoading()
-            sendEmailAPI()
+            emailAuthUseCase()
                 .onSuccess {
-                    verifyNumberValue = it.random
+                    verifyNumberValue = it
                     _sendEvent.emit(Unit)
                     dismissLoading() }
                 .onError { e -> catchError(e) }
@@ -50,16 +52,18 @@ class EmailViewModel @Inject constructor(
         return userInputState.value == verifyNumberValue
     }
 
+
+    // TODO : 비밀번호 오류 체크하기
     fun postCreateWallet(password: String, passwordCheck: String) {
         baseViewModelScope.launch {
             showLoading()
-            createWalletAPI(password, passwordCheck)
+            createWalletUseCase(password, passwordCheck)
                 .onSuccess {
                     _navigationEvent.emit(EmailNavigationAction.SuccessCreateWallet)
                     dismissLoading() }
                 .onError { e ->
                     when(e) {
-                        is NotCorrectPasswordException -> _retryEvent.emit(Unit)
+//                        is NotCorrectPasswordException -> _retryEvent.emit(Unit)
                         else -> catchError(e)
                     }
                 }
@@ -69,13 +73,9 @@ class EmailViewModel @Inject constructor(
     fun changePassword(nowPwd : String, checkPwd : String){
         baseViewModelScope.launch {
             showLoading()
-            changePasswordAPI(nowPwd = nowPwd, checkPwd = checkPwd)
-                .onSuccess {
-                    _navigationEvent.emit(EmailNavigationAction.SuccessResetPassword)
-                }
-                .onError {
-                        e -> catchError(e)
-                }
+            patchPasswordUseCase(nowPwd = nowPwd, changePwd = checkPwd)
+                .onSuccess { _navigationEvent.emit(EmailNavigationAction.SuccessResetPassword) }
+                .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
