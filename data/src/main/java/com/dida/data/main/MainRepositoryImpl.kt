@@ -183,8 +183,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.getMain().toDomain() }
     }
 
-    override suspend fun soldOut(range: Int): NetworkResult<SoldOut> {
-        return handleApi { didaApi.getSoldOut(range).toDomain() }
+    override suspend fun soldOut(range: Int): NetworkResult<List<SoldOut>> {
+        return handleApi { didaApi.getSoldOut(range).soldOuts }
     }
 
     override suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>> {

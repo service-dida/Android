@@ -84,7 +84,7 @@ interface MainRepository {
 
     suspend fun main(): NetworkResult<Main>
 
-    suspend fun soldOut(range: Int): NetworkResult<SoldOut>
+    suspend fun soldOut(range: Int): NetworkResult<List<SoldOut>>
 
     suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>>
 

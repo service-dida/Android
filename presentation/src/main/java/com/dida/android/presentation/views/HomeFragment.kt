@@ -13,7 +13,7 @@ import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
 import com.dida.common.util.*
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.domain.model.main.HotItems
+import com.dida.domain.main.model.HotItems
 import com.dida.home.HomeMessageAction
 import com.dida.home.HomeNavigationAction
 import com.dida.home.HomeViewModel
@@ -118,8 +118,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                         homeEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
                     }
 
-                    if (home.getHotUsers.isNotEmpty()) {
-                        collectionAdapter.submitList(home.getHotUsers)
+                    if (home.getHotMembers.isNotEmpty()) {
+                        collectionAdapter.submitList(home.getHotMembers)
                         collectionMoreAdapter.submitList(listOf(CollectionMoreItem(0)))
                     } else {
                         collectionEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))

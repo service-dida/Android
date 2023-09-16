@@ -7,3 +7,9 @@ data class HotItem(
     val price: String,
     val likeCount: String
 )
+
+sealed class HotItems {
+    data class Contents(
+        val contents: List<HotItem>
+    ) : HotItems()
+}

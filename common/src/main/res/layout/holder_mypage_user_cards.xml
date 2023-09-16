@@ -7,7 +7,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.UserNft" />
+            type="com.dida.domain.main.model.RecentNft" />
 
         <variable
             name="eventListener"
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:onSingleClick="@{() -> eventListener.onNftItemClicked(holderModel.cardId)}">
+                app:onSingleClick="@{() -> eventListener.onNftItemClicked(holderModel.nftId)}">
 
                 <ImageView
                     android:id="@+id/nft_ImageView"
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    app:image_from_url="@{holderModel.imgUrl}"
+                    app:image_from_url="@{holderModel.nftImgUrl}"
                     app:layout_constraintDimensionRatio="1/1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="@{holderModel.userName}"
+                    android:text="@{holderModel.memberName}"
                     android:textColor="@color/white"
                     android:textSize="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="@{holderModel.cardName}"
+                    android:text="@{holderModel.nftName}"
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +113,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/holder_main"
-                app:onSingleClick="@{() -> eventListener.onLikeBtnClicked(holderModel.cardId, holderModel.liked)}"/>
+                app:onSingleClick="@{() -> eventListener.onLikeBtnClicked(holderModel.nftId, holderModel.liked)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

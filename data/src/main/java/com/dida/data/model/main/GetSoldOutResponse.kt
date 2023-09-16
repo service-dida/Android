@@ -1,10 +1,7 @@
 package com.dida.data.model.main
 
-import com.dida.domain.main.model.MemberInfo
-import com.dida.domain.main.model.NftInfo
-import com.google.gson.annotations.SerializedName
+import com.dida.domain.main.model.SoldOut
 
 data class GetSoldOutResponse(
-    @SerializedName("nftInfo") val nftInfo: List<NftInfo>,
-    @SerializedName("memberInfo") val memberInfo: List<MemberInfo>,
+    val soldOuts: List<SoldOut>
 )

@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.main.HotSeller
+import com.dida.domain.main.model.HotSeller
 import com.dida.home.HomeActionHandler
 import com.dida.home.R
 import com.dida.home.databinding.HolderHotsellerBinding
@@ -32,7 +32,7 @@ class HotSellerAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).userId * -1
+    override fun getItemId(position: Int): Long = getItem(position).memberId * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_hotseller
 
@@ -46,7 +46,7 @@ class HotSellerAdapter(
 
     internal object HotSellerItemDiffCallback : DiffUtil.ItemCallback<HotSeller>() {
         override fun areItemsTheSame(oldItem: HotSeller, newItem: HotSeller) =
-            oldItem.userId == newItem.userId
+            oldItem.memberId == newItem.memberId
 
         override fun areContentsTheSame(oldItem: HotSeller, newItem: HotSeller) =
             oldItem == newItem
