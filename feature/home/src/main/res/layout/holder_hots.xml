@@ -112,7 +112,7 @@
                 android:textSize="15dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:textColor="@color/mainblack"
-                android:text="@{holderModel.likeCount()}"
+                android:text="@{holderModel.likeCount}"
                 android:layout_marginLeft="8dp">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>

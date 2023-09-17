@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -36,7 +35,7 @@ import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.Divider12
 import com.dida.compose.utils.clickableSingle
-import com.dida.domain.model.main.UserHide
+import com.dida.domain.main.model.HideMember
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -83,14 +82,14 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
 
     @Composable
     fun BlockScreen(
-        userList: List<UserHide>
+        userList: List<HideMember>
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
-            items(userList) { user ->
+            items(userList.size) {
                 BlockUserItem(
-                    user = user
+                    user = userList[it]
                 ) {
                     viewModel.onBlockCancel(it)
                 }
@@ -100,8 +99,8 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
 
     @Composable
     fun BlockUserItem(
-        user: UserHide,
-        onBlockCancelClicked: (user: UserHide) -> Unit
+        user: HideMember,
+        onBlockCancelClicked: (user: HideMember) -> Unit
     ) {
         Surface(
             modifier = Modifier
@@ -124,7 +123,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                 ) {
                     AsyncImage(
                         modifier = Modifier.fillMaxSize(),
-                        model = user.imgUrl,
+                        model = user.profileUrl,
                         contentDescription = "유저 이미지",
                         contentScale = ContentScale.Crop,
                         error = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground),
@@ -134,7 +133,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                 Divider12()
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = user.userName,
+                    text = user.nickname,
                     style = DidaTypography.h3,
                     fontSize = dpToSp(dp = 16.dp),
                     maxLines = 1,

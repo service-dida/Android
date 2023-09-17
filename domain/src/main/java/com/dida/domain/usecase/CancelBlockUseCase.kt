@@ -8,7 +8,7 @@ import javax.inject.Inject
 class CancelBlockUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(type: Block, postId: Long) : NetworkResult<Unit> {
-        return repository.cancelBlock(type, postId)
+    suspend operator fun invoke(type: Block, blockId: Long) : NetworkResult<Unit> {
+        return repository.cancelBlock(type, blockId)
     }
 }

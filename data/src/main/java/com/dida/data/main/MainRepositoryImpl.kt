@@ -37,6 +37,8 @@ import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.DealingHistory
+import com.dida.domain.main.model.HideMember
+import com.dida.domain.main.model.HideNft
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.HotSellerPage
 import com.dida.domain.main.model.LoginToken
@@ -252,6 +254,14 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun likedNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>> {
         return handleApi { didaApi.getLikedNfts(page, size).toDomain() }
+    }
+
+    override suspend fun hideNfts(page: Int, size: Int): NetworkResult<Contents<HideNft>> {
+        return handleApi { didaApi.getHideNfts(page, size).toDomain() }
+    }
+
+    override suspend fun hideMembers(page: Int, size: Int): NetworkResult<Contents<HideMember>> {
+        return handleApi { didaApi.getHideMembers(page, size).toDomain() }
     }
 
     override suspend fun block(type: Block, blockId: Long): NetworkResult<Unit> {

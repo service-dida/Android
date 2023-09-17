@@ -10,6 +10,8 @@ import com.dida.domain.main.model.CommonProfile
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.DealingHistory
+import com.dida.domain.main.model.HideMember
+import com.dida.domain.main.model.HideNft
 import com.dida.domain.main.model.HotMember
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.HotSellerPage
@@ -117,6 +119,10 @@ interface MainRepository {
     suspend fun ownNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
 
     suspend fun likedNfts(page: Int, size: Int): NetworkResult<Contents<OwnNft>>
+
+    suspend fun hideNfts(page: Int, size: Int): NetworkResult<Contents<HideNft>>
+
+    suspend fun hideMembers(page: Int, size: Int): NetworkResult<Contents<HideMember>>
 
     suspend fun block(type: Block, blockId: Long): NetworkResult<Unit>
 

@@ -10,14 +10,15 @@ import com.dida.common.R
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.databinding.HolderMypageUserCardsBinding
 import com.dida.domain.main.model.RecentNft
+import com.dida.home.databinding.HolderRecentNftBinding
 
 class RecentNftAdapter(
     private val eventListener: NftActionHandler
 ) : ListAdapter<RecentNft, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderMypageUserCardsBinding =
-            DataBindingUtil.inflate<HolderMypageUserCardsBinding?>(
+        val viewDataBinding: HolderRecentNftBinding =
+            DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.holder_mypage_user_cards,
                 parent,
@@ -33,9 +34,9 @@ class RecentNftAdapter(
 
     override fun getItemId(position: Int): Long = getItem(position).nftId * -1
 
-    override fun getItemViewType(position: Int): Int = R.layout.holder_mypage_user_cards
+    override fun getItemViewType(position: Int): Int = com.dida.home.R.layout.holder_recent_nft
 
-    class ViewHolder(private val binding: HolderMypageUserCardsBinding) :
+    class ViewHolder(private val binding: HolderRecentNftBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RecentNft) {
             binding.holderModel = item
