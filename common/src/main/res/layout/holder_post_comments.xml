@@ -4,7 +4,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.PostComments" />
+            type="com.dida.domain.main.model.Comment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:image_from_url_circle="@{holderModel.userImgUrl}">
+            app:image_from_url_circle="@{holderModel.memberInfo.profileImgUrl}">
         </ImageView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="14dp"
-                android:text="@{holderModel.content}"
+                android:text="@{holderModel.commentInfo.content}"
                 android:paddingEnd="20dp"
                 android:paddingStart="20dp"
                 android:paddingTop="8dp"

@@ -1,23 +1,19 @@
 package com.dida.password
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.model.WrongPassword5TimesException
-import com.dida.domain.onError
-import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CheckPasswordAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Stack
 import javax.inject.Inject
 
+// TODO : 비밀번호 확인
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
-    private val passwordAPI: CheckPasswordAPI
+//    private val passwordAPI: CheckPasswordAPI
 ) : BaseViewModel() {
 
     private var isClickable = true
@@ -77,27 +73,27 @@ class PasswordViewModel @Inject constructor(
     }
 
     private suspend fun checkPassword(password : String){
-        passwordAPI(password)
-            .onSuccess {
-                if (it.flag) {
-                    _completeEvent.emit(password)
-                } else {
-                    isClickable = false
-                    _wrongCountState.emit("${it.wrongCnt}/5")
-                    _failEvent.emit(true)
-
-                    stack.clear()
-                    delay(1000)
-                    _failEvent.emit(false)
-                    isClickable = true
-                }
-            }.onError { e ->
-                if (e is WrongPassword5TimesException) {
-                    _dismissEvent.emit(true)
-                } else {
-                    catchError(e)
-                }
-            }
+//        passwordAPI(password)
+//            .onSuccess {
+//                if (it.flag) {
+//                    _completeEvent.emit(password)
+//                } else {
+//                    isClickable = false
+//                    _wrongCountState.emit("${it.wrongCnt}/5")
+//                    _failEvent.emit(true)
+//
+//                    stack.clear()
+//                    delay(1000)
+//                    _failEvent.emit(false)
+//                    isClickable = true
+//                }
+//            }.onError { e ->
+//                if (e is WrongPassword5TimesException) {
+//                    _dismissEvent.emit(true)
+//                } else {
+//                    catchError(e)
+//                }
+//            }
     }
         fun initPwdInfo(stackSize: Int,settingYn : Boolean) {
             this.stackSize = stackSize

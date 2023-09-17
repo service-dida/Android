@@ -1,6 +1,6 @@
 package com.dida.user_profile
 
-import com.dida.domain.model.main.Follow
+import com.dida.domain.main.model.Follow
 
 sealed class UserProfileNavigationAction {
     class NavigateToDetailNft(val cardId: Long) : UserProfileNavigationAction()
