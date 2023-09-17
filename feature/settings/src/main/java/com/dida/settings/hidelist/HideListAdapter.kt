@@ -7,13 +7,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.main.HideCard
+import com.dida.domain.main.model.HideNft
 import com.dida.settings.R
 import com.dida.settings.databinding.HolderHideListItemBinding
 
+// TOOD : 숨김 카드 목록 관련 수정
 class HideListAdapter(
     private val eventListener: HideListActionHandler
-): ListAdapter<HideCard, HideListAdapter.ViewHolder>(HideListItemDiffCallback) {
+): ListAdapter<HideNft, HideListAdapter.ViewHolder>(HideListItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderHideListItemBinding = DataBindingUtil.inflate<HolderHideListItemBinding?>(
@@ -30,23 +31,23 @@ class HideListAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).cardId.toLong() * -1
+    override fun getItemId(position: Int): Long = getItem(position).nftId * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_hide_list_item
 
     class ViewHolder(private val binding: HolderHideListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: HideCard) {
+        fun bind(item: HideNft) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object HideListItemDiffCallback : DiffUtil.ItemCallback<HideCard>() {
-        override fun areItemsTheSame(oldItem: HideCard, newItem: HideCard) =
-            oldItem.cardId == newItem.cardId
+    internal object HideListItemDiffCallback : DiffUtil.ItemCallback<HideNft>() {
+        override fun areItemsTheSame(oldItem: HideNft, newItem: HideNft) =
+            oldItem.nftId == newItem.nftId
 
-        override fun areContentsTheSame(oldItem: HideCard, newItem: HideCard) =
+        override fun areContentsTheSame(oldItem: HideNft, newItem: HideNft) =
             oldItem == newItem
     }
 }

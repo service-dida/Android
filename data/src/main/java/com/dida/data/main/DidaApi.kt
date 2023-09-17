@@ -1,6 +1,8 @@
 package com.dida.data.main
 
 import com.dida.data.model.additional.GetAlarmsResponse
+import com.dida.data.model.additional.GetHideMembersResponse
+import com.dida.data.model.additional.GetHideNftsResponse
 import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostMakePictureResponse
 import com.dida.data.model.additional.PostReportRequest
@@ -374,7 +376,12 @@ interface DidaApi {
     @DELETE("/common/nft/hide")
     suspend fun cancelBlockNft(@Query("nftId") nftId: Long): Unit
 
-    // TODO : NFT 숨김 목록 조회 API 추가
+    // NFT 숨김 목록
+    @GET("/common/nft/hide")
+    suspend fun getHideNfts(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetHideNftsResponse
 
     // 멤버 숨기기
     @POST("/common/member/hide")
@@ -384,7 +391,12 @@ interface DidaApi {
     @DELETE("/common/member/hide")
     suspend fun cancelBlockMember(@Query("memberId") memberId: Long): Unit
 
-    // TODO : 멤버 숨김 목록 조회 API 추가
+    // 멤버 숨김 목록 조회 API
+    @GET("/common/member/hide")
+    suspend fun getHideMembers(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetHideMembersResponse
 
     // 게시글 숨기기
     @POST("/common/post/hide")
