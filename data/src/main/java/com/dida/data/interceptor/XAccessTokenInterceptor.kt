@@ -12,14 +12,12 @@ class XAccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
 
-        var jwtToken = ""
         runBlocking {
             dataStorePreferences.getAccessToken()?.let {
-                jwtToken = it
+                builder.addHeader("Authorization", it)
             }
         }
 
-        builder.addHeader("Authorization", jwtToken)
         return chain.proceed(builder.build())
     }
 }
