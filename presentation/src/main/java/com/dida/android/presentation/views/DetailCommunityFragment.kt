@@ -21,6 +21,7 @@ import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
 import com.dida.common.util.DIDAINTENT
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.DetailCommunityMessageAction
@@ -93,9 +94,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             }
 
             launch {
-                viewModel.commentList.collectLatest {
-                    binding.detailCommunityMain.isVisible = it.isNotEmpty()
-                    commentsAdapter.submitList(it)
+                viewModel.comments.collectLatest {
+                    binding.detailCommunityMain.isVisible = it.content.isNotEmpty()
+                    commentsAdapter.submitList(it.content)
                     if (viewModel.isWrite.value) keyboardHide()
                 }
             }
@@ -147,6 +148,10 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun initAdapter() {
         binding.detailCommunityMain.adapter = commentsAdapter
+        binding.detailCommunityMain.addOnPagingListener(
+            arrivedTop = { viewModel.nextPage(args.postId) },
+            arrivedBottom = { viewModel.beforePage(args.postId) }
+        )
     }
 
     private fun showDeleteDialog(postId: Long) {

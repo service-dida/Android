@@ -1,6 +1,6 @@
 package com.dida.domain.main.model
 
 data class SoldOut(
-    val nftInfo: List<NftInfo>,
-    val memberInfo: List<MemberInfo>,
+    val nftInfo: NftInfo,
+    val memberInfo: MemberInfo,
 )

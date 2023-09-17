@@ -9,17 +9,17 @@ import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.data.model.HaveNotJwtTokenException
-import com.dida.domain.model.main.DetailNft
-import com.dida.domain.model.main.Posts
+import com.dida.domain.main.model.Block
+import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.DeleteNftAPI
-import com.dida.domain.usecase.main.DetailNftAPI
-import com.dida.domain.usecase.main.HideNftAPI
-import com.dida.domain.usecase.main.PostLikeAPI
-import com.dida.domain.usecase.main.PostsCardCardIdAPI
-import com.dida.domain.usecase.main.SellNftAPI
+import com.dida.domain.usecase.BlockUseCase
+import com.dida.domain.usecase.DeleteNftUseCase
+import com.dida.domain.usecase.NftDetailUseCase
+import com.dida.domain.usecase.NftLikeUseCase
+import com.dida.domain.usecase.PostsFromNftUseCase
+import com.dida.domain.usecase.SellNftUseCase
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -33,12 +33,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailNftViewModel @Inject constructor(
-    private val detailNftAPI: DetailNftAPI,
-    private val postLikeAPI: PostLikeAPI,
-    private val postsCardCardIdAPI: PostsCardCardIdAPI,
-    private val sellNftAPI: SellNftAPI,
-    private val hideNftAPI: HideNftAPI,
-    private val deleteNftAPI: DeleteNftAPI,
+    private val nftDetailUseCase: NftDetailUseCase,
+    private val nftLikeUseCase: NftLikeUseCase,
+    private val postsFromNftUseCase: PostsFromNftUseCase,
+    private val sellNftUseCase: SellNftUseCase,
+    private val blockUseCase: BlockUseCase,
+    private val deleteNftUseCase: DeleteNftUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -48,11 +48,11 @@ class DetailNftViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<DetailNftNavigationAction> = MutableSharedFlow<DetailNftNavigationAction>()
     val navigationEvent: SharedFlow<DetailNftNavigationAction> = _navigationEvent
 
-    private val _detailNftState: MutableStateFlow<UiState<DetailNft>> = MutableStateFlow(UiState.Loading)
-    val detailNftState: StateFlow<UiState<DetailNft>> = _detailNftState
+    private val _detailNftState: MutableStateFlow<UiState<Nft>> = MutableStateFlow(UiState.Loading)
+    val detailNftState: StateFlow<UiState<Nft>> = _detailNftState
 
-    private val _communityState: MutableStateFlow<List<Posts>> = MutableStateFlow(emptyList())
-    val communityState: StateFlow<List<Posts>> = _communityState.asStateFlow()
+    private val _communityState: MutableStateFlow<List<Post>> = MutableStateFlow(emptyList())
+    val communityState: StateFlow<List<Post>> = _communityState.asStateFlow()
 
     val detailOwnerTypeState: NoCompareMutableStateFlow<DetailOwnerType> = NoCompareMutableStateFlow(DetailOwnerType.ALL)
 
@@ -66,7 +66,7 @@ class DetailNftViewModel @Inject constructor(
 
     private fun onGetDetailCard() {
         baseViewModelScope.launch {
-            detailNftAPI(cardIdState.value)
+            nftDetailUseCase(cardIdState.value)
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _detailNftState.value = UiState.Success(it)
@@ -78,8 +78,8 @@ class DetailNftViewModel @Inject constructor(
 
     private fun onGetCommunity() {
         baseViewModelScope.launch {
-            postsCardCardIdAPI(cardId = cardIdState.value)
-                .onSuccess { _communityState.value = it }
+            postsFromNftUseCase(nftId = cardIdState.value, page = 0, size = 10)
+                .onSuccess { _communityState.value = it.content }
                 .onError { e -> catchError(e) }
         }
     }
@@ -87,7 +87,7 @@ class DetailNftViewModel @Inject constructor(
     fun onLikePost() {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(cardIdState.value)
+            nftLikeUseCase(cardIdState.value)
                 .onSuccess { onGetDetailCard() }
                 .onError { e -> catchError(e) }
         }
@@ -96,7 +96,7 @@ class DetailNftViewModel @Inject constructor(
     fun onSellCard(payPwd: String, price: Double) {
         baseViewModelScope.launch {
             showLoading()
-            sellNftAPI(payPwd, cardIdState.value, price)
+            sellNftUseCase(payPwd, cardIdState.value, price)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }.onError { e -> catchError(e) }
@@ -106,17 +106,18 @@ class DetailNftViewModel @Inject constructor(
     fun onHideCard() {
         baseViewModelScope.launch {
             showLoading()
-            hideNftAPI(cardIdState.value)
+            blockUseCase(type = Block.NFT, blockId = cardIdState.value)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
                 }.onError { e -> catchError(e) }
         }
     }
 
+    // TODO : NFT 삭제 관련 로직 수정하기
     fun deleteNft(password : String) {
         baseViewModelScope.launch {
             showLoading()
-            deleteNftAPI(cardIdState.value, password)
+            deleteNftUseCase(cardIdState.value)
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
                 }.onError { e -> catchError(e) }
@@ -127,28 +128,29 @@ class DetailNftViewModel @Inject constructor(
         onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
     }
 
-    private fun setDetailOwnerType(detailNFT: DetailNft) {
-        baseViewModelScope.launch {
-            if (detailNFT.type == "MINE") {
-                if (detailNFT.price == "NOT SALE") {
-                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_NOTSALE)
-                } else {
-                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_SALE)
-                }
-            } else if (detailNFT.type == "NOT MINE") {
-                if (detailNFT.price == "NOT SALE") {
-                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_NOTSALE)
-                } else {
-                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_SALE)
-                }
-            } else if (detailNFT.type == "NEED LOGIN") {
-                if (detailNFT.price == "NOT SALE") {
-                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_NOTSALE)
-                } else {
-                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_SALE)
-                }
-            }
-        }
+    // TODO : NFT 상세 내껀지 판별하는 로직 수정
+    private fun setDetailOwnerType(detailNFT: Nft) {
+//        baseViewModelScope.launch {
+//            if (detailNFT.nftInfo.type == "MINE") {
+//                if (detailNFT.price == "NOT SALE") {
+//                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_NOTSALE)
+//                } else {
+//                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_SALE)
+//                }
+//            } else if (detailNFT.type == "NOT MINE") {
+//                if (detailNFT.price == "NOT SALE") {
+//                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_NOTSALE)
+//                } else {
+//                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_SALE)
+//                }
+//            } else if (detailNFT.type == "NEED LOGIN") {
+//                if (detailNFT.price == "NOT SALE") {
+//                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_NOTSALE)
+//                } else {
+//                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_SALE)
+//                }
+//            }
+//        }
     }
 
     override fun onCommunityMoreClicked() {
@@ -159,36 +161,38 @@ class DetailNftViewModel @Inject constructor(
 
     override fun onUserProfileClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(DetailNftNavigationAction.NavigateToUserProfile(userId = detailNftState.value.successOrNull()!!.userId))
+            _navigationEvent.emit(DetailNftNavigationAction.NavigateToUserProfile(userId = detailNftState.value.successOrNull()?.memberInfo?.memberId ?: 0))
         }
     }
 
+    // TODO : Remote Exception 관련 수정하기
     override fun onNextButtonClicked() {
         baseViewModelScope.launch {
-            when(detailOwnerTypeState.value){
-                DetailOwnerType.NOTLOGIN_AND_SALE ->{
-                    catchError(HaveNotJwtTokenException(Throwable(), "", 100))
+            when (detailOwnerTypeState.value) {
+                DetailOwnerType.NOTLOGIN_AND_SALE -> {
+//                    catchError(HaveNotJwtTokenException(Throwable(), "", 100))
                 }
-                DetailOwnerType.NOTMINE_AND_SALE ->{
+
+                DetailOwnerType.NOTMINE_AND_SALE -> {
                     val detailNFT = detailNftState.value.successOrNull()
-                    if(detailNFT != null){
-                        _navigationEvent.emit(
-                            DetailNftNavigationAction.NavigateToBuyNft(
-                                detailNFT.cardId,
-                                detailNFT.imgUrl,
-                                detailNFT.title,
-                                detailNFT.profileUrl,
-                                detailNFT.nickname,
-                                detailNFT.price,
-                                detailNFT.viewerNickname,
-                                detailNFT.marketId
-                            )
-                        )
+                    if (detailNFT != null) {
+//                        _navigationEvent.emit(
+//                            DetailNftNavigationAction.NavigateToBuyNft(
+//                                detailNFT.nftInfo.nftId,
+//                                detailNFT.nftInfo.nftImgUrl,
+//                                detailNFT.nftInfo.nftName,
+//                                detailNFT.memberInfo.profileImgUrl ?: "",
+//                                detailNFT.memberInfo.memberName,
+//                                detailNFT.nftInfo.price,
+//                                detailNFT.viewerNickname,
+//                                detailNFT.marketId
+//                            )
+//                        )
                     }
                 }
-                DetailOwnerType.MINE_AND_NOTSALE ->{
-                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToSell)
-                }
+
+                DetailOwnerType.MINE_AND_NOTSALE -> _navigationEvent.emit(DetailNftNavigationAction.NavigateToSell)
+
                 else -> {}
             }
         }
@@ -208,8 +212,8 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationEvent.emit(
                 DetailNftNavigationAction.NavigateToImageDetail(
-                    imageUrl = detailNftState.value.successOrNull()?.imgUrl,
-                    imageTitle = detailNftState.value.successOrNull()?.title,
+                    imageUrl = detailNftState.value.successOrNull()?.nftInfo?.nftImgUrl,
+                    imageTitle = detailNftState.value.successOrNull()?.nftInfo?.nftName,
                     imageDescription = detailNftState.value.successOrNull()?.description
                 )
             )

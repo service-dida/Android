@@ -5,6 +5,10 @@ import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.klaytn.UploadAssetUseCase
+import com.dida.domain.usecase.CancelSellNftUseCase
+import com.dida.domain.usecase.CommonProfileUseCase
+import com.dida.domain.usecase.CreateNftUseCase
+import com.dida.domain.usecase.SellNftUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,10 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddPurposeViewModel @Inject constructor(
-    private val mintNftAPI: MintNftAPI,
+    private val createNftUseCase: CreateNftUseCase,
     private val uploadAssetUseCase: UploadAssetUseCase,
-    private val userProfileAPI: UserProfileAPI,
-    private val sellNftAPI: SellNftAPI
+    private val profileUseCase: CommonProfileUseCase,
+    private val sellNftUseCase: SellNftUseCase
 ) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
@@ -45,10 +49,10 @@ class AddPurposeViewModel @Inject constructor(
             _titleState.value = title
             _descriptionState.value = description
 
-            userProfileAPI()
+            profileUseCase()
                 .onSuccess {
-                    _profileImgState.value = it.profileUrl
-                    _nickNameState.value = it.nickname }
+                    _profileImgState.value = it.memberInfo.profileImgUrl ?: ""
+                    _nickNameState.value = it.memberInfo.memberName }
                 .onError { e -> catchError(e) }
         }
     }
@@ -82,6 +86,7 @@ class AddPurposeViewModel @Inject constructor(
         NOT_SALE,
         SALE
     }
+
     fun mintNFT(password: String , type : AddNftType, price: Double) {
         baseViewModelScope.launch {
             showLoading()
@@ -94,7 +99,7 @@ class AddPurposeViewModel @Inject constructor(
                 .onSuccess { }
                 .onError { e -> catchError(e) }
                 .flatMap {
-                    mintNftAPI(password, titleState.value, descriptionState.value, it.uri)
+                    createNftUseCase(password, titleState.value, descriptionState.value, it.uri)
                 }
                 .onSuccess { cardId ->
                     if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
@@ -106,7 +111,7 @@ class AddPurposeViewModel @Inject constructor(
 
     private fun sellNft(payPwd : String, cardId: Long, price : Double){
         baseViewModelScope.launch {
-            sellNftAPI(payPwd,cardId,price)
+            sellNftUseCase(payPwd, cardId, price)
                 .onSuccess {
                     dismissLoading()
                     _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)

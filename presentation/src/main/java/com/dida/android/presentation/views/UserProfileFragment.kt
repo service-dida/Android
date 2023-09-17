@@ -61,9 +61,10 @@ class UserProfileFragment :
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
-                        is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
+//                        is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
                         is UserProfileNavigationAction.NavigateToUserFollowed -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToUserFollowedFragment(it.userId, it.type))
+                        else -> {}
                     }
                 }
             }
@@ -96,7 +97,7 @@ class UserProfileFragment :
 
         viewLifecycleOwner.repeatOnResumed {
             viewModel.userCardState.collectLatest {
-                userCardAdapter.submitData(it)
+                userCardAdapter.submitList(it.content)
             }
         }
     }
@@ -112,7 +113,6 @@ class UserProfileFragment :
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserProfile()
-            userCardAdapter.refresh()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -121,16 +121,6 @@ class UserProfileFragment :
         binding.rvUserNft.apply {
             adapter = userCardAdapter
             layoutManager = GridLayoutManager(context, 2)
-        }
-
-        userCardAdapter.addLoadStateListener {
-            when(it.append) {
-                is LoadState.NotLoading -> {
-                    binding.emptyView.isVisible = userCardAdapter.snapshot().items.isEmpty()
-                    binding.rvUserNft.isVisible = userCardAdapter.snapshot().items.isNotEmpty()
-                }
-                else -> {}
-            }
         }
     }
 

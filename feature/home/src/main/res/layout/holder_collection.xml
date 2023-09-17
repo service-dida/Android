@@ -5,7 +5,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.Collection" />
+            type="com.dida.domain.main.model.HotMember" />
 
         <variable
             name="eventListener"
@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/follow_btn"
-            app:onSingleClick="@{() -> eventListener.onCollectionItemClicked(holderModel.userId)}">
+            app:onSingleClick="@{() -> eventListener.onCollectionItemClicked(holderModel.memberId)}">
 
             <ImageView
                 android:id="@+id/user_img"
@@ -38,7 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:adjustViewBounds="true"
-                image_from_url_circle="@{holderModel.userImg}">
+                app:image_from_url_circle="@{holderModel.profileUrl}">
             </ImageView>
 
             <TextView
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{holderModel.userName}"
+                android:text="@{holderModel.memberName}"
                 app:layout_constraintStart_toEndOf="@id/user_img"
                 android:layout_marginStart="16dp"
                 android:textSize="18dp"
@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@id/user_name"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="@id/user_name"
-                android:text="@{holderModel.userDetail}"
+                android:text="@{holderModel.memberNftCounts()}"
                 android:textSize="14dp"
                 android:textColor="@color/hots_coin_txt"
                 android:fontFamily="@font/pretendard_regular">
@@ -77,15 +77,15 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="14dp"
             android:textSize="14dp"
-            android:text="@{holderModel.follow ? @string/user_following : @string/user_follow}"
+            android:text="@{holderModel.followed ? @string/user_following : @string/user_follow}"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textColor="@{holderModel.follow ? @color/mainblack : @color/white}"
-            android:background="@{holderModel.follow ? @drawable/custom_brandlemon_radius100 : @drawable/custom_brandlemon_empty_radius100}"
+            android:textColor="@{holderModel.followed ? @color/mainblack : @color/white}"
+            android:background="@{holderModel.followed ? @drawable/custom_brandlemon_radius100 : @drawable/custom_brandlemon_empty_radius100}"
             android:fontFamily="@font/pretendard_regular"
-            app:goneUnless="@{!holderModel.isMine}"
+            app:goneUnless="@{!holderModel.me}"
             app:onSingleClick="@{() ->  eventListener.onUserFollowClicked(holderModel)}">
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>

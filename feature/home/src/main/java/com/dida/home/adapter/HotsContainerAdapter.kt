@@ -15,7 +15,7 @@ import com.dida.common.util.Constants
 import com.dida.common.util.SLIDETYPE
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
-import com.dida.domain.model.main.HotItems
+import com.dida.domain.main.model.HotItems
 import com.dida.home.HomeActionHandler
 import com.dida.home.databinding.HolderHotsContainerBinding
 import java.lang.ref.WeakReference

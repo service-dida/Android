@@ -6,7 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("cardCount")
-fun TextView.bindCardCount(count: Long) {
+fun TextView.bindCardCount(count: Int) {
     val view = this
     view.text = "$count 작품"
 }

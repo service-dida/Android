@@ -6,7 +6,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.HotCards.Contents" />
+            type="com.dida.domain.main.model.HotPosts.Contents" />
 
         <variable
             name="eventListener"

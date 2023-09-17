@@ -7,7 +7,7 @@ import javax.inject.Inject
 class CreateNftUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(payPwd: String, title: String, description: String, image: String) : NetworkResult<Unit> {
+    suspend operator fun invoke(payPwd: String, title: String, description: String, image: String) : NetworkResult<Long> {
         return repository.createNft(payPwd, title, description, image)
     }
 }

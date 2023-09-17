@@ -90,7 +90,7 @@
             android:lineSpacingExtra="20px"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeover_tv"
-            tools:text="@string/email_masking_hint"></TextView>
+            tools:text="@string/email_masking_hint" />
 
         <TextView
             android:id="@+id/ok_btn"

@@ -1,27 +1,28 @@
 package com.dida.recent_nft
 
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.main.UserNft
+import com.dida.common.util.PAGING_SIZE
+import com.dida.domain.Contents
+import com.dida.domain.main.model.RecentNft
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.PostLikeAPI
-import com.dida.domain.usecase.main.RecentCardAPI
-import com.dida.recent_nft.adapter.createCardPager
+import com.dida.domain.usecase.NftLikeUseCase
+import com.dida.domain.usecase.RecentNftsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecentNftViewModel @Inject constructor(
-    private val recentCardAPI: RecentCardAPI,
-    private val postLikeAPI: PostLikeAPI
+    private val recentNftsUseCase: RecentNftsUseCase,
+    private val nftLikeUseCase: NftLikeUseCase
 ) : BaseViewModel(), RecentNftActionHandler, NftActionHandler {
 
     private val TAG = "RecentNftViewModel"
@@ -29,7 +30,18 @@ class RecentNftViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<RecentNftNavigationAction> = MutableSharedFlow<RecentNftNavigationAction>()
     val navigationEvent: SharedFlow<RecentNftNavigationAction> = _navigationEvent.asSharedFlow()
 
-    val cardsState: Flow<PagingData<UserNft>> = createCardPager(recentCardAPI = recentCardAPI).flow.cachedIn(baseViewModelScope)
+    private val _cardsState: MutableStateFlow<Contents<RecentNft>> = MutableStateFlow(
+        Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
+    )
+    val cardsState: StateFlow<Contents<RecentNft>> = _cardsState.asStateFlow()
+
+    init {
+        baseViewModelScope.launch {
+            recentNftsUseCase(page = 0, size = PAGING_SIZE)
+                .onSuccess { _cardsState.value = it }
+                .onError { e -> catchError(e) }
+        }
+    }
 
     override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
@@ -40,7 +52,7 @@ class RecentNftViewModel @Inject constructor(
     override fun onLikeBtnClicked(nftId: Long, liked: Boolean) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId)
+            nftLikeUseCase(nftId)
                 .onSuccess { _navigationEvent.emit(RecentNftNavigationAction.NavigateToCardRefresh) }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -48,4 +60,26 @@ class RecentNftViewModel @Inject constructor(
     }
 
     override fun onCreateButtonClicked() {}
+
+    fun nextPage() {
+        baseViewModelScope.launch {
+            if (!cardsState.value.hasNext) return@launch
+            showLoading()
+            recentNftsUseCase(cardsState.value.page + 1, PAGING_SIZE)
+                .onSuccess { _cardsState.value = it }
+                .onError { e -> catchError(e) }
+            dismissLoading()
+        }
+    }
+
+    fun beforePage() {
+        baseViewModelScope.launch {
+            if (cardsState.value.page == 0) return@launch
+            showLoading()
+            recentNftsUseCase(cardsState.value.page - 1, PAGING_SIZE)
+                .onSuccess { _cardsState.value = it }
+                .onError { e -> catchError(e) }
+            dismissLoading()
+        }
+    }
 }

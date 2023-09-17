@@ -3,10 +3,6 @@ package com.dida.add.main
 import android.net.Uri
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.combineStates
-import com.dida.data.model.NeedToWalletException
-import com.dida.domain.onError
-import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.WalletExistedAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,17 +10,11 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.combineTransform
-import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateNftViewModel @Inject constructor(
-    private val walletExistedAPI: WalletExistedAPI,
-) : BaseViewModel() {
+class CreateNftViewModel @Inject constructor() : BaseViewModel() {
 
     private val TAG = "CreateNftViewModel"
 

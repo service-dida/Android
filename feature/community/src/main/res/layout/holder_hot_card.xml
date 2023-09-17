@@ -6,7 +6,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.HotCard" />
+            type="com.dida.domain.main.model.HotPost" />
 
         <variable
             name="eventListener"
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:image_from_url="@{holderModel.cardImgUrl}"
+                app:image_from_url="@{holderModel.nftImgUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -67,7 +67,7 @@
                     android:textColor="@color/white"
                     android:fontFamily="@font/pretendard_medium"
                     android:textSize="14dp"
-                    android:text="@{String.valueOf(holderModel.comments)}"/>
+                    android:text="@{String.valueOf(holderModel.commentCnt)}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

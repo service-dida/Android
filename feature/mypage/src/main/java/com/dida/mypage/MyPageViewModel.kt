@@ -1,30 +1,38 @@
 package com.dida.mypage
 
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.PAGING_SIZE
 import com.dida.common.util.SHIMMER_TIME
+import com.dida.common.util.UPDATED_DESC
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.domain.model.main.UserNft
-import com.dida.domain.model.main.UserProfile
+import com.dida.domain.Contents
+import com.dida.domain.flatMap
+import com.dida.domain.main.model.CommonProfile
+import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.PostLikeAPI
-import com.dida.domain.usecase.main.UserNftAPI
-import com.dida.domain.usecase.main.UserProfileAPI
+import com.dida.domain.usecase.CheckWalletUseCase
+import com.dida.domain.usecase.CommonProfileNftUseCase
+import com.dida.domain.usecase.CommonProfileUseCase
+import com.dida.domain.usecase.NftLikeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    private val userProfileAPI: UserProfileAPI,
-    private val postLikeAPI: PostLikeAPI,
-    userNftAPI: UserNftAPI,
+    private val commonProfileUseCase: CommonProfileUseCase,
+    private val checkWalletUseCase: CheckWalletUseCase,
+    private val commonProfileNftUseCase: CommonProfileNftUseCase,
+    private val nftLikeUseCase: NftLikeUseCase,
 ) : BaseViewModel(), MypageActionHandler, NftActionHandler {
 
     private val TAG = "MyPageViewModel"
@@ -32,13 +40,15 @@ class MyPageViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<MypageNavigationAction> = MutableSharedFlow<MypageNavigationAction>()
     val navigationEvent: SharedFlow<MypageNavigationAction> = _navigationEvent
 
-    private val _myPageState: MutableStateFlow<UiState<UserProfile>> = MutableStateFlow(UiState.Loading)
-    val myPageState: StateFlow<UiState<UserProfile>> = _myPageState
+    private val _myPageState: MutableStateFlow<UiState<CommonProfile>> = MutableStateFlow(UiState.Loading)
+    val myPageState: StateFlow<UiState<CommonProfile>> = _myPageState
 
     private val hasWalletState = MutableStateFlow<Boolean>(false)
 
-    val userCardState: Flow<PagingData<UserNft>> = createUserCardPager(userNftAPI = userNftAPI)
-        .flow.cachedIn(baseViewModelScope)
+    private val _userCardState: MutableStateFlow<Contents<CommonProfileNft>> = MutableStateFlow(
+        Contents(page = 0, pageSize = 0, content = emptyList())
+    )
+    val userCardState: StateFlow<Contents<CommonProfileNft>> = _userCardState.asStateFlow()
 
     enum class CardSortType{
         NEWEST, OLDEST
@@ -50,12 +60,15 @@ class MyPageViewModel @Inject constructor(
     fun getUserInfo() {
         baseViewModelScope.launch {
             _myPageState.value = UiState.Loading
-            userProfileAPI()
+            commonProfileUseCase()
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _myPageState.value = UiState.Success(it)
-                    hasWalletState.value = it.getWallet
-                }.onError { e -> catchError(e) }
+                }.flatMap { checkWalletUseCase() }
+                .onSuccess { hasWalletState.value = it }
+                .flatMap { commonProfileNftUseCase(page = 0, pageSize = PAGING_SIZE, sort = UPDATED_DESC) }
+                .onSuccess { _userCardState.value = it }
+                .onError { e -> catchError(e) }
         }
     }
 
@@ -85,7 +98,7 @@ class MyPageViewModel @Inject constructor(
     override fun onLikeBtnClicked(nftId: Long, liked: Boolean) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId)
+            nftLikeUseCase(nftId)
                 .onSuccess {
                     _navigationEvent.emit(MypageNavigationAction.NavigateToLikeButtonClicked)
                     dismissLoading()
@@ -112,13 +125,13 @@ class MyPageViewModel @Inject constructor(
 
     override fun onUserFollowedClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(MypageNavigationAction.NavigateToUserFollowedClicked(myPageState.value.successOrNull()?.userId ?: 0))
+            _navigationEvent.emit(MypageNavigationAction.NavigateToUserFollowedClicked(myPageState.value.successOrNull()?.memberInfo?.memberId ?: 0))
         }
     }
 
     override fun onUserFollowingClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(MypageNavigationAction.NavigateToUserFollowingClicked(myPageState.value.successOrNull()?.userId ?: 0))
+            _navigationEvent.emit(MypageNavigationAction.NavigateToUserFollowingClicked(myPageState.value.successOrNull()?.memberInfo?.memberId ?: 0))
         }
     }
 }

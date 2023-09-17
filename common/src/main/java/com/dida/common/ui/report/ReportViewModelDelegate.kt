@@ -1,17 +1,12 @@
 package com.dida.common.ui.report
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.model.AlreadyReport
-import com.dida.data.model.HaveNotJwtTokenException
-import com.dida.data.model.InvalidKakaoAccessTokenException
-import com.dida.data.model.NeedLogin
+import com.dida.domain.main.model.Block
+import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.PostPostHideAPI
-import com.dida.domain.usecase.main.PostUserHideAPI
-import com.dida.domain.usecase.main.ReportCardAPI
-import com.dida.domain.usecase.main.ReportPostAPI
-import com.dida.domain.usecase.main.ReportUserAPI
+import com.dida.domain.usecase.BlockUseCase
+import com.dida.domain.usecase.ReportUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -38,11 +33,8 @@ interface ReportViewModelDelegate {
 }
 
 class DefaultReportViewModelDelegate @Inject constructor(
-    private val reportUserAPI: ReportUserAPI,
-    private val reportPostAPI: ReportPostAPI,
-    private val reportCardAPI: ReportCardAPI,
-    private val postUserHideAPI: PostUserHideAPI,
-    private val postPostHideAPI: PostPostHideAPI
+    private val reportUseCase: ReportUseCase,
+    private val blockUseCase: BlockUseCase
 ): ReportViewModelDelegate, BaseViewModel() {
 
     private val _navigateToReportEvent: MutableSharedFlow<Pair<ReportType, Boolean>> = MutableSharedFlow()
@@ -51,6 +43,7 @@ class DefaultReportViewModelDelegate @Inject constructor(
     private val _navigateToBlockEvent: MutableSharedFlow<Pair<ReportType, Boolean>> = MutableSharedFlow()
     override val navigateToBlockEvent: SharedFlow<Pair<ReportType, Boolean>> = _navigateToBlockEvent.asSharedFlow()
 
+    // TODO : 서버 API 에러 관련 수정 필요
     override fun onReportDelegate(
         coroutineScope: CoroutineScope,
         type: ReportType,
@@ -59,13 +52,13 @@ class DefaultReportViewModelDelegate @Inject constructor(
     ) {
         coroutineScope.launch {
             when (type) {
-                ReportType.USER -> reportUserAPI(userId = reportId, content = content)
-                ReportType.POST -> reportPostAPI(postId = reportId, content = content)
-                ReportType.CARD -> reportCardAPI(cardId = reportId, content = content)
+                ReportType.USER -> reportUseCase(type = Report.MEMBER, reportedId = reportId, description = content)
+                ReportType.POST -> reportUseCase(type = Report.POST, reportedId = reportId, description = content)
+                ReportType.CARD -> reportUseCase(type = Report.NFT, reportedId = reportId, description = content)
             }.onSuccess { _navigateToReportEvent.emit(Pair(type, true))
             }.onError {
                 when(it) {
-                    is AlreadyReport -> _navigateToReportEvent.emit(Pair(type, false))
+//                    is AlreadyReport -> _navigateToReportEvent.emit(Pair(type, false))
                     else -> catchError(it)
                 }
             }
@@ -76,8 +69,8 @@ class DefaultReportViewModelDelegate @Inject constructor(
     override fun onBlockDelegate(coroutineScope: CoroutineScope, type: ReportType, blockId: Long) {
         coroutineScope.launch {
             when (type) {
-                ReportType.POST -> postPostHideAPI(postId = blockId)
-                else -> postUserHideAPI(userId = blockId)
+                ReportType.POST -> blockUseCase(type = Block.POST, blockId = blockId)
+                else -> blockUseCase(type = Block.MEMBER, blockId = blockId)
             }.onSuccess { _navigateToBlockEvent.emit(Pair(type, true))
             }.onError { _navigateToBlockEvent.emit(Pair(type, false)) }
         }

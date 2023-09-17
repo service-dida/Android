@@ -3,19 +3,19 @@ package com.dida.recent_nft.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.actionhandler.NftActionHandler
-import com.dida.common.databinding.HolderMypageUserCardsBinding
-import com.dida.domain.model.main.UserNft
+import com.dida.domain.main.model.RecentNft
+import com.dida.recent_nft.databinding.HolderRecentNftBinding
 
-class CardPagingAdapter(
+class RecentNftAdapter(
     private val eventListener: NftActionHandler
-): PagingDataAdapter<UserNft, CardPagingAdapter.ViewHolder>(CardItemDiffCallback) {
+): ListAdapter<RecentNft, RecentNftAdapter.ViewHolder>(CardItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderMypageUserCardsBinding = DataBindingUtil.inflate(
+        val viewDataBinding: HolderRecentNftBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             com.dida.common.R.layout.holder_mypage_user_cards,
             parent,
@@ -31,19 +31,19 @@ class CardPagingAdapter(
 
     override fun getItemViewType(position: Int): Int = com.dida.common.R.layout.holder_mypage_user_cards
 
-    class ViewHolder(private val binding: HolderMypageUserCardsBinding) :
+    class ViewHolder(private val binding: HolderRecentNftBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserNft) {
+        fun bind(item: RecentNft) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object CardItemDiffCallback : DiffUtil.ItemCallback<UserNft>() {
-        override fun areItemsTheSame(oldItem: UserNft, newItem: UserNft) =
-            oldItem.cardId == newItem.cardId && oldItem.liked == newItem.liked
+    internal object CardItemDiffCallback : DiffUtil.ItemCallback<RecentNft>() {
+        override fun areItemsTheSame(oldItem: RecentNft, newItem: RecentNft) =
+            oldItem.nftId == newItem.nftId && oldItem.liked == newItem.liked
 
-        override fun areContentsTheSame(oldItem: UserNft, newItem: UserNft) =
+        override fun areContentsTheSame(oldItem: RecentNft, newItem: RecentNft) =
             oldItem == newItem
     }
 }

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
@@ -46,8 +45,8 @@ import com.dida.compose.utils.Divider12
 import com.dida.compose.utils.Divider8
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.clickableSingle
-import com.dida.domain.model.main.Collection
-import com.dida.domain.model.main.Follow
+import com.dida.domain.main.model.CommonFollow
+import com.dida.user_followed.Follow
 import com.dida.user_followed.UserFollowedMessageAction
 import com.dida.user_followed.UserFollowedViewModel
 import com.dida.user_followed.databinding.FragmentUserfollowedBinding
@@ -113,10 +112,10 @@ class UserFollowedFragment :
                 val coroutineScope = rememberCoroutineScope()
 
                 LaunchedEffect(key1 = Unit) {
-                    when (args.type) {
-                        Follow.FOLLOWER -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
-                        Follow.FOLLOWING -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
-                    }
+//                    when (args.type) {
+//                        Follow.FOLLOWER -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
+//                        Follow.FOLLOWING -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
+//                    }
                 }
 
                 Column(
@@ -197,16 +196,16 @@ class UserFollowedFragment :
 
     @Composable
     fun FollowedColumn(
-        items: List<Collection>
+        items: List<CommonFollow>
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(items) {
+            items(items.size) {
                 FollowUserItem(
-                    item = it,
+                    item = items[it],
                     onUserClicked = { },
-                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(it) }
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items[it]) }
                 )
             }
         }
@@ -214,7 +213,7 @@ class UserFollowedFragment :
     
     @Composable
     fun FollowUserItem(
-        item: Collection,
+        item: CommonFollow,
         onUserClicked: () -> Unit,
         onFollowButtonClicked: () -> Unit
     ) {
@@ -231,7 +230,7 @@ class UserFollowedFragment :
             ) {
                 AsyncImage(
                     modifier = Modifier.size(62.dp),
-                    model = item.userImg,
+                    model = item.profileImgUrl,
                     contentDescription = "유저 이미지"
                 )
                 Divider12()
@@ -244,7 +243,7 @@ class UserFollowedFragment :
                         style = DidaTypography.h4,
                         color = White,
                         fontSize = dpToSp(dp = 20.dp),
-                        text = item.userName,
+                        text = item.memberName,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -254,18 +253,12 @@ class UserFollowedFragment :
                         style = DidaTypography.body1,
                         color = TextGray,
                         fontSize = dpToSp(dp = 14.dp),
-                        text = item.userDetail,
+                        text = "",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                     Divider12()
-                    if (!item.isMine) {
-                        if (item.follow) {
-                            FollowButton(onFollowButtonClicked = onFollowButtonClicked)
-                        } else {
-                            CancelFollowButton(onFollowButtonClicked = onFollowButtonClicked)
-                        }
-                    }
+                    CancelFollowButton(onFollowButtonClicked = onFollowButtonClicked)
                 }
             }
         }

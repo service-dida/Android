@@ -7,4 +7,8 @@ data class HotMember(
     val nftCount: Int,
     val followed: Boolean,
     val me: Boolean
-)
+) {
+    fun memberNftCounts(): String {
+        return nftCount.toString() + "작품"
+    }
+}

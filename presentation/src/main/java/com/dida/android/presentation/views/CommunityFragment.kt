@@ -9,13 +9,15 @@ import com.dida.common.dialog.CompleteDialogFragment
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
-import com.dida.common.util.*
+import com.dida.common.util.DIDAINTENT
+import com.dida.common.util.repeatOnStarted
+import com.dida.common.util.successOrNull
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardsContainerAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
-import com.dida.domain.model.main.HotCards
+import com.dida.domain.main.model.HotPosts
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -78,7 +80,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             launch {
                 viewModel.hotCardState.collectLatest {
                     it.successOrNull()?.let { hotCards ->
-                        val item = if (hotCards.isNotEmpty()) listOf(HotCards.Contents(hotCards)) else emptyList()
+                        val item = if (hotCards.isNotEmpty()) listOf(HotPosts.Contents(hotCards)) else emptyList()
                         hotCardsContainerAdapter.submitList(item)
                     }
                 }

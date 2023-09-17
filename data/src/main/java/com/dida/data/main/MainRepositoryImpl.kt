@@ -183,8 +183,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.getMain().toDomain() }
     }
 
-    override suspend fun soldOut(range: Int): NetworkResult<SoldOut> {
-        return handleApi { didaApi.getSoldOut(range).toDomain() }
+    override suspend fun soldOut(range: Int): NetworkResult<List<SoldOut>> {
+        return handleApi { didaApi.getSoldOut(range).soldOuts }
     }
 
     override suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>> {
@@ -321,9 +321,9 @@ class MainRepositoryImpl @Inject constructor(
         title: String,
         description: String,
         image: String
-    ): NetworkResult<Unit> {
+    ): NetworkResult<Long> {
         val body = PostNftRequest(payPwd, title, description, image)
-        return handleApi { didaApi.postNft(body) }
+        return handleApi { didaApi.postNft(body).nftId }
     }
 
     override suspend fun swapToDida(payPwd: String, coin: Int): NetworkResult<Unit> {
@@ -336,7 +336,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.postSwapToKlay(body) }
     }
 
-    override suspend fun sellNft(payPwd: String, nftId: Long, price: Float): NetworkResult<Unit> {
+    override suspend fun sellNft(payPwd: String, nftId: Long, price: Double): NetworkResult<Unit> {
         val body = PostSellNftRequest(payPwd, nftId, price)
         return handleApi { didaApi.postSellNft(body) }
     }

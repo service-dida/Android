@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
 import com.dida.create_community.CreateCommunityViewModel
 import com.dida.create_community.adapter.CreateCommunityNftAdapter
@@ -37,9 +38,9 @@ class CreateCommunityNftFragment(
             launch {
                 viewModel.cardPostLikeState.collectLatest {
                     if (createNftState == 0) {
-                        binding.likeEmptyView.isVisible = it.isEmpty()
-                        binding.recyclerNft.isVisible = it.isNotEmpty()
-                        cardsAdapter.submitList(it)
+                        binding.likeEmptyView.isVisible = it.content.isEmpty()
+                        binding.recyclerNft.isVisible = it.content.isNotEmpty()
+                        cardsAdapter.submitList(it.content)
                     }
                 }
             }
@@ -47,19 +48,22 @@ class CreateCommunityNftFragment(
             launch {
                 viewModel.cardPostMyState.collectLatest {
                     if (createNftState == 1) {
-                        binding.createEmptyView.isVisible = it.isEmpty()
-                        binding.recyclerNft.isVisible = it.isNotEmpty()
-                        cardsAdapter.submitList(it)
+                        binding.createEmptyView.isVisible = it.content.isEmpty()
+                        binding.recyclerNft.isVisible = it.content.isNotEmpty()
+                        cardsAdapter.submitList(it.content)
                     }
                 }
             }
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
     private fun initAdapter() {
         binding.recyclerNft.adapter = cardsAdapter
+        binding.recyclerNft.addOnPagingListener(
+            arrivedTop = { viewModel.nextPage(createNftState) },
+            arrivedBottom = { viewModel.beforePage(createNftState) }
+        )
     }
 }

@@ -10,11 +10,11 @@ import com.dida.common.util.context
 import com.dida.community.HotCardActionHandler
 import com.dida.community.R
 import com.dida.community.databinding.HolderHotCardBinding
-import com.dida.domain.model.main.HotCard
+import com.dida.domain.main.model.HotPost
 
 class HotCardAdapter(
     private val eventListener: HotCardActionHandler
-) : ListAdapter<HotCard, HotCardAdapter.ViewHolder>(HotCardDiffCallback) {
+) : ListAdapter<HotPost, HotCardAdapter.ViewHolder>(HotCardDiffCallback) {
 
     init { setHasStableIds(true) }
 
@@ -33,25 +33,25 @@ class HotCardAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).cardId * -1
+    override fun getItemId(position: Int): Long = getItem(position).nftId * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_hot_card
 
     class ViewHolder(private val binding: HolderHotCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HotCard) {
+        fun bind(item: HotPost) {
             binding.holderModel = item
             binding.nftImageView.setColorFilter(context.getColor(com.dida.common.R.color.dim_black_50))
             binding.executePendingBindings()
         }
     }
 
-    internal object HotCardDiffCallback : DiffUtil.ItemCallback<HotCard>() {
-        override fun areItemsTheSame(oldItem: HotCard, newItem: HotCard) =
-            oldItem.cardId == newItem.cardId
+    internal object HotCardDiffCallback : DiffUtil.ItemCallback<HotPost>() {
+        override fun areItemsTheSame(oldItem: HotPost, newItem: HotPost) =
+            oldItem.nftId == newItem.nftId
 
-        override fun areContentsTheSame(oldItem: HotCard, newItem: HotCard) =
+        override fun areContentsTheSame(oldItem: HotPost, newItem: HotPost) =
             oldItem == newItem
     }
 }

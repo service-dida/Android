@@ -11,13 +11,12 @@ import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.community.adapter.createPostsPager
 import com.dida.data.DataApplication
-import com.dida.data.model.NeedLogin
-import com.dida.domain.model.main.HotCard
-import com.dida.domain.model.main.Posts
+import com.dida.domain.main.model.HotPost
+import com.dida.domain.main.model.Post
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.HotCardAPI
-import com.dida.domain.usecase.main.PostsAPI
+import com.dida.domain.usecase.HotPostsUseCase
+import com.dida.domain.usecase.PostsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -28,13 +27,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    postsAPI: PostsAPI,
-    private val hotCardAPI: HotCardAPI,
+    private val postsUseCase: PostsUseCase,
+    private val hotPostsUseCase: HotPostsUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -47,18 +45,18 @@ class CommunityViewModel @Inject constructor(
     private val _blockEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val blockEvent: SharedFlow<Unit> = _blockEvent.asSharedFlow()
 
-    val postsState: Flow<PagingData<Posts>> = createPostsPager(postsAPI = postsAPI)
+    val postsState: Flow<PagingData<Post>> = createPostsPager(postsUseCase = postsUseCase)
         .flow.cachedIn(baseViewModelScope)
 
-    private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
-    val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
+    private val _hotCardState: MutableStateFlow<UiState<List<HotPost>>> = MutableStateFlow<UiState<List<HotPost>>>(UiState.Loading)
+    val hotCardState: StateFlow<UiState<List<HotPost>>> = _hotCardState.asStateFlow()
 
 
     init {
         baseViewModelScope.launch {
-            hotCardAPI().onSuccess {
+            hotPostsUseCase(0, 10).onSuccess {
                 delay(SHIMMER_TIME)
-                _hotCardState.value = UiState.Success(it)
+                _hotCardState.value = UiState.Success(it.content)
             }.onError { e -> catchError(e) }
         }
     }
@@ -66,9 +64,9 @@ class CommunityViewModel @Inject constructor(
     fun getHotCards() {
         baseViewModelScope.launch {
             _hotCardState.value = UiState.Loading
-            hotCardAPI().onSuccess {
+            hotPostsUseCase(0, 10).onSuccess {
                 delay(SHIMMER_TIME)
-                _hotCardState.value = UiState.Success(it)
+                _hotCardState.value = UiState.Success(it.content)
             }.onError { e -> catchError(e) }
         }
     }
@@ -79,10 +77,11 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    // TODO : 로그인 필요할 경우 Exception 처리 필요
     override fun onCommunityWriteClicked() {
         baseViewModelScope.launch {
             if (DataApplication.dataStorePreferences.getAccessToken() == null) {
-                catchError(NeedLogin(e = IOException(), code = 127))
+//                catchError(NeedLogin(e = IOException(), code = 127))
             } else {
                 _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
             }

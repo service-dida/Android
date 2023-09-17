@@ -84,7 +84,7 @@ interface MainRepository {
 
     suspend fun main(): NetworkResult<Main>
 
-    suspend fun soldOut(range: Int): NetworkResult<SoldOut>
+    suspend fun soldOut(range: Int): NetworkResult<List<SoldOut>>
 
     suspend fun soldOutPage(range: Int, page: Int, size: Int): NetworkResult<Contents<SoldOut>>
 
@@ -142,13 +142,13 @@ interface MainRepository {
 
     suspend fun patchPassword(nowPwd: String, changePwd: String): NetworkResult<Unit>
 
-    suspend fun createNft(payPwd: String, title: String, description: String, image: String): NetworkResult<Unit>
+    suspend fun createNft(payPwd: String, title: String, description: String, image: String): NetworkResult<Long>
 
     suspend fun swapToDida(payPwd: String, coin: Int): NetworkResult<Unit>
 
     suspend fun swapToKlay(payPwd: String, coin: Int): NetworkResult<Unit>
 
-    suspend fun sellNft(payPwd: String, nftId: Long, price: Float): NetworkResult<Unit>
+    suspend fun sellNft(payPwd: String, nftId: Long, price: Double): NetworkResult<Unit>
 
     suspend fun cancelSellNft(pawPwd: String, marketId: Long): NetworkResult<Unit>
 

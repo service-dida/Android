@@ -7,7 +7,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.Wallet" />
+            type="com.dida.domain.main.model.Wallet" />
 
         <variable
             name="eventListener"

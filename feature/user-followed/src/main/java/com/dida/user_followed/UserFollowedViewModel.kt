@@ -1,11 +1,11 @@
 package com.dida.user_followed
 
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.main.Collection
-import com.dida.domain.model.main.Follow
+import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.PostUserFollowAPI
+import com.dida.domain.usecase.CommonFollowUseCase
+import com.dida.domain.usecase.MemberFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,16 +18,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserFollowedViewModel @Inject constructor(
-    private val postUserFollowAPI: PostUserFollowAPI
+    private val memberFollowUseCase: MemberFollowUseCase,
+    private val commonFollowUseCase: CommonFollowUseCase
 ) : BaseViewModel() {
 
     private val TAG = "UserFollowedViewModel"
 
-    private val _followingListState: MutableStateFlow<List<Collection>> = MutableStateFlow(emptyList())
-    val followingListState: StateFlow<List<Collection>> = _followingListState.asStateFlow()
+    private val _followingListState: MutableStateFlow<List<CommonFollow>> = MutableStateFlow(emptyList())
+    val followingListState: StateFlow<List<CommonFollow>> = _followingListState.asStateFlow()
 
-    private val _followerListState: MutableStateFlow<List<Collection>> = MutableStateFlow(emptyList())
-    val followerListState: StateFlow<List<Collection>> = _followerListState.asStateFlow()
+    private val _followerListState: MutableStateFlow<List<CommonFollow>> = MutableStateFlow(emptyList())
+    val followerListState: StateFlow<List<CommonFollow>> = _followerListState.asStateFlow()
 
     private val _messageEvent: MutableSharedFlow<UserFollowedMessageAction> = MutableSharedFlow<UserFollowedMessageAction>()
     val messageEvent: SharedFlow<UserFollowedMessageAction> = _messageEvent.asSharedFlow()
@@ -35,15 +36,18 @@ class UserFollowedViewModel @Inject constructor(
     /**
      * TODO : 팔로우 유저 목록 API 연동
      **/
-    fun onGetUserFollowed(type: Follow) {
+    fun onGetUserFollowed() {
 
     }
 
-    fun onFollowButtonClicked(user: Collection) = baseViewModelScope.launch {
-        postUserFollowAPI(user.userId)
+    fun onFollowButtonClicked(user: CommonFollow) = baseViewModelScope.launch {
+        memberFollowUseCase(user.memberId)
             .onSuccess {
-                if (user.follow) _messageEvent.emit(UserFollowedMessageAction.UserUnFollowMessage)
-                else _messageEvent.emit(UserFollowedMessageAction.UserFollowMessage(user.userName))
+                _messageEvent.emit(UserFollowedMessageAction.UserUnFollowMessage)
             }.onError { e -> catchError(e) }
     }
+}
+
+enum class Follow(val str: String) {
+    FOLLOWER("팔로워"), FOLLOWING("팔로잉")
 }

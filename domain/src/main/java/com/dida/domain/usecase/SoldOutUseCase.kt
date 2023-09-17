@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SoldOutUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(range: Int) : NetworkResult<SoldOut> {
+    suspend operator fun invoke(range: Int) : NetworkResult<List<SoldOut>> {
         return repository.soldOut(range)
     }
 }

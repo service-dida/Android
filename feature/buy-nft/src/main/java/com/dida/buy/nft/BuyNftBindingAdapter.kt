@@ -2,8 +2,7 @@ package com.dida.buy.nft
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.dida.domain.model.main.DetailNft
-import kotlinx.coroutines.flow.StateFlow
+import com.dida.domain.ui.model.DetailNft
 
 
 @BindingAdapter("sellerText")

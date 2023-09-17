@@ -7,3 +7,9 @@ data class HotPost(
     val nftId: Long,
     val nftImgUrl: String
 )
+
+sealed class HotPosts {
+    data class Contents(
+        val contents: List<HotPost>
+    ) : HotPosts()
+}

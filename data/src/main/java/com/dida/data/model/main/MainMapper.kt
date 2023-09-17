@@ -19,10 +19,6 @@ fun GetMainResponse.toDomain(): Main {
     return Main(getHotItems, getHotSellers, getRecentNfts, getHotMembers)
 }
 
-fun GetSoldOutResponse.toDomain(): SoldOut {
-    return SoldOut(nftInfo, memberInfo)
-}
-
 fun GetSoldOutPageResponse.toDomain(): Contents<SoldOut> {
     return Contents(
         page = page,
