@@ -4,11 +4,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.dida.android.R
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
 import com.dida.recent_nft.RecentNftNavigationAction
 import com.dida.recent_nft.RecentNftViewModel
-import com.dida.recent_nft.adapter.CardPagingAdapter
+import com.dida.recent_nft.adapter.RecentNftAdapter
 import com.dida.recent_nft.databinding.FragmentRecentNftBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -24,7 +24,7 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
 
     override val viewModel : RecentNftViewModel by viewModels()
     private val navController by lazy { findNavController() }
-    private val cardPagingAdapter by lazy { CardPagingAdapter(viewModel) }
+    private val cardPagingAdapter by lazy { RecentNftAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -41,21 +41,21 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
             viewModel.navigationEvent.collectLatest {
                 when(it) {
                     is RecentNftNavigationAction.NavigateToRecentNftItem -> navigate(RecentNftFragmentDirections.actionRecentNftFragmentToDetailNftFragment(cardId = it.nftId.toLong()))
-                    is RecentNftNavigationAction.NavigateToCardRefresh -> cardPagingAdapter.refresh()
+//                    is RecentNftNavigationAction.NavigateToCardRefresh -> cardPagingAdapter.refresh()
+                    else -> {}
                 }
             }
         }
 
         viewLifecycleOwner.repeatOnStarted {
             viewModel.cardsState.collectLatest {
-                cardPagingAdapter.submitData(it)
+                cardPagingAdapter.submitList(it.content)
             }
         }
     }
 
     override fun initAfterBinding() {
         parentFragmentManager.addOnBackStackChangedListener {
-            cardPagingAdapter.refresh()
         }
     }
 
@@ -70,5 +70,9 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         binding.recentNftRecycler.layoutManager = gridLayoutManager
         binding.recentNftRecycler.adapter = cardPagingAdapter
+        binding.recentNftRecycler.addOnPagingListener(
+            arrivedTop = { viewModel.nextPage() },
+            arrivedBottom = { viewModel.beforePage() }
+        )
     }
 }

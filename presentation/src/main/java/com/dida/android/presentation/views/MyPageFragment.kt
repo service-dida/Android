@@ -1,13 +1,9 @@
 package com.dida.android.presentation.views
 
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.UserCardAdapter
-import com.dida.common.util.repeatOnResumed
-import com.dida.domain.model.main.Follow
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
@@ -48,16 +44,16 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
                     is MypageNavigationAction.NavigateToCreate -> navigate(MyPageFragmentDirections.actionMyPageFragmentToAddFragment())
-                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.refresh()
-                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId,Follow.FOLLOWER))
-                    is MypageNavigationAction.NavigateToUserFollowingClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId,Follow.FOLLOWING))
+                    else -> {}
+//                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId, Follow.FOLLOWER))
+//                    is MypageNavigationAction.NavigateToUserFollowingClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId, Follow.FOLLOWING))
                 }
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userCardState.collectLatest {
-                userCardAdapter.submitData(it)
+                userCardAdapter.submitList(it.content)
             }
         }
     }
@@ -67,7 +63,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     override fun onResume() {
         super.onResume()
-        userCardAdapter.retry()
         viewModel.getUserInfo()
         getLastScrollY()
     }
@@ -85,7 +80,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserInfo()
-            userCardAdapter.refresh()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -94,16 +88,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         binding.rvUserNft.apply {
             adapter = userCardAdapter
             layoutManager = GridLayoutManager(context, 2)
-        }
-
-        userCardAdapter.addLoadStateListener {
-            when(it.append) {
-                is LoadState.NotLoading -> {
-                    binding.emptyView.isVisible = userCardAdapter.snapshot().items.isEmpty()
-                    binding.rvUserNft.isVisible = userCardAdapter.snapshot().items.isNotEmpty()
-                }
-                else -> {}
-            }
         }
     }
 

@@ -6,4 +6,8 @@ data class Swap(
     val type: String,
     val coin: Float,
     val time: String,
-)
+) {
+    fun getAmountUnit(): String {
+        return if(type == "K") coin.toString()+"klay" else coin.toString()+"dida"
+    }
+}

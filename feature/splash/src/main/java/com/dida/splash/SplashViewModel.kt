@@ -5,10 +5,9 @@ import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CheckVersionAPI
-import com.dida.domain.usecase.main.DeviceTokenAPI
-import com.dida.domain.usecase.main.RefreshTokenAPI
-import com.dida.domain.usecase.main.UserProfileAPI
+import com.dida.domain.usecase.CommonProfileUseCase
+import com.dida.domain.usecase.PatchDeviceTokenUseCase
+import com.dida.domain.usecase.RefreshTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,10 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val versionAPI: CheckVersionAPI,
-    private val deviceTokenAPI: DeviceTokenAPI,
-    private val userProfileAPI: UserProfileAPI,
-    private val refreshTokenAPI: RefreshTokenAPI,
+    private val patchDeviceTokenUseCase: PatchDeviceTokenUseCase,
+    private val commonProfileUseCase: CommonProfileUseCase,
+    private val refreshTokenUseCase: RefreshTokenUseCase
 ) : BaseViewModel() {
 
     private val TAG = "SplashViewModel"
@@ -33,27 +31,26 @@ class SplashViewModel @Inject constructor(
     private val _navigateToHome: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val navigateToHome: SharedFlow<Boolean> = _navigateToHome.asSharedFlow()
 
+    // TODO : 버전 체크 API 추가 필요
     fun onVersionCheck() {
         baseViewModelScope.launch {
-            versionAPI()
-                .onSuccess { _appVersion.emit(it.version) }
-                .onError { e -> catchError(e) }
+            _appVersion.emit(0)
         }
     }
 
     fun onAppSetUp(deviceToken: String) {
         baseViewModelScope.launch {
             dataStorePreferences.getRefreshToken()?.let { token ->
-                refreshTokenAPI.invoke(request = token)
+                refreshTokenUseCase(refreshToken = token)
                     .onSuccess { response ->
                         dataStorePreferences.setAccessToken(
                             accessToken = response.accessToken ?: "",
                             refreshToken = response.refreshToken ?: ""
                         )
-                    }.flatMap { deviceTokenAPI(deviceToken = deviceToken) }
-                    .flatMap { userProfileAPI() }
-                    .onSuccess { userProfile ->
-                        dataStorePreferences.setUserId(userProfile.userId)
+                    }.flatMap { patchDeviceTokenUseCase(deviceToken = deviceToken) }
+                    .flatMap { commonProfileUseCase() }
+                    .onSuccess {
+                        dataStorePreferences.setUserId(it.memberInfo.memberId)
                         _navigateToHome.emit(true)
                         _splashScreenGone.emit(true)
                     }.onError { e -> catchError(e) }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.hot_user.R
 import com.dida.hot_user.databinding.HolderCardBinding
 
-class UserCardAdapter() : ListAdapter<String, UserCardAdapter.ViewHolder>(CardDiffCallback) {
+class UserCardAdapter : ListAdapter<String, UserCardAdapter.ViewHolder>(CardDiffCallback) {
 
     init { setHasStableIds(true) }
 

@@ -1,11 +1,10 @@
 package com.dida.swap
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.model.NeedToWalletException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.WalletAmountAPI
-import com.dida.domain.usecase.main.WalletExistedAPI
+import com.dida.domain.usecase.CheckWalletUseCase
+import com.dida.domain.usecase.MemberWalletUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SwapViewModel @Inject constructor(
-    private val walletAmountAPI: WalletAmountAPI,
-    private val walletExistedAPI: WalletExistedAPI
+    private val memberWalletUseCase: MemberWalletUseCase,
+    private val checkWalletUseCase: CheckWalletUseCase
 ) : BaseViewModel(), SwapActionHandler {
 
     private val TAG = "SwapViewModel"
@@ -41,7 +40,7 @@ class SwapViewModel @Inject constructor(
 
     fun initWalletAmount() {
         baseViewModelScope.launch {
-            walletAmountAPI()
+            memberWalletUseCase()
                 .onSuccess {
                     klayAmount = it.klay.toString()
                     didaAmount = it.dida.toString()
@@ -58,15 +57,17 @@ class SwapViewModel @Inject constructor(
         }
     }
 
+    // TODO : 지갑 없을 경우 로직 수정
     fun getWalletExists() {
         baseViewModelScope.launch {
             showLoading()
-            walletExistedAPI()
-                .onSuccess {
-                    _walletExistsState.emit(it)
-                }.onError { e ->
-                    if (e is NeedToWalletException) _walletExistsState.emit(false)
-                    else catchError(e) }
+            checkWalletUseCase()
+                .onSuccess { _walletExistsState.emit(it) }
+                .onError { e ->
+//                    if (e is NeedToWalletException) _walletExistsState.emit(false)
+//                    else catchError(e)
+                    catchError(e)
+                }
             dismissLoading()
         }
     }

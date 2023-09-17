@@ -20,3 +20,5 @@ fun RecyclerView.addOnPagingListener(
 }
 
 const val PAGING_SIZE = 20
+const val UPDATED_DESC = "updated_desc"
+const val UPDATED_ASC = "updated_asc"

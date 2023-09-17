@@ -6,14 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.main.SwapHistory
+import com.dida.domain.main.model.Swap
 import com.dida.swap.history.R
 import com.dida.swap.history.SwapHistoryActionHandler
 import com.dida.swap.history.databinding.HolderSwapHistoryBinding
 
 class SwapHistoryAdapter(
     private val eventListener : SwapHistoryActionHandler
-): ListAdapter<SwapHistory, SwapHistoryAdapter.ViewHolder>(SwapHistoryDiffCallback) {
+): ListAdapter<Swap, SwapHistoryAdapter.ViewHolder>(SwapHistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderSwapHistoryBinding = DataBindingUtil.inflate(
@@ -34,17 +34,17 @@ class SwapHistoryAdapter(
 
     class ViewHolder(private val binding: HolderSwapHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SwapHistory) {
+        fun bind(item: Swap) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object SwapHistoryDiffCallback : DiffUtil.ItemCallback<SwapHistory>() {
-        override fun areItemsTheSame(oldItem: SwapHistory, newItem: SwapHistory) =
+    internal object SwapHistoryDiffCallback : DiffUtil.ItemCallback<Swap>() {
+        override fun areItemsTheSame(oldItem: Swap, newItem: Swap) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: SwapHistory, newItem: SwapHistory) =
+        override fun areContentsTheSame(oldItem: Swap, newItem: Swap) =
             oldItem == newItem
     }
 }

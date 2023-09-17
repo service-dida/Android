@@ -3,18 +3,18 @@ package com.dida.hot_user.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.main.HotUser
+import com.dida.domain.main.model.HotSellerPage
 import com.dida.hot_user.HotUserActionHandler
 import com.dida.hot_user.R
 import com.dida.hot_user.databinding.HolderHotUserBinding
 
-class HotUserPagingAdapter(
+class HotUserAdapter(
     private val eventListener: HotUserActionHandler
-): PagingDataAdapter<HotUser, HotUserPagingAdapter.ViewHolder>(HotUserItemDiffCallback) {
+): ListAdapter<HotSellerPage, HotUserAdapter.ViewHolder>(HotUserItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderHotUserBinding = DataBindingUtil.inflate(
@@ -35,22 +35,22 @@ class HotUserPagingAdapter(
 
     class ViewHolder(private val binding: HolderHotUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: HotUser) {
+        fun bind(item: HotSellerPage) {
             binding.holderModel = item
 
             binding.userCardRecyclerview.apply {
-                adapter = UserCardAdapter().apply { submitList(item.cardUrls) }
+                adapter = UserCardAdapter().apply { submitList(item.nftImgUrl) }
                 layoutManager = GridLayoutManager(context, 5)
             }
             binding.executePendingBindings()
         }
     }
 
-    internal object HotUserItemDiffCallback : DiffUtil.ItemCallback<HotUser>() {
-        override fun areItemsTheSame(oldItem: HotUser, newItem: HotUser) =
-            oldItem.userId == newItem.userId && oldItem.followed == oldItem.followed
+    internal object HotUserItemDiffCallback : DiffUtil.ItemCallback<HotSellerPage>() {
+        override fun areItemsTheSame(oldItem: HotSellerPage, newItem: HotSellerPage) =
+            oldItem.memberInfo.memberId == newItem.memberInfo.memberId && oldItem.memberInfo.followed == oldItem.memberInfo.followed
 
-        override fun areContentsTheSame(oldItem: HotUser, newItem: HotUser) =
+        override fun areContentsTheSame(oldItem: HotSellerPage, newItem: HotSellerPage) =
             oldItem == newItem
     }
 }

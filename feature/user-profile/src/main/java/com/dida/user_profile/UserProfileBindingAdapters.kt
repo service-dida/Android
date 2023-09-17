@@ -10,14 +10,14 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.domain.model.main.OtherUserProfie
+import com.dida.domain.main.model.MemberProfile
 
 @BindingAdapter("otherUserProfile")
-fun ImageView.bindOtherUserProfile(uiState: UiState<OtherUserProfie>) {
+fun ImageView.bindOtherUserProfile(uiState: UiState<MemberProfile>) {
     uiState.successOrNull()?.let {
-        if (it.profileUrl.isEmpty().not()) {
+        if (it.memberDetailInfo.memberInfo.profileImgUrl?.isEmpty()?.not() == true) {
             Glide.with(context)
-                .load(it.profileUrl)
+                .load(it.memberDetailInfo.memberInfo.profileImgUrl)
                 .placeholder(com.dida.common.R.mipmap.img_dida_logo_foreground)
                 .error(com.dida.common.R.mipmap.img_dida_logo_foreground)
                 .transform(CenterCrop(), RoundedCorners(1000))
@@ -32,33 +32,33 @@ fun ImageView.bindOtherUserProfile(uiState: UiState<OtherUserProfie>) {
 }
 
 @BindingAdapter("otherUserNickname")
-fun TextView.bindOtherUserNickname(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.nickname
+fun TextView.bindOtherUserNickname(uiState: UiState<MemberProfile>) {
+    this.text = uiState.successOrNull()?.memberDetailInfo?.memberInfo?.memberName
 }
 
 @BindingAdapter("otherUserDescription")
-fun TextView.bindOtherUserDescription(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.description
+fun TextView.bindOtherUserDescription(uiState: UiState<MemberProfile>) {
+    this.text = uiState.successOrNull()?.memberDetailInfo?.description
 }
 
 @BindingAdapter("otherUserNftCount")
-fun TextView.bindOtherUserNftCount(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.cardCnt.toString()
+fun TextView.bindOtherUserNftCount(uiState: UiState<MemberProfile>) {
+    this.text = uiState.successOrNull()?.memberDetailInfo?.nftCnt.toString()
 }
 
 @BindingAdapter("otherUserFollwingCount")
-fun TextView.bindOtherUserFollwingCount(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.followingCnt.toString()
+fun TextView.bindOtherUserFollwingCount(uiState: UiState<MemberProfile>) {
+    this.text = uiState.successOrNull()?.memberDetailInfo?.followingCnt.toString()
 }
 
 @BindingAdapter("otherUserFollwerCount")
-fun TextView.bindOtherUserFollwerCount(uiState: UiState<OtherUserProfie>) {
-    this.text = uiState.successOrNull()?.followerCnt.toString()
+fun TextView.bindOtherUserFollwerCount(uiState: UiState<MemberProfile>) {
+    this.text = uiState.successOrNull()?.memberDetailInfo?.followerCnt.toString()
 }
 
 @RequiresApi(Build.VERSION_CODES.M)
 @BindingAdapter("otherUserFollowBtn")
-fun TextView.bindOtherUserFollowBtn(uiState: UiState<OtherUserProfie>) {
+fun TextView.bindOtherUserFollowBtn(uiState: UiState<MemberProfile>) {
     val view = this
     var isFollow = false
     uiState.successOrNull()?.let {
