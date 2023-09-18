@@ -32,7 +32,7 @@ class BearerInterceptor : Interceptor {
             in 400 .. 500 -> {
                 val requestUrl = request.url.toString()
                 val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
-                val errorException = createErrorException(requestUrl, response.code, errorResponse)
+                val errorException = createErrorException(requestUrl, errorResponse)
 
                 when (errorResponse?.code) {
                     "AUTH_003" -> {
