@@ -24,7 +24,6 @@ class BearerInterceptor : Interceptor {
     //todo 조건 분기로 인터셉터 구조 변경
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
 
@@ -34,6 +33,7 @@ class BearerInterceptor : Interceptor {
                 val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
                 val errorException = createErrorException(requestUrl, errorResponse)
 
+                val newRequestBuilder = chain.request().newBuilder()
                 when (errorResponse?.code) {
                     "AUTH_003" -> {
                         runBlocking {
@@ -48,13 +48,12 @@ class BearerInterceptor : Interceptor {
                                 }
                             }?.onSuccess {
                                 DataApplication.dataStorePreferences.setAccessToken(it.accessToken ?: "", it.refreshToken ?: "")
-                                accessToken = it.accessToken ?: ""
+                                newRequestBuilder.addHeader("Authorization", it.accessToken ?: "")
                             }?.onError {
                                 DataApplication.dataStorePreferences.removeAccountToken()
-                                accessToken = ""
                             }
                         }
-                        return chain.proceed(chain.request().newBuilder().addHeader("Authorization", accessToken).build())
+                        return chain.proceed(newRequestBuilder.build())
                     }
                     else -> errorException.let { throw it }
                 }
