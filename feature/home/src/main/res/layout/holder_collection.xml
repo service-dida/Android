@@ -38,8 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:adjustViewBounds="true"
-                app:image_from_url_circle="@{holderModel.profileUrl}">
-            </ImageView>
+                app:image_from_url_circle="@{holderModel.profileUrl}" />
 
             <TextView
                 android:id="@+id/user_name"
@@ -51,8 +50,7 @@
                 android:layout_marginStart="16dp"
                 android:textSize="18dp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/pretendard_bold">
-            </TextView>
+                android:fontFamily="@font/pretendard_bold"/>
 
             <TextView
                 android:id="@+id/user_detail"
@@ -64,8 +62,7 @@
                 android:text="@{holderModel.memberNftCounts()}"
                 android:textSize="14dp"
                 android:textColor="@color/hots_coin_txt"
-                android:fontFamily="@font/pretendard_regular">
-            </TextView>
+                android:fontFamily="@font/pretendard_regular"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

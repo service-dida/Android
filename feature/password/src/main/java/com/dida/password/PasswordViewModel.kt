@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import java.util.Stack
 import javax.inject.Inject
 
-// TODO : 비밀번호 확인
+// TODO : 비밀번호 확인 API 추가하기
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
 //    private val passwordAPI: CheckPasswordAPI
@@ -72,7 +72,7 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
-    private suspend fun checkPassword(password : String){
+    private suspend fun checkPassword(password : String) {
 //        passwordAPI(password)
 //            .onSuccess {
 //                if (it.flag) {
@@ -95,8 +95,9 @@ class PasswordViewModel @Inject constructor(
 //                }
 //            }
     }
-        fun initPwdInfo(stackSize: Int,settingYn : Boolean) {
-            this.stackSize = stackSize
-            this.settingYn = settingYn
-        }
+
+    fun initPwdInfo(stackSize: Int, settingYn: Boolean) {
+        this.stackSize = stackSize
+        this.settingYn = settingYn
     }
+}
