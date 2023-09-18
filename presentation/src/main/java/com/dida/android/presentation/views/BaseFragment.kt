@@ -140,7 +140,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             launch {
                 exception?.collectLatest { exception ->
                     dismissLoadingDialog()
-                    when(exception) {
+                    when (exception) {
                         is ErrorWithRetry -> onErrorRetry(exception, exception.retry, exception.retryScope)
                         else -> onError(exception)
                     }
@@ -284,24 +284,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     private fun onError(exception: Throwable) {
         sendException(exception)
         when (exception) {
-            is ConnectException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
-            is ServerNotFoundException -> {
-                sendException(exception)
-                showServiceErrorDialog(exception)
-            }
-            is InternalServerErrorException -> {
-                sendException(exception)
-                showServiceErrorFragment(exception)
-            }
-            is UnknownException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
-            else -> showErrorToastMessage(exception)
+            is ServerNotFoundException -> showServiceErrorDialog(exception)
+            is InternalServerErrorException -> showServiceErrorFragment(exception)
+            else -> showNetworkErrorDialog()
         }
+        sendException(exception)
     }
 
     private fun onErrorRetry(exception: Throwable, retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
