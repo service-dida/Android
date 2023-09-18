@@ -3,7 +3,9 @@ package com.dida.common.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dida.data.DataApplication
-import com.dida.data.model.InvalidTokenException
+import com.dida.data.model.Auth001Exception
+import com.dida.data.model.Auth002Exception
+import com.dida.data.model.Auth004Exception
 import com.dida.domain.NetworkResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -32,17 +34,16 @@ abstract class BaseViewModel : ViewModel() {
     private val _baseNavigationEvent: MutableSharedFlow<BaseNavigationAction> = MutableSharedFlow<BaseNavigationAction>()
     val baseNavigationEvent: SharedFlow<BaseNavigationAction> = _baseNavigationEvent
 
-    // TODO : API 에러 관련 로직 재 수정 필요
     protected suspend fun catchError(exception: Throwable) {
         when(exception) {
-//            is HaveNotJwtTokenException, is InvalidKakaoAccessTokenException, is NeedLogin -> {
-//                DataApplication.dataStorePreferences.removeAccountToken()
-//                _baseNavigationEvent.emit(BaseNavigationAction.NavigateToLogin)
-//            }
-//            is InvalidTokenException -> {
-//                DataApplication.dataStorePreferences.removeAccountToken()
-//                _baseNavigationEvent.emit(BaseNavigationAction.NavigateToDuplicateLogin)
-//            }
+            is Auth001Exception, is Auth004Exception -> {
+                DataApplication.dataStorePreferences.removeAccountToken()
+                _baseNavigationEvent.emit(BaseNavigationAction.NavigateToLogin)
+            }
+            is Auth002Exception -> {
+                DataApplication.dataStorePreferences.removeAccountToken()
+                _baseNavigationEvent.emit(BaseNavigationAction.NavigateToDuplicateLogin)
+            }
             else -> _errorEvent.emit(exception)
         }
     }
