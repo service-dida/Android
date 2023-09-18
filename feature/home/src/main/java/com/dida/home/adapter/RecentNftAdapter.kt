@@ -20,7 +20,7 @@ class RecentNftAdapter(
         val viewDataBinding: HolderRecentNftBinding =
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.holder_mypage_user_cards,
+                com.dida.home.R.layout.holder_recent_nft,
                 parent,
                 false
             )
