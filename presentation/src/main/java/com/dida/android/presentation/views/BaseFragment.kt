@@ -293,22 +293,10 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     private fun onErrorRetry(exception: Throwable, retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
         sendException(exception)
         when (exception) {
-            is ConnectException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
-            is ServerNotFoundException -> {
-                sendException(exception)
-                showServiceErrorDialog(exception)
-            }
-            is InternalServerErrorException -> {
-                sendException(exception)
-                showServiceErrorFragment(exception)
-            }
-            is UnknownException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
+            is ConnectException -> showNetworkErrorDialog()
+            is ServerNotFoundException -> showServiceErrorDialog(exception)
+            is InternalServerErrorException -> showServiceErrorFragment(exception)
+            is UnknownException -> showNetworkErrorDialog()
             else -> showServiceErrorDialog(retry, retryScope)
         }
     }
