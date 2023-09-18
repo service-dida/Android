@@ -282,7 +282,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * */
     // Error 관련
     private fun onError(exception: Throwable) {
-        sendException(exception)
         when (exception) {
             is ServerNotFoundException -> showServiceErrorDialog(exception)
             is InternalServerErrorException -> showServiceErrorFragment(exception)
