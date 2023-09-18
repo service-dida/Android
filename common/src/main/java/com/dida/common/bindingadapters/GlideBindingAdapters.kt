@@ -90,8 +90,13 @@ object GlideBindingAdapters {
     @JvmStatic
     @BindingAdapter("image_from_url_circle")
     fun bindImageFromURLCircle(imageView: ImageView, imageURL: String?) {
-        imageURL?.let {
-            if (it.isNotBlank()) {
+        if (imageURL == null) {
+            Glide.with(imageView.context)
+                .load(R.mipmap.img_dida_logo_foreground)
+                .transform(CenterCrop(), RoundedCorners(200))
+                .into(imageView)
+        } else {
+            if (imageURL.isNotBlank()) {
                 Glide.with(imageView.context)
                     .load(imageURL)
                     .placeholder(R.mipmap.img_dida_logo_foreground)
