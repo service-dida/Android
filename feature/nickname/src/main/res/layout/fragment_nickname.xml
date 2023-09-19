@@ -35,8 +35,7 @@
             android:text="@string/nickname_main_yourname"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="@color/white"
-            android:textSize="28dp">
-        </TextView>
+            android:textSize="28dp" />
 
         <TextView
             android:id="@+id/nickname_main_txt2"
@@ -50,8 +49,7 @@
             android:text="@string/nickname_main_text"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="@color/white"
-            android:textSize="14dp">
-        </TextView>
+            android:textSize="14dp" />
 
         <EditText
             android:id="@+id/nick_name_edit"
@@ -73,8 +71,7 @@
             android:layout_marginTop="10dp"
             android:maxLines="1"
             android:maxLength="8"
-            app:layout_constraintTop_toBottomOf="@id/nickname_main_txt2">
-        </EditText>
+            app:layout_constraintTop_toBottomOf="@id/nickname_main_txt2" />
 
         <TextView
             android:id="@+id/nickname_check_txt"
@@ -87,8 +84,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:textColor="@{vm.nickNameCheckState ? @color/notice_red : @color/notice_green}"
             android:text="@{vm.nickNameCheckTextState}"
-            android:textSize="14dp">
-        </TextView>
+            android:textSize="14dp" />
 
         <ImageView
             android:id="@+id/nickname_check"
@@ -98,8 +94,7 @@
             android:src="@{vm.nickNameCheckState ? @drawable/ic_nickname_fail : @drawable/ic_nickname_success}"
             app:layout_constraintTop_toTopOf="@id/nick_name_edit"
             app:layout_constraintBottom_toBottomOf="@id/nick_name_edit"
-            app:layout_constraintEnd_toEndOf="@id/nick_name_edit">
-        </ImageView>
+            app:layout_constraintEnd_toEndOf="@id/nick_name_edit" />
 
         <TextView
             android:id="@+id/ok_btn"
@@ -116,8 +111,7 @@
             app:onSingleClick="@{() -> vm.onCreateItemClicked()}"
             android:textColor="@{vm.nickNameCheckState ? @color/surface6 : @color/mainblack}"
             android:textSize="16dp"
-            android:background="@{vm.nickNameCheckState ? @drawable/custom_surface2_radius10 : @drawable/custom_brandlemon_radius10}">
-        </TextView>
+            android:background="@{vm.nickNameCheckState ? @drawable/custom_surface2_radius10 : @drawable/custom_brandlemon_radius10}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

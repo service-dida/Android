@@ -64,11 +64,15 @@ class NicknameViewModel @AssistedInject constructor(
 
     private fun nicknameAPIServer(nickName: String) {
         baseViewModelScope.launch {
+            if (nickName.isNullOrBlank()) {
+                setNicknameVerify(0)
+                _nickNameCheckState.value = true
+                return@launch
+            }
             checkNicknameUseCase(nickName)
                 .onSuccess {
                     _nickNameCheckState.value = it
-                    if(it) { setNicknameVerify(2) }
-                    else { setNicknameVerify(3) }
+                    setNicknameVerify(if (it) 2 else 3)
                 }.onError { e ->
                     setNicknameVerify(0)
                     _nickNameCheckState.value = true
@@ -88,7 +92,7 @@ class NicknameViewModel @AssistedInject constructor(
     }
 
     override fun onCreateItemClicked() {
-        if(!nickNameCheckState.value){
+        if (!nickNameCheckState.value) {
             createUserAPIServer(email, userInputState.value)
         }
     }
