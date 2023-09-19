@@ -59,6 +59,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(com.
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 AppLog.e("Fetching FCM registration token failed", task.exception.toString())
+                viewModel.onGoogleServiceError()
                 return@OnCompleteListener
             }
             // Get new FCM registration token

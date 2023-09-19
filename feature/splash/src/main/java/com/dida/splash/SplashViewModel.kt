@@ -46,19 +46,28 @@ class SplashViewModel @Inject constructor(
                         dataStorePreferences.setAccessToken(
                             accessToken = response.accessToken ?: "",
                             refreshToken = response.refreshToken ?: ""
-                        )
-                    }.flatMap { patchDeviceTokenUseCase(deviceToken = deviceToken) }
+                        ) }
+                    .flatMap { patchDeviceTokenUseCase(deviceToken = deviceToken) }
                     .flatMap { commonProfileUseCase() }
                     .onSuccess {
                         dataStorePreferences.setUserId(it.memberInfo.memberId)
-                        _navigateToHome.emit(true)
-                        _splashScreenGone.emit(true)
-                    }.onError { e -> catchError(e) }
+                        onGoneSplash() }
+                    .onError { e -> catchError(e) }
             }
             if (dataStorePreferences.getAccessToken() == null) {
-                _navigateToHome.emit(true)
-                _splashScreenGone.emit(true)
+                onGoneSplash()
             }
         }
+    }
+
+    fun onGoogleServiceError() {
+        baseViewModelScope.launch {
+            onGoneSplash()
+        }
+    }
+
+    private suspend fun onGoneSplash() {
+        _navigateToHome.emit(true)
+        _splashScreenGone.emit(true)
     }
 }
