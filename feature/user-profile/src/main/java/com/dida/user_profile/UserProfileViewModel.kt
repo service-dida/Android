@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UPDATED_DESC
 import com.dida.common.util.UiState
@@ -66,7 +66,7 @@ class UserProfileViewModel @AssistedInject constructor(
                     setCardSort(type = cardSortTypeState.value)
                     _userProfileState.value = UiState.Success(it)
                 }.flatMap {
-                    memberProfileNftUseCase(memberId = it.memberDetailInfo.memberInfo.memberId, page = 0, pageSize = PAGING_SIZE, sort = UPDATED_DESC)
+                    memberProfileNftUseCase(memberId = it.memberDetailInfo.memberInfo.memberId, page = 0, pageSize = PAGE_SIZE, sort = UPDATED_DESC)
                 }.onSuccess {
                     _userCardState.value = it
                 }

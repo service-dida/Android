@@ -1,14 +1,12 @@
 package com.dida.settings.hidelist
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.UiState
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HideNft
-import com.dida.domain.main.model.Nft
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.BlockUseCase
 import com.dida.domain.usecase.CancelBlockUseCase
 import com.dida.domain.usecase.HideNftsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +34,7 @@ class HideListViewModel @Inject constructor(
 
     fun getHideList() {
         baseViewModelScope.launch {
-            hideNftsUseCase(0, PAGING_SIZE)
+            hideNftsUseCase(0, PAGE_SIZE)
                 .onSuccess { _HideCardState.emit(UiState.Success(it.content)) }
                 .onError { e -> catchError(e) }
         }

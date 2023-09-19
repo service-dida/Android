@@ -4,7 +4,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
-import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.dialog.CompleteDialogFragment
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
@@ -32,7 +32,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override val viewModel : CommunityViewModel by viewModels()
     private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
-    private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
+    private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
     private var lastScrollY = 0
 
@@ -73,7 +73,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.postsState.collectLatest {
-                    communityPagingAdapter.submitData(it)
+                    communityAdapter.submitList(it.content)
                 }
             }
 
@@ -94,7 +94,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                             ReportType.POST -> showReportCompleteDialog()
                             else -> {}
                         }
-                        communityPagingAdapter.refresh()
+                        viewModel.getCommunity()
                     } else {
                         showToastMessage(requireContext().getString(R.string.already_report_message))
                     }
@@ -110,7 +110,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                             ReportType.POST -> showBlockCompleteDialog()
                             else -> {}
                         }
-                        communityPagingAdapter.refresh()
+                        viewModel.getCommunity()
                     }
                 }
             }
@@ -127,15 +127,14 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_REPORT)) showReportUserCompleteDialog()
             if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_BLOCK)) showBlockCompleteDialog()
             if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showBlockUserCompleteDialog()
+            viewModel.getCommunity()
         }
-        communityPagingAdapter.refresh()
         getLastScrollY()
     }
 
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getHotCards()
-            communityPagingAdapter.refresh()
+            viewModel.getCommunity()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -147,7 +146,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     private fun initRecyclerView() {
         binding.activeCommunityRecyclerView.adapter = hotCardsContainerAdapter
-        binding.communityRecyclerView.adapter = communityPagingAdapter
+        binding.communityRecyclerView.adapter = communityAdapter
     }
 
     private fun setLastScrollY() {

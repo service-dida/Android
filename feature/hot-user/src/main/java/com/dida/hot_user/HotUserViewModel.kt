@@ -1,7 +1,7 @@
 package com.dida.hot_user
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
 import com.dida.domain.main.model.HotSellerPage
@@ -37,7 +37,7 @@ class HotUserViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            hotMemberPageUseCase(page = 0, size = PAGING_SIZE)
+            hotMemberPageUseCase(page = 0, size = PAGE_SIZE)
                 .onSuccess { _hotMemberState.value = it }
                 .onError { e -> catchError(e) }
         }
@@ -53,7 +53,7 @@ class HotUserViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             memberFollowUseCase(userId)
-                .flatMap { hotMemberPageUseCase(page = hotMemberState.value.page, size = PAGING_SIZE) }
+                .flatMap { hotMemberPageUseCase(page = hotMemberState.value.page, size = PAGE_SIZE) }
                 .onSuccess { _hotMemberState.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -64,7 +64,7 @@ class HotUserViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (hotMemberState.value.page == 0) return@launch
             showLoading()
-            hotMemberPageUseCase(page = hotMemberState.value.page - 1, size = PAGING_SIZE)
+            hotMemberPageUseCase(page = hotMemberState.value.page - 1, size = PAGE_SIZE)
                 .onSuccess { _hotMemberState.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -75,7 +75,7 @@ class HotUserViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (!hotMemberState.value.hasNext) return@launch
             showLoading()
-            hotMemberPageUseCase(page = hotMemberState.value.page + 1, size = PAGING_SIZE)
+            hotMemberPageUseCase(page = hotMemberState.value.page + 1, size = PAGE_SIZE)
                 .onSuccess { _hotMemberState.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()

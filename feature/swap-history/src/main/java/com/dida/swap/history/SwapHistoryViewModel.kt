@@ -1,7 +1,7 @@
 package com.dida.swap.history
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.Contents
 import com.dida.domain.main.model.Swap
 import com.dida.domain.onError
@@ -34,7 +34,7 @@ class SwapHistoryViewModel @Inject constructor(
 
     fun getSwapHistory(){
         baseViewModelScope.launch {
-            memberSwapUseCase(page = 0, size = PAGING_SIZE)
+            memberSwapUseCase(page = 0, size = PAGE_SIZE)
                 .onSuccess {
                     _swapHistoryState.emit(it)
                     _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)
@@ -46,7 +46,7 @@ class SwapHistoryViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (!swapHistoryState.value.hasNext) return@launch
             showLoading()
-            memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGING_SIZE)
+            memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGE_SIZE)
                 .onSuccess {
                     _swapHistoryState.emit(it)
                     _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)
@@ -58,7 +58,7 @@ class SwapHistoryViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (swapHistoryState.value.page == 0) return@launch
             showLoading()
-            memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGING_SIZE)
+            memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGE_SIZE)
                 .onSuccess {
                     _swapHistoryState.emit(it)
                     _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)

@@ -2,7 +2,7 @@ package com.dida.recent_nft
 
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.Contents
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.onError
@@ -37,7 +37,7 @@ class RecentNftViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            recentNftsUseCase(page = 0, size = PAGING_SIZE)
+            recentNftsUseCase(page = 0, size = PAGE_SIZE)
                 .onSuccess { _cardsState.value = it }
                 .onError { e -> catchError(e) }
         }
@@ -65,7 +65,7 @@ class RecentNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (!cardsState.value.hasNext) return@launch
             showLoading()
-            recentNftsUseCase(cardsState.value.page + 1, PAGING_SIZE)
+            recentNftsUseCase(cardsState.value.page + 1, PAGE_SIZE)
                 .onSuccess { _cardsState.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()
@@ -76,7 +76,7 @@ class RecentNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (cardsState.value.page == 0) return@launch
             showLoading()
-            recentNftsUseCase(cardsState.value.page - 1, PAGING_SIZE)
+            recentNftsUseCase(cardsState.value.page - 1, PAGE_SIZE)
                 .onSuccess { _cardsState.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()

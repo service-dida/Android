@@ -4,7 +4,7 @@ import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.ui.report.ReportType
 import com.dida.common.ui.report.ReportViewModelDelegate
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.data.DataApplication
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
@@ -66,7 +66,7 @@ class DetailCommunityViewModel @Inject constructor(
             showLoading()
             postsDetailUseCase(postId = postId)
                 .onSuccess { _postState.value = it }
-                .flatMap { commentsFromPostUserUseCase.invoke(postId = postId, 0 , PAGING_SIZE) }
+                .flatMap { commentsFromPostUserUseCase.invoke(postId = postId, 0 , PAGE_SIZE) }
                 .onSuccess {
                     _comments.value = it
                     _commentEmpty.value = it.content.isEmpty()
@@ -94,7 +94,7 @@ class DetailCommunityViewModel @Inject constructor(
                         commentsFromPostUserUseCase(
                             postId = postId,
                             page = comments.value.page,
-                            size = PAGING_SIZE
+                            size = PAGE_SIZE
                         )
                     }.onSuccess {
                         isWrite.value = true
@@ -117,7 +117,7 @@ class DetailCommunityViewModel @Inject constructor(
             commentsFromPostUserUseCase(
                 postId = postId,
                 page = comments.value.page + 1,
-                size = PAGING_SIZE
+                size = PAGE_SIZE
             ).onSuccess { _comments.value = it
             }.onError { e -> catchError(e) }
         }
@@ -133,7 +133,7 @@ class DetailCommunityViewModel @Inject constructor(
             commentsFromPostUserUseCase(
                 postId = postId,
                 page = comments.value.page - 1,
-                size = PAGING_SIZE
+                size = PAGE_SIZE
             ).onSuccess { _comments.value = it
             }.onError { e -> catchError(e) }
         }

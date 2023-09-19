@@ -1,7 +1,7 @@
 package com.dida.create_community
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
 import com.dida.domain.main.model.OwnNft
@@ -39,9 +39,9 @@ class CreateCommunityViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            likedNftsUseCase.invoke(0, PAGING_SIZE)
+            likedNftsUseCase.invoke(0, PAGE_SIZE)
                 .onSuccess { _cardPostLikeState.value = it }
-                .flatMap { ownNftsUseCase(0, PAGING_SIZE) }
+                .flatMap { ownNftsUseCase(0, PAGE_SIZE) }
                 .onSuccess { _cardPostMyState.value = it }
                 .onError { e -> catchError(e) }
         }
@@ -73,7 +73,7 @@ class CreateCommunityViewModel @Inject constructor(
                     dismissLoading()
                     return@launch
                 }
-                likedNftsUseCase(page = cardPostLikeState.value.page + 1, PAGING_SIZE).onSuccess {
+                likedNftsUseCase(page = cardPostLikeState.value.page + 1, PAGE_SIZE).onSuccess {
                     _cardPostLikeState.value = it.copy(content = it.content)
                 }
             } else {
@@ -81,7 +81,7 @@ class CreateCommunityViewModel @Inject constructor(
                     dismissLoading()
                     return@launch
                 }
-                ownNftsUseCase(page = cardPostMyState.value.page + 1, PAGING_SIZE).onSuccess {
+                ownNftsUseCase(page = cardPostMyState.value.page + 1, PAGE_SIZE).onSuccess {
                     _cardPostMyState.value = it.copy(content = cardPostMyState.value.content + it.content)
                 }
             }
@@ -97,7 +97,7 @@ class CreateCommunityViewModel @Inject constructor(
                     dismissLoading()
                     return@launch
                 }
-                likedNftsUseCase(page = cardPostLikeState.value.page - 1, PAGING_SIZE).onSuccess {
+                likedNftsUseCase(page = cardPostLikeState.value.page - 1, PAGE_SIZE).onSuccess {
                     _cardPostLikeState.value = it.copy(content = it.content)
                 }
             } else {
@@ -105,7 +105,7 @@ class CreateCommunityViewModel @Inject constructor(
                     dismissLoading()
                     return@launch
                 }
-                ownNftsUseCase(page = cardPostMyState.value.page - 1, PAGING_SIZE).onSuccess {
+                ownNftsUseCase(page = cardPostMyState.value.page - 1, PAGE_SIZE).onSuccess {
                     _cardPostMyState.value = it.copy(content = cardPostMyState.value.content + it.content)
                 }
             }

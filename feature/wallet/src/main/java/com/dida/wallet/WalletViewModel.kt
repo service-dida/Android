@@ -1,7 +1,7 @@
 package com.dida.wallet
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.Wallet
 import com.dida.domain.onError
@@ -111,7 +111,7 @@ class WalletViewModel @Inject constructor(
 
     fun historyBuy() {
         baseViewModelScope.launch {
-            purchaseTransactionsUseCase(page = 0, size = PAGING_SIZE)
+            purchaseTransactionsUseCase(page = 0, size = PAGE_SIZE)
                 .onSuccess { _currentHistoryState.value = it.content }
                 .onError { e -> catchError(e) }
         }
@@ -119,7 +119,7 @@ class WalletViewModel @Inject constructor(
 
     fun historySell() {
         baseViewModelScope.launch {
-            saleTransactionsUseCase(0, PAGING_SIZE)
+            saleTransactionsUseCase(0, PAGE_SIZE)
                 .onSuccess { _currentHistoryState.value = it.content }
                 .onError { e -> catchError(e) }
         }
