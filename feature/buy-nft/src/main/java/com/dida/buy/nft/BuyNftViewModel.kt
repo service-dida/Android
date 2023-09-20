@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class BuyNftViewModel @AssistedInject constructor(
-    @Assisted("buyCard") val nftId: Long,
+    @Assisted("nftId") val nftId: Long,
     private val buyNftUseCase: BuyNftUseCase,
     private val nftDetailUseCase: NftDetailUseCase,
     private val commonProfileUseCase: CommonProfileUseCase
