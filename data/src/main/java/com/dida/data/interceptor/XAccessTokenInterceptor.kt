@@ -12,12 +12,14 @@ class XAccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
 
+        var accessToken = ""
         runBlocking {
             dataStorePreferences.getAccessToken()?.let {
-                builder.addHeader("Authorization", it)
+                accessToken = it
             }
         }
 
+        builder.addHeader("Authorization", accessToken)
         return chain.proceed(builder.build())
     }
 }
