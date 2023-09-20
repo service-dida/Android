@@ -60,25 +60,12 @@ class HotUserViewModel @Inject constructor(
         }
     }
 
-    fun beforePage() {
-        baseViewModelScope.launch {
-            if (hotMemberState.value.page == 0) return@launch
-            showLoading()
-            hotMemberPageUseCase(page = hotMemberState.value.page - 1, size = PAGE_SIZE)
-                .onSuccess { _hotMemberState.value = it }
-                .onError { e -> catchError(e) }
-            dismissLoading()
-        }
-    }
-
     fun nextPage() {
         baseViewModelScope.launch {
             if (!hotMemberState.value.hasNext) return@launch
-            showLoading()
             hotMemberPageUseCase(page = hotMemberState.value.page + 1, size = PAGE_SIZE)
                 .onSuccess { _hotMemberState.value = it }
                 .onError { e -> catchError(e) }
-            dismissLoading()
         }
     }
 

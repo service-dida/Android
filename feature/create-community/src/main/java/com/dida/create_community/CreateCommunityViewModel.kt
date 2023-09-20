@@ -67,10 +67,8 @@ class CreateCommunityViewModel @Inject constructor(
 
     fun nextPage(nftState: Int) {
         baseViewModelScope.launch {
-            showLoading()
             if (nftState == 0) {
                 if (!cardPostLikeState.value.hasNext) {
-                    dismissLoading()
                     return@launch
                 }
                 likedNftsUseCase(page = cardPostLikeState.value.page + 1, PAGE_SIZE).onSuccess {
@@ -78,38 +76,12 @@ class CreateCommunityViewModel @Inject constructor(
                 }
             } else {
                 if (!cardPostMyState.value.hasNext) {
-                    dismissLoading()
                     return@launch
                 }
                 ownNftsUseCase(page = cardPostMyState.value.page + 1, PAGE_SIZE).onSuccess {
                     _cardPostMyState.value = it.copy(content = cardPostMyState.value.content + it.content)
                 }
             }
-            dismissLoading()
-        }
-    }
-
-    fun beforePage(nftState: Int) {
-        baseViewModelScope.launch {
-            showLoading()
-            if (nftState == 0) {
-                if (cardPostLikeState.value.page == 0) {
-                    dismissLoading()
-                    return@launch
-                }
-                likedNftsUseCase(page = cardPostLikeState.value.page - 1, PAGE_SIZE).onSuccess {
-                    _cardPostLikeState.value = it.copy(content = it.content)
-                }
-            } else {
-                if (cardPostMyState.value.page == 0) {
-                    dismissLoading()
-                    return@launch
-                }
-                ownNftsUseCase(page = cardPostMyState.value.page - 1, PAGE_SIZE).onSuccess {
-                    _cardPostMyState.value = it.copy(content = cardPostMyState.value.content + it.content)
-                }
-            }
-            dismissLoading()
         }
     }
 }

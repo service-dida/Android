@@ -149,8 +149,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private fun initAdapter() {
         binding.detailCommunityMain.adapter = commentsAdapter
         binding.detailCommunityMain.addOnPagingListener(
-            arrivedTop = { viewModel.nextPage(args.postId) },
-            arrivedBottom = { viewModel.beforePage(args.postId) }
+            arrivedBottom = { viewModel.nextPage(args.postId) }
         )
     }
 

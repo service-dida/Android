@@ -64,22 +64,9 @@ class RecentNftViewModel @Inject constructor(
     fun nextPage() {
         baseViewModelScope.launch {
             if (!cardsState.value.hasNext) return@launch
-            showLoading()
             recentNftsUseCase(cardsState.value.page + 1, PAGE_SIZE)
                 .onSuccess { _cardsState.value = it }
                 .onError { e -> catchError(e) }
-            dismissLoading()
-        }
-    }
-
-    fun beforePage() {
-        baseViewModelScope.launch {
-            if (cardsState.value.page == 0) return@launch
-            showLoading()
-            recentNftsUseCase(cardsState.value.page - 1, PAGE_SIZE)
-                .onSuccess { _cardsState.value = it }
-                .onError { e -> catchError(e) }
-            dismissLoading()
         }
     }
 }

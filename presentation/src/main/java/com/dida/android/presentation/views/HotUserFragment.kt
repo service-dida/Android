@@ -68,8 +68,7 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
     private fun initAdapter() {
         binding.hotUserRecycler.adapter = hotUserAdapter
         binding.hotUserRecycler.addOnPagingListener(
-            arrivedTop = { viewModel.nextPage() },
-            arrivedBottom = { viewModel.beforePage() }
+            arrivedBottom = { viewModel.nextPage() }
         )
     }
 }

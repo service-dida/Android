@@ -109,30 +109,12 @@ class DetailCommunityViewModel @Inject constructor(
 
     fun nextPage(postId: Long) {
         baseViewModelScope.launch {
-            showLoading()
             if (!comments.value.hasNext) {
-                dismissLoading()
                 return@launch
             }
             commentsFromPostUserUseCase(
                 postId = postId,
                 page = comments.value.page + 1,
-                size = PAGE_SIZE
-            ).onSuccess { _comments.value = it
-            }.onError { e -> catchError(e) }
-        }
-    }
-
-    fun beforePage(postId: Long) {
-        baseViewModelScope.launch {
-            showLoading()
-            if (comments.value.page == 0) {
-                dismissLoading()
-                return@launch
-            }
-            commentsFromPostUserUseCase(
-                postId = postId,
-                page = comments.value.page - 1,
                 size = PAGE_SIZE
             ).onSuccess { _comments.value = it
             }.onError { e -> catchError(e) }

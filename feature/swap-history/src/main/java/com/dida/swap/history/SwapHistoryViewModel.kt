@@ -45,19 +45,6 @@ class SwapHistoryViewModel @Inject constructor(
     fun nextPage() {
         baseViewModelScope.launch {
             if (!swapHistoryState.value.hasNext) return@launch
-            showLoading()
-            memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGE_SIZE)
-                .onSuccess {
-                    _swapHistoryState.emit(it)
-                    _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)
-                }.onError { e -> catchError(e) }
-        }
-    }
-
-    fun beforePage() {
-        baseViewModelScope.launch {
-            if (swapHistoryState.value.page == 0) return@launch
-            showLoading()
             memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGE_SIZE)
                 .onSuccess {
                     _swapHistoryState.emit(it)
