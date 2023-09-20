@@ -135,7 +135,7 @@ class DetailNftViewModel @Inject constructor(
     // TODO : NFT 상세 내껀지 판별하는 로직 수정
     private fun setDetailOwnerType(detailNFT: Nft) {
         baseViewModelScope.launch {
-            if (detailNFT.isMe) {
+            if (detailNFT.me) {
                 if (detailNFT.nftInfo.price == "NOT SALE") {
                     detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_NOTSALE)
                 } else {

@@ -2,6 +2,7 @@ package com.dida.data.main
 
 import com.dida.data.api.handleApi
 import com.dida.data.model.additional.PostMakePictureRequest
+import com.dida.data.model.additional.PostNftLikeRequest
 import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.additional.toDomain
 import com.dida.data.model.dex.DeleteSellNftRequest
@@ -297,7 +298,8 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun nftLike(nftId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.postNftLike(nftId) }
+        val body = PostNftLikeRequest(nftId)
+        return handleApi { didaApi.postNftLike(body) }
     }
 
     override suspend fun makeAiPicture(payPwd: String, setence: String): NetworkResult<AiPicture> {

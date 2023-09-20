@@ -5,6 +5,7 @@ import com.dida.data.model.additional.GetHideMembersResponse
 import com.dida.data.model.additional.GetHideNftsResponse
 import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostMakePictureResponse
+import com.dida.data.model.additional.PostNftLikeRequest
 import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.dex.DeleteSellNftRequest
 import com.dida.data.model.dex.GetMemberSwapResponse
@@ -428,7 +429,7 @@ interface DidaApi {
 
     // NFT 좋아요 누르기
     @POST("/common/nft/like")
-    suspend fun postNftLike(@Query("nftId") nftId: Long): Unit
+    suspend fun postNftLike(@Body body: PostNftLikeRequest): Unit
 
     // 그림 생성하기
     @POST("/member/picture")
