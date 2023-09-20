@@ -44,9 +44,6 @@ class CommunityViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent.asSharedFlow()
 
-    private val _blockEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val blockEvent: SharedFlow<Unit> = _blockEvent.asSharedFlow()
-
     private val _postsState: MutableStateFlow<Contents<Post>> = MutableStateFlow(
         Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
@@ -113,11 +110,6 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostBlock(type: ReportType, blockId: Long){
-        baseViewModelScope.launch {
-            onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
-        }
-    }
 
     override fun onUpdateClicked(postId: Long) {
         baseViewModelScope.launch {

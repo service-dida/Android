@@ -49,24 +49,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when (it) {
-                        is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
-                        is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
-                        is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
-                        is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
-                        is CommunityNavigationAction.NavigateToBlock -> showBlockPostDialog(postId = it.postId)
-                        is CommunityNavigationAction.NavigateToUpdate -> {}
-                        is CommunityNavigationAction.NavigateToDelete -> {}
-                    }
-                }
-            }
-
-
-            launch {
-                viewModel.blockEvent.collectLatest {
-                    showMessageSnackBar(getString(R.string.block_post_message))
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
+                    is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
+                    is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
+                    is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
+                    is CommunityNavigationAction.NavigateToBlock -> showBlockPostDialog(postId = it.postId)
+                    is CommunityNavigationAction.NavigateToUpdate -> {}
+                    is CommunityNavigationAction.NavigateToDelete -> {}
                 }
             }
         }
@@ -88,11 +79,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             }
 
             launch {
-                viewModel.navigateToReportEvent.collectLatest {
-                    if (it.second) {
-                        when (it.first) {
-                            ReportType.USER -> showReportUserCompleteDialog()
-                            ReportType.POST -> showReportCompleteDialog()
+                viewModel.navigateToReportEvent.collectLatest { (type, succes) ->
+                    if (succes) {
+                        when (type) {
+                            ReportType.USER -> showCompleteDialog(getString(R.string.report_user_dialog_message))
+                            ReportType.POST -> showCompleteDialog(getString(R.string.report_dialog_message))
                             else -> {}
                         }
                         viewModel.getCommunity()
@@ -104,11 +95,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             }
 
             launch {
-                viewModel.navigateToBlockEvent.collectLatest {
-                    if (it.second) {
-                        when (it.first) {
-                            ReportType.USER -> showBlockUserCompleteDialog()
-                            ReportType.POST -> showBlockCompleteDialog()
+                viewModel.navigateToBlockEvent.collectLatest { (type, succes) ->
+                    if (succes) {
+                        when (type) {
+                            ReportType.USER -> showCompleteDialog(getString(R.string.block_user_dialog_message))
+                            ReportType.POST -> showCompleteDialog(getString(R.string.block_dialog_message))
                             else -> {}
                         }
                         viewModel.getCommunity()
@@ -123,11 +114,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     override fun onResume() {
         super.onResume()
         setFragmentResultListener(DIDAINTENT.RESULT_SCREEN_COMMUNITY) { _, bundle ->
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_CREATE)) showCreateCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_REPORT)) showReportCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_REPORT)) showReportUserCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_BLOCK)) showBlockCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showBlockUserCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_CREATE)) showCompleteDialog(getString(R.string.create_post_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_REPORT)) showCompleteDialog(getString(R.string.report_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_REPORT)) showCompleteDialog(getString(R.string.report_user_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_BLOCK)) showCompleteDialog(getString(R.string.block_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showCompleteDialog(getString(R.string.block_user_dialog_message))
             viewModel.getCommunity()
         }
         getLastScrollY()
@@ -164,34 +155,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
     }
 
-    private fun showCreateCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.create_post_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
-    private fun showReportCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.report_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
-    private fun showReportUserCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.report_user_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
     private fun showBlockPostDialog(postId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.community_detail.R.string.block_post_title))
             .message(getString(com.dida.community_detail.R.string.block_post_description))
             .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.onPostBlock(type = ReportType.POST, blockId = postId)
+                    viewModel.onBlock(type = ReportType.POST, blockId = postId)
                 }
             })
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
@@ -200,16 +170,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     }
 
-    private fun showBlockCompleteDialog() {
+    private fun showCompleteDialog(message: String) {
         CompleteDialogFragment.Builder()
-            .message(getString(R.string.block_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
-    private fun showBlockUserCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.block_user_dialog_message))
+            .message(message)
             .build()
             .show(childFragmentManager, "complete_dialog")
     }
@@ -222,12 +185,5 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                 content = content
             )
         }.show(childFragmentManager, "Report Dialog")
-    }
-
-    private fun showMessageSnackBar(message: String) {
-        DefaultSnackBar.Builder()
-            .view(binding.root)
-            .message(message)
-            .build()
     }
 }

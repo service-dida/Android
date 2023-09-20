@@ -34,7 +34,7 @@ interface ReportViewModelDelegate {
 
 class DefaultReportViewModelDelegate @Inject constructor(
     private val reportUseCase: ReportUseCase,
-    private val blockUseCase: BlockUseCase
+    private val blockUseCase: BlockUseCase,
 ): ReportViewModelDelegate, BaseViewModel() {
 
     private val _navigateToReportEvent: MutableSharedFlow<Pair<ReportType, Boolean>> = MutableSharedFlow()
