@@ -24,4 +24,6 @@ fun scrollPercent(recyclerView: RecyclerView): Double {
 
 const val PAGE_SIZE = 20
 const val INIT_PAGE = 0
+const val UPDATED_DESC = "updated_desc"
+const val UPDATED_ASC = "updated_asc"
 
