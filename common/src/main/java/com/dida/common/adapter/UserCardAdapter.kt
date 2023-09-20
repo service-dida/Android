@@ -17,7 +17,7 @@ class UserCardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderMypageUserCardsBinding =
-            DataBindingUtil.inflate<HolderMypageUserCardsBinding?>(
+            DataBindingUtil.inflate<HolderMypageUserCardsBinding>(
                 LayoutInflater.from(parent.context),
                 R.layout.holder_mypage_user_cards,
                 parent,
