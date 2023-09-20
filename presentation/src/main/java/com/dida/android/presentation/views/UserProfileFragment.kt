@@ -1,13 +1,11 @@
 package com.dida.android.presentation.views
 
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.common.adapter.UserCardAdapter
@@ -62,10 +60,9 @@ class UserProfileFragment :
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
-//                        is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
                         is UserProfileNavigationAction.NavigateToUserFollowed -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToUserFollowedFragment(it.userId, it.type))
-                        else -> {}
+                        is UserProfileNavigationAction.NavigateToNftUpdate -> userCardAdapter.changeNftLike(it.nftId)
                     }
                 }
             }
@@ -77,13 +74,14 @@ class UserProfileFragment :
                         is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
                         is UserMessageAction.NftBookmarkMessage -> {
                             if (it.liked) {
-                                showActionSnackBar(
-                                    message = getString(R.string.add_bookmark_message),
-                                    label = getString(R.string.add_bookmark_action_title_message),
-                                    onClickListener = object : DefaultSnackBar.OnClickListener {
-                                        override fun onClick() {}
-                                    }
-                                )
+//                                showActionSnackBar(
+//                                    message = getString(R.string.add_bookmark_message),
+//                                    label = getString(R.string.add_bookmark_action_title_message),
+//                                    onClickListener = object : DefaultSnackBar.OnClickListener {
+//                                        override fun onClick() {}
+//                                    }
+//                                )
+                                showMessageSnackBar(getString(R.string.add_bookmark_message))
                             } else {
                                 showMessageSnackBar(getString(R.string.delete_bookmark_message))
                             }

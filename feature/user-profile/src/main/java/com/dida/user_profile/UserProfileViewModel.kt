@@ -99,10 +99,8 @@ class UserProfileViewModel @AssistedInject constructor(
             showLoading()
             nftLikeUseCase(nftId)
                 .onSuccess {
-                    _messageEvent.emit(UserMessageAction.NftBookmarkMessage(liked))
-                    userCardState.value.content.forEach {
-                        if (it.nftInfo.nftId == nftId) it.copy(liked = liked)
-                    }
+                    _messageEvent.emit(UserMessageAction.NftBookmarkMessage(!liked))
+                    _navigationEvent.emit(UserProfileNavigationAction.NavigateToNftUpdate(nftId))
                 }
                 .onError { e -> catchError(e) }
             dismissLoading()

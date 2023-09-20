@@ -3,7 +3,7 @@ package com.dida.domain.main.model
 
 data class CommonProfileNft(
     val nftInfo: NftInfo,
-    val liked: Boolean,
+    var liked: Boolean,
 )
 
 data class NftInfo(
