@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.dida.user_profile.UserProfileViewModel.CardSortType"/>
+        <import type="com.dida.domain.main.model.Sort"/>
         <variable
             name="vm"
             type="com.dida.user_profile.UserProfileViewModel" />
@@ -260,9 +260,9 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/pretendard_regular"
                                     android:gravity="center"
-                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(CardSortType.NEWEST)}"
+                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(Sort.NEWEST)}"
                                     android:text="@string/mypage_nft_type_newest_text"
-                                    android:textColor="@{vm.cardSortTypeState==CardSortType.NEWEST? @color/brand_lemon : @color/surface6}"
+                                    android:textColor="@{vm.cardSortTypeState == Sort.NEWEST? @color/brand_lemon : @color/surface6}"
                                     android:textSize="14dp" />
 
                                 <ImageView
@@ -279,9 +279,9 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/pretendard_regular"
                                     android:gravity="center"
-                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(CardSortType.OLDEST)}"
+                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(Sort.OLDEST)}"
                                     android:text="@string/mypage_nft_type_oldest_text"
-                                    android:textColor="@{vm.cardSortTypeState==CardSortType.OLDEST? @color/brand_lemon : @color/surface6}"
+                                    android:textColor="@{vm.cardSortTypeState == Sort.OLDEST? @color/brand_lemon : @color/surface6}"
                                     android:textSize="14dp" />
 
                             </LinearLayout>

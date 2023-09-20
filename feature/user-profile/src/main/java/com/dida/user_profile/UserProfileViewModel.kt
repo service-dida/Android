@@ -6,14 +6,13 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
-import com.dida.common.util.UPDATED_DESC
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.Contents
-import com.dida.domain.flatMap
 import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.Follow
 import com.dida.domain.main.model.MemberProfile
+import com.dida.domain.main.model.Sort
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.MemberFollowUseCase
@@ -42,12 +41,8 @@ class UserProfileViewModel @AssistedInject constructor(
     private val _messageEvent: MutableSharedFlow<UserMessageAction> = MutableSharedFlow<UserMessageAction>()
     val messageEvent: SharedFlow<UserMessageAction> = _messageEvent.asSharedFlow()
 
-    enum class CardSortType{
-        NEWEST, OLDEST
-    }
-
-    private val _cardSortTypeState: MutableStateFlow<CardSortType> = MutableStateFlow<CardSortType>(CardSortType.NEWEST)
-    val cardSortTypeState: StateFlow<CardSortType> = _cardSortTypeState.asStateFlow()
+    private val _cardSortTypeState: MutableStateFlow<Sort> = MutableStateFlow<Sort>(Sort.NEWEST)
+    val cardSortTypeState: StateFlow<Sort> = _cardSortTypeState.asStateFlow()
 
     private val _userProfileState: MutableStateFlow<UiState<MemberProfile>> = MutableStateFlow<UiState<MemberProfile>>(UiState.Loading)
     val userProfileState: StateFlow<UiState<MemberProfile>> = _userProfileState.asStateFlow()
@@ -57,19 +52,35 @@ class UserProfileViewModel @AssistedInject constructor(
     )
     val userCardState: StateFlow<Contents<CommonProfileNft>> = _userCardState.asStateFlow()
 
+    init {
+        getUserProfile()
+        getUserNfts()
+    }
+
     fun getUserProfile() {
         _userProfileState.value = UiState.Loading
         baseViewModelScope.launch {
             memberProfileUseCase(memberId = userId)
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    setCardSort(type = cardSortTypeState.value)
                     _userProfileState.value = UiState.Success(it)
-                }.flatMap {
-                    memberProfileNftUseCase(memberId = it.memberDetailInfo.memberInfo.memberId, page = 0, pageSize = PAGE_SIZE, sort = UPDATED_DESC)
-                }.onSuccess {
-                    _userCardState.value = it
-                }
+                }.onError { e -> catchError(e) }
+        }
+    }
+
+    fun getUserNfts() {
+        baseViewModelScope.launch {
+            memberProfileNftUseCase(memberId = userId, page = 0, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
+                .onSuccess { _userCardState.value = it }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun onNextPage() {
+        baseViewModelScope.launch {
+            if (!userCardState.value.hasNext) return@launch
+            memberProfileNftUseCase(memberId = userId, page = userCardState.value.page + 1, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
+                .onSuccess { _userCardState.value = it }
                 .onError { e -> catchError(e) }
         }
     }
@@ -86,11 +97,8 @@ class UserProfileViewModel @AssistedInject constructor(
             showLoading()
             nftLikeUseCase(nftId)
                 .onSuccess {
-                    if (liked) _messageEvent.emit(UserMessageAction.DeleteCardBookmarkMessage)
-                    else _messageEvent.emit(UserMessageAction.AddCardBookmarkMessage)
-                    _navigationEvent.emit(UserProfileNavigationAction.NavigateToCardLikeButtonClicked)
-                    getUserProfile()
-                }.onError { e -> catchError(e) }
+                    _messageEvent.emit(UserMessageAction.NftBookmarkMessage(liked)) }
+                .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
@@ -111,9 +119,9 @@ class UserProfileViewModel @AssistedInject constructor(
         }
     }
 
-    override fun onCardSortTypeClicked(type: CardSortType) {
+    override fun onCardSortTypeClicked(type: Sort) {
         _cardSortTypeState.value = type
-        setCardSort(type = cardSortTypeState.value)
+        getUserNfts()
     }
 
     override fun onUserFollowerClicked() {
@@ -125,13 +133,6 @@ class UserProfileViewModel @AssistedInject constructor(
     override fun onUserFollowingClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId, type = Follow.FOLLOWING))
-        }
-    }
-
-    private fun setCardSort(type: CardSortType) {
-        when(type) {
-            CardSortType.NEWEST -> {}
-            CardSortType.OLDEST -> {}
         }
     }
 

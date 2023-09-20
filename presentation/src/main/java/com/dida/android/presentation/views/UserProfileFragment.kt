@@ -11,6 +11,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.common.adapter.UserCardAdapter
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.DefaultSnackBar
@@ -74,16 +75,19 @@ class UserProfileFragment :
                     when(it) {
                         is UserMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
                         is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
-                        is UserMessageAction.AddCardBookmarkMessage -> {
-                            showActionSnackBar(
-                                message = getString(R.string.add_bookmark_message),
-                                label = getString(R.string.add_bookmark_action_title_message),
-                                onClickListener = object : DefaultSnackBar.OnClickListener {
-                                    override fun onClick() {}
-                                }
-                            )
+                        is UserMessageAction.NftBookmarkMessage -> {
+                            if (it.liked) {
+                                showActionSnackBar(
+                                    message = getString(R.string.add_bookmark_message),
+                                    label = getString(R.string.add_bookmark_action_title_message),
+                                    onClickListener = object : DefaultSnackBar.OnClickListener {
+                                        override fun onClick() {}
+                                    }
+                                )
+                            } else {
+                                showMessageSnackBar(getString(R.string.delete_bookmark_message))
+                            }
                         }
-                        is UserMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
                 }
             }
@@ -102,17 +106,12 @@ class UserProfileFragment :
         }
     }
 
-    override fun initAfterBinding() {
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getUserProfile()
-    }
+    override fun initAfterBinding() {}
 
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserProfile()
+            viewModel.getUserNfts()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -122,6 +121,10 @@ class UserProfileFragment :
             adapter = userCardAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
+
+        binding.rvUserNft.addOnPagingListener(
+            arrivedBottom = { viewModel.onNextPage() }
+        )
     }
 
     private fun initToolbar() {

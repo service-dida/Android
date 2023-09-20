@@ -52,6 +52,7 @@ import com.dida.domain.main.model.PublicKey
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.SoldOut
+import com.dida.domain.main.model.Sort
 import com.dida.domain.main.model.Swap
 import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
@@ -105,9 +106,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun commonProfileNft(
         page: Int,
         size: Int,
-        sort: String
+        sort: Sort
     ): NetworkResult<Contents<CommonProfileNft>> {
-        return handleApi { didaApi.getCommonProfileNft(page, size, sort).toDomain() }
+        return handleApi { didaApi.getCommonProfileNft(page, size, sort.str).toDomain() }
     }
 
     override suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile> {
@@ -118,9 +119,9 @@ class MainRepositoryImpl @Inject constructor(
         memberId: Long,
         page: Int,
         size: Int,
-        sort: String
+        sort: Sort
     ): NetworkResult<Contents<CommonProfileNft>> {
-        return handleApi { didaApi.getMemberProfileNft(memberId, page, size, sort).toDomain() }
+        return handleApi { didaApi.getMemberProfileNft(memberId, page, size, sort.str).toDomain() }
     }
 
     override suspend fun memberFollow(memberId: Long): NetworkResult<Unit> {
