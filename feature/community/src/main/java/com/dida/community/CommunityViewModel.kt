@@ -48,7 +48,7 @@ class CommunityViewModel @Inject constructor(
     val blockEvent: SharedFlow<Unit> = _blockEvent.asSharedFlow()
 
     private val _postsState: MutableStateFlow<Contents<Post>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = 0, content = emptyList())
+        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val postsState: StateFlow<Contents<Post>> = _postsState.asStateFlow()
 
@@ -70,6 +70,17 @@ class CommunityViewModel @Inject constructor(
                     delay(SHIMMER_TIME)
                     _hotCardState.value = UiState.Success(it.content)
                 }.onError { e -> catchError(e) }
+        }
+    }
+
+    fun onNextPage() {
+        baseViewModelScope.launch {
+            if (!postsState.value.hasNext) return@launch
+            postsUseCase(postsState.value.page + 1, PAGE_SIZE)
+                .onSuccess {
+                    delay(SHIMMER_TIME)
+                    _postsState.value = it }
+                .onError { e -> catchError(e) }
         }
     }
 

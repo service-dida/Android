@@ -10,6 +10,7 @@ import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.ui.report.ReportType
 import com.dida.common.util.DIDAINTENT
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.common.widget.DefaultSnackBar
@@ -147,6 +148,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     private fun initRecyclerView() {
         binding.activeCommunityRecyclerView.adapter = hotCardsContainerAdapter
         binding.communityRecyclerView.adapter = communityAdapter
+        binding.communityRecyclerView.addOnPagingListener(
+            arrivedBottom = { viewModel.onNextPage() }
+        )
     }
 
     private fun setLastScrollY() {
