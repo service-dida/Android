@@ -134,27 +134,28 @@ class DetailNftViewModel @Inject constructor(
 
     // TODO : NFT 상세 내껀지 판별하는 로직 수정
     private fun setDetailOwnerType(detailNFT: Nft) {
-//        baseViewModelScope.launch {
-//            if (detailNFT.nftInfo.type == "MINE") {
-//                if (detailNFT.price == "NOT SALE") {
-//                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_NOTSALE)
-//                } else {
-//                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_SALE)
-//                }
-//            } else if (detailNFT.type == "NOT MINE") {
-//                if (detailNFT.price == "NOT SALE") {
-//                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_NOTSALE)
-//                } else {
-//                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_SALE)
-//                }
-//            } else if (detailNFT.type == "NEED LOGIN") {
+        baseViewModelScope.launch {
+            if (detailNFT.isMe) {
+                if (detailNFT.nftInfo.price == "NOT SALE") {
+                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_NOTSALE)
+                } else {
+                    detailOwnerTypeState.emit(DetailOwnerType.MINE_AND_SALE)
+                }
+            } else {
+                if (detailNFT.nftInfo.price == "NOT SALE") {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_NOTSALE)
+                } else {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_SALE)
+                }
+            }
+//            else if (detailNFT.type == "NEED LOGIN") {
 //                if (detailNFT.price == "NOT SALE") {
 //                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_NOTSALE)
 //                } else {
 //                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_SALE)
 //                }
 //            }
-//        }
+        }
     }
 
     override fun onCommunityMoreClicked() {
@@ -179,19 +180,8 @@ class DetailNftViewModel @Inject constructor(
 
                 DetailOwnerType.NOTMINE_AND_SALE -> {
                     val detailNFT = detailNftState.value.successOrNull()
-                    if (detailNFT != null) {
-//                        _navigationEvent.emit(
-//                            DetailNftNavigationAction.NavigateToBuyNft(
-//                                detailNFT.nftInfo.nftId,
-//                                detailNFT.nftInfo.nftImgUrl,
-//                                detailNFT.nftInfo.nftName,
-//                                detailNFT.memberInfo.profileImgUrl ?: "",
-//                                detailNFT.memberInfo.memberName,
-//                                detailNFT.nftInfo.price,
-//                                detailNFT.viewerNickname,
-//                                detailNFT.marketId
-//                            )
-//                        )
+                    detailNFT?.let {
+                        _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft(detailNFT.nftInfo.nftId))
                     }
                 }
 

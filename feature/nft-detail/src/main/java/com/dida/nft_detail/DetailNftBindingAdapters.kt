@@ -105,7 +105,7 @@ fun TextView.bindNftDidaPrice(uiState: UiState<Nft>) {
 
 @BindingAdapter("NftPriceLayout")
 fun ConstraintLayout.bindVisible(type: DetailOwnerType) {
-    if (type == DetailOwnerType.NOTMINE_AND_NOTSALE ||type == DetailOwnerType.NOTLOGIN_AND_NOTSALE) {
+    if (type == DetailOwnerType.NOTMINE_AND_NOTSALE || type == DetailOwnerType.NOTLOGIN_AND_NOTSALE) {
         this.visibility = View.GONE
     }
 }
