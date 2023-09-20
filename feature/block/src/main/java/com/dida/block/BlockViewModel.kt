@@ -1,7 +1,7 @@
 package com.dida.block
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HideMember
 import com.dida.domain.onError
@@ -33,7 +33,7 @@ class BlockViewModel @Inject constructor(
 
     private fun getUserHides() {
         baseViewModelScope.launch {
-            hideMembersUseCase(0, PAGING_SIZE)
+            hideMembersUseCase(0, PAGE_SIZE)
                 .onSuccess { _userState.value = it.content }
                 .onError { e -> catchError(e) }
         }

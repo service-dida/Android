@@ -2,7 +2,7 @@ package com.dida.mypage
 
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UPDATED_DESC
 import com.dida.common.util.UiState
@@ -66,7 +66,7 @@ class MyPageViewModel @Inject constructor(
                     _myPageState.value = UiState.Success(it)
                 }.flatMap { checkWalletUseCase() }
                 .onSuccess { hasWalletState.value = it }
-                .flatMap { commonProfileNftUseCase(page = 0, pageSize = PAGING_SIZE, sort = UPDATED_DESC) }
+                .flatMap { commonProfileNftUseCase(page = 0, pageSize = PAGE_SIZE, sort = UPDATED_DESC) }
                 .onSuccess { _userCardState.value = it }
                 .onError { e -> catchError(e) }
         }

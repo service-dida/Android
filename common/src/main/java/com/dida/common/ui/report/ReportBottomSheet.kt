@@ -101,7 +101,3 @@ class ReportBottomSheet(
         }
     }
 }
-
-enum class ReportType {
-    USER, POST, CARD
-}

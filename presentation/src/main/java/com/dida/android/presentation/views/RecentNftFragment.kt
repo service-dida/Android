@@ -71,8 +71,7 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
         binding.recentNftRecycler.layoutManager = gridLayoutManager
         binding.recentNftRecycler.adapter = cardPagingAdapter
         binding.recentNftRecycler.addOnPagingListener(
-            arrivedTop = { viewModel.nextPage() },
-            arrivedBottom = { viewModel.beforePage() }
+            arrivedBottom = { viewModel.nextPage() }
         )
     }
 }

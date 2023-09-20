@@ -2,14 +2,15 @@ package com.dida.community_detail
 
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.ui.report.ReportType
 import com.dida.common.ui.report.ReportViewModelDelegate
-import com.dida.common.util.PAGING_SIZE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.data.DataApplication
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
+import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CommentsFromPostUserUseCase
@@ -66,7 +67,7 @@ class DetailCommunityViewModel @Inject constructor(
             showLoading()
             postsDetailUseCase(postId = postId)
                 .onSuccess { _postState.value = it }
-                .flatMap { commentsFromPostUserUseCase.invoke(postId = postId, 0 , PAGING_SIZE) }
+                .flatMap { commentsFromPostUserUseCase.invoke(postId = postId, 0 , PAGE_SIZE) }
                 .onSuccess {
                     _comments.value = it
                     _commentEmpty.value = it.content.isEmpty()
@@ -94,7 +95,7 @@ class DetailCommunityViewModel @Inject constructor(
                         commentsFromPostUserUseCase(
                             postId = postId,
                             page = comments.value.page,
-                            size = PAGING_SIZE
+                            size = PAGE_SIZE
                         )
                     }.onSuccess {
                         isWrite.value = true
@@ -109,31 +110,13 @@ class DetailCommunityViewModel @Inject constructor(
 
     fun nextPage(postId: Long) {
         baseViewModelScope.launch {
-            showLoading()
             if (!comments.value.hasNext) {
-                dismissLoading()
                 return@launch
             }
             commentsFromPostUserUseCase(
                 postId = postId,
                 page = comments.value.page + 1,
-                size = PAGING_SIZE
-            ).onSuccess { _comments.value = it
-            }.onError { e -> catchError(e) }
-        }
-    }
-
-    fun beforePage(postId: Long) {
-        baseViewModelScope.launch {
-            showLoading()
-            if (comments.value.page == 0) {
-                dismissLoading()
-                return@launch
-            }
-            commentsFromPostUserUseCase(
-                postId = postId,
-                page = comments.value.page - 1,
-                size = PAGING_SIZE
+                size = PAGE_SIZE
             ).onSuccess { _comments.value = it
             }.onError { e -> catchError(e) }
         }
@@ -203,10 +186,6 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: ReportType, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
-    }
-
     fun onDeletePost(postId: Long) {
         baseViewModelScope.launch {
             deletePostUseCase.invoke(postId)
@@ -218,7 +197,11 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostBlock(type: ReportType, blockId: Long){
-        onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
+    fun onReport(type: Report, reportId: Long, content: String) = baseViewModelScope.launch {
+        onReportDelegate(type = type, reportId = reportId, content = content)
+    }
+
+    fun onBlock(type: Block, blockId: Long) = baseViewModelScope.launch {
+        onBlockDelegate(type = type, blockId = blockId)
     }
 }

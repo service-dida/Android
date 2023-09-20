@@ -9,9 +9,9 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.ui.report.ReportBottomSheet
-import com.dida.common.ui.report.ReportType
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
+import com.dida.domain.main.model.Report
 import com.dida.image_viewer.ImageViewerActivity
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.DetailNftNavigationAction
@@ -174,7 +174,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     private fun showReportDialog(cardId: Long) {
         ReportBottomSheet { confirm, content ->
             if (confirm) viewModel.onReport(
-                type = ReportType.USER,
+                type = Report.NFT,
                 reportId = cardId,
                 content = content
             )

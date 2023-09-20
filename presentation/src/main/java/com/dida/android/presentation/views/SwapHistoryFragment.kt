@@ -68,8 +68,7 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
     private fun initAdapter(){
         binding.swapHistoryRv.adapter = swapHistoryAdapter
         binding.swapHistoryRv.addOnPagingListener(
-            arrivedTop = { viewModel.nextPage() },
-            arrivedBottom = { viewModel.beforePage() }
+            arrivedBottom = { viewModel.nextPage() }
         )
     }
 }
