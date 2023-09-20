@@ -36,11 +36,11 @@ class LoginMainViewModel @Inject constructor(
             showLoading()
             loginUseCase(idToken)
                 .onSuccess {
-                    if(it.message.isNullOrEmpty()) {
-                        _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.message ?: ""))
-                    } else {
+                    if (it.message.isNullOrEmpty()) {
                         dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
                         _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
+                    } else {
+                        _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.message ?: ""))
                     }
                     dismissLoading()
                 }.onError { e -> catchError(e) }
