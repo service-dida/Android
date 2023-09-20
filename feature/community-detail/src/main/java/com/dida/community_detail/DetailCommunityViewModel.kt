@@ -2,14 +2,15 @@ package com.dida.community_detail
 
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.ui.report.ReportType
 import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.common.util.PAGE_SIZE
 import com.dida.data.DataApplication
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
+import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CommentsFromPostUserUseCase
@@ -185,10 +186,6 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: ReportType, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
-    }
-
     fun onDeletePost(postId: Long) {
         baseViewModelScope.launch {
             deletePostUseCase.invoke(postId)
@@ -200,7 +197,11 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostBlock(type: ReportType, blockId: Long){
+    fun onReport(type: Report, reportId: Long, content: String) {
+        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
+    }
+
+    fun onBlock(type: Block, blockId: Long){
         onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
     }
 }

@@ -3,7 +3,6 @@ package com.dida.nft_detail
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.ui.report.ReportType
 import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
@@ -12,6 +11,7 @@ import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.BlockUseCase
@@ -124,7 +124,7 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: ReportType, reportId: Long, content: String) {
+    fun onReport(type: Report, reportId: Long, content: String) {
         onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
     }
 
