@@ -80,8 +80,10 @@ class UserProfileViewModel @AssistedInject constructor(
         baseViewModelScope.launch {
             if (!userCardState.value.hasNext) return@launch
             memberProfileNftUseCase(memberId = userId, page = userCardState.value.page + 1, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
-                .onSuccess { _userCardState.value = it }
-                .onError { e -> catchError(e) }
+                .onSuccess {
+                    it.content = (userCardState.value.content.toMutableList()) + it.content
+                    _userCardState.value = it
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -97,7 +99,11 @@ class UserProfileViewModel @AssistedInject constructor(
             showLoading()
             nftLikeUseCase(nftId)
                 .onSuccess {
-                    _messageEvent.emit(UserMessageAction.NftBookmarkMessage(liked)) }
+                    _messageEvent.emit(UserMessageAction.NftBookmarkMessage(liked))
+                    userCardState.value.content.forEach {
+                        if (it.nftInfo.nftId == nftId) it.copy(liked = liked)
+                    }
+                }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }

@@ -77,8 +77,9 @@ class CommunityViewModel @Inject constructor(
             postsUseCase(postsState.value.page + 1, PAGE_SIZE)
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    _postsState.value = it }
-                .onError { e -> catchError(e) }
+                    it.content = (postsState.value.content.toMutableList()) + it.content
+                    _postsState.value = it
+                }.onError { e -> catchError(e) }
         }
     }
 
