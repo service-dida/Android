@@ -49,7 +49,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is BuyNftNavigationAction.NavigateToSuccess -> navigate(BuyNftFragmentDirections.actionBuyNftFragmentToBuySuccessFragment(it.cardId))
-                    is BuyNftNavigationAction.NavigateToFailAlert -> buyFailToastMessage()
+                    is BuyNftNavigationAction.NavigateToFailAlert -> showFailBuyDialog()
                 }
             }
         }
@@ -76,7 +76,7 @@ class BuyNftFragment : BaseFragment<FragmentBuyNftBinding, BuyNftViewModel>(R.la
         }
     }
 
-    private fun buyFailToastMessage() {
+    private fun showFailBuyDialog() {
         ImageDialogFragment.Builder()
             .title(getString(R.string.buy_fail_main_title))
             .message(getString(R.string.buy_fail_sub_title))
