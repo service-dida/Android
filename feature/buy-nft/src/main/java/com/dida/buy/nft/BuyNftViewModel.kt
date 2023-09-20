@@ -56,7 +56,7 @@ class BuyNftViewModel @AssistedInject constructor(
                 buyNftUseCase(password, nft.nftInfo.nftId)
                     .onSuccess { _navigationEvent.emit(BuyNftNavigationAction.NavigateToSuccess(nft.nftInfo.nftId)) }
                     .onError { e ->
-                        if (e is Wallet008Exception) _navigationEvent.emit(BuyNftNavigationAction.NavigateToFailAlert)
+                        if (e is Wallet008Exception) _navigationEvent.emit(BuyNftNavigationAction.NavigateToFail)
                         else catchError(e)
                     }
             }
