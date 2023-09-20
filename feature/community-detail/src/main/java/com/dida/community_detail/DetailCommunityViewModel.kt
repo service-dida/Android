@@ -197,11 +197,11 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: Report, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
+    fun onReport(type: Report, reportId: Long, content: String) = baseViewModelScope.launch {
+        onReportDelegate(type = type, reportId = reportId, content = content)
     }
 
-    fun onBlock(type: Block, blockId: Long){
-        onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
+    fun onBlock(type: Block, blockId: Long) = baseViewModelScope.launch {
+        onBlockDelegate(type = type, blockId = blockId)
     }
 }

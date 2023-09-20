@@ -124,8 +124,12 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: Report, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
+    fun onReport(type: Report, reportId: Long, content: String) = baseViewModelScope.launch {
+        onReportDelegate(type = type, reportId = reportId, content = content)
+    }
+
+    fun onBlock(type: Block, blockId: Long) = baseViewModelScope.launch {
+        onBlockDelegate(type = type, blockId = blockId)
     }
 
     // TODO : NFT 상세 내껀지 판별하는 로직 수정
