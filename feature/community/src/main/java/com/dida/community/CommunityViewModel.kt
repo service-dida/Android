@@ -3,7 +3,6 @@ package com.dida.community
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.ui.report.ReportType
 import com.dida.common.ui.report.ReportViewModelDelegate
 import com.dida.common.util.INIT_PAGE
 import com.dida.common.util.PAGE_SIZE
@@ -13,8 +12,10 @@ import com.dida.data.DataApplication
 import com.dida.data.model.Auth001Exception
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
+import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.HotPostsUseCase
@@ -129,11 +130,11 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: ReportType, reportId: Long, content: String) {
+    fun onReport(type: Report, reportId: Long, content: String) {
         onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
     }
 
-    fun onBlock(type: ReportType, blockId: Long) {
+    fun onBlock(type: Block, blockId: Long) {
         onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
     }
 }

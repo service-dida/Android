@@ -16,18 +16,19 @@ import javax.inject.Inject
 
 interface ReportViewModelDelegate {
 
-    val navigateToReportEvent: SharedFlow<Pair<ReportType, Boolean>>
-    val navigateToBlockEvent: SharedFlow<Pair<ReportType, Boolean>>
+    val navigateToReportEvent: SharedFlow<Pair<Report, Boolean>>
+    val navigateToBlockEvent: SharedFlow<Pair<Block, Boolean>>
 
     fun onReportDelegate(
         coroutineScope: CoroutineScope,
-        type: ReportType, reportId: Long,
+        type: Report,
+        reportId: Long,
         content: String
     )
 
     fun onBlockDelegate(
         coroutineScope: CoroutineScope,
-        type: ReportType,
+        type: Block,
         blockId: Long
      )
 }
@@ -37,42 +38,30 @@ class DefaultReportViewModelDelegate @Inject constructor(
     private val blockUseCase: BlockUseCase,
 ): ReportViewModelDelegate, BaseViewModel() {
 
-    private val _navigateToReportEvent: MutableSharedFlow<Pair<ReportType, Boolean>> = MutableSharedFlow()
-    override val navigateToReportEvent: SharedFlow<Pair<ReportType, Boolean>> = _navigateToReportEvent.asSharedFlow()
+    private val _navigateToReportEvent: MutableSharedFlow<Pair<Report, Boolean>> = MutableSharedFlow()
+    override val navigateToReportEvent: SharedFlow<Pair<Report, Boolean>> = _navigateToReportEvent.asSharedFlow()
 
-    private val _navigateToBlockEvent: MutableSharedFlow<Pair<ReportType, Boolean>> = MutableSharedFlow()
-    override val navigateToBlockEvent: SharedFlow<Pair<ReportType, Boolean>> = _navigateToBlockEvent.asSharedFlow()
+    private val _navigateToBlockEvent: MutableSharedFlow<Pair<Block, Boolean>> = MutableSharedFlow()
+    override val navigateToBlockEvent: SharedFlow<Pair<Block, Boolean>> = _navigateToBlockEvent.asSharedFlow()
 
-    // TODO : 서버 API 에러 관련 수정 필요
     override fun onReportDelegate(
         coroutineScope: CoroutineScope,
-        type: ReportType,
+        type: Report,
         reportId: Long,
         content: String
     ) {
         coroutineScope.launch {
-            when (type) {
-                ReportType.USER -> reportUseCase(type = Report.MEMBER, reportedId = reportId, description = content)
-                ReportType.POST -> reportUseCase(type = Report.POST, reportedId = reportId, description = content)
-                ReportType.CARD -> reportUseCase(type = Report.NFT, reportedId = reportId, description = content)
-            }.onSuccess { _navigateToReportEvent.emit(Pair(type, true))
-            }.onError {
-                when(it) {
-//                    is AlreadyReport -> _navigateToReportEvent.emit(Pair(type, false))
-                    else -> catchError(it)
-                }
-            }
+            reportUseCase(type = type, reportedId = reportId, description = content)
+                .onSuccess { _navigateToReportEvent.emit(Pair(type, true)) }
+                .onError { e -> catchError(e) }
         }
     }
 
-    // TODO : 차단 API 추가 연결하기
-    override fun onBlockDelegate(coroutineScope: CoroutineScope, type: ReportType, blockId: Long) {
+    override fun onBlockDelegate(coroutineScope: CoroutineScope, type: Block, blockId: Long) {
         coroutineScope.launch {
-            when (type) {
-                ReportType.POST -> blockUseCase(type = Block.POST, blockId = blockId)
-                else -> blockUseCase(type = Block.MEMBER, blockId = blockId)
-            }.onSuccess { _navigateToBlockEvent.emit(Pair(type, true))
-            }.onError { _navigateToBlockEvent.emit(Pair(type, false)) }
+            blockUseCase(type = type, blockId = blockId)
+                .onSuccess { _navigateToBlockEvent.emit(Pair(type, true)) }
+                .onError { _navigateToBlockEvent.emit(Pair(type, false)) }
         }
     }
 
