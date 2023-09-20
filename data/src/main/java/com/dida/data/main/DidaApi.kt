@@ -221,8 +221,8 @@ interface DidaApi {
     suspend fun postBuyNft(@Body body: PostBuyNftRequest): Unit
 
     // NFT 상세보기
-    @GET("/common/nft/{nftId}")
-    suspend fun getNftDetail(nftId: Long): GetNftResponse
+    @GET("/nft/{nftId}")
+    suspend fun getNftDetail(@Path("nftId") nftId: Long): GetNftResponse
 
     // 전체 거래 내역 보기
     @GET("/member/transaction")
