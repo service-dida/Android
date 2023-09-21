@@ -60,11 +60,12 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="14dp">
-                <!--TODO : 프로필 없을 시 기본 사진 추가-->
+                    android:layout_marginTop="14dp"
+                    app:onSingleClick="@{() -> vm.onProfileImageClicked()}">
+
                     <ImageView
                         android:id="@+id/circleImageView"
-                        updateProfileImage="@{vm.profileImageState}"
+                        app:updateProfileImage="@{vm.profileImageState}"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:background="@drawable/custom_surface2_radius100"
