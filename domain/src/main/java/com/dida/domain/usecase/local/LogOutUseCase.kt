@@ -4,7 +4,7 @@ import com.dida.domain.NetworkResult
 import com.dida.domain.main.LocalRepository
 import javax.inject.Inject
 
-class LogOutCheckUseCase @Inject constructor(
+class LogOutUseCase @Inject constructor(
     private val repository: LocalRepository
 ) {
     suspend operator fun invoke() : NetworkResult<Unit> {

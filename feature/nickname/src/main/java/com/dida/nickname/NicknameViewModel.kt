@@ -3,11 +3,12 @@ package com.dida.nickname
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
-import com.dida.data.DataApplication
+import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CheckNicknameUseCase
 import com.dida.domain.usecase.PostUserUseCase
+import com.dida.domain.usecase.local.SetTokenUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.*
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 class NicknameViewModel @AssistedInject constructor(
     @Assisted("email") val email: String,
     private val postUserUseCase: PostUserUseCase,
-    private val checkNicknameUseCase: CheckNicknameUseCase
+    private val checkNicknameUseCase: CheckNicknameUseCase,
+    private val setTokenUseCase: SetTokenUseCase
 ) : BaseViewModel(), NicknameActionHandler {
 
     private val TAG = "NicknameViewModel"
@@ -84,9 +86,8 @@ class NicknameViewModel @AssistedInject constructor(
     private fun createUserAPIServer(email: String, nickName: String) {
         baseViewModelScope.launch {
             postUserUseCase(email, nickName)
-                .onSuccess {
-                    DataApplication.dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
-                    _navigationEvent.emit(NicknameNavigationAction.NavigateToHome) }
+                .flatMap { setTokenUseCase(it.accessToken, it.refreshToken) }
+                .onSuccess { _navigationEvent.emit(NicknameNavigationAction.NavigateToHome) }
                 .onError { e -> catchError(e) }
         }
     }
