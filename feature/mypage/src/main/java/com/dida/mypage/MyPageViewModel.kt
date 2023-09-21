@@ -2,6 +2,7 @@ package com.dida.mypage
 
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.INIT_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
@@ -46,16 +47,17 @@ class MyPageViewModel @Inject constructor(
     private val hasWalletState = MutableStateFlow<Boolean>(false)
 
     private val _userCardState: MutableStateFlow<Contents<CommonProfileNft>> = MutableStateFlow(
-        Contents(page = 0, pageSize = 0, content = emptyList())
+        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val userCardState: StateFlow<Contents<CommonProfileNft>> = _userCardState.asStateFlow()
 
-    enum class CardSortType{
-        NEWEST, OLDEST
-    }
+    private val _cardSortTypeState: MutableStateFlow<Sort> = MutableStateFlow<Sort>(Sort.NEWEST)
+    val cardSortTypeState: StateFlow<Sort> = _cardSortTypeState
 
-    private val _cardSortTypeState: MutableStateFlow<CardSortType> = MutableStateFlow<CardSortType>(CardSortType.NEWEST)
-    val cardSortTypeState: StateFlow<CardSortType> = _cardSortTypeState
+    init {
+        getUserInfo()
+        getUserNfts()
+    }
 
     fun getUserInfo() {
         baseViewModelScope.launch {
@@ -64,18 +66,29 @@ class MyPageViewModel @Inject constructor(
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _myPageState.value = UiState.Success(it)
-                }.flatMap { checkWalletUseCase() }
+                }
+                .flatMap { checkWalletUseCase() }
                 .onSuccess { hasWalletState.value = it }
-                .flatMap { commonProfileNftUseCase(page = 0, pageSize = PAGE_SIZE, sort = Sort.NEWEST) }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun getUserNfts() {
+        baseViewModelScope.launch {
+            commonProfileNftUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
                 .onSuccess { _userCardState.value = it }
                 .onError { e -> catchError(e) }
         }
     }
 
-    private fun setCardSort(type: CardSortType) {
-        when(type) {
-            CardSortType.NEWEST -> {}
-            CardSortType.OLDEST -> {}
+    fun onNextPage() {
+        baseViewModelScope.launch {
+            if (!userCardState.value.hasNext) return@launch
+            commonProfileNftUseCase(page = userCardState.value.page + 1, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
+                .onSuccess {
+                    it.content = (userCardState.value.content.toMutableList()) + it.content
+                    _userCardState.value = it
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -100,7 +113,7 @@ class MyPageViewModel @Inject constructor(
             showLoading()
             nftLikeUseCase(nftId)
                 .onSuccess {
-                    _navigationEvent.emit(MypageNavigationAction.NavigateToLikeButtonClicked)
+                    _navigationEvent.emit(MypageNavigationAction.NavigateToLikeButtonClicked(nftId))
                     dismissLoading()
                 }.onError { e -> catchError(e) }
         }
@@ -112,9 +125,9 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    override fun onMypageNftTypeClicked(type: CardSortType) {
+    override fun onMypageNftTypeClicked(type: Sort) {
         _cardSortTypeState.value = type
-        setCardSort(type)
+        getUserNfts()
     }
 
     override fun onSettingsClicked() {

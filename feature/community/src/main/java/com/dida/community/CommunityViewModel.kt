@@ -60,7 +60,7 @@ class CommunityViewModel @Inject constructor(
 
     fun getCommunity() {
         baseViewModelScope.launch {
-            postsUseCase(postsState.value.page, PAGE_SIZE)
+            postsUseCase(INIT_PAGE, PAGE_SIZE)
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _postsState.value = it }

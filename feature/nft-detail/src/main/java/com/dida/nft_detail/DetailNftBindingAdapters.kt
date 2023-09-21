@@ -49,7 +49,7 @@ fun TextView.bindDescription(uiState: UiState<Nft>) {
 
 @BindingAdapter("userNickname")
 fun TextView.bindNickName(uiState: UiState<Nft>) {
-    this.text = uiState.successOrNull()?.nftInfo?.nftName
+    this.text = uiState.successOrNull()?.memberInfo?.memberName
 }
 
 @BindingAdapter("userProfile")
