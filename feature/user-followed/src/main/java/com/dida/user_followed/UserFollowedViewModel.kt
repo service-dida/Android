@@ -1,10 +1,14 @@
 package com.dida.user_followed
 
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.PAGE_SIZE
+import com.dida.domain.Contents
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CommonFollowUseCase
+import com.dida.domain.usecase.CommonFollowingUseCase
 import com.dida.domain.usecase.MemberFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,25 +23,69 @@ import javax.inject.Inject
 @HiltViewModel
 class UserFollowedViewModel @Inject constructor(
     private val memberFollowUseCase: MemberFollowUseCase,
-    private val commonFollowUseCase: CommonFollowUseCase
+    private val commonFollowUseCase: CommonFollowUseCase,
+    private val commonFollowingUseCase: CommonFollowingUseCase
 ) : BaseViewModel() {
 
     private val TAG = "UserFollowedViewModel"
 
-    private val _followingListState: MutableStateFlow<List<CommonFollow>> = MutableStateFlow(emptyList())
-    val followingListState: StateFlow<List<CommonFollow>> = _followingListState.asStateFlow()
+    private val _followingState: MutableStateFlow<Contents<CommonFollow>> = MutableStateFlow(
+        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+    )
+    val followingState: StateFlow<Contents<CommonFollow>> = _followingState.asStateFlow()
 
-    private val _followerListState: MutableStateFlow<List<CommonFollow>> = MutableStateFlow(emptyList())
-    val followerListState: StateFlow<List<CommonFollow>> = _followerListState.asStateFlow()
+    private val _followerState: MutableStateFlow<Contents<CommonFollow>> = MutableStateFlow(
+        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+    )
+    val followerState: StateFlow<Contents<CommonFollow>> = _followerState.asStateFlow()
 
     private val _messageEvent: MutableSharedFlow<UserFollowedMessageAction> = MutableSharedFlow<UserFollowedMessageAction>()
     val messageEvent: SharedFlow<UserFollowedMessageAction> = _messageEvent.asSharedFlow()
 
-    /**
-     * TODO : 팔로우 유저 목록 API 연동
-     **/
-    fun onGetUserFollowed() {
 
+    init {
+        getFollowerMember()
+        getFollowingMember()
+    }
+
+    fun getFollowerMember() {
+        baseViewModelScope.launch {
+            commonFollowUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE)
+                .onSuccess { _followerState.value = it }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun getFollowingMember() {
+        baseViewModelScope.launch {
+            baseViewModelScope.launch {
+                commonFollowingUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE)
+                    .onSuccess { _followingState.value = it }
+                    .onError { e -> catchError(e) }
+            }
+        }
+    }
+
+    fun onNextPageFromFollower() {
+        baseViewModelScope.launch {
+            commonFollowUseCase(page = followerState.value.page + 1, pageSize = PAGE_SIZE)
+                .onSuccess {
+                    it.content = (followerState.value.content.toMutableList()) + it.content
+                    _followerState.value = it
+                }
+                .onError { e -> catchError(e) }
+        }
+    }
+
+    fun onNextPageFromFollowing() {
+        baseViewModelScope.launch {
+            commonFollowingUseCase(page = followingState.value.page + 1, pageSize = PAGE_SIZE)
+                .onSuccess {
+                    it.content = (followingState.value.content.toMutableList()) + it.content
+                    _followingState.value = it
+                }
+                .onError { e -> catchError(e) }
+        }
     }
 
     fun onFollowButtonClicked(user: CommonFollow) = baseViewModelScope.launch {

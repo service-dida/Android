@@ -145,7 +145,7 @@ interface DidaApi {
         @Query("size") size: Int,
     ): GetCommonFollowResponse
 
-    // 팔로우 목록 보기
+    // 팔로잉 목록 보기
     @GET("/common/following")
     suspend fun getCommonFollowing(
         @Query("page") page: Int,

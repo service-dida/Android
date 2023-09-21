@@ -171,8 +171,8 @@ class UserFollowedFragment :
         tabs: List<Follow>,
         pagerState: PagerState
     ) {
-        val followingList = viewModel.followingListState.collectAsStateWithLifecycle()
-        val followerList = viewModel.followerListState.collectAsStateWithLifecycle()
+        val following = viewModel.followingState.collectAsStateWithLifecycle()
+        val follower = viewModel.followerState.collectAsStateWithLifecycle()
 
         HorizontalPager(
             modifier = Modifier.fillMaxSize(),
@@ -181,14 +181,16 @@ class UserFollowedFragment :
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                when(tabs[index]) {
+                when (tabs[index]) {
                     Follow.FOLLOWER -> {
-                        if (followerList.value.isEmpty()) Spacer(modifier = Modifier.weight(1f))
-                        else FollowedColumn(items = followerList.value)
+                        viewModel.getFollowerMember()
+                        if (follower.value.content.isEmpty()) Spacer(modifier = Modifier.weight(1f))
+                        else FollowedColumn(items = follower.value.content)
                     }
                     Follow.FOLLOWING -> {
-                        if (followingList.value.isEmpty()) Spacer(modifier = Modifier.weight(1f))
-                        else FollowedColumn(items = followingList.value)
+                        viewModel.getFollowingMember()
+                        if (following.value.content.isEmpty()) Spacer(modifier = Modifier.weight(1f))
+                        else FollowedColumn(items = following.value.content)
                     }
                 }
             }
@@ -216,7 +218,8 @@ class UserFollowedFragment :
     fun FollowUserItem(
         item: CommonFollow,
         onUserClicked: () -> Unit,
-        onFollowButtonClicked: () -> Unit
+        onFollowButtonClicked: () -> Unit,
+        isFollowed: Boolean
     ) {
         Surface(
             modifier = Modifier
@@ -259,7 +262,8 @@ class UserFollowedFragment :
                         overflow = TextOverflow.Ellipsis
                     )
                     Divider12()
-                    CancelFollowButton(onFollowButtonClicked = onFollowButtonClicked)
+                    if (isFollowed) CancelFollowButton(onFollowButtonClicked = onFollowButtonClicked)
+                    else FollowButton(onFollowButtonClicked = onFollowButtonClicked)
                 }
             }
         }
