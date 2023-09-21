@@ -117,22 +117,18 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private fun showImageFromBottomSheet() {
         val dialog = ImageBottomSheet { getGallery ->
-            if (getGallery) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) launchGalleryPicker()
-                else launchGallery()
-            } else {
-                launchCamera()
-            }
+            if (getGallery) launchGallery()
+            else launchCamera()
         }
         dialog.show(childFragmentManager, TAG)
     }
 
-    private fun launchGalleryPicker() {
-        galleryPickerLauncher.launch(PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly).build())
-    }
-
     private fun launchGallery() {
-        galleryLauncher.launch("image/*")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            galleryPickerLauncher.launch(PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly).build())
+        } else {
+            galleryLauncher.launch("image/*")
+        }
     }
 
     private fun launchCamera() {
