@@ -20,6 +20,7 @@ import com.dida.domain.usecase.NftDetailUseCase
 import com.dida.domain.usecase.NftLikeUseCase
 import com.dida.domain.usecase.PostsFromNftUseCase
 import com.dida.domain.usecase.SellNftUseCase
+import com.dida.domain.usecase.local.LoginCheckUseCase
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -39,6 +40,7 @@ class DetailNftViewModel @Inject constructor(
     private val sellNftUseCase: SellNftUseCase,
     private val blockUseCase: BlockUseCase,
     private val deleteNftUseCase: DeleteNftUseCase,
+    private val loginCheckUseCase: LoginCheckUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -51,6 +53,9 @@ class DetailNftViewModel @Inject constructor(
     private val _detailNftState: MutableStateFlow<UiState<Nft>> = MutableStateFlow(UiState.Loading)
     val detailNftState: StateFlow<UiState<Nft>> = _detailNftState
 
+    private val _isLoginedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoginedState: StateFlow<Boolean> = _isLoginedState.asStateFlow()
+
     private val _communityState: MutableStateFlow<List<Post>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Post>> = _communityState.asStateFlow()
 
@@ -62,6 +67,14 @@ class DetailNftViewModel @Inject constructor(
         cardIdState.value = cardId
         onGetDetailCard()
         onGetCommunity()
+        loginCheck()
+    }
+
+    private fun loginCheck() {
+        baseViewModelScope.launch {
+            loginCheckUseCase()
+                .onSuccess { _isLoginedState.value = it }
+        }
     }
 
     private fun onGetDetailCard() {

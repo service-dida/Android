@@ -20,6 +20,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.HotPostsUseCase
 import com.dida.domain.usecase.PostsUseCase
+import com.dida.domain.usecase.local.LoginCheckUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -36,6 +37,7 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     private val postsUseCase: PostsUseCase,
     private val hotPostsUseCase: HotPostsUseCase,
+    private val loginCheckUseCase: LoginCheckUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -91,11 +93,11 @@ class CommunityViewModel @Inject constructor(
 
     override fun onCommunityWriteClicked() {
         baseViewModelScope.launch {
-            if (DataApplication.dataStorePreferences.getAccessToken() == null) {
-                catchError(Auth001Exception(e = IOException()))
-            } else {
-                _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
-            }
+            loginCheckUseCase()
+                .onSuccess {
+                    if (it) _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
+                    else catchError(Auth001Exception(e = IOException()))
+                }
         }
     }
 

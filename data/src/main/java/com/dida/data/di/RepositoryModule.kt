@@ -1,8 +1,8 @@
 package com.dida.data.di
 
 import com.dida.data.klaytn.KlaytnApi
-import com.dida.data.main.DidaApi
 import com.dida.data.klaytn.KlaytnRepositoryImpl
+import com.dida.data.main.DidaApi
 import com.dida.data.main.MainRepositoryImpl
 import com.dida.domain.klaytn.KlaytnRepository
 import com.dida.domain.main.MainRepository

@@ -2,9 +2,11 @@ package com.dida.login
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
+import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.LoginUseCase
+import com.dida.domain.usecase.local.SetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginMainViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val setTokenUseCase: SetTokenUseCase
 ) : BaseViewModel() {
 
     private val TAG = "LoginMainViewModel"
@@ -36,14 +39,16 @@ class LoginMainViewModel @Inject constructor(
             showLoading()
             loginUseCase(idToken)
                 .onSuccess {
-                    if (it.message.isNullOrEmpty()) {
-                        dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
-                        _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
-                    } else {
+                    if (!it.message.isNullOrEmpty()) {
                         _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.message ?: ""))
+                        return@launch
+
                     }
-                    dismissLoading()
-                }.onError { e -> catchError(e) }
+                }
+                .flatMap { setTokenUseCase(it.accessToken, it.refreshToken) }
+                .onSuccess { _navigationEvent.emit(LoginNavigationAction.NavigateToHome) }
+                .onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 }
