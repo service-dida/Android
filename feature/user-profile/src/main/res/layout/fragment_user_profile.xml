@@ -43,6 +43,7 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     app:otherUserFollowBtn="@{vm.userProfileState}"
+                    app:isMyProfile="@{vm.isMyProfile}"
                     android:fontFamily="@font/pretendard_regular"
                     app:onSingleClick="@{() ->  vm.onFollowClicked()}"/>
 

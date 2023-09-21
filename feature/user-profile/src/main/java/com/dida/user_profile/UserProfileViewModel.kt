@@ -19,6 +19,7 @@ import com.dida.domain.usecase.MemberFollowUseCase
 import com.dida.domain.usecase.MemberProfileNftUseCase
 import com.dida.domain.usecase.MemberProfileUseCase
 import com.dida.domain.usecase.NftLikeUseCase
+import com.dida.domain.usecase.local.GetUserIdUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
@@ -31,6 +32,7 @@ class UserProfileViewModel @AssistedInject constructor(
     private val memberProfileUseCase: MemberProfileUseCase,
     private val memberFollowUseCase: MemberFollowUseCase,
     private val memberProfileNftUseCase: MemberProfileNftUseCase,
+    private val getUserIdUseCase: GetUserIdUseCase,
 ) : BaseViewModel(), UserProfileActionHandler, NftActionHandler {
 
     private val TAG = "UserProfileViewModel"
@@ -52,9 +54,20 @@ class UserProfileViewModel @AssistedInject constructor(
     )
     val userCardState: StateFlow<Contents<CommonProfileNft>> = _userCardState.asStateFlow()
 
+    private val _isMyProfile: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isMyProfile: StateFlow<Boolean> = _isMyProfile.asStateFlow()
+
     init {
         getUserProfile()
         getUserNfts()
+        checkMyProfile()
+    }
+
+    private fun checkMyProfile() {
+        baseViewModelScope.launch {
+            getUserIdUseCase()
+                .onSuccess { _isMyProfile.value = (it == userId) }
+        }
     }
 
     fun getUserProfile() {

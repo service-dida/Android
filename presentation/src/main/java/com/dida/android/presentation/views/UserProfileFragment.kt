@@ -92,12 +92,6 @@ class UserProfileFragment :
         }
 
         viewLifecycleOwner.repeatOnCreated {
-            if (args.userId == dataStorePreferences.getUserId()) {
-                binding.followBtn.visibility = View.GONE
-            }
-        }
-
-        viewLifecycleOwner.repeatOnResumed {
             viewModel.userCardState.collectLatest {
                 userCardAdapter.submitList(it.content)
             }
