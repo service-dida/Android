@@ -34,12 +34,11 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
     private val TAG = "UpdateProfileFragment"
     private val navController: NavController by lazy { findNavController() }
 
-    private val galleryPickerLauncher =
-        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { url ->
-            url?.let {
-                createFile(url)
-            }
+    private val galleryPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri ->
+        imageUri?.let {
+            createFile(it)
         }
+    }
 
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
         imageUri?.let {
@@ -47,14 +46,13 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
         }
     }
 
-    private val cameraLauncher: ActivityResultLauncher<Uri> =
-        registerForActivityResult(ActivityResultContracts.TakePicture()) {
-            if (it) {
-                cameraUri?.let { uri ->
-                    createFile(uri)
-                }
+    private val cameraLauncher: ActivityResultLauncher<Uri> = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        if (it) {
+            cameraUri?.let { uri ->
+                createFile(uri)
             }
         }
+    }
 
     private var cameraUri: Uri? = null
 
