@@ -8,6 +8,7 @@ import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
+import com.dida.data.DataApplication
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.Post
@@ -51,6 +52,9 @@ class DetailNftViewModel @Inject constructor(
     private val _detailNftState: MutableStateFlow<UiState<Nft>> = MutableStateFlow(UiState.Loading)
     val detailNftState: StateFlow<UiState<Nft>> = _detailNftState
 
+    private val _isLoginedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoginedState: StateFlow<Boolean> = _isLoginedState.asStateFlow()
+
     private val _communityState: MutableStateFlow<List<Post>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Post>> = _communityState.asStateFlow()
 
@@ -62,6 +66,15 @@ class DetailNftViewModel @Inject constructor(
         cardIdState.value = cardId
         onGetDetailCard()
         onGetCommunity()
+        loginCheck()
+    }
+
+    private fun loginCheck() {
+        baseViewModelScope.launch {
+            DataApplication.dataStorePreferences.getAccessToken()?.let {
+                _isLoginedState.value = true
+            }
+        }
     }
 
     private fun onGetDetailCard() {
