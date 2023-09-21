@@ -7,7 +7,7 @@ import javax.inject.Inject
 class SetTokenUseCase @Inject constructor(
     private val repository: LocalRepository
 ) {
-    suspend operator fun invoke(accessToken: String, refreshToken: String) : NetworkResult<Unit> {
+    suspend operator fun invoke(accessToken: String?, refreshToken: String?) : NetworkResult<Unit> {
         return repository.login(accessToken, refreshToken)
     }
 }

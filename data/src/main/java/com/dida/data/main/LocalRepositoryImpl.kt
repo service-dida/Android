@@ -25,8 +25,9 @@ class LocalRepositoryImpl @Inject constructor(
         return handleApi { DataApplication.dataStorePreferences.getUserId() }
     }
 
-    override suspend fun login(accessToken: String, refreshToken: String): NetworkResult<Unit> {
-        return handleApi { DataApplication.dataStorePreferences.setAccessToken(accessToken, refreshToken) }
+    override suspend fun login(accessToken: String?, refreshToken: String?): NetworkResult<Unit> {
+        return if (accessToken != null && refreshToken != null) handleApi { DataApplication.dataStorePreferences.setAccessToken(accessToken, refreshToken) }
+        else handleApi { DataApplication.dataStorePreferences.removeAccountToken() }
     }
 
     override suspend fun setUserId(userId: Long): NetworkResult<Unit> {
