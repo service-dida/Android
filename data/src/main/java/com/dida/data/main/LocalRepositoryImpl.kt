@@ -15,5 +15,17 @@ class LocalRepositoryImpl @Inject constructor(
         }
         return handleApi { false }
     }
+
+    override suspend fun logOut(): NetworkResult<Unit> {
+        return handleApi { DataApplication.dataStorePreferences.removeAccountToken() }
+    }
+
+    override suspend fun getUserId(): NetworkResult<Long> {
+        return handleApi { DataApplication.dataStorePreferences.getUserId() }
+    }
+
+    override suspend fun login(accessToken: String, refreshToken: String): NetworkResult<Unit> {
+        return handleApi { DataApplication.dataStorePreferences.setAccessToken(accessToken, refreshToken) }
+    }
 }
 

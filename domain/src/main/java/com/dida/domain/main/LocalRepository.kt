@@ -6,5 +6,11 @@ interface LocalRepository {
 
     suspend fun checkLogin(): NetworkResult<Boolean>
 
+    suspend fun logOut(): NetworkResult<Unit>
+
+    suspend fun getUserId(): NetworkResult<Long>
+
+    suspend fun login(accessToken: String, refreshToken: String): NetworkResult<Unit>
+
 }
 
