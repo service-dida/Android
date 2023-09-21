@@ -8,6 +8,7 @@ import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
+import com.dida.data.model.Auth001Exception
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.Post
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -145,7 +147,6 @@ class DetailNftViewModel @Inject constructor(
         onBlockDelegate(type = type, blockId = blockId)
     }
 
-    // TODO : NFT 상세 내껀지 판별하는 로직 수정
     private fun setDetailOwnerType(detailNFT: Nft) {
         baseViewModelScope.launch {
             if (detailNFT.me) {
@@ -161,13 +162,13 @@ class DetailNftViewModel @Inject constructor(
                     detailOwnerTypeState.emit(DetailOwnerType.NOTMINE_AND_SALE)
                 }
             }
-//            else if (detailNFT.type == "NEED LOGIN") {
-//                if (detailNFT.price == "NOT SALE") {
-//                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_NOTSALE)
-//                } else {
-//                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_SALE)
-//                }
-//            }
+            if (!isLoginedState.value) {
+                if (detailNFT.nftInfo.price == "NOT SALE") {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_NOTSALE)
+                } else {
+                    detailOwnerTypeState.emit(DetailOwnerType.NOTLOGIN_AND_SALE)
+                }
+            }
         }
     }
 
@@ -183,23 +184,17 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    // TODO : Remote Exception 관련 수정하기
     override fun onNextButtonClicked() {
         baseViewModelScope.launch {
             when (detailOwnerTypeState.value) {
-                DetailOwnerType.NOTLOGIN_AND_SALE -> {
-//                    catchError(HaveNotJwtTokenException(Throwable(), "", 100))
-                }
-
                 DetailOwnerType.NOTMINE_AND_SALE -> {
-                    val detailNFT = detailNftState.value.successOrNull()
-                    detailNFT?.let {
-                        _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft(detailNFT.nftInfo.nftId))
+                    detailNftState.value.successOrNull()?.let {
+                        _navigationEvent.emit(DetailNftNavigationAction.NavigateToBuyNft(it.nftInfo.nftId))
                     }
                 }
 
+                DetailOwnerType.NOTLOGIN_AND_SALE -> catchError(Auth001Exception(e = IOException()))
                 DetailOwnerType.MINE_AND_NOTSALE -> _navigationEvent.emit(DetailNftNavigationAction.NavigateToSell)
-
                 else -> {}
             }
         }
@@ -209,6 +204,7 @@ class DetailNftViewModel @Inject constructor(
     override fun onContractLinkClicked() = Unit
 
     override fun onOwnerShipClicked() = Unit
+
     override fun onWritePostClicked() {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToWritePost)
@@ -239,7 +235,6 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    // TODO : 신고 및 차단 & 수정 삭제 플로우 추가하기
     override fun onReportClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailNftNavigationAction.NavigateToReport(userId))

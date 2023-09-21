@@ -58,6 +58,7 @@ enum class DetailNftMenuType{
     HIDE,
     REPORT
 }
+
 enum class DetailOwnerType {
     ALL,
     MINE_AND_SALE,

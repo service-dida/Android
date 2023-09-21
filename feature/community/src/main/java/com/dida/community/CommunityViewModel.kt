@@ -8,7 +8,6 @@ import com.dida.common.util.INIT_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
-import com.dida.data.DataApplication
 import com.dida.data.model.Auth001Exception
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
