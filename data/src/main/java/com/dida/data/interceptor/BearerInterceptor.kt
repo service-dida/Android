@@ -51,6 +51,7 @@ class BearerInterceptor : Interceptor {
                                 newRequestBuilder.addHeader("Authorization", it.accessToken ?: "")
                             }?.onError {
                                 DataApplication.dataStorePreferences.removeAccountToken()
+                                newRequestBuilder.addHeader("Authorization", "")
                             }
                         }
                         return chain.proceed(newRequestBuilder.build())

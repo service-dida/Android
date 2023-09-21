@@ -8,7 +8,6 @@ import com.dida.common.util.INIT_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
-import com.dida.data.DataApplication
 import com.dida.data.model.Auth001Exception
 import com.dida.domain.Contents
 import com.dida.domain.flatMap
@@ -20,6 +19,7 @@ import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.HotPostsUseCase
 import com.dida.domain.usecase.PostsUseCase
+import com.dida.domain.usecase.local.LoginCheckUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -36,6 +36,7 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     private val postsUseCase: PostsUseCase,
     private val hotPostsUseCase: HotPostsUseCase,
+    private val loginCheckUseCase: LoginCheckUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -59,7 +60,7 @@ class CommunityViewModel @Inject constructor(
 
     fun getCommunity() {
         baseViewModelScope.launch {
-            postsUseCase(postsState.value.page, PAGE_SIZE)
+            postsUseCase(INIT_PAGE, PAGE_SIZE)
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _postsState.value = it }
@@ -77,8 +78,9 @@ class CommunityViewModel @Inject constructor(
             postsUseCase(postsState.value.page + 1, PAGE_SIZE)
                 .onSuccess {
                     delay(SHIMMER_TIME)
-                    _postsState.value = it }
-                .onError { e -> catchError(e) }
+                    it.content = (postsState.value.content.toMutableList()) + it.content
+                    _postsState.value = it
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -90,11 +92,11 @@ class CommunityViewModel @Inject constructor(
 
     override fun onCommunityWriteClicked() {
         baseViewModelScope.launch {
-            if (DataApplication.dataStorePreferences.getAccessToken() == null) {
-                catchError(Auth001Exception(e = IOException()))
-            } else {
-                _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
-            }
+            loginCheckUseCase()
+                .onSuccess {
+                    if (it) _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
+                    else catchError(Auth001Exception(e = IOException()))
+                }
         }
     }
 

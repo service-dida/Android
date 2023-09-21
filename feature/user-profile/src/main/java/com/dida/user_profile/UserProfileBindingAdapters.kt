@@ -1,6 +1,7 @@
 package com.dida.user_profile
 
 import android.os.Build
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -73,4 +74,10 @@ fun TextView.bindOtherUserFollowBtn(uiState: UiState<MemberProfile>) {
         view.setTextColor(context.getColor(com.dida.common.R.color.brand_lemon))
         view.setBackgroundResource(com.dida.common.R.drawable.custom_brandlemon_empty_radius100)
     }
+}
+
+@BindingAdapter("isMyProfile")
+fun TextView.bindIsMyProfile(my: Boolean) {
+    val view = this
+    view.visibility = if (my) View.GONE else View.VISIBLE
 }

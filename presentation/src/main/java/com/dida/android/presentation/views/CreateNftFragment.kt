@@ -1,11 +1,10 @@
 package com.dida.android.presentation.views
 
-import android.app.Activity
-import android.content.Intent
+import android.Manifest
 import android.net.Uri
+import android.os.Build
 import android.util.TypedValue
-import android.view.WindowManager
-import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,13 +12,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.add.R
-import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.databinding.FragmentCreateNftBinding
-import com.dida.add.main.AddViewModel
 import com.dida.add.main.CreateNftViewModel
 import com.dida.common.customview.addOnFocusListener
-import com.dida.common.util.repeatOnCreated
-import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,7 +32,23 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
     private val navController: NavController by lazy { findNavController() }
     private val args: CreateNftFragmentArgs by navArgs()
 
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private val galleryPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri ->
+        onCheckSelectImage(imageUri)
+    }
+
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
+        onCheckSelectImage(imageUri)
+    }
+
+    private val askMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        permissions.values.all { it == true }.let { allPermissionGranted ->
+            if (allPermissionGranted) {
+                launchGalleryPicker()
+            } else {
+                showToastMessage("권한을 허용해 주세요.")
+            }
+        }
+    }
 
     override fun initStartView() {
         binding.apply {
@@ -47,14 +58,13 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
         exception = viewModel.errorEvent
         initToolbar()
         initNextButton()
-        initRegisterForActivityResult()
         initImage()
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigateToGallery.collectLatest {
-                getImageToGallery()
+                getGalleryImage()
             }
         }
     }
@@ -68,36 +78,39 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
 
     private fun initImage() {
         if (args.imgUrl == null) {
-            getImageToGallery()
+            getGalleryImage()
         } else {
             viewModel.setNFTImage(Uri.parse(args.imgUrl))
         }
     }
 
-    private fun initRegisterForActivityResult() {
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    val intent = result.data
-                    if (intent != null) {
-                        val uri = intent.data
-                        if (checkImageSize(uri!!)) {
-                            viewModel.setNFTImage(uri)
-                        } else {
-                            showToastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
-                            getImageToGallery()
-                        }
-                    }
-                } else {
-                    navController.popBackStack()
-                }
+    private fun onCheckSelectImage(imageUri: Uri?) {
+        if (imageUri == null) navController.popBackStack()
+
+        imageUri?.let {
+            if (checkImageSize(it)) {
+                viewModel.setNFTImage(it)
+            } else {
+                showToastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
+                getGalleryImage()
             }
+        }
     }
 
-    private fun getImageToGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        resultLauncher.launch(intent)
+    private fun getGalleryImage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            launchGalleryPicker()
+        } else {
+            askMultiplePermissions.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))
+        }
+    }
+
+    private fun launchGalleryPicker() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            galleryPickerLauncher.launch(PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly).build())
+        } else {
+            galleryLauncher.launch("image/*")
+        }
     }
 
     private fun initToolbar() {

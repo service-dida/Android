@@ -1,15 +1,22 @@
 package com.dida.splash
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CommonProfileUseCase
 import com.dida.domain.usecase.PatchDeviceTokenUseCase
 import com.dida.domain.usecase.RefreshTokenUseCase
+import com.dida.domain.usecase.local.GetTokenUseCase
+import com.dida.domain.usecase.local.SetTokenUseCase
+import com.dida.domain.usecase.local.SetUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,7 +24,10 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val patchDeviceTokenUseCase: PatchDeviceTokenUseCase,
     private val commonProfileUseCase: CommonProfileUseCase,
-    private val refreshTokenUseCase: RefreshTokenUseCase
+    private val refreshTokenUseCase: RefreshTokenUseCase,
+    private val setTokenUseCase: SetTokenUseCase,
+    private val setUserIdUseCase: SetUserIdUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
 ) : BaseViewModel() {
 
     private val TAG = "SplashViewModel"
@@ -40,23 +50,22 @@ class SplashViewModel @Inject constructor(
 
     fun onAppSetUp(deviceToken: String) {
         baseViewModelScope.launch {
-            dataStorePreferences.getRefreshToken()?.let { token ->
-                refreshTokenUseCase(refreshToken = token)
-                    .onSuccess { response ->
-                        dataStorePreferences.setAccessToken(
-                            accessToken = response.accessToken ?: "",
-                            refreshToken = response.refreshToken ?: ""
-                        ) }
-                    .flatMap { patchDeviceTokenUseCase(deviceToken = deviceToken) }
-                    .flatMap { commonProfileUseCase() }
-                    .onSuccess {
-                        dataStorePreferences.setUserId(it.memberInfo.memberId)
-                        onGoneSplash() }
-                    .onError { e -> catchError(e) }
-            }
-            if (dataStorePreferences.getAccessToken() == null) {
-                onGoneSplash()
-            }
+            getTokenUseCase()
+                .onSuccess { (accessToken, refreshToken) ->
+                    if (accessToken == null || refreshToken == null) {
+                        onGoneSplash()
+                        return@launch
+                    }
+                }
+                .flatMap { (accessToken, refreshToken) -> refreshTokenUseCase(refreshToken = refreshToken ?: "") }
+                .onSuccess { setTokenUseCase(accessToken = it.accessToken, refreshToken = it.refreshToken) }
+                .flatMap { patchDeviceTokenUseCase(deviceToken = deviceToken) }
+                .flatMap { commonProfileUseCase() }
+                .onSuccess {
+                    setUserIdUseCase(it.memberInfo.memberId)
+                    onGoneSplash()
+                }
+                .onError { e -> catchError(e) }
         }
     }
 

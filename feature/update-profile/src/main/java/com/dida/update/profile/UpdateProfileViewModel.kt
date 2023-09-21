@@ -30,7 +30,7 @@ class UpdateProfileViewModel @Inject constructor(
     private val patchProfileNicknameUseCase: PatchProfileNicknameUseCase,
     private val patchProfileDescriptionUseCase: PatchProfileDescriptionUseCase,
     private val commonProfileUseCase: CommonProfileUseCase
-) : BaseViewModel() {
+) : BaseViewModel(), UpdateProfileActionHandler {
 
     private val TAG = "UpdateProfileViewModel"
 
@@ -168,22 +168,16 @@ class UpdateProfileViewModel @Inject constructor(
         }
     }
 
-    fun clearNickname(){
-        baseViewModelScope.launch {
-            nickNameState.emit("")
-        }
-    }
-
-    fun clearDescription(){
-        baseViewModelScope.launch {
-            descriptionState.emit("")
-        }
-    }
-
     val profileImageMultipartState : MutableStateFlow<MultipartBody.Part?> = MutableStateFlow<MultipartBody.Part?>(null)
 
     fun selectProfileImage(url : Uri, multipartBody: MultipartBody.Part){
         profileImageMultipartState.value = multipartBody
         profileImageState.value = url.toString()
+    }
+
+    override fun onProfileImageClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(UpdateProfileNavigationAction.NavigateToUpdateProfileImage)
+        }
     }
 }

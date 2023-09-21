@@ -17,7 +17,7 @@ class UserCardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderMypageUserCardsBinding =
-            DataBindingUtil.inflate<HolderMypageUserCardsBinding?>(
+            DataBindingUtil.inflate<HolderMypageUserCardsBinding>(
                 LayoutInflater.from(parent.context),
                 R.layout.holder_mypage_user_cards,
                 parent,
@@ -32,6 +32,18 @@ class UserCardAdapter(
     }
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_mypage_user_cards
+
+    fun changeNftLike(nftId: Long) {
+        val index = findIndexFromNftId(nftId)
+        currentList[index].apply {
+            this.liked = !this.liked
+        }
+        this@UserCardAdapter.notifyItemChanged(index)
+    }
+
+    private fun findIndexFromNftId(nftId: Long): Int {
+        return currentList.indexOfFirst { (it.nftInfo.nftId == nftId) }
+    }
 
     class ViewHolder(private val binding: HolderMypageUserCardsBinding) :
         RecyclerView.ViewHolder(binding.root) {

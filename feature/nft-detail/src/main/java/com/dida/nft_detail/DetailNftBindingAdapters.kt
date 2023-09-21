@@ -49,7 +49,7 @@ fun TextView.bindDescription(uiState: UiState<Nft>) {
 
 @BindingAdapter("userNickname")
 fun TextView.bindNickName(uiState: UiState<Nft>) {
-    this.text = uiState.successOrNull()?.nftInfo?.nftName
+    this.text = uiState.successOrNull()?.memberInfo?.memberName
 }
 
 @BindingAdapter("userProfile")
@@ -110,16 +110,9 @@ fun ConstraintLayout.bindVisible(type: DetailOwnerType) {
     }
 }
 
-// TODO : NFT 타입 관련 Response 수정 필요
-@BindingAdapter("LoginCheck")
-fun FloatingActionButton.bindVisible(uiState: UiState<Nft>) {
-//    if(uiState != UiState.Loading){
-//        if(uiState.successOrNull()?.type == "NEED LOGIN") {
-//            this.visibility = View.GONE
-//        } else {
-//            this.visibility = View.VISIBLE
-//        }
-//    }
+@BindingAdapter("writeLoginCheck")
+fun FloatingActionButton.bindLoginCheck(login: Boolean) {
+    this.visibility = if(login) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("NftDetailConfirmBtn")
@@ -144,15 +137,13 @@ fun TextView.bindConfrimBtn(type: DetailOwnerType) {
     }
 }
 
-// TODO : NFT 타입 관련 Response 수정 필요
-@BindingAdapter("NftDetailToolbar")
-fun Toolbar.bindToolbar(uiState: UiState<Nft>) {
-//    this.menu.clear()
-//    if (uiState.successOrNull()?.type != "NEED LOGIN") {
-//        if (uiState.successOrNull()?.liked == true) {
-//            this.inflateMenu(R.menu.menu_detailnft_like_toolbar)
-//        } else {
-//            this.inflateMenu(R.menu.menu_detailnft_unlike_toolbar)
-//        }
-//    }
+@BindingAdapter(value = ["nftDetailToolbar", "loginState"], requireAll = true)
+fun Toolbar.bindToolbar(nft: UiState<Nft>, login: Boolean) {
+    this.menu.clear()
+    if (login) {
+        nft.successOrNull()?.let {
+            if (it.liked) this.inflateMenu(R.menu.menu_detailnft_like_toolbar)
+            else this.inflateMenu(R.menu.menu_detailnft_unlike_toolbar)
+        }
+    }
 }

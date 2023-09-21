@@ -1,16 +1,12 @@
 package com.dida.android.presentation.views
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
-import android.view.MotionEvent
-import android.view.View
-import android.view.View.OnTouchListener
-import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +14,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.util.uriToFile
 import com.dida.common.ui.ImageBottomSheet
-import com.dida.common.util.DIDAINTENT
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.update.profile.R
 import com.dida.update.profile.UpdateProfileNavigationAction
@@ -38,30 +33,35 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
 
     private val TAG = "UpdateProfileFragment"
     private val navController: NavController by lazy { findNavController() }
-    private lateinit var requestUpdateProfile: ActivityResultLauncher<Intent>
 
-    private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
-    private lateinit var cameraLauncher: ActivityResultLauncher<Uri>
+    private val galleryPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri ->
+        imageUri?.let {
+            createFile(it)
+        }
+    }
+
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
+        imageUri?.let {
+            createFile(it)
+        }
+    }
+
+    private val cameraLauncher: ActivityResultLauncher<Uri> = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        if (it) {
+            cameraUri?.let { uri ->
+                createFile(uri)
+            }
+        }
+    }
+
     private var cameraUri: Uri? = null
 
-    // 요청하고자 하는 권한들
-    private val permissionList = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE)
-
-    // 권한을 허용하도록 요청
-    private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-        results.forEach {
-            if (!it.value) showToastMessage("권한 허용이 필요합니다.")
-            if (!it.value) {
-                showToastMessage("권한 허용이 필요합니다.")
+    private val askMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        permissions.values.all { it == true }.let { allPermissionGranted ->
+            if (allPermissionGranted) {
+                showImageFromBottomSheet()
             } else {
-                val dialog = ImageBottomSheet { getGallery ->
-                    if (getGallery) getGalleryImage()
-                    else getCaptureImage()
-                }
-                dialog.show(childFragmentManager, TAG)
+                showToastMessage("권한을 허용해 주세요.")
             }
         }
     }
@@ -77,7 +77,6 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        initRegisterForActivityResult()
         initToolbar()
     }
 
@@ -88,6 +87,13 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
                     is UpdateProfileNavigationAction.NavigateToBack -> {
                         showMessageSnackBar(getString(com.dida.android.R.string.update_profile_message))
                         navController.popBackStack()
+                    }
+                    is UpdateProfileNavigationAction.NavigateToUpdateProfileImage -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            showImageFromBottomSheet()
+                        } else {
+                            askMultiplePermissions.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))
+                        }
                     }
                 }
             }
@@ -107,52 +113,25 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding, UpdateP
                 true
             }
         }
+    }
 
-        binding.profileCl.setOnClickListener {
-            editProfileImageBottomSheet()
+    private fun showImageFromBottomSheet() {
+        val dialog = ImageBottomSheet { getGallery ->
+            if (getGallery) launchGallery()
+            else launchCamera()
+        }
+        dialog.show(childFragmentManager, TAG)
+    }
+
+    private fun launchGallery() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            galleryPickerLauncher.launch(PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly).build())
+        } else {
+            galleryLauncher.launch("image/*")
         }
     }
 
-    private fun editProfileImageBottomSheet() {
-        requestMultiplePermission.launch(permissionList)
-    }
-
-    private fun initRegisterForActivityResult() {
-        requestUpdateProfile = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            val isUpdateProfile = activityResult.data?.getBooleanExtra(DIDAINTENT.RESULT_KEY_UPDATE_PROFILE, false) ?: false
-            if (!isUpdateProfile) {
-                val intent = activityResult.data
-                if (intent != null) {
-                    val uri = intent.data
-                    val file = uriToFile(uri!!, requireContext())
-                    val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                    val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                    viewModel.selectProfileImage(uri, requestBody)
-                }
-            }
-        }
-
-        galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            activityResult.data?.let {
-                createFile(it.data!!)
-            }
-        }
-
-        cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-            if(it) { cameraUri?.let { uri ->
-                createFile(uri)
-            } }
-        }
-    }
-
-    private fun getGalleryImage() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        galleryLauncher.launch(intent)
-
-    }
-
-    private fun getCaptureImage() {
+    private fun launchCamera() {
         cameraUri = createImageFile()
         cameraLauncher.launch(cameraUri)
     }

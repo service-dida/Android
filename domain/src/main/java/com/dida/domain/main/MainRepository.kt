@@ -26,6 +26,7 @@ import com.dida.domain.main.model.PublicKey
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.SoldOut
+import com.dida.domain.main.model.Sort
 import com.dida.domain.main.model.Swap
 import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
@@ -50,11 +51,11 @@ interface MainRepository {
 
     suspend fun commonProfile(): NetworkResult<CommonProfile>
 
-    suspend fun commonProfileNft(page: Int, size: Int, sort: String): NetworkResult<Contents<CommonProfileNft>>
+    suspend fun commonProfileNft(page: Int, size: Int, sort: Sort): NetworkResult<Contents<CommonProfileNft>>
 
     suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile>
 
-    suspend fun memberProfileNFt(memberId: Long, page: Int, size: Int, sort: String): NetworkResult<Contents<CommonProfileNft>>
+    suspend fun memberProfileNFt(memberId: Long, page: Int, size: Int, sort: Sort): NetworkResult<Contents<CommonProfileNft>>
 
     suspend fun memberFollow(memberId: Long): NetworkResult<Unit>
 

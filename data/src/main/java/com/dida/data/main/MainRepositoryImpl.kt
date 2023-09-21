@@ -2,6 +2,7 @@ package com.dida.data.main
 
 import com.dida.data.api.handleApi
 import com.dida.data.model.additional.PostMakePictureRequest
+import com.dida.data.model.additional.PostNftLikeRequest
 import com.dida.data.model.additional.PostReportRequest
 import com.dida.data.model.additional.toDomain
 import com.dida.data.model.dex.DeleteSellNftRequest
@@ -26,16 +27,16 @@ import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonCommentsRequest
 import com.dida.data.model.sns.PostCommonPostRequest
 import com.dida.data.model.sns.toDomain
+import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
-import com.dida.domain.main.model.CommonProfile
-import com.dida.domain.main.model.CommonProfileNft
-import com.dida.domain.Contents
 import com.dida.domain.main.model.AiPicture
 import com.dida.domain.main.model.Alarm
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
+import com.dida.domain.main.model.CommonProfile
+import com.dida.domain.main.model.CommonProfileNft
 import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.HideMember
 import com.dida.domain.main.model.HideNft
@@ -52,6 +53,7 @@ import com.dida.domain.main.model.PublicKey
 import com.dida.domain.main.model.RecentNft
 import com.dida.domain.main.model.Report
 import com.dida.domain.main.model.SoldOut
+import com.dida.domain.main.model.Sort
 import com.dida.domain.main.model.Swap
 import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
@@ -105,9 +107,9 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun commonProfileNft(
         page: Int,
         size: Int,
-        sort: String
+        sort: Sort
     ): NetworkResult<Contents<CommonProfileNft>> {
-        return handleApi { didaApi.getCommonProfileNft(page, size, sort).toDomain() }
+        return handleApi { didaApi.getCommonProfileNft(page, size, sort.str).toDomain() }
     }
 
     override suspend fun memberProfile(memberId: Long): NetworkResult<MemberProfile> {
@@ -118,9 +120,9 @@ class MainRepositoryImpl @Inject constructor(
         memberId: Long,
         page: Int,
         size: Int,
-        sort: String
+        sort: Sort
     ): NetworkResult<Contents<CommonProfileNft>> {
-        return handleApi { didaApi.getMemberProfileNft(memberId, page, size, sort).toDomain() }
+        return handleApi { didaApi.getMemberProfileNft(memberId, page, size, sort.str).toDomain() }
     }
 
     override suspend fun memberFollow(memberId: Long): NetworkResult<Unit> {
@@ -296,7 +298,8 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun nftLike(nftId: Long): NetworkResult<Unit> {
-        return handleApi { didaApi.postNftLike(nftId) }
+        val body = PostNftLikeRequest(nftId)
+        return handleApi { didaApi.postNftLike(body) }
     }
 
     override suspend fun makeAiPicture(payPwd: String, setence: String): NetworkResult<AiPicture> {
