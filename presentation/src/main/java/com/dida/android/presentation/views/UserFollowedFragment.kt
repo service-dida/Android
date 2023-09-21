@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
@@ -46,7 +47,7 @@ import com.dida.compose.utils.Divider8
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.clickableSingle
 import com.dida.domain.main.model.CommonFollow
-import com.dida.user_followed.Follow
+import com.dida.domain.main.model.Follow
 import com.dida.user_followed.UserFollowedMessageAction
 import com.dida.user_followed.UserFollowedViewModel
 import com.dida.user_followed.databinding.FragmentUserfollowedBinding
@@ -106,16 +107,17 @@ class UserFollowedFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val tabs = listOf(Follow.FOLLOWER, Follow.FOLLOWING)
                 val pagerState = rememberPagerState(pageCount = tabs.size)
                 val coroutineScope = rememberCoroutineScope()
 
                 LaunchedEffect(key1 = Unit) {
-//                    when (args.type) {
-//                        Follow.FOLLOWER -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
-//                        Follow.FOLLOWING -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
-//                    }
+                    when (args.type) {
+                        Follow.FOLLOWER -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
+                        Follow.FOLLOWING -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
+                    }
                 }
 
                 Column(
@@ -190,7 +192,6 @@ class UserFollowedFragment :
                     }
                 }
             }
-
         }
     }
 

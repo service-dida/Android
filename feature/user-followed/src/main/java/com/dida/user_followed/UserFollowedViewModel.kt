@@ -47,7 +47,3 @@ class UserFollowedViewModel @Inject constructor(
             }.onError { e -> catchError(e) }
     }
 }
-
-enum class Follow(val str: String) {
-    FOLLOWER("팔로워"), FOLLOWING("팔로잉")
-}
