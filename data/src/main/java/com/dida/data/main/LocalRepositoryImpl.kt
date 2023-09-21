@@ -1,5 +1,6 @@
 package com.dida.data.main
 
+import android.provider.ContactsContract.Data
 import com.dida.data.DataApplication
 import com.dida.data.api.handleApi
 import com.dida.domain.NetworkResult
@@ -26,6 +27,10 @@ class LocalRepositoryImpl @Inject constructor(
 
     override suspend fun login(accessToken: String, refreshToken: String): NetworkResult<Unit> {
         return handleApi { DataApplication.dataStorePreferences.setAccessToken(accessToken, refreshToken) }
+    }
+
+    override suspend fun setUserId(userId: Long): NetworkResult<Unit> {
+        return handleApi { DataApplication.dataStorePreferences.setUserId(userId) }
     }
 }
 

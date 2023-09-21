@@ -4,7 +4,7 @@ import com.dida.domain.NetworkResult
 import com.dida.domain.main.LocalRepository
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(
+class SetTokenUseCase @Inject constructor(
     private val repository: LocalRepository
 ) {
     suspend operator fun invoke(accessToken: String, refreshToken: String) : NetworkResult<Unit> {
