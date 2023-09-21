@@ -8,7 +8,6 @@ import com.dida.common.util.NoCompareMutableStateFlow
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.data.DataApplication
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.Post
@@ -21,6 +20,7 @@ import com.dida.domain.usecase.NftDetailUseCase
 import com.dida.domain.usecase.NftLikeUseCase
 import com.dida.domain.usecase.PostsFromNftUseCase
 import com.dida.domain.usecase.SellNftUseCase
+import com.dida.domain.usecase.local.LoginCheckUseCase
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -40,6 +40,7 @@ class DetailNftViewModel @Inject constructor(
     private val sellNftUseCase: SellNftUseCase,
     private val blockUseCase: BlockUseCase,
     private val deleteNftUseCase: DeleteNftUseCase,
+    private val loginCheckUseCase: LoginCheckUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -71,9 +72,8 @@ class DetailNftViewModel @Inject constructor(
 
     private fun loginCheck() {
         baseViewModelScope.launch {
-            DataApplication.dataStorePreferences.getAccessToken()?.let {
-                _isLoginedState.value = true
-            }
+            loginCheckUseCase()
+                .onSuccess { _isLoginedState.value = it }
         }
     }
 
