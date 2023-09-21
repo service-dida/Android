@@ -14,5 +14,7 @@ interface LocalRepository {
 
     suspend fun setUserId(userId: Long): NetworkResult<Unit>
 
+    suspend fun getToken(): NetworkResult<Pair<String?, String?>>
+
 }
 

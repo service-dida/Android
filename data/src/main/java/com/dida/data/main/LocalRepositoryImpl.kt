@@ -32,5 +32,11 @@ class LocalRepositoryImpl @Inject constructor(
     override suspend fun setUserId(userId: Long): NetworkResult<Unit> {
         return handleApi { DataApplication.dataStorePreferences.setUserId(userId) }
     }
+
+    override suspend fun getToken(): NetworkResult<Pair<String?, String?>> {
+        val accessToken: String? = DataApplication.dataStorePreferences.getAccessToken()
+        val refreshToken: String? = DataApplication.dataStorePreferences.getRefreshToken()
+        return handleApi { Pair(accessToken, refreshToken) }
+    }
 }
 
