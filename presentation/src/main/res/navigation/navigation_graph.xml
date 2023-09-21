@@ -570,27 +570,6 @@
         <argument
             android:name="nftId"
             app:argType="long" />
-        <argument
-            android:name="nftImg"
-            app:argType="string" />
-        <argument
-            android:name="nftTitle"
-            app:argType="string" />
-        <argument
-            android:name="userImg"
-            app:argType="string" />
-        <argument
-            android:name="userName"
-            app:argType="string" />
-        <argument
-            android:name="price"
-            app:argType="string" />
-        <argument
-            android:name="viewerNickname"
-            app:argType="string" />
-        <argument
-            android:name="marketId"
-            app:argType="long" />
         <action
             android:id="@+id/action_buyNftFragment_to_buySuccessFragment"
             app:destination="@id/buySuccessFragment"

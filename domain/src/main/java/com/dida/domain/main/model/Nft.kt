@@ -8,4 +8,5 @@ data class Nft(
     val contractAddress: String,
     val followed: Boolean,
     val liked: Boolean,
+    val isMe: Boolean
 )

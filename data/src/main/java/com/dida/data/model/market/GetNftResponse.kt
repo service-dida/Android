@@ -12,4 +12,5 @@ data class GetNftResponse(
     @SerializedName("contractAddress") val contractAddress: String,
     @SerializedName("followed") val followed: Boolean,
     @SerializedName("liked") val liked: Boolean,
+    @SerializedName("isMe") val isMe: Boolean,
 )
