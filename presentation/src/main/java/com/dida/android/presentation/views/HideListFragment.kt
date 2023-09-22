@@ -5,6 +5,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.dida.common.util.addOnPagingListener
+import com.dida.common.util.repeatOnCreated
 import com.dida.settings.R
 import com.dida.settings.databinding.FragmentHideListBinding
 import com.dida.settings.hidelist.HideListAdapter
@@ -25,6 +27,7 @@ class HideListFragment : BaseFragment<FragmentHideListBinding, HideListViewModel
     override val viewModel: HideListViewModel by viewModels()
 
     private val navController: NavController by lazy { findNavController() }
+    private val nftAdapter by lazy { HideListAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -39,21 +42,20 @@ class HideListFragment : BaseFragment<FragmentHideListBinding, HideListViewModel
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    is HideListNavigationAction.NavigateToDetailNft -> navigate(
-                        HideListFragmentDirections.actionHideListFragmentToDetailNftFragment(it.cardId)
-                    )
+                    is HideListNavigationAction.NavigateToDetailNft -> navigate(HideListFragmentDirections.actionHideListFragmentToDetailNftFragment(it.cardId))
                 }
+            }
+        }
+
+        viewLifecycleOwner.repeatOnCreated {
+            viewModel.hideCardState.collectLatest {
+                nftAdapter.submitList(it.content)
             }
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getHideList()
-    }
 
     private fun initMyPage() {
         initToolbar()
@@ -62,8 +64,12 @@ class HideListFragment : BaseFragment<FragmentHideListBinding, HideListViewModel
 
     private fun initAdapter() {
         binding.hideListRecycler.apply {
-            adapter = HideListAdapter(viewModel)
+            adapter = nftAdapter
             layoutManager = GridLayoutManager(context, 2)
+        }
+
+        binding.hideListRecycler.addOnPagingListener {
+            viewModel.onNextPage()
         }
     }
 

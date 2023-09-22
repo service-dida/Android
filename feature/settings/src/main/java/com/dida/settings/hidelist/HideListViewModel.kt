@@ -1,8 +1,10 @@
 package com.dida.settings.hidelist
 
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.INIT_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.UiState
+import com.dida.domain.Contents
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HideNft
 import com.dida.domain.onError
@@ -17,7 +19,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// TODO : 페이징 적용 필요
 @HiltViewModel
 class HideListViewModel @Inject constructor(
     private val hideNftsUseCase: HideNftsUseCase,
@@ -29,13 +30,19 @@ class HideListViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<HideListNavigationAction> = MutableSharedFlow<HideListNavigationAction>()
     val navigationEvent: SharedFlow<HideListNavigationAction> = _navigationEvent
 
-    private val _HideCardState: MutableStateFlow<UiState<List<HideNft>>> = MutableStateFlow(UiState.Loading)
-    val hideCardState: StateFlow<UiState<List<HideNft>>> = _HideCardState
+    private val _hideCardState: MutableStateFlow<Contents<HideNft>> = MutableStateFlow(
+        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+    )
+    val hideCardState: StateFlow<Contents<HideNft>> = _hideCardState
 
-    fun getHideList() {
+    init {
+        getHideList()
+    }
+
+    private fun getHideList() {
         baseViewModelScope.launch {
-            hideNftsUseCase(0, PAGE_SIZE)
-                .onSuccess { _HideCardState.emit(UiState.Success(it.content)) }
+            hideNftsUseCase(INIT_PAGE, PAGE_SIZE)
+                .onSuccess { _hideCardState.emit(it) }
                 .onError { e -> catchError(e) }
         }
     }
@@ -48,8 +55,27 @@ class HideListViewModel @Inject constructor(
 
     override fun onHideClicked(nftId: Long) {
         baseViewModelScope.launch {
+            showLoading()
             cancelBlockUseCase(type = Block.NFT, blockId = nftId)
-                .onSuccess {  }
+                .onSuccess {
+                    val index = hideCardState.value.content.toMutableList().indexOfFirst { it.nftId == nftId }
+                    val newList = hideCardState.value.content.toMutableList().apply {
+                        removeAt(index)
+                    }
+                    _hideCardState.value = hideCardState.value.copy(content = newList)
+                }
+                .onError { e -> catchError(e) }
+            dismissLoading()
+        }
+    }
+
+    fun onNextPage() {
+        baseViewModelScope.launch {
+            hideNftsUseCase(hideCardState.value.page + 1, PAGE_SIZE)
+                .onSuccess {
+                    it.content = (hideCardState.value.content.toMutableList()) + it.content
+                    _hideCardState.emit(it)
+                }
                 .onError { e -> catchError(e) }
         }
     }
