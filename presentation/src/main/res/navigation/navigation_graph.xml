@@ -635,6 +635,11 @@
             android:name="type"
             app:argType="com.dida.domain.main.model.Follow"
             android:defaultValue="FOLLOWER"/>
+        <action
+            android:id="@+id/action_userFollowedFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment

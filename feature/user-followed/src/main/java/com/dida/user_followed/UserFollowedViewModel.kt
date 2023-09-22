@@ -68,6 +68,7 @@ class UserFollowedViewModel @Inject constructor(
 
     fun onNextPageFromFollower() {
         baseViewModelScope.launch {
+            if (!followerState.value.hasNext) return@launch
             commonFollowUseCase(page = followerState.value.page + 1, pageSize = PAGE_SIZE)
                 .onSuccess {
                     it.content = (followerState.value.content.toMutableList()) + it.content
@@ -79,6 +80,7 @@ class UserFollowedViewModel @Inject constructor(
 
     fun onNextPageFromFollowing() {
         baseViewModelScope.launch {
+            if (!followingState.value.hasNext) return@launch
             commonFollowingUseCase(page = followingState.value.page + 1, pageSize = PAGE_SIZE)
                 .onSuccess {
                     it.content = (followingState.value.content.toMutableList()) + it.content

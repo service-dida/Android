@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
@@ -20,6 +21,8 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -182,32 +185,60 @@ class UserFollowedFragment :
                 modifier = Modifier.fillMaxSize()
             ) {
                 when (tabs[index]) {
-                    Follow.FOLLOWER -> {
-                        viewModel.getFollowerMember()
-                        if (follower.value.content.isEmpty()) Spacer(modifier = Modifier.weight(1f))
-                        else FollowedColumn(items = follower.value.content)
-                    }
-                    Follow.FOLLOWING -> {
-                        viewModel.getFollowingMember()
-                        if (following.value.content.isEmpty()) Spacer(modifier = Modifier.weight(1f))
-                        else FollowedColumn(items = following.value.content)
-                    }
+                    Follow.FOLLOWER -> FollowerScreen(items = follower.value.content)
+                    Follow.FOLLOWING -> FollowingScreen(items = following.value.content)
                 }
             }
         }
     }
 
     @Composable
-    fun FollowedColumn(
+    fun FollowerScreen(
         items: List<CommonFollow>
     ) {
+        val listState = rememberLazyListState()
+        val nextPage = remember {
+            derivedStateOf { listState.firstVisibleItemIndex == (items.size - 10) }
+        }
+
+        LaunchedEffect(key1 = nextPage.value) {
+            if (nextPage.value) viewModel.onNextPageFromFollower()
+        }
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            state = listState
+        ) {
+            items(items.size) {
+                FollowerItem(
+                    item = items[it],
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items[it].memberId)) },
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items[it]) }
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun FollowingScreen(
+        items: List<CommonFollow>
+    ) {
+        val listState = rememberLazyListState()
+        val nextPage = remember {
+            derivedStateOf { listState.firstVisibleItemIndex == (items.size - 10) }
+        }
+
+        LaunchedEffect(key1 = nextPage.value) {
+            if (nextPage.value) viewModel.onNextPageFromFollowing()
+        }
+
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
         ) {
             items(items.size) {
-                FollowUserItem(
+                FollowingItem(
                     item = items[it],
-                    onUserClicked = { },
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items[it].memberId)) },
                     onFollowButtonClicked = { viewModel.onFollowButtonClicked(items[it]) }
                 )
             }
@@ -215,11 +246,10 @@ class UserFollowedFragment :
     }
     
     @Composable
-    fun FollowUserItem(
+    fun FollowingItem(
         item: CommonFollow,
         onUserClicked: () -> Unit,
-        onFollowButtonClicked: () -> Unit,
-        isFollowed: Boolean
+        onFollowButtonClicked: () -> Unit
     ) {
         Surface(
             modifier = Modifier
@@ -262,8 +292,60 @@ class UserFollowedFragment :
                         overflow = TextOverflow.Ellipsis
                     )
                     Divider12()
-                    if (isFollowed) CancelFollowButton(onFollowButtonClicked = onFollowButtonClicked)
-                    else FollowButton(onFollowButtonClicked = onFollowButtonClicked)
+                    CancelFollowButton(onFollowButtonClicked = onFollowButtonClicked)
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun FollowerItem(
+        item: CommonFollow,
+        onUserClicked: () -> Unit,
+        onFollowButtonClicked: () -> Unit
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp, horizontal = 16.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickableSingle { onUserClicked() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AsyncImage(
+                    modifier = Modifier.size(62.dp),
+                    model = item.profileImgUrl,
+                    contentDescription = "유저 이미지"
+                )
+                Divider12()
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        style = DidaTypography.h4,
+                        color = White,
+                        fontSize = dpToSp(dp = 20.dp),
+                        text = item.memberName,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Divider8()
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        style = DidaTypography.body1,
+                        color = TextGray,
+                        fontSize = dpToSp(dp = 14.dp),
+                        text = "",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Divider12()
+                    FollowButton(onFollowButtonClicked = onFollowButtonClicked)
                 }
             }
         }
