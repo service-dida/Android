@@ -277,7 +277,7 @@ class UserFollowedFragment :
                         style = DidaTypography.h4,
                         color = White,
                         fontSize = dpToSp(dp = 20.dp),
-                        text = item.memberName,
+                        text = item.nickname,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -330,7 +330,7 @@ class UserFollowedFragment :
                         style = DidaTypography.h4,
                         color = White,
                         fontSize = dpToSp(dp = 20.dp),
-                        text = item.memberName,
+                        text = item.nickname,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

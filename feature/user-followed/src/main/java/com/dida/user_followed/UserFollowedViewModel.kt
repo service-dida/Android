@@ -48,7 +48,7 @@ class UserFollowedViewModel @Inject constructor(
         getFollowingMember()
     }
 
-    fun getFollowerMember() {
+    private fun getFollowerMember() {
         baseViewModelScope.launch {
             commonFollowUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE)
                 .onSuccess { _followerState.value = it }
@@ -56,7 +56,7 @@ class UserFollowedViewModel @Inject constructor(
         }
     }
 
-    fun getFollowingMember() {
+    private fun getFollowingMember() {
         baseViewModelScope.launch {
             baseViewModelScope.launch {
                 commonFollowingUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE)
