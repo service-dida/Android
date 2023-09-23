@@ -2,6 +2,7 @@ package com.dida.password
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.model.Wallet002Exception
+import com.dida.data.model.Wallet006Exception
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CheckPasswordUseCase
@@ -76,7 +77,6 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
-    // TODO : 비밀번호 5회 이상 틀렸을 경우 로직 추가 필요
     private suspend fun checkPassword(password : String) {
         checkPasswordUseCase(password)
             .onSuccess {
@@ -84,6 +84,7 @@ class PasswordViewModel @Inject constructor(
             }.onError { e ->
                 when (e) {
                     is Wallet002Exception -> wrongPassword()
+                    is Wallet006Exception -> _dismissEvent.emit(Unit)
                     else -> catchError(e)
                 }
             }
@@ -98,8 +99,6 @@ class PasswordViewModel @Inject constructor(
         delay(1000)
         _failEvent.emit(false)
         isClickable = true
-
-        if (wrongCountState.value >= 5) _dismissEvent.emit(Unit)
     }
 
     fun initPwdInfo(stackSize: Int, settingYn: Boolean) {
