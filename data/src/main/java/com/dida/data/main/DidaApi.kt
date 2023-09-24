@@ -20,6 +20,7 @@ import com.dida.data.model.login.GetCommonWalletResponse
 import com.dida.data.model.login.GetEmailAuthResponse
 import com.dida.data.model.login.GetPublicKeyResponse
 import com.dida.data.model.login.PatchMemberDeviceRequest
+import com.dida.data.model.login.PostCheckPasswordRequest
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
@@ -176,6 +177,10 @@ interface DidaApi {
     // 결제 비밀번호 찾기(임시 비밀번호 발급)
     @PATCH("/member/password/tmp")
     suspend fun patchTempMemberPassword(): Unit
+
+    // 결제 비밀번호 확인
+    @POST("/member/password/check")
+    suspend fun postCheckPassword(@Body body: PostCheckPasswordRequest): Unit
 
     /**
      * Dex 및 Nft

@@ -161,5 +161,7 @@ interface MainRepository {
 
     suspend fun buyNft(payPwd: String, marketId: Long): NetworkResult<Unit>
 
+    suspend fun checkPassword(payPwd: String) : NetworkResult<Unit>
+
 }
 
