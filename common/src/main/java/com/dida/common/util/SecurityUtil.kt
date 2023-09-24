@@ -2,7 +2,9 @@ import android.os.Build
 import java.security.GeneralSecurityException
 import java.security.spec.X509EncodedKeySpec
 import java.security.KeyFactory
+import java.security.NoSuchAlgorithmException
 import java.security.PublicKey
+import java.security.spec.InvalidKeySpecException
 import java.util.Base64
 import javax.crypto.Cipher
 
@@ -31,7 +33,7 @@ fun String.rsaEncode(publicKey: String): String? {
 private fun convertPublicKey(publicKey: String): PublicKey? {
     try {
         val keyBytes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Base64.getDecoder().decode(publicKey)
+            Base64.getDecoder().decode(publicKey.toByteArray())
         } else {
             android.util.Base64.decode(publicKey, android.util.Base64.DEFAULT)
         }
@@ -43,6 +45,7 @@ private fun convertPublicKey(publicKey: String): PublicKey? {
     }
     return null
 }
+
 /*fun base64EncodeToString(byteData: ByteArray): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         Base64.getEncoder().encodeToString(byteData)

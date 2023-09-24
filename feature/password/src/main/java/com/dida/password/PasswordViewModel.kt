@@ -1,19 +1,30 @@
 package com.dida.password
 
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.AppLog
+import com.dida.data.model.login.GetPublicKeyResponse
+import com.dida.domain.flatMap
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
+import com.dida.domain.usecase.BuyNftUseCase
+import com.dida.domain.usecase.CheckPasswordUseCase
+import com.dida.domain.usecase.PatchPasswordUseCase
+import com.dida.domain.usecase.PublicKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import rsaEncode
 import java.util.Stack
 import javax.inject.Inject
 
 // TODO : 비밀번호 확인 API 추가하기
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
-//    private val passwordAPI: CheckPasswordAPI
+    private val getPublicKeyUseCase: PublicKeyUseCase,
+    private val checkPasswordUseCase: CheckPasswordUseCase
 ) : BaseViewModel() {
 
     private var isClickable = true
@@ -64,36 +75,46 @@ class PasswordViewModel @Inject constructor(
             password += it.toString()
         }
         baseViewModelScope.launch {
-            if(settingYn){
+            if (settingYn) {
                 _completeEvent.emit(password)
-            }else{
+            } else {
                 checkPassword(password)
             }
         }
     }
 
-    private suspend fun checkPassword(password : String) {
-//        passwordAPI(password)
-//            .onSuccess {
-//                if (it.flag) {
-//                    _completeEvent.emit(password)
-//                } else {
-//                    isClickable = false
-//                    _wrongCountState.emit("${it.wrongCnt}/5")
-//                    _failEvent.emit(true)
-//
-//                    stack.clear()
-//                    delay(1000)
-//                    _failEvent.emit(false)
-//                    isClickable = true
-//                }
-//            }.onError { e ->
-//                if (e is WrongPassword5TimesException) {
-//                    _dismissEvent.emit(true)
-//                } else {
-//                    catchError(e)
-//                }
-//            }
+    private suspend fun checkPassword(password: String) {
+        baseViewModelScope.launch {
+            getPublicKeyUseCase()
+                .onSuccess {
+                    AppLog.e("haha ${password.rsaEncode(it.publicKey)!!}")
+                    checkPasswordUseCase(password.rsaEncode(it.publicKey)!!)
+                        .onSuccess {
+                            _completeEvent.emit(password)
+                        }.onError { e ->
+                            AppLog.e("haha ${e}")
+                            //TODO 틀렸을 때
+                            /*isClickable = false
+                            _wrongCountState.emit("${it.wrongCnt}/5")
+                            _failEvent.emit(true)
+
+                            stack.clear()
+                            delay(1000)
+                            _failEvent.emit(false)
+                            isClickable = true*/
+
+                            //TODO 5번 틀렸을 때
+                            /*if (e is WrongPassword5TimesException) {
+                                _dismissEvent.emit(true)
+                            } else {
+                                catchError(e)
+                            }*/
+                        }
+                }
+                .onError {
+                    AppLog.e("haha ${it}")
+                }
+        }
     }
 
     fun initPwdInfo(stackSize: Int, settingYn: Boolean) {

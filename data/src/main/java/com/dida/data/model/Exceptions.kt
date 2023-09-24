@@ -22,6 +22,9 @@ class Alarm001Exception(e: Throwable?, val url: String? = null, code: String? = 
 /** GLOBAL_001 올바른 argument를 입력해주세요. **/
 class Global001Exception(e: Throwable?, val url: String? = null, code: String? = null): IOException(e)
 
+/** WALLET_002 비밀번호가 일치하지 않습니다. **/
+class Wallet002Exception(e: Throwable?, val url: String? = null, code: String? = null): IOException(e)
+
 /**
  * 401번 에러
  **/
@@ -75,9 +78,6 @@ class Member005Exception(e: Throwable?, val url: String? = null, code: String? =
 
 /** NFT_005 올바르지 않은 NFT입니다. **/
 class Nft005Exception(e: Throwable?, val url: String? = null, code: String? = null): IOException(e)
-
-/** WALLET_002 비밀번호가 일치하지 않습니다. **/
-class Wallet002Exception(e: Throwable?, val url: String? = null, code: String? = null): IOException(e)
 
 /** WALLET_005 디다 사용자의 주소입니다. **/
 class Wallet005Exception(e: Throwable?, val url: String? = null, code: String? = null): IOException(e)
