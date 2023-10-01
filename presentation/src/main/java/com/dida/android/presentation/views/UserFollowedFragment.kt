@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -15,11 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -30,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -186,9 +191,6 @@ class UserFollowedFragment :
         tabs: List<Follow>,
         pagerState: PagerState
     ) {
-        val following = viewModel.followingState.collectAsStateWithLifecycle()
-        val follower = viewModel.followerState.collectAsStateWithLifecycle()
-
         HorizontalPager(
             modifier = Modifier.fillMaxSize(),
             state = pagerState
@@ -197,20 +199,19 @@ class UserFollowedFragment :
                 modifier = Modifier.fillMaxSize()
             ) {
                 when (tabs[index]) {
-                    Follow.FOLLOWER -> FollowerScreen(items = follower.value.content)
-                    Follow.FOLLOWING -> FollowingScreen(items = following.value.content)
+                    Follow.FOLLOWER -> FollowerScreen()
+                    Follow.FOLLOWING -> FollowingScreen()
                 }
             }
         }
     }
 
     @Composable
-    fun FollowerScreen(
-        items: List<CommonFollow>
-    ) {
+    fun FollowerScreen() {
+        val items = viewModel.followerState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage = remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.size - 10) }
+            derivedStateOf { listState.firstVisibleItemIndex == (items.value.content.size - 10) }
         }
 
         LaunchedEffect(key1 = nextPage.value) {
@@ -223,11 +224,14 @@ class UserFollowedFragment :
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item { VerticalDivider(dp = 19) }
-            items(items.size) {
+            items(
+                count = items.value.content.size,
+                key = { items.value.content[it].isFollowing }
+            ) {
                 FollowerItem(
-                    item = items[it],
-//                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items[it].memberId)) },
-//                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items[it]) }
+                    item = items.value.content[it],
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.value.content[it].memberId)) },
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.value.content[it]) }
                 )
             }
             item { VerticalDivider(dp = 19) }
@@ -235,12 +239,11 @@ class UserFollowedFragment :
     }
 
     @Composable
-    fun FollowingScreen(
-        items: List<CommonFollow>
-    ) {
+    fun FollowingScreen() {
+        val items = viewModel.followingState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage = remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.size - 10) }
+            derivedStateOf { listState.firstVisibleItemIndex == (items.value.content.size - 10) }
         }
 
         LaunchedEffect(key1 = nextPage.value) {
@@ -253,11 +256,14 @@ class UserFollowedFragment :
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item { VerticalDivider(dp = 19) }
-            items(items.size) {
+            items(
+                count = items.value.content.size,
+                key = { items.value.content[it].isFollowing }
+            ) {
                 FollowerItem(
-                    item = items[it],
-//                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items[it].memberId)) },
-//                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items[it]) }
+                    item = items.value.content[it],
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.value.content[it].memberId)) },
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.value.content[it]) }
                 )
             }
             item { VerticalDivider(dp = 19) }
@@ -266,19 +272,21 @@ class UserFollowedFragment :
 
     @Composable
     fun FollowerItem(
-        item: CommonFollow
+        item: CommonFollow,
+        onUserClicked: () -> Unit,
+        onFollowButtonClicked: () -> Unit
     ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-                .clip(RoundedCornerShape(14.dp))
-                .clipToBounds()
+                .clickableSingle { onUserClicked() },
+            color = MainBlack
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Surface1)
+                    .background(color = Surface1, shape = RoundedCornerShape(size = 14.dp))
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -310,6 +318,38 @@ class UserFollowedFragment :
                     )
                 }
                 HorizontalDivider(dp = 12)
+                if (item.isFollowing) {
+                    Surface(
+                        modifier = Modifier
+                            .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))
+                            .background(color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .clickableSingle { onFollowButtonClicked() },
+                        color = BrandLemon
+                    ) {
+                        Text(
+                            text = "팔로잉",
+                            style = DidaTypography.body1,
+                            fontSize = dpToSp(dp = 12.dp),
+                            color = MainBlack
+                        )
+                    }
+                } else {
+                    Surface(
+                        modifier = Modifier
+                            .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .clickableSingle { onFollowButtonClicked() },
+                        color = Surface1
+                    ) {
+                        Text(
+                            text = "팔로우",
+                            style = DidaTypography.body1,
+                            fontSize = dpToSp(dp = 12.dp),
+                            color = White
+                        )
+                    }
+                }
             }
         }
     }

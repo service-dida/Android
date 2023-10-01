@@ -39,9 +39,9 @@ class UserFollowedViewModel @Inject constructor(
     )
     val followerState: StateFlow<Contents<CommonFollow>> = _followerState.asStateFlow()
 
-    private val _messageEvent: MutableSharedFlow<UserFollowedMessageAction> = MutableSharedFlow<UserFollowedMessageAction>()
+    private val _messageEvent: MutableSharedFlow<UserFollowedMessageAction> =
+        MutableSharedFlow<UserFollowedMessageAction>()
     val messageEvent: SharedFlow<UserFollowedMessageAction> = _messageEvent.asSharedFlow()
-
 
     init {
         getFollowerMember()
@@ -90,10 +90,47 @@ class UserFollowedViewModel @Inject constructor(
         }
     }
 
-    fun onFollowButtonClicked(user: CommonFollow) = baseViewModelScope.launch {
-        memberFollowUseCase(user.memberId)
-            .onSuccess {
-                _messageEvent.emit(UserFollowedMessageAction.UserUnFollowMessage)
-            }.onError { e -> catchError(e) }
+    fun onFollowButtonClicked(user: CommonFollow) =
+        baseViewModelScope.launch {
+            memberFollowUseCase(user.memberId)
+                .onSuccess {
+                    if (user.isFollowing) _messageEvent.emit(UserFollowedMessageAction.UserUnFollowMessage)
+                    else _messageEvent.emit(UserFollowedMessageAction.UserFollowMessage(user.nickname))
+                    changeFollowingUser(user)
+                    changeFollowerUser(user)
+                }
+                .onError { e -> catchError(e) }
+        }
+
+    private fun changeFollowingUser(user: CommonFollow) {
+        val userIndex = followingState.value.content.indexOf(user)
+        val newList = followingState.value.content.toMutableList()
+        val beforeUser = newList[userIndex]
+
+        val newUser = CommonFollow(
+            memberId = beforeUser.memberId,
+            nickname = beforeUser.nickname,
+            profileImgUrl = beforeUser.profileImgUrl,
+            nftCnt = beforeUser.nftCnt,
+            isFollowing = !beforeUser.isFollowing
+        )
+        newList[userIndex] = newUser
+        _followingState.value.content = newList
+    }
+
+    private fun changeFollowerUser(user: CommonFollow) {
+        val userIndex = followerState.value.content.indexOf(user)
+        val newList = followerState.value.content.toMutableList()
+        val beforeUser = newList[userIndex]
+
+        val newUser = CommonFollow(
+            memberId = beforeUser.memberId,
+            nickname = beforeUser.nickname,
+            profileImgUrl = beforeUser.profileImgUrl,
+            nftCnt = beforeUser.nftCnt,
+            isFollowing = !beforeUser.isFollowing
+        )
+        newList[userIndex] = newUser
+        _followerState.value.content = newList
     }
 }
