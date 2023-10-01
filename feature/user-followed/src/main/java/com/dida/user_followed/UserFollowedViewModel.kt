@@ -39,8 +39,7 @@ class UserFollowedViewModel @Inject constructor(
     )
     val followerState: StateFlow<Contents<CommonFollow>> = _followerState.asStateFlow()
 
-    private val _messageEvent: MutableSharedFlow<UserFollowedMessageAction> =
-        MutableSharedFlow<UserFollowedMessageAction>()
+    private val _messageEvent: MutableSharedFlow<UserFollowedMessageAction> = MutableSharedFlow<UserFollowedMessageAction>()
     val messageEvent: SharedFlow<UserFollowedMessageAction> = _messageEvent.asSharedFlow()
 
     init {
@@ -106,7 +105,6 @@ class UserFollowedViewModel @Inject constructor(
         val userIndex = followingState.value.content.indexOf(user)
         val newList = followingState.value.content.toMutableList()
         val beforeUser = newList[userIndex]
-
         val newUser = CommonFollow(
             memberId = beforeUser.memberId,
             nickname = beforeUser.nickname,
@@ -115,14 +113,13 @@ class UserFollowedViewModel @Inject constructor(
             isFollowing = !beforeUser.isFollowing
         )
         newList[userIndex] = newUser
-        _followingState.value.content = newList
+        _followingState.value = Contents(page = followingState.value.page, pageSize = followingState.value.pageSize, hasNext = followingState.value.hasNext, content = newList)
     }
 
     private fun changeFollowerUser(user: CommonFollow) {
         val userIndex = followerState.value.content.indexOf(user)
         val newList = followerState.value.content.toMutableList()
         val beforeUser = newList[userIndex]
-
         val newUser = CommonFollow(
             memberId = beforeUser.memberId,
             nickname = beforeUser.nickname,
@@ -131,6 +128,6 @@ class UserFollowedViewModel @Inject constructor(
             isFollowing = !beforeUser.isFollowing
         )
         newList[userIndex] = newUser
-        _followerState.value.content = newList
+        _followerState.value = Contents(page = followerState.value.page, pageSize = followerState.value.pageSize, hasNext = followerState.value.hasNext, content = newList)
     }
 }
