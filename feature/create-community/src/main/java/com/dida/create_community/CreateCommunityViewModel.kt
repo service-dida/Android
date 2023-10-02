@@ -25,24 +25,24 @@ class CreateCommunityViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<CreateCommunityNavigationAction> = MutableSharedFlow<CreateCommunityNavigationAction>()
     val navigationEvent: SharedFlow<CreateCommunityNavigationAction> = _navigationEvent
 
-    private val _cardPostMyState: MutableStateFlow<Contents<OwnNft>> =
+    private val _ownNftState: MutableStateFlow<Contents<OwnNft>> =
         MutableStateFlow<Contents<OwnNft>>(
             Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
         )
-    val cardPostMyState: StateFlow<Contents<OwnNft>> = _cardPostMyState.asStateFlow()
+    val ownNftState: StateFlow<Contents<OwnNft>> = _ownNftState.asStateFlow()
 
-    private val _cardPostLikeState: MutableStateFlow<Contents<OwnNft>> =
+    private val _likeNftState: MutableStateFlow<Contents<OwnNft>> =
         MutableStateFlow<Contents<OwnNft>>(
             Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
         )
-    val cardPostLikeState: StateFlow<Contents<OwnNft>> = _cardPostLikeState.asStateFlow()
+    val likeNftState: StateFlow<Contents<OwnNft>> = _likeNftState.asStateFlow()
 
     init {
         baseViewModelScope.launch {
             likedNftsUseCase.invoke(0, PAGE_SIZE)
-                .onSuccess { _cardPostLikeState.value = it }
+                .onSuccess { _likeNftState.value = it }
                 .flatMap { ownNftsUseCase(0, PAGE_SIZE) }
-                .onSuccess { _cardPostMyState.value = it }
+                .onSuccess { _ownNftState.value = it }
                 .onError { e -> catchError(e) }
         }
     }
@@ -68,18 +68,18 @@ class CreateCommunityViewModel @Inject constructor(
     fun nextPage(nftState: Int) {
         baseViewModelScope.launch {
             if (nftState == 0) {
-                if (!cardPostLikeState.value.hasNext) {
+                if (!likeNftState.value.hasNext) {
                     return@launch
                 }
-                likedNftsUseCase(page = cardPostLikeState.value.page + 1, PAGE_SIZE).onSuccess {
-                    _cardPostLikeState.value = it.copy(content = it.content)
+                likedNftsUseCase(page = likeNftState.value.page + 1, PAGE_SIZE).onSuccess {
+                    _likeNftState.value = it.copy(content = it.content)
                 }
             } else {
-                if (!cardPostMyState.value.hasNext) {
+                if (!ownNftState.value.hasNext) {
                     return@launch
                 }
-                ownNftsUseCase(page = cardPostMyState.value.page + 1, PAGE_SIZE).onSuccess {
-                    _cardPostMyState.value = it.copy(content = cardPostMyState.value.content + it.content)
+                ownNftsUseCase(page = ownNftState.value.page + 1, PAGE_SIZE).onSuccess {
+                    _ownNftState.value = it.copy(content = ownNftState.value.content + it.content)
                 }
             }
         }

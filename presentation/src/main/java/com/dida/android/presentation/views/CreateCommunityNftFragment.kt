@@ -36,7 +36,7 @@ class CreateCommunityNftFragment(
     override fun initDataBinding() {
         viewLifecycleOwner.repeatOnStarted {
             launch {
-                viewModel.cardPostLikeState.collectLatest {
+                viewModel.likeNftState.collectLatest {
                     if (createNftState == 0) {
                         binding.likeEmptyView.isVisible = it.content.isEmpty()
                         binding.recyclerNft.isVisible = it.content.isNotEmpty()
@@ -46,7 +46,7 @@ class CreateCommunityNftFragment(
             }
 
             launch {
-                viewModel.cardPostMyState.collectLatest {
+                viewModel.ownNftState.collectLatest {
                     if (createNftState == 1) {
                         binding.createEmptyView.isVisible = it.content.isEmpty()
                         binding.recyclerNft.isVisible = it.content.isNotEmpty()
