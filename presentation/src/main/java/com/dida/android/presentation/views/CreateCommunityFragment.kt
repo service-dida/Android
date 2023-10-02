@@ -41,7 +41,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                 when (it) {
                     is CreateCommunityNavigationAction.NavigateToSelectNft ->
                         navigate(CreateCommunityFragmentDirections.actionCreateCommunityFragmentToCommunityCommunityInputFragment(it.cardId, true))
-                    is CreateCommunityNavigationAction.NavigateToLike -> {}
+                    is CreateCommunityNavigationAction.NavigateToLike -> navigate(CreateCommunityFragmentDirections.actionCreateCommunityFragmentToRecentNftFragment())
                     is CreateCommunityNavigationAction.NavigateToCreate -> navigate(CreateCommunityFragmentDirections.actionCreateCommunityFragmentToAddFragment())
                 }
             }
