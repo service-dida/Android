@@ -22,6 +22,7 @@ import com.dida.data.model.market.toDomain
 import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.profile.PostMemberPasswordCheckRequest
 import com.dida.data.model.profile.toDomain
 import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonCommentsRequest
@@ -362,6 +363,11 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun buyNft(payPwd: String, marketId: Long): NetworkResult<Unit> {
         val body = PostBuyNftRequest(payPwd, marketId)
         return handleApi { didaApi.postBuyNft(body) }
+    }
+
+    override suspend fun checkPassword(payPwd: String): NetworkResult<Unit> {
+        val body : PostMemberPasswordCheckRequest = PostMemberPasswordCheckRequest(payPwd)
+        return handleApi { didaApi.postPasswordCheck(body) }
     }
 
 }

@@ -41,6 +41,7 @@ import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.sns.GetOwnNftsResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.profile.PostMemberPasswordCheckRequest
 import com.dida.data.model.sns.GetCommentsFromPostResponse
 import com.dida.data.model.sns.GetHotPostsResponse
 import com.dida.data.model.sns.GetPostDetailResponse
@@ -145,7 +146,7 @@ interface DidaApi {
         @Query("size") size: Int,
     ): GetCommonFollowResponse
 
-    // 팔로우 목록 보기
+    // 팔로잉 목록 보기
     @GET("/common/following")
     suspend fun getCommonFollowing(
         @Query("page") page: Int,
@@ -176,6 +177,10 @@ interface DidaApi {
     // 결제 비밀번호 찾기(임시 비밀번호 발급)
     @PATCH("/member/password/tmp")
     suspend fun patchTempMemberPassword(): Unit
+
+    // 결제 비밀번호 확인하기
+    @POST("/member/password/check")
+    suspend fun postPasswordCheck(@Body body: PostMemberPasswordCheckRequest): Unit
 
     /**
      * Dex 및 Nft

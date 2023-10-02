@@ -1,5 +1,6 @@
 package com.dida.android.presentation.views
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -57,6 +58,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
         viewLifecycleOwner.repeatOnCreated {
             viewModel.userCardState.collectLatest {
+                binding.emptyView.visibility = if (it.content.isEmpty()) View.VISIBLE else View.GONE
                 userCardAdapter.submitList(it.content)
             }
         }
