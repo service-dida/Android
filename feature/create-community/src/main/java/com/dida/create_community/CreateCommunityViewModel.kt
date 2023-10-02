@@ -65,22 +65,24 @@ class CreateCommunityViewModel @Inject constructor(
         }
     }
 
-    fun nextPage(nftState: Int) {
+    fun onNextPageFromLikeNft() {
         baseViewModelScope.launch {
-            if (nftState == 0) {
-                if (!likeNftState.value.hasNext) {
-                    return@launch
-                }
-                likedNftsUseCase(page = likeNftState.value.page + 1, PAGE_SIZE).onSuccess {
-                    _likeNftState.value = it.copy(content = it.content)
-                }
-            } else {
-                if (!ownNftState.value.hasNext) {
-                    return@launch
-                }
-                ownNftsUseCase(page = ownNftState.value.page + 1, PAGE_SIZE).onSuccess {
-                    _ownNftState.value = it.copy(content = ownNftState.value.content + it.content)
-                }
+            if (!likeNftState.value.hasNext) {
+                return@launch
+            }
+            likedNftsUseCase(page = likeNftState.value.page + 1, PAGE_SIZE).onSuccess {
+                _likeNftState.value = it.copy(content = it.content)
+            }
+        }
+    }
+
+    fun onNextPageFromOwnNft() {
+        baseViewModelScope.launch {
+            if (!ownNftState.value.hasNext) {
+                return@launch
+            }
+            ownNftsUseCase(page = ownNftState.value.page + 1, PAGE_SIZE).onSuccess {
+                _ownNftState.value = it.copy(content = ownNftState.value.content + it.content)
             }
         }
     }
