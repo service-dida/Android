@@ -94,8 +94,8 @@
             android:background="@drawable/custom_surface2_radius8"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             app:onSingleClick="@{() -> eventListener.onNftSelectClicked(holderModel.nftId)}">
         </TextView>
 

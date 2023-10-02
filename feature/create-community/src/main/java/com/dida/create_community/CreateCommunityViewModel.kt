@@ -35,7 +35,7 @@ class CreateCommunityViewModel @Inject constructor(
         MutableStateFlow<Contents<OwnNft>>(
             Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
         )
-    val cardPostLikeState: StateFlow<Contents<OwnNft>> = _cardPostMyState.asStateFlow()
+    val cardPostLikeState: StateFlow<Contents<OwnNft>> = _cardPostLikeState.asStateFlow()
 
     init {
         baseViewModelScope.launch {
@@ -55,13 +55,13 @@ class CreateCommunityViewModel @Inject constructor(
 
     override fun onLikeButtonClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToCreate)
+            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToLike)
         }
     }
 
     override fun onCreateButtonClicked() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToLike)
+            _navigationEvent.emit(CreateCommunityNavigationAction.NavigateToCreate)
         }
     }
 
