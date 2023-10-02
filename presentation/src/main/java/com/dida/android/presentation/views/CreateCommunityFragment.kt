@@ -205,21 +205,27 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             if (nextPage.value) viewModel.onNextPageFromLikeNft()
         }
 
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            state = listState,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item { VerticalDivider(dp = 19) }
-            items(
-                count = items.value.content.size
-            ) {
-                NftItem(
-                    item = items.value.content[it],
-                    onClicked = { viewModel.onNftSelectClicked(items.value.content[it].nftId) }
-                )
+        if (items.value.content.isEmpty()) {
+            EmptyLikeNft {
+                viewModel.onLikeButtonClicked()
             }
-            item { VerticalDivider(dp = 19) }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item { VerticalDivider(dp = 19) }
+                items(
+                    count = items.value.content.size
+                ) {
+                    NftItem(
+                        item = items.value.content[it],
+                        onClicked = { viewModel.onNftSelectClicked(items.value.content[it].nftId) }
+                    )
+                }
+                item { VerticalDivider(dp = 19) }
+            }
         }
     }
 
@@ -235,21 +241,27 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             if (nextPage.value) viewModel.onNextPageFromOwnNft()
         }
 
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            state = listState,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item { VerticalDivider(dp = 19) }
-            items(
-                count = items.value.content.size
-            ) {
-                NftItem(
-                    item = items.value.content[it],
-                    onClicked = { viewModel.onNftSelectClicked(items.value.content[it].nftId) }
-                )
+        if (items.value.content.isEmpty()) {
+            EmptyOwnNft {
+                viewModel.onCreateButtonClicked()
             }
-            item { VerticalDivider(dp = 19) }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item { VerticalDivider(dp = 19) }
+                items(
+                    count = items.value.content.size
+                ) {
+                    NftItem(
+                        item = items.value.content[it],
+                        onClicked = { viewModel.onNftSelectClicked(items.value.content[it].nftId) }
+                    )
+                }
+                item { VerticalDivider(dp = 19) }
+            }
         }
     }
 
@@ -322,6 +334,72 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                         color = White
                     )
                 }
+            }
+        }
+    }
+
+    @Composable
+    fun EmptyLikeNft(
+        onClicked: () -> Unit
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = getString(com.dida.create_community.R.string.create_community_like_empty_text),
+                style = DidaTypography.h1,
+                fontSize = dpToSp(dp = 20.dp),
+                color = TextGray
+            )
+            VerticalDivider(dp = 24)
+            Surface(
+                modifier = Modifier
+                    .background(color = BrandLemon, shape = RoundedCornerShape(size = 10.dp))
+                    .padding(16.dp)
+                    .clickableSingle { onClicked() },
+                color = BrandLemon
+            ) {
+                Text(
+                    text = getString(com.dida.create_community.R.string.create_community_empty_like_button_text),
+                    style = DidaTypography.h1,
+                    fontSize = dpToSp(dp = 16.dp),
+                    color = MainBlack
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun EmptyOwnNft(
+        onClicked: () -> Unit
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = getString(com.dida.create_community.R.string.create_community_create_empty_text),
+                style = DidaTypography.h1,
+                fontSize = dpToSp(dp = 20.dp),
+                color = TextGray
+            )
+            VerticalDivider(dp = 24)
+            Surface(
+                modifier = Modifier
+                    .background(color = BrandLemon, shape = RoundedCornerShape(size = 10.dp))
+                    .padding(16.dp)
+                    .clickableSingle { onClicked() },
+                color = BrandLemon
+            ) {
+                Text(
+                    text = getString(com.dida.create_community.R.string.create_community_empty_create_button_text),
+                    style = DidaTypography.h1,
+                    fontSize = dpToSp(dp = 16.dp),
+                    color = MainBlack
+                )
             }
         }
     }
