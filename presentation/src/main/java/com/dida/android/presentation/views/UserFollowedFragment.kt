@@ -225,8 +225,7 @@ class UserFollowedFragment :
         ) {
             item { VerticalDivider(dp = 19) }
             items(
-                count = items.value.content.size,
-                key = { items.value.content[it].isFollowing }
+                count = items.value.content.size
             ) {
                 FollowerItem(
                     item = items.value.content[it],
@@ -257,8 +256,7 @@ class UserFollowedFragment :
         ) {
             item { VerticalDivider(dp = 19) }
             items(
-                count = items.value.content.size,
-                key = { items.value.content[it].isFollowing }
+                count = items.value.content.size
             ) {
                 FollowerItem(
                     item = items.value.content[it],
@@ -318,7 +316,7 @@ class UserFollowedFragment :
                     )
                 }
                 HorizontalDivider(dp = 12)
-                if (item.isFollowing) {
+                if (item.following) {
                     Surface(
                         modifier = Modifier
                             .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))

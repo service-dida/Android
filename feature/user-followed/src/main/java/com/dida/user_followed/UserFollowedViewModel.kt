@@ -93,7 +93,7 @@ class UserFollowedViewModel @Inject constructor(
         baseViewModelScope.launch {
             memberFollowUseCase(user.memberId)
                 .onSuccess {
-                    if (user.isFollowing) _messageEvent.emit(UserFollowedMessageAction.UserUnFollowMessage)
+                    if (user.following) _messageEvent.emit(UserFollowedMessageAction.UserUnFollowMessage)
                     else _messageEvent.emit(UserFollowedMessageAction.UserFollowMessage(user.nickname))
                     changeFollowingUser(user)
                     changeFollowerUser(user)
@@ -110,7 +110,7 @@ class UserFollowedViewModel @Inject constructor(
             nickname = beforeUser.nickname,
             profileImgUrl = beforeUser.profileImgUrl,
             nftCnt = beforeUser.nftCnt,
-            isFollowing = !beforeUser.isFollowing
+            following = !beforeUser.following
         )
         newList[userIndex] = newUser
         _followingState.value = Contents(page = followingState.value.page, pageSize = followingState.value.pageSize, hasNext = followingState.value.hasNext, content = newList)
@@ -125,7 +125,7 @@ class UserFollowedViewModel @Inject constructor(
             nickname = beforeUser.nickname,
             profileImgUrl = beforeUser.profileImgUrl,
             nftCnt = beforeUser.nftCnt,
-            isFollowing = !beforeUser.isFollowing
+            following = !beforeUser.following
         )
         newList[userIndex] = newUser
         _followerState.value = Contents(page = followerState.value.page, pageSize = followerState.value.pageSize, hasNext = followerState.value.hasNext, content = newList)

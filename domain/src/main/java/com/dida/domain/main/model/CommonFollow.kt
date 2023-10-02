@@ -6,5 +6,5 @@ data class CommonFollow(
     val nickname: String,
     val profileImgUrl: String?,
     val nftCnt: Int,
-    val isFollowing: Boolean
+    val following: Boolean
 )
