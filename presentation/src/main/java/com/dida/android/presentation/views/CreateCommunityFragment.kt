@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
-import com.dida.android.presentation.adapter.CreateCommunityNftPagerAdapter
 import com.dida.create_community.CreateCommunityNavigationAction
 import com.dida.create_community.CreateCommunityViewModel
 import com.dida.create_community.databinding.FragmentCreateCommunityBinding
@@ -48,20 +47,9 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
-    private fun initAdapter() {
-        val tabTitleArray = arrayOf(getString(R.string.create_community_like_nft), getString(R.string.create_community_my_nft))
-
-        val viewPager = binding.viewpagerNft
-        val tabLayout = binding.tabNft
-
-        viewPager.adapter = CreateCommunityNftPagerAdapter(this@CreateCommunityFragment, lifecycle)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabTitleArray[position]
-        }.attach()
-    }
+    private fun initAdapter() {}
 
     private fun initToolbar() {
         binding.toolbar.apply {
