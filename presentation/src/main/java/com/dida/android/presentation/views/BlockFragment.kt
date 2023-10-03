@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -19,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -34,11 +34,10 @@ import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Surface1
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
-import com.dida.compose.utils.Divider12
+import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.clickableSingle
-import com.dida.domain.model.main.UserHide
+import com.dida.domain.main.model.HideMember
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.dida.block.R.layout.fragment_block) {
@@ -67,6 +66,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val userList = viewModel.userListState.collectAsStateWithLifecycle()
                 BlockScreen(userList.value)
@@ -83,14 +83,14 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
 
     @Composable
     fun BlockScreen(
-        userList: List<UserHide>
+        userList: List<HideMember>
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
-            items(userList) { user ->
+            items(userList.size) {
                 BlockUserItem(
-                    user = user
+                    user = userList[it]
                 ) {
                     viewModel.onBlockCancel(it)
                 }
@@ -100,8 +100,8 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
 
     @Composable
     fun BlockUserItem(
-        user: UserHide,
-        onBlockCancelClicked: (user: UserHide) -> Unit
+        user: HideMember,
+        onBlockCancelClicked: (user: HideMember) -> Unit
     ) {
         Surface(
             modifier = Modifier
@@ -124,24 +124,24 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                 ) {
                     AsyncImage(
                         modifier = Modifier.fillMaxSize(),
-                        model = user.imgUrl,
+                        model = user.profileUrl,
                         contentDescription = "유저 이미지",
                         contentScale = ContentScale.Crop,
                         error = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground),
                         placeholder = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground)
                     )
                 }
-                Divider12()
+                HorizontalDivider(dp = 12)
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = user.userName,
+                    text = user.nickname,
                     style = DidaTypography.h3,
                     fontSize = dpToSp(dp = 16.dp),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     color = White
                 )
-                Divider12()
+                HorizontalDivider(dp = 12)
                 Surface(
                     modifier = Modifier
                         .clickableSingle { onBlockCancelClicked(user) },

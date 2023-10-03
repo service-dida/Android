@@ -5,13 +5,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
-import com.dida.hot_user.HotUserNavigationAction
 import com.dida.hot_user.HotUserViewModel
-import com.dida.hot_user.adapter.HotUserPagingAdapter
+import com.dida.hot_user.adapter.HotUserAdapter
 import com.dida.hot_user.databinding.FragmentHotUserBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -25,7 +24,8 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
 
     override val viewModel : HotUserViewModel by viewModels()
     private val navController by lazy { findNavController() }
-    private val hotUserPagingAdapter by lazy { HotUserPagingAdapter(viewModel) }
+    private val hotUserAdapter by lazy { HotUserAdapter(viewModel) }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -39,18 +39,15 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
 
     override fun initDataBinding() {
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.hotUserState.collectLatest {
+            viewModel.hotMemberState.collectLatest {
                 viewModel.dismissLoading()
-                hotUserPagingAdapter.submitData(it)
+                hotUserAdapter.submitList(it.content)
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))
-                    is HotUserNavigationAction.NavigateToFollow -> hotUserPagingAdapter.refresh()
-                }
+            viewModel.navigateToUser.collectLatest {
+                navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it))
             }
         }
     }
@@ -66,6 +63,9 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
     }
 
     private fun initAdapter() {
-        binding.hotUserRecycler.adapter = hotUserPagingAdapter
+        binding.hotUserRecycler.adapter = hotUserAdapter
+        binding.hotUserRecycler.addOnPagingListener(
+            arrivedBottom = { viewModel.nextPage() }
+        )
     }
 }

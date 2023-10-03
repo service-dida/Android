@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
-import com.dida.domain.model.main.Home
-import com.dida.domain.model.main.Hots
-import com.dida.domain.model.main.SoldOut
+import com.dida.domain.main.model.HotItem
+import com.dida.domain.main.model.Main
+import com.dida.domain.main.model.SoldOut
 import com.dida.home.adapter.*
 
 @BindingAdapter(value = ["hotsItem", "eventListener"], requireAll = true)
-fun ViewPager2.bindHotsItems(banners: List<Hots>?, eventListener : HomeActionHandler?) {
+fun ViewPager2.bindHotsItems(banners: List<HotItem>?, eventListener : HomeActionHandler?) {
     val recyclerView = this
     if (!banners.isNullOrEmpty() && eventListener != null) {
         recyclerView.isVisible = true
@@ -26,10 +26,10 @@ fun ViewPager2.bindHotsItems(banners: List<Hots>?, eventListener : HomeActionHan
 }
 
 @BindingAdapter("recentNftItem")
-fun RecyclerView.bindRecentNftItem(uiState: UiState<Home>) {
+fun RecyclerView.bindRecentNftItem(uiState: UiState<Main>) {
     val boundAdapter = this.adapter
-    if (boundAdapter is RecentNftAdapter) {
-        boundAdapter.submitList(uiState.successOrNull()?.getRecentCards)
+    if (boundAdapter is HomeRecentNftAdapter) {
+        boundAdapter.submitList(uiState.successOrNull()?.getRecentNfts)
     }
 }
 

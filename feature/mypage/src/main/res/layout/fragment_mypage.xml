@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.dida.mypage.MyPageViewModel.CardSortType"/>
+        <import type="com.dida.domain.main.model.Sort"/>
         <variable
             name="vm"
             type="com.dida.mypage.MyPageViewModel" />
@@ -45,7 +45,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    constraint_endLoading="@{vm.myPageState}"
+                    app:constraint_endLoading="@{vm.myPageState}"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp">
 
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="19dp"
                         android:fontFamily="@font/pretendard_regular"
-                        userNickname="@{vm.myPageState}"
+                        app:userNickname="@{vm.myPageState}"
                         android:textColor="@color/white"
                         android:textSize="22dp"
                         app:layout_constraintEnd_toEndOf="@+id/circleImageView"
@@ -80,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_regular"
-                        userDescription="@{vm.myPageState}"
+                        app:userDescription="@{vm.myPageState}"
                         android:textColor="@color/white"
                         android:textSize="14dp"
                         app:layout_constraintEnd_toEndOf="@+id/circleImageView"
@@ -116,7 +116,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
-                                userNftCount="@{vm.myPageState}"
+                                app:userNftCount="@{vm.myPageState}"
                                 android:textColor="@color/white"
                                 android:textSize="16dp" />
 
@@ -147,7 +147,7 @@
                             app:onSingleClick="@{() -> vm.onUserFollowedClicked()}">
 
                             <TextView
-                                userFollwerCount="@{vm.myPageState}"
+                                app:userFollwerCount="@{vm.myPageState}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -183,7 +183,7 @@
                             app:onSingleClick="@{() -> vm.onUserFollowingClicked()}">
 
                             <TextView
-                                userFollwingCount="@{vm.myPageState}"
+                                app:userFollwingCount="@{vm.myPageState}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -235,9 +235,9 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
-                                app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(CardSortType.NEWEST)}"
+                                app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(Sort.NEWEST)}"
                                 android:text="@string/mypage_nft_type_newest_text"
-                                android:textColor="@{vm.cardSortTypeState==CardSortType.NEWEST? @color/brand_lemon : @color/surface6}"
+                                android:textColor="@{vm.cardSortTypeState == Sort.NEWEST? @color/brand_lemon : @color/surface6}"
                                 android:textSize="14dp" />
 
                             <ImageView
@@ -253,9 +253,9 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
-                                app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(CardSortType.OLDEST)}"
+                                app:onSingleClick="@{() -> vm.onMypageNftTypeClicked(Sort.OLDEST)}"
                                 android:text="@string/mypage_nft_type_oldest_text"
-                                android:textColor="@{vm.cardSortTypeState==CardSortType.OLDEST? @color/brand_lemon : @color/surface6}"
+                                android:textColor="@{vm.cardSortTypeState == Sort.OLDEST? @color/brand_lemon : @color/surface6}"
                                 android:textSize="14dp" />
 
                         </LinearLayout>
@@ -294,7 +294,7 @@
                             android:textColor="@color/white_50"
                             android:textSize="20dp"
                             android:fontFamily="@font/pretendard_bold"
-                            android:layout_marginBottom="18dp"/>
+                            android:layout_marginBottom="10dp"/>
 
                         <TextView
                             android:id="@+id/empty_description"
@@ -307,7 +307,7 @@
                             android:textColor="@color/surface6"
                             android:textSize="16dp"
                             android:fontFamily="@font/pretendard_bold"
-                            android:layout_marginBottom="18dp"/>
+                            android:layout_marginBottom="24dp"/>
 
                         <TextView
                             android:id="@+id/empty_create_button"

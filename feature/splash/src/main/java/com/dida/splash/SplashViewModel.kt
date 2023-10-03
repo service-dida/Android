@@ -1,25 +1,33 @@
 package com.dida.splash
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CheckVersionAPI
-import com.dida.domain.usecase.main.DeviceTokenAPI
-import com.dida.domain.usecase.main.RefreshTokenAPI
-import com.dida.domain.usecase.main.UserProfileAPI
+import com.dida.domain.usecase.CommonProfileUseCase
+import com.dida.domain.usecase.PatchDeviceTokenUseCase
+import com.dida.domain.usecase.RefreshTokenUseCase
+import com.dida.domain.usecase.local.GetTokenUseCase
+import com.dida.domain.usecase.local.SetTokenUseCase
+import com.dida.domain.usecase.local.SetUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val versionAPI: CheckVersionAPI,
-    private val deviceTokenAPI: DeviceTokenAPI,
-    private val userProfileAPI: UserProfileAPI,
-    private val refreshTokenAPI: RefreshTokenAPI,
+    private val patchDeviceTokenUseCase: PatchDeviceTokenUseCase,
+    private val commonProfileUseCase: CommonProfileUseCase,
+    private val refreshTokenUseCase: RefreshTokenUseCase,
+    private val setTokenUseCase: SetTokenUseCase,
+    private val setUserIdUseCase: SetUserIdUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
 ) : BaseViewModel() {
 
     private val TAG = "SplashViewModel"
@@ -33,35 +41,42 @@ class SplashViewModel @Inject constructor(
     private val _navigateToHome: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val navigateToHome: SharedFlow<Boolean> = _navigateToHome.asSharedFlow()
 
+    // TODO : 버전 체크 API 추가 필요
     fun onVersionCheck() {
         baseViewModelScope.launch {
-            versionAPI()
-                .onSuccess { _appVersion.emit(it.version) }
-                .onError { e -> catchError(e) }
+            _appVersion.emit(0)
         }
     }
 
     fun onAppSetUp(deviceToken: String) {
         baseViewModelScope.launch {
-            dataStorePreferences.getRefreshToken()?.let { token ->
-                refreshTokenAPI.invoke(request = token)
-                    .onSuccess { response ->
-                        dataStorePreferences.setAccessToken(
-                            accessToken = response.accessToken ?: "",
-                            refreshToken = response.refreshToken ?: ""
-                        )
-                    }.flatMap { deviceTokenAPI(deviceToken = deviceToken) }
-                    .flatMap { userProfileAPI() }
-                    .onSuccess { userProfile ->
-                        dataStorePreferences.setUserId(userProfile.userId)
-                        _navigateToHome.emit(true)
-                        _splashScreenGone.emit(true)
-                    }.onError { e -> catchError(e) }
-            }
-            if (dataStorePreferences.getAccessToken() == null) {
-                _navigateToHome.emit(true)
-                _splashScreenGone.emit(true)
-            }
+            getTokenUseCase()
+                .onSuccess { (accessToken, refreshToken) ->
+                    if (accessToken == null || refreshToken == null) {
+                        onGoneSplash()
+                        return@launch
+                    }
+                }
+                .flatMap { (accessToken, refreshToken) -> refreshTokenUseCase(refreshToken = refreshToken ?: "") }
+                .onSuccess { setTokenUseCase(accessToken = it.accessToken, refreshToken = it.refreshToken) }
+                .flatMap { patchDeviceTokenUseCase(deviceToken = deviceToken) }
+                .flatMap { commonProfileUseCase() }
+                .onSuccess {
+                    setUserIdUseCase(it.memberInfo.memberId)
+                    onGoneSplash()
+                }
+                .onError { e -> catchError(e) }
         }
+    }
+
+    fun onGoogleServiceError() {
+        baseViewModelScope.launch {
+            onGoneSplash()
+        }
+    }
+
+    private suspend fun onGoneSplash() {
+        _navigateToHome.emit(true)
+        _splashScreenGone.emit(true)
     }
 }

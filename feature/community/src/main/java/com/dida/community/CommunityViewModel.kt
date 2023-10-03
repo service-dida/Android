@@ -1,26 +1,27 @@
 package com.dida.community
 
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.ui.report.ReportType
 import com.dida.common.ui.report.ReportViewModelDelegate
+import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
-import com.dida.community.adapter.createPostsPager
-import com.dida.data.DataApplication
-import com.dida.data.model.NeedLogin
-import com.dida.domain.model.main.HotCard
-import com.dida.domain.model.main.Posts
+import com.dida.data.model.Auth001Exception
+import com.dida.domain.Contents
+import com.dida.domain.flatMap
+import com.dida.domain.main.model.Block
+import com.dida.domain.main.model.HotPost
+import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.HotCardAPI
-import com.dida.domain.usecase.main.PostsAPI
+import com.dida.domain.usecase.HotPostsUseCase
+import com.dida.domain.usecase.PostsUseCase
+import com.dida.domain.usecase.local.LoginCheckUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -33,8 +34,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
-    postsAPI: PostsAPI,
-    private val hotCardAPI: HotCardAPI,
+    private val postsUseCase: PostsUseCase,
+    private val hotPostsUseCase: HotPostsUseCase,
+    private val loginCheckUseCase: LoginCheckUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), CommunityActionHandler, CommunityWriteActionHandler, HotCardActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -44,32 +46,41 @@ class CommunityViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<CommunityNavigationAction> = MutableSharedFlow<CommunityNavigationAction>()
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent.asSharedFlow()
 
-    private val _blockEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val blockEvent: SharedFlow<Unit> = _blockEvent.asSharedFlow()
+    private val _postsState: MutableStateFlow<Contents<Post>> = MutableStateFlow(
+        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+    )
+    val postsState: StateFlow<Contents<Post>> = _postsState.asStateFlow()
 
-    val postsState: Flow<PagingData<Posts>> = createPostsPager(postsAPI = postsAPI)
-        .flow.cachedIn(baseViewModelScope)
-
-    private val _hotCardState: MutableStateFlow<UiState<List<HotCard>>> = MutableStateFlow<UiState<List<HotCard>>>(UiState.Loading)
-    val hotCardState: StateFlow<UiState<List<HotCard>>> = _hotCardState.asStateFlow()
-
+    private val _hotCardState: MutableStateFlow<UiState<List<HotPost>>> = MutableStateFlow<UiState<List<HotPost>>>(UiState.Loading)
+    val hotCardState: StateFlow<UiState<List<HotPost>>> = _hotCardState.asStateFlow()
 
     init {
+        getCommunity()
+    }
+
+    fun getCommunity() {
         baseViewModelScope.launch {
-            hotCardAPI().onSuccess {
-                delay(SHIMMER_TIME)
-                _hotCardState.value = UiState.Success(it)
-            }.onError { e -> catchError(e) }
+            postsUseCase(INIT_PAGE, PAGE_SIZE)
+                .onSuccess {
+                    delay(SHIMMER_TIME)
+                    _postsState.value = it }
+                .flatMap { hotPostsUseCase(INIT_PAGE, PAGE_SIZE / 2) }
+                .onSuccess {
+                    delay(SHIMMER_TIME)
+                    _hotCardState.value = UiState.Success(it.content)
+                }.onError { e -> catchError(e) }
         }
     }
 
-    fun getHotCards() {
+    fun onNextPage() {
         baseViewModelScope.launch {
-            _hotCardState.value = UiState.Loading
-            hotCardAPI().onSuccess {
-                delay(SHIMMER_TIME)
-                _hotCardState.value = UiState.Success(it)
-            }.onError { e -> catchError(e) }
+            if (!postsState.value.hasNext) return@launch
+            postsUseCase(postsState.value.page + 1, PAGE_SIZE)
+                .onSuccess {
+                    delay(SHIMMER_TIME)
+                    it.content = (postsState.value.content.toMutableList()) + it.content
+                    _postsState.value = it
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -81,11 +92,11 @@ class CommunityViewModel @Inject constructor(
 
     override fun onCommunityWriteClicked() {
         baseViewModelScope.launch {
-            if (DataApplication.dataStorePreferences.getAccessToken() == null) {
-                catchError(NeedLogin(e = IOException(), code = 127))
-            } else {
-                _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
-            }
+            loginCheckUseCase()
+                .onSuccess {
+                    if (it) _navigationEvent.emit(CommunityNavigationAction.NavigateToCommunityWrite)
+                    else catchError(Auth001Exception(e = IOException()))
+                }
         }
     }
 
@@ -102,11 +113,6 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostBlock(type: ReportType, blockId: Long){
-        baseViewModelScope.launch {
-            onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
-        }
-    }
 
     override fun onUpdateClicked(postId: Long) {
         baseViewModelScope.launch {
@@ -126,11 +132,11 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: ReportType, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
+    fun onReport(type: Report, reportId: Long, content: String) = baseViewModelScope.launch {
+        onReportDelegate(type = type, reportId = reportId, content = content)
     }
 
-    fun onBlock(type: ReportType, blockId: Long) {
-        onBlockDelegate(coroutineScope = baseViewModelScope, type = type, blockId = blockId)
+    fun onBlock(type: Block, blockId: Long) = baseViewModelScope.launch {
+        onBlockDelegate(type = type, blockId = blockId)
     }
 }

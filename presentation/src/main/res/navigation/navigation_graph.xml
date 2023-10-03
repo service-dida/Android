@@ -149,6 +149,11 @@
             app:destination="@id/addFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_createCommunityFragment_to_recentNftFragment"
+            app:destination="@id/recentNftFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -570,27 +575,6 @@
         <argument
             android:name="nftId"
             app:argType="long" />
-        <argument
-            android:name="nftImg"
-            app:argType="string" />
-        <argument
-            android:name="nftTitle"
-            app:argType="string" />
-        <argument
-            android:name="userImg"
-            app:argType="string" />
-        <argument
-            android:name="userName"
-            app:argType="string" />
-        <argument
-            android:name="price"
-            app:argType="string" />
-        <argument
-            android:name="viewerNickname"
-            app:argType="string" />
-        <argument
-            android:name="marketId"
-            app:argType="long" />
         <action
             android:id="@+id/action_buyNftFragment_to_buySuccessFragment"
             app:destination="@id/buySuccessFragment"
@@ -643,11 +627,6 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@id/userProfileFragment"/>
-        <action
-            android:id="@+id/action_userProfileFragment_to_userFollowedFragment"
-            app:destination="@id/userFollowedFragment"
-            app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -659,8 +638,13 @@
             app:argType="long" />
         <argument
             android:name="type"
-            app:argType="com.dida.domain.model.main.Follow"
+            app:argType="com.dida.domain.main.model.Follow"
             android:defaultValue="FOLLOWER"/>
+        <action
+            android:id="@+id/action_userFollowedFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment

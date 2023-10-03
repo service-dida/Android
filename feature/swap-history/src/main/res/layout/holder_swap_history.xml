@@ -10,7 +10,7 @@
             type="com.dida.swap.history.SwapHistoryActionHandler"/>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.SwapHistory" />
+            type="com.dida.domain.main.model.Swap" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
         android:id="@+id/imageView"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:src='@{holderModel.sendCoinType.equals("K")? @drawable/ic_klay : @drawable/ic_dida}'
+        android:src='@{holderModel.type.equals("K")? @drawable/ic_klay : @drawable/ic_dida}'
         tools:src="@drawable/ic_klay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             style="@style/TextView_regular_18_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{holderModel.sendCoinType.equals("K")? @string/swap_history_klayToDida_text : @string/swap_history_didaToKlay_text}'
+            android:text='@{holderModel.type.equals("K")? @string/swap_history_klayToDida_text : @string/swap_history_didaToKlay_text}'
             tools:text="@string/swap_history_klayToDida_text" />
 
         <LinearLayout
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@{holderModel.timeToDayAndTime().first}" />
+                android:text="@{holderModel.time}" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@{holderModel.timeToDayAndTime().second}" />
+                android:text="@{holderModel.time}" />
 
         </LinearLayout>
 

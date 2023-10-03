@@ -4,18 +4,21 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
-import com.dida.common.adapter.CommunityPagingAdapter
+import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.dialog.CompleteDialogFragment
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
-import com.dida.common.ui.report.ReportType
-import com.dida.common.util.*
-import com.dida.common.widget.DefaultSnackBar
+import com.dida.common.util.DIDAINTENT
+import com.dida.common.util.addOnPagingListener
+import com.dida.common.util.repeatOnStarted
+import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.HotCardsContainerAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
-import com.dida.domain.model.main.HotCards
+import com.dida.domain.main.model.Block
+import com.dida.domain.main.model.HotPosts
+import com.dida.domain.main.model.Report
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -30,7 +33,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override val viewModel : CommunityViewModel by viewModels()
     private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
-    private val communityPagingAdapter by lazy { CommunityPagingAdapter(viewModel) }
+    private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
     private var lastScrollY = 0
 
@@ -46,24 +49,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            launch {
-                viewModel.navigationEvent.collectLatest {
-                    when (it) {
-                        is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
-                        is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
-                        is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
-                        is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
-                        is CommunityNavigationAction.NavigateToBlock -> showBlockPostDialog(postId = it.postId)
-                        is CommunityNavigationAction.NavigateToUpdate -> {}
-                        is CommunityNavigationAction.NavigateToDelete -> {}
-                    }
-                }
-            }
-
-
-            launch {
-                viewModel.blockEvent.collectLatest {
-                    showMessageSnackBar(getString(R.string.block_post_message))
+            viewModel.navigationEvent.collectLatest {
+                when (it) {
+                    is CommunityNavigationAction.NavigateToDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityDetailFragment(it.postId))
+                    is CommunityNavigationAction.NavigateToCommunityWrite -> navigate(CommunityFragmentDirections.actionCommunityFragmentToCreateCommunityFragment())
+                    is CommunityNavigationAction.NavigateToNftDetail -> navigate(CommunityFragmentDirections.actionCommunityFragmentToDetailNftFragment(it.cardId))
+                    is CommunityNavigationAction.NavigateToReport -> showReportDialog(it.postId)
+                    is CommunityNavigationAction.NavigateToBlock -> showBlockPostDialog(postId = it.postId)
+                    is CommunityNavigationAction.NavigateToUpdate -> {}
+                    is CommunityNavigationAction.NavigateToDelete -> {}
                 }
             }
         }
@@ -71,28 +65,28 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.postsState.collectLatest {
-                    communityPagingAdapter.submitData(it)
+                    communityAdapter.submitList(it.content)
                 }
             }
 
             launch {
                 viewModel.hotCardState.collectLatest {
                     it.successOrNull()?.let { hotCards ->
-                        val item = if (hotCards.isNotEmpty()) listOf(HotCards.Contents(hotCards)) else emptyList()
+                        val item = if (hotCards.isNotEmpty()) listOf(HotPosts.Contents(hotCards)) else emptyList()
                         hotCardsContainerAdapter.submitList(item)
                     }
                 }
             }
 
             launch {
-                viewModel.navigateToReportEvent.collectLatest {
-                    if (it.second) {
-                        when (it.first) {
-                            ReportType.USER -> showReportUserCompleteDialog()
-                            ReportType.POST -> showReportCompleteDialog()
+                viewModel.navigateToReportEvent.collectLatest { (type, succes) ->
+                    if (succes) {
+                        when (type) {
+                            Report.MEMBER -> showCompleteDialog(getString(R.string.report_user_dialog_message))
+                            Report.POST -> showCompleteDialog(getString(R.string.report_dialog_message))
                             else -> {}
                         }
-                        communityPagingAdapter.refresh()
+                        viewModel.getCommunity()
                     } else {
                         showToastMessage(requireContext().getString(R.string.already_report_message))
                     }
@@ -101,14 +95,14 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             }
 
             launch {
-                viewModel.navigateToBlockEvent.collectLatest {
-                    if (it.second) {
-                        when (it.first) {
-                            ReportType.USER -> showBlockUserCompleteDialog()
-                            ReportType.POST -> showBlockCompleteDialog()
+                viewModel.navigateToBlockEvent.collectLatest { (type, succes) ->
+                    if (succes) {
+                        when (type) {
+                            Block.MEMBER -> showCompleteDialog(getString(R.string.block_user_dialog_message))
+                            Block.POST -> showCompleteDialog(getString(R.string.block_dialog_message))
                             else -> {}
                         }
-                        communityPagingAdapter.refresh()
+                        viewModel.getCommunity()
                     }
                 }
             }
@@ -120,20 +114,19 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     override fun onResume() {
         super.onResume()
         setFragmentResultListener(DIDAINTENT.RESULT_SCREEN_COMMUNITY) { _, bundle ->
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_CREATE)) showCreateCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_REPORT)) showReportCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_REPORT)) showReportUserCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_BLOCK)) showBlockCompleteDialog()
-            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showBlockUserCompleteDialog()
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_CREATE)) showCompleteDialog(getString(R.string.create_post_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_REPORT)) showCompleteDialog(getString(R.string.report_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_REPORT)) showCompleteDialog(getString(R.string.report_user_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_POST_BLOCK)) showCompleteDialog(getString(R.string.block_dialog_message))
+            if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showCompleteDialog(getString(R.string.block_user_dialog_message))
+            viewModel.getCommunity()
         }
-        communityPagingAdapter.refresh()
         getLastScrollY()
     }
 
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getHotCards()
-            communityPagingAdapter.refresh()
+            viewModel.getCommunity()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -145,7 +138,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     private fun initRecyclerView() {
         binding.activeCommunityRecyclerView.adapter = hotCardsContainerAdapter
-        binding.communityRecyclerView.adapter = communityPagingAdapter
+        binding.communityRecyclerView.adapter = communityAdapter
+        binding.communityRecyclerView.addOnPagingListener(
+            arrivedBottom = { viewModel.onNextPage() }
+        )
     }
 
     private fun setLastScrollY() {
@@ -159,34 +155,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
     }
 
-    private fun showCreateCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.create_post_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
-    private fun showReportCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.report_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
-    private fun showReportUserCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.report_user_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
     private fun showBlockPostDialog(postId: Long) {
         DefaultDialogFragment.Builder()
             .title(getString(com.dida.community_detail.R.string.block_post_title))
             .message(getString(com.dida.community_detail.R.string.block_post_description))
             .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.onPostBlock(type = ReportType.POST, blockId = postId)
+                    viewModel.onBlock(type = Block.POST, blockId = postId)
                 }
             })
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
@@ -195,16 +170,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     }
 
-    private fun showBlockCompleteDialog() {
+    private fun showCompleteDialog(message: String) {
         CompleteDialogFragment.Builder()
-            .message(getString(R.string.block_dialog_message))
-            .build()
-            .show(childFragmentManager, "complete_dialog")
-    }
-
-    private fun showBlockUserCompleteDialog() {
-        CompleteDialogFragment.Builder()
-            .message(getString(R.string.block_user_dialog_message))
+            .message(message)
             .build()
             .show(childFragmentManager, "complete_dialog")
     }
@@ -212,17 +180,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     private fun showReportDialog(userId: Long) {
         ReportBottomSheet { confirm, content ->
             if (confirm) viewModel.onReport(
-                type = ReportType.USER,
+                type = Report.MEMBER,
                 reportId = userId,
                 content = content
             )
         }.show(childFragmentManager, "Report Dialog")
-    }
-
-    private fun showMessageSnackBar(message: String) {
-        DefaultSnackBar.Builder()
-            .view(binding.root)
-            .message(message)
-            .build()
     }
 }

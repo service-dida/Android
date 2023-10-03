@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.R
 import com.dida.common.databinding.HolderPostCommentsBinding
-import com.dida.domain.model.main.PostComments
+import com.dida.domain.main.model.Comment
 
 class PostCommentsAdapter(
-) : ListAdapter<PostComments, PostCommentsAdapter.ViewHolder>(CommentsDiffCallback) {
+) : ListAdapter<Comment, PostCommentsAdapter.ViewHolder>(CommentsDiffCallback) {
 
     init {
         setHasStableIds(true)
@@ -31,24 +31,24 @@ class PostCommentsAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).commentId.toLong() * -1
+    override fun getItemId(position: Int): Long = getItem(position).commentInfo.commentId * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_post_comments
 
     class ViewHolder(private val binding: HolderPostCommentsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: PostComments) {
+        fun bind(item: Comment) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object CommentsDiffCallback : DiffUtil.ItemCallback<PostComments>() {
-        override fun areItemsTheSame(oldItem: PostComments, newItem: PostComments) =
-            oldItem.commentId == newItem.commentId
+    internal object CommentsDiffCallback : DiffUtil.ItemCallback<Comment>() {
+        override fun areItemsTheSame(oldItem: Comment, newItem: Comment) =
+            oldItem.commentInfo.commentId == newItem.commentInfo.commentId
 
-        override fun areContentsTheSame(oldItem: PostComments, newItem: PostComments) =
+        override fun areContentsTheSame(oldItem: Comment, newItem: Comment) =
             oldItem == newItem
     }
 }

@@ -72,7 +72,7 @@ class PasswordDialog(
             launch {
                 viewModel.stackSizeState.collect {
                     checkImageType(it)
-                    if(it!=0){
+                    if (it != 0) {
                         buttonVibrator()
                     }
                 }
@@ -90,25 +90,11 @@ class PasswordDialog(
                     failAction(it)
                 }
             }
+        }
 
-            launch {
-                viewModel.dismissEvent.collectLatest {
-                    VerticalDialogFragment.Builder()
-                        .title(getString(R.string.wrong_password_mainTitle))
-                        .message(getString(R.string.wrong_password_subTitle))
-                        .positiveButton(getString(R.string.wrong_password_positive), object : VerticalDialogFragment.OnClickListener {
-                            override fun onClick() {
-                                result.invoke(false,"reset")
-                            }
-                        })
-                        .negativeButton(getString(R.string.wrong_password_negative), object : VerticalDialogFragment.OnClickListener {
-                            override fun onClick() {
-                                result.invoke(false,"")
-                            }
-                        })
-                        .build()
-                        .show(childFragmentManager, "log_out_dialog")
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.dismissEvent.collectLatest {
+                showWrongOverFivePasswordDialog()
             }
         }
     }
@@ -203,5 +189,23 @@ class PasswordDialog(
             val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             vibrator.vibrate(1000)
         }
+    }
+
+    private fun showWrongOverFivePasswordDialog() {
+        VerticalDialogFragment.Builder()
+            .title(getString(R.string.wrong_password_mainTitle))
+            .message(getString(R.string.wrong_password_subTitle))
+            .positiveButton(getString(R.string.wrong_password_positive), object : VerticalDialogFragment.OnClickListener {
+                override fun onClick() {
+                    result.invoke(false,"reset")
+                }
+            })
+            .negativeButton(getString(R.string.wrong_password_negative), object : VerticalDialogFragment.OnClickListener {
+                override fun onClick() {
+                    result.invoke(false,"")
+                }
+            })
+            .build()
+            .show(childFragmentManager, "log_out_dialog")
     }
 }

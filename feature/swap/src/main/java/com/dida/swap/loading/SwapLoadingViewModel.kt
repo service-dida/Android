@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.SwapDidaToKlayAPI
-import com.dida.domain.usecase.main.SwapKlayToDidaAPI
+import com.dida.domain.usecase.SwapToDidaUseCase
+import com.dida.domain.usecase.SwapToKlayUseCase
 import com.dida.swap.SwapType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -18,8 +18,8 @@ class SwapLoadingViewModel @AssistedInject constructor(
     @Assisted("swapType") val swapType: SwapType,
     @Assisted("password") val password: String,
     @Assisted("amount") val amount: Float,
-    private val swapKlayToDidaApi: SwapKlayToDidaAPI,
-    private val swapDidaToKlayAPI: SwapDidaToKlayAPI
+    private val swapToKlayUseCase: SwapToKlayUseCase,
+    private val swapToDidaUseCase: SwapToDidaUseCase
 ) : BaseViewModel() {
 
     private val TAG = "SwapLoadingViewModel"
@@ -33,12 +33,12 @@ class SwapLoadingViewModel @AssistedInject constructor(
         baseViewModelScope.launch {
             when (swapType) {
                 SwapType.KLAY_TO_DIDA -> {
-                    swapKlayToDidaApi(password, amount.toDouble())
+                    swapToDidaUseCase(password, amount.toInt())
                         .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
                         .onError { e -> catchError(e) }
                 }
                 else -> {
-                    swapDidaToKlayAPI(password, amount.toDouble())
+                    swapToKlayUseCase(password, amount.toInt())
                         .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
                         .onError { e -> catchError(e) }
                 }

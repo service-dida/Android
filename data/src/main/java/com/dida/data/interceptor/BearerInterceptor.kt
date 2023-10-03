@@ -1,10 +1,9 @@
 package com.dida.data.interceptor
 
 import com.dida.data.DataApplication
-import com.dida.data.api.ApiClient.BASE_URL
-import com.dida.data.api.MainAPIService
+import com.dida.data.api.ApiClient.TEST_URL
 import com.dida.data.api.handleApi
-import com.dida.data.model.InvalidJwtTokenException
+import com.dida.data.main.DidaApi
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import kotlinx.coroutines.runBlocking
@@ -25,42 +24,40 @@ class BearerInterceptor : Interceptor {
     //todo 조건 분기로 인터셉터 구조 변경
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        var accessToken = ""
         val request = chain.request()
         val response = chain.proceed(request)
 
-        when(response.code) {
+        when (response.code) {
             in 400 .. 500 -> {
                 val requestUrl = request.url.toString()
                 val errorResponse = response.body?.string()?.let { createErrorResponse(it) }
-                val errorException = createErrorException(requestUrl, response.code, errorResponse)
+                val errorException = createErrorException(requestUrl, errorResponse)
 
-                when(errorException) {
-                    is InvalidJwtTokenException -> {
+                val newRequestBuilder = chain.request().newBuilder()
+                when (errorResponse?.code) {
+                    "AUTH_003" -> {
                         runBlocking {
                             //토큰 갱신 api 호출
                             DataApplication.dataStorePreferences.getRefreshToken()?.let {
                                 handleApi {
                                     Retrofit.Builder()
-                                        .baseUrl(BASE_URL)
+                                        .baseUrl(TEST_URL)
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build()
-                                        .create(MainAPIService::class.java).refreshtokenAPIServer(it)
+                                        .create(DidaApi::class.java).patchRefreshToken(it)
                                 }
                             }?.onSuccess {
                                 DataApplication.dataStorePreferences.setAccessToken(it.accessToken ?: "", it.refreshToken ?: "")
-                                accessToken = it.accessToken ?: ""
+                                newRequestBuilder.addHeader("Authorization", it.accessToken ?: "")
                             }?.onError {
                                 DataApplication.dataStorePreferences.removeAccountToken()
-                                accessToken = ""
+                                newRequestBuilder.addHeader("Authorization", "")
                             }
                         }
-                        return chain.proceed(chain.request().newBuilder().addHeader("Authorization", accessToken).build())
+                        return chain.proceed(newRequestBuilder.build())
                     }
                     else -> errorException.let { throw it }
                 }
-
-
             }
 
             else -> return response

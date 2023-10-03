@@ -1,8 +1,7 @@
 package com.dida.data.model
 
 interface ErrorResponse {
-    val timestamp: String?
-    val status: Int?
+    val code: String?
     val message: String?
-    val code: Int?
+    val timestamp: String?
 }

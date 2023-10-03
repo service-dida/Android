@@ -11,6 +11,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,7 +33,7 @@ import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.MainBlack
-import com.dida.compose.utils.Divider16
+import com.dida.compose.utils.VerticalDivider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -85,6 +86,7 @@ class KeywordColorFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
 
@@ -113,7 +115,7 @@ class KeywordColorFragment :
                         hasNext = hasNext.value,
                         onButtonClicked = { viewModel.onNextClicked() }
                     )
-                    Divider16()
+                    VerticalDivider(dp = 16)
                 }
             }
         }

@@ -23,7 +23,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:NftDetailToolbar="@{vm.detailNftState}"
+            app:nftDetailToolbar="@{vm.detailNftState}"
+            app:loginState="@{vm.isLoginedState}"
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextAppearance="@style/ToolBarStyle" />
 
@@ -54,7 +55,7 @@
 
                 <TextView
                     android:id="@+id/nft_name_txt"
-                    NftTitle="@{vm.detailNftState}"
+                    app:NftTitle="@{vm.detailNftState}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -92,7 +93,7 @@
 
                     <ImageView
                         android:id="@+id/user_img"
-                        NftProfileUrl="@{vm.detailNftState}"
+                        app:userProfile="@{vm.detailNftState}"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:layout_marginLeft="16dp"
@@ -102,7 +103,7 @@
 
                     <TextView
                         android:id="@+id/user_name_txt"
-                        NftNickName="@{vm.detailNftState}"
+                        app:userNickname="@{vm.detailNftState}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
@@ -438,7 +439,7 @@
             android:padding="16dp"
             android:src="@drawable/ic_write"
             android:visibility="gone"
-            app:LoginCheck="@{vm.detailNftState}"
+            app:writeLoginCheck="@{vm.isLoginedState}"
             app:layout_constraintBottom_toTopOf="@id/price_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:onSingleClick="@{() -> vm.onWritePostClicked()}" />

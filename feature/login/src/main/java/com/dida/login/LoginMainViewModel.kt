@@ -2,20 +2,21 @@ package com.dida.login
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication.Companion.dataStorePreferences
+import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.LoginAPI
+import com.dida.domain.usecase.LoginUseCase
+import com.dida.domain.usecase.local.SetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginMainViewModel @Inject constructor(
-    private val loginAPI: LoginAPI
+    private val loginUseCase: LoginUseCase,
+    private val setTokenUseCase: SetTokenUseCase
 ) : BaseViewModel() {
 
     private val TAG = "LoginMainViewModel"
@@ -36,16 +37,18 @@ class LoginMainViewModel @Inject constructor(
     fun loginAPIServer(idToken: String) {
         baseViewModelScope.launch {
             showLoading()
-            loginAPI(idToken)
+            loginUseCase(idToken)
                 .onSuccess {
-                    if(it.refreshToken.isNullOrEmpty()) {
-                        _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.accessToken!!))
-                    } else {
-                        dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
-                        _navigationEvent.emit(LoginNavigationAction.NavigateToHome)
+                    if (!it.message.isNullOrEmpty()) {
+                        _navigationEvent.emit(LoginNavigationAction.NavigateToNickname(it.message ?: ""))
+                        return@launch
+
                     }
-                    dismissLoading()
-                }.onError { e -> catchError(e) }
+                }
+                .flatMap { setTokenUseCase(it.accessToken, it.refreshToken) }
+                .onSuccess { _navigationEvent.emit(LoginNavigationAction.NavigateToHome) }
+                .onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 }

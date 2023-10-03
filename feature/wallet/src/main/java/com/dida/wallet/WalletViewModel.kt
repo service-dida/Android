@@ -1,26 +1,28 @@
 package com.dida.wallet
 
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.flatMap
-import com.dida.domain.model.main.TradeHistory
-import com.dida.domain.model.main.Wallet
+import com.dida.common.util.PAGE_SIZE
+import com.dida.domain.main.model.DealingHistory
+import com.dida.domain.main.model.Wallet
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.BuyListAPI
-import com.dida.domain.usecase.main.BuySellListAPI
-import com.dida.domain.usecase.main.SellListAPI
-import com.dida.domain.usecase.main.WalletAmountAPI
+import com.dida.domain.usecase.MemberWalletUseCase
+import com.dida.domain.usecase.PurchaseTransactionsUseCase
+import com.dida.domain.usecase.SaleTransactionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WalletViewModel @Inject constructor(
-    private val walletAmountAPI: WalletAmountAPI,
-    private val buySellListAPI: BuySellListAPI,
-    private val buyListAPI: BuyListAPI,
-    private val sellListAPI: SellListAPI
+    private val memberWalletUseCase: MemberWalletUseCase,
+    private val purchaseTransactionsUseCase: PurchaseTransactionsUseCase,
+    private val saleTransactionsUseCase: SaleTransactionsUseCase,
 ) : BaseViewModel(), WalletActionHandler {
 
     private val TAG = "WalletViewModel"
@@ -28,8 +30,8 @@ class WalletViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<WalletNavigationAction> = MutableSharedFlow<WalletNavigationAction>()
     val navigationEvent: SharedFlow<WalletNavigationAction> = _navigationEvent
 
-    private val _currentHistoryState: MutableStateFlow<List<TradeHistory>> = MutableStateFlow<List<TradeHistory>>(emptyList())
-    val currentHistoryState: StateFlow<List<TradeHistory>> = _currentHistoryState.asStateFlow()
+    private val _currentHistoryState: MutableStateFlow<List<DealingHistory>> = MutableStateFlow<List<DealingHistory>>(emptyList())
+    val currentHistoryState: StateFlow<List<DealingHistory>> = _currentHistoryState.asStateFlow()
 
     private val _walletListState: MutableStateFlow<List<Wallet>> = MutableStateFlow(emptyList())
     val walletListState: StateFlow<List<Wallet>> = _walletListState.asStateFlow()
@@ -49,7 +51,7 @@ class WalletViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            walletAmountAPI()
+            memberWalletUseCase()
                 .onSuccess {
                     _walletListState.value = listOf(
                         Wallet(amount = it.dida.toString(), type = "DIDA"),
@@ -63,7 +65,7 @@ class WalletViewModel @Inject constructor(
     fun getWallet() {
         baseViewModelScope.launch {
             launch {
-                walletAmountAPI()
+                memberWalletUseCase()
                     .onSuccess {
                         _walletListState.value = listOf(
                             Wallet(amount = it.dida.toString(), type = "DIDA"),
@@ -98,26 +100,27 @@ class WalletViewModel @Inject constructor(
         }
     }
 
+    // TODO : 구매, 판매 내역 관련 로직 수정하기
     fun historyAll() {
-        baseViewModelScope.launch {
-            buySellListAPI()
-                .onSuccess { _currentHistoryState.value = it }
-                .onError { e -> catchError(e) }
-        }
+//        baseViewModelScope.launch {
+//            buySellListAPI()
+//                .onSuccess { _currentHistoryState.value = it }
+//                .onError { e -> catchError(e) }
+//        }
     }
 
     fun historyBuy() {
         baseViewModelScope.launch {
-            buyListAPI()
-                .onSuccess { _currentHistoryState.value = it }
+            purchaseTransactionsUseCase(page = 0, size = PAGE_SIZE)
+                .onSuccess { _currentHistoryState.value = it.content }
                 .onError { e -> catchError(e) }
         }
     }
 
     fun historySell() {
         baseViewModelScope.launch {
-            sellListAPI()
-                .onSuccess { _currentHistoryState.value = it }
+            saleTransactionsUseCase(0, PAGE_SIZE)
+                .onSuccess { _currentHistoryState.value = it.content }
                 .onError { e -> catchError(e) }
         }
     }

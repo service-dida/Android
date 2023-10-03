@@ -1,18 +1,24 @@
 package com.dida.swap.history
 
 import com.dida.common.base.BaseViewModel
-import com.dida.domain.model.main.SwapHistory
+import com.dida.common.util.PAGE_SIZE
+import com.dida.domain.Contents
+import com.dida.domain.main.model.Swap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.SwapHistoryAPI
+import com.dida.domain.usecase.MemberSwapUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SwapHistoryViewModel @Inject constructor(
-    private val swapHistoryAPI: SwapHistoryAPI
+    private val memberSwapUseCase: MemberSwapUseCase,
 ) : BaseViewModel() , SwapHistoryActionHandler{
 
     private val TAG = "SwapHistoryViewModel"
@@ -21,12 +27,14 @@ class SwapHistoryViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<SwapHistoryNavigationAction> = MutableSharedFlow<SwapHistoryNavigationAction>()
     val navigationEvent: SharedFlow<SwapHistoryNavigationAction> = _navigationEvent
 
-    private val _swapHistoryState: MutableStateFlow<List<SwapHistory>> = MutableStateFlow<List<SwapHistory>>(emptyList())
-    val swapHistoryState: StateFlow<List<SwapHistory>> = _swapHistoryState.asStateFlow()
+    private val _swapHistoryState: MutableStateFlow<Contents<Swap>> = MutableStateFlow<Contents<Swap>>(
+        Contents(page = 0, pageSize = 0, content = emptyList())
+    )
+    val swapHistoryState: StateFlow<Contents<Swap>> = _swapHistoryState.asStateFlow()
 
     fun getSwapHistory(){
         baseViewModelScope.launch {
-            swapHistoryAPI()
+            memberSwapUseCase(page = 0, size = PAGE_SIZE)
                 .onSuccess {
                     _swapHistoryState.emit(it)
                     _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)
@@ -34,5 +42,14 @@ class SwapHistoryViewModel @Inject constructor(
         }
     }
 
-
+    fun nextPage() {
+        baseViewModelScope.launch {
+            if (!swapHistoryState.value.hasNext) return@launch
+            memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGE_SIZE)
+                .onSuccess {
+                    _swapHistoryState.emit(it)
+                    _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)
+                }.onError { e -> catchError(e) }
+        }
+    }
 }

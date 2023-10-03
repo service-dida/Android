@@ -1,13 +1,13 @@
 package com.dida.android.presentation.views
 
-import androidx.core.view.isVisible
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.common.adapter.UserCardAdapter
-import com.dida.common.util.repeatOnResumed
-import com.dida.domain.model.main.Follow
+import com.dida.common.util.addOnPagingListener
+import com.dida.common.util.repeatOnCreated
+import com.dida.domain.main.model.Follow
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
@@ -35,7 +35,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        initMyPage()
+        initToolbar()
+        initAdapter()
         initSwipeRefresh()
     }
 
@@ -48,16 +49,17 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
                     is MypageNavigationAction.NavigateToCreate -> navigate(MyPageFragmentDirections.actionMyPageFragmentToAddFragment())
-                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.refresh()
-                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId,Follow.FOLLOWER))
-                    is MypageNavigationAction.NavigateToUserFollowingClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId,Follow.FOLLOWING))
+                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId, Follow.FOLLOWER))
+                    is MypageNavigationAction.NavigateToUserFollowingClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId, Follow.FOLLOWING))
+                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.changeNftLike(it.nftId)
                 }
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.repeatOnCreated {
             viewModel.userCardState.collectLatest {
-                userCardAdapter.submitData(it)
+                binding.emptyView.visibility = if (it.content.isEmpty()) View.VISIBLE else View.GONE
+                userCardAdapter.submitList(it.content)
             }
         }
     }
@@ -67,8 +69,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     override fun onResume() {
         super.onResume()
-        userCardAdapter.retry()
-        viewModel.getUserInfo()
         getLastScrollY()
     }
 
@@ -77,15 +77,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         setLastScrollY()
     }
 
-    private fun initMyPage() {
-        initToolbar()
-        initAdapter()
-    }
-
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserInfo()
-            userCardAdapter.refresh()
+            viewModel.getUserNfts()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -96,15 +91,9 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             layoutManager = GridLayoutManager(context, 2)
         }
 
-        userCardAdapter.addLoadStateListener {
-            when(it.append) {
-                is LoadState.NotLoading -> {
-                    binding.emptyView.isVisible = userCardAdapter.snapshot().items.isEmpty()
-                    binding.rvUserNft.isVisible = userCardAdapter.snapshot().items.isNotEmpty()
-                }
-                else -> {}
-            }
-        }
+        binding.rvUserNft.addOnPagingListener(
+            arrivedBottom = { viewModel.onNextPage() }
+        )
     }
 
     private fun initToolbar() {

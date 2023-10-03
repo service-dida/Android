@@ -3,10 +3,9 @@ package com.dida.common.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dida.data.DataApplication
-import com.dida.data.model.HaveNotJwtTokenException
-import com.dida.data.model.InvalidKakaoAccessTokenException
-import com.dida.data.model.InvalidTokenException
-import com.dida.data.model.NeedLogin
+import com.dida.data.model.Auth001Exception
+import com.dida.data.model.Auth002Exception
+import com.dida.data.model.Auth004Exception
 import com.dida.domain.NetworkResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -37,11 +36,11 @@ abstract class BaseViewModel : ViewModel() {
 
     protected suspend fun catchError(exception: Throwable) {
         when(exception) {
-            is HaveNotJwtTokenException, is InvalidKakaoAccessTokenException, is NeedLogin -> {
+            is Auth001Exception, is Auth004Exception -> {
                 DataApplication.dataStorePreferences.removeAccountToken()
                 _baseNavigationEvent.emit(BaseNavigationAction.NavigateToLogin)
             }
-            is InvalidTokenException -> {
+            is Auth002Exception -> {
                 DataApplication.dataStorePreferences.removeAccountToken()
                 _baseNavigationEvent.emit(BaseNavigationAction.NavigateToDuplicateLogin)
             }

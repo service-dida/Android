@@ -19,14 +19,16 @@ import com.dida.common.adapter.CommentsAdapter
 import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
-import com.dida.common.ui.report.ReportType
 import com.dida.common.util.DIDAINTENT
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.DetailCommunityMessageAction
 import com.dida.community_detail.DetailCommunityNavigationAction
 import com.dida.community_detail.DetailCommunityViewModel
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
+import com.dida.domain.main.model.Block
+import com.dida.domain.main.model.Report
 import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -93,9 +95,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             }
 
             launch {
-                viewModel.commentList.collectLatest {
-                    binding.detailCommunityMain.isVisible = it.isNotEmpty()
-                    commentsAdapter.submitList(it)
+                viewModel.comments.collectLatest {
+                    binding.detailCommunityMain.isVisible = it.content.isNotEmpty()
+                    commentsAdapter.submitList(it.content)
                     if (viewModel.isWrite.value) keyboardHide()
                 }
             }
@@ -104,9 +106,10 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 viewModel.navigateToReportEvent.collectLatest {
                     if (it.second) {
                         when (it.first) {
-                            ReportType.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_REPORT to true))
-                            ReportType.USER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_REPORT to true))
-                            ReportType.CARD -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_REPORT to true))
+                            Report.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_REPORT to true))
+                            Report.MEMBER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_REPORT to true))
+                            Report.NFT -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_REPORT to true))
+                            else -> {}
                         }
                         navController.popBackStack()
                     } else {
@@ -119,9 +122,10 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
                 viewModel.navigateToBlockEvent.collectLatest {
                     if (it.second) {
                         when (it.first) {
-                            ReportType.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_BLOCK to true))
-                            ReportType.USER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_BLOCK to true))
-                            ReportType.CARD -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_BLOCK to true))
+                            Block.POST -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_POST_BLOCK to true))
+                            Block.MEMBER -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_USER_BLOCK to true))
+                            Block.NFT -> setFragmentResult(DIDAINTENT.RESULT_SCREEN_COMMUNITY, bundleOf(DIDAINTENT.RESULT_KEY_CARD_BLOCK to true))
+                            else -> {}
                         }
                         navController.popBackStack()
                     }
@@ -147,6 +151,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private fun initAdapter() {
         binding.detailCommunityMain.adapter = commentsAdapter
+        binding.detailCommunityMain.addOnPagingListener(
+            arrivedBottom = { viewModel.nextPage(args.postId) }
+        )
     }
 
     private fun showDeleteDialog(postId: Long) {
@@ -183,7 +190,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .message(getString(com.dida.community_detail.R.string.block_post_description))
             .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.onPostBlock(type = ReportType.POST, blockId = postId)
+                    viewModel.onBlock(type = Block.POST, blockId = postId)
                 }
             })
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
@@ -198,7 +205,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .message(getString(com.dida.community_detail.R.string.block_user_description))
             .positiveButton(getString(com.dida.community_detail.R.string.block_post_positive), object : DefaultDialogFragment.OnClickListener {
                 override fun onClick() {
-                    viewModel.onPostBlock(type = ReportType.USER, blockId = userId)
+                    viewModel.onBlock(type = Block.MEMBER, blockId = userId)
                 }
             })
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
@@ -279,7 +286,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private fun showReportDialog(userId: Long) {
         ReportBottomSheet { confirm, content ->
             if (confirm) viewModel.onReport(
-                type = ReportType.USER,
+                type = Report.MEMBER,
                 reportId = userId,
                 content = content
             )
@@ -289,7 +296,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
     private fun showPostReportDialog(postId: Long) {
         ReportBottomSheet { confirm, content ->
             if (confirm) viewModel.onReport(
-                type = ReportType.POST,
+                type = Report.POST,
                 reportId = postId,
                 content = content
             )

@@ -9,9 +9,9 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.ui.report.ReportBottomSheet
-import com.dida.common.ui.report.ReportType
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
+import com.dida.domain.main.model.Report
 import com.dida.image_viewer.ImageViewerActivity
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.nft_detail.DetailNftNavigationAction
@@ -56,18 +56,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     is DetailNftNavigationAction.NavigateToCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityFragment())
                     is DetailNftNavigationAction.NavigateToItemCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityDetailFragment(it.postId))
                     is DetailNftNavigationAction.NavigateToCreateCommunity -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCreateCommunityFragment())
-                    is DetailNftNavigationAction.NavigateToBuyNft -> navigate(
-                        DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment(
-                            it.nftId,
-                            it.nftImg,
-                            it.nftTitle,
-                            it.userImg,
-                            it.userName,
-                            it.price,
-                            it.viewerNickName,
-                            it.marketId
-                        )
-                    )
+                    is DetailNftNavigationAction.NavigateToBuyNft -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToBuyNftFragment(it.nftId))
                     is DetailNftNavigationAction.NavigateToHome -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToHomeFragment())
                     is DetailNftNavigationAction.NavigateToBack -> navController.popBackStack()
                     is DetailNftNavigationAction.NavigateToUserProfile -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToUserProfileFragment(it.userId))
@@ -156,7 +145,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     }
 
     private fun showDeleteNftDialog(){
-        if (viewModel.detailNftState.value.successOrNull()?.price == "NOT SALE") {
+        if (viewModel.detailNftState.value.successOrNull()?.nftInfo?.price == "NOT SALE") {
             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
                 if (success) {
                     viewModel.deleteNft(password)
@@ -174,7 +163,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
     private fun showReportDialog(cardId: Long) {
         ReportBottomSheet { confirm, content ->
             if (confirm) viewModel.onReport(
-                type = ReportType.USER,
+                type = Report.NFT,
                 reportId = cardId,
                 content = content
             )

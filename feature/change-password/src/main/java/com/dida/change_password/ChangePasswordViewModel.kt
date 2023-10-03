@@ -3,7 +3,7 @@ package com.dida.change_password
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.ChangePasswordAPI
+import com.dida.domain.usecase.PatchPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
-    private val changePasswordAPI: ChangePasswordAPI
+    private val patchPasswordUseCase: PatchPasswordUseCase
 ) : BaseViewModel(), ChangePasswordActionHandler {
 
     private val TAG = "ChangePasswordViewModel"
@@ -29,7 +29,7 @@ class ChangePasswordViewModel @Inject constructor(
     override fun onOkBtnClicked() {
         baseViewModelScope.launch {
             showLoading()
-            changePasswordAPI(nowPwd = beforePasswordState.value, checkPwd = newPasswordState.value)
+            patchPasswordUseCase(nowPwd = beforePasswordState.value, changePwd = newPasswordState.value)
                 .onSuccess { _navigationEvent.emit(Unit) }
                 .onError { e -> catchError(e) }
             dismissLoading()
