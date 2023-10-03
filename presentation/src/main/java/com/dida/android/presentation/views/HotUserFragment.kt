@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
-import com.dida.hot_user.HotUserNavigationAction
 import com.dida.hot_user.HotUserViewModel
 import com.dida.hot_user.adapter.HotUserAdapter
 import com.dida.hot_user.databinding.FragmentHotUserBinding
@@ -47,10 +46,8 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))
-                }
+            viewModel.navigateToUser.collectLatest {
+                navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it))
             }
         }
     }
