@@ -16,27 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.dida.compose.theme.Surface2
 
-
-@Composable
-fun Divider8() {
-    Spacer(modifier = Modifier.size(8.dp))
-}
-
-@Composable
-fun Divider10() {
-    Spacer(modifier = Modifier.size(10.dp))
-}
-
-@Composable
-fun Divider12() {
-    Spacer(modifier = Modifier.size(12.dp))
-}
-
-@Composable
-fun Divider16() {
-    Spacer(modifier = Modifier.size(16.dp))
-}
-
 @Composable
 fun VerticalDivider(dp: Int) {
     Spacer(

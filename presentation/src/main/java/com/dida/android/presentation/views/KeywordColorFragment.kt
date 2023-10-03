@@ -33,7 +33,7 @@ import com.dida.android.presentation.views.ui.SelectKeywords
 import com.dida.android.presentation.views.ui.WriteKeyword
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.MainBlack
-import com.dida.compose.utils.Divider16
+import com.dida.compose.utils.VerticalDivider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -115,7 +115,7 @@ class KeywordColorFragment :
                         hasNext = hasNext.value,
                         onButtonClicked = { viewModel.onNextClicked() }
                     )
-                    Divider16()
+                    VerticalDivider(dp = 16)
                 }
             }
         }

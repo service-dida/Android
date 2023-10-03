@@ -34,11 +34,10 @@ import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Surface1
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
-import com.dida.compose.utils.Divider12
+import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.clickableSingle
 import com.dida.domain.main.model.HideMember
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.dida.block.R.layout.fragment_block) {
@@ -132,7 +131,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                         placeholder = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground)
                     )
                 }
-                Divider12()
+                HorizontalDivider(dp = 12)
                 Text(
                     modifier = Modifier.weight(1f),
                     text = user.nickname,
@@ -142,7 +141,7 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                     overflow = TextOverflow.Ellipsis,
                     color = White
                 )
-                Divider12()
+                HorizontalDivider(dp = 12)
                 Surface(
                     modifier = Modifier
                         .clickableSingle { onBlockCancelClicked(user) },
