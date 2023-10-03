@@ -57,7 +57,6 @@ fun TextView.bindOtherUserFollwerCount(uiState: UiState<MemberProfile>) {
     this.text = uiState.successOrNull()?.memberDetailInfo?.followerCnt.toString()
 }
 
-@RequiresApi(Build.VERSION_CODES.M)
 @BindingAdapter("otherUserFollowBtn")
 fun TextView.bindOtherUserFollowBtn(uiState: UiState<MemberProfile>) {
     val view = this
