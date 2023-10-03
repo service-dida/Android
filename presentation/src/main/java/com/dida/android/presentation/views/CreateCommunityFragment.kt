@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -44,6 +46,7 @@ import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
+import com.dida.compose.utils.LineDivider
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
@@ -123,6 +126,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                         color = White
                     )
                     Tabs(tabs = tabs, pagerState = pagerState, coroutineScope = coroutineScope)
+                    LineDivider(color = Surface2, height = 1)
                     TabContents(tabs = tabs, pagerState = pagerState)
                 }
             }

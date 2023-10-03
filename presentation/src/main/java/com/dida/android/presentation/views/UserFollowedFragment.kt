@@ -55,6 +55,7 @@ import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.NoticeRed
 import com.dida.compose.theme.Surface1
+import com.dida.compose.theme.Surface2
 import com.dida.compose.theme.Surface6
 import com.dida.compose.theme.TextGray
 import com.dida.compose.theme.White
@@ -63,6 +64,7 @@ import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.Divider12
 import com.dida.compose.utils.Divider8
 import com.dida.compose.utils.HorizontalDivider
+import com.dida.compose.utils.LineDivider
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
@@ -144,6 +146,7 @@ class UserFollowedFragment :
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     Tabs(tabs = tabs, pagerState = pagerState, coroutineScope = coroutineScope)
+                    LineDivider(color = Surface2, height = 1)
                     TabContents(tabs = tabs, pagerState = pagerState)
                 }
             }
