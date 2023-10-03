@@ -213,7 +213,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 state = listState,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item { VerticalDivider(dp = 19) }
                 items(
@@ -249,7 +249,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 state = listState,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item { VerticalDivider(dp = 19) }
                 items(
