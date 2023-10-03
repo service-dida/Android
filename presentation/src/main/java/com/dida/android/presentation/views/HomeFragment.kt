@@ -192,7 +192,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         binding.collectionRecycler.adapter = collectionConcatAdapter
 
         binding.recentnftRecycler.apply {
-            adapter = RecentNftAdapter(viewModel)
+            adapter = HomeRecentNftAdapter(viewModel)
             layoutManager = GridLayoutManager(context, 2)
         }
 

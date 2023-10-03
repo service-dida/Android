@@ -24,7 +24,7 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
 
     override val viewModel : RecentNftViewModel by viewModels()
     private val navController by lazy { findNavController() }
-    private val cardPagingAdapter by lazy { RecentNftAdapter(viewModel) }
+    private val recentNftAdapter by lazy { RecentNftAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -40,8 +40,7 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when(it) {
-                    is RecentNftNavigationAction.NavigateToRecentNftItem -> navigate(RecentNftFragmentDirections.actionRecentNftFragmentToDetailNftFragment(cardId = it.nftId.toLong()))
-//                    is RecentNftNavigationAction.NavigateToCardRefresh -> cardPagingAdapter.refresh()
+                    is RecentNftNavigationAction.NavigateToRecentNftItem -> navigate(RecentNftFragmentDirections.actionRecentNftFragmentToDetailNftFragment(cardId = it.nftId))
                     else -> {}
                 }
             }
@@ -49,14 +48,13 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
 
         viewLifecycleOwner.repeatOnStarted {
             viewModel.cardsState.collectLatest {
-                cardPagingAdapter.submitList(it.content)
+                recentNftAdapter.submitList(it.content)
             }
         }
     }
 
     override fun initAfterBinding() {
-        parentFragmentManager.addOnBackStackChangedListener {
-        }
+        parentFragmentManager.addOnBackStackChangedListener {}
     }
 
     private fun initToolbar(){
@@ -69,7 +67,7 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
     private fun initAdapter() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         binding.recentNftRecycler.layoutManager = gridLayoutManager
-        binding.recentNftRecycler.adapter = cardPagingAdapter
+        binding.recentNftRecycler.adapter = recentNftAdapter
         binding.recentNftRecycler.addOnPagingListener(
             arrivedBottom = { viewModel.nextPage() }
         )

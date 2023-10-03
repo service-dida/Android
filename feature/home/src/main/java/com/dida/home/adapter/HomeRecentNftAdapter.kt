@@ -6,21 +6,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.common.R
 import com.dida.common.actionhandler.NftActionHandler
-import com.dida.common.databinding.HolderMypageUserCardsBinding
 import com.dida.domain.main.model.RecentNft
-import com.dida.home.databinding.HolderRecentNftBinding
+import com.dida.home.databinding.HolderHomeRecentNftBinding
 
-class RecentNftAdapter(
+class HomeRecentNftAdapter(
     private val eventListener: NftActionHandler
-) : ListAdapter<RecentNft, RecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
+) : ListAdapter<RecentNft, HomeRecentNftAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderRecentNftBinding =
+        val viewDataBinding: HolderHomeRecentNftBinding =
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                com.dida.home.R.layout.holder_recent_nft,
+                com.dida.home.R.layout.holder_home_recent_nft,
                 parent,
                 false
             )
@@ -34,9 +32,9 @@ class RecentNftAdapter(
 
     override fun getItemId(position: Int): Long = getItem(position).nftId * -1
 
-    override fun getItemViewType(position: Int): Int = com.dida.home.R.layout.holder_recent_nft
+    override fun getItemViewType(position: Int): Int = com.dida.home.R.layout.holder_home_recent_nft
 
-    class ViewHolder(private val binding: HolderRecentNftBinding) :
+    class ViewHolder(private val binding: HolderHomeRecentNftBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RecentNft) {
             binding.holderModel = item
