@@ -1,9 +1,12 @@
 package com.dida.common.bindingadapters
 
+import android.graphics.Bitmap
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.common.R
 
@@ -107,6 +110,31 @@ object GlideBindingAdapters {
                 Glide.with(imageView.context)
                     .load(R.mipmap.img_dida_logo_foreground)
                     .transform(CenterCrop(), RoundedCorners(200))
+                    .into(imageView)
+            }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("image_rounded_corner_top")
+    fun bindImageRoundedCornerTop(imageView: ImageView, imageURL: String?) {
+        if (imageURL == null) {
+            Glide.with(imageView.context)
+                .load(R.mipmap.img_dida_logo_foreground)
+                .transform(CenterCrop(), GranularRoundedCorners(10f, 10f, 0f, 0f))
+                .into(imageView)
+        } else {
+            if (imageURL.isNotBlank()) {
+                Glide.with(imageView.context)
+                    .load(imageURL)
+                    .placeholder(R.mipmap.img_dida_logo_foreground)
+                    .error(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), GranularRoundedCorners(10f, 10f, 0f, 0f))
+                    .into(imageView)
+            } else {
+                Glide.with(imageView.context)
+                    .load(R.mipmap.img_dida_logo_foreground)
+                    .transform(CenterCrop(), GranularRoundedCorners(10f, 10f, 0f, 0f))
                     .into(imageView)
             }
         }

@@ -28,7 +28,7 @@ fun ViewPager2.bindHotsItems(banners: List<HotItem>?, eventListener : HomeAction
 @BindingAdapter("recentNftItem")
 fun RecyclerView.bindRecentNftItem(uiState: UiState<Main>) {
     val boundAdapter = this.adapter
-    if (boundAdapter is RecentNftAdapter) {
+    if (boundAdapter is HomeRecentNftAdapter) {
         boundAdapter.submitList(uiState.successOrNull()?.getRecentNfts)
     }
 }
