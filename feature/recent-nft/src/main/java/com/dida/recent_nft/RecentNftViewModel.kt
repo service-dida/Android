@@ -28,25 +28,25 @@ class RecentNftViewModel @Inject constructor(
 
     private val TAG = "RecentNftViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<RecentNftNavigationAction> = MutableSharedFlow<RecentNftNavigationAction>()
-    val navigationEvent: SharedFlow<RecentNftNavigationAction> = _navigationEvent.asSharedFlow()
+    private val _navigateToNftDetail: MutableSharedFlow<Long> = MutableSharedFlow<Long>()
+    val navigateToNftDetail: SharedFlow<Long> = _navigateToNftDetail.asSharedFlow()
 
-    private val _cardsState: MutableStateFlow<Contents<RecentNft>> = MutableStateFlow(
+    private val _recentNftState: MutableStateFlow<Contents<RecentNft>> = MutableStateFlow(
         Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, hasNext = true, content = emptyList())
     )
-    val cardsState: StateFlow<Contents<RecentNft>> = _cardsState.asStateFlow()
+    val recentNftState: StateFlow<Contents<RecentNft>> = _recentNftState.asStateFlow()
 
     init {
         baseViewModelScope.launch {
             recentNftsUseCase(page = INIT_PAGE, size = PAGE_SIZE)
-                .onSuccess { _cardsState.value = it }
+                .onSuccess { _recentNftState.value = it }
                 .onError { e -> catchError(e) }
         }
     }
 
     override fun onNftItemClicked(nftId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(RecentNftNavigationAction.NavigateToRecentNftItem(nftId))
+            _navigateToNftDetail.emit(nftId)
         }
     }
 
@@ -54,7 +54,21 @@ class RecentNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             nftLikeUseCase(nftId)
-                .onSuccess { _navigationEvent.emit(RecentNftNavigationAction.NavigateToCardRefresh) }
+                .onSuccess {
+                    val newList = recentNftState.value.content.toMutableList()
+                    val nftIndex = recentNftState.value.content.indexOfFirst { it.nftId == nftId }
+                    val beforeNft = newList[nftIndex]
+                    val newNft = RecentNft(
+                        nftId = beforeNft.nftId,
+                        nftName = beforeNft.nftName,
+                        memberName = beforeNft.memberName,
+                        nftImgUrl = beforeNft.nftImgUrl,
+                        price = beforeNft.price,
+                        liked = !beforeNft.liked
+                    )
+                    newList[nftIndex] = newNft
+                    _recentNftState.value = Contents(page = recentNftState.value.page, pageSize = recentNftState.value.pageSize, hasNext = recentNftState.value.hasNext, content = newList)
+                }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
@@ -64,9 +78,9 @@ class RecentNftViewModel @Inject constructor(
 
     fun nextPage() {
         baseViewModelScope.launch {
-            if (!cardsState.value.hasNext) return@launch
-            recentNftsUseCase(cardsState.value.page + 1, PAGE_SIZE)
-                .onSuccess { _cardsState.value = it }
+            if (!recentNftState.value.hasNext) return@launch
+            recentNftsUseCase(recentNftState.value.page + 1, PAGE_SIZE)
+                .onSuccess { _recentNftState.value = it }
                 .onError { e -> catchError(e) }
         }
     }
