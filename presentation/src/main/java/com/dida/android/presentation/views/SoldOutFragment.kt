@@ -49,7 +49,6 @@ import com.dida.domain.main.model.SoldOut
 import com.dida.soldout.Period
 import com.dida.soldout.SoldOutViewModel
 import com.dida.soldout.databinding.FragmentSoldOutBinding
-import com.dida.swap.loading.SwapLoadingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

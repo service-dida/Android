@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -195,10 +196,10 @@ class UserFollowedFragment :
 
     @Composable
     fun FollowerScreen() {
-        val items = viewModel.followerState.collectAsStateWithLifecycle()
+        val items by viewModel.followerState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage = remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.value.content.size - 10) }
+            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
         LaunchedEffect(key1 = nextPage.value) {
@@ -212,12 +213,12 @@ class UserFollowedFragment :
         ) {
             item { VerticalDivider(dp = 19) }
             items(
-                count = items.value.content.size
+                count = items.content.size
             ) {
                 FollowerItem(
-                    item = items.value.content[it],
-                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.value.content[it].memberId)) },
-                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.value.content[it]) }
+                    item = items.content[it],
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.content[it].memberId)) },
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.content[it]) }
                 )
             }
             item { VerticalDivider(dp = 19) }
@@ -226,10 +227,10 @@ class UserFollowedFragment :
 
     @Composable
     fun FollowingScreen() {
-        val items = viewModel.followingState.collectAsStateWithLifecycle()
+        val items by viewModel.followingState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage = remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.value.content.size - 10) }
+            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
         LaunchedEffect(key1 = nextPage.value) {
@@ -243,12 +244,12 @@ class UserFollowedFragment :
         ) {
             item { VerticalDivider(dp = 19) }
             items(
-                count = items.value.content.size
+                count = items.content.size
             ) {
                 FollowerItem(
-                    item = items.value.content[it],
-                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.value.content[it].memberId)) },
-                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.value.content[it]) }
+                    item = items.content[it],
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.content[it].memberId)) },
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.content[it]) }
                 )
             }
             item { VerticalDivider(dp = 19) }

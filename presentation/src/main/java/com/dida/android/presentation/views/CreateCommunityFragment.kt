@@ -23,6 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -199,17 +200,17 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
 
     @Composable
     fun LikeNftScreen() {
-        val items = viewModel.likeNftState.collectAsStateWithLifecycle()
+        val items by viewModel.likeNftState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage = remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.value.content.size - 10) }
+            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
         LaunchedEffect(key1 = nextPage.value) {
             if (nextPage.value) viewModel.onNextPageFromLikeNft()
         }
 
-        if (items.value.content.isEmpty()) {
+        if (items.content.isEmpty()) {
             EmptyLikeNft {
                 viewModel.onLikeButtonClicked()
             }
@@ -221,11 +222,11 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             ) {
                 item { VerticalDivider(dp = 19) }
                 items(
-                    count = items.value.content.size
+                    count = items.content.size
                 ) {
                     NftItem(
-                        item = items.value.content[it],
-                        onClicked = { viewModel.onNftSelectClicked(items.value.content[it].nftId) }
+                        item = items.content[it],
+                        onClicked = { viewModel.onNftSelectClicked(items.content[it].nftId) }
                     )
                 }
                 item { VerticalDivider(dp = 19) }
@@ -235,17 +236,17 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
 
     @Composable
     fun OwnNftScreen() {
-        val items = viewModel.ownNftState.collectAsStateWithLifecycle()
+        val items by viewModel.ownNftState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage = remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.value.content.size - 10) }
+            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
         LaunchedEffect(key1 = nextPage.value) {
             if (nextPage.value) viewModel.onNextPageFromOwnNft()
         }
 
-        if (items.value.content.isEmpty()) {
+        if (items.content.isEmpty()) {
             EmptyOwnNft {
                 viewModel.onCreateButtonClicked()
             }
@@ -257,11 +258,11 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             ) {
                 item { VerticalDivider(dp = 19) }
                 items(
-                    count = items.value.content.size
+                    count = items.content.size
                 ) {
                     NftItem(
-                        item = items.value.content[it],
-                        onClicked = { viewModel.onNftSelectClicked(items.value.content[it].nftId) }
+                        item = items.content[it],
+                        onClicked = { viewModel.onNftSelectClicked(items.content[it].nftId) }
                     )
                 }
                 item { VerticalDivider(dp = 19) }

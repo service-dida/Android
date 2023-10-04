@@ -89,8 +89,8 @@ class KeywordStyleFragment :
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                val keywords = viewModel.keywordsState.collectAsStateWithLifecycle()
-                val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
+                val keywords by viewModel.keywordsState.collectAsStateWithLifecycle()
+                val hasNext by viewModel.nextState.collectAsStateWithLifecycle()
 
                 val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
                 val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
@@ -104,7 +104,7 @@ class KeywordStyleFragment :
                     KeywordTitle(type = KeywordType.Style)
                     KeywordMore(onButtonClicked = {})
                     StyleKeywords(
-                        keywords = keywords.value,
+                        keywords = keywords,
                         onKeywordClicked = {
                             viewModel.onKeywordClicked(it)
                             sharedViewModel.insertKeyword(KeywordType.Style, it)
@@ -115,7 +115,7 @@ class KeywordStyleFragment :
                     SelectKeywordTitle(isSelected = selectedCount)
                     SelectKeywords(keywords = selectedKeywords.value)
                     NextButton(
-                        hasNext = hasNext.value,
+                        hasNext = hasNext,
                         onButtonClicked = { viewModel.onNextClicked() }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
