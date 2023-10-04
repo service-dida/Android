@@ -1,25 +1,24 @@
 package com.dida.soldout
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.INIT_PAGE
 import com.dida.common.util.PAGE_SIZE
-import com.dida.data.DataApplication
 import com.dida.domain.Contents
 import com.dida.domain.main.model.SoldOut
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.SoldOutPageUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class SoldOutViewModel @Inject constructor(
+class SoldOutViewModel @AssistedInject constructor(
+    @Assisted("period") val period: Int,
     private val soldOutPageUseCase: SoldOutPageUseCase
 ) : BaseViewModel() {
 
@@ -36,7 +35,7 @@ class SoldOutViewModel @Inject constructor(
     )
     val soldOutState: StateFlow<Contents<SoldOut>> = _soldOutState.asStateFlow()
 
-    fun getSoldOut(period: Int) {
+    init {
         baseViewModelScope.launch {
             soldOutPageUseCase(range = period, page = INIT_PAGE, size = PAGE_SIZE)
                 .onSuccess {
@@ -67,6 +66,25 @@ class SoldOutViewModel @Inject constructor(
                     _soldOutState.value = it
                 }
                 .onError { e -> catchError(e) }
+        }
+    }
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedFactory{
+        fun create(
+            @Assisted("period") period: Int
+        ): SoldOutViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: AssistedFactory,
+            period: Int
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(period) as T
+            }
         }
     }
 

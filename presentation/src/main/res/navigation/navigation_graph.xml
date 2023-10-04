@@ -73,6 +73,11 @@
         <argument
             android:name="period"
             app:argType="integer"/>
+        <action
+            android:id="@+id/action_soldOutFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
 
     <fragment

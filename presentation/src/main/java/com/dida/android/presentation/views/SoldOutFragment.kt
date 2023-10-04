@@ -49,7 +49,9 @@ import com.dida.domain.main.model.SoldOut
 import com.dida.soldout.Period
 import com.dida.soldout.SoldOutViewModel
 import com.dida.soldout.databinding.FragmentSoldOutBinding
+import com.dida.swap.loading.SwapLoadingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(com.dida.soldout.R.layout.fragment_sold_out) {
@@ -59,7 +61,14 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
     override val layoutResourceId: Int
         get() = com.dida.soldout.R.layout.fragment_sold_out
 
-    override val viewModel: SoldOutViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: SoldOutViewModel.AssistedFactory
+    override val viewModel: SoldOutViewModel by viewModels {
+        SoldOutViewModel.provideFactory(
+            assistedFactory,
+            period = args.period
+        )
+    }
     private val navController: NavController by lazy { findNavController() }
     private val args: SoldOutFragmentArgs by navArgs()
 
@@ -70,7 +79,6 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
         }
         exception = viewModel.errorEvent
         initToolbar()
-        viewModel.getSoldOut(args.period)
     }
 
     override fun initDataBinding() {}
@@ -126,7 +134,7 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
                         ) {
                             SoldOutItem(
                                 item = items.content[it],
-                                onItemClicked = {}
+                                onItemClicked = { navigate(SoldOutFragmentDirections.actionSoldOutFragmentToDetailNftFragment(items.content[it].nftInfo.nftId)) }
                             )
                         }
                         item { VerticalDivider(dp = 19) }
