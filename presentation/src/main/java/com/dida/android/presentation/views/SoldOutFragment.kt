@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -27,17 +27,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.dida.android.R
 import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
-import com.dida.compose.theme.Surface1
 import com.dida.compose.theme.Surface2
 import com.dida.compose.theme.TextGray
 import com.dida.compose.theme.White
@@ -51,7 +50,6 @@ import com.dida.soldout.Period
 import com.dida.soldout.SoldOutViewModel
 import com.dida.soldout.databinding.FragmentSoldOutBinding
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(com.dida.soldout.R.layout.fragment_sold_out) {
@@ -99,19 +97,23 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Row(
+                    LazyRow(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        periods.forEach {
+                        item { HorizontalDivider(dp = 6) }
+                        items(
+                            count = periods.size
+                        ) {
                             PeriodItem(
-                                item = it,
-                                isClicked = (it.period == selectedPeriod),
-                                onPeriodClicked = { viewModel.onSelectPeriod(it.period) }
+                                item = periods[it],
+                                isClicked = (periods[it].period == selectedPeriod),
+                                onPeriodClicked = { viewModel.onSelectPeriod(periods[it].period) }
                             )
                         }
+                        item { HorizontalDivider(dp = 6) }
                     }
 
                     LazyColumn(
@@ -194,7 +196,9 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
                         text = item.nftInfo.nftName,
                         style = DidaTypography.h1,
                         fontSize = dpToSp(dp = 18.dp),
-                        color = White
+                        color = White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                     VerticalDivider(dp = 4)
                     Row(
