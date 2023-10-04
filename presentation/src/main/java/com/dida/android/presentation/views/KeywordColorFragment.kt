@@ -88,10 +88,10 @@ class KeywordColorFragment :
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
+                val hasNext by viewModel.nextState.collectAsStateWithLifecycle()
 
-                val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
-                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
+                val selectedKeywords by sharedViewModel.keywords.collectAsStateWithLifecycle()
+                val selectedCount by remember { derivedStateOf { selectedKeywords.count { it.word != "" } > 0 } }
 
                 Column(
                     modifier = Modifier
@@ -110,9 +110,9 @@ class KeywordColorFragment :
                     WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
-                    SelectKeywords(keywords = selectedKeywords.value)
+                    SelectKeywords(keywords = selectedKeywords)
                     DrawButton(
-                        hasNext = hasNext.value,
+                        hasNext = hasNext,
                         onButtonClicked = { viewModel.onNextClicked() }
                     )
                     VerticalDivider(dp = 16)

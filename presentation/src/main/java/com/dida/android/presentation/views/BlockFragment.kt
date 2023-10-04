@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -68,8 +69,8 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                val userList = viewModel.userListState.collectAsStateWithLifecycle()
-                BlockScreen(userList.value)
+                val userList by viewModel.userListState.collectAsStateWithLifecycle()
+                BlockScreen(userList)
             }
         }
     }
@@ -91,8 +92,8 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
             items(userList.size) {
                 BlockUserItem(
                     user = userList[it]
-                ) {
-                    viewModel.onBlockCancel(it)
+                ) { item ->
+                    viewModel.onBlockCancel(userHide = item)
                 }
             }
         }

@@ -89,6 +89,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:block"))
                 add("implementation", project(":feature:user-followed"))
                 add("implementation", project(":feature:image-viewer"))
+                add("implementation", project(":feature:sold-out"))
 
 
                 // Android Common
