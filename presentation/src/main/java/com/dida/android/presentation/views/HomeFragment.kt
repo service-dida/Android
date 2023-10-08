@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.dida.android.R
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
@@ -24,6 +25,7 @@ import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Objects
 
 
 @AndroidEntryPoint
@@ -63,6 +65,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         initAdapter()
         initSwipeRefresh()
         initNotificationPermission()
+        initScrollListener()
     }
 
     override fun initDataBinding() {
@@ -129,19 +132,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         }
     }
 
-    override fun initAfterBinding() {
-        binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            if (binding.hotSellerRecycler.y + binding.hotSellerRecycler.height <= scrollY && scrollY < binding.soldoutMore.y) {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
-            } else if (binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y + 100) {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
-            } else if (binding.recentnftRecycler.y + 100 <= scrollY) {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
-            } else {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
-            }
-        }
-    }
+    override fun initAfterBinding() {}
 
     override fun onResume() {
         super.onResume()
@@ -165,6 +156,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getHome()
             binding.swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
+    private fun initScrollListener() {
+        binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            if (binding.hotSellerRecycler.y + binding.hotSellerRecycler.height <= scrollY && scrollY < binding.soldoutMore.y) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
+            } else if (binding.soldoutMore.y <= scrollY && scrollY < binding.recentnftRecycler.y + 100) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2))
+            } else if (binding.recentnftRecycler.y + 100 <= scrollY) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(3))
+            } else {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
+            }
         }
     }
 
