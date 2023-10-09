@@ -24,7 +24,6 @@ import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.Objects
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home),
@@ -36,7 +35,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         get() = com.dida.home.R.layout.fragment_home
 
     override val viewModel: HomeViewModel by viewModels()
-    private val hotsContainerAdapter by lazy { HotsContainerAdapter(viewModel) }
 
     private val permissionManager = PermissionManagerImpl(this)
     private val notificationPermissionRequest: PermissionRequester = permissionManager.forPermission(Permissions.PostNotification).subscribe(this)
@@ -44,6 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
     private lateinit var collectionConcatAdapter: ConcatAdapter
 
+    private val hotsContainerAdapter by lazy { HotsContainerAdapter(viewModel) }
     private val hotSellerAdapter by lazy { HotSellerAdapter(viewModel) }
     private val hotSellerMoreAdapter by lazy { HotSellerMoreAdapter(viewModel) }
     private val homeEmptyAdapter by lazy { HomeEmptyAdapter(viewModel) }
@@ -88,15 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                     when(it) {
                         is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
                         is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
-                        is HomeMessageAction.AddCardBookmarkMessage -> {
-                            showActionSnackBar(
-                                message = getString(R.string.add_bookmark_message),
-                                label = getString(R.string.add_bookmark_action_title_message),
-                                onClickListener = object : DefaultSnackBar.OnClickListener {
-                                    override fun onClick() {}
-                                }
-                            )
-                        }
+                        is HomeMessageAction.AddCardBookmarkMessage -> showMessageSnackBar(getString(R.string.add_bookmark_message))
                         is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
 
@@ -243,14 +234,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         DefaultSnackBar.Builder()
             .view(binding.root)
             .message(message)
-            .build()
-    }
-
-    private fun showActionSnackBar(message: String, label: String, onClickListener: DefaultSnackBar.OnClickListener) {
-        DefaultSnackBar.Builder()
-            .view(binding.root)
-            .message(message)
-            .actionButton(label, onClickListener)
             .build()
     }
 }
