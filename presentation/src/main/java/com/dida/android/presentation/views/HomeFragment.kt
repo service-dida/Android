@@ -61,6 +61,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         initSwipeRefresh()
         initNotificationPermission()
         initScrollListener()
+        initHomeTab()
     }
 
     override fun initDataBinding() {
@@ -187,7 +188,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             adapter = HomeRecentNftAdapter(viewModel)
             layoutManager = GridLayoutManager(context, 2)
         }
+    }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initHomeTab() {
         with(binding.tabLayout) {
             addTab(this.newTab().setText(R.string.home_hotitem_tab))
             addTab(this.newTab().setText(R.string.home_soldout_tab))
