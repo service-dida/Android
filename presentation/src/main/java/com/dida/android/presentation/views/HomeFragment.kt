@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.dida.android.R
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
@@ -27,7 +26,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Objects
 
-
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home),
     AppBarLayout.OnOffsetChangedListener {
@@ -41,9 +39,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private val hotsContainerAdapter by lazy { HotsContainerAdapter(viewModel) }
 
     private val permissionManager = PermissionManagerImpl(this)
-    private val notificationPermissionRequest: PermissionRequester =
-        permissionManager.forPermission(Permissions.PostNotification)
-            .subscribe(this)
+    private val notificationPermissionRequest: PermissionRequester = permissionManager.forPermission(Permissions.PostNotification).subscribe(this)
 
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
     private lateinit var collectionConcatAdapter: ConcatAdapter

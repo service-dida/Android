@@ -78,8 +78,8 @@ class HomeViewModel @Inject constructor(
             soldOutUseCase(day)
                 .onSuccess {
                     _soldoutState.value = UiState.Success(it)
-                    _termState.value = day }
-                .onError { e -> catchError(e) }
+                    _termState.value = day
+                }.onError { e -> catchError(e) }
         }
     }
 
