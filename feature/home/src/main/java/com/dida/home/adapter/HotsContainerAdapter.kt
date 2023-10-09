@@ -134,7 +134,7 @@ class HotsContainerViewHolder(
             binding.hotsViewPager.smoothScrollToPosition(
                 item = targetPosition,
                 duration = Constants.ROLLING_INTERVAL_MS,
-                pagePxWidth = this.itemView.width / 2
+                pagePxWidth = (this.itemView.width * (0.7f)).toInt()
             )
         }
     }

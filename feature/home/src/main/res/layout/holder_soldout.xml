@@ -32,21 +32,24 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/nft_contents"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/nft_img"
+            app:layout_constraintStart_toEndOf="@id/nft_img"
+            app:layout_constraintEnd_toStartOf="@id/nft_price"
             android:layout_marginLeft="16dp">
 
             <TextView
                 android:id="@+id/nft_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:text="@{holderModel.nftInfo.nftName}"
                 android:textSize="18dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/white"
                 android:fontFamily="@font/pretendard_regular">
             </TextView>
@@ -63,11 +66,12 @@
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/user_img"
                 app:layout_constraintBottom_toBottomOf="@id/user_img"
-                app:layout_constraintLeft_toRightOf="@id/user_img"
+                app:layout_constraintStart_toEndOf="@id/user_img"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:text="@{holderModel.memberInfo.memberName}"
                 android:textSize="14dp"
                 android:textColor="@color/hots_coin_txt"
@@ -77,12 +81,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/nft_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/nft_contents"
             app:layout_constraintBottom_toBottomOf="@id/nft_contents"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/custom_surface6_radius10"
             android:padding="10dp">
 
             <ImageView
@@ -97,17 +101,18 @@
 
             <TextView
                 android:id="@+id/price_txt"
+                style="@style/TextView_bold_14_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/soldout_img"
-                app:decimalPrice="@{holderModel.nftInfo.price}"
+                android:layout_marginLeft="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                style="@style/TextView_bold_14_white"
-                android:layout_marginLeft="8dp">
+                android:text="@{holderModel.nftInfo.price}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/soldout_img"
+                app:layout_constraintTop_toTopOf="parent">
             </TextView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

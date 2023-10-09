@@ -37,6 +37,6 @@ fun RecyclerView.bindRecentNftItem(uiState: UiState<Main>) {
 fun RecyclerView.bindSoldoutItem(uiState: UiState<List<SoldOut>>) {
     val boundAdapter = this.adapter
     if (boundAdapter is SoldOutAdapter) {
-        boundAdapter.submitList(uiState.successOrNull())
+        boundAdapter.submitList(uiState.successOrNull()?.toList())
     }
 }
