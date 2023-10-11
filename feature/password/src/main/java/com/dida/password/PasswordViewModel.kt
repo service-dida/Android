@@ -1,7 +1,10 @@
 package com.dida.password
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.AppLog
+import com.dida.common.util.SecurityUtil2
 import com.dida.data.model.login.GetPublicKeyResponse
 import com.dida.domain.flatMap
 import com.dida.domain.onError
@@ -69,6 +72,7 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun submitStack() {
         var password = ""
         stack.forEach {
@@ -83,12 +87,13 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun checkPassword(password: String) {
         baseViewModelScope.launch {
             getPublicKeyUseCase()
                 .onSuccess {
-                    AppLog.e("haha ${password.rsaEncode(it.publicKey)!!}")
-                    checkPasswordUseCase(password.rsaEncode(it.publicKey)!!)
+                    AppLog.e("haha ${SecurityUtil2().rsaEncode(password,it.publicKey)}")
+                    checkPasswordUseCase(SecurityUtil2().rsaEncode(password,it.publicKey))
                         .onSuccess {
                             _completeEvent.emit(password)
                         }.onError { e ->

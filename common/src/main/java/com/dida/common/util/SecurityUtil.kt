@@ -8,7 +8,7 @@ import java.security.spec.InvalidKeySpecException
 import java.util.Base64
 import javax.crypto.Cipher
 
-private const val INSTANCE_TYPE = "RSA/ECB/PKCS1Padding"
+private const val INSTANCE_TYPE = "RSA"
 
 fun String.rsaEncode(publicKey: String): String? {
     try {
@@ -37,7 +37,7 @@ private fun convertPublicKey(publicKey: String): PublicKey? {
         } else {
             android.util.Base64.decode(publicKey, android.util.Base64.DEFAULT)
         }
-        val keyFactory = KeyFactory.getInstance("RSA")
+        val keyFactory = KeyFactory.getInstance(INSTANCE_TYPE)
         val keySpec = X509EncodedKeySpec(keyBytes)
         return keyFactory.generatePublic(keySpec)
     }catch (e : GeneralSecurityException){
