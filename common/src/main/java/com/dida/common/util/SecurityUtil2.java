@@ -9,7 +9,7 @@ import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import android.util.Base64; // 수정된 import 문
+import java.util.Base64; // 수정된 import 문
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -27,21 +27,19 @@ public class SecurityUtil2 {
 
         return base64EncodeToString(plainTextByte);
     }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Key convertPublicKey(String publicKey)
             throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         KeyFactory keyFactory = KeyFactory.getInstance(INSTANCE_TYPE);
-        byte[] publicKeyByte = Base64.decode(publicKey, Base64.URL_SAFE); // 수정된 부분
+        byte[] publicKeyByte = Base64.getDecoder().decode(publicKey.getBytes());
 
         return keyFactory.generatePublic(new X509EncodedKeySpec(publicKeyByte));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String base64EncodeToString(byte[] byteData) {
-        return Base64.encodeToString(byteData, Base64.URL_SAFE); // 수정된 부분
+        return Base64.getEncoder().encodeToString(byteData);
     }
-
     private static final String INSTANCE_TYPE = "RSA";
 }
