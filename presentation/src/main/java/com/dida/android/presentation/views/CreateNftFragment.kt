@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.Manifest
 import android.net.Uri
 import android.os.Build
 import android.util.TypedValue
@@ -40,16 +39,6 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
         onCheckSelectImage(imageUri)
     }
 
-    private val askMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        permissions.values.all { it == true }.let { allPermissionGranted ->
-            if (allPermissionGranted) {
-                launchGalleryPicker()
-            } else {
-                showToastMessage("권한을 허용해 주세요.")
-            }
-        }
-    }
-
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -64,7 +53,7 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigateToGallery.collectLatest {
-                getGalleryImage()
+                navigateToGallery()
             }
         }
     }
@@ -78,35 +67,35 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
 
     private fun initImage() {
         if (args.imgUrl == null) {
-            getGalleryImage()
+            navigateToGallery()
         } else {
             viewModel.setNFTImage(Uri.parse(args.imgUrl))
         }
     }
 
     private fun onCheckSelectImage(imageUri: Uri?) {
-        if (imageUri == null) navController.popBackStack()
-
-        imageUri?.let {
-            if (checkImageSize(it)) {
-                viewModel.setNFTImage(it)
+        if (imageUri == null) {
+            navController.popBackStack()
+        } else {
+            if (checkImageSize(imageUri)) {
+                viewModel.setNFTImage(imageUri)
             } else {
                 showToastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
-                getGalleryImage()
+                navigateToGallery()
             }
         }
     }
 
-    private fun getGalleryImage() {
+    private fun navigateToGallery() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             launchGalleryPicker()
         } else {
-            askMultiplePermissions.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))
+            launchGalleryPicker()
         }
     }
 
     private fun launchGalleryPicker() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= 33) {
             galleryPickerLauncher.launch(PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly).build())
         } else {
             galleryLauncher.launch("image/*")
