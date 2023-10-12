@@ -1,55 +1,29 @@
-import android.os.Build
-import java.security.GeneralSecurityException
-import java.security.spec.X509EncodedKeySpec
 import java.security.KeyFactory
-import java.security.NoSuchAlgorithmException
 import java.security.PublicKey
-import java.security.spec.InvalidKeySpecException
-import java.util.Base64
+import java.security.spec.X509EncodedKeySpec
 import javax.crypto.Cipher
 
-private const val INSTANCE_TYPE = "RSA"
-
-fun String.rsaEncode(publicKey: String): String? {
+fun String.encryptWithPublicKey(publicKeyString: String): String {
     try {
-        val cipher = Cipher.getInstance(INSTANCE_TYPE)
-        cipher.init(Cipher.ENCRYPT_MODE, convertPublicKey(publicKey))
+        // Base64 디코딩된 공개 키 문자열을 byte 배열로 변환
+        val publicKeyBytes = android.util.Base64.decode(publicKeyString, android.util.Base64.NO_WRAP)
 
-        val plainTextByte = cipher.doFinal(this.toByteArray())
+        // 공개 키 생성
+        val keySpec = X509EncodedKeySpec(publicKeyBytes)
+        val keyFactory = KeyFactory.getInstance("RSA")
+        val publicKey: PublicKey = keyFactory.generatePublic(keySpec)
 
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Base64.getEncoder().encodeToString(plainTextByte)
-        } else {
-            android.util.Base64.encodeToString(plainTextByte, android.util.Base64.DEFAULT)
-        }
-    }catch (e : GeneralSecurityException){
+        // RSA 암호화 초기화
+        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey)
+
+        // 메시지를 바이트 배열로 변환하여 암호화
+        val encryptedBytes = cipher.doFinal(this.toByteArray(Charsets.UTF_8))
+
+        // 암호화된 바이트 배열을 Base64 문자열로 변환하여 반환
+        return android.util.Base64.encodeToString(encryptedBytes, android.util.Base64.NO_WRAP)
+    } catch (e: Exception) {
         e.printStackTrace()
+        return ""
     }
-    // Unable to encrypt Token
-    return null
 }
-
-@Throws(Exception::class)
-private fun convertPublicKey(publicKey: String): PublicKey? {
-    try {
-        val keyBytes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Base64.getDecoder().decode(publicKey.toByteArray())
-        } else {
-            android.util.Base64.decode(publicKey, android.util.Base64.DEFAULT)
-        }
-        val keyFactory = KeyFactory.getInstance(INSTANCE_TYPE)
-        val keySpec = X509EncodedKeySpec(keyBytes)
-        return keyFactory.generatePublic(keySpec)
-    }catch (e : GeneralSecurityException){
-        e.printStackTrace()
-    }
-    return null
-}
-
-/*fun base64EncodeToString(byteData: ByteArray): String {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        Base64.getEncoder().encodeToString(byteData)
-    } else {
-        android.util.Base64.encodeToString(byteData, android.util.Base64.DEFAULT)
-    }
-}*/

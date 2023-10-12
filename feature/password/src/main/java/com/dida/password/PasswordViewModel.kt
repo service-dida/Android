@@ -4,22 +4,17 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.AppLog
-import com.dida.common.util.SecurityUtil2
-import com.dida.data.model.login.GetPublicKeyResponse
-import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.BuyNftUseCase
 import com.dida.domain.usecase.CheckPasswordUseCase
-import com.dida.domain.usecase.PatchPasswordUseCase
 import com.dida.domain.usecase.PublicKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import encryptWithPublicKey
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import rsaEncode
 import java.util.Stack
 import javax.inject.Inject
 
@@ -92,8 +87,8 @@ class PasswordViewModel @Inject constructor(
         baseViewModelScope.launch {
             getPublicKeyUseCase()
                 .onSuccess {
-                    AppLog.e("haha ${SecurityUtil2().rsaEncode(password,it.publicKey)}")
-                    checkPasswordUseCase(SecurityUtil2().rsaEncode(password,it.publicKey))
+
+                    checkPasswordUseCase(password.encryptWithPublicKey(it.publicKey))
                         .onSuccess {
                             _completeEvent.emit(password)
                         }.onError { e ->
