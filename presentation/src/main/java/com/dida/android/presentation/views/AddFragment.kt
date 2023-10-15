@@ -73,7 +73,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                         PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, msg ->
                             if (!success) {
                                 if (msg == "reset") navigate(AddFragmentDirections.actionAddFragmentToSettingFragment())
-                                else navController.popBackStack()
+                                else navController.checkPopBackStack()
                             }
                         }.show(childFragmentManager, "AddFragment")
                     } else {
@@ -100,10 +100,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_close_white)
-            this.setNavigationOnClickListener {
-                if (navController.backQueue.size <= 2) navigate(AddFragmentDirections.actionMainFragment())
-                else navController.popBackStack()
-            }
+            this.setNavigationOnClickListener { navController.checkPopBackStack() }
         }
     }
 
@@ -180,5 +177,11 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                 )
             }
         }
+    }
+
+    private fun NavController.checkPopBackStack() {
+        val navigation = this
+        if (navigation.backQueue.size <= 2) navigate(AddFragmentDirections.actionMainFragment())
+        else navigation.popBackStack()
     }
 }
