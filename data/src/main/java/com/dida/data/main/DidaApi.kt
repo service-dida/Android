@@ -21,6 +21,7 @@ import com.dida.data.model.login.GetEmailAuthResponse
 import com.dida.data.model.login.GetPublicKeyResponse
 import com.dida.data.model.login.PatchMemberDeviceRequest
 import com.dida.data.model.login.PostCheckPasswordRequest
+import com.dida.data.model.login.PostCheckPasswordResponse
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostLoginResponse
 import com.dida.data.model.login.PostNicknameRequest
@@ -180,7 +181,7 @@ interface DidaApi {
 
     // 결제 비밀번호 확인
     @POST("/member/password/check")
-    suspend fun postCheckPassword(@Body body: PostCheckPasswordRequest): Unit
+    suspend fun postCheckPassword(@Body body: PostCheckPasswordRequest): PostCheckPasswordResponse
 
     /**
      * Dex 및 Nft

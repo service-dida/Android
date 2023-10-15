@@ -21,6 +21,7 @@ import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.OwnNft
+import com.dida.domain.main.model.Password
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.PublicKey
 import com.dida.domain.main.model.RecentNft
@@ -161,7 +162,7 @@ interface MainRepository {
 
     suspend fun buyNft(payPwd: String, marketId: Long): NetworkResult<Unit>
 
-    suspend fun checkPassword(payPwd: String) : NetworkResult<Unit>
+    suspend fun checkPassword(payPwd: String) : NetworkResult<Password>
 
 }
 

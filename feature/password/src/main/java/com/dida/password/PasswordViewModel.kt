@@ -4,12 +4,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.AppLog
+import com.dida.data.model.Wallet002Exception
+import com.dida.data.model.Wallet006Exception
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CheckPasswordUseCase
 import com.dida.domain.usecase.PublicKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import encryptWithPublicKey
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -87,32 +90,30 @@ class PasswordViewModel @Inject constructor(
         baseViewModelScope.launch {
             getPublicKeyUseCase()
                 .onSuccess {
-
                     checkPasswordUseCase(password.encryptWithPublicKey(it.publicKey))
                         .onSuccess {
-                            _completeEvent.emit(password)
+                            if(it.matched){
+                                _completeEvent.emit(password)
+                            }else{
+                                isClickable = false
+                                _wrongCountState.emit("${it.wrongCnt}/5")
+                                _failEvent.emit(true)
+
+                                stack.clear()
+                                delay(1000)
+                                _failEvent.emit(false)
+                                isClickable = true
+                            }
                         }.onError { e ->
-                            AppLog.e("haha ${e}")
-                            //TODO 틀렸을 때
-                            /*isClickable = false
-                            _wrongCountState.emit("${it.wrongCnt}/5")
-                            _failEvent.emit(true)
-
-                            stack.clear()
-                            delay(1000)
-                            _failEvent.emit(false)
-                            isClickable = true*/
-
-                            //TODO 5번 틀렸을 때
-                            /*if (e is WrongPassword5TimesException) {
+                            if (e is Wallet006Exception) {
                                 _dismissEvent.emit(true)
                             } else {
                                 catchError(e)
-                            }*/
+                            }
                         }
                 }
-                .onError {
-                    AppLog.e("haha ${it}")
+                .onError {e ->
+                    catchError(e)
                 }
         }
     }
