@@ -2,6 +2,7 @@
 <resources>
     <!-- NFT 생성 화면-->
     <string name="add_nft_main_title">NFT 만들기</string>
+    <string name="add_nft_init_title">NFT 생성</string>
     <string name="next_btn">다음</string>
     <string name="add_nft_title_text">작품명</string>
     <string name="add_nft_title_hint">매력적인 제목을 지어보세요.</string>
