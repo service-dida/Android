@@ -210,7 +210,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     Row {
                         Image(
                             painter = painterResource(id = com.dida.common.R.drawable.ic_dida_dialog_foreground),
-                            contentDescription =
+                            contentDescription = ""
                         )
                         Text("DIDA 추천!")
                     }
