@@ -2,19 +2,27 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
@@ -26,11 +34,13 @@ import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
 import com.dida.ai.keyword.KeywordViewModel
+import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Surface2
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
+import com.dida.compose.utils.TriangleEdgeShape
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
 import com.dida.password.PasswordDialog
@@ -119,6 +129,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                 text = "어떤 이미지로\nNFT를 생성하시겠어요?",
             )
             VerticalDivider(dp = 50)
+            RecommendBubble()
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -176,6 +187,44 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     text = "직접 입력해서\n그리기",
                 )
             }
+        }
+    }
+
+    @Composable
+    fun RecommendBubble() {
+        Surface(
+            modifier = Modifier.offset(y = (-20).dp)
+        ) {
+            Row(
+                modifier = Modifier.height(IntrinsicSize.Max)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .background(
+                            color = BrandLemon,
+                            shape = RoundedCornerShape(4.dp, 4.dp, 0.dp, 4.dp)
+                        )
+                        .wrapContentWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Row {
+                        Image(
+                            painter = painterResource(id = com.dida.common.R.drawable.ic_dida_dialog_foreground),
+                            contentDescription =
+                        )
+                        Text("DIDA 추천!")
+                    }
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .background(
+                        color = BrandLemon,
+                        shape = TriangleEdgeShape(10)
+                    )
+                    .width(8.dp)
+                    .fillMaxHeight()
+            ) {}
         }
     }
 
