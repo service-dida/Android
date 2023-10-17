@@ -2,19 +2,28 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
@@ -26,7 +35,9 @@ import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
 import com.dida.ai.keyword.KeywordViewModel
+import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DidaTypography
+import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.Surface2
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.DidaImage
@@ -118,16 +129,17 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                 color = Color.White,
                 text = "어떤 이미지로\nNFT를 생성하시겠어요?",
             )
-            VerticalDivider(dp = 50)
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(260.dp)
+                    .height(310.dp)
                     .clickableSingle { navigate(AddFragmentDirections.actionAddFragmentToKeywordProductFragment()) },
-                color = Surface2,
+                color = MainBlack,
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 50.dp)
                 ) {
                     DidaImage(
                         modifier = Modifier
@@ -138,6 +150,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .background(color = Surface2)
                             .padding(vertical = 21.dp),
                         textAlign = TextAlign.Center,
                         style = DidaTypography.subtitle1,
@@ -146,6 +159,7 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                         text = "AI 키워드 그리기",
                     )
                 }
+                RecommendBubble()
             }
             VerticalDivider(dp = 10)
             Row(
@@ -174,6 +188,43 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     fontSize = dpToSp(dp = 18.dp),
                     color = Color.White,
                     text = "직접 입력해서\n그리기",
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun RecommendBubble() {
+        Column(
+            modifier = Modifier.offset(x = 7.dp, y = 10.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(
+                        color = BrandLemon,
+                        shape = RoundedCornerShape(8.dp))
+                    .wrapContentWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = com.dida.common.R.drawable.ic_recommend_thumb),
+                    contentDescription = ""
+                )
+                HorizontalDivider(dp = 4)
+                Text(
+                    textAlign = TextAlign.Center,
+                    style = DidaTypography.body1,
+                    fontSize = dpToSp(dp = 12.dp),
+                    color = Color.Black,
+                    text = "DIDA 추천!",
+                )
+            }
+            Row {
+                HorizontalDivider(dp = 24)
+                Image(
+                    painter = painterResource(id = com.dida.common.R.drawable.img_arrow_bottom),
+                    contentDescription = ""
                 )
             }
         }
