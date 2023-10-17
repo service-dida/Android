@@ -211,7 +211,7 @@
                 android:id="@+id/description_edit"
                 style="@style/EditText_surface2_radius10_solid_surface5"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="356dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
@@ -224,7 +224,6 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="24dp"
                 android:text="@={vm.descriptionState}"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_txt" />
