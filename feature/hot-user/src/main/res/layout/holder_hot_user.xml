@@ -22,7 +22,8 @@
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
         android:background="@drawable/custom_surface3_radius14"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:onSingleClick="@{() -> eventListener.onUserClicked(holderModel.memberInfo.memberId)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/user_layout"
@@ -30,8 +31,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/follow_btn"
-            app:onSingleClick="@{() -> eventListener.onUserClicked(holderModel.memberInfo.memberId)}">
+            app:layout_constraintEnd_toStartOf="@id/follow_btn">
 
             <ImageView
                 android:id="@+id/user_profile"
@@ -92,7 +92,7 @@
             android:layout_marginTop="14dp"
             android:orientation="horizontal"
             android:background="@drawable/custom_surface3_radius14"
-            android:clipToOutline="true"/>
+            android:clipToOutline="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

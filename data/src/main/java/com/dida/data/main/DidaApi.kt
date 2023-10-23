@@ -43,6 +43,7 @@ import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.sns.GetOwnNftsResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.profile.PostMemberPasswordCheckRequest
 import com.dida.data.model.sns.GetCommentsFromPostResponse
 import com.dida.data.model.sns.GetHotPostsResponse
 import com.dida.data.model.sns.GetPostDetailResponse
@@ -147,7 +148,7 @@ interface DidaApi {
         @Query("size") size: Int,
     ): GetCommonFollowResponse
 
-    // 팔로우 목록 보기
+    // 팔로잉 목록 보기
     @GET("/common/following")
     suspend fun getCommonFollowing(
         @Query("page") page: Int,

@@ -59,8 +59,27 @@
             app:destination="@id/userProfileFragment"
             app:enterAnim="@anim/enter_from_right"
             app:popExitAnim="@anim/exit_to_right" />
-
+        <action
+            android:id="@+id/action_homeFragment_to_soldOutFragment"
+            app:destination="@id/soldOutFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/soldOutFragment"
+        android:name="com.dida.android.presentation.views.SoldOutFragment"
+        android:label="SoldOutFragment">
+        <argument
+            android:name="period"
+            app:argType="integer"/>
+        <action
+            android:id="@+id/action_soldOutFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
     <fragment
         android:id="@+id/swapFragment"
         android:name="com.dida.android.presentation.views.SwapFragment"
@@ -147,6 +166,11 @@
         <action
             android:id="@+id/action_createCommunityFragment_to_addFragment"
             app:destination="@id/addFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_createCommunityFragment_to_recentNftFragment"
+            app:destination="@id/recentNftFragment"
             app:popExitAnim="@anim/exit_to_right"
             app:enterAnim="@anim/enter_from_right" />
     </fragment>
@@ -622,11 +646,6 @@
             app:enterAnim="@anim/enter_from_right"
             app:popUpToInclusive="true"
             app:popUpTo="@id/userProfileFragment"/>
-        <action
-            android:id="@+id/action_userProfileFragment_to_userFollowedFragment"
-            app:destination="@id/userFollowedFragment"
-            app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment
@@ -640,6 +659,11 @@
             android:name="type"
             app:argType="com.dida.domain.main.model.Follow"
             android:defaultValue="FOLLOWER"/>
+        <action
+            android:id="@+id/action_userFollowedFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:popExitAnim="@anim/exit_to_right"
+            app:enterAnim="@anim/enter_from_right" />
     </fragment>
 
     <fragment

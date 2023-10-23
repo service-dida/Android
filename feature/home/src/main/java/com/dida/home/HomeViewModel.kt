@@ -73,13 +73,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onSoldOutDayClicked(term: Int) {
+    override fun onSoldOutDayClicked(day: Int) {
         baseViewModelScope.launch {
-            soldOutUseCase(term)
+            soldOutUseCase(day)
                 .onSuccess {
                     _soldoutState.value = UiState.Success(it)
-                    _termState.value = term }
-                .onError { e -> catchError(e) }
+                    _termState.value = day
+                }.onError { e -> catchError(e) }
         }
     }
 

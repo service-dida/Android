@@ -2,16 +2,17 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
@@ -20,10 +21,14 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,22 +36,25 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.compose.AsyncImage
 import com.dida.android.R
 import com.dida.common.widget.DefaultSnackBar
 import com.dida.compose.theme.BrandLemon
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.Surface1
+import com.dida.compose.theme.Surface2
 import com.dida.compose.theme.Surface6
 import com.dida.compose.theme.TextGray
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
-import com.dida.compose.utils.Divider12
-import com.dida.compose.utils.Divider8
+import com.dida.compose.utils.DidaImage
+import com.dida.compose.utils.HorizontalDivider
+import com.dida.compose.utils.LineDivider
 import com.dida.compose.utils.NoRippleInteractionSource
+import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
 import com.dida.domain.main.model.CommonFollow
-import com.dida.user_followed.Follow
+import com.dida.domain.main.model.Follow
 import com.dida.user_followed.UserFollowedMessageAction
 import com.dida.user_followed.UserFollowedViewModel
 import com.dida.user_followed.databinding.FragmentUserfollowedBinding
@@ -106,22 +114,24 @@ class UserFollowedFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val tabs = listOf(Follow.FOLLOWER, Follow.FOLLOWING)
                 val pagerState = rememberPagerState(pageCount = tabs.size)
                 val coroutineScope = rememberCoroutineScope()
 
                 LaunchedEffect(key1 = Unit) {
-//                    when (args.type) {
-//                        Follow.FOLLOWER -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
-//                        Follow.FOLLOWING -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
-//                    }
+                    when (args.type) {
+                        Follow.FOLLOWER -> coroutineScope.launch { pagerState.animateScrollToPage(0) }
+                        Follow.FOLLOWING -> coroutineScope.launch { pagerState.animateScrollToPage(1) }
+                    }
                 }
 
                 Column(
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     Tabs(tabs = tabs, pagerState = pagerState, coroutineScope = coroutineScope)
+                    LineDivider(color = Surface2, height = 1)
                     TabContents(tabs = tabs, pagerState = pagerState)
                 }
             }
@@ -169,9 +179,6 @@ class UserFollowedFragment :
         tabs: List<Follow>,
         pagerState: PagerState
     ) {
-        val followingList = viewModel.followingListState.collectAsStateWithLifecycle()
-        val followerList = viewModel.followerListState.collectAsStateWithLifecycle()
-
         HorizontalPager(
             modifier = Modifier.fillMaxSize(),
             state = pagerState
@@ -179,40 +186,78 @@ class UserFollowedFragment :
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                when(tabs[index]) {
-                    Follow.FOLLOWER -> {
-                        if (followerList.value.isEmpty()) Spacer(modifier = Modifier.weight(1f))
-                        else FollowedColumn(items = followerList.value)
-                    }
-                    Follow.FOLLOWING -> {
-                        if (followingList.value.isEmpty()) Spacer(modifier = Modifier.weight(1f))
-                        else FollowedColumn(items = followingList.value)
-                    }
+                when (tabs[index]) {
+                    Follow.FOLLOWER -> FollowerScreen()
+                    Follow.FOLLOWING -> FollowingScreen()
                 }
             }
-
         }
     }
 
     @Composable
-    fun FollowedColumn(
-        items: List<CommonFollow>
-    ) {
+    fun FollowerScreen() {
+        val items by viewModel.followerState.collectAsStateWithLifecycle()
+        val listState = rememberLazyListState()
+        val nextPage = remember {
+            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
+        }
+
+        LaunchedEffect(key1 = nextPage.value) {
+            if (nextPage.value) viewModel.onNextPageFromFollower()
+        }
+
         LazyColumn(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            state = listState,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(items.size) {
-                FollowUserItem(
-                    item = items[it],
-                    onUserClicked = { },
-                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items[it]) }
+            item { VerticalDivider(dp = 19) }
+            items(
+                count = items.content.size
+            ) {
+                FollowerItem(
+                    item = items.content[it],
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.content[it].memberId)) },
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.content[it]) }
                 )
             }
+            item { VerticalDivider(dp = 19) }
         }
     }
-    
+
     @Composable
-    fun FollowUserItem(
+    fun FollowingScreen() {
+        val items by viewModel.followingState.collectAsStateWithLifecycle()
+        val listState = rememberLazyListState()
+        val nextPage = remember {
+            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
+        }
+
+        LaunchedEffect(key1 = nextPage.value) {
+            if (nextPage.value) viewModel.onNextPageFromFollowing()
+        }
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            state = listState,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item { VerticalDivider(dp = 19) }
+            items(
+                count = items.content.size
+            ) {
+                FollowerItem(
+                    item = items.content[it],
+                    onUserClicked = { navigate(UserFollowedFragmentDirections.actionUserFollowedFragmentToUserProfileFragment(items.content[it].memberId)) },
+                    onFollowButtonClicked = { viewModel.onFollowButtonClicked(items.content[it]) }
+                )
+            }
+            item { VerticalDivider(dp = 19) }
+        }
+    }
+
+    @Composable
+    fun FollowerItem(
         item: CommonFollow,
         onUserClicked: () -> Unit,
         onFollowButtonClicked: () -> Unit
@@ -220,96 +265,78 @@ class UserFollowedFragment :
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 6.dp, horizontal = 16.dp)
+                .padding(horizontal = 16.dp)
+                .clickableSingle { onUserClicked() },
+            color = MainBlack
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickableSingle { onUserClicked() },
+                    .background(color = Surface1, shape = RoundedCornerShape(size = 14.dp))
+                    .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AsyncImage(
-                    modifier = Modifier.size(62.dp),
-                    model = item.profileImgUrl,
-                    contentDescription = "유저 이미지"
+                DidaImage(
+                    modifier = Modifier
+                        .size(62.dp)
+                        .clip(RoundedCornerShape(100.dp)),
+                    model = item.profileImgUrl
                 )
-                Divider12()
+                HorizontalDivider(dp = 12)
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        style = DidaTypography.h4,
-                        color = White,
-                        fontSize = dpToSp(dp = 20.dp),
-                        text = item.memberName,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        text = item.nickname,
+                        style = DidaTypography.h1,
+                        fontSize = dpToSp(dp = 16.dp),
+                        color = White
                     )
-                    Divider8()
+                    VerticalDivider(dp = 4)
                     Text(
                         modifier = Modifier.fillMaxWidth(),
+                        text = item.nftCnt.toString() + " 작품",
                         style = DidaTypography.body1,
-                        color = TextGray,
                         fontSize = dpToSp(dp = 14.dp),
-                        text = "",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        color = TextGray
                     )
-                    Divider12()
-                    CancelFollowButton(onFollowButtonClicked = onFollowButtonClicked)
+                }
+                HorizontalDivider(dp = 12)
+                if (item.following) {
+                    Surface(
+                        modifier = Modifier
+                            .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))
+                            .background(color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .clickableSingle { onFollowButtonClicked() },
+                        color = BrandLemon
+                    ) {
+                        Text(
+                            text = "팔로잉",
+                            style = DidaTypography.body1,
+                            fontSize = dpToSp(dp = 12.dp),
+                            color = MainBlack
+                        )
+                    }
+                } else {
+                    Surface(
+                        modifier = Modifier
+                            .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .clickableSingle { onFollowButtonClicked() },
+                        color = Surface1
+                    ) {
+                        Text(
+                            text = "팔로우",
+                            style = DidaTypography.body1,
+                            fontSize = dpToSp(dp = 12.dp),
+                            color = White
+                        )
+                    }
                 }
             }
-        }
-    }
-
-    @Composable
-    fun FollowButton(
-        onFollowButtonClicked: () -> Unit
-    ) {
-        Surface(
-            modifier = Modifier
-                .padding(vertical = 8.dp, horizontal = 16.dp)
-                .clickableSingle { onFollowButtonClicked() }
-                .border(
-                    width = 1.dp,
-                    color = BrandLemon,
-                    shape = RoundedCornerShape(size = 100.dp)
-                )
-        ) {
-            Text(
-                modifier = Modifier,
-                style = DidaTypography.body1,
-                color = White,
-                fontSize = dpToSp(dp = 12.dp),
-                text = "팔로우",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-    }
-
-    @Composable
-    fun CancelFollowButton(
-        onFollowButtonClicked: () -> Unit
-    ) {
-        Surface(
-            modifier = Modifier
-                .padding(vertical = 8.dp, horizontal = 16.dp)
-                .clickableSingle { onFollowButtonClicked() },
-            shape = RoundedCornerShape(100.dp),
-            color = BrandLemon
-        ) {
-            Text(
-                modifier = Modifier,
-                style = DidaTypography.body1,
-                color = MainBlack,
-                fontSize = dpToSp(dp = 12.dp),
-                text = "팔로잉",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
         }
     }
 

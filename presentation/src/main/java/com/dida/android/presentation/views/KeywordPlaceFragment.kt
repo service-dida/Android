@@ -12,6 +12,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -86,12 +87,13 @@ class KeywordPlaceFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                val keywords = viewModel.keywordsState.collectAsStateWithLifecycle()
-                val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
+                val keywords by viewModel.keywordsState.collectAsStateWithLifecycle()
+                val hasNext by viewModel.nextState.collectAsStateWithLifecycle()
 
-                val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
-                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
+                val selectedKeywords by sharedViewModel.keywords.collectAsStateWithLifecycle()
+                val selectedCount by remember { derivedStateOf { selectedKeywords.count { it.word != "" } > 0 } }
 
                 Column(
                     modifier = Modifier
@@ -102,7 +104,7 @@ class KeywordPlaceFragment :
                     KeywordTitle(type = KeywordType.Place)
                     KeywordMore(onButtonClicked = {})
                     DefaultKeywords(
-                        keywords = keywords.value,
+                        keywords = keywords,
                         onKeywordClicked = {
                             viewModel.onKeywordClicked(it)
                             sharedViewModel.insertKeyword(KeywordType.Place, it)
@@ -111,9 +113,9 @@ class KeywordPlaceFragment :
                     WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
-                    SelectKeywords(keywords = selectedKeywords.value)
+                    SelectKeywords(keywords = selectedKeywords)
                     NextButton(
-                        hasNext = hasNext.value,
+                        hasNext = hasNext,
                         onButtonClicked = { viewModel.onNextClicked() }
                     )
                     Spacer(modifier = Modifier.height(16.dp))

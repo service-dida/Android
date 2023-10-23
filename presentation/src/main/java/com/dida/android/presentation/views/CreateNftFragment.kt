@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.Manifest
 import android.net.Uri
 import android.os.Build
 import android.util.TypedValue
@@ -15,6 +14,7 @@ import com.dida.add.R
 import com.dida.add.databinding.FragmentCreateNftBinding
 import com.dida.add.main.CreateNftViewModel
 import com.dida.common.customview.addOnFocusListener
+import com.dida.common.util.checkImageSize
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,21 +33,13 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
     private val args: CreateNftFragmentArgs by navArgs()
 
     private val galleryPickerLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri ->
-        onCheckSelectImage(imageUri)
+        if (imageUri == null) navController.popBackStack()
+        else onCheckSelectImage(imageUri)
     }
 
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
-        onCheckSelectImage(imageUri)
-    }
-
-    private val askMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        permissions.values.all { it == true }.let { allPermissionGranted ->
-            if (allPermissionGranted) {
-                launchGalleryPicker()
-            } else {
-                showToastMessage("권한을 허용해 주세요.")
-            }
-        }
+        if (imageUri == null) navController.popBackStack()
+        else onCheckSelectImage(imageUri)
     }
 
     override fun initStartView() {
@@ -58,13 +50,13 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
         exception = viewModel.errorEvent
         initToolbar()
         initNextButton()
-        initImage()
+        initNftImage()
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigateToGallery.collectLatest {
-                getGalleryImage()
+                navigateToGallery()
             }
         }
     }
@@ -76,37 +68,25 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
         initEditText()
     }
 
-    private fun initImage() {
-        if (args.imgUrl == null) {
-            getGalleryImage()
-        } else {
-            viewModel.setNFTImage(Uri.parse(args.imgUrl))
+    private fun initNftImage() {
+        when (args.imgUrl) {
+            null -> navigateToGallery()
+            else -> viewModel.setNFTImage(Uri.parse(args.imgUrl))
         }
     }
 
-    private fun onCheckSelectImage(imageUri: Uri?) {
-        if (imageUri == null) navController.popBackStack()
-
-        imageUri?.let {
-            if (checkImageSize(it)) {
-                viewModel.setNFTImage(it)
-            } else {
+    private fun onCheckSelectImage(imageUri: Uri) {
+        when (imageUri.checkImageSize(requireContext())) {
+            true -> viewModel.setNFTImage(imageUri)
+            false -> {
                 showToastMessage("사진의 용량은 10MB를 넘길 수 없습니다.")
-                getGalleryImage()
+                navigateToGallery()
             }
         }
     }
 
-    private fun getGalleryImage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            launchGalleryPicker()
-        } else {
-            askMultiplePermissions.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))
-        }
-    }
-
-    private fun launchGalleryPicker() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    private fun navigateToGallery() {
+        if (Build.VERSION.SDK_INT >= 33) {
             galleryPickerLauncher.launch(PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly).build())
         } else {
             galleryLauncher.launch("image/*")
@@ -123,29 +103,13 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
     private fun initNextButton() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigateToAddPurpose.collectLatest {
-                if (!viewModel.hasNextState.value) {
-                    showToastMessage(getString(R.string.not_yet_title_and_description))
-                } else if (viewModel.nftImageState.value == "") {
-                    showToastMessage(getString(R.string.not_yet_image))
-                } else {
-                    val action =
-                        CreateNftFragmentDirections.actionCreateNftFragmentToAddPurposeFragment(
-                            viewModel.nftImageState.value,
-                            viewModel.titleTextState.value,
-                            viewModel.descriptionTextState.value
-                        )
-                    navigate(action)
+                when {
+                    !viewModel.hasNextState.value -> showToastMessage(getString(R.string.not_yet_title_and_description))
+                    viewModel.nftImageState.value.isBlank() -> showToastMessage(getString(R.string.not_yet_image))
+                    else -> navigate(CreateNftFragmentDirections.actionCreateNftFragmentToAddPurposeFragment(viewModel.nftImageState.value, viewModel.titleTextState.value, viewModel.descriptionTextState.value))
                 }
             }
         }
-    }
-
-    private fun checkImageSize(uri: Uri): Boolean {
-        val inputStream = requireActivity().contentResolver.openInputStream(uri)
-        val bytes = inputStream?.buffered()?.use { it.readBytes() }
-        val sizeInMb = bytes?.size?.toDouble()?.div(1024)?.div(1024)
-
-        return !(sizeInMb != null && sizeInMb > 10)
     }
 
     private fun initEditText() {

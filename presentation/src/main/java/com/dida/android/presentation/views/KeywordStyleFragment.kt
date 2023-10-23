@@ -12,6 +12,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -86,41 +87,38 @@ class KeywordStyleFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                binding.composeView.apply {
-                    setContent {
-                        val keywords = viewModel.keywordsState.collectAsStateWithLifecycle()
-                        val hasNext = viewModel.nextState.collectAsStateWithLifecycle()
+                val keywords by viewModel.keywordsState.collectAsStateWithLifecycle()
+                val hasNext by viewModel.nextState.collectAsStateWithLifecycle()
 
-                        val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
-                        val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
+                val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
+                val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
 
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(MainBlack)
-                        ) {
-                            CustomLinearProgressBar(progress = 0.75f)
-                            KeywordTitle(type = KeywordType.Style)
-                            KeywordMore(onButtonClicked = {})
-                            StyleKeywords(
-                                keywords = keywords.value,
-                                onKeywordClicked = {
-                                    viewModel.onKeywordClicked(it)
-                                    sharedViewModel.insertKeyword(KeywordType.Style, it)
-                                }
-                            )
-                            WriteKeyword(onButtonClicked = {})
-                            Spacer(modifier = Modifier.weight(1f))
-                            SelectKeywordTitle(isSelected = selectedCount)
-                            SelectKeywords(keywords = selectedKeywords.value)
-                            NextButton(
-                                hasNext = hasNext.value,
-                                onButtonClicked = { viewModel.onNextClicked() }
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MainBlack)
+                ) {
+                    CustomLinearProgressBar(progress = 0.75f)
+                    KeywordTitle(type = KeywordType.Style)
+                    KeywordMore(onButtonClicked = {})
+                    StyleKeywords(
+                        keywords = keywords,
+                        onKeywordClicked = {
+                            viewModel.onKeywordClicked(it)
+                            sharedViewModel.insertKeyword(KeywordType.Style, it)
                         }
-                    }
+                    )
+                    WriteKeyword(onButtonClicked = {})
+                    Spacer(modifier = Modifier.weight(1f))
+                    SelectKeywordTitle(isSelected = selectedCount)
+                    SelectKeywords(keywords = selectedKeywords.value)
+                    NextButton(
+                        hasNext = hasNext,
+                        onButtonClicked = { viewModel.onNextClicked() }
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }

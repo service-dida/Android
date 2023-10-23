@@ -142,18 +142,6 @@ class UserProfileViewModel @AssistedInject constructor(
         getUserNfts()
     }
 
-    override fun onUserFollowerClicked() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId, type = Follow.FOLLOWER))
-        }
-    }
-
-    override fun onUserFollowingClicked() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(UserProfileNavigationAction.NavigateToUserFollowed(userId = userId, type = Follow.FOLLOWING))
-        }
-    }
-
     @dagger.assisted.AssistedFactory
     interface AssistedFactory{
         fun create(

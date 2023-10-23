@@ -25,7 +25,7 @@ import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
-import com.dida.compose.utils.Divider10
+import com.dida.compose.utils.HorizontalDivider
 import kotlinx.coroutines.launch
 
 @Composable
@@ -66,11 +66,11 @@ fun SelectKeywords(
             verticalAlignment = Alignment.CenterVertically,
             state = listState
         ) {
-            item { Divider10() }
+            item { HorizontalDivider(dp = 10) }
             items(keywords.size) {
                 if(keywords[it].word != "") SelectedKeywordItem(keyword = keywords[it].word)
             }
-            item { Divider10() }
+            item { HorizontalDivider(dp = 10) }
         }
     }
 }

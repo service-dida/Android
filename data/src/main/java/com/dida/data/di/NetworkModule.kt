@@ -6,6 +6,7 @@ import com.dida.data.interceptor.BearerInterceptor
 import com.dida.data.main.DidaApi
 import com.dida.data.interceptor.XAccessTokenInterceptor
 import com.google.gson.GsonBuilder
+import com.dida.data.interceptor.AccessTokenInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +31,7 @@ object NetworkModule {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+            .addNetworkInterceptor(AccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(BearerInterceptor()) // Refresh Token
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
@@ -38,7 +39,7 @@ object NetworkModule {
         OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
-            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+            .addNetworkInterceptor(AccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(BearerInterceptor()) // Refresh Token
             .build()
     }

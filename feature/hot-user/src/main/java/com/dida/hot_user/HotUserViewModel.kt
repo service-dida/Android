@@ -27,8 +27,8 @@ class HotUserViewModel @Inject constructor(
 
     private val TAG = "HotUserViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<HotUserNavigationAction> = MutableSharedFlow<HotUserNavigationAction>()
-    val navigationEvent: SharedFlow<HotUserNavigationAction> = _navigationEvent.asSharedFlow()
+    private val _navigateToUser: MutableSharedFlow<Long> = MutableSharedFlow<Long>()
+    val navigateToUser: SharedFlow<Long> = _navigateToUser.asSharedFlow()
 
     private val _hotMemberState: MutableStateFlow<Contents<HotSellerPage>> = MutableStateFlow(
         Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
@@ -45,7 +45,7 @@ class HotUserViewModel @Inject constructor(
 
     override fun onUserClicked(userId: Long) {
         baseViewModelScope.launch {
-            _navigationEvent.emit(HotUserNavigationAction.NavigateToUserProfile(userId = userId))
+            _navigateToUser.emit(userId)
         }
     }
 

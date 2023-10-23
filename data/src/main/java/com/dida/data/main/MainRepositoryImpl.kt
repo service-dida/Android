@@ -23,6 +23,7 @@ import com.dida.data.model.market.toDomain
 import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
+import com.dida.data.model.profile.PostMemberPasswordCheckRequest
 import com.dida.data.model.profile.toDomain
 import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonCommentsRequest
