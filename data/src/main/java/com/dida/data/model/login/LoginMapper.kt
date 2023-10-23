@@ -1,6 +1,7 @@
 package com.dida.data.model.login
 
 import com.dida.domain.main.model.LoginToken
+import com.dida.domain.main.model.Password
 import com.dida.domain.main.model.PublicKey
 
 fun PostLoginResponse.toDomain(): LoginToken {
@@ -14,3 +15,11 @@ fun PostLoginResponse.toDomain(): LoginToken {
 fun GetPublicKeyResponse.toDomain(): PublicKey {
     return PublicKey(publicKey)
 }
+
+fun PostCheckPasswordResponse.toDomain(): Password {
+    return Password(
+        matched = matched,
+        wrongCnt = wrongCnt
+    )
+}
+

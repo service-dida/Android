@@ -1,12 +1,17 @@
 package com.dida.password
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.dida.common.base.BaseViewModel
+import com.dida.common.util.AppLog
 import com.dida.data.model.Wallet002Exception
 import com.dida.data.model.Wallet006Exception
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CheckPasswordUseCase
+import com.dida.domain.usecase.PublicKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import encryptWithPublicKey
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
-    private val checkPasswordUseCase: CheckPasswordUseCase,
+    private val getPublicKeyUseCase: PublicKeyUseCase,
+    private val checkPasswordUseCase: CheckPasswordUseCase
 ) : BaseViewModel() {
 
     private var isClickable = true
@@ -63,7 +69,8 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
-    private fun submitStack() {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun submitStack() {
         var password = ""
         stack.forEach {
             password += it.toString()
@@ -77,17 +84,37 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
-    private suspend fun checkPassword(password : String) {
-        checkPasswordUseCase(password)
-            .onSuccess {
-                _completeEvent.emit(password)
-            }.onError { e ->
-                when (e) {
-                    is Wallet002Exception -> wrongPassword()
-                    is Wallet006Exception -> _dismissEvent.emit(Unit)
-                    else -> catchError(e)
+    @RequiresApi(Build.VERSION_CODES.O)
+    private suspend fun checkPassword(password: String) {
+        baseViewModelScope.launch {
+            getPublicKeyUseCase()
+                .onSuccess {
+                    checkPasswordUseCase(password.encryptWithPublicKey(it.publicKey))
+                        .onSuccess {
+                            if(it.matched){
+                                _completeEvent.emit(password)
+                            }else{
+                                isClickable = false
+                                _wrongCountState.emit("${it.wrongCnt}/5")
+                                _failEvent.emit(true)
+
+                                stack.clear()
+                                delay(1000)
+                                _failEvent.emit(false)
+                                isClickable = true
+                            }
+                        }.onError { e ->
+                            if (e is Wallet006Exception) {
+                                _dismissEvent.emit(true)
+                            } else {
+                                catchError(e)
+                            }
+                        }
                 }
-            }
+                .onError {e ->
+                    catchError(e)
+                }
+        }
     }
 
     private fun wrongPassword() = baseViewModelScope.launch {

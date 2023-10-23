@@ -12,8 +12,10 @@ import com.dida.domain.onSuccess
 import com.dida.domain.usecase.BuyNftUseCase
 import com.dida.domain.usecase.CommonProfileUseCase
 import com.dida.domain.usecase.NftDetailUseCase
+import com.dida.domain.usecase.PublicKeyUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import encryptWithPublicKey
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -25,7 +27,8 @@ class BuyNftViewModel @AssistedInject constructor(
     @Assisted("nftId") val nftId: Long,
     private val buyNftUseCase: BuyNftUseCase,
     private val nftDetailUseCase: NftDetailUseCase,
-    private val commonProfileUseCase: CommonProfileUseCase
+    private val commonProfileUseCase: CommonProfileUseCase,
+    private val getPublicKeyUseCase: PublicKeyUseCase
 ) : BaseViewModel() {
 
     private val TAG = "BuyNftViewModel"
@@ -52,14 +55,20 @@ class BuyNftViewModel @AssistedInject constructor(
     fun buyNft(password: String) {
         baseViewModelScope.launch {
             showLoading()
-            detailNftState.value?.let { nft ->
-                buyNftUseCase(password, nft.nftInfo.nftId)
-                    .onSuccess { _navigationEvent.emit(BuyNftNavigationAction.NavigateToSuccess(nft.nftInfo.nftId)) }
-                    .onError { e ->
-                        if (e is Wallet008Exception) _navigationEvent.emit(BuyNftNavigationAction.NavigateToFail)
-                        else catchError(e)
+            getPublicKeyUseCase()
+                .onSuccess {
+                    detailNftState.value?.let { nft ->
+                        buyNftUseCase(password.encryptWithPublicKey(it.publicKey), nft.nftInfo.nftId)
+                            .onSuccess {
+                                _navigationEvent.emit(BuyNftNavigationAction.NavigateToSuccess(nft.nftInfo.nftId))
+                            }
+                            .onError { e ->
+                                if (e is Wallet008Exception) _navigationEvent.emit(BuyNftNavigationAction.NavigateToFail)
+                                else catchError(e)
+                            }
                     }
-            }
+
+                }.onError { e -> catchError(e) }
             dismissLoading()
         }
     }

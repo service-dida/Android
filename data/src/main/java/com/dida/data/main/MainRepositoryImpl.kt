@@ -12,6 +12,7 @@ import com.dida.data.model.dex.PostSellNftRequest
 import com.dida.data.model.dex.PostSwapRequest
 import com.dida.data.model.dex.toDomain
 import com.dida.data.model.login.PatchMemberDeviceRequest
+import com.dida.data.model.login.PostCheckPasswordRequest
 import com.dida.data.model.login.PostLoginRequest
 import com.dida.data.model.login.PostNicknameRequest
 import com.dida.data.model.login.PostUserRequest
@@ -49,6 +50,7 @@ import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.OwnNft
+import com.dida.domain.main.model.Password
 import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.PublicKey
 import com.dida.domain.main.model.RecentNft
@@ -365,10 +367,9 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.postBuyNft(body) }
     }
 
-    override suspend fun checkPassword(payPwd: String): NetworkResult<Unit> {
-        val body : PostMemberPasswordCheckRequest = PostMemberPasswordCheckRequest(payPwd)
-        return handleApi { didaApi.postPasswordCheck(body) }
+    override suspend fun checkPassword(payPwd: String): NetworkResult<Password> {
+        val body = PostCheckPasswordRequest(payPwd)
+        return handleApi { didaApi.postCheckPassword(body).toDomain() }
     }
-
 }
 

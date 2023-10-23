@@ -4,6 +4,8 @@ import com.dida.data.BuildConfig
 import com.dida.data.api.ApiClient.TEST_URL
 import com.dida.data.interceptor.BearerInterceptor
 import com.dida.data.main.DidaApi
+import com.dida.data.interceptor.XAccessTokenInterceptor
+import com.google.gson.GsonBuilder
 import com.dida.data.interceptor.AccessTokenInterceptor
 import dagger.Module
 import dagger.Provides
@@ -47,7 +49,10 @@ object NetworkModule {
     @Named("Main")
     fun provideRetrofit(@Named("Main") okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(TEST_URL)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(
+            GsonBuilder()
+            .disableHtmlEscaping()
+            .create()))
         .client(okHttpClient)
         .build()
 
