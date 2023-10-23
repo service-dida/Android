@@ -45,8 +45,8 @@ class PasswordViewModel @Inject constructor(
     private val _stackSizeState = MutableStateFlow<Int>(0)
     val stackSizeState: StateFlow<Int> = _stackSizeState
 
-    private val _wrongCountState = MutableStateFlow<Int>(1)
-    val wrongCountState: StateFlow<Int> = _wrongCountState
+    private val _wrongCountState = MutableStateFlow<String>("")
+    val wrongCountState: StateFlow<String> = _wrongCountState
 
     fun addStack(num: Int) {
         if (isClickable) {
@@ -69,7 +69,6 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun submitStack() {
         var password = ""
         stack.forEach {
@@ -84,7 +83,6 @@ class PasswordViewModel @Inject constructor(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun checkPassword(password: String) {
         baseViewModelScope.launch {
             getPublicKeyUseCase()
@@ -105,7 +103,7 @@ class PasswordViewModel @Inject constructor(
                             }
                         }.onError { e ->
                             if (e is Wallet006Exception) {
-                                _dismissEvent.emit(true)
+                                _dismissEvent.emit(Unit)
                             } else {
                                 catchError(e)
                             }
@@ -115,17 +113,6 @@ class PasswordViewModel @Inject constructor(
                     catchError(e)
                 }
         }
-    }
-
-    private fun wrongPassword() = baseViewModelScope.launch {
-        isClickable = false
-        _wrongCountState.emit(wrongCountState.value + 1)
-        _failEvent.emit(true)
-
-        stack.clear()
-        delay(1000)
-        _failEvent.emit(false)
-        isClickable = true
     }
 
     fun initPwdInfo(stackSize: Int, settingYn: Boolean) {
