@@ -134,7 +134,7 @@ interface MainRepository {
 
     suspend fun nftLike(nftId: Long): NetworkResult<Unit>
 
-    suspend fun makeAiPicture(payPwd: String, setence: String): NetworkResult<AiPicture>
+    suspend fun makeAiPicture(setence: String): NetworkResult<AiPicture>
 
     suspend fun readAlarm(alarmId: Long): NetworkResult<Unit>
 

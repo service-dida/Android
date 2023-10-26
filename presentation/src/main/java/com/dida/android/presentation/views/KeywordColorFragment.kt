@@ -142,7 +142,8 @@ class KeywordColorFragment :
             .message(getString(com.dida.common.R.string.draw_dialog_description))
             .positiveButton(getString(com.dida.common.R.string.draw_dialog_positive), object : CentralDialogFragment.OnClickListener {
                 override fun onClick() {
-                    navigate(KeywordColorFragmentDirections.actionKeywordColorFragmentToKeywordResultFragment())
+                    sharedViewModel.makeAiPicture()
+                    //navigate(KeywordColorFragmentDirections.actionKeywordColorFragmentToKeywordResultFragment())
                 }
             })
             .negativeButton(getString(com.dida.common.R.string.draw_dialog_negative))
