@@ -48,11 +48,11 @@ fun LineDivider(
 }
 
 @Composable
-fun RowScope.weightDivider(weight: Float) {
+fun RowScope.WeightDivider(weight: Float) {
     Spacer(modifier = Modifier.weight(weight))
 }
 
 @Composable
-fun ColumnScope.weightDivider(weight: Float) {
+fun ColumnScope.WeightDivider(weight: Float) {
     Spacer(modifier = Modifier.weight(weight))
 }
