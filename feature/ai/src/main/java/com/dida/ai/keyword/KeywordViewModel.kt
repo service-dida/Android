@@ -12,9 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class KeywordViewModel @Inject constructor(
-    private val makeAiPictureUseCase: MakeAiPictureUseCase
-): BaseViewModel() {
+class KeywordViewModel @Inject constructor(): BaseViewModel() {
 
     private val _keywords: MutableStateFlow<List<Keyword>> = MutableStateFlow(listOf(Keyword.Init, Keyword.Init, Keyword.Init, Keyword.Init))
     var keywords: StateFlow<List<Keyword>> = _keywords.asStateFlow()
@@ -37,24 +35,12 @@ class KeywordViewModel @Inject constructor(
         _keywords.value = deletedKeywords
     }
 
-    fun getSentence(): String{
+    fun getKeywords(): String{
         var sentence = ""
         _keywords.value.forEach { keyword ->
             sentence += "${keyword.word} "
         }
         return sentence
-    }
-
-    fun makeAiPicture(){
-        baseViewModelScope.launch {
-            makeAiPictureUseCase(getSentence())
-                .onSuccess {
-
-                }
-                .onError { e ->
-                    catchError(e)
-                }
-        }
     }
 }
 

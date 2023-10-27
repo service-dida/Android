@@ -6,14 +6,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.ai.databinding.FragmentKeywordResultBinding
+import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.result.KeywordResultViewModel
 import com.dida.compose.theme.dpToSp
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +32,7 @@ class KeywordResultFragment :
         get() = com.dida.ai.R.layout.fragment_keyword_result // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel: KeywordResultViewModel by viewModels()
+    private val sharedViewModel: KeywordViewModel by activityViewModels()
     private val navController: NavController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -37,6 +42,7 @@ class KeywordResultFragment :
         }
         exception = viewModel.errorEvent
         initToolbar()
+        createAiPicture()
     }
 
     override fun initDataBinding() {}
@@ -55,6 +61,7 @@ class KeywordResultFragment :
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
+                val aiPictures by viewModel.aiPictures.collectAsStateWithLifecycle()
                 Column {
                     Text(
                         text = "키워드 재선택하기",
@@ -76,5 +83,10 @@ class KeywordResultFragment :
 
             }
         }
+    }
+
+    private fun createAiPicture() {
+        val sentence = sharedViewModel.getKeywords()
+        viewModel.createAiPicture(sentence)
     }
 }

@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.ui
+package com.dida.ai.keyword.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -108,7 +108,7 @@ fun StyleKeywords(
 val colors = listOf(
     Keyword.Color(color = Red, word = "Red"),
     Keyword.Color(color = OrangeRed, word = "Orange Red"),
-    Keyword.Color(color = Orange, word ="Orange"),
+    Keyword.Color(color = Orange, word = "Orange"),
     Keyword.Color(color = Yellow, word = "Yellow"),
     Keyword.Color(color = GreenYellow, word = "Green Yellow"),
     Keyword.Color(color = Green, word = "Green"),

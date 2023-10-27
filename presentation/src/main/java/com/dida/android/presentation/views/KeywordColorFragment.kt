@@ -23,14 +23,14 @@ import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
 import com.dida.ai.keyword.color.KeywordColorViewModel
-import com.dida.android.presentation.views.ui.ColorKeywords
-import com.dida.android.presentation.views.ui.CustomLinearProgressBar
-import com.dida.android.presentation.views.ui.DrawButton
-import com.dida.android.presentation.views.ui.KeywordMore
-import com.dida.android.presentation.views.ui.KeywordTitle
-import com.dida.android.presentation.views.ui.SelectKeywordTitle
-import com.dida.android.presentation.views.ui.SelectKeywords
-import com.dida.android.presentation.views.ui.WriteKeyword
+import com.dida.ai.keyword.component.ColorKeywords
+import com.dida.ai.keyword.component.CustomLinearProgressBar
+import com.dida.ai.keyword.component.DrawButton
+import com.dida.ai.keyword.component.KeywordMore
+import com.dida.ai.keyword.component.KeywordTitle
+import com.dida.ai.keyword.component.SelectKeywordTitle
+import com.dida.ai.keyword.component.SelectKeywords
+import com.dida.ai.keyword.component.WriteKeyword
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.utils.VerticalDivider
@@ -135,15 +135,13 @@ class KeywordColorFragment :
         navController.popBackStack()
     }
 
-    // TODO : 시작하기 클릭시 로직 추가하기
     private fun showDrawDialog() {
         CentralDialogFragment.Builder()
             .title(getString(com.dida.common.R.string.draw_dialog_title))
             .message(getString(com.dida.common.R.string.draw_dialog_description))
             .positiveButton(getString(com.dida.common.R.string.draw_dialog_positive), object : CentralDialogFragment.OnClickListener {
                 override fun onClick() {
-                    sharedViewModel.makeAiPicture()
-                    //navigate(KeywordColorFragmentDirections.actionKeywordColorFragmentToKeywordResultFragment())
+                    navigate(KeywordColorFragmentDirections.actionKeywordColorFragmentToKeywordResultFragment())
                 }
             })
             .negativeButton(getString(com.dida.common.R.string.draw_dialog_negative))
