@@ -60,7 +60,7 @@ class KeywordResultViewModel @Inject constructor(
 
     fun onCreateNft() {
         baseViewModelScope.launch {
-            _navigationAction.emit(KeywordResultNavigationAction.NavigateToCreateNftDialog)
+            _navigationAction.emit(KeywordResultNavigationAction.NavigateToCreateNft(selectedPicture.value))
         }
     }
 }

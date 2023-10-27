@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -104,7 +103,7 @@ class KeywordResultFragment :
                 when (it) {
                     is KeywordResultNavigationAction.NavigateToRestartKeyword -> {}
                     is KeywordResultNavigationAction.NavigateToDownloadAiPicture -> {}
-                    is KeywordResultNavigationAction.NavigateToCreateNftDialog -> {}
+                    is KeywordResultNavigationAction.NavigateToCreateNft -> navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment(it.imageUrl))
                 }
             }
         }
