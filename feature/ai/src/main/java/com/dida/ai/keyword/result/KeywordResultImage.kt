@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.dida.compose.theme.BrandLemon
+import com.dida.compose.theme.MainBlack
 import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.VerticalDivider
@@ -41,6 +42,7 @@ fun KeywordResultImages(
                     .aspectRatio(1f)
                     .padding(vertical = 4.dp)
                     .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(10.dp))
+                    .clip(shape = RoundedCornerShape(10.dp))
             } else {
                 Modifier
                     .weight(1f)
@@ -51,7 +53,8 @@ fun KeywordResultImages(
             }
             DidaImage(
                 modifier = backgroundModifier,
-                model = it
+                model = it,
+                alpha = if (selectedImage != it) 0.5f else 1f
             )
         }
     }

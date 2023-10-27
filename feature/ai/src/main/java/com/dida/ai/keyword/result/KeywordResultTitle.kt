@@ -35,6 +35,7 @@ fun KeywordResultMessage() {
             .padding(top = 8.dp, start = 16.dp, end = 16.dp),
         style = DidaTypography.body1,
         fontSize = dpToSp(dp = 16.dp),
+        lineHeight = dpToSp(dp = 24.dp),
         color = Gray05
     )
 }

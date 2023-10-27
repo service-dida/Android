@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,6 +23,7 @@ import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
 import com.dida.ai.keyword.result.RestartKeyword
+import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -89,6 +91,7 @@ class KeywordResultFragment :
                         onDownloadClicked = viewModel::onDownload,
                         onCreateNftClicked = viewModel::onCreateNft
                     )
+                    VerticalDivider(dp = 16)
                 }
 
             }
