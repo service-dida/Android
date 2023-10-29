@@ -22,13 +22,20 @@ import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
 import com.dida.ai.keyword.result.RestartKeyword
-import com.dida.common.util.mLoad
-import com.dida.common.util.mSaveMediaToStorage
+import com.dida.common.util.stringToBitmap
+import com.dida.common.util.saveMediaToStorage
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExecutorCoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.CancellationException
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @AndroidEntryPoint
@@ -117,11 +124,26 @@ class KeywordResultFragment :
     }
 
     private fun downloadAiPicture() {
-        val myExecutor = Executors.newSingleThreadExecutor()
-        var mImage: Bitmap?
-        myExecutor.execute {
-            mImage = mLoad(viewModel.selectedPicture.value)
-            requireContext().mSaveMediaToStorage(mImage)
+        val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+        val dispatcher: ExecutorCoroutineDispatcher = executorService.asCoroutineDispatcher()
+        var result: Boolean = false
+        CoroutineScope(dispatcher).launch {
+            showLoadingDialog()
+            val bitmap = stringToBitmap(viewModel.selectedPicture.value)
+            result = requireContext().saveMediaToStorage(bitmap)
+        }.invokeOnCompletion { throwable ->
+            when (throwable) {
+                is CancellationException -> showToastMessage(requireContext().getString(R.string.download_ai_picture_failure))
+                else -> {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        dismissLoadingDialog()
+                        when (result) {
+                            true -> showToastMessage(requireContext().getString(R.string.download_ai_picture_success))
+                            false -> showToastMessage(requireContext().getString(R.string.download_ai_picture_failure))
+                        }
+                    }
+                }
+            }
         }
     }
 }

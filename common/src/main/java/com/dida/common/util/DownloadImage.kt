@@ -22,7 +22,7 @@ import java.net.URL
  * https://www.geeksforgeeks.org/download-image-from-url-in-android/
  **/
 
-fun mLoad(string: String): Bitmap? {
+fun stringToBitmap(string: String): Bitmap? {
     val url: URL = mStringToURL(string)!!
     val connection: HttpURLConnection?
     try {
@@ -49,7 +49,7 @@ fun mStringToURL(string: String): URL? {
 
 // Function to save image on the device.
 // Refer: https://www.geeksforgeeks.org/circular-crop-an-image-and-save-it-to-the-file-in-android/
-fun Context.mSaveMediaToStorage(bitmap: Bitmap?) {
+fun Context.saveMediaToStorage(bitmap: Bitmap?): Boolean {
     val filename = "${System.currentTimeMillis()}.jpg"
     var fos: OutputStream? = null
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -67,7 +67,10 @@ fun Context.mSaveMediaToStorage(bitmap: Bitmap?) {
         val image = File(imagesDir, filename)
         fos = FileOutputStream(image)
     }
+
     fos?.use {
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        return true
     }
+    return false
 }
