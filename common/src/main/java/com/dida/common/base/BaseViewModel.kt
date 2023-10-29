@@ -35,7 +35,7 @@ abstract class BaseViewModel : ViewModel() {
     val baseNavigationEvent: SharedFlow<BaseNavigationAction> = _baseNavigationEvent
 
     protected suspend fun catchError(exception: Throwable) {
-        when(exception) {
+        when (exception) {
             is Auth001Exception, is Auth004Exception -> {
                 DataApplication.dataStorePreferences.removeAccountToken()
                 _baseNavigationEvent.emit(BaseNavigationAction.NavigateToLogin)
