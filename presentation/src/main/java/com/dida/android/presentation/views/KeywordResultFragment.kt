@@ -1,13 +1,7 @@
 package com.dida.android.presentation.views
 
-import android.annotation.TargetApi
-import android.content.ContentValues
-import android.media.MediaScannerConnection
-import android.net.Uri
-import android.os.Build
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.View
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.ai.R
 import com.dida.ai.databinding.FragmentKeywordResultBinding
 import com.dida.ai.keyword.KeywordViewModel
-import com.dida.ai.keyword.result.AiPicture
 import com.dida.ai.keyword.result.KeywordResultButton
 import com.dida.ai.keyword.result.KeywordResultImages
 import com.dida.ai.keyword.result.KeywordResultMessage
@@ -29,19 +22,14 @@ import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
 import com.dida.ai.keyword.result.RestartKeyword
-import com.dida.common.util.toImageUri
+import com.dida.common.util.mLoad
+import com.dida.common.util.mSaveMediaToStorage
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.net.URI
-import java.net.URL
+import java.util.concurrent.Executors
 
 @AndroidEntryPoint
 class KeywordResultFragment :
@@ -128,87 +116,12 @@ class KeywordResultFragment :
         viewModel.createAiPicture(sentence)
     }
 
-    private fun downloadAiPicture() = viewLifecycleOwner.lifecycleScope.launch {
-        val imageUri = viewModel.selectedPicture.value.toImageUri()
-//        val imageUri = "https://altools.co.kr/_next/static/media/img_feature_alsee_1.da0eae6f.png".toImageUri()
-        val aiPicture = AiPicture(keyword = sharedViewModel.getKeywords(), uri = imageUri)
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                downloadAiPictureForQ(aiPicture = aiPicture)
-            } else {
-                downloadAiPictureOld(aiPicture = aiPicture)
-            }
-            showToastMessage(requireContext().getString(R.string.download_ai_picture_success))
-        } catch (e: Exception) {
-            showToastMessage(requireContext().getString(R.string.download_ai_picture_failure))
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.Q)
-    private suspend fun downloadAiPictureForQ(aiPicture: AiPicture) = withContext(Dispatchers.IO) {
-        val currentTime = System.currentTimeMillis()
-        val values = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "${currentTime}_${aiPicture.keyword}.jpg")
-            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-            put(MediaStore.Images.Media.IS_PENDING, 1)
-        }
-
-        val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-        val item = requireContext().contentResolver?.insert(collection, values)
-        if (!aiPicture.uri?.toString().isNullOrBlank() && item != null) {
-            val image = File(URI(aiPicture.uri?.toString()))
-            requireContext().contentResolver?.openFileDescriptor(item, "w", null).use { fileDescriptor ->
-                if (fileDescriptor != null) {
-                    FileOutputStream(fileDescriptor.fileDescriptor).use { outputStream ->
-                        val file = File(image.absolutePath)
-                        file.let {
-                            val fis = FileInputStream(it)
-                            var readCount = 0
-                            val bufferArray = ByteArray(1024)
-                            while (fis.read(bufferArray, 0, 1024).also { readCount = it } != -1) {
-                                outputStream.write(bufferArray, 0, readCount)
-                            }
-                            outputStream.close()
-                        }
-                    }
-                }
-            }
-        }
-
-        values.clear()
-        values.put(MediaStore.Images.Media.IS_PENDING, 0)
-        if (!aiPicture.uri?.toString().isNullOrBlank() && item != null) {
-            requireContext().contentResolver?.update(item, values, null, null)
-        }
-    }
-
-    private suspend fun downloadAiPictureOld(aiPicture: AiPicture) = withContext(Dispatchers.IO) {
-        val currentTime = System.currentTimeMillis()
-        val storageDir = File("${Environment.getExternalStorageDirectory().absolutePath}/DIDA")
-        if (!storageDir.exists()) storageDir.mkdirs()
-        val image = File(URI(aiPicture.uri?.toString()))
-        val target = File(storageDir.absolutePath, "${currentTime}_${aiPicture.keyword}.jpg")
-
-        copyFile(image.absolutePath, target.absolutePath)
-        MediaScannerConnection.scanFile(
-            requireContext(),
-            arrayOf(target.path),
-            arrayOf("image/jpeg"),
-            null
-        )
-    }
-
-    private fun copyFile(strSrc: String, saveFile: String) {
-        val file = File(strSrc)
-        file.let {
-            val fis = FileInputStream(it)
-            val fos = FileOutputStream(saveFile)
-            var readCount = 0
-            val bufferArray = ByteArray(1024)
-            while (fis.read(bufferArray, 0, 1024).also { readCount = it } != -1) {
-                fos.write(bufferArray, 0, readCount)
-            }
-            fos.close()
+    private fun downloadAiPicture() {
+        val myExecutor = Executors.newSingleThreadExecutor()
+        var mImage: Bitmap?
+        myExecutor.execute {
+            mImage = mLoad(viewModel.selectedPicture.value)
+            requireContext().mSaveMediaToStorage(mImage)
         }
     }
 }
