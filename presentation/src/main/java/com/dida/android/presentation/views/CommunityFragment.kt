@@ -42,7 +42,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initRecyclerView()
         initSwipeRefresh()
     }

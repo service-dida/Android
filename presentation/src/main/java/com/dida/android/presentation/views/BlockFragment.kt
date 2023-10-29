@@ -56,7 +56,6 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
     }
 

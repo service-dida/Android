@@ -84,10 +84,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      */
     private val mLoadingDialog: LoadingDialogFragment by lazy { LoadingDialogFragment() }
 
-    /**
-     * Exception을 처리할 SharedFlow
-    */
-    protected var exception: SharedFlow<Throwable>? = null
     private var toast: Toast? = null
 
     /**
@@ -138,7 +134,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     private fun observeEvent() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
-                exception?.collectLatest { exception ->
+                viewModel.errorEvent.collectLatest { exception ->
                     dismissLoadingDialog()
                     when (exception) {
                         is ErrorWithRetry -> onErrorRetry(exception, exception.retry, exception.retryScope)
@@ -283,22 +279,18 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     // Error 관련
     private fun onError(exception: Throwable) {
         when (exception) {
-            is ServerNotFoundException -> showServiceErrorDialog(exception)
-            is InternalServerErrorException -> showServiceErrorFragment(exception)
-            else -> showNetworkErrorDialog()
+            is InternalServerErrorException -> showNetworkErrorDialog()
+            else -> showServiceErrorDialog(exception)
         }
         sendException(exception)
     }
 
     private fun onErrorRetry(exception: Throwable, retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
-        sendException(exception)
         when (exception) {
-            is ConnectException -> showNetworkErrorDialog()
-            is ServerNotFoundException -> showServiceErrorDialog(exception)
-            is InternalServerErrorException -> showServiceErrorFragment(exception)
-            is UnknownException -> showNetworkErrorDialog()
+            is InternalServerErrorException -> showNetworkErrorDialog()
             else -> showServiceErrorDialog(retry, retryScope)
         }
+        sendException(exception)
     }
 
     // 일반적인 에러
@@ -360,10 +352,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             showToastMessage(message)
             navigateToHomeFragment()
         }
-    }
-
-    private fun showServiceErrorFragment(throwable: Throwable) {
-        showErrorDialog(throwable.cause?.message ?: "") { findNavController().navigateUp() }
     }
 }
 

@@ -30,7 +30,6 @@ class RecentNftFragment : BaseFragment<FragmentRecentNftBinding, RecentNftViewMo
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
     }

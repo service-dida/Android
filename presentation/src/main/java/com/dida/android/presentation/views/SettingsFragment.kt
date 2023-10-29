@@ -63,7 +63,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         setOnBackPressedEvent()
     }

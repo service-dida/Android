@@ -38,7 +38,6 @@ class AddPurposeFragment :
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
 
         val imageUrl = if (args.fromGallery) getPath(args.imgURL) else args.imgURL
         viewModel.initNFTInfo(imageUrl, args.title, args.description)

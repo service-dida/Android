@@ -24,7 +24,6 @@ class HotSellerFragment : BaseFragment<FragmentHotSellerBinding, HotSellerViewMo
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
     }
 

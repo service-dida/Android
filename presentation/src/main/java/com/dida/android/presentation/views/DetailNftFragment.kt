@@ -43,7 +43,6 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         viewModel.setCardId(args.cardId)
         initToolbar()
         initAdapter()

@@ -47,7 +47,6 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initNextButton()
         initNftImage()

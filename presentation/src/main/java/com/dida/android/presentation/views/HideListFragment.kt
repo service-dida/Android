@@ -34,7 +34,6 @@ class HideListFragment : BaseFragment<FragmentHideListBinding, HideListViewModel
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initMyPage()
     }
 

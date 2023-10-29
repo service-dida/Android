@@ -56,7 +56,6 @@ class KeywordStyleFragment :
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         setOnBackPressedEvent()
     }

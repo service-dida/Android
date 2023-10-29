@@ -31,7 +31,6 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         viewModel.showLoading()
         initToolbar()
         initAdapter()

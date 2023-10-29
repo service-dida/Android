@@ -27,7 +27,6 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Chang
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
     }
 

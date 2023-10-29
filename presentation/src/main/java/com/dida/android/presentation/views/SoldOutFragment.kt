@@ -76,7 +76,6 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
     }
 
