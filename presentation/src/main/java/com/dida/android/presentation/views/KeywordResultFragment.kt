@@ -85,13 +85,11 @@ class KeywordResultFragment :
                 ) {
                     KeywordResultTitle()
                     KeywordResultMessage()
-                    if (aiPictures.isNotEmpty()) {
-                        KeywordResultImages(
-                            images = aiPictures,
-                            selectedImage = selectedPicture,
-                            onClicked = viewModel::onSelectImage
-                        )
-                    }
+                    KeywordResultImages(
+                        images = aiPictures,
+                        selectedImage = selectedPicture,
+                        onClicked = viewModel::onSelectImage
+                    )
                     WeightDivider(weight = 1f)
                     RestartKeyword(onClicked = viewModel::onRestartKeyword)
                     KeywordResultButton(

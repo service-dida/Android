@@ -24,7 +24,7 @@ class KeywordResultViewModel @Inject constructor(
     private val _navigationAction: MutableSharedFlow<KeywordResultNavigationAction> = MutableSharedFlow<KeywordResultNavigationAction>()
     val navigationAction: SharedFlow<KeywordResultNavigationAction> = _navigationAction.asSharedFlow()
 
-    private val _aiPictures: MutableStateFlow<List<String>> = MutableStateFlow<List<String>>(emptyList())
+    private val _aiPictures: MutableStateFlow<List<String>> = MutableStateFlow<List<String>>(INITIALIZE_LIST)
     val aiPictures: StateFlow<List<String>> = _aiPictures.asStateFlow()
 
     private val _selectedPicture: MutableStateFlow<String> = MutableStateFlow<String>("")
@@ -62,5 +62,9 @@ class KeywordResultViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationAction.emit(KeywordResultNavigationAction.NavigateToCreateNft(selectedPicture.value))
         }
+    }
+
+    companion object {
+        val INITIALIZE_LIST = listOf<String>("", "", "", "")
     }
 }

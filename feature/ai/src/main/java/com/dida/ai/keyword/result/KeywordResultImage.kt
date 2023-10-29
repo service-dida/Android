@@ -1,12 +1,11 @@
 package com.dida.ai.keyword.result
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,12 +13,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.dida.compose.theme.BrandLemon
-import com.dida.compose.theme.MainBlack
-import com.dida.compose.utils.DidaImage
-import com.dida.compose.utils.HorizontalDivider
-import com.dida.compose.utils.VerticalDivider
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -35,27 +33,45 @@ fun KeywordResultImages(
         maxItemsInEachRow = 2,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        images.forEach {
-            val backgroundModifier = if (selectedImage == it) {
-                Modifier
-                    .weight(1f)
-                    .aspectRatio(1f)
-                    .padding(vertical = 4.dp)
-                    .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(10.dp))
-                    .clip(shape = RoundedCornerShape(10.dp))
-            } else {
-                Modifier
-                    .weight(1f)
-                    .aspectRatio(1f)
-                    .padding(vertical = 4.dp)
-                    .clip(shape = RoundedCornerShape(10.dp))
-                    .clickable { onClicked(it) }
+        if (images != KeywordResultViewModel.INITIALIZE_LIST) {
+            images.forEach {
+                val backgroundModifier = if (selectedImage == it) {
+                    Modifier
+                        .weight(1f)
+                        .aspectRatio(1f)
+                        .padding(vertical = 4.dp)
+                        .border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(10.dp))
+                        .clip(shape = RoundedCornerShape(10.dp))
+                } else {
+                    Modifier
+                        .weight(1f)
+                        .aspectRatio(1f)
+                        .padding(vertical = 4.dp)
+                        .clip(shape = RoundedCornerShape(10.dp))
+                        .clickable { onClicked(it) }
+                }
+                AsyncImage(
+                    modifier = backgroundModifier,
+                    model = it,
+                    alpha = if (selectedImage != it && selectedImage.isNotBlank()) 0.5f else 1f,
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "AI 그림 이미지 이미지",
+                    placeholder = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground)
+                )
             }
-            DidaImage(
-                modifier = backgroundModifier,
-                model = it,
-                alpha = if (selectedImage != it) 0.5f else 1f
-            )
+        } else {
+            (0..3).forEach { _ ->
+                Image(
+                    modifier = Modifier
+                        .weight(1f)
+                        .aspectRatio(1f)
+                        .padding(vertical = 4.dp)
+                        .clip(shape = RoundedCornerShape(10.dp)),
+                    painter = painterResource(id = com.dida.common.R.mipmap.img_dida_logo_foreground),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "AI 그림 이미지 이미지",
+                )
+            }
         }
     }
 }
