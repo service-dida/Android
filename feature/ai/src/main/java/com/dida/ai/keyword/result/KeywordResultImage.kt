@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.dida.compose.theme.BrandLemon
+import com.dida.compose.utils.noRippleClickable
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -48,7 +49,7 @@ fun KeywordResultImages(
                         .aspectRatio(1f)
                         .padding(vertical = 4.dp)
                         .clip(shape = RoundedCornerShape(10.dp))
-                        .clickable { onClicked(it) }
+                        .noRippleClickable { onClicked(it) }
                 }
                 AsyncImage(
                     modifier = backgroundModifier,
