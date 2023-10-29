@@ -2,8 +2,6 @@ package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,14 +16,8 @@ import com.dida.common.util.urlImageToFile
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileOutputStream
-import java.net.ConnectException
-import java.net.URL
 
 @AndroidEntryPoint
 class AddPurposeFragment :

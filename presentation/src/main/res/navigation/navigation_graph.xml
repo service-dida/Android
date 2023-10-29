@@ -433,6 +433,10 @@
         android:name="com.dida.android.presentation.views.AddPurposeFragment"
         android:label="AddPurposeFragment">
         <argument
+            android:name="fromGallery"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
             android:name="imgURL"
             app:argType="string" />
         <argument
