@@ -90,7 +90,7 @@ interface DidaApi {
     suspend fun getPublicKey(): GetPublicKeyResponse
 
     // 인증 메일 보내기
-    @GET("/visitor/auth")
+    @GET("/common/auth")
     suspend fun getEmailAuth(): GetEmailAuthResponse
 
     // 지갑 발급하기
