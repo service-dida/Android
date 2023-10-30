@@ -1,10 +1,14 @@
 package com.dida.ai.keyword
 
 import com.dida.common.base.BaseViewModel
+import com.dida.domain.onError
+import com.dida.domain.onSuccess
+import com.dida.domain.usecase.MakeAiPictureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +33,14 @@ class KeywordViewModel @Inject constructor(): BaseViewModel() {
             this[type.index] = Keyword.Init
         }
         _keywords.value = deletedKeywords
+    }
+
+    fun getKeywords(): String{
+        var sentence = ""
+        _keywords.value.forEach { keyword ->
+            sentence += "${keyword.word} "
+        }
+        return sentence
     }
 }
 

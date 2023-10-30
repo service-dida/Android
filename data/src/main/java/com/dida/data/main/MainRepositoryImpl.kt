@@ -305,8 +305,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { didaApi.postNftLike(body) }
     }
 
-    override suspend fun makeAiPicture(payPwd: String, setence: String): NetworkResult<AiPicture> {
-        val body = PostMakePictureRequest(payPwd, setence)
+    override suspend fun makeAiPicture(setence: String): NetworkResult<AiPicture> {
+        val body = PostMakePictureRequest(setence)
         return handleApi { didaApi.makeAiPicture(body).toDomain() }
     }
 

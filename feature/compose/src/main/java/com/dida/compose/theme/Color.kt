@@ -17,6 +17,7 @@ val White = Color(0xFFFFFFFF)
 val NoticeRed = Color(0xFFE8625B)
 val LineSurface = Color(0x80DADADA)
 val TextGray = Color(0xFFC5C5CF)
+val Gray05 = Color(0xFFBDBDBD)
 
 val Surface0 = Color(0xFF121212)
 val Surface1 = Color(0xFF1C1C1E)

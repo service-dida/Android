@@ -8,8 +8,10 @@ import com.dida.domain.klaytn.UploadAssetUseCase
 import com.dida.domain.usecase.CancelSellNftUseCase
 import com.dida.domain.usecase.CommonProfileUseCase
 import com.dida.domain.usecase.CreateNftUseCase
+import com.dida.domain.usecase.PublicKeyUseCase
 import com.dida.domain.usecase.SellNftUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import encryptWithPublicKey
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,7 +25,8 @@ class AddPurposeViewModel @Inject constructor(
     private val createNftUseCase: CreateNftUseCase,
     private val uploadAssetUseCase: UploadAssetUseCase,
     private val profileUseCase: CommonProfileUseCase,
-    private val sellNftUseCase: SellNftUseCase
+    private val sellNftUseCase: SellNftUseCase,
+    private val getPublicKeyUseCase: PublicKeyUseCase,
 ) : BaseViewModel(), AddPurposeActionHandler {
 
     private val TAG = "AddPurposeViewModel"
@@ -95,17 +98,22 @@ class AddPurposeViewModel @Inject constructor(
             val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
             val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-            uploadAssetUseCase(requestBody)
-                .onSuccess { }
-                .onError { e -> catchError(e) }
-                .flatMap {
-                    createNftUseCase(password, titleState.value, descriptionState.value, it.uri)
+            getPublicKeyUseCase()
+                .onSuccess { publicKey ->
+                    uploadAssetUseCase(requestBody)
+                        .onSuccess { }
+                        .onError { e -> catchError(e) }
+                        .flatMap {
+                            createNftUseCase(password.encryptWithPublicKey(publicKey.publicKey), titleState.value, descriptionState.value, it.uri)
+                        }
+                        .onSuccess { cardId ->
+                            if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                            else sellNft(password, cardId, price)
+                        }
+                        .onError { e -> catchError(e) }
                 }
-                .onSuccess { cardId ->
-                    if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-                    else sellNft(password, cardId, price)
-                }
-                .onError { e -> catchError(e) }
+                .onError {e -> catchError(e) }
+
         }
     }
 

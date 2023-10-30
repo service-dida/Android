@@ -9,7 +9,7 @@ import javax.inject.Inject
 class MakeAiPictureUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(payPwd: String, sentence: String) : NetworkResult<AiPicture> {
-        return repository.makeAiPicture(payPwd, sentence)
+    suspend operator fun invoke(sentence: String) : NetworkResult<AiPicture> {
+        return repository.makeAiPicture(sentence)
     }
 }

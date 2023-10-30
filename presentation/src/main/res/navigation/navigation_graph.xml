@@ -418,9 +418,7 @@
             android:id="@+id/action_keywordResultFragment_to_createNftFragment"
             app:destination="@id/createNftFragment"
             app:popExitAnim="@anim/exit_to_right"
-            app:enterAnim="@anim/enter_from_right"
-            app:popUpTo="@id/keywordProductFragment"
-            app:popUpToInclusive="true" />
+            app:enterAnim="@anim/enter_from_right" />
         <action
             android:id="@+id/action_keywordResultFragment_to_addFragment"
             app:destination="@id/addFragment"

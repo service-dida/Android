@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.ui
+package com.dida.ai.keyword.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -50,6 +50,7 @@ import com.dida.compose.theme.White
 import com.dida.compose.theme.Yellow
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.clickableSingle
+import com.dida.compose.utils.noRippleClickable
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -108,7 +109,7 @@ fun StyleKeywords(
 val colors = listOf(
     Keyword.Color(color = Red, word = "Red"),
     Keyword.Color(color = OrangeRed, word = "Orange Red"),
-    Keyword.Color(color = Orange, word ="Orange"),
+    Keyword.Color(color = Orange, word = "Orange"),
     Keyword.Color(color = Yellow, word = "Yellow"),
     Keyword.Color(color = GreenYellow, word = "Green Yellow"),
     Keyword.Color(color = Green, word = "Green"),
@@ -210,7 +211,7 @@ fun DefaultKeywordItem(
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onKeywordClicked(item) }
+                .noRippleClickable { onKeywordClicked(item) }
         ) {
             Text(
                 text = item.word,
@@ -233,7 +234,7 @@ fun StyleKeywordItem(
     val backgroundModifier = if (selected) {
         modifier.padding(vertical = 4.dp).border(width = 1.dp, color = BrandLemon, shape = RoundedCornerShape(10.dp))
     } else {
-        modifier.padding(vertical = 4.dp).clickable { onKeywordClicked(item) }
+        modifier.padding(vertical = 4.dp).noRippleClickable { onKeywordClicked(item) }
     }
     Surface(
         color = Surface2,
@@ -273,7 +274,7 @@ fun ColorKeywordItem(
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onKeywordClicked(item) }
+                .noRippleClickable { onKeywordClicked(item) }
         ) {
             Text(
                 text = item.word,
@@ -300,7 +301,7 @@ fun SelectedColorKeywordItem(
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onKeywordClicked(item) }
+                .noRippleClickable { onKeywordClicked(item) }
         ) {
             Text(
                 text = item.word,

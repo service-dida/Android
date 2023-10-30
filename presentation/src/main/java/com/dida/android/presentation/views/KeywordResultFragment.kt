@@ -1,34 +1,54 @@
 package com.dida.android.presentation.views
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.unit.dp
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import com.dida.ai.R
 import com.dida.ai.databinding.FragmentKeywordResultBinding
+import com.dida.ai.keyword.KeywordViewModel
+import com.dida.ai.keyword.result.KeywordResultButton
+import com.dida.ai.keyword.result.KeywordResultImages
+import com.dida.ai.keyword.result.KeywordResultMessage
+import com.dida.ai.keyword.result.KeywordResultNavigationAction
+import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
-import com.dida.compose.theme.dpToSp
+import com.dida.ai.keyword.result.RestartKeyword
+import com.dida.common.util.stringToBitmap
+import com.dida.common.util.saveMediaToStorage
+import com.dida.compose.utils.VerticalDivider
+import com.dida.compose.utils.WeightDivider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExecutorCoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.CancellationException
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @AndroidEntryPoint
 class KeywordResultFragment :
-    BaseFragment<FragmentKeywordResultBinding, KeywordResultViewModel>(com.dida.ai.R.layout.fragment_keyword_result) {
+    BaseFragment<FragmentKeywordResultBinding, KeywordResultViewModel>(R.layout.fragment_keyword_result) {
 
     private val TAG = "KeywordResultFragment"
 
     override val layoutResourceId: Int
-        get() = com.dida.ai.R.layout.fragment_keyword_result // get() : 커스텀 접근자, 코틀린 문법
+        get() = R.layout.fragment_keyword_result // get() : 커스텀 접근자, 코틀린 문법
 
     override val viewModel: KeywordResultViewModel by viewModels()
-    private val navController: NavController by lazy { findNavController() }
+    private val sharedViewModel: KeywordViewModel by activityViewModels()
 
     override fun initStartView() {
         binding.apply {
@@ -37,6 +57,8 @@ class KeywordResultFragment :
         }
         exception = viewModel.errorEvent
         initToolbar()
+        createAiPicture()
+        observeNavigation()
     }
 
     override fun initDataBinding() {}
@@ -55,25 +77,70 @@ class KeywordResultFragment :
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                Column {
-                    Text(
-                        text = "키워드 재선택하기",
-                        fontSize = dpToSp(dp = 16.dp),
-                        color = Color.White,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToKeywordProductFragment()) }
+                val aiPictures by viewModel.aiPictures.collectAsStateWithLifecycle()
+                val selectedPicture by viewModel.selectedPicture.collectAsStateWithLifecycle()
+
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    KeywordResultTitle()
+                    KeywordResultMessage()
+                    KeywordResultImages(
+                        images = aiPictures,
+                        selectedImage = selectedPicture,
+                        onClicked = viewModel::onSelectImage
                     )
-                    Text(
-                        text = "NFT 만들기",
-                        fontSize = dpToSp(dp = 16.dp),
-                        color = Color.White,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .clickable { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment()) }
+                    WeightDivider(weight = 1f)
+                    RestartKeyword(onClicked = viewModel::onRestartKeyword)
+                    KeywordResultButton(
+                        isSelected = selectedPicture.isNotBlank(),
+                        onDownloadClicked = viewModel::onDownload,
+                        onCreateNftClicked = viewModel::onCreateNft
                     )
+                    VerticalDivider(dp = 16)
                 }
 
+            }
+        }
+    }
+
+    private fun observeNavigation() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigationAction.collectLatest {
+                when (it) {
+                    is KeywordResultNavigationAction.NavigateToRestartKeyword -> {}
+                    is KeywordResultNavigationAction.NavigateToDownloadAiPicture -> downloadAiPicture()
+                    is KeywordResultNavigationAction.NavigateToCreateNft -> navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment(it.imageUrl))
+                }
+            }
+        }
+    }
+
+    private fun createAiPicture() {
+        val sentence = sharedViewModel.getKeywords()
+        viewModel.createAiPicture(sentence)
+    }
+
+    private fun downloadAiPicture() {
+        val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+        val dispatcher: ExecutorCoroutineDispatcher = executorService.asCoroutineDispatcher()
+        var result: Boolean = false
+        CoroutineScope(dispatcher).launch {
+            showLoadingDialog()
+            val bitmap = stringToBitmap(viewModel.selectedPicture.value)
+            result = requireContext().saveMediaToStorage(bitmap)
+        }.invokeOnCompletion { throwable ->
+            when (throwable) {
+                is CancellationException -> showToastMessage(requireContext().getString(R.string.download_ai_picture_failure))
+                else -> {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        dismissLoadingDialog()
+                        when (result) {
+                            true -> showToastMessage(requireContext().getString(R.string.download_ai_picture_success))
+                            false -> showToastMessage(requireContext().getString(R.string.download_ai_picture_failure))
+                        }
+                    }
+                }
             }
         }
     }

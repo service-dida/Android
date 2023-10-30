@@ -1,4 +1,4 @@
-package com.dida.android.presentation.views.ui
+package com.dida.ai.keyword.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
