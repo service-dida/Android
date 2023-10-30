@@ -49,7 +49,6 @@ class UserProfileFragment :
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
         initSwipeRefresh()

@@ -82,7 +82,6 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
     }

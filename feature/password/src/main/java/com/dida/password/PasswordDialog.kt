@@ -59,7 +59,6 @@ class PasswordDialog(
                     View.GONE
                 }
         }
-        exception = viewModel.errorEvent
         viewModel.initPwdInfo(size, settingYn)
         makePasswordDial()
         dialogFullScreen()

@@ -43,7 +43,6 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
         initSwipeRefresh()

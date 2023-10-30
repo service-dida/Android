@@ -46,7 +46,6 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
         }
         getMaskingEmail()
         requireActivity().window.setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-        exception = viewModel.errorEvent
     }
 
     override fun initDataBinding() {

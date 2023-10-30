@@ -55,7 +55,6 @@ class KeywordResultFragment :
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         createAiPicture()
         observeNavigation()

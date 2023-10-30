@@ -10,7 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 
 abstract class BaseBottomSheetDialogFragment<T : ViewDataBinding, R : BaseViewModel> :
     BottomSheetDialogFragment() {
@@ -30,7 +30,6 @@ abstract class BaseBottomSheetDialogFragment<T : ViewDataBinding, R : BaseViewMo
 
     private var isSetBackButtonValid = false
 
-    protected var exception: SharedFlow<Throwable>? = null
     private var toast: Toast? = null
 
 
@@ -52,8 +51,8 @@ abstract class BaseBottomSheetDialogFragment<T : ViewDataBinding, R : BaseViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launchWhenStarted {
-            exception?.collect { exception ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.errorEvent.collect { exception ->
                 showToastMessage(exception)
             }
         }

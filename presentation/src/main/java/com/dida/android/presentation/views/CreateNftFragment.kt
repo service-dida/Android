@@ -47,7 +47,6 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initNextButton()
         initNftImage()
@@ -106,7 +105,14 @@ class CreateNftFragment : BaseFragment<FragmentCreateNftBinding, CreateNftViewMo
                 when {
                     !viewModel.hasNextState.value -> showToastMessage(getString(R.string.not_yet_title_and_description))
                     viewModel.nftImageState.value.isBlank() -> showToastMessage(getString(R.string.not_yet_image))
-                    else -> navigate(CreateNftFragmentDirections.actionCreateNftFragmentToAddPurposeFragment(viewModel.nftImageState.value, viewModel.titleTextState.value, viewModel.descriptionTextState.value))
+                    else -> navigate(
+                        CreateNftFragmentDirections.actionCreateNftFragmentToAddPurposeFragment(
+                            fromGallery = args.imgUrl == null,
+                            imgURL = viewModel.nftImageState.value,
+                            title = viewModel.titleTextState.value,
+                            description = viewModel.descriptionTextState.value
+                        )
+                    )
                 }
             }
         }

@@ -73,7 +73,6 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         sharedViewModel.initKeywords()
     }

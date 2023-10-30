@@ -39,7 +39,6 @@ class BuySuccessFragment : BaseFragment<FragmentBuySuccessBinding, BuySuccessVie
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
     }
 
     override fun initDataBinding() {

@@ -52,7 +52,6 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
     }

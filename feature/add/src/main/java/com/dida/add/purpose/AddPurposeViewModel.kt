@@ -90,7 +90,7 @@ class AddPurposeViewModel @Inject constructor(
         SALE
     }
 
-    fun mintNFT(password: String , type : AddNftType, price: Double) {
+    fun mintLocalImageToNFT(password: String , type : AddNftType, price: Double) {
         baseViewModelScope.launch {
             showLoading()
 
@@ -113,7 +113,30 @@ class AddPurposeViewModel @Inject constructor(
                         .onError { e -> catchError(e) }
                 }
                 .onError {e -> catchError(e) }
+        }
+    }
+    fun mintFileToNFT(password: String , type : AddNftType, price: Double, file: File) {
+        baseViewModelScope.launch {
+            showLoading()
 
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+            getPublicKeyUseCase()
+                .onSuccess { publicKey ->
+                    uploadAssetUseCase(requestBody)
+                        .onSuccess { }
+                        .onError { e -> catchError(e) }
+                        .flatMap {
+                            createNftUseCase(password.encryptWithPublicKey(publicKey.publicKey), titleState.value, descriptionState.value, it.uri)
+                        }
+                        .onSuccess { cardId ->
+                            if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+                            else sellNft(password, cardId, price)
+                        }
+                        .onError { e -> catchError(e) }
+                }
+                .onError {e -> catchError(e) }
         }
     }
 
