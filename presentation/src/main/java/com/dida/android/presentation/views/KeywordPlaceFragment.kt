@@ -24,7 +24,6 @@ import com.dida.ai.databinding.FragmentKeywordPlaceBinding
 import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
-import com.dida.ai.keyword.place.KeywordPlaceViewModel
 import com.dida.ai.keyword.component.CustomLinearProgressBar
 import com.dida.ai.keyword.component.DefaultKeywords
 import com.dida.ai.keyword.component.KeywordMore
@@ -32,7 +31,7 @@ import com.dida.ai.keyword.component.KeywordTitle
 import com.dida.ai.keyword.component.NextButton
 import com.dida.ai.keyword.component.SelectKeywordTitle
 import com.dida.ai.keyword.component.SelectKeywords
-import com.dida.ai.keyword.component.WriteKeyword
+import com.dida.ai.keyword.place.KeywordPlaceViewModel
 import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -109,7 +108,6 @@ class KeywordPlaceFragment :
                             sharedViewModel.insertKeyword(KeywordType.Place, it)
                         }
                     )
-                    WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
                     SelectKeywords(keywords = selectedKeywords)
