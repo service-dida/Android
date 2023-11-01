@@ -158,6 +158,7 @@ fun ColorKeywords(
     }
 }
 
+// TODO : 추후 키워드 직접 입력 기능 생길 경우에 사용
 @Composable
 fun WriteKeyword(
     onButtonClicked: () -> Unit

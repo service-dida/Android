@@ -24,7 +24,6 @@ import com.dida.ai.databinding.FragmentKeywordStyleBinding
 import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
-import com.dida.ai.keyword.style.KeywordStyleViewModel
 import com.dida.ai.keyword.component.CustomLinearProgressBar
 import com.dida.ai.keyword.component.KeywordMore
 import com.dida.ai.keyword.component.KeywordTitle
@@ -32,7 +31,7 @@ import com.dida.ai.keyword.component.NextButton
 import com.dida.ai.keyword.component.SelectKeywordTitle
 import com.dida.ai.keyword.component.SelectKeywords
 import com.dida.ai.keyword.component.StyleKeywords
-import com.dida.ai.keyword.component.WriteKeyword
+import com.dida.ai.keyword.style.KeywordStyleViewModel
 import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -109,7 +108,6 @@ class KeywordStyleFragment :
                             sharedViewModel.insertKeyword(KeywordType.Style, it)
                         }
                     )
-                    WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
                     SelectKeywords(keywords = selectedKeywords.value)

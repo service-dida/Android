@@ -65,7 +65,10 @@ class SplashViewModel @Inject constructor(
                     setUserIdUseCase(it.memberInfo.memberId)
                     onGoneSplash()
                 }
-                .onError { e -> catchError(e) }
+                .onError { e ->
+                    onGoneSplash()
+                    catchError(e)
+                }
         }
     }
 

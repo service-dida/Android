@@ -24,7 +24,6 @@ import com.dida.ai.databinding.FragmentKeywordProductBinding
 import com.dida.ai.keyword.KeywordNavigationAction
 import com.dida.ai.keyword.KeywordType
 import com.dida.ai.keyword.KeywordViewModel
-import com.dida.ai.keyword.product.KeywordProductViewModel
 import com.dida.ai.keyword.component.CustomLinearProgressBar
 import com.dida.ai.keyword.component.DefaultKeywords
 import com.dida.ai.keyword.component.KeywordMore
@@ -32,7 +31,7 @@ import com.dida.ai.keyword.component.KeywordTitle
 import com.dida.ai.keyword.component.NextButton
 import com.dida.ai.keyword.component.SelectKeywordTitle
 import com.dida.ai.keyword.component.SelectKeywords
-import com.dida.ai.keyword.component.WriteKeyword
+import com.dida.ai.keyword.product.KeywordProductViewModel
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.MainBlack
 import dagger.hilt.android.AndroidEntryPoint
@@ -111,7 +110,6 @@ class KeywordProductFragment :
                             sharedViewModel.insertKeyword(KeywordType.Product, it)
                         }
                     )
-                    WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
                     SelectKeywords(keywords = selectedKeywords.value)

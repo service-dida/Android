@@ -30,7 +30,6 @@ import com.dida.ai.keyword.component.KeywordMore
 import com.dida.ai.keyword.component.KeywordTitle
 import com.dida.ai.keyword.component.SelectKeywordTitle
 import com.dida.ai.keyword.component.SelectKeywords
-import com.dida.ai.keyword.component.WriteKeyword
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.utils.VerticalDivider
@@ -106,7 +105,6 @@ class KeywordColorFragment :
                             viewModel.onKeywordClicked(it)
                         }
                     )
-                    WriteKeyword(onButtonClicked = {})
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
                     SelectKeywords(keywords = selectedKeywords)

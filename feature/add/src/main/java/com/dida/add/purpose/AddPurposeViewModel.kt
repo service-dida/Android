@@ -1,18 +1,23 @@
 package com.dida.add.purpose
 
 import com.dida.common.base.BaseViewModel
+import com.dida.domain.NetworkResult
 import com.dida.domain.flatMap
+import com.dida.domain.klaytn.UploadAssetUseCase
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.klaytn.UploadAssetUseCase
-import com.dida.domain.usecase.CancelSellNftUseCase
 import com.dida.domain.usecase.CommonProfileUseCase
 import com.dida.domain.usecase.CreateNftUseCase
 import com.dida.domain.usecase.PublicKeyUseCase
 import com.dida.domain.usecase.SellNftUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import encryptWithPublicKey
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -91,63 +96,42 @@ class AddPurposeViewModel @Inject constructor(
     }
 
     fun mintLocalImageToNFT(password: String , type : AddNftType, price: Double) {
-        baseViewModelScope.launch {
-            showLoading()
-
-            val file = File(nftImageState.value)
-            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-            val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
-            getPublicKeyUseCase()
-                .onSuccess { publicKey ->
-                    uploadAssetUseCase(requestBody)
-                        .onSuccess { }
-                        .onError { e -> catchError(e) }
-                        .flatMap {
-                            createNftUseCase(password.encryptWithPublicKey(publicKey.publicKey), titleState.value, descriptionState.value, it.uri)
-                        }
-                        .onSuccess { cardId ->
-                            if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-                            else sellNft(password, cardId, price)
-                        }
-                        .onError { e -> catchError(e) }
-                }
-                .onError {e -> catchError(e) }
-        }
+        showLoading()
+        val file = File(nftImageState.value)
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        sellNft(requestBody = requestBody, password = password, type = type, price = price)
     }
+
     fun mintFileToNFT(password: String , type : AddNftType, price: Double, file: File) {
-        baseViewModelScope.launch {
-            showLoading()
-
-            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-            val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
-            getPublicKeyUseCase()
-                .onSuccess { publicKey ->
-                    uploadAssetUseCase(requestBody)
-                        .onSuccess { }
-                        .onError { e -> catchError(e) }
-                        .flatMap {
-                            createNftUseCase(password.encryptWithPublicKey(publicKey.publicKey), titleState.value, descriptionState.value, it.uri)
-                        }
-                        .onSuccess { cardId ->
-                            if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-                            else sellNft(password, cardId, price)
-                        }
-                        .onError { e -> catchError(e) }
-                }
-                .onError {e -> catchError(e) }
-        }
+        showLoading()
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        sellNft(requestBody = requestBody, password = password, type = type, price = price)
     }
 
-    private fun sellNft(payPwd : String, cardId: Long, price : Double){
+    private fun sellNft(requestBody: MultipartBody.Part, password: String, type: AddNftType, price: Double) {
         baseViewModelScope.launch {
-            sellNftUseCase(payPwd, cardId, price)
-                .onSuccess {
-                    dismissLoading()
-                    _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
-                }
-                .onError { e -> catchError(e) }
+            val publicKey = (getPublicKeyUseCase() as NetworkResult.Success).data
+
+            uploadAssetUseCase(requestBody).flatMap { asset ->
+                createNftUseCase(
+                    payPwd = password.encryptWithPublicKey(publicKey.publicKey),
+                    title = titleState.value,
+                    description = descriptionState.value,
+                    image = asset.uri
+                )
+            }.onSuccess {
+                if (type == AddNftType.NOT_SALE) _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+            }.flatMap { nftId ->
+                sellNftUseCase(
+                    payPwd = password.encryptWithPublicKey(publicKey.publicKey),
+                    nftId = nftId,
+                    price = price
+                )
+            }.onSuccess { _navigationEvent.emit(AddPurposeNavigationAction.NavigateToMyPage)
+            }.onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 }
