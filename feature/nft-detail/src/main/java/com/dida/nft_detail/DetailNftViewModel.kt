@@ -9,6 +9,7 @@ import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.data.model.Auth001Exception
+import com.dida.domain.NetworkResult
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Nft
 import com.dida.domain.main.model.Post
@@ -20,10 +21,12 @@ import com.dida.domain.usecase.DeleteNftUseCase
 import com.dida.domain.usecase.NftDetailUseCase
 import com.dida.domain.usecase.NftLikeUseCase
 import com.dida.domain.usecase.PostsFromNftUseCase
+import com.dida.domain.usecase.PublicKeyUseCase
 import com.dida.domain.usecase.SellNftUseCase
 import com.dida.domain.usecase.local.LoginCheckUseCase
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import encryptWithPublicKey
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,6 +46,7 @@ class DetailNftViewModel @Inject constructor(
     private val blockUseCase: BlockUseCase,
     private val deleteNftUseCase: DeleteNftUseCase,
     private val loginCheckUseCase: LoginCheckUseCase,
+    private val getPublicKeyUseCase: PublicKeyUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -111,10 +115,15 @@ class DetailNftViewModel @Inject constructor(
     fun onSellCard(payPwd: String, price: Double) {
         baseViewModelScope.launch {
             showLoading()
-            sellNftUseCase(payPwd, cardIdState.value, price)
-                .onSuccess {
-                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
-                }.onError { e -> catchError(e) }
+            val publicKey = (getPublicKeyUseCase() as NetworkResult.Success).data
+
+            sellNftUseCase(
+                payPwd = payPwd.encryptWithPublicKey(publicKey.publicKey),
+                nftId = cardIdState.value,
+                price = price
+            ).onSuccess {
+                _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
+            }.onError { e -> catchError(e) }
         }
     }
 
@@ -133,9 +142,8 @@ class DetailNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             deleteNftUseCase(cardIdState.value)
-                .onSuccess {
-                    _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome)
-                }.onError { e -> catchError(e) }
+                .onSuccess { _navigationEvent.emit(DetailNftNavigationAction.NavigateToHome) }
+                .onError { e -> catchError(e) }
         }
     }
 

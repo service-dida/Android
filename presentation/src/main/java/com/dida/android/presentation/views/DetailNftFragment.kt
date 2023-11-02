@@ -131,15 +131,15 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
     private fun showSellNftDialog(){
         AddSaleNftBottomSheet { price ->
-            PasswordDialog(6,"비밀번호 입력","6자리를 입력해주세요."){ success, password ->
-                if(success){
+            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                if (success) {
                     viewModel.onSellCard(password, price.toDouble())
-                }else {
+                } else {
                     if (password == "reset") {
                         navigate(DetailNftFragmentDirections.actionDetailNftFragmentToSettingFragment())
                     }
                 }
-            }.show(childFragmentManager,"DetailNftBottomSheet")
+            }.show(childFragmentManager, "DetailNftBottomSheet")
         }.show(childFragmentManager, "DetailNftFragment")
     }
 
