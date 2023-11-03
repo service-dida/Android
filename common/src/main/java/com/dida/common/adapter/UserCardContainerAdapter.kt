@@ -57,8 +57,7 @@ class UserCardContainerAdapter(
         item?.let { holder.bind(it.items) }
     }
 
-    class ViewHolder(private val binding: HolderUserCardContainerBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: HolderUserCardContainerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(items: List<CommonProfileNft>) {
             binding.items = items
             binding.executePendingBindings()
@@ -67,10 +66,12 @@ class UserCardContainerAdapter(
 
     internal object UserCardContainerItemDiffCallback : DiffUtil.ItemCallback<UserCardContainerItem>() {
         override fun areItemsTheSame(oldItem: UserCardContainerItem, newItem: UserCardContainerItem) =
-            oldItem.items == newItem.items
+            oldItem.items.zip(newItem.items).all { (old, new) ->
+                (old.nftInfo.nftId == new.nftInfo.nftId) && (old.liked == new.liked)
+            }
 
         override fun areContentsTheSame(oldItem: UserCardContainerItem, newItem: UserCardContainerItem) =
-            oldItem.equals(newItem)
+            oldItem.items == newItem.items
     }
 }
 
