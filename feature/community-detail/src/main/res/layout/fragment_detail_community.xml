@@ -22,6 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 style="@style/TextView_bold_20_white"
                 android:layout_width="wrap_content"
@@ -35,8 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toTopOf="@id/edit_main">
+            app:layout_constraintBottom_toTopOf="@id/edit_main"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -46,45 +47,43 @@
                     android:id="@+id/community_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:background="@color/surface1"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:paddingBottom="20dp">
+                    android:paddingBottom="20dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/user_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/more_button"
                         android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toStartOf="@id/more_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:onSingleClick="@{() -> vm.onUserProfileClicked(vm.postState.memberInfo.memberId)}">
 
                         <ImageView
                             android:id="@+id/user_img"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:image_from_url_circle="@{vm.postState.memberInfo.profileImgUrl}"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:image_from_url_circle="@{vm.postState.memberInfo.profileImgUrl}">
-                        </ImageView>
+                            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
                         <TextView
                             android:id="@+id/user_name"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="@id/user_img"
-                            app:layout_constraintBottom_toBottomOf="@id/user_img"
-                            app:layout_constraintStart_toEndOf="@id/user_img"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:text="@{vm.postState.memberInfo.memberName}"
-                            android:textSize="15dp"
-                            android:textColor="@color/white"
+                            android:layout_marginLeft="12dp"
                             android:fontFamily="@font/pretendard_bold"
-                            android:layout_marginLeft="12dp">
-                        </TextView>
+                            android:text="@{vm.postState.memberInfo.memberName}"
+                            android:textColor="@color/white"
+                            android:textSize="15dp"
+                            app:layout_constraintBottom_toBottomOf="@id/user_img"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/user_img"
+                            app:layout_constraintTop_toTopOf="@id/user_img"></TextView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,9 +91,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
-                        app:layout_constraintTop_toTopOf="@id/user_layout"
                         app:layout_constraintBottom_toBottomOf="@id/user_layout"
                         app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/user_layout"
                         app:onSingleClick="@{() -> vm.onCommunityMoreClicked(vm.postState.memberInfo.memberId, vm.postState.postInfo.postId)}">
 
                         <ImageView
@@ -102,11 +101,11 @@
                             android:layout_height="wrap_content"
                             android:padding="4dp"
                             android:scaleType="centerCrop"
+                            android:src="@drawable/ic_more_white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_more_white"/>
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -114,96 +113,93 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
-                        app:layout_constraintTop_toBottomOf="@id/user_layout"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:fontFamily="@font/pretendard_bold"
                         android:text="@{vm.postState.postInfo.title}"
                         android:textColor="@color/white"
                         android:textSize="16dp"
-                        android:fontFamily="@font/pretendard_bold">
-                    </TextView>
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/user_layout"></TextView>
 
                     <TextView
                         android:id="@+id/contents_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@id/contents_name"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        android:text="@{vm.postState.postInfo.content}"
+                        android:fontFamily="@font/pretendard_regular"
                         android:lineSpacingMultiplier="1.3"
+                        android:text="@{vm.postState.postInfo.content}"
                         android:textColor="@color/white"
                         android:textSize="14dp"
-                        android:fontFamily="@font/pretendard_regular">
-                    </TextView>
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/contents_name"></TextView>
 
                     <View
                         android:id="@+id/line1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginTop="32dp"
                         android:background="@color/line_surface1"
-                        app:layout_constraintTop_toBottomOf="@id/contents_txt"
-                        android:layout_marginTop="32dp">
-                    </View>
+                        app:layout_constraintTop_toBottomOf="@id/contents_txt"></View>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/card_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/line1"
                         android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/line1"
                         app:onSingleClick="@{() -> vm.onCardClicked(vm.postState.nftInfo.nftId)}">
 
                         <ImageView
                             android:id="@+id/nft_img"
                             android:layout_width="79dp"
                             android:layout_height="79dp"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:nft_img_rounded="@{vm.postState.nftInfo.nftImgUrl}"/>
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nft_img_rounded="@{vm.postState.nftInfo.nftImgUrl}" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/nft_contents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="@id/nft_img"
+                            android:layout_marginLeft="16dp"
                             app:layout_constraintBottom_toBottomOf="@id/nft_img"
                             app:layout_constraintLeft_toRightOf="@id/nft_img"
-                            android:layout_marginLeft="16dp">
+                            app:layout_constraintTop_toTopOf="@id/nft_img">
 
                             <TextView
                                 android:id="@+id/nft_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                android:fontFamily="@font/pretendard_regular"
                                 android:text="@{vm.postState.nftInfo.nftName}"
-                                android:textSize="14dp"
                                 android:textColor="@color/white"
-                                android:fontFamily="@font/pretendard_regular"/>
+                                android:textSize="14dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
                                 android:id="@+id/dida_img"
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
+                                android:layout_marginTop="8dp"
                                 android:background="@drawable/custom_brandlemon_fill_radius100"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/nft_name"
                                 android:src="@mipmap/img_dida_logo_foreground"
-                                android:layout_marginTop="8dp"/>
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/nft_name" />
 
                             <TextView
                                 android:id="@+id/dida_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="@id/dida_img"
+                                android:layout_marginLeft="8dp"
+                                android:fontFamily="@font/pretendard_semibold"
+                                android:text="@{vm.postState.nftInfo.price}"
+                                android:textColor="@color/hots_coin_txt"
+                                android:textSize="12dp"
                                 app:layout_constraintBottom_toBottomOf="@id/dida_img"
                                 app:layout_constraintStart_toEndOf="@id/dida_img"
-                                android:text="@{vm.postState.nftInfo.price}"
-                                android:textSize="12dp"
-                                android:textColor="@color/hots_coin_txt"
-                                android:fontFamily="@font/pretendard_semibold"
-                                android:layout_marginLeft="8dp"/>
+                                app:layout_constraintTop_toTopOf="@id/dida_img" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <ImageView
@@ -211,11 +207,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="6dp"
-                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_next"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:src="@drawable/ic_next">
-                        </ImageView>
+                            app:layout_constraintTop_toTopOf="parent"></ImageView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -223,28 +218,28 @@
                     android:id="@+id/detail_community_main"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintTop_toBottomOf="@id/community_main"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="vertical"
                     android:clipToPadding="false"
                     android:fillViewport="true"
+                    android:orientation="vertical"
                     android:overScrollMode="never"
-                    android:padding="4dp"/>
+                    android:padding="4dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/community_main" />
 
                 <TextView
                     android:id="@+id/reply_empty_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/community_main"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="@string/detail_community_reply_empty_text"
                     android:fontFamily="@font/pretendard_bold"
-                    android:lineSpacingExtra="8dp"
-                    android:textColor="@color/white_50"
                     android:gravity="center"
+                    android:lineSpacingExtra="8dp"
+                    android:text="@string/detail_community_reply_empty_text"
+                    android:textColor="@color/white_50"
+                    android:textSize="20dp"
                     android:visibility="gone"
-                    android:textSize="20dp"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/community_main" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -253,43 +248,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/surface6"/>
+                android:background="@color/surface6"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="16dp">
+
                 <EditText
                     android:id="@+id/edit_comments"
                     style="@style/Widget.AppCompat.EditText.DetailCommunity.EditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@={vm.commentState}"
+                    app:commentBackground="@{vm.commentState}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/send_btn"
-                    android:text="@={vm.commentState}"
-                    android:layout_marginEnd="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    app:commentBackground="@{vm.commentState}"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/send_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:icSendAble="@{vm.commentState}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:icSendAble="@{vm.commentState}"
-                    tools:src="@drawable/ic_send_enabled"
-                    app:onSingleClick="@{() -> vm.onCommentClicked(vm.postState.postInfo.postId)}"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:onSingleClick="@{() -> vm.onCommentClicked(vm.postState.postInfo.postId)}"
+                    tools:src="@drawable/ic_send_enabled" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

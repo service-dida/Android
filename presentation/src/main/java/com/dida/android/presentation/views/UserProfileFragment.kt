@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -11,9 +10,7 @@ import com.dida.android.R
 import com.dida.common.adapter.UserCardAdapter
 import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnCreated
-import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserMessageAction
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
@@ -23,6 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// FIXME : Paging 수정 필요
 @AndroidEntryPoint
 class UserProfileFragment :
     BaseFragment<FragmentUserProfileBinding, UserProfileViewModel>(com.dida.user_profile.R.layout.fragment_user_profile) {
@@ -60,7 +58,7 @@ class UserProfileFragment :
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
-                        is UserProfileNavigationAction.NavigateToNftUpdate -> userCardAdapter.changeNftLike(it.nftId)
+                        is UserProfileNavigationAction.NavigateToNftUpdate -> {}
                     }
                 }
             }

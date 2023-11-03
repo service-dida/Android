@@ -201,12 +201,12 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
     fun LikeNftScreen() {
         val items by viewModel.likeNftState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
-        val nextPage = remember {
+        val nextPage by remember {
             derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
-        LaunchedEffect(key1 = nextPage.value) {
-            if (nextPage.value) viewModel.onNextPageFromLikeNft()
+        LaunchedEffect(key1 = nextPage) {
+            if (nextPage) viewModel.onNextPageFromLikeNft()
         }
 
         if (items.content.isEmpty()) {
@@ -237,12 +237,12 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
     fun OwnNftScreen() {
         val items by viewModel.ownNftState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
-        val nextPage = remember {
+        val nextPage by remember {
             derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
-        LaunchedEffect(key1 = nextPage.value) {
-            if (nextPage.value) viewModel.onNextPageFromOwnNft()
+        LaunchedEffect(key1 = nextPage) {
+            if (nextPage) viewModel.onNextPageFromOwnNft()
         }
 
         if (items.content.isEmpty()) {

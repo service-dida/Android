@@ -2,7 +2,7 @@ package com.dida.recent_nft
 
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.Contents
 import com.dida.domain.main.model.RecentNft
@@ -32,13 +32,13 @@ class RecentNftViewModel @Inject constructor(
     val navigateToNftDetail: SharedFlow<Long> = _navigateToNftDetail.asSharedFlow()
 
     private val _recentNftState: MutableStateFlow<Contents<RecentNft>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, hasNext = true, content = emptyList())
+        Contents(page = FIRST_PAGE, pageSize = PAGE_SIZE, hasNext = true, content = emptyList())
     )
     val recentNftState: StateFlow<Contents<RecentNft>> = _recentNftState.asStateFlow()
 
     init {
         baseViewModelScope.launch {
-            recentNftsUseCase(page = INIT_PAGE, size = PAGE_SIZE)
+            recentNftsUseCase(page = FIRST_PAGE, size = PAGE_SIZE)
                 .onSuccess { _recentNftState.value = it }
                 .onError { e -> catchError(e) }
         }

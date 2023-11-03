@@ -1,9 +1,8 @@
 package com.dida.settings.hidelist
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
-import com.dida.common.util.UiState
 import com.dida.domain.Contents
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HideNft
@@ -31,7 +30,7 @@ class HideListViewModel @Inject constructor(
     val navigationEvent: SharedFlow<HideListNavigationAction> = _navigationEvent
 
     private val _hideCardState: MutableStateFlow<Contents<HideNft>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+        Contents(page = FIRST_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val hideCardState: StateFlow<Contents<HideNft>> = _hideCardState
 
@@ -41,7 +40,7 @@ class HideListViewModel @Inject constructor(
 
     private fun getHideList() {
         baseViewModelScope.launch {
-            hideNftsUseCase(INIT_PAGE, PAGE_SIZE)
+            hideNftsUseCase(FIRST_PAGE, PAGE_SIZE)
                 .onSuccess { _hideCardState.emit(it) }
                 .onError { e -> catchError(e) }
         }

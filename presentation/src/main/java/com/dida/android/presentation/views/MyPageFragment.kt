@@ -1,13 +1,18 @@
 package com.dida.android.presentation.views
 
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
-import com.dida.common.adapter.UserCardAdapter
+import androidx.recyclerview.widget.ConcatAdapter
+import com.dida.common.adapter.UserCardContainerAdapter
+import com.dida.common.adapter.UserCardContainerItem
 import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnCreated
+import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Follow
+import com.dida.mypage.MyPageEmptyAdapter
+import com.dida.mypage.MyPageEmptyItem
+import com.dida.mypage.MyPageHeaderAdapter
+import com.dida.mypage.MyPageSortAdapter
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
@@ -17,7 +22,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
+class MyPageFragment :
+    BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
 
     private val TAG = "MyPageFragment"
 
@@ -25,9 +31,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
         get() = R.layout.fragment_mypage
 
     override val viewModel: MyPageViewModel by viewModels()
-    private val userCardAdapter: UserCardAdapter by lazy { UserCardAdapter(viewModel) }
 
-    private var lastScrollY = 0
+    private lateinit var adapter: ConcatAdapter
+    private val myPageHeaderAdapter by lazy { MyPageHeaderAdapter(viewModel) }
+    private val myPageSortAdapter by lazy { MyPageSortAdapter(viewModel) }
+    private val myPageEmptyAdapter by lazy { MyPageEmptyAdapter(viewModel) }
+    private val userCardAdapter: UserCardContainerAdapter by lazy { UserCardContainerAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -47,34 +56,54 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                     is MypageNavigationAction.NavigateToWallet -> navigate(MyPageFragmentDirections.actionMyPageFragmentToWalletFragment())
                     is MypageNavigationAction.NavigateToDetailNft -> navigate(MyPageFragmentDirections.actionMyPageFragmentToDetailNftFragment(it.cardId))
                     is MypageNavigationAction.NavigateToSettings -> navigate(MyPageFragmentDirections.actionMyPageFragmentToSettingFragment())
+
                     is MypageNavigationAction.NavigateToCreate -> navigate(MyPageFragmentDirections.actionMyPageFragmentToAddFragment())
-                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId, Follow.FOLLOWER))
-                    is MypageNavigationAction.NavigateToUserFollowingClicked -> navigate(MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(it.userId, Follow.FOLLOWING))
-                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.changeNftLike(it.nftId)
+                    is MypageNavigationAction.NavigateToUserFollowedClicked -> navigate(
+                        MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(
+                            it.userId,
+                            Follow.FOLLOWER
+                        )
+                    )
+
+                    is MypageNavigationAction.NavigateToUserFollowingClicked -> navigate(
+                        MyPageFragmentDirections.actionMyPageFragmentToUserFollowedFragment(
+                            it.userId,
+                            Follow.FOLLOWING
+                        )
+                    )
                 }
             }
         }
 
         viewLifecycleOwner.repeatOnCreated {
-            viewModel.userCardState.collectLatest {
-                binding.emptyView.visibility = if (it.content.isEmpty()) View.VISIBLE else View.GONE
-                userCardAdapter.submitList(it.content)
+            launch {
+                viewModel.userCardState.collectLatest {
+                    if (it.content.isEmpty()) {
+                        myPageEmptyAdapter.submitList(listOf(MyPageEmptyItem))
+                    } else {
+                        myPageEmptyAdapter.submitList(emptyList())
+                        userCardAdapter.submitList(listOf(UserCardContainerItem(it.content)))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.myPageState.collectLatest {
+                    it.successOrNull()?.let { profile ->
+                        myPageHeaderAdapter.submitList(listOf(profile))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.cardSortTypeState.collectLatest {
+                    myPageSortAdapter.submitList(listOf(it))
+                }
             }
         }
     }
 
-    override fun initAfterBinding() {
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getLastScrollY()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setLastScrollY()
-    }
+    override fun initAfterBinding() {}
 
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -85,15 +114,26 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     }
 
     private fun initAdapter() {
-        binding.rvUserNft.apply {
-            adapter = userCardAdapter
-            layoutManager = GridLayoutManager(context, 2)
-        }
 
-        binding.rvUserNft.addOnPagingListener(
+        val adapterConfig = ConcatAdapter.Config.Builder()
+            .setIsolateViewTypes(true)
+            .setStableIdMode(ConcatAdapter.Config.StableIdMode.SHARED_STABLE_IDS)
+            .build()
+
+        adapter = ConcatAdapter(
+            adapterConfig,
+            myPageHeaderAdapter,
+            myPageSortAdapter,
+            myPageEmptyAdapter,
+            userCardAdapter
+        )
+
+        binding.myPageRecyclerview.adapter = adapter
+        binding.myPageRecyclerview.addOnPagingListener(
             arrivedBottom = { viewModel.onNextPage() }
         )
     }
+
 
     private fun initToolbar() {
         binding.toolbar.apply {
@@ -106,16 +146,5 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
                 true
             }
         }
-    }
-
-    private fun getLastScrollY() {
-        if (lastScrollY > 0) {
-            binding.mypageScroll.scrollTo(0, lastScrollY)
-            lastScrollY = 0
-        }
-    }
-
-    private fun setLastScrollY() {
-        lastScrollY = binding.mypageScroll.scrollY
     }
 }

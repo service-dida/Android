@@ -4,7 +4,7 @@ import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.actionhandler.CommunityWriteActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.ui.report.ReportViewModelDelegate
-import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
@@ -47,7 +47,7 @@ class CommunityViewModel @Inject constructor(
     val navigationEvent: SharedFlow<CommunityNavigationAction> = _navigationEvent.asSharedFlow()
 
     private val _postsState: MutableStateFlow<Contents<Post>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+        Contents(page = FIRST_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val postsState: StateFlow<Contents<Post>> = _postsState.asStateFlow()
 
@@ -60,11 +60,11 @@ class CommunityViewModel @Inject constructor(
 
     fun getCommunity() {
         baseViewModelScope.launch {
-            postsUseCase(INIT_PAGE, PAGE_SIZE)
+            postsUseCase(FIRST_PAGE, PAGE_SIZE)
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _postsState.value = it }
-                .flatMap { hotPostsUseCase(INIT_PAGE, PAGE_SIZE / 2) }
+                .flatMap { hotPostsUseCase(FIRST_PAGE, PAGE_SIZE / 2) }
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _hotCardState.value = UiState.Success(it.content)

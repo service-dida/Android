@@ -92,12 +92,12 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
                 val selectedPeriod by viewModel.selectedPeriod.collectAsStateWithLifecycle()
                 val items by viewModel.soldOutState.collectAsStateWithLifecycle()
                 val listState = rememberLazyListState()
-                val nextPage = remember {
+                val nextPage by remember {
                     derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
                 }
 
-                LaunchedEffect(key1 = nextPage.value) {
-                    if (nextPage.value) viewModel.onNextPageFromSoldOut()
+                LaunchedEffect(key1 = nextPage) {
+                    if (nextPage) viewModel.onNextPageFromSoldOut()
                 }
 
                 Column(

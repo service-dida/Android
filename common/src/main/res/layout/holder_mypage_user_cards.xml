@@ -112,8 +112,7 @@
                 android:src="@{holderModel.liked? @drawable/ic_fill_heart : @drawable/ic_empty_heart}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/holder_main"
-                app:onSingleClick="@{() -> eventListener.onLikeBtnClicked(holderModel.nftInfo.nftId, holderModel.liked)}"/>
+                app:layout_constraintTop_toBottomOf="@+id/holder_main" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

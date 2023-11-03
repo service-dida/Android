@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
-        <import type="com.dida.domain.main.model.Sort"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.dida.domain.main.model.Sort" />
+
         <variable
             name="vm"
             type="com.dida.user_profile.UserProfileViewModel" />
@@ -28,24 +31,25 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
+
                 <TextView
                     android:id="@+id/follow_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_gravity="end"
-                    android:textSize="12dp"
                     android:layout_marginEnd="16dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    app:otherUserFollowBtn="@{vm.userProfileState}"
-                    app:isMyProfile="@{vm.isMyProfile}"
                     android:fontFamily="@font/pretendard_regular"
-                    app:onSingleClick="@{() ->  vm.onFollowClicked()}"/>
+                    android:paddingLeft="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="6dp"
+                    android:textSize="12dp"
+                    app:isMyProfile="@{vm.isMyProfile}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:onSingleClick="@{() ->  vm.onFollowClicked()}"
+                    app:otherUserFollowBtn="@{vm.userProfileState}" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -53,19 +57,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:constraint_endLoading="@{vm.userProfileState}"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:clipToPadding="false"
+                    android:fillViewport="true"
+                    android:overScrollMode="never"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:clipToPadding="false"
-                    android:fillViewport="true"
-                    android:overScrollMode="never">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -89,28 +93,28 @@
                             android:id="@+id/user_name_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
                             android:fontFamily="@font/pretendard_regular"
-                            app:otherUserNickname="@{vm.userProfileState}"
                             android:textColor="@color/white"
                             android:textSize="24dp"
-                            android:layout_marginTop="16dp"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/user_image_view"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/user_image_view"
+                            app:otherUserNickname="@{vm.userProfileState}" />
 
                         <!--TODO : 자기소개 없을 시 기본 말 추가-->
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
                             android:fontFamily="@font/pretendard_regular"
-                            app:otherUserDescription="@{vm.userProfileState}"
                             android:textColor="@color/white"
                             android:textSize="14dp"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/user_name_text_view"
-                            android:layout_marginTop="6dp"/>
+                            app:otherUserDescription="@{vm.userProfileState}" />
 
                         <LinearLayout
                             android:id="@+id/linearLayout"
@@ -141,9 +145,9 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/pretendard_regular"
                                     android:gravity="center"
-                                    app:otherUserNftCount="@{vm.userProfileState}"
                                     android:textColor="@color/white"
-                                    android:textSize="16dp" />
+                                    android:textSize="16dp"
+                                    app:otherUserNftCount="@{vm.userProfileState}" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -176,9 +180,9 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/pretendard_regular"
                                     android:gravity="center"
-                                    app:otherUserFollwerCount="@{vm.userProfileState}"
                                     android:textColor="@color/white"
-                                    android:textSize="16dp" />
+                                    android:textSize="16dp"
+                                    app:otherUserFollwerCount="@{vm.userProfileState}" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -206,14 +210,14 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    app:otherUserFollwingCount="@{vm.userProfileState}"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/pretendard_regular"
                                     android:gravity="center"
                                     android:textColor="@color/white"
-                                    android:textSize="16dp" />
+                                    android:textSize="16dp"
+                                    app:otherUserFollwingCount="@{vm.userProfileState}" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -259,10 +263,10 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/pretendard_regular"
                                     android:gravity="center"
-                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(Sort.NEWEST)}"
                                     android:text="@string/mypage_nft_type_newest_text"
                                     android:textColor="@{vm.cardSortTypeState == Sort.NEWEST? @color/brand_lemon : @color/surface6}"
-                                    android:textSize="14dp" />
+                                    android:textSize="14dp"
+                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(Sort.NEWEST)}" />
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -278,10 +282,10 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/pretendard_regular"
                                     android:gravity="center"
-                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(Sort.OLDEST)}"
                                     android:text="@string/mypage_nft_type_oldest_text"
                                     android:textColor="@{vm.cardSortTypeState == Sort.OLDEST? @color/brand_lemon : @color/surface6}"
-                                    android:textSize="14dp" />
+                                    android:textSize="14dp"
+                                    app:onSingleClick="@{() -> vm.onCardSortTypeClicked(Sort.OLDEST)}" />
 
                             </LinearLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -291,13 +295,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
+                            android:nestedScrollingEnabled="false"
+                            android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
                             tools:itemCount="2"
-                            android:orientation="vertical"
-                            android:nestedScrollingEnabled="false"
                             tools:listitem="@layout/holder_mypage_user_cards" />
 
 
@@ -305,32 +309,32 @@
                             android:id="@+id/empty_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toBottomOf="@id/constraintLayout"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:visibility="gone">
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/constraintLayout">
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintBottom_toTopOf="@id/empty_text_view"
+                                android:layout_marginBottom="30dp"
                                 android:src="@drawable/ic_empty_user"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/empty_text_view"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginBottom="30dp"/>
+                                app:layout_constraintStart_toStartOf="parent" />
 
                             <TextView
                                 android:id="@+id/empty_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                android:textSize="20dp"
                                 android:fontFamily="@font/pretendard_bold"
+                                android:text="@string/user_profile_empty_text_view"
                                 android:textColor="@color/white_50"
-                                android:text="@string/user_profile_empty_text_view"/>
+                                android:textSize="20dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -341,15 +345,16 @@
                 android:id="@+id/user_shimmer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:startLoading="@{vm.userProfileState}"
-                tools:visibility="gone"
+                android:layout_marginTop="9dp"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
-                android:layout_marginTop="9dp">
+                app:startLoading="@{vm.userProfileState}"
+                tools:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <include layout="@layout/skeleton_other_user_profile" />
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
