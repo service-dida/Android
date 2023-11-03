@@ -13,8 +13,8 @@ fun RecyclerView.addOnPagingListener(
             super.onScrolled(recyclerView, dx, dy)
 
             val layoutManager = (recyclerView.layoutManager as LinearLayoutManager)
-            val firstVisibleItemIndex = layoutManager.findFirstVisibleItemPosition()
-            if (firstVisibleItemIndex == (layoutManager.itemCount - NEXT_PAGE_TRIGGER)) {
+            val lastVisibleItemIndex = layoutManager.findLastVisibleItemPosition()
+            if (lastVisibleItemIndex == layoutManager.itemCount) {
                 arrivedBottom()
                 return
             }
@@ -37,5 +37,4 @@ fun scrollPercent(recyclerView: RecyclerView): Double {
 
 const val PAGE_SIZE = 20
 const val INIT_PAGE = 0
-private const val NEXT_PAGE_TRIGGER = PAGE_SIZE / 2
 
