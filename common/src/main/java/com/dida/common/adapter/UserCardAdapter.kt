@@ -15,6 +15,8 @@ class UserCardAdapter(
     private val eventListener: NftActionHandler
 ) : ListAdapter<CommonProfileNft, UserCardAdapter.ViewHolder>(RecentNftItemDiffCallback) {
 
+    init { setHasStableIds(true) }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderMypageUserCardsBinding =
             DataBindingUtil.inflate<HolderMypageUserCardsBinding>(

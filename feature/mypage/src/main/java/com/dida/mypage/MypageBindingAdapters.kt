@@ -3,59 +3,57 @@ package com.dida.mypage
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.common.util.UiState
-import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.CommonProfile
 
 @BindingAdapter("userProfile")
-fun ImageView.bindUserProfile(uiState: UiState<CommonProfile>) {
-    uiState.successOrNull()?.let {
-        if(it.memberInfo.profileImgUrl?.isEmpty()?.not() == true) {
-            Glide.with(context)
-                .load(it.memberInfo.profileImgUrl)
-                .placeholder(com.dida.common.R.mipmap.img_dida_logo_foreground)
-                .error(com.dida.common.R.mipmap.img_dida_logo_foreground)
-                .transform(CenterCrop(), RoundedCorners(1000))
-                .into(this)
-        } else {
-            Glide.with(context)
-                .load(com.dida.common.R.mipmap.img_dida_logo_foreground)
-                .transform(CenterCrop(), RoundedCorners(1000))
-                .into(this)
-        }
+fun ImageView.bindUserProfile(commonProfile: CommonProfile) {
+    if(commonProfile.memberInfo.profileImgUrl?.isEmpty()?.not() == true) {
+        Glide.with(context)
+            .load(commonProfile.memberInfo.profileImgUrl)
+            .placeholder(com.dida.common.R.mipmap.img_dida_logo_foreground)
+            .error(com.dida.common.R.mipmap.img_dida_logo_foreground)
+            .transform(CenterCrop(), RoundedCorners(1000))
+            .into(this)
+    } else {
+        Glide.with(context)
+            .load(com.dida.common.R.mipmap.img_dida_logo_foreground)
+            .transform(CenterCrop(), RoundedCorners(1000))
+            .into(this)
     }
 }
 
 @BindingAdapter("userNickname")
-fun TextView.bindUserNickname(uiState: UiState<CommonProfile>) {
-    this.text = uiState.successOrNull()?.memberInfo?.memberName
+fun TextView.bindUserNickname(commonProfile: CommonProfile) {
+    this.text = commonProfile.memberInfo.memberName
 }
 
 @BindingAdapter("userDescription")
-fun TextView.bindUserDescription(uiState: UiState<CommonProfile>) {
-    this.text = uiState.successOrNull()?.description
+fun TextView.bindUserDescription(commonProfile: CommonProfile) {
+    this.text = commonProfile.description
 }
 
 @BindingAdapter("userNftCount")
-fun TextView.bindUserNftCount(uiState: UiState<CommonProfile>) {
-    this.text = uiState.successOrNull()?.nftCnt.toString()
+fun TextView.bindUserNftCount(commonProfile: CommonProfile) {
+    this.text = commonProfile.nftCnt.toString()
 }
 
 @BindingAdapter("userFollwingCount")
-fun TextView.bindUserFollwingCount(uiState: UiState<CommonProfile>) {
-    this.text = uiState.successOrNull()?.followingCnt.toString()
+fun TextView.bindUserFollwingCount(commonProfile: CommonProfile) {
+    this.text = commonProfile.followingCnt.toString()
 }
 
 @BindingAdapter("userFollwerCount")
-fun TextView.bindUserFollwerCount(uiState: UiState<CommonProfile>) {
-    this.text = uiState.successOrNull()?.followerCnt.toString()
+fun TextView.bindUserFollwerCount(commonProfile: CommonProfile) {
+    this.text = commonProfile.followerCnt.toString()
 }
 
 @BindingAdapter("userToolBar")
-fun androidx.appcompat.widget.Toolbar.bindUserToolBar(uiState: UiState<CommonProfile>) {
+fun Toolbar.bindUserToolBar(uiState: UiState<CommonProfile>) {
     visibility = if (uiState is UiState.Success) View.VISIBLE else View.INVISIBLE
 }
