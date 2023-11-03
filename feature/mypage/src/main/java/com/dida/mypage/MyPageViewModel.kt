@@ -2,7 +2,7 @@ package com.dida.mypage
 
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
@@ -47,7 +47,7 @@ class MyPageViewModel @Inject constructor(
     private val hasWalletState = MutableStateFlow<Boolean>(false)
 
     private val _userCardState: MutableStateFlow<Contents<CommonProfileNft>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+        Contents(page = FIRST_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val userCardState: StateFlow<Contents<CommonProfileNft>> = _userCardState.asStateFlow()
 
@@ -75,7 +75,7 @@ class MyPageViewModel @Inject constructor(
 
     fun getUserNfts() {
         baseViewModelScope.launch {
-            commonProfileNftUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
+            commonProfileNftUseCase(page = FIRST_PAGE, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
                 .onSuccess { _userCardState.value = it }
                 .onError { e -> catchError(e) }
         }

@@ -1,7 +1,7 @@
 package com.dida.user_followed
 
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.domain.Contents
 import com.dida.domain.main.model.CommonFollow
@@ -30,12 +30,12 @@ class UserFollowedViewModel @Inject constructor(
     private val TAG = "UserFollowedViewModel"
 
     private val _followingState: MutableStateFlow<Contents<CommonFollow>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+        Contents(page = FIRST_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val followingState: StateFlow<Contents<CommonFollow>> = _followingState.asStateFlow()
 
     private val _followerState: MutableStateFlow<Contents<CommonFollow>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+        Contents(page = FIRST_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val followerState: StateFlow<Contents<CommonFollow>> = _followerState.asStateFlow()
 
@@ -49,7 +49,7 @@ class UserFollowedViewModel @Inject constructor(
 
     private fun getFollowerMember() {
         baseViewModelScope.launch {
-            commonFollowUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE)
+            commonFollowUseCase(page = FIRST_PAGE, pageSize = PAGE_SIZE)
                 .onSuccess { _followerState.value = it }
                 .onError { e -> catchError(e) }
         }
@@ -58,7 +58,7 @@ class UserFollowedViewModel @Inject constructor(
     private fun getFollowingMember() {
         baseViewModelScope.launch {
             baseViewModelScope.launch {
-                commonFollowingUseCase(page = INIT_PAGE, pageSize = PAGE_SIZE)
+                commonFollowingUseCase(page = FIRST_PAGE, pageSize = PAGE_SIZE)
                     .onSuccess { _followingState.value = it }
                     .onError { e -> catchError(e) }
             }

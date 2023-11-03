@@ -4,14 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.util.INIT_PAGE
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
 import com.dida.common.util.successOrNull
 import com.dida.domain.Contents
 import com.dida.domain.main.model.CommonProfileNft
-import com.dida.domain.main.model.Follow
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.Sort
 import com.dida.domain.onError
@@ -51,7 +50,7 @@ class UserProfileViewModel @AssistedInject constructor(
     val userProfileState: StateFlow<UiState<MemberProfile>> = _userProfileState.asStateFlow()
 
     private val _userCardState: MutableStateFlow<Contents<CommonProfileNft>> = MutableStateFlow(
-        Contents(page = INIT_PAGE, pageSize = PAGE_SIZE, content = emptyList())
+        Contents(page = FIRST_PAGE, pageSize = PAGE_SIZE, content = emptyList())
     )
     val userCardState: StateFlow<Contents<CommonProfileNft>> = _userCardState.asStateFlow()
 
@@ -84,7 +83,7 @@ class UserProfileViewModel @AssistedInject constructor(
 
     fun getUserNfts() {
         baseViewModelScope.launch {
-            memberProfileNftUseCase(memberId = userId, page = INIT_PAGE, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
+            memberProfileNftUseCase(memberId = userId, page = FIRST_PAGE, pageSize = PAGE_SIZE, sort = cardSortTypeState.value)
                 .onSuccess { _userCardState.value = it }
                 .onError { e -> catchError(e) }
         }

@@ -3,7 +3,8 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
-import com.dida.common.adapter.UserCardAdapter
+import com.dida.common.adapter.UserCardContainerAdapter
+import com.dida.common.adapter.UserCardContainerItem
 import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.successOrNull
@@ -35,7 +36,7 @@ class MyPageFragment :
     private val myPageHeaderAdapter by lazy { MyPageHeaderAdapter(viewModel) }
     private val myPageSortAdapter by lazy { MyPageSortAdapter(viewModel) }
     private val myPageEmptyAdapter by lazy { MyPageEmptyAdapter(viewModel) }
-    private val userCardAdapter: UserCardAdapter by lazy { UserCardAdapter(viewModel) }
+    private val userCardAdapter: UserCardContainerAdapter by lazy { UserCardContainerAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -71,9 +72,8 @@ class MyPageFragment :
                         )
                     )
 
-                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.changeNftLike(
-                        it.nftId
-                    )
+//                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.changeNftLike(it.nftId)
+                    is MypageNavigationAction.NavigateToLikeButtonClicked -> {}
                 }
             }
         }
@@ -84,15 +84,16 @@ class MyPageFragment :
                     if (it.content.isEmpty()) {
                         myPageEmptyAdapter.submitList(listOf(MyPageEmptyItem))
                     } else {
-                        userCardAdapter.submitList(it.content)
+                        myPageEmptyAdapter.submitList(emptyList())
+                        userCardAdapter.submitList(listOf(UserCardContainerItem(it.content)))
                     }
                 }
             }
 
             launch {
                 viewModel.myPageState.collectLatest {
-                    it.successOrNull()?.let {
-                        myPageHeaderAdapter.submitList(listOf(it))
+                    it.successOrNull()?.let { profile ->
+                        myPageHeaderAdapter.submitList(listOf(profile))
                     }
                 }
             }
