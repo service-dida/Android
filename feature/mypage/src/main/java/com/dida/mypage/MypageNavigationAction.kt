@@ -6,7 +6,6 @@ sealed class MypageNavigationAction {
     object NavigateToWallet : MypageNavigationAction()
     class NavigateToDetailNft(val cardId: Long) : MypageNavigationAction()
     object NavigateToCreate: MypageNavigationAction()
-    class NavigateToLikeButtonClicked(val nftId: Long): MypageNavigationAction()
     class NavigateToUserFollowedClicked(val userId: Long): MypageNavigationAction()
     class NavigateToUserFollowingClicked(val userId: Long): MypageNavigationAction()
 }

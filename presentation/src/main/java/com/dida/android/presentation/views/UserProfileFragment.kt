@@ -58,7 +58,7 @@ class UserProfileFragment :
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
-                        is UserProfileNavigationAction.NavigateToNftUpdate -> userCardAdapter.changeNftLike(it.nftId)
+                        is UserProfileNavigationAction.NavigateToNftUpdate -> {}
                     }
                 }
             }

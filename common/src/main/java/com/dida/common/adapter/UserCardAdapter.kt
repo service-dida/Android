@@ -1,5 +1,6 @@
 package com.dida.common.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -30,27 +31,32 @@ class UserCardAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+        getItem(position)?.let { holder.bind(it, eventListener) }
     }
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_mypage_user_cards
 
-    fun changeNftLike(nftId: Long) {
-        val index = findIndexFromNftId(nftId)
-        currentList[index].apply {
-            this.liked = !this.liked
-        }
-        this@UserCardAdapter.notifyItemChanged(index)
-    }
-
-    private fun findIndexFromNftId(nftId: Long): Int {
-        return currentList.indexOfFirst { (it.nftInfo.nftId == nftId) }
-    }
-
     class ViewHolder(private val binding: HolderMypageUserCardsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CommonProfileNft) {
+
+        @SuppressLint("UseCompatLoadingForDrawables")
+        fun bind(
+            item: CommonProfileNft,
+            eventListener: NftActionHandler
+        ) {
             binding.holderModel = item
+            binding.likeBtn.apply {
+                setOnClickListener {
+                    if (item.liked) {
+                        this.setImageDrawable(context.getDrawable(R.drawable.ic_empty_heart))
+                    } else {
+                        this.setImageDrawable(context.getDrawable(R.drawable.ic_fill_heart))
+                    }
+                    item.liked = !item.liked
+                    eventListener.onLikeBtnClicked(item.nftInfo.nftId, item.liked)
+                    binding.notifyChange()
+                }
+            }
             binding.executePendingBindings()
         }
     }

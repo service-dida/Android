@@ -71,9 +71,6 @@ class MyPageFragment :
                             Follow.FOLLOWING
                         )
                     )
-
-//                    is MypageNavigationAction.NavigateToLikeButtonClicked -> userCardAdapter.changeNftLike(it.nftId)
-                    is MypageNavigationAction.NavigateToLikeButtonClicked -> {}
                 }
             }
         }

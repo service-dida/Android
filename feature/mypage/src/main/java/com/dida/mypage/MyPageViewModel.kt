@@ -111,11 +111,8 @@ class MyPageViewModel @Inject constructor(
     override fun onLikeBtnClicked(nftId: Long, liked: Boolean) {
         baseViewModelScope.launch {
             showLoading()
-            nftLikeUseCase(nftId)
-                .onSuccess {
-                    _navigationEvent.emit(MypageNavigationAction.NavigateToLikeButtonClicked(nftId))
-                    dismissLoading()
-                }.onError { e -> catchError(e) }
+            nftLikeUseCase(nftId).onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 
