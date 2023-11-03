@@ -24,15 +24,15 @@
                 android:id="@+id/btn_community_write"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_write"
                 android:backgroundTint="@color/brand_lemon"
-                app:onSingleClick="@{() -> vm.onCommunityWriteClicked()}"
                 android:contentDescription="@string/community_floatingActionButton_description"
                 android:padding="16dp"
-                app:fab_endLoading="@{vm.hotCardState}"/>
+                android:src="@drawable/ic_write"
+                app:fab_endLoading="@{vm.hotCardState}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:onSingleClick="@{() -> vm.onCommunityWriteClicked()}" />
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/community_scroll"
@@ -55,8 +55,8 @@
                         android:id="@+id/active_community_Text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="?actionBarSize"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="?actionBarSize"
                         android:fontFamily="@font/pretendard_bold"
                         android:gravity="start"
                         android:text="@string/community_hot_title_text"
@@ -82,14 +82,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginTop="15dp"
-                        android:overScrollMode="never"
                         android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/active_community_Text2"
                         tools:itemCount="3"
-                        tools:listitem="@layout/holder_hot_cards_container"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        tools:listitem="@layout/holder_hot_cards_container" />
 
                     <TextView
                         android:id="@+id/recent_Text"
@@ -112,31 +112,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:orientation="vertical"
                         android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/recent_Text"
-                        android:orientation="vertical"
-                        tools:listitem="@layout/holder_community"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        tools:listitem="@layout/holder_community" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.core.widget.NestedScrollView>
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/user_shimmer"
-                app:startLoading="@{vm.hotCardState}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="9dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:startLoading="@{vm.hotCardState}">
 
-                <include layout="@layout/skeleton_community"/>
+                <include layout="@layout/skeleton_community" />
             </com.facebook.shimmer.ShimmerFrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
