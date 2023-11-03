@@ -3,6 +3,7 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.dialog.CompleteDialogFragment
@@ -14,6 +15,10 @@ import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
+import com.dida.community.adapter.CommunityHeaderAdapter
+import com.dida.community.adapter.CommunityHeaderItem
+import com.dida.community.adapter.HotCardHeaderAdapter
+import com.dida.community.adapter.HotCardHeaderItem
 import com.dida.community.adapter.HotCardsContainerAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.main.model.Block
@@ -23,7 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// FIXME : Paging 수정 필요
 @AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewModel>(com.dida.community.R.layout.fragment_community) {
 
@@ -33,10 +37,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         get() = com.dida.community.R.layout.fragment_community
 
     override val viewModel : CommunityViewModel by viewModels()
-    private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
-    private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
-    private var lastScrollY = 0
+    private lateinit var adapter: ConcatAdapter
+    private val hotCardHeaderAdapter by lazy { HotCardHeaderAdapter() }
+    private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
+    private val communityHeaderAdapter by lazy { CommunityHeaderAdapter() }
+    private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -121,7 +127,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             if (bundle.getBoolean(DIDAINTENT.RESULT_KEY_USER_BLOCK)) showCompleteDialog(getString(R.string.block_user_dialog_message))
             viewModel.getCommunity()
         }
-        getLastScrollY()
     }
 
     private fun initSwipeRefresh() {
@@ -131,28 +136,27 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        setLastScrollY()
-    }
-
     private fun initRecyclerView() {
-        binding.activeCommunityRecyclerView.adapter = hotCardsContainerAdapter
-        binding.communityRecyclerView.adapter = communityAdapter
-        binding.communityRecyclerView.addOnPagingListener(
+        val adapterConfig = ConcatAdapter.Config.Builder()
+            .setIsolateViewTypes(true)
+            .setStableIdMode(ConcatAdapter.Config.StableIdMode.SHARED_STABLE_IDS)
+            .build()
+
+        adapter = ConcatAdapter(
+            adapterConfig,
+            hotCardHeaderAdapter,
+            hotCardsContainerAdapter,
+            communityHeaderAdapter,
+            communityAdapter
+        )
+
+        hotCardHeaderAdapter.submitList(listOf(HotCardHeaderItem))
+        communityHeaderAdapter.submitList(listOf(CommunityHeaderItem))
+
+        binding.communityRecyclerview.adapter = adapter
+        binding.communityRecyclerview.addOnPagingListener(
             arrivedBottom = { viewModel.onNextPage() }
         )
-    }
-
-    private fun setLastScrollY() {
-        lastScrollY = binding.communityScroll.scrollY
-    }
-
-    private fun getLastScrollY() {
-        if (lastScrollY > 0) {
-            binding.communityScroll.scrollTo(0, lastScrollY)
-            lastScrollY = 0
-        }
     }
 
     private fun showBlockPostDialog(postId: Long) {
