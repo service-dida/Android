@@ -197,12 +197,12 @@ class UserFollowedFragment :
     fun FollowerScreen() {
         val items by viewModel.followerState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
-        val nextPage = remember {
+        val nextPage by remember {
             derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
-        LaunchedEffect(key1 = nextPage.value) {
-            if (nextPage.value) viewModel.onNextPageFromFollower()
+        LaunchedEffect(key1 = nextPage) {
+            if (nextPage) viewModel.onNextPageFromFollower()
         }
 
         LazyColumn(
@@ -228,12 +228,12 @@ class UserFollowedFragment :
     fun FollowingScreen() {
         val items by viewModel.followingState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
-        val nextPage = remember {
+        val nextPage by remember {
             derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
         }
 
-        LaunchedEffect(key1 = nextPage.value) {
-            if (nextPage.value) viewModel.onNextPageFromFollowing()
+        LaunchedEffect(key1 = nextPage) {
+            if (nextPage) viewModel.onNextPageFromFollowing()
         }
 
         LazyColumn(
