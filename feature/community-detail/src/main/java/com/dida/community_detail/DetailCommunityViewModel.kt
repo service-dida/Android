@@ -55,9 +55,6 @@ class DetailCommunityViewModel @Inject constructor(
     )
     val comments: StateFlow<Contents<Comment>> = _comments.asStateFlow()
 
-    private val _commentEmpty: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val commentEmpty: StateFlow<Boolean> = _commentEmpty.asStateFlow()
-
     val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
     val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
@@ -70,7 +67,6 @@ class DetailCommunityViewModel @Inject constructor(
                 .flatMap { commentsFromPostUserUseCase.invoke(postId = postId, 0 , PAGE_SIZE) }
                 .onSuccess {
                     _comments.value = it
-                    _commentEmpty.value = it.content.isEmpty()
                     isWrite.value = false
                 }.onError { e -> catchError(e) }
             dismissLoading()
@@ -100,7 +96,6 @@ class DetailCommunityViewModel @Inject constructor(
                     }.onSuccess {
                         isWrite.value = true
                         _comments.value = it
-                        _commentEmpty.value = it.content.isEmpty()
                     }
                     .onError { e -> catchError(e) }
             }
@@ -122,29 +117,19 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onCommunityMoreClicked(userId: Long, postId: Long) {
-        baseViewModelScope.launch {
-            if (DataApplication.dataStorePreferences.getUserId() != userId) {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(postId))
-            } else {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToWriterMore(postId))
-            }
-        }
-    }
-
     override fun onCommentUserProfileClicked(userId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUserProfile(userId = userId))
         }
     }
 
-    fun onPostReport(postId: Long) {
+    override fun onPostReport(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostReport(postId = postId))
         }
     }
 
-    fun onPostBlockClicked(postId: Long) {
+    override fun onPostBlockClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostBlock(postId = postId))
         }
@@ -183,6 +168,18 @@ class DetailCommunityViewModel @Inject constructor(
     override fun onCardClicked(cardId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = cardId))
+        }
+    }
+
+    override fun onDeletePostDialog(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToDeletePostDialog(postId = postId))
+        }
+    }
+
+    override fun onUpdatePost(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdatePost(postId = postId))
         }
     }
 
