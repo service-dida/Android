@@ -1,8 +1,6 @@
 package com.dida.android.presentation.views
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
@@ -218,7 +216,6 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
             .build()
             .show(childFragmentManager, "block_post_dialog")
-
     }
 
     private fun showBlockUserDialog(userId: Long) {
@@ -233,19 +230,11 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             .negativeButton(getString(com.dida.community_detail.R.string.block_post_negative))
             .build()
             .show(childFragmentManager, "block_user_dialog")
-
     }
 
     private fun keyboardHide() {
         (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(binding.editComments.windowToken, 0)
-        scrollToDown()
-    }
-
-    private fun scrollToDown() {
-        Handler(Looper.getMainLooper()).post {
-//            binding.detailCommunityRecyclerview.scrollTo(ScrollView.FOCUS_DOWN)
-        }
     }
 
     private fun showMessageSnackBar(message: String) {

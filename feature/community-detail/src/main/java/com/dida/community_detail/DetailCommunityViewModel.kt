@@ -3,6 +3,7 @@ package com.dida.community_detail
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.ui.report.ReportViewModelDelegate
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.data.DataApplication
 import com.dida.domain.Contents
@@ -90,7 +91,7 @@ class DetailCommunityViewModel @Inject constructor(
                     .flatMap {
                         commentsFromPostUserUseCase(
                             postId = postId,
-                            page = comments.value.page,
+                            page = FIRST_PAGE,
                             size = PAGE_SIZE
                         )
                     }.onSuccess {
