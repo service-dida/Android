@@ -6,14 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.main.model.CommonProfile
+import com.dida.domain.main.model.MemberProfile
 import com.dida.user_profile.R
 import com.dida.user_profile.UserProfileActionHandler
 import com.dida.user_profile.databinding.HolderUserProfileHeaderBinding
 
 class UserProfileHeaderAdapter(
     private val eventListener: UserProfileActionHandler
-) : ListAdapter<CommonProfile, UserProfileHeaderAdapter.ViewHolder>(UserProfileHeaderDiffCallback) {
+) : ListAdapter<MemberProfile, UserProfileHeaderAdapter.ViewHolder>(UserProfileHeaderDiffCallback) {
 
     init { setHasStableIds(true) }
 
@@ -37,17 +37,17 @@ class UserProfileHeaderAdapter(
     class ViewHolder(private val binding: HolderUserProfileHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: CommonProfile) {
+        fun bind(item: MemberProfile) {
             binding.holder = item
             binding.executePendingBindings()
         }
     }
 
-    internal object UserProfileHeaderDiffCallback : DiffUtil.ItemCallback<CommonProfile>() {
-        override fun areItemsTheSame(oldItem: CommonProfile, newItem: CommonProfile) =
+    internal object UserProfileHeaderDiffCallback : DiffUtil.ItemCallback<MemberProfile>() {
+        override fun areItemsTheSame(oldItem: MemberProfile, newItem: MemberProfile) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: CommonProfile, newItem: CommonProfile) =
+        override fun areContentsTheSame(oldItem: MemberProfile, newItem: MemberProfile) =
             oldItem == newItem
     }
 }

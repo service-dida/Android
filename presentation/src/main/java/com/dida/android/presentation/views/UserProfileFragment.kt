@@ -5,22 +5,31 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.common.adapter.UserCardAdapter
+import com.dida.common.adapter.UserCardContainerAdapter
+import com.dida.common.adapter.UserCardContainerItem
 import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnCreated
+import com.dida.common.util.successOrNull
 import com.dida.common.widget.DefaultSnackBar
+import com.dida.mypage.adapter.MyPageEmptyAdapter
+import com.dida.mypage.adapter.MyPageEmptyItem
+import com.dida.mypage.adapter.MyPageHeaderAdapter
+import com.dida.mypage.adapter.MyPageSortAdapter
 import com.dida.user_profile.UserMessageAction
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
+import com.dida.user_profile.adapter.UserProfileHeaderAdapter
+import com.dida.user_profile.adapter.UserProfileSortAdapter
 import com.dida.user_profile.databinding.FragmentUserProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// FIXME : Paging 수정 필요
 @AndroidEntryPoint
 class UserProfileFragment :
     BaseFragment<FragmentUserProfileBinding, UserProfileViewModel>(com.dida.user_profile.R.layout.fragment_user_profile) {
@@ -40,7 +49,11 @@ class UserProfileFragment :
 
     private val navController: NavController by lazy { findNavController() }
     private val args: UserProfileFragmentArgs by navArgs()
-    private val userCardAdapter by lazy { UserCardAdapter(viewModel) }
+
+    private lateinit var adapter: ConcatAdapter
+    private val userProfileHeaderAdapter by lazy { UserProfileHeaderAdapter(viewModel) }
+    private val userProfileSortAdapter by lazy { UserProfileSortAdapter(viewModel) }
+    private val userCardAdapter: UserCardContainerAdapter by lazy { UserCardContainerAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -58,7 +71,6 @@ class UserProfileFragment :
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
-                        is UserProfileNavigationAction.NavigateToNftUpdate -> {}
                     }
                 }
             }
@@ -70,13 +82,6 @@ class UserProfileFragment :
                         is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
                         is UserMessageAction.NftBookmarkMessage -> {
                             if (it.liked) {
-//                                showActionSnackBar(
-//                                    message = getString(R.string.add_bookmark_message),
-//                                    label = getString(R.string.add_bookmark_action_title_message),
-//                                    onClickListener = object : DefaultSnackBar.OnClickListener {
-//                                        override fun onClick() {}
-//                                    }
-//                                )
                                 showMessageSnackBar(getString(R.string.add_bookmark_message))
                             } else {
                                 showMessageSnackBar(getString(R.string.delete_bookmark_message))
@@ -88,8 +93,24 @@ class UserProfileFragment :
         }
 
         viewLifecycleOwner.repeatOnCreated {
-            viewModel.userCardState.collectLatest {
-                userCardAdapter.submitList(it.content)
+            launch {
+                viewModel.userCardState.collectLatest {
+                    userCardAdapter.submitList(listOf(UserCardContainerItem(it.content)))
+                }
+            }
+
+            launch {
+                viewModel.userProfileState.collectLatest {
+                    it.successOrNull()?.let { profile ->
+                        userProfileHeaderAdapter.submitList(listOf(profile))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.cardSortTypeState.collectLatest {
+                    userProfileSortAdapter.submitList(listOf(it))
+                }
             }
         }
     }
@@ -105,12 +126,21 @@ class UserProfileFragment :
     }
 
     private fun initAdapter() {
-        binding.rvUserNft.apply {
-            adapter = userCardAdapter
-            layoutManager = GridLayoutManager(context, 2)
-        }
 
-        binding.rvUserNft.addOnPagingListener(
+        val adapterConfig = ConcatAdapter.Config.Builder()
+            .setIsolateViewTypes(true)
+            .setStableIdMode(ConcatAdapter.Config.StableIdMode.SHARED_STABLE_IDS)
+            .build()
+
+        adapter = ConcatAdapter(
+            adapterConfig,
+            userProfileHeaderAdapter,
+            userProfileSortAdapter,
+            userCardAdapter
+        )
+
+        binding.userProfileRecyclerview.adapter = adapter
+        binding.userProfileRecyclerview.addOnPagingListener(
             arrivedBottom = { viewModel.onNextPage() }
         )
     }

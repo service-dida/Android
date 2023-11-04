@@ -6,7 +6,7 @@
 
         <variable
             name="holder"
-            type="com.dida.domain.main.model.CommonProfile" />
+            type="com.dida.domain.main.model.MemberProfile" />
 
         <variable
             name="eventListener"
@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:userProfile="@{holder}" />
+            app:otherUserProfile="@{holder}" />
 
         <TextView
             android:id="@+id/textView"
@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="@+id/circleImageView"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/circleImageView"
-            app:userNickname="@{holder}" />
+            app:otherUserNickname="@{holder}" />
 
         <!--TODO : 자기소개 없을 시 기본 말 추가-->
         <TextView
@@ -54,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="@+id/circleImageView"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:userDescription="@{holder}" />
+            app:otherUserDescription="@{holder}" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -87,7 +87,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="16dp"
-                    app:userNftCount="@{holder}" />
+                    app:otherUserNftCount="@{holder}" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -122,7 +122,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="16dp"
-                    app:userFollwerCount="@{holder}" />
+                    app:otherUserFollwerCount="@{holder}" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -157,7 +157,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="16dp"
-                    app:userFollwingCount="@{holder}" />
+                    app:otherUserFollwingCount="@{holder}" />
 
                 <TextView
                     android:layout_width="match_parent"
