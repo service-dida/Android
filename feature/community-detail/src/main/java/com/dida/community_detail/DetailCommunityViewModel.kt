@@ -3,6 +3,7 @@ package com.dida.community_detail
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.ui.report.ReportViewModelDelegate
+import com.dida.common.util.FIRST_PAGE
 import com.dida.common.util.PAGE_SIZE
 import com.dida.data.DataApplication
 import com.dida.domain.Contents
@@ -55,9 +56,6 @@ class DetailCommunityViewModel @Inject constructor(
     )
     val comments: StateFlow<Contents<Comment>> = _comments.asStateFlow()
 
-    private val _commentEmpty: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val commentEmpty: StateFlow<Boolean> = _commentEmpty.asStateFlow()
-
     val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
     val isWrite: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
@@ -70,7 +68,6 @@ class DetailCommunityViewModel @Inject constructor(
                 .flatMap { commentsFromPostUserUseCase.invoke(postId = postId, 0 , PAGE_SIZE) }
                 .onSuccess {
                     _comments.value = it
-                    _commentEmpty.value = it.content.isEmpty()
                     isWrite.value = false
                 }.onError { e -> catchError(e) }
             dismissLoading()
@@ -94,13 +91,12 @@ class DetailCommunityViewModel @Inject constructor(
                     .flatMap {
                         commentsFromPostUserUseCase(
                             postId = postId,
-                            page = comments.value.page,
+                            page = FIRST_PAGE,
                             size = PAGE_SIZE
                         )
                     }.onSuccess {
                         isWrite.value = true
                         _comments.value = it
-                        _commentEmpty.value = it.content.isEmpty()
                     }
                     .onError { e -> catchError(e) }
             }
@@ -117,18 +113,10 @@ class DetailCommunityViewModel @Inject constructor(
                 postId = postId,
                 page = comments.value.page + 1,
                 size = PAGE_SIZE
-            ).onSuccess { _comments.value = it
+            ).onSuccess {
+                it.content = (comments.value.content.toMutableList()) + it.content
+                _comments.value = it
             }.onError { e -> catchError(e) }
-        }
-    }
-
-    override fun onCommunityMoreClicked(userId: Long, postId: Long) {
-        baseViewModelScope.launch {
-            if (DataApplication.dataStorePreferences.getUserId() != userId) {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(postId))
-            } else {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToWriterMore(postId))
-            }
         }
     }
 
@@ -138,13 +126,13 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostReport(postId: Long) {
+    override fun onPostReport(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostReport(postId = postId))
         }
     }
 
-    fun onPostBlockClicked(postId: Long) {
+    override fun onPostBlockClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostBlock(postId = postId))
         }
@@ -183,6 +171,18 @@ class DetailCommunityViewModel @Inject constructor(
     override fun onCardClicked(cardId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToCardDetail(cardId = cardId))
+        }
+    }
+
+    override fun onDeletePostDialog(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToDeletePostDialog(postId = postId))
+        }
+    }
+
+    override fun onUpdatePost(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdatePost(postId = postId))
         }
     }
 

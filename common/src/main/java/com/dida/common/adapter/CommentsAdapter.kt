@@ -15,6 +15,7 @@ import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommentsBinding
 import com.dida.domain.main.model.Comment
 
+// FIXME : 댓글 수정하기 화면 필요
 class CommentsAdapter(
     private val eventListener: CommentActionHandler
 ) : ListAdapter<Comment, CommentsAdapter.ViewHolder>(CommentsDiffCallback) {
@@ -30,7 +31,7 @@ class CommentsAdapter(
             false
         )
         viewDataBinding.eventListener = eventListener
-        return ViewHolder(viewDataBinding)
+        return ViewHolder(viewDataBinding, eventListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,15 +42,21 @@ class CommentsAdapter(
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_comments
 
-    class ViewHolder(private val binding: HolderCommentsBinding) :
+    class ViewHolder(
+        private val binding: HolderCommentsBinding,
+        private val eventListener: CommentActionHandler
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Comment) {
             binding.holderModel = item
             binding.moreBtn.isVisible = item.type != "NEED LOGIN"
             binding.moreBtn.setOnSingleClickListener {
-                if (item.type == "MINE") it.showEditCommentBalloon(commentId = item.commentInfo.commentId, listener = binding.eventListener!!)
-                else it.showReportCommentBalloon(userId = item.memberInfo.memberId, listener = binding.eventListener!!)
+                if (item.type == "MINE") {
+                    eventListener.onDeleteClicked(item.commentInfo.commentId)
+                } else {
+                    it.showReportCommentBalloon(userId = item.memberInfo.memberId, listener = eventListener)
+                }
             }
             binding.executePendingBindings()
         }
