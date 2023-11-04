@@ -1,4 +1,4 @@
-package com.dida.mypage
+package com.dida.mypage.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.domain.main.model.Sort
+import com.dida.mypage.MypageActionHandler
+import com.dida.mypage.R
 import com.dida.mypage.databinding.HolderMyPageSortBinding
 
 class MyPageSortAdapter(

@@ -111,10 +111,7 @@ class UserProfileViewModel @AssistedInject constructor(
         baseViewModelScope.launch {
             showLoading()
             nftLikeUseCase(nftId)
-                .onSuccess {
-                    _messageEvent.emit(UserMessageAction.NftBookmarkMessage(!liked))
-                    _navigationEvent.emit(UserProfileNavigationAction.NavigateToNftUpdate(nftId))
-                }
+                .onSuccess { _messageEvent.emit(UserMessageAction.NftBookmarkMessage(liked)) }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
@@ -127,10 +124,17 @@ class UserProfileViewModel @AssistedInject constructor(
             showLoading()
             memberFollowUseCase(memberId = userId)
                 .onSuccess {
-                    val profile = userProfileState.value.successOrNull()!!
-                    if (profile.followed) _messageEvent.emit(UserMessageAction.UserUnFollowMessage)
-                    else _messageEvent.emit(UserMessageAction.UserFollowMessage(profile.memberDetailInfo.memberInfo.memberName))
-                    getUserProfile()
+                    val profile = userProfileState.value.successOrNull()
+                    profile?.let {
+                        if (it.followed) {
+                            _messageEvent.emit(UserMessageAction.UserUnFollowMessage)
+                        } else {
+                            _messageEvent.emit(UserMessageAction.UserFollowMessage(profile.memberDetailInfo.memberInfo.memberName))
+                        }
+                        val changeProfile = MemberProfile(profile.memberDetailInfo, followed = !profile.followed)
+                        _userProfileState.value = UiState.Success(changeProfile)
+                    }
+
                 }.onError { e -> catchError(e) }
             dismissLoading()
         }

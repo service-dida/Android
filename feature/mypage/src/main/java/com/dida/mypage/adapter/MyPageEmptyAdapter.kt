@@ -1,4 +1,4 @@
-package com.dida.mypage
+package com.dida.mypage.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.actionhandler.NftActionHandler
+import com.dida.mypage.R
 import com.dida.mypage.databinding.HolderMyPageEmptyBinding
 
 class MyPageEmptyAdapter(
