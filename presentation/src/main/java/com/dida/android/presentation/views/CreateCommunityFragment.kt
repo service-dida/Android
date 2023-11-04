@@ -51,6 +51,7 @@ import com.dida.compose.utils.LineDivider
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
+import com.dida.compose.utils.reachEnd
 import com.dida.create_community.CreateCommunityNavigationAction
 import com.dida.create_community.CreateCommunityViewModel
 import com.dida.create_community.databinding.FragmentCreateCommunityBinding
@@ -202,7 +203,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
         val items by viewModel.likeNftState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage by remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
+            derivedStateOf { listState.reachEnd() }
         }
 
         LaunchedEffect(key1 = nextPage) {
@@ -238,7 +239,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
         val items by viewModel.ownNftState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage by remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
+            derivedStateOf { listState.reachEnd() }
         }
 
         LaunchedEffect(key1 = nextPage) {
