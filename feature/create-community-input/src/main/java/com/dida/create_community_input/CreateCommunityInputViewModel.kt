@@ -102,21 +102,27 @@ class CreateCommunityInputViewModel @AssistedInject constructor(
 
     override fun onBackButtonClicked() {
         baseViewModelScope.launch {
-            if (createdState) _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
+            _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
         }
     }
 
     override fun onCreateClicked() {
         baseViewModelScope.launch {
             showLoading()
-            if(titleState.value.isNotBlank() && descriptionState.value.isNotBlank()) {
+            if (titleState.value.isNotBlank() && descriptionState.value.isNotBlank()) {
                 if (createdState) {
-                    writePostUseCase(nftId = _cardIdState.value, title = titleState.value, content = descriptionState.value)
-                        .onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
+                    writePostUseCase(
+                        nftId = _cardIdState.value,
+                        title = titleState.value,
+                        content = descriptionState.value
+                    ).onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
                         .onError { e -> catchError(e) }
                 } else {
-                    patchPostUseCase(postId = postIdState.value, title = titleState.value, content = descriptionState.value)
-                        .onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
+                    patchPostUseCase(
+                        postId = postIdState.value,
+                        title = titleState.value,
+                        content = descriptionState.value
+                    ).onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
                         .onError { e -> catchError(e) }
                 }
             }
