@@ -80,7 +80,9 @@ class RecentNftViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (!recentNftState.value.hasNext) return@launch
             recentNftsUseCase(recentNftState.value.page + 1, PAGE_SIZE)
-                .onSuccess { _recentNftState.value = it }
+                .onSuccess {
+                    it.content = (recentNftState.value.content.toMutableList() + it.content)
+                    _recentNftState.value = it }
                 .onError { e -> catchError(e) }
         }
     }

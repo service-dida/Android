@@ -72,8 +72,7 @@ class UserFollowedViewModel @Inject constructor(
                 .onSuccess {
                     it.content = (followerState.value.content.toMutableList()) + it.content
                     _followerState.value = it
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
@@ -84,8 +83,7 @@ class UserFollowedViewModel @Inject constructor(
                 .onSuccess {
                     it.content = (followingState.value.content.toMutableList()) + it.content
                     _followingState.value = it
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 

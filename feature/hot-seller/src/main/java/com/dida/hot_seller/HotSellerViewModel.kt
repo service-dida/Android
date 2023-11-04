@@ -56,7 +56,9 @@ class HotSellerViewModel @Inject constructor(
             if (!hotSellerState.value.hasNext) return@launch
             showLoading()
             hotSellerPageUseCase.invoke(hotSellerState.value.page + 1, PAGE_SIZE)
-                .onSuccess { _hotSellerState.value = it }
+                .onSuccess {
+                    it.content = (hotSellerState.value.content.toMutableList()) + it.content
+                    _hotSellerState.value = it }
                 .onError { e -> catchError(e) }
             dismissLoading()
         }
