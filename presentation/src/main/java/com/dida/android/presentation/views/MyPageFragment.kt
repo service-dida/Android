@@ -9,10 +9,10 @@ import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Follow
-import com.dida.mypage.MyPageEmptyAdapter
-import com.dida.mypage.MyPageEmptyItem
-import com.dida.mypage.MyPageHeaderAdapter
-import com.dida.mypage.MyPageSortAdapter
+import com.dida.mypage.adapter.MyPageEmptyAdapter
+import com.dida.mypage.adapter.MyPageEmptyItem
+import com.dida.mypage.adapter.MyPageHeaderAdapter
+import com.dida.mypage.adapter.MyPageSortAdapter
 import com.dida.mypage.MyPageViewModel
 import com.dida.mypage.MypageNavigationAction
 import com.dida.mypage.R
