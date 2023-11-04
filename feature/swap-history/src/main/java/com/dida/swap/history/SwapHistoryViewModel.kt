@@ -47,7 +47,8 @@ class SwapHistoryViewModel @Inject constructor(
             if (!swapHistoryState.value.hasNext) return@launch
             memberSwapUseCase(page = swapHistoryState.value.page + 1, size = PAGE_SIZE)
                 .onSuccess {
-                    _swapHistoryState.emit(it)
+                    it.content = (swapHistoryState.value.content.toMutableList() + it.content)
+                    _swapHistoryState.value = it
                     _navigationEvent.emit(SwapHistoryNavigationAction.finishGetSwapHistory)
                 }.onError { e -> catchError(e) }
         }

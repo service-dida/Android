@@ -64,8 +64,7 @@ class SoldOutViewModel @AssistedInject constructor(
                 .onSuccess {
                     it.content = (soldOutState.value.content.toMutableList()) + it.content
                     _soldOutState.value = it
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 

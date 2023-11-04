@@ -53,6 +53,7 @@ import com.dida.compose.utils.LineDivider
 import com.dida.compose.utils.NoRippleInteractionSource
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
+import com.dida.compose.utils.reachEnd
 import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.Follow
 import com.dida.user_followed.UserFollowedMessageAction
@@ -198,7 +199,7 @@ class UserFollowedFragment :
         val items by viewModel.followerState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage by remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
+            derivedStateOf { listState.reachEnd() }
         }
 
         LaunchedEffect(key1 = nextPage) {
@@ -229,7 +230,7 @@ class UserFollowedFragment :
         val items by viewModel.followingState.collectAsStateWithLifecycle()
         val listState = rememberLazyListState()
         val nextPage by remember {
-            derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
+            derivedStateOf { listState.reachEnd() }
         }
 
         LaunchedEffect(key1 = nextPage) {

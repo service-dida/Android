@@ -64,7 +64,9 @@ class HotUserViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (!hotMemberState.value.hasNext) return@launch
             hotMemberPageUseCase(page = hotMemberState.value.page + 1, size = PAGE_SIZE)
-                .onSuccess { _hotMemberState.value = it }
+                .onSuccess {
+                    it.content = (hotMemberState.value.content.toMutableList()) + it.content
+                    _hotMemberState.value = it }
                 .onError { e -> catchError(e) }
         }
     }

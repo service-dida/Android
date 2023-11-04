@@ -45,6 +45,7 @@ import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
+import com.dida.compose.utils.reachEnd
 import com.dida.domain.main.model.SoldOut
 import com.dida.soldout.Period
 import com.dida.soldout.SoldOutViewModel
@@ -93,7 +94,7 @@ class SoldOutFragment : BaseFragment<FragmentSoldOutBinding, SoldOutViewModel>(c
                 val items by viewModel.soldOutState.collectAsStateWithLifecycle()
                 val listState = rememberLazyListState()
                 val nextPage by remember {
-                    derivedStateOf { listState.firstVisibleItemIndex == (items.content.size - 10) }
+                    derivedStateOf { listState.reachEnd() }
                 }
 
                 LaunchedEffect(key1 = nextPage) {

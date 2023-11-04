@@ -73,9 +73,8 @@ class HideListViewModel @Inject constructor(
             hideNftsUseCase(hideCardState.value.page + 1, PAGE_SIZE)
                 .onSuccess {
                     it.content = (hideCardState.value.content.toMutableList()) + it.content
-                    _hideCardState.emit(it)
-                }
-                .onError { e -> catchError(e) }
+                    _hideCardState.value = it
+                }.onError { e -> catchError(e) }
         }
     }
 }

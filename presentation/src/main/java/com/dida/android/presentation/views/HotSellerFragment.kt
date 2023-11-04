@@ -8,6 +8,7 @@ import com.dida.hot_seller.HotSellerViewModel
 import com.dida.hot_seller.databinding.FragmentHotSellerBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO : HotSeller 더보기 Ui 완성하기
 @AndroidEntryPoint
 class HotSellerFragment : BaseFragment<FragmentHotSellerBinding, HotSellerViewModel>(com.dida.hot_seller.R.layout.fragment_hot_seller) {
 
