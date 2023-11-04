@@ -112,7 +112,9 @@ class DetailCommunityViewModel @Inject constructor(
                 postId = postId,
                 page = comments.value.page + 1,
                 size = PAGE_SIZE
-            ).onSuccess { _comments.value = it
+            ).onSuccess {
+                it.content = (comments.value.content.toMutableList()) + it.content
+                _comments.value = it
             }.onError { e -> catchError(e) }
         }
     }

@@ -3,21 +3,16 @@ package com.dida.android.presentation.views
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ScrollView
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
 import com.dida.android.R
 import com.dida.common.adapter.CommentsAdapter
-import com.dida.common.ballon.DefaultBalloon
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.util.DIDAINTENT
@@ -27,16 +22,17 @@ import com.dida.common.widget.DefaultSnackBar
 import com.dida.community_detail.DetailCommunityMessageAction
 import com.dida.community_detail.DetailCommunityNavigationAction
 import com.dida.community_detail.DetailCommunityViewModel
+import com.dida.community_detail.adapter.CommentEmptyAdapter
+import com.dida.community_detail.adapter.CommentEmptyItem
 import com.dida.community_detail.adapter.DetailCommunityHeaderAdapter
 import com.dida.community_detail.databinding.FragmentDetailCommunityBinding
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Report
-import com.skydoves.balloon.showAlignBottom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// FIXME : Paging 수정 필요
+// FIXME : 댓글 수정 화면 필요
 @AndroidEntryPoint
 class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, DetailCommunityViewModel>(com.dida.community_detail.R.layout.fragment_detail_community) {
 
@@ -51,6 +47,7 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
 
     private lateinit var adapter: ConcatAdapter
     private val detailCommunityHeaderAdapter by lazy { DetailCommunityHeaderAdapter(viewModel) }
+    private val commentEmptyAdapter by lazy { CommentEmptyAdapter() }
     private val commentsAdapter by lazy { CommentsAdapter(viewModel) }
 
     override fun initStartView() {
@@ -105,8 +102,9 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
             launch {
                 viewModel.comments.collectLatest {
                     if (it.content.isEmpty()) {
-
+                        if (it.pageSize != 0) commentEmptyAdapter.submitList(listOf(CommentEmptyItem))
                     } else {
+                        commentEmptyAdapter.submitList(emptyList())
                         commentsAdapter.submitList(it.content)
                     }
 
@@ -170,9 +168,8 @@ class DetailCommunityFragment : BaseFragment<FragmentDetailCommunityBinding, Det
         adapter = ConcatAdapter(
             adapterConfig,
             detailCommunityHeaderAdapter,
-            myPageSortAdapter,
-            myPageEmptyAdapter,
-            userCardAdapter
+            commentEmptyAdapter,
+            commentsAdapter,
         )
 
         binding.detailCommunityRecyclerview.adapter = adapter
