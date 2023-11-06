@@ -50,7 +50,7 @@
                     app:NftImgUrl="@{vm.detailNftState}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:onSingleClick="@{() -> vm.onImageClicked()}"
+                    app:onFirstClick="@{() -> vm.onImageClicked()}"
                     app:onDoubleClick="@{() -> vm.onLikeNft()}"
                     tools:src="@drawable/nft_example_image" />
 

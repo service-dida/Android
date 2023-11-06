@@ -22,10 +22,15 @@ fun CompoundButton.setOnSingleCheckedChangeListener(checkedChangeListener: Compo
     } ?: setOnCheckedChangeListener(null)
 }
 
-@BindingAdapter("onDoubleClick")
-fun View.setOnDoubleClickListener(clickListener: View.OnClickListener?) {
-    clickListener?.also {
-        setOnClickListener(OnDoubleClickListener(it))
+@BindingAdapter(value = ["onFirstClick", "onDoubleClick"], requireAll = false)
+fun View.setOnDoubleClickListener(
+    singleClickListener: View.OnClickListener?,
+    doubleClickListener: View.OnClickListener?
+) {
+    doubleClickListener?.also {
+        setOnClickListener(
+            OnDoubleClickListener(singleClickListener = singleClickListener, doubleClickListener = it)
+        )
     } ?: setOnClickListener(null)
 }
 
