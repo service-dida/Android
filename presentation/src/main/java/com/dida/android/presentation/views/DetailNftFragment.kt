@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.ui.report.ReportBottomSheet
+import com.dida.common.util.increaseAnimate
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Report
@@ -26,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.nft_detail.R.layout.fragment_detail_nft) {
@@ -84,20 +86,13 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.nftLikeState.collectLatest {
-                if (it) {
-                    binding.likeImage.apply {
-                        setImageDrawable(requireContext().getDrawable(com.dida.common.R.drawable.ic_empty_heart))
-                        visibility = View.VISIBLE
-                        delay(500)
-                        visibility = View.GONE
-                    }
-                } else {
-                    binding.likeImage.apply {
-                        setImageDrawable(requireContext().getDrawable(com.dida.common.R.drawable.ic_fill_heart))
-                        visibility = View.VISIBLE
-                        delay(500)
-                        visibility = View.GONE
-                    }
+                val imageSrc = if (it) requireContext().getDrawable(com.dida.common.R.drawable.ic_empty_heart) else requireContext().getDrawable(com.dida.common.R.drawable.ic_fill_heart)
+                binding.likeImage.apply {
+                    setImageDrawable(imageSrc)
+                    visibility = View.VISIBLE
+                    this.increaseAnimate()
+                    delay(500)
+                    visibility = View.GONE
                 }
             }
         }
