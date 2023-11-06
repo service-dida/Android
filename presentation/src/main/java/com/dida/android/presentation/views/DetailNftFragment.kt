@@ -103,7 +103,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         with(binding.toolbar) {
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    com.dida.nft_detail.R.id.action_heart -> viewModel.onLikePost()
+                    com.dida.nft_detail.R.id.action_heart -> viewModel.onLikeNft()
                     com.dida.nft_detail.R.id.action_more -> {
                         DetailNftBottomSheet(viewModel.detailOwnerTypeState.value) { type ->
                             when(type){

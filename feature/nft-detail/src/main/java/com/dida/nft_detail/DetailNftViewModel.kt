@@ -103,7 +103,7 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun onLikePost() {
+    fun onLikeNft() {
         baseViewModelScope.launch {
             showLoading()
             nftLikeUseCase(cardIdState.value)
