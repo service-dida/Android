@@ -1,5 +1,7 @@
 package com.dida.android.presentation.views
 
+import android.annotation.SuppressLint
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +23,7 @@ import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -48,6 +51,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         initAdapter()
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
@@ -73,6 +77,26 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                             imageDescription = it.imageDescription
                         )
                         startActivity(intent)
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.nftLikeState.collectLatest {
+                if (it) {
+                    binding.likeImage.apply {
+                        setImageDrawable(requireContext().getDrawable(com.dida.common.R.drawable.ic_empty_heart))
+                        visibility = View.VISIBLE
+                        delay(500)
+                        visibility = View.GONE
+                    }
+                } else {
+                    binding.likeImage.apply {
+                        setImageDrawable(requireContext().getDrawable(com.dida.common.R.drawable.ic_fill_heart))
+                        visibility = View.VISIBLE
+                        delay(500)
+                        visibility = View.GONE
                     }
                 }
             }
