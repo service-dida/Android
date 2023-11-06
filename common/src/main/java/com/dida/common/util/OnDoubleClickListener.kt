@@ -1,7 +1,5 @@
 package com.dida.common.util
 
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 
 class OnDoubleClickListener(
@@ -14,7 +12,6 @@ class OnDoubleClickListener(
     override fun onClick(v: View?) {
         clickCount += 1
 
-        val handler = Handler(Looper.getMainLooper())
         val clickRunnable = Runnable {
             if (clickCount >= 2) {
                 doubleClickListener.onClick(v)
@@ -25,7 +22,7 @@ class OnDoubleClickListener(
         }
 
         if (clickCount == 1) {
-            handler.postDelayed(clickRunnable, intervalMs)
+            v?.postDelayed(clickRunnable, intervalMs)
         }
     }
 }
