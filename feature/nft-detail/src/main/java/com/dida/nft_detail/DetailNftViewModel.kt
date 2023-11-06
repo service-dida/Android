@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -64,6 +65,9 @@ class DetailNftViewModel @Inject constructor(
 
     private val _communityState: MutableStateFlow<List<Post>> = MutableStateFlow(emptyList())
     val communityState: StateFlow<List<Post>> = _communityState.asStateFlow()
+
+    private val _nftLikeState: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val nftLikeState: SharedFlow<Boolean> = _nftLikeState.asSharedFlow()
 
     val detailOwnerTypeState: NoCompareMutableStateFlow<DetailOwnerType> = NoCompareMutableStateFlow(DetailOwnerType.ALL)
 
@@ -103,11 +107,14 @@ class DetailNftViewModel @Inject constructor(
         }
     }
 
-    fun onLikePost() {
+    fun onLikeNft() {
         baseViewModelScope.launch {
             showLoading()
             nftLikeUseCase(cardIdState.value)
-                .onSuccess { onGetDetailCard() }
+                .onSuccess {
+                    _nftLikeState.emit(detailNftState.value.successOrNull()?.liked ?: false)
+                    onGetDetailCard()
+                }
                 .onError { e -> catchError(e) }
         }
     }

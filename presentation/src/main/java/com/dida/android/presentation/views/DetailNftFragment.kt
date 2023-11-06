@@ -1,5 +1,7 @@
 package com.dida.android.presentation.views
 
+import android.annotation.SuppressLint
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.ui.report.ReportBottomSheet
+import com.dida.common.util.increaseAnimate
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Report
@@ -21,8 +24,10 @@ import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.nft_detail.R.layout.fragment_detail_nft) {
@@ -48,6 +53,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         initAdapter()
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
@@ -78,6 +84,19 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.nftLikeState.collectLatest {
+                val imageSrc = if (it) requireContext().getDrawable(com.dida.common.R.drawable.ic_empty_heart) else requireContext().getDrawable(com.dida.common.R.drawable.ic_fill_heart)
+                binding.likeImage.apply {
+                    setImageDrawable(imageSrc)
+                    visibility = View.VISIBLE
+                    this.increaseAnimate()
+                    delay(500)
+                    visibility = View.GONE
+                }
+            }
+        }
+
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.communityState.collectLatest {
@@ -103,7 +122,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         with(binding.toolbar) {
             this.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    com.dida.nft_detail.R.id.action_heart -> viewModel.onLikePost()
+                    com.dida.nft_detail.R.id.action_heart -> viewModel.onLikeNft()
                     com.dida.nft_detail.R.id.action_more -> {
                         DetailNftBottomSheet(viewModel.detailOwnerTypeState.value) { type ->
                             when(type){
