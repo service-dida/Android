@@ -94,7 +94,6 @@ class DetailNftViewModel @Inject constructor(
                     delay(SHIMMER_TIME)
                     _detailNftState.value = UiState.Success(it)
                     setDetailOwnerType(it)
-                    dismissLoading()
                 }.onError { e -> catchError(e) }
         }
     }
@@ -109,13 +108,11 @@ class DetailNftViewModel @Inject constructor(
 
     fun onLikeNft() {
         baseViewModelScope.launch {
-            showLoading()
             nftLikeUseCase(cardIdState.value)
                 .onSuccess {
                     _nftLikeState.emit(detailNftState.value.successOrNull()?.liked ?: false)
                     onGetDetailCard()
-                }
-                .onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 
