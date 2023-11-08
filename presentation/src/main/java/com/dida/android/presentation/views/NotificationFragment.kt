@@ -23,6 +23,7 @@ import com.dida.compose.utils.reachEnd
 import com.dida.domain.main.model.Follow
 import com.dida.notification.NotificationNavigationAction
 import com.dida.notification.NotificationViewModel
+import com.dida.notification.component.NotificationFooterItem
 import com.dida.notification.component.NotificationItem
 import com.dida.notification.databinding.FragmentNotificationBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,6 +90,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
                             alarm = it,
                             onAlarmClicked = { viewModel.onNotificationClicked(it) }
                         )
+                    }
+                    if (alarms.content.isNotEmpty()) {
+                        item { NotificationFooterItem() }
+                    } else {
+
                     }
                 }
             }

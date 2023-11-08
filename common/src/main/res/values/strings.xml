@@ -188,5 +188,7 @@
 
     <string name="sale_notification_title">NFT</string>
     <string name="sale_notification_message">NFT가 판매 되었어요.</string>
+
+    <string name="alarm_footer_message">받은 알림은 30일 동안 보관됩니다.</string>
 </resources>
 
