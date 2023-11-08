@@ -94,7 +94,9 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
                     }
                     if (alarms.content.isNotEmpty() && !alarms.hasNext) {
                         item { NotificationFooterItem() }
-                    } else {
+                    }
+
+                    if (alarms.content.isEmpty() && alarms.pageSize != 0) {
                         item { NotificationEmptyItem() }
                     }
                 }
