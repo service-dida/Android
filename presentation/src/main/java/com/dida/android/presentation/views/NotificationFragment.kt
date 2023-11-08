@@ -95,7 +95,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
         }
     }
 
-    private fun initToolbar(){
+    private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
             this.setNavigationOnClickListener { navController.popBackStack() }

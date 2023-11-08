@@ -175,7 +175,7 @@
     <string name="report_hint">직접 작성하기</string>
 
     <!-- 알림화면 -->
-    <string name="notification_title">얼림</string>
+    <string name="alarm_title">알림</string>
 
     <string name="comment_notification_title">커뮤니티</string>
     <string name="comment_notification_message">누군가 내 게시글에 댓글을 남겼어요.</string>
