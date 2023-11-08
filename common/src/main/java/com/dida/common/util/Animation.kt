@@ -4,17 +4,12 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
-import android.view.animation.RotateAnimation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 
 private const val ScaleFrom: Float = 0f
 private const val ScaleTo: Float = 1.2f
-private const val ScaleDuration: Long = 200
-
-private const val RotateFrom: Float = -20f
-private const val RotateTo: Float = 20f
-private const val RotateDuration: Long = 300
+private const val ScaleDuration: Long = 600
 
 private const val PivotValue: Float = 0.5f
 
@@ -31,7 +26,7 @@ fun ImageView.likeAnimation(
             imageView.post { imageView.visibility = View.VISIBLE }
         }
         override fun onAnimationEnd(animation: Animation?) {
-            imageView.postDelayed({ imageView.visibility = View.GONE }, 100)
+            imageView.post { imageView.visibility = View.GONE }
         }
         override fun onAnimationRepeat(animation: Animation?) = Unit
     }
@@ -46,18 +41,8 @@ fun ImageView.likeAnimation(
         duration = ScaleDuration
     }
 
-    val rotationAnimation = RotateAnimation(
-        RotateFrom, RotateTo,
-        Animation.RELATIVE_TO_SELF, PivotValue,
-        Animation.RELATIVE_TO_SELF, PivotValue
-    ).apply {
-        duration = RotateDuration
-        repeatMode = Animation.REVERSE
-    }
-
     animSet.apply {
         addAnimation(scaleAnimation)
-        addAnimation(rotationAnimation)
         setAnimationListener(animationListener)
     }
 
