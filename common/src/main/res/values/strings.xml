@@ -178,17 +178,18 @@
     <string name="alarm_title">알림</string>
 
     <string name="comment_notification_title">커뮤니티</string>
-    <string name="comment_notification_message">누군가 내 게시글에 댓글을 남겼어요.</string>
+    <string name="comment_notification_message">누군가 내 게시글에 댓글을 남겼어요</string>
 
     <string name="follow_notification_title">커뮤니티</string>
-    <string name="follow_notification_message">누군가 저를 팔로우했어요.</string>
+    <string name="follow_notification_message">누군가 저를 팔로우했어요</string>
 
     <string name="like_notification_title">NFT</string>
-    <string name="like_notification_message">누군가 내 NFT에 좋아요를 남겼어요.</string>
+    <string name="like_notification_message">누군가 내 NFT에 좋아요를 남겼어요</string>
 
     <string name="sale_notification_title">NFT</string>
-    <string name="sale_notification_message">NFT가 판매 되었어요.</string>
+    <string name="sale_notification_message">NFT가 판매 되었어요</string>
 
     <string name="alarm_footer_message">받은 알림은 30일 동안 보관됩니다.</string>
+    <string name="alarm_empty_message">아직 받은 알림이 없어요</string>
 </resources>
 

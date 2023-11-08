@@ -23,6 +23,7 @@ import com.dida.compose.utils.reachEnd
 import com.dida.domain.main.model.Follow
 import com.dida.notification.NotificationNavigationAction
 import com.dida.notification.NotificationViewModel
+import com.dida.notification.component.NotificationEmptyItem
 import com.dida.notification.component.NotificationFooterItem
 import com.dida.notification.component.NotificationItem
 import com.dida.notification.databinding.FragmentNotificationBinding
@@ -91,10 +92,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
                             onAlarmClicked = { viewModel.onNotificationClicked(it) }
                         )
                     }
-                    if (alarms.content.isNotEmpty()) {
+                    if (alarms.content.isNotEmpty() && !alarms.hasNext) {
                         item { NotificationFooterItem() }
                     } else {
-
+                        item { NotificationEmptyItem() }
                     }
                 }
             }
