@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -14,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dida.common.R
 import com.dida.compose.theme.DidaTypography
+import com.dida.compose.theme.Surface4
 import com.dida.compose.theme.Surface5
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.VerticalDivider
@@ -22,11 +24,13 @@ import com.dida.compose.utils.VerticalDivider
 fun NotificationEmptyItem() {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(painter = painterResource(
             id = R.drawable.ic_notification_empty),
-            contentDescription = "알림 Empty 이미지"
+            contentDescription = "알림 Empty 이미지",
+            tint = Surface4
         )
         VerticalDivider(dp = 12)
         Text(
