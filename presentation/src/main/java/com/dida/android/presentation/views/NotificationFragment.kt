@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.dida.domain.main.model.Follow
 import com.dida.notification.NotificationNavigationAction
 import com.dida.notification.NotificationViewModel
 import com.dida.notification.databinding.FragmentNotificationBinding
@@ -38,9 +39,9 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is NotificationNavigationAction.NavigateToPost -> {}
-                    is NotificationNavigationAction.NavigateToNft -> {}
-                    is NotificationNavigationAction.NavigateToUserFollowed -> {}
+                    is NotificationNavigationAction.NavigateToPost -> navigate(NotificationFragmentDirections.actionPostFragment(it.postId))
+                    is NotificationNavigationAction.NavigateToNft -> navigate(NotificationFragmentDirections.actionNftFragment(it.nftId))
+                    is NotificationNavigationAction.NavigateToUserFollowed -> navigate(NotificationFragmentDirections.actionUserFollowedFragment(0, Follow.FOLLOWER))
                 }
             }
         }
