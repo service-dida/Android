@@ -29,22 +29,22 @@ class NotificationViewModel @Inject constructor(
     private val _navigationAction: MutableSharedFlow<NotificationNavigationAction> = MutableSharedFlow<NotificationNavigationAction>()
     val navigationAction: SharedFlow<NotificationNavigationAction> = _navigationAction
 
-    private val _alarms: MutableStateFlow<Contents<Alarm>> = MutableStateFlow(
+    private val _notifications: MutableStateFlow<Contents<Alarm>> = MutableStateFlow(
         Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
     )
-    val alarms: StateFlow<Contents<Alarm>> = _alarms.asStateFlow()
+    val notifications: StateFlow<Contents<Alarm>> = _notifications.asStateFlow()
 
     init {
         baseViewModelScope.launch {
             alarmsUseCase(page = 0, size = PAGE_SIZE)
-                .onSuccess { _alarms.value = it }
+                .onSuccess { _notifications.value = it }
                 .onError { e -> catchError(e) }
         }
     }
 
-    fun onAlarmClicked(alarm: Alarm) {
+    fun onNotificationClicked(alarm: Alarm) {
         baseViewModelScope.launch {
-            onReadAlarm(alarmId = alarm.alarmId).join()
+            onReadNotification(alarmId = alarm.alarmId).join()
             when (alarm.type) {
                 AlarmType.SALE, AlarmType.LIKE -> _navigationAction.emit(NotificationNavigationAction.NavigateToNft(alarm.id))
                 AlarmType.COMMENT -> _navigationAction.emit(NotificationNavigationAction.NavigateToPost(alarm.id))
@@ -53,12 +53,12 @@ class NotificationViewModel @Inject constructor(
         }
     }
 
-    private fun onReadAlarm(alarmId: Long) = baseViewModelScope.launch {
+    private fun onReadNotification(alarmId: Long) = baseViewModelScope.launch {
         showLoading()
         readAlarmUseCase(alarmId = alarmId)
             .onSuccess {
-                val newList = alarms.value.content.toMutableList()
-                val alarmIndex = alarms.value.content.indexOfFirst { it.alarmId == alarmId }
+                val newList = notifications.value.content.toMutableList()
+                val alarmIndex = notifications.value.content.indexOfFirst { it.alarmId == alarmId }
                 val beforeAlarm = newList[alarmIndex]
                 val newNft = Alarm(
                     alarmId = beforeAlarm.alarmId,
@@ -68,10 +68,10 @@ class NotificationViewModel @Inject constructor(
                     date = beforeAlarm.date
                 )
                 newList[alarmIndex] = newNft
-                _alarms.value = Contents(
-                    page = alarms.value.page,
-                    pageSize = alarms.value.pageSize,
-                    hasNext = alarms.value.hasNext,
+                _notifications.value = Contents(
+                    page = notifications.value.page,
+                    pageSize = notifications.value.pageSize,
+                    hasNext = notifications.value.hasNext,
                     content = newList
                 )
             }.onError { e -> catchError(e) }
@@ -80,12 +80,12 @@ class NotificationViewModel @Inject constructor(
 
     fun nextPage() {
         baseViewModelScope.launch {
-            if (!alarms.value.hasNext) return@launch
+            if (!notifications.value.hasNext) return@launch
             showLoading()
-            alarmsUseCase(alarms.value.page + 1, PAGE_SIZE)
+            alarmsUseCase(notifications.value.page + 1, PAGE_SIZE)
                 .onSuccess {
-                    it.content = (alarms.value.content.toMutableList()) + it.content
-                    _alarms.value = it
+                    it.content = (notifications.value.content.toMutableList()) + it.content
+                    _notifications.value = it
                 }.onError { e -> catchError(e) }
             dismissLoading()
         }

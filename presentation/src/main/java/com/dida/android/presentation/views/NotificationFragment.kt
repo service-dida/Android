@@ -2,14 +2,28 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.dida.compose.theme.MainBlack
+import com.dida.compose.utils.reachEnd
 import com.dida.domain.main.model.Follow
 import com.dida.notification.NotificationNavigationAction
 import com.dida.notification.NotificationViewModel
+import com.dida.notification.component.NotificationItem
 import com.dida.notification.databinding.FragmentNotificationBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -53,7 +67,31 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {}
+            setContent {
+                val alarms by viewModel.notifications.collectAsStateWithLifecycle()
+                val listState = rememberLazyListState()
+                val nextPage by remember {
+                    derivedStateOf { listState.reachEnd() }
+                }
+
+                LaunchedEffect(key1 = nextPage) {
+                    if (nextPage) viewModel.nextPage()
+                }
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MainBlack),
+                    state = listState,
+                ) {
+                    items(alarms.content) {
+                        NotificationItem(
+                            alarm = it,
+                            onAlarmClicked = { viewModel.onNotificationClicked(it) }
+                        )
+                    }
+                }
+            }
         }
     }
 
