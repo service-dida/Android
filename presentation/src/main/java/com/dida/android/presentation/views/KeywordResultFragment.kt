@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Column
@@ -21,19 +20,19 @@ import com.dida.ai.keyword.result.KeywordResultMessage
 import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
+import com.dida.ai.keyword.result.KeywordResultViewModel.Companion.INITIALIZE_LIST
 import com.dida.ai.keyword.result.RestartKeyword
-import com.dida.common.util.stringToBitmap
+import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.saveMediaToStorage
+import com.dida.common.util.stringToBitmap
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -60,7 +59,14 @@ class KeywordResultFragment :
         observeNavigation()
     }
 
-    override fun initDataBinding() {}
+    override fun initDataBinding() {
+        repeatOnCreated {
+            viewModel.aiPictures.collectLatest {
+                if (it == INITIALIZE_LIST) showLoadingDialog()
+                else dismissLoadingDialog()
+            }
+        }
+    }
 
     override fun initAfterBinding() {}
 
