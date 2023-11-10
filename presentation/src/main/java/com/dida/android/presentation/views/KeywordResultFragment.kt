@@ -20,9 +20,8 @@ import com.dida.ai.keyword.result.KeywordResultMessage
 import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
-import com.dida.ai.keyword.result.KeywordResultViewModel.Companion.INITIALIZE_LIST
 import com.dida.ai.keyword.result.RestartKeyword
-import com.dida.common.util.repeatOnCreated
+import com.dida.common.dialog.CentralDialogFragment
 import com.dida.common.util.saveMediaToStorage
 import com.dida.common.util.stringToBitmap
 import com.dida.compose.utils.VerticalDivider
@@ -68,7 +67,7 @@ class KeywordResultFragment :
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_close_white)
-            this.setNavigationOnClickListener { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToAddFragment()) }
+            this.setNavigationOnClickListener { showAiPictureCloseDialog() }
         }
     }
 
@@ -107,7 +106,7 @@ class KeywordResultFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordResultNavigationAction.NavigateToRestartKeyword -> viewModel.createAiPicture(keywords)
+                    is KeywordResultNavigationAction.NavigateToRestartKeyword -> {}
                     is KeywordResultNavigationAction.NavigateToDownloadAiPicture -> downloadAiPicture()
                     is KeywordResultNavigationAction.NavigateToCreateNft -> navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment(it.imageUrl))
                 }
@@ -137,5 +136,20 @@ class KeywordResultFragment :
                 }
             }
         }
+    }
+
+    private fun showAiPictureCloseDialog() {
+        CentralDialogFragment.Builder()
+            .title(getString(com.dida.common.R.string.ai_picture_dialog_title))
+            .message(getString(com.dida.common.R.string.ai_picture_dialog_description))
+            .positiveButton(getString(com.dida.common.R.string.ai_picture_dialog_positive))
+            .negativeButton(getString(com.dida.common.R.string.ai_picture_dialog_negative), object : CentralDialogFragment.OnClickListener {
+                override fun onClick() {
+                    sharedViewModel.initKeywords()
+                    navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToAddFragment())
+                }
+            })
+            .build()
+            .show(childFragmentManager, "show_draw_dialog")
     }
 }

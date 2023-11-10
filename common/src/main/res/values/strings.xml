@@ -22,6 +22,11 @@
     <string name="draw_back_dialog_positive">나가기</string>
     <string name="draw_back_dialog_negative">계속 그리기</string>
 
+    <string name="ai_picture_dialog_title">아직 NFT를 생성하지 않았어요!</string>
+    <string name="ai_picture_dialog_description">디다로 그림그리기를 나가시겠어요?\n완성된 그림은 저장되지 않아요.</string>
+    <string name="ai_picture_dialog_positive">계속 그리기</string>
+    <string name="ai_picture_dialog_negative">나가기</string>
+
     <string name="draw_dialog_title">10Dida를 사용하여 그림 그리기를 시작할까요?</string>
     <string name="draw_dialog_description">광고가 끝난 후 완성된 그림을 만날 수 있어요!</string>
     <string name="draw_dialog_positive">시작하기</string>
