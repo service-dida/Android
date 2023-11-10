@@ -32,11 +32,9 @@ class KeywordResultViewModel @Inject constructor(
 
     fun createAiPicture(sentence: String) {
         baseViewModelScope.launch {
-            showLoading()
             makeAiPictureUseCase(sentence)
                 .onSuccess { _aiPictures.value = listOf(it.url1, it.url2, it.url3, it.url4) }
                 .onError { e -> catchError(e) }
-            dismissLoading()
         }
     }
 

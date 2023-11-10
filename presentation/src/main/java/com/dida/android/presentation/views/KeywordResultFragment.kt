@@ -1,6 +1,5 @@
 package com.dida.android.presentation.views
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Column
@@ -22,18 +21,17 @@ import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
 import com.dida.ai.keyword.result.RestartKeyword
-import com.dida.common.util.stringToBitmap
+import com.dida.common.dialog.CentralDialogFragment
 import com.dida.common.util.saveMediaToStorage
+import com.dida.common.util.stringToBitmap
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -50,13 +48,15 @@ class KeywordResultFragment :
     override val viewModel: KeywordResultViewModel by viewModels()
     private val sharedViewModel: KeywordViewModel by activityViewModels()
 
+    private val keywords by lazy { sharedViewModel.getKeywords() }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         initToolbar()
-        createAiPicture()
+        viewModel.createAiPicture(keywords)
         observeNavigation()
     }
 
@@ -67,7 +67,7 @@ class KeywordResultFragment :
     private fun initToolbar() {
         binding.toolbar.apply {
             this.setNavigationIcon(com.dida.common.R.drawable.ic_close_white)
-            this.setNavigationOnClickListener { navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToAddFragment()) }
+            this.setNavigationOnClickListener { showAiPictureCloseDialog() }
         }
     }
 
@@ -98,7 +98,6 @@ class KeywordResultFragment :
                     )
                     VerticalDivider(dp = 16)
                 }
-
             }
         }
     }
@@ -113,11 +112,6 @@ class KeywordResultFragment :
                 }
             }
         }
-    }
-
-    private fun createAiPicture() {
-        val sentence = sharedViewModel.getKeywords()
-        viewModel.createAiPicture(sentence)
     }
 
     private fun downloadAiPicture() {
@@ -142,5 +136,20 @@ class KeywordResultFragment :
                 }
             }
         }
+    }
+
+    private fun showAiPictureCloseDialog() {
+        CentralDialogFragment.Builder()
+            .title(getString(com.dida.common.R.string.ai_picture_dialog_title))
+            .message(getString(com.dida.common.R.string.ai_picture_dialog_description))
+            .positiveButton(getString(com.dida.common.R.string.ai_picture_dialog_positive))
+            .negativeButton(getString(com.dida.common.R.string.ai_picture_dialog_negative), object : CentralDialogFragment.OnClickListener {
+                override fun onClick() {
+                    sharedViewModel.initKeywords()
+                    navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToAddFragment())
+                }
+            })
+            .build()
+            .show(childFragmentManager, "show_draw_dialog")
     }
 }
