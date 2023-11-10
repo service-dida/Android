@@ -49,24 +49,19 @@ class KeywordResultFragment :
     override val viewModel: KeywordResultViewModel by viewModels()
     private val sharedViewModel: KeywordViewModel by activityViewModels()
 
+    private val keywords by lazy { sharedViewModel.getKeywords() }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         initToolbar()
-        createAiPicture()
+        viewModel.createAiPicture(keywords)
         observeNavigation()
     }
 
-    override fun initDataBinding() {
-        repeatOnCreated {
-            viewModel.aiPictures.collectLatest {
-                if (it == INITIALIZE_LIST) showLoadingDialog()
-                else dismissLoadingDialog()
-            }
-        }
-    }
+    override fun initDataBinding() {}
 
     override fun initAfterBinding() {}
 
@@ -104,7 +99,6 @@ class KeywordResultFragment :
                     )
                     VerticalDivider(dp = 16)
                 }
-
             }
         }
     }
@@ -113,17 +107,12 @@ class KeywordResultFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordResultNavigationAction.NavigateToRestartKeyword -> {}
+                    is KeywordResultNavigationAction.NavigateToRestartKeyword -> viewModel.createAiPicture(keywords)
                     is KeywordResultNavigationAction.NavigateToDownloadAiPicture -> downloadAiPicture()
                     is KeywordResultNavigationAction.NavigateToCreateNft -> navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment(it.imageUrl))
                 }
             }
         }
-    }
-
-    private fun createAiPicture() {
-        val sentence = sharedViewModel.getKeywords()
-        viewModel.createAiPicture(sentence)
     }
 
     private fun downloadAiPicture() {
