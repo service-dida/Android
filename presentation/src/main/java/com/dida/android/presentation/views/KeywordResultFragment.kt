@@ -11,6 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.dida.add.bottom.AddKeepNftBottomSheet
+import com.dida.add.purpose.AddPurposeViewModel
 import com.dida.ai.R
 import com.dida.ai.databinding.FragmentKeywordResultBinding
 import com.dida.ai.keyword.KeywordViewModel
@@ -21,11 +24,15 @@ import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
 import com.dida.ai.keyword.result.RestartKeyword
+import com.dida.ai.keyword.result.dialog.AiPictureRestartBottomSheet
+import com.dida.ai.keyword.result.dialog.RestartMenu
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.common.util.saveMediaToStorage
 import com.dida.common.util.stringToBitmap
+import com.dida.common.util.urlImageToFile
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
+import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
@@ -106,7 +113,7 @@ class KeywordResultFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 when (it) {
-                    is KeywordResultNavigationAction.NavigateToRestartKeyword -> {}
+                    is KeywordResultNavigationAction.NavigateToRestartKeyword -> showRestartDialog()
                     is KeywordResultNavigationAction.NavigateToDownloadAiPicture -> downloadAiPicture()
                     is KeywordResultNavigationAction.NavigateToCreateNft -> navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment(it.imageUrl))
                 }
@@ -151,5 +158,16 @@ class KeywordResultFragment :
             })
             .build()
             .show(childFragmentManager, "show_draw_dialog")
+    }
+
+    private fun showRestartDialog() {
+        val dialog = AiPictureRestartBottomSheet {
+            when (it) {
+                RestartMenu.RESTART_KEYWORD -> findNavController().popBackStack()
+                RestartMenu.SAME_KEYWORD -> viewModel.createAiPicture(keywords)
+                else -> {}
+            }
+        }
+        dialog.show(childFragmentManager, TAG)
     }
 }
