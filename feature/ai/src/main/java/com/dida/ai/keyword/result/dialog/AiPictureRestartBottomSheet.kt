@@ -29,6 +29,7 @@ class AiPictureRestartBottomSheet(
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationAction.collectLatest {
                 onRestartMenu(it)
+                dismissAllowingStateLoss()
             }
         }
     }
