@@ -22,4 +22,8 @@
     <string name="download_ai_picture_success">Ai 그림이 저장되었어요.</string>
     <string name="download_ai_picture_failure">Ai 그림 저장이 실패했어요.</string>
 
+    <string name="restart_bottom_sheet_title">DIDA 코인으로\n더 마음에 드는 NFT를 찾아보세요!</string>
+    <string name="restart_button_label">같은 단어로 다시 그리기</string>
+    <string name="restart_keyword_button_label">단어 수정하러 가기</string>
+
 </resources>
