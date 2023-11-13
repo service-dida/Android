@@ -27,13 +27,18 @@ import com.dida.ai.keyword.result.RestartKeyword
 import com.dida.ai.keyword.result.dialog.AiPictureRestartBottomSheet
 import com.dida.ai.keyword.result.dialog.RestartMenu
 import com.dida.common.dialog.CentralDialogFragment
+import com.dida.common.util.AppLog
 import com.dida.common.util.saveMediaToStorage
 import com.dida.common.util.stringToBitmap
 import com.dida.common.util.urlImageToFile
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
 import com.dida.password.PasswordDialog
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
@@ -58,6 +63,8 @@ class KeywordResultFragment :
 
     private val keywords by lazy { sharedViewModel.getKeywords() }
 
+    private var rewardedAd: RewardedAd? = null
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -65,6 +72,7 @@ class KeywordResultFragment :
         }
         initToolbar()
         initAdMob()
+        loadAdMob()
         viewModel.createAiPicture(keywords)
         observeNavigation()
     }
@@ -175,5 +183,28 @@ class KeywordResultFragment :
 
     private fun initAdMob(){
         MobileAds.initialize(requireContext()) {}
+    }
+
+    private fun loadAdMob(){
+        var adRequest = AdRequest.Builder().build()
+        RewardedAd.load(requireContext(),"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                rewardedAd = null
+            }
+
+            override fun onAdLoaded(ad: RewardedAd) {
+                rewardedAd = ad
+                rewardedAd?.let { ad ->
+                    ad.show(requireActivity(), OnUserEarnedRewardListener { rewardItem ->
+                        // Handle the reward.
+                        val rewardAmount = rewardItem.amount
+                        val rewardType = rewardItem.type
+                        AppLog.d(TAG, "User earned the reward.")
+                    })
+                } ?: run {
+                    AppLog.d(TAG, "The rewarded ad wasn't ready yet.")
+                }
+            }
+        })
     }
 }
