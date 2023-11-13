@@ -32,6 +32,11 @@
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlyticsCollectionEnabled}" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7771742705720534~9962591280"/>
+
         <service
             android:name=".util.MyFirebaseMessagingService"
             android:stopWithTask="false"

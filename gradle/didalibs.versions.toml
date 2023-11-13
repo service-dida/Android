@@ -54,6 +54,8 @@ navigationCompose = "2.5.1"
 
 paging = "3.0.1"
 
+ads = "22.5.0"
+
 # Compose Version
 androidxComposeBom = "2023.04.01"
 androidxComposeCompiler = "1.4.4"
@@ -147,7 +149,7 @@ android-pluginGradle = { module = "com.android.tools.build:gradle",version.ref =
 kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin",version.ref = "kotlin" }
 
 androidx-paging = { module = "androidx.paging:paging-runtime-ktx",version.ref = "paging" }
-
+play-service-ads = {module = "com.google.android.gms:play-services-ads", version.ref = "ads"}
 # Compose
 androidxComposeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 androidxComposeFoundation = { group = "androidx.compose.foundation", name = "foundation" }

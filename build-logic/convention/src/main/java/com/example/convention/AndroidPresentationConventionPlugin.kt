@@ -147,6 +147,9 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                 // Swipe Refresh Layout
                 add("implementation", libs.findLibrary("androidx-swipe-refresh-layout").get())
+
+                //google adMob
+                add("implementation", libs.findLibrary("play-service-ads").get())
             }
         }
     }

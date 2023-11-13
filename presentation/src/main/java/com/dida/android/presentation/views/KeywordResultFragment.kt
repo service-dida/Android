@@ -33,6 +33,7 @@ import com.dida.common.util.urlImageToFile
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
 import com.dida.password.PasswordDialog
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
@@ -63,6 +64,7 @@ class KeywordResultFragment :
             this.lifecycleOwner = viewLifecycleOwner
         }
         initToolbar()
+        initAdMob()
         viewModel.createAiPicture(keywords)
         observeNavigation()
     }
@@ -169,5 +171,9 @@ class KeywordResultFragment :
             }
         }
         dialog.show(childFragmentManager, TAG)
+    }
+
+    private fun initAdMob(){
+        MobileAds.initialize(requireContext()) {}
     }
 }
