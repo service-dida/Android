@@ -27,7 +27,7 @@
 - DataStore
 - Version Catalog (build-logic convention을 활용한 라이브러리 버젼 관리)
 - Micro Architecture (Resource 관리 측면)
-- Firebase Crashlytics
+- Compose (일부 화면 ComposeView 작업)
 - Bitrise + Firebase + Discord Webhook (CI/CD 관련)
 
 #### Ui 측면
@@ -37,7 +37,6 @@
 
 #### 추후 적용기술
 - Unit Test (JUnit등)
-- Compose (순차적으로 업데이트 마이그레이션 예정)
 - Firebase Analytics (이벤트 명시 확정 후 도입 예정)
 - Klint (정적 분석도구 추후 도입 예정)
 - Kapt to Ksp Migration (추후 지원 라이브러리 관련해서 도입 예정)
