@@ -23,6 +23,7 @@ import com.dida.ai.keyword.result.KeywordResultMessage
 import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
+import com.dida.ai.keyword.result.KeywordResultViewModel.Companion.INITIALIZE_LIST
 import com.dida.ai.keyword.result.RestartKeyword
 import com.dida.ai.keyword.result.dialog.AiPictureRestartBottomSheet
 import com.dida.ai.keyword.result.dialog.RestartMenu
@@ -37,6 +38,7 @@ import com.dida.password.PasswordDialog
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,7 +73,6 @@ class KeywordResultFragment :
             this.lifecycleOwner = viewLifecycleOwner
         }
         initToolbar()
-        initAdMob()
         loadAdMob()
         viewModel.createAiPicture(keywords)
         observeNavigation()
@@ -180,29 +181,37 @@ class KeywordResultFragment :
         }
         dialog.show(childFragmentManager, TAG)
     }
-
-    private fun initAdMob(){
-        MobileAds.initialize(requireContext()) {}
-    }
-
     private fun loadAdMob(){
         var adRequest = AdRequest.Builder().build()
         RewardedAd.load(requireContext(),"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 rewardedAd = null
             }
-
             override fun onAdLoaded(ad: RewardedAd) {
                 rewardedAd = ad
                 rewardedAd?.let { ad ->
-                    ad.show(requireActivity(), OnUserEarnedRewardListener { rewardItem ->
-                        // Handle the reward.
-                        val rewardAmount = rewardItem.amount
-                        val rewardType = rewardItem.type
-                        AppLog.d(TAG, "User earned the reward.")
-                    })
+                    ad.show(requireActivity()) { _ ->
+                        AppLog.d(TAG, "첫번째 광고 끝")
+                        if (viewModel.aiPictures.value == INITIALIZE_LIST) {
+                            RewardedAd.load(requireContext(), "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+                                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                                        rewardedAd = null
+                                    }
+                                    override fun onAdLoaded(ad: RewardedAd) {
+                                        rewardedAd = ad
+                                        rewardedAd?.let { ad ->
+                                            ad.show(requireActivity()){ _ ->
+                                                AppLog.d(TAG, "두번째 광고 끝")
+                                            }
+                                        } ?: run {
+                                            AppLog.d(TAG, "두번째 광고 준비 안됨")
+                                        }
+                                    }
+                                })
+                        }
+                    }
                 } ?: run {
-                    AppLog.d(TAG, "The rewarded ad wasn't ready yet.")
+                    AppLog.d(TAG, "첫번째 광고 준비 안됨")
                 }
             }
         })
