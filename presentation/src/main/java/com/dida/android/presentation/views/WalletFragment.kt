@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnStarted
 import com.dida.wallet.R
 import com.dida.wallet.WalletNavigationAction
@@ -100,6 +101,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getWallet()
+            requireView().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

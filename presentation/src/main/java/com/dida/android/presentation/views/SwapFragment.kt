@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.util.Constants
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.removeTrailingDot
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
@@ -97,6 +98,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getWalletExists()
+            requireView().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
