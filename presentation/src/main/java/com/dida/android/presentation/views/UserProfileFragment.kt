@@ -12,6 +12,7 @@ import com.dida.common.adapter.UserCardAdapter
 import com.dida.common.adapter.UserCardContainerAdapter
 import com.dida.common.adapter.UserCardContainerItem
 import com.dida.common.util.addOnPagingListener
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.successOrNull
 import com.dida.common.widget.DefaultSnackBar
@@ -121,6 +122,7 @@ class UserProfileFragment :
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserProfile()
             viewModel.getUserNfts()
+            requireView().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
