@@ -111,7 +111,7 @@
             app:onSingleClick="@{() -> vm.onCreateItemClicked()}"
             android:textColor="@{vm.nickNameCheckState ? @color/surface6 : @color/mainblack}"
             android:textSize="16dp"
-            android:background="@{vm.nickNameCheckState ? @drawable/custom_surface2_radius10 : @drawable/custom_brandlemon_radius10}" />
+            android:background="@{vm.nickNameCheckState ? @drawable/custom_surface4_radius10 : @drawable/custom_brandlemon_radius10}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
