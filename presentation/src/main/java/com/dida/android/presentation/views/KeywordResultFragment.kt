@@ -27,6 +27,7 @@ import com.dida.ai.keyword.result.KeywordResultViewModel.Companion.INITIALIZE_LI
 import com.dida.ai.keyword.result.RestartKeyword
 import com.dida.ai.keyword.result.dialog.AiPictureRestartBottomSheet
 import com.dida.ai.keyword.result.dialog.RestartMenu
+import com.dida.android.BuildConfig
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.common.util.AppLog
 import com.dida.common.util.saveMediaToStorage
@@ -183,7 +184,7 @@ class KeywordResultFragment :
     }
     private fun loadAdMob(){
         var adRequest = AdRequest.Builder().build()
-        RewardedAd.load(requireContext(),"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+        RewardedAd.load(requireContext(),BuildConfig.GOOGLE_ADMOB_UNIT_TEST_ID, adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 rewardedAd = null
             }
@@ -193,7 +194,7 @@ class KeywordResultFragment :
                     ad.show(requireActivity()) { _ ->
                         AppLog.d(TAG, "첫번째 광고 끝")
                         if (viewModel.aiPictures.value == INITIALIZE_LIST) {
-                            RewardedAd.load(requireContext(), "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+                            RewardedAd.load(requireContext(), BuildConfig.GOOGLE_ADMOB_UNIT_TEST_ID, adRequest, object : RewardedAdLoadCallback() {
                                     override fun onAdFailedToLoad(adError: LoadAdError) {
                                         rewardedAd = null
                                     }
