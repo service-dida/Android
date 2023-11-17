@@ -110,7 +110,7 @@ class MyPageFragment :
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserInfo()
             viewModel.getUserNfts()
-            requireView().performHapticEvent()
+            requireContext().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

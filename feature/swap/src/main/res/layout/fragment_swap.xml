@@ -15,7 +15,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:hapticFeedbackEnabled="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -156,8 +157,8 @@
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
                                     android:layout_marginTop="10dp"
-                                    android:padding="4dp"
                                     android:background="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
+                                    android:padding="4dp"
                                     android:src="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/top_send_tv"
@@ -185,8 +186,8 @@
                                     android:background="@android:color/transparent"
                                     android:gravity="end"
                                     android:hint="@string/swap_example_coin_hint"
-                                    android:text="@={vm.amountInputState}"
                                     android:inputType="numberDecimal"
+                                    android:text="@={vm.amountInputState}"
                                     android:textColorHint="@color/surface6"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -233,8 +234,8 @@
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
                                     android:layout_marginTop="10dp"
-                                    android:padding="4dp"
                                     android:background="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
+                                    android:padding="4dp"
                                     android:src="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/bottom_send_tv"
@@ -262,8 +263,8 @@
                                     android:background="@android:color/transparent"
                                     android:gravity="end"
                                     android:hint="@string/swap_example_coin_hint"
-                                    android:text="@={vm.amountInputState}"
                                     android:inputType="numberDecimal"
+                                    android:text="@={vm.amountInputState}"
                                     android:textColorHint="@color/surface6"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -276,12 +277,12 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:onSingleClick="@{() -> vm.onSwapTypeChange()}"
                             android:src="@drawable/ic_swap_change_fill"
                             app:layout_constraintBottom_toBottomOf="@+id/bottom_outer_cl"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/top_outer_cl" />
+                            app:layout_constraintTop_toTopOf="@+id/top_outer_cl"
+                            app:onSingleClick="@{() -> vm.onSwapTypeChange()}" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -400,11 +401,11 @@
                             android:background="@drawable/custom_okbtn_success"
                             android:fontFamily="@font/pretendard_bold"
                             android:gravity="center"
-                            app:onSingleClick="@{() -> vm.onSwapClicked()}"
                             android:padding="18dp"
                             android:text="@string/swap_confirm_btn_text"
                             android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:onSingleClick="@{() -> vm.onSwapClicked()}" />
                     </LinearLayout>
 
 

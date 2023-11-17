@@ -10,20 +10,28 @@ import android.os.VibratorManager
 import android.view.HapticFeedbackConstants
 import android.view.View
 
-fun View.performHapticEvent() {
-    val view = this
-    view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+@SuppressLint("MissingPermission")
+fun Context.performHapticEvent() {
+    val context = this
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val vibrator = vibratorManager.defaultVibrator
+        vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
+    } else {
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator.vibrate(5)
+    }
 }
 
 @SuppressLint("MissingPermission")
-fun Activity.performVibrate() {
-    val activity = this
+fun Context.performVibrate(milliseconds: Long = 50, amplitude: Int = 100) {
+    val context = this
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val vibratorManager = activity.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         val vibrator = vibratorManager.defaultVibrator
-        vibrator.vibrate(VibrationEffect.createOneShot(50, 50))
+        vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, amplitude))
     } else {
-        val vibrator = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(1000)
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator.vibrate(50)
     }
 }

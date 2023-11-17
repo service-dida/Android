@@ -101,7 +101,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getWallet()
-            requireView().performHapticEvent()
+            requireContext().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

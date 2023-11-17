@@ -98,7 +98,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getWalletExists()
-            requireView().performHapticEvent()
+            requireContext().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

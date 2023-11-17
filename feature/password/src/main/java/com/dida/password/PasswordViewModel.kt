@@ -89,9 +89,9 @@ class PasswordViewModel @Inject constructor(
                 .onSuccess {
                     checkPasswordUseCase(password.encryptWithPublicKey(it.publicKey))
                         .onSuccess {
-                            if(it.matched){
+                            if (it.matched) {
                                 _completeEvent.emit(password)
-                            }else{
+                            } else {
                                 isClickable = false
                                 _wrongCountState.emit("${it.wrongCnt}/5")
                                 _failEvent.emit(true)

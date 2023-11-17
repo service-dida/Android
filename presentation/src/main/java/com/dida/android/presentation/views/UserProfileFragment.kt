@@ -16,10 +16,6 @@ import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.successOrNull
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.mypage.adapter.MyPageEmptyAdapter
-import com.dida.mypage.adapter.MyPageEmptyItem
-import com.dida.mypage.adapter.MyPageHeaderAdapter
-import com.dida.mypage.adapter.MyPageSortAdapter
 import com.dida.user_profile.UserMessageAction
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
@@ -122,7 +118,7 @@ class UserProfileFragment :
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserProfile()
             viewModel.getUserNfts()
-            requireView().performHapticEvent()
+            requireContext().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

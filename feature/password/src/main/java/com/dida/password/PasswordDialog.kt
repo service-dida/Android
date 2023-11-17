@@ -64,7 +64,7 @@ class PasswordDialog(
             launch {
                 viewModel.stackSizeState.collect {
                     checkImageType(it)
-                    if (it != 0) requireActivity().performVibrate()
+                    if (it != 0) requireContext().performVibrate()
                 }
             }
 
@@ -78,6 +78,7 @@ class PasswordDialog(
             launch {
                 viewModel.failEvent.collectLatest {
                     failAction(it)
+                    requireContext().performVibrate(milliseconds = 100, amplitude = 200)
                 }
             }
         }
@@ -111,13 +112,13 @@ class PasswordDialog(
                 dialog!!.findViewById(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         }
-        val view = view
-        view!!.post {
-            val parent = view!!.parent as View
+        val view = requireView()
+        view.post {
+            val parent = view.parent as View
             val params = parent.layoutParams as CoordinatorLayout.LayoutParams
             val behavior = params.behavior
             val bottomSheetBehavior = behavior as BottomSheetBehavior<*>?
-            bottomSheetBehavior!!.peekHeight = view!!.measuredHeight
+            bottomSheetBehavior!!.peekHeight = view.measuredHeight
             parent.setBackgroundColor(Color.TRANSPARENT)
         }
     }

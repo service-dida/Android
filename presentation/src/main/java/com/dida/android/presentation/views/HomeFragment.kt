@@ -142,7 +142,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getHome()
-            requireView().performHapticEvent()
+            requireContext().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
