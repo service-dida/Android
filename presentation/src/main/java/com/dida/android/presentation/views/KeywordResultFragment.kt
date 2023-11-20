@@ -12,8 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.dida.add.bottom.AddKeepNftBottomSheet
-import com.dida.add.purpose.AddPurposeViewModel
 import com.dida.ai.R
 import com.dida.ai.databinding.FragmentKeywordResultBinding
 import com.dida.ai.keyword.KeywordViewModel
@@ -27,12 +25,11 @@ import com.dida.ai.keyword.result.RestartKeyword
 import com.dida.ai.keyword.result.dialog.AiPictureRestartBottomSheet
 import com.dida.ai.keyword.result.dialog.RestartMenu
 import com.dida.common.dialog.CentralDialogFragment
+import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.saveMediaToStorage
 import com.dida.common.util.stringToBitmap
-import com.dida.common.util.urlImageToFile
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
-import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
@@ -115,7 +112,10 @@ class KeywordResultFragment :
                 when (it) {
                     is KeywordResultNavigationAction.NavigateToRestartKeyword -> showRestartDialog()
                     is KeywordResultNavigationAction.NavigateToDownloadAiPicture -> downloadAiPicture()
-                    is KeywordResultNavigationAction.NavigateToCreateNft -> navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment(it.imageUrl))
+                    is KeywordResultNavigationAction.NavigateToCreateNft ->
+                        navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToCreateNftFragment(it.imageUrl))
+                    is KeywordResultNavigationAction.NavigateToNotMatchedPicture -> showNotMatchedPictureDialog()
+                    is KeywordResultNavigationAction.NavigateToServiceDenied -> showServiceDeniedDialog()
                 }
             }
         }
@@ -150,14 +150,44 @@ class KeywordResultFragment :
             .title(getString(com.dida.common.R.string.ai_picture_dialog_title))
             .message(getString(com.dida.common.R.string.ai_picture_dialog_description))
             .positiveButton(getString(com.dida.common.R.string.ai_picture_dialog_positive))
-            .negativeButton(getString(com.dida.common.R.string.ai_picture_dialog_negative), object : CentralDialogFragment.OnClickListener {
-                override fun onClick() {
-                    sharedViewModel.initKeywords()
-                    navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToAddFragment())
-                }
-            })
+            .negativeButton(
+                getString(com.dida.common.R.string.ai_picture_dialog_negative),
+                object : CentralDialogFragment.OnClickListener {
+                    override fun onClick() {
+                        sharedViewModel.initKeywords()
+                        navigate(KeywordResultFragmentDirections.actionKeywordResultFragmentToAddFragment())
+                    }
+                })
             .build()
             .show(childFragmentManager, "show_draw_dialog")
+    }
+
+    private fun showNotMatchedPictureDialog() {
+        DefaultDialogFragment.Builder()
+            .title(getString(R.string.not_matched_picture_title))
+            .message(getString(R.string.not_matched_picture_message))
+            .positiveButton(getString(R.string.restart_keyword_button_label), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    findNavController().popBackStack()
+                }
+            })
+            .cancelable(false)
+            .build()
+            .show(childFragmentManager, "error_dialog")
+    }
+
+    private fun showServiceDeniedDialog() {
+        DefaultDialogFragment.Builder()
+            .title(getString(R.string.service_denied_title))
+            .message(getString(R.string.service_denied_message))
+            .positiveButton(getString(com.dida.common.R.string.ok_text), object : DefaultDialogFragment.OnClickListener {
+                override fun onClick() {
+                    findNavController().popBackStack()
+                }
+            })
+            .cancelable(false)
+            .build()
+            .show(childFragmentManager, "error_dialog")
     }
 
     private fun showRestartDialog() {

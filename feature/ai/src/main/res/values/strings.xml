@@ -27,8 +27,15 @@
     <string name="restart_keyword_button_label">단어 수정하러 가기</string>
     <string name="restart_keyword_next_button_label">10dida를 사용하기</string>
 
+    <string name="not_matched_picture_title">디다가 키워드로 그릴 수 있는 그림이 없어요.</string>
+    <string name="not_matched_picture_message">키워드를 다시 골라주세요.\n그림 그리는데 소진된 디다는 다시 돌려받았어요.</string>
+
+    <string name="service_denied_title">디다의 그림을 원하는 사람이 많아요.</string>
+    <string name="service_denied_message">사용량이 많아 잠시 후에 다시 그려주세요.\n그림 그리는데 소진된 디다는 다시 돌려받았어요.</string>
+
     <string name="input_title">디다가 그릴 그림의\n키워드를 알려주세요</string>
     <string name="input_edit_text_message">키워드를 알려주세요</string>
     <string name="input_message">정확한 그림을 위해서 10글자 이상으로 입력이 가능해요</string>
+
 
 </resources>
