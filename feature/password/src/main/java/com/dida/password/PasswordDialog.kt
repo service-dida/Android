@@ -1,28 +1,21 @@
 package com.dida.password
 
-import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.base.BaseBottomSheetDialogFragment
-import com.dida.common.dialog.CentralDialogFragment
 import com.dida.common.dialog.VerticalDialogFragment
+import com.dida.common.util.performVibrate
 import com.dida.password.databinding.DialogPasswordBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,9 +64,7 @@ class PasswordDialog(
             launch {
                 viewModel.stackSizeState.collect {
                     checkImageType(it)
-                    if (it != 0) {
-                        buttonVibrator()
-                    }
+                    if (it != 0) requireContext().performVibrate()
                 }
             }
 
@@ -87,6 +78,7 @@ class PasswordDialog(
             launch {
                 viewModel.failEvent.collectLatest {
                     failAction(it)
+                    requireContext().performVibrate(milliseconds = 100, amplitude = 200)
                 }
             }
         }
@@ -120,13 +112,13 @@ class PasswordDialog(
                 dialog!!.findViewById(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         }
-        val view = view
-        view!!.post {
-            val parent = view!!.parent as View
+        val view = requireView()
+        view.post {
+            val parent = view.parent as View
             val params = parent.layoutParams as CoordinatorLayout.LayoutParams
             val behavior = params.behavior
             val bottomSheetBehavior = behavior as BottomSheetBehavior<*>?
-            bottomSheetBehavior!!.peekHeight = view!!.measuredHeight
+            bottomSheetBehavior!!.peekHeight = view.measuredHeight
             parent.setBackgroundColor(Color.TRANSPARENT)
         }
     }
@@ -176,17 +168,6 @@ class PasswordDialog(
             binding.mainTitleTv.text = mainTitleStr
             binding.subTitleTv.visibility = View.VISIBLE
             binding.worngCountTv.visibility = View.GONE
-        }
-    }
-
-    private fun buttonVibrator() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager = activity?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            val vibrator = vibratorManager.defaultVibrator
-            vibrator.vibrate(VibrationEffect.createOneShot(50, 50))
-        } else {
-            val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            vibrator.vibrate(1000)
         }
     }
 

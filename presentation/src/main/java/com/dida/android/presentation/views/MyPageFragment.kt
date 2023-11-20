@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.dida.common.adapter.UserCardContainerAdapter
 import com.dida.common.adapter.UserCardContainerItem
 import com.dida.common.util.addOnPagingListener
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Follow
@@ -109,6 +110,7 @@ class MyPageFragment :
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getUserInfo()
             viewModel.getUserNfts()
+            requireContext().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/dialog_title_text"
-        style="@style/TextView_bold_24_white"
+        style="@style/TextView_bold_20_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/dialog_message_text"
@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/dialog_message_text"
-        style="@style/TextView_regular_16_white"
+        style="@style/TextView_regular_14_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

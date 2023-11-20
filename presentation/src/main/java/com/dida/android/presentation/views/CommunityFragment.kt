@@ -11,6 +11,7 @@ import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.util.DIDAINTENT
 import com.dida.common.util.addOnPagingListener
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.community.CommunityNavigationAction
@@ -132,6 +133,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     private fun initSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getCommunity()
+            requireContext().performHapticEvent()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

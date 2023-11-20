@@ -77,6 +77,7 @@ class Market005Exception(e: Throwable?, val url: String? = null, code: String? =
 class Member005Exception(e: Throwable?, val url: String? = null, code: String? = null): IOException(e)
 
 /** NFT_005 올바르지 않은 NFT입니다. **/
+/** NFT_005 달리 기준 거절 사유일 때(Your request was rejected ~~~) **/
 class Nft005Exception(e: Throwable?, val url: String? = null, code: String? = null): IOException(e)
 
 /** WALLET_005 디다 사용자의 주소입니다. **/
