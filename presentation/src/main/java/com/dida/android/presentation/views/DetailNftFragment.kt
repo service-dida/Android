@@ -1,7 +1,6 @@
 package com.dida.android.presentation.views
 
 import android.annotation.SuppressLint
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +11,7 @@ import com.dida.android.R
 import com.dida.common.adapter.CommunityAdapter
 import com.dida.common.ui.report.ReportBottomSheet
 import com.dida.common.util.likeAnimation
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnStarted
 import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Report
@@ -24,10 +24,8 @@ import com.dida.nft_detail.bottom.DetailNftMenuType
 import com.dida.nft_detail.databinding.FragmentDetailNftBinding
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewModel>(com.dida.nft_detail.R.layout.fragment_detail_nft) {
@@ -87,6 +85,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.nftLikeState.collectLatest {
                 binding.likeImage.likeAnimation(it)
+                requireContext().performHapticEvent()
             }
         }
 
