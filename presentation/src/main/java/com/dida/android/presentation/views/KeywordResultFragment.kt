@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
@@ -66,7 +67,7 @@ class KeywordResultFragment :
     private val keywords by lazy { sharedViewModel.getKeywords() }
 
     private var rewardedAd: RewardedAd? = null
-
+    private var adRequest = lazy { AdRequest.Builder().build() }
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -182,38 +183,23 @@ class KeywordResultFragment :
         dialog.show(childFragmentManager, TAG)
     }
     private fun loadAdMob(){
-        var adRequest = AdRequest.Builder().build()
-        RewardedAd.load(requireContext(),"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                rewardedAd = null
-            }
-            override fun onAdLoaded(ad: RewardedAd) {
-                rewardedAd = ad
-                rewardedAd?.let { ad ->
-                    ad.show(requireActivity()) { _ ->
-                        AppLog.d(TAG, "첫번째 광고 끝")
-                        if (viewModel.aiPictures.value == INITIALIZE_LIST) {
-                            RewardedAd.load(requireContext(), "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
-                                    override fun onAdFailedToLoad(adError: LoadAdError) {
-                                        rewardedAd = null
-                                    }
-                                    override fun onAdLoaded(ad: RewardedAd) {
-                                        rewardedAd = ad
-                                        rewardedAd?.let { ad ->
-                                            ad.show(requireActivity()){ _ ->
-                                                AppLog.d(TAG, "두번째 광고 끝")
-                                            }
-                                        } ?: run {
-                                            AppLog.d(TAG, "두번째 광고 준비 안됨")
-                                        }
-                                    }
-                                })
+        if (viewModel.aiPictures.value == INITIALIZE_LIST) {
+            RewardedAd.load(requireContext(), "ca-app-pub-3940256099942544/5224354917", adRequest.value, object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        rewardedAd = null
+                    }
+                    override fun onAdLoaded(ad: RewardedAd) {
+                        rewardedAd = ad
+                        rewardedAd?.let { ad ->
+                            ad.show(requireActivity()) { _ ->
+                                showToastMessage("아직 ai가 그림을 그리는중이에요.")
+                                loadAdMob()
+                            }
+                        } ?: run {
+                            showToastMessage("광고 호출을 실패하였습니다.")
                         }
                     }
-                } ?: run {
-                    AppLog.d(TAG, "첫번째 광고 준비 안됨")
-                }
-            }
-        })
+                })
+        }
     }
 }
