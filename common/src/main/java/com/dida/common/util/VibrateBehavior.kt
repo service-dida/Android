@@ -1,16 +1,11 @@
 package com.dida.common.util
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.view.HapticFeedbackConstants
-import android.view.View
 
-@SuppressLint("MissingPermission")
 fun Context.performHapticEvent() {
     val context = this
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -23,7 +18,6 @@ fun Context.performHapticEvent() {
     }
 }
 
-@SuppressLint("MissingPermission")
 fun Context.performVibrate(milliseconds: Long = 50, amplitude: Int = 100) {
     val context = this
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
