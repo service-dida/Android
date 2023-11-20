@@ -58,7 +58,7 @@ class BuyNftViewModel @AssistedInject constructor(
             getPublicKeyUseCase()
                 .onSuccess {
                     detailNftState.value?.let { nft ->
-                        buyNftUseCase(password.encryptWithPublicKey(it.publicKey), nft.nftInfo.nftId)
+                        buyNftUseCase(password.encryptWithPublicKey(it.publicKey), nft.marketId)
                             .onSuccess {
                                 _navigationEvent.emit(BuyNftNavigationAction.NavigateToSuccess(nft.nftInfo.nftId))
                             }
