@@ -2,6 +2,7 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
@@ -21,15 +22,24 @@ import com.dida.ai.keyword.result.KeywordResultMessage
 import com.dida.ai.keyword.result.KeywordResultNavigationAction
 import com.dida.ai.keyword.result.KeywordResultTitle
 import com.dida.ai.keyword.result.KeywordResultViewModel
+import com.dida.ai.keyword.result.KeywordResultViewModel.Companion.INITIALIZE_LIST
 import com.dida.ai.keyword.result.RestartKeyword
 import com.dida.ai.keyword.result.dialog.AiPictureRestartBottomSheet
 import com.dida.ai.keyword.result.dialog.RestartMenu
 import com.dida.common.dialog.CentralDialogFragment
+import com.dida.common.util.AppLog
 import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.saveMediaToStorage
 import com.dida.common.util.stringToBitmap
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.WeightDivider
+import com.dida.password.PasswordDialog
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
@@ -54,12 +64,15 @@ class KeywordResultFragment :
 
     private val keywords by lazy { sharedViewModel.getKeywords() }
 
+    private var rewardedAd: RewardedAd? = null
+    private var adRequest = lazy { AdRequest.Builder().build() }
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         initToolbar()
+        loadAdMob()
         viewModel.createAiPicture(keywords)
         observeNavigation()
     }
@@ -199,5 +212,25 @@ class KeywordResultFragment :
             }
         }
         dialog.show(childFragmentManager, TAG)
+    }
+    private fun loadAdMob(){
+        if (viewModel.aiPictures.value == INITIALIZE_LIST) {
+            RewardedAd.load(requireContext(), "ca-app-pub-3940256099942544/5224354917", adRequest.value, object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        rewardedAd = null
+                    }
+                    override fun onAdLoaded(ad: RewardedAd) {
+                        rewardedAd = ad
+                        rewardedAd?.let { ad ->
+                            ad.show(requireActivity()) { _ ->
+                                showToastMessage("아직 ai가 그림을 그리는중이에요.")
+                                loadAdMob()
+                            }
+                        } ?: run {
+                            showToastMessage("광고 호출을 실패하였습니다.")
+                        }
+                    }
+                })
+        }
     }
 }
