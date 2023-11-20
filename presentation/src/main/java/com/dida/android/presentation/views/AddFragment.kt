@@ -183,7 +183,8 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     modifier = Modifier
                         .weight(1f)
                         .background(color = Surface2)
-                        .padding(vertical = 42.dp),
+                        .padding(vertical = 42.dp)
+                        .clickableSingle { navigate(AddFragmentDirections.actionAddFragmentToKeywordInputFragment()) },
                     textAlign = TextAlign.Center,
                     style = DidaTypography.subtitle1,
                     fontSize = dpToSp(dp = 18.dp),
