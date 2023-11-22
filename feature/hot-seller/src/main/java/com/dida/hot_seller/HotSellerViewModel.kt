@@ -30,7 +30,6 @@ class HotSellerViewModel @Inject constructor(
     private val _hotSellerState: MutableStateFlow<Contents<HotSellerPage>> = MutableStateFlow(
         Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
     )
-
     val hotSellerState: StateFlow<Contents<HotSellerPage>> = _hotSellerState.asStateFlow()
 
     init {
