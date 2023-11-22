@@ -34,12 +34,14 @@ import com.dida.domain.main.model.HotSellerPage
 @Composable
 fun HotSellerItem(
     item: HotSellerPage,
-    onFollowButtonClicked: () -> Unit
+    onFollowButtonClicked: () -> Unit,
+    onUserClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
+            .clickableSingle { onUserClicked() }
     ) {
         Row(
             modifier = Modifier

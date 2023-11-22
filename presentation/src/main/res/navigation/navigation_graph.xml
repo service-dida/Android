@@ -634,7 +634,13 @@
     <fragment
         android:id="@+id/hotSellerFragment"
         android:name="com.dida.android.presentation.views.HotSellerFragment"
-        android:label="HotSellerFragment" />
+        android:label="HotSellerFragment" >
+        <action
+            android:id="@+id/action_hotSellerFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
     <fragment
         android:id="@+id/buyNftFragment"
         android:name="com.dida.android.presentation.views.BuyNftFragment"

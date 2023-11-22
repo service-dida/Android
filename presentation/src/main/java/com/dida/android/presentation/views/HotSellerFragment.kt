@@ -92,7 +92,8 @@ class HotSellerFragment : BaseFragment<FragmentHotSellerBinding, HotSellerViewMo
                     items(hotSellers.size) {
                         HotSellerItem(
                             item = hotSellers.content[it],
-                            onFollowButtonClicked = { viewModel.onFollowButtonClicked(hotSellers.content[it]) }
+                            onFollowButtonClicked = { viewModel.onFollowButtonClicked(hotSellers.content[it]) },
+                            onUserClicked = { navigate(HotSellerFragmentDirections.actionHotSellerFragmentToUserProfileFragment(hotSellers.content[it].memberInfo.memberId)) }
                         )
                     }
                     item { VerticalDivider(dp = 19) }
