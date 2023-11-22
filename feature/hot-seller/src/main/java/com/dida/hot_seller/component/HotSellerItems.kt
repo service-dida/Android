@@ -76,45 +76,9 @@ fun HotSellerItem(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-            if (item.memberInfo.followed) {
-                Surface(
-                    modifier = Modifier
-                        .border(
-                            width = 1.dp,
-                            color = BrandLemon,
-                            shape = RoundedCornerShape(size = 100.dp)
-                        )
-                        .background(color = BrandLemon, shape = RoundedCornerShape(size = 100.dp))
-                        .padding(vertical = 8.dp, horizontal = 16.dp)
-                        .clickableSingle { onFollowButtonClicked() },
-                    color = BrandLemon
-                ) {
-                    Text(
-                        text = "팔로잉",
-                        style = DidaTypography.body1,
-                        fontSize = dpToSp(dp = 12.dp),
-                        color = MainBlack
-                    )
-                }
-            } else {
-                Surface(
-                    modifier = Modifier
-                        .border(
-                            width = 1.dp,
-                            color = BrandLemon,
-                            shape = RoundedCornerShape(size = 100.dp)
-                        )
-                        .padding(vertical = 8.dp, horizontal = 16.dp)
-                        .clickableSingle { onFollowButtonClicked() },
-                    color = Surface1
-                ) {
-                    Text(
-                        text = "팔로우",
-                        style = DidaTypography.body1,
-                        fontSize = dpToSp(dp = 12.dp),
-                        color = White
-                    )
-                }
+            if (!item.memberInfo.me) {
+                if (item.memberInfo.followed) FollowingButton { onFollowButtonClicked() }
+                else FollowButton { onFollowButtonClicked() }
             }
         }
         Row(
@@ -126,10 +90,64 @@ fun HotSellerItem(
         ) {
             item.nftImgUrl.forEach {
                 DidaImage(
-                    modifier = Modifier.weight(1f).aspectRatio(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .aspectRatio(1f),
                     model = it
                 )
             }
         }
+    }
+}
+
+@Composable
+fun FollowingButton(
+    onFollowButtonClicked: () -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .border(
+                width = 1.dp,
+                color = BrandLemon,
+                shape = RoundedCornerShape(size = 100.dp)
+            )
+            .background(
+                color = BrandLemon,
+                shape = RoundedCornerShape(size = 100.dp)
+            )
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .clickableSingle { onFollowButtonClicked() },
+        color = BrandLemon
+    ) {
+        Text(
+            text = "팔로잉",
+            style = DidaTypography.body1,
+            fontSize = dpToSp(dp = 12.dp),
+            color = MainBlack
+        )
+    }
+}
+
+@Composable
+fun FollowButton(
+    onFollowButtonClicked: () -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .border(
+                width = 1.dp,
+                color = BrandLemon,
+                shape = RoundedCornerShape(size = 100.dp)
+            )
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .clickableSingle { onFollowButtonClicked() },
+        color = Surface1
+    ) {
+        Text(
+            text = "팔로우",
+            style = DidaTypography.body1,
+            fontSize = dpToSp(dp = 12.dp),
+            color = White
+        )
     }
 }
