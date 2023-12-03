@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
@@ -94,6 +97,7 @@ class KeywordProductFragment :
 
                 val selectedKeywords = sharedViewModel.keywords.collectAsStateWithLifecycle()
                 val selectedCount by remember { derivedStateOf { selectedKeywords.value.count { it.word != "" } > 0 } }
+                var selectedIndex by rememberSaveable { mutableStateOf(-1) }
 
                 Column(
                     modifier = Modifier
@@ -102,13 +106,19 @@ class KeywordProductFragment :
                 ) {
                     CustomLinearProgressBar(progress = 0.25f)
                     KeywordTitle(type = KeywordType.Product)
-                    KeywordMore(onButtonClicked = { viewModel.getKeywordThings() })
+                    KeywordMore {
+                        viewModel.getKeywordThings()
+                        sharedViewModel.deleteKeyword(KeywordType.Product)
+                        selectedIndex = -1
+                    }
                     DefaultKeywords(
                         keywords = keywords,
-                        onKeywordClicked = {
-                            viewModel.onKeywordClicked(it)
-                            sharedViewModel.insertKeyword(KeywordType.Product, it)
-                        }
+                        onKeywordClicked = { keyword, position ->
+                            viewModel.onKeywordClicked(keyword)
+                            sharedViewModel.insertKeyword(KeywordType.Product, keyword)
+                            selectedIndex = position
+                        },
+                        selectedIndex = selectedIndex
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     SelectKeywordTitle(isSelected = selectedCount)
