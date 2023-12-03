@@ -107,13 +107,13 @@ class DataStorePreferences(val context: Context) {
 
     suspend fun getKeywordThings(): List<String> {
         return context.dataStore.data.firstOrNull()?.let {
-            it[thingsPreference]?.split(",")?.slice(0..9) ?: emptyList<String>()
+            it[thingsPreference]?.split(",")?.shuffled()?.slice(0..9) ?: emptyList<String>()
         } ?: emptyList<String>()
     }
 
     suspend fun getKeywordPlaces(): List<String> {
         return context.dataStore.data.firstOrNull()?.let {
-            it[placesPreference]?.split(",")?.slice(0..9) ?: emptyList<String>()
+            it[placesPreference]?.split(",")?.shuffled()?.slice(0..9) ?: emptyList<String>()
         } ?: emptyList<String>()
     }
 }
