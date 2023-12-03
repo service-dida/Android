@@ -30,7 +30,7 @@ class KeywordPlaceViewModel @Inject constructor(
         getKeywordPlaces()
     }
 
-    private fun getKeywordPlaces() {
+    fun getKeywordPlaces() {
         baseViewModelScope.launch {
             keywordPlacesUseCase()
                 .onSuccess { keywords ->

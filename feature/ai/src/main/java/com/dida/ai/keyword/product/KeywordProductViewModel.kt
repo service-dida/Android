@@ -30,7 +30,7 @@ class KeywordProductViewModel @Inject constructor(
         getKeywordThings()
     }
 
-    private fun getKeywordThings() {
+    fun getKeywordThings() {
         baseViewModelScope.launch {
             getKeywordThingsUseCase()
                 .onSuccess { keywords ->

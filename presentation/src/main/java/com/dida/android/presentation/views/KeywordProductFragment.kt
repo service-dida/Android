@@ -102,7 +102,7 @@ class KeywordProductFragment :
                 ) {
                     CustomLinearProgressBar(progress = 0.25f)
                     KeywordTitle(type = KeywordType.Product)
-                    KeywordMore(onButtonClicked = {})
+                    KeywordMore(onButtonClicked = { viewModel.getKeywordThings() })
                     DefaultKeywords(
                         keywords = keywords,
                         onKeywordClicked = {
