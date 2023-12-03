@@ -5,9 +5,11 @@ import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
 import com.dida.domain.usecase.CommonProfileUseCase
+import com.dida.domain.usecase.GetKeywordsUseCase
 import com.dida.domain.usecase.PatchDeviceTokenUseCase
 import com.dida.domain.usecase.RefreshTokenUseCase
 import com.dida.domain.usecase.local.GetTokenUseCase
+import com.dida.domain.usecase.local.SetKeywordsUseCase
 import com.dida.domain.usecase.local.SetTokenUseCase
 import com.dida.domain.usecase.local.SetUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +30,8 @@ class SplashViewModel @Inject constructor(
     private val setTokenUseCase: SetTokenUseCase,
     private val setUserIdUseCase: SetUserIdUseCase,
     private val getTokenUseCase: GetTokenUseCase,
+    private val getKeywordsUseCase: GetKeywordsUseCase,
+    private val setKeywordsUseCase: SetKeywordsUseCase,
 ) : BaseViewModel() {
 
     private val TAG = "SplashViewModel"
@@ -50,7 +54,9 @@ class SplashViewModel @Inject constructor(
 
     fun onAppSetUp(deviceToken: String) {
         baseViewModelScope.launch {
-            getTokenUseCase()
+            getKeywordsUseCase()
+                .onSuccess { setKeywordsUseCase(it) }
+                .flatMap { getTokenUseCase() }
                 .onSuccess { (accessToken, refreshToken) ->
                     if (accessToken == null || refreshToken == null) {
                         onGoneSplash()

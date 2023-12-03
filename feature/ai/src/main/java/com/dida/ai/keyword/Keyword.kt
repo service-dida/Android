@@ -22,3 +22,7 @@ sealed class Keyword {
         override val word: String = ""
     }
 }
+
+fun String.toKeyword(): Keyword.Default {
+    return Keyword.Default(this)
+}

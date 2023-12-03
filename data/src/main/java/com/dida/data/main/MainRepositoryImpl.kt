@@ -44,6 +44,7 @@ import com.dida.domain.main.model.HideMember
 import com.dida.domain.main.model.HideNft
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.HotSellerPage
+import com.dida.domain.main.model.Keywords
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
@@ -316,6 +317,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun alarms(page: Int, size: Int): NetworkResult<Contents<Alarm>> {
         return handleApi { didaApi.getAlarms(page, size).toDomain() }
+    }
+
+    override suspend fun getKeywords(): NetworkResult<Keywords> {
+        return handleApi { didaApi.getKeywords().toDomain() }
     }
 
     override suspend fun getPublicKey(): NetworkResult<PublicKey> {

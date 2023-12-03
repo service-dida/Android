@@ -1,7 +1,6 @@
 package com.dida.ai.keyword.component
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -56,10 +55,9 @@ import com.dida.compose.utils.noRippleClickable
 @Composable
 fun DefaultKeywords(
     keywords: List<Keyword.Default>,
-    onKeywordClicked: (keyword: Keyword) -> Unit
+    onKeywordClicked: (keyword: Keyword, position: Int) -> Unit,
+    selectedIndex: Int,
 ) {
-    var selectedIndex by rememberSaveable { mutableStateOf(-1) }
-
     FlowRow(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -69,8 +67,7 @@ fun DefaultKeywords(
                 selected = position == selectedIndex,
                 item = keywords[position],
                 onKeywordClicked = {
-                    onKeywordClicked(it)
-                    selectedIndex = position
+                    onKeywordClicked(it, position)
                 }
             )
         }
