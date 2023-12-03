@@ -15,6 +15,7 @@ import com.dida.domain.main.model.HideNft
 import com.dida.domain.main.model.HotMember
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.HotSellerPage
+import com.dida.domain.main.model.Keywords
 import com.dida.domain.main.model.LoginToken
 import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
@@ -139,6 +140,8 @@ interface MainRepository {
     suspend fun readAlarm(alarmId: Long): NetworkResult<Unit>
 
     suspend fun alarms(page: Int, size: Int): NetworkResult<Contents<Alarm>>
+
+    suspend fun getKeywords(): NetworkResult<Keywords>
 
     /**
      * 암호화 영역

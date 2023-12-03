@@ -3,6 +3,7 @@ package com.dida.data.main
 import com.dida.data.model.additional.GetAlarmsResponse
 import com.dida.data.model.additional.GetHideMembersResponse
 import com.dida.data.model.additional.GetHideNftsResponse
+import com.dida.data.model.additional.GetKeywordsResponse
 import com.dida.data.model.additional.PostMakePictureRequest
 import com.dida.data.model.additional.PostMakePictureResponse
 import com.dida.data.model.additional.PostNftLikeRequest
@@ -66,9 +67,6 @@ import retrofit2.http.Query
 
 interface DidaApi {
 
-    /**
-     * 로그인 및 회원가입
-     **/
     // 카카오 로그인
     @POST("/kakao/login")
     suspend fun login(@Body body: PostLoginRequest): PostLoginResponse
@@ -452,5 +450,9 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetAlarmsResponse
+
+    // 키워드 목록 가져오기
+    @GET("/keyword")
+    suspend fun getKeywords(): GetKeywordsResponse
 
 }
