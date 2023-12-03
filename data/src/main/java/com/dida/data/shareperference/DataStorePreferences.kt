@@ -7,7 +7,9 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.dida.data.R
+import com.dida.domain.main.model.Keywords
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 
 class DataStorePreferences(val context: Context) {
 
@@ -19,6 +21,8 @@ class DataStorePreferences(val context: Context) {
     private val fcmTokenPreference = stringPreferencesKey("FCM-TOKEN")
     private val fcmIndexPreference = intPreferencesKey("FCM-INDEX")
     private val userIdPreferences = longPreferencesKey("USER-ID")
+    private val thingsPreference = stringPreferencesKey("thingsPreference")
+    private val placesPreference = stringPreferencesKey("placesPreference")
 
     suspend fun setUserId(userId: Long) {
         context.dataStore.edit { preference ->
@@ -92,5 +96,24 @@ class DataStorePreferences(val context: Context) {
         } else {
             return context.dataStore.data.first()[fcmIndexPreference]
         }
+    }
+
+    suspend fun setKeywords(keywords: Keywords) {
+        context.dataStore.edit { preference ->
+            preference[thingsPreference] = keywords.things.joinToString(",")
+            preference[placesPreference] = keywords.places.joinToString(",")
+        }
+    }
+
+    suspend fun getKeywordThings(): List<String> {
+        return context.dataStore.data.firstOrNull()?.let {
+            it[thingsPreference]?.split(",")?.slice(0..9) ?: emptyList<String>()
+        } ?: emptyList<String>()
+    }
+
+    suspend fun getKeywordPlaces(): List<String> {
+        return context.dataStore.data.firstOrNull()?.let {
+            it[placesPreference]?.split(",")?.slice(0..9) ?: emptyList<String>()
+        } ?: emptyList<String>()
     }
 }

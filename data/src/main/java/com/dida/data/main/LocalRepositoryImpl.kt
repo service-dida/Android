@@ -5,6 +5,7 @@ import com.dida.data.DataApplication
 import com.dida.data.api.handleApi
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.LocalRepository
+import com.dida.domain.main.model.Keywords
 import javax.inject.Inject
 
 class LocalRepositoryImpl @Inject constructor(
@@ -38,6 +39,18 @@ class LocalRepositoryImpl @Inject constructor(
         val accessToken: String? = DataApplication.dataStorePreferences.getAccessToken()
         val refreshToken: String? = DataApplication.dataStorePreferences.getRefreshToken()
         return handleApi { Pair(accessToken, refreshToken) }
+    }
+
+    override suspend fun setKeywords(keywords: Keywords): NetworkResult<Unit> {
+        return handleApi { DataApplication.dataStorePreferences.setKeywords(keywords) }
+    }
+
+    override suspend fun getKeywordThings(): NetworkResult<List<String>> {
+        return handleApi { DataApplication.dataStorePreferences.getKeywordThings() }
+    }
+
+    override suspend fun getKeywordPlaces(): NetworkResult<List<String>> {
+        return handleApi { DataApplication.dataStorePreferences.getKeywordPlaces() }
     }
 }
 
