@@ -68,6 +68,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     is DetailNftNavigationAction.NavigateToBlock -> {}
                     is DetailNftNavigationAction.NavigateToUpdate -> {}
                     is DetailNftNavigationAction.NavigateToDelete -> {}
+                    is DetailNftNavigationAction.NavigateToOwnerShipHistory -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToOwnerShipHIstoryFragment())
                     is DetailNftNavigationAction.NavigateToWritePost -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityCommunityInputFragment(args.cardId, true))
                     is DetailNftNavigationAction.NavigateToImageDetail -> {
                         val intent = ImageViewerActivity.starterIntent(

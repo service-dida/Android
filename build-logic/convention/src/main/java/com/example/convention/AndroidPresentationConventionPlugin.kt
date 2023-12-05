@@ -95,6 +95,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:image-viewer"))
                 add("implementation", project(":feature:sold-out"))
                 add("implementation", project(":feature:notification"))
+                add("implementation", project(":feature:ownership-history"))
 
 
                 // Android Common

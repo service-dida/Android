@@ -76,10 +76,16 @@ ballon = "1.5.2"
 swiperefreshlayout = "1.1.0"
 
 photoViewVersion = "2.3.0"
+agp = "7.3.1"
+kotlin190 = "1.9.0"
+annotation = "1.7.0"
 
 [plugins]
 hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "safeargs" }
+androidDynamicFeature = { id = "com.android.dynamic-feature", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin190" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
 [libraries]
 # Define the libraries
@@ -186,6 +192,7 @@ coilGifCompose = { group = "io.coil-kt", name = "coil-gif", version.ref = "coilV
 skydoves-ballon = { module = "com.github.skydoves:balloon", version.ref = "ballon" }
 
 androidx-swipe-refresh-layout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 
 
 [bundles]
