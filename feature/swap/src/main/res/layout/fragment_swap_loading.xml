@@ -33,32 +33,42 @@
                 android:text="@string/swap_toolbar_text" />
         </androidx.appcompat.widget.Toolbar>
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/loading_dialog"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:layout_gravity="center"
-            android:background="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="160dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/dida_swap_lottie" />
-
-        <TextView
-            android:id="@+id/swap_text"
-            style="@style/TextView_bold_24_white"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{vm.swapType == SwapType.KLAY_TO_DIDA? @string/swap_klaytoDida_loading_text : @string/swap_DidaToKlay_loading_text}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loading_dialog"
-            android:layout_marginTop="16dp"
-            tools:text="@string/swap_klaytoDida_loading_text" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="64dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loading_dialog"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dida_swap_lottie" />
+
+            <TextView
+                android:id="@+id/swap_text"
+                style="@style/TextView_bold_24_white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{vm.swapType == SwapType.KLAY_TO_DIDA? @string/swap_klaytoDida_loading_text : @string/swap_DidaToKlay_loading_text}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loading_dialog"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="16dp"
+                tools:text="@string/swap_klaytoDida_loading_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
