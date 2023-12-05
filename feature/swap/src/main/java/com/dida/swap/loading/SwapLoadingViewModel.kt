@@ -12,8 +12,10 @@ import com.dida.swap.SwapType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import encryptWithPublicKey
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class SwapLoadingViewModel @AssistedInject constructor(
@@ -27,28 +29,24 @@ class SwapLoadingViewModel @AssistedInject constructor(
 
     private val TAG = "SwapLoadingViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<SwapLoadingNavigationAction> =
-        MutableSharedFlow<SwapLoadingNavigationAction>()
-    val navigationEvent: SharedFlow<SwapLoadingNavigationAction> = _navigationEvent
+    private val _navigateToSuccess: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val navigateToSuccess: SharedFlow<Unit> = _navigateToSuccess.asSharedFlow()
 
     init {
-        //TODO : 실패 시 로직 구현해야함
+        swapCoin()
+    }
+
+    private fun swapCoin() {
         baseViewModelScope.launch {
             getPublicKeyUseCase()
                 .onSuccess {
                     when (swapType) {
-                        SwapType.KLAY_TO_DIDA -> {
-                            swapToDidaUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
-                                .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
-                                .onError { e -> catchError(e) }
-                        }
-
-                        else -> {
-                            swapToKlayUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
-                                .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
-                                .onError { e -> catchError(e) }
-                        }
-                    }
+                        SwapType.KLAY_TO_DIDA -> swapToDidaUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
+                        else -> swapToKlayUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
+                    }.onSuccess {
+                        delay(2000L)
+                        _navigateToSuccess.emit(Unit)
+                    }.onError { e -> catchError(e) }
                 }.onError { e -> catchError(e) }
         }
     }
