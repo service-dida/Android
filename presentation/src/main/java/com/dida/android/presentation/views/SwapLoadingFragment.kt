@@ -30,7 +30,7 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
     }
 
     private val args: SwapLoadingFragmentArgs by navArgs()
-    
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
