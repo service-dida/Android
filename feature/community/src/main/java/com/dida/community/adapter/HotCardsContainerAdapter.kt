@@ -88,7 +88,9 @@ class HotCardsContainerViewHolder(
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             if ((position == contentSize - 2)) {
-                binding.hotCardsViewpager.setCurrentItem(2, false)
+                with(binding.hotCardsViewpager) {
+                    this.post { this.setCurrentItem(2, false) }
+                }
             } else if ((position == 1) && (positionOffset <= scrollFinishOffset)) {
                 binding.hotCardsViewpager.setCurrentItem(contentSize - 3, false)
             }
