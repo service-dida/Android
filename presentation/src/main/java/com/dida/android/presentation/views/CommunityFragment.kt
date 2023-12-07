@@ -21,6 +21,8 @@ import com.dida.community.adapter.CommunityHeaderItem
 import com.dida.community.adapter.HotPostHeaderAdapter
 import com.dida.community.adapter.HotPostHeaderItem
 import com.dida.community.adapter.HotPostContainerAdapter
+import com.dida.community.adapter.PostEmptyAdapter
+import com.dida.community.adapter.PostEmptyItem
 import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HotPosts
@@ -43,6 +45,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     private val hotPostHeaderAdapter by lazy { HotPostHeaderAdapter() }
     private val hotPostContainerAdapter by lazy { HotPostContainerAdapter(viewModel) }
     private val communityHeaderAdapter by lazy { CommunityHeaderAdapter() }
+    private val postEmptyAdapter by lazy { PostEmptyAdapter() }
     private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
     override fun initStartView() {
@@ -72,6 +75,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.postsState.collectLatest {
+                    if (it.content.isEmpty()) postEmptyAdapter.submitList(listOf(PostEmptyItem)) else postEmptyAdapter.submitList(emptyList())
                     communityAdapter.submitList(it.content)
                 }
             }
@@ -153,6 +157,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             hotPostHeaderAdapter,
             hotPostContainerAdapter,
             communityHeaderAdapter,
+            postEmptyAdapter,
             communityAdapter
         )
 
