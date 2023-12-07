@@ -95,7 +95,7 @@ class CirclePagerIndicatorDecoration(
         when (slideType) {
             SLIDETYPE.CAROUSEL -> {
                 drawCarouselInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount)
-                drawCarouselHighlights(c, indicatorStartX, indicatorPosY, activePosition)
+                drawCarouselHighlights(c, indicatorStartX, indicatorPosY, activePosition, itemCount)
             }
             SLIDETYPE.INFINITE -> {
                 drawInfiniteInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount)
@@ -200,14 +200,15 @@ class CirclePagerIndicatorDecoration(
         c: Canvas,
         indicatorStartX: Float,
         indicatorPosY: Float,
-        highlightPosition: Int
+        highlightPosition: Int,
+        itemCount: Int
     ) {
         paint.color = activeColor
 
         // width of item indicator including padding
         val itemWidth = indicatorItemLength + indicatorItemPadding
         val highlightStart = indicatorStartX + itemWidth * highlightPosition
-        if (!(highlightPosition == 0 || highlightPosition == 1)) c.drawCircle(highlightStart, indicatorPosY, indicatorItemLength / 2f, paint)
+        if (!(highlightPosition == 0 || highlightPosition == 1 || highlightPosition == (itemCount - 1) || highlightPosition == (itemCount - 2))) c.drawCircle(highlightStart, indicatorPosY, indicatorItemLength / 2f, paint)
         if (indicatorStrokeColor > 0) c.drawCircle(highlightStart, indicatorPosY, indicatorItemLength.toFloat(), strokePaint)
     }
 
