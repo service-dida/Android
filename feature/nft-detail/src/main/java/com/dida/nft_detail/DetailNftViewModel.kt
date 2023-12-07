@@ -16,13 +16,7 @@ import com.dida.domain.main.model.Post
 import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.BlockUseCase
-import com.dida.domain.usecase.DeleteNftUseCase
-import com.dida.domain.usecase.NftDetailUseCase
-import com.dida.domain.usecase.NftLikeUseCase
-import com.dida.domain.usecase.PostsFromNftUseCase
-import com.dida.domain.usecase.PublicKeyUseCase
-import com.dida.domain.usecase.SellNftUseCase
+import com.dida.domain.usecase.*
 import com.dida.domain.usecase.local.LoginCheckUseCase
 import com.dida.nft_detail.bottom.DetailOwnerType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,6 +42,7 @@ class DetailNftViewModel @Inject constructor(
     private val deleteNftUseCase: DeleteNftUseCase,
     private val loginCheckUseCase: LoginCheckUseCase,
     private val getPublicKeyUseCase: PublicKeyUseCase,
+    private val cancelSellNftUseCase: CancelSellNftUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailNftActionHandler, CommunityActionHandler, CommunityWriteActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -72,6 +67,7 @@ class DetailNftViewModel @Inject constructor(
     val detailOwnerTypeState: NoCompareMutableStateFlow<DetailOwnerType> = NoCompareMutableStateFlow(DetailOwnerType.ALL)
 
     private val cardIdState: MutableStateFlow<Long> = MutableStateFlow(0)
+    private val marketIdState: MutableStateFlow<Long> = MutableStateFlow(0)
 
     fun setCardId(cardId: Long) {
         cardIdState.value = cardId
@@ -93,6 +89,7 @@ class DetailNftViewModel @Inject constructor(
                 .onSuccess {
                     delay(SHIMMER_TIME)
                     _detailNftState.value = UiState.Success(it)
+                    marketIdState.value = it.marketId
                     setDetailOwnerType(it)
                 }.onError { e -> catchError(e) }
         }
@@ -138,6 +135,21 @@ class DetailNftViewModel @Inject constructor(
                 .onSuccess {
                     _navigationEvent.emit(DetailNftNavigationAction.NavigateToBack)
                 }.onError { e -> catchError(e) }
+        }
+    }
+
+    fun onCancelCard(payPwd: String) {
+        baseViewModelScope.launch {
+            showLoading()
+            val publicKey = (getPublicKeyUseCase() as NetworkResult.Success).data
+
+            cancelSellNftUseCase(
+                payPwd = payPwd.encryptWithPublicKey(publicKey.publicKey),
+                marketId = marketIdState.value
+            ).onSuccess {
+                _navigationEvent.emit(DetailNftNavigationAction.NavigateToCancel())
+            }.onError { e -> catchError(e) }
+            dismissLoading()
         }
     }
 

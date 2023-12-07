@@ -125,6 +125,8 @@ fun TextView.bindConfrimBtn(type: DetailOwnerType) {
             )
             this.gravity = Gravity.CENTER_HORIZONTAL
             this.text = "판매하기"
+            this.setTextColor(ContextCompat.getColor(this.context,com.dida.common.R.color.black))
+            this.background = ContextCompat.getDrawable(this.context,com.dida.common.R.drawable.custom_brandlemon_radius10)
         }
         DetailOwnerType.MINE_AND_SALE-> {
             this.text = "판매중"
