@@ -79,8 +79,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             launch {
                 viewModel.hotCardState.collectLatest {
                     it.successOrNull()?.let { hotCards ->
-                        val item = if (hotCards.isNotEmpty()) listOf(HotPosts.Contents(hotCards)) else emptyList()
-                        hotPostContainerAdapter.submitList(item)
+                        if (hotCards.isNotEmpty()) {
+                            hotPostHeaderAdapter.submitList(listOf(HotPostHeaderItem))
+                            hotPostContainerAdapter.submitList(listOf(HotPosts.Contents(hotCards)))
+                        } else {
+                            hotPostContainerAdapter.submitList(emptyList())
+                        }
                     }
                 }
             }
@@ -152,7 +156,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             communityAdapter
         )
 
-        hotPostHeaderAdapter.submitList(listOf(HotPostHeaderItem))
         communityHeaderAdapter.submitList(listOf(CommunityHeaderItem))
 
         binding.communityRecyclerview.adapter = adapter
