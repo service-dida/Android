@@ -18,9 +18,9 @@ import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.CommunityHeaderAdapter
 import com.dida.community.adapter.CommunityHeaderItem
-import com.dida.community.adapter.HotCardHeaderAdapter
-import com.dida.community.adapter.HotCardHeaderItem
-import com.dida.community.adapter.HotCardsContainerAdapter
+import com.dida.community.adapter.HotPostHeaderAdapter
+import com.dida.community.adapter.HotPostHeaderItem
+import com.dida.community.adapter.HotPostContainerAdapter
 import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HotPosts
@@ -40,8 +40,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     override val viewModel : CommunityViewModel by viewModels()
 
     private lateinit var adapter: ConcatAdapter
-    private val hotCardHeaderAdapter by lazy { HotCardHeaderAdapter() }
-    private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
+    private val hotPostHeaderAdapter by lazy { HotPostHeaderAdapter() }
+    private val hotPostContainerAdapter by lazy { HotPostContainerAdapter(viewModel) }
     private val communityHeaderAdapter by lazy { CommunityHeaderAdapter() }
     private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
@@ -80,7 +80,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                 viewModel.hotCardState.collectLatest {
                     it.successOrNull()?.let { hotCards ->
                         val item = if (hotCards.isNotEmpty()) listOf(HotPosts.Contents(hotCards)) else emptyList()
-                        hotCardsContainerAdapter.submitList(item)
+                        hotPostContainerAdapter.submitList(item)
                     }
                 }
             }
@@ -146,13 +146,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
         adapter = ConcatAdapter(
             adapterConfig,
-            hotCardHeaderAdapter,
-            hotCardsContainerAdapter,
+            hotPostHeaderAdapter,
+            hotPostContainerAdapter,
             communityHeaderAdapter,
             communityAdapter
         )
 
-        hotCardHeaderAdapter.submitList(listOf(HotCardHeaderItem))
+        hotPostHeaderAdapter.submitList(listOf(HotPostHeaderItem))
         communityHeaderAdapter.submitList(listOf(CommunityHeaderItem))
 
         binding.communityRecyclerview.adapter = adapter

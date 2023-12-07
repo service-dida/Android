@@ -16,28 +16,28 @@ import com.dida.common.util.SLIDETYPE
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
 import com.dida.community.HotCardActionHandler
-import com.dida.community.databinding.HolderHotCardsContainerBinding
+import com.dida.community.databinding.HolderHotPostContainerBinding
 import com.dida.domain.main.model.HotPosts
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
-class HotCardsContainerAdapter(
+class HotPostContainerAdapter(
     private val eventListener: HotCardActionHandler
-) : ListAdapter<HotPosts.Contents, HotCardsContainerViewHolder>(HotCardsDiffCallback) {
+) : ListAdapter<HotPosts.Contents, HotPostContainerViewHolder>(HotPostDiffCallback) {
 
     init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): HotCardsContainerViewHolder {
-        return HotCardsContainerViewHolder(
-            HolderHotCardsContainerBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
-                eventListener = this@HotCardsContainerAdapter.eventListener
+    ): HotPostContainerViewHolder {
+        return HotPostContainerViewHolder(
+            HolderHotPostContainerBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
+                eventListener = this@HotPostContainerAdapter.eventListener
                 val indicatorHeight = parent.context.resources.getDimensionPixelSize(com.dida.common.R.dimen.hots_indicator_height)
                 val activeColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.white)
                 val inactiveColor: Int = ContextCompat.getColor(parent.context, com.dida.common.R.color.surface6)
-                hotCardsViewpager.addItemDecoration(
+                hotPostViewpager.addItemDecoration(
                     CirclePagerIndicatorDecoration(
                         slideType = SLIDETYPE.CAROUSEL,
                         activeColor = activeColor,
@@ -49,15 +49,15 @@ class HotCardsContainerAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: HotCardsContainerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HotPostContainerViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
 
     override fun getItemId(position: Int): Long = getItem(position)?.hashCode()?.toLong() ?: -1
 }
 
-class HotCardsContainerViewHolder(
-    private val binding: HolderHotCardsContainerBinding
+class HotPostContainerViewHolder(
+    private val binding: HolderHotPostContainerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var targetPosition = 0
@@ -65,7 +65,7 @@ class HotCardsContainerViewHolder(
 
     private val scrollFinishOffset = 0.001633987f
 
-    private val handler = HotCardsContainerViewHandler(this)
+    private val handler = HotPostContainerViewHandler(this)
 
     private val compositePageTransformer = CompositePageTransformer().apply {
         addTransformer { page, position ->
@@ -88,17 +88,17 @@ class HotCardsContainerViewHolder(
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             if ((position == contentSize - 2)) {
-                with(binding.hotCardsViewpager) {
+                with(binding.hotPostViewpager) {
                     this.post { this.setCurrentItem(2, false) }
                 }
             } else if ((position == 1) && (positionOffset <= scrollFinishOffset)) {
-                binding.hotCardsViewpager.setCurrentItem(contentSize - 3, false)
+                binding.hotPostViewpager.setCurrentItem(contentSize - 3, false)
             }
         }
     }
 
     init {
-        binding.hotCardsViewpager.registerOnPageChangeCallback(onPageChangeCallback)
+        binding.hotPostViewpager.registerOnPageChangeCallback(onPageChangeCallback)
         handler.sendEmptyMessageDelayed(MSG_START_SCROLL, Constants.REPEAT_INTERVAL_MS)
     }
 
@@ -109,7 +109,7 @@ class HotCardsContainerViewHolder(
                 this.slice(this.size -2 until this.size) + this + this.slice(0 until 2)
             }
             binding.holderModel = HotPosts.Contents(items)
-            binding.hotCardsViewpager.apply {
+            binding.hotPostViewpager.apply {
                 clipToPadding = false
                 clipChildren = false
                 offscreenPageLimit = 3
@@ -121,16 +121,16 @@ class HotCardsContainerViewHolder(
             binding.holderModel = hotCardsItem
         }
         binding.executePendingBindings()
-        if (hotCardsItem.contents.size > 1) binding.hotCardsViewpager.setCurrentItem(2, false)
+        if (hotCardsItem.contents.size > 1) binding.hotPostViewpager.setCurrentItem(2, false)
     }
 
     fun handleMessage(msg: Message?) {
         if (msg?.what != MSG_START_SCROLL) return
 
         if (this.itemView.isShown) {
-            val nextPosition = binding.hotCardsViewpager.currentItem + 1
+            val nextPosition = binding.hotPostViewpager.currentItem + 1
             targetPosition = if (contentSize <= targetPosition) 0 else nextPosition
-            binding.hotCardsViewpager.smoothScrollToPosition(
+            binding.hotPostViewpager.smoothScrollToPosition(
                 item = targetPosition,
                 duration = Constants.ROLLING_INTERVAL_MS,
                 pagePxWidth = this.itemView.width / 2
@@ -138,8 +138,8 @@ class HotCardsContainerViewHolder(
         }
     }
 
-    private class HotCardsContainerViewHandler(viewHolder: HotCardsContainerViewHolder) : Handler(Looper.getMainLooper()) {
-        private val holder: WeakReference<HotCardsContainerViewHolder> = WeakReference(viewHolder)
+    private class HotPostContainerViewHandler(viewHolder: HotPostContainerViewHolder) : Handler(Looper.getMainLooper()) {
+        private val holder: WeakReference<HotPostContainerViewHolder> = WeakReference(viewHolder)
         override fun handleMessage(msg: Message) {
             val viewHolder = holder.get()
             viewHolder?.handleMessage(msg)
@@ -151,7 +151,7 @@ class HotCardsContainerViewHolder(
     }
 }
 
-internal object HotCardsDiffCallback : DiffUtil.ItemCallback<HotPosts.Contents>() {
+internal object HotPostDiffCallback : DiffUtil.ItemCallback<HotPosts.Contents>() {
     override fun areItemsTheSame(oldItem: HotPosts.Contents, newItem: HotPosts.Contents) =
         oldItem == newItem
 
