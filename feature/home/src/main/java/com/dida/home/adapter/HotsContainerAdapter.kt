@@ -91,7 +91,9 @@ class HotsContainerViewHolder(
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             if ((position == contentSize - 2)) {
-                binding.hotsViewPager.setCurrentItem(2, false)
+                with(binding.hotsViewPager) {
+                    this.post { this.setCurrentItem(2, false) }
+                }
             } else if ((position == 1) && (positionOffset <= scrollFinishOffset)) {
                 binding.hotsViewPager.setCurrentItem(contentSize - 3, false)
             }

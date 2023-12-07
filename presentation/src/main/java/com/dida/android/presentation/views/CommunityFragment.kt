@@ -18,9 +18,11 @@ import com.dida.community.CommunityNavigationAction
 import com.dida.community.CommunityViewModel
 import com.dida.community.adapter.CommunityHeaderAdapter
 import com.dida.community.adapter.CommunityHeaderItem
-import com.dida.community.adapter.HotCardHeaderAdapter
-import com.dida.community.adapter.HotCardHeaderItem
-import com.dida.community.adapter.HotCardsContainerAdapter
+import com.dida.community.adapter.HotPostHeaderAdapter
+import com.dida.community.adapter.HotPostHeaderItem
+import com.dida.community.adapter.HotPostContainerAdapter
+import com.dida.community.adapter.PostEmptyAdapter
+import com.dida.community.adapter.PostEmptyItem
 import com.dida.community.databinding.FragmentCommunityBinding
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.HotPosts
@@ -40,9 +42,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     override val viewModel : CommunityViewModel by viewModels()
 
     private lateinit var adapter: ConcatAdapter
-    private val hotCardHeaderAdapter by lazy { HotCardHeaderAdapter() }
-    private val hotCardsContainerAdapter by lazy { HotCardsContainerAdapter(viewModel) }
+    private val hotPostHeaderAdapter by lazy { HotPostHeaderAdapter() }
+    private val hotPostContainerAdapter by lazy { HotPostContainerAdapter(viewModel) }
     private val communityHeaderAdapter by lazy { CommunityHeaderAdapter() }
+    private val postEmptyAdapter by lazy { PostEmptyAdapter() }
     private val communityAdapter by lazy { CommunityAdapter(viewModel) }
 
     override fun initStartView() {
@@ -72,6 +75,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewLifecycleOwner.repeatOnStarted {
             launch {
                 viewModel.postsState.collectLatest {
+                    if (it.content.isEmpty()) postEmptyAdapter.submitList(listOf(PostEmptyItem)) else postEmptyAdapter.submitList(emptyList())
                     communityAdapter.submitList(it.content)
                 }
             }
@@ -79,8 +83,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             launch {
                 viewModel.hotCardState.collectLatest {
                     it.successOrNull()?.let { hotCards ->
-                        val item = if (hotCards.isNotEmpty()) listOf(HotPosts.Contents(hotCards)) else emptyList()
-                        hotCardsContainerAdapter.submitList(item)
+                        if (hotCards.isNotEmpty()) {
+                            hotPostHeaderAdapter.submitList(listOf(HotPostHeaderItem))
+                            hotPostContainerAdapter.submitList(listOf(HotPosts.Contents(hotCards)))
+                        } else {
+                            hotPostContainerAdapter.submitList(emptyList())
+                        }
                     }
                 }
             }
@@ -146,13 +154,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
         adapter = ConcatAdapter(
             adapterConfig,
-            hotCardHeaderAdapter,
-            hotCardsContainerAdapter,
+            hotPostHeaderAdapter,
+            hotPostContainerAdapter,
             communityHeaderAdapter,
+            postEmptyAdapter,
             communityAdapter
         )
 
-        hotCardHeaderAdapter.submitList(listOf(HotCardHeaderItem))
         communityHeaderAdapter.submitList(listOf(CommunityHeaderItem))
 
         binding.communityRecyclerview.adapter = adapter

@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dida.common.util.context
 import com.dida.community.HotCardActionHandler
 import com.dida.community.R
-import com.dida.community.databinding.HolderHotCardBinding
+import com.dida.community.databinding.HolderHotPostBinding
 import com.dida.domain.main.model.HotPost
 
-class HotCardAdapter(
+class HotPostAdapter(
     private val eventListener: HotCardActionHandler
-) : ListAdapter<HotPost, HotCardAdapter.ViewHolder>(HotCardDiffCallback) {
+) : ListAdapter<HotPost, HotPostAdapter.ViewHolder>(HotPostDiffCallback) {
 
     init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding: HolderHotCardBinding = DataBindingUtil.inflate(
+        val viewDataBinding: HolderHotPostBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.holder_hot_card,
+            R.layout.holder_hot_post,
             parent,
             false
         )
@@ -35,9 +35,9 @@ class HotCardAdapter(
 
     override fun getItemId(position: Int): Long = getItem(position).nftId * -1
 
-    override fun getItemViewType(position: Int): Int = R.layout.holder_hot_card
+    override fun getItemViewType(position: Int): Int = R.layout.holder_hot_post
 
-    class ViewHolder(private val binding: HolderHotCardBinding) :
+    class ViewHolder(private val binding: HolderHotPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HotPost) {
@@ -47,7 +47,7 @@ class HotCardAdapter(
         }
     }
 
-    internal object HotCardDiffCallback : DiffUtil.ItemCallback<HotPost>() {
+    internal object HotPostDiffCallback : DiffUtil.ItemCallback<HotPost>() {
         override fun areItemsTheSame(oldItem: HotPost, newItem: HotPost) =
             oldItem.nftId == newItem.nftId
 
