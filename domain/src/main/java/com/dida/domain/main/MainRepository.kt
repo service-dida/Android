@@ -12,7 +12,6 @@ import com.dida.domain.main.model.CommonFollow
 import com.dida.domain.main.model.DealingHistory
 import com.dida.domain.main.model.HideMember
 import com.dida.domain.main.model.HideNft
-import com.dida.domain.main.model.HotMember
 import com.dida.domain.main.model.HotPost
 import com.dida.domain.main.model.HotSellerPage
 import com.dida.domain.main.model.Keywords
@@ -21,7 +20,7 @@ import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
-import com.dida.domain.main.model.OwnHistory
+import com.dida.domain.main.model.OwnershipHistory
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Password
 import com.dida.domain.main.model.Post
@@ -144,7 +143,7 @@ interface MainRepository {
 
     suspend fun getKeywords(): NetworkResult<Keywords>
 
-    suspend fun getOwnHistory(nftId: Long, page: Int, size: Int): NetworkResult<Contents<OwnHistory>>
+    suspend fun getOwnershipHistory(nftId: Long, page: Int, size: Int): NetworkResult<Contents<OwnershipHistory>>
 
     /**
      * 암호화 영역

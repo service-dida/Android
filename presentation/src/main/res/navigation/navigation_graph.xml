@@ -751,6 +751,10 @@
     <fragment
         android:id="@+id/ownerShipHistoryFragment"
         android:name="com.dida.android.presentation.views.OwnerShipHistoryFragment"
-        android:label="OwnerShipHistoryFragment" />
+        android:label="OwnerShipHistoryFragment" >
+        <argument
+            android:name="nftId"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
