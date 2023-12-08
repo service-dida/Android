@@ -21,6 +21,7 @@ import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.OwnHistory
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Password
 import com.dida.domain.main.model.Post
@@ -142,6 +143,8 @@ interface MainRepository {
     suspend fun alarms(page: Int, size: Int): NetworkResult<Contents<Alarm>>
 
     suspend fun getKeywords(): NetworkResult<Keywords>
+
+    suspend fun getOwnHistory(nftId: Long, page: Int, size: Int): NetworkResult<Contents<OwnHistory>>
 
     /**
      * 암호화 영역

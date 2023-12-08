@@ -50,6 +50,7 @@ import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.OwnHistory
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Password
 import com.dida.domain.main.model.Post
@@ -321,6 +322,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getKeywords(): NetworkResult<Keywords> {
         return handleApi { didaApi.getKeywords().toDomain() }
+    }
+
+    override suspend fun getOwnHistory(nftId: Long, page: Int, size: Int): NetworkResult<Contents<OwnHistory>> {
+        return handleApi { didaApi.getOwnHistory(nftId, page, size).toDomain() }
     }
 
     override suspend fun getPublicKey(): NetworkResult<PublicKey> {
