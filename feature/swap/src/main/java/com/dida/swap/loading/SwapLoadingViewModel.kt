@@ -44,7 +44,7 @@ class SwapLoadingViewModel @AssistedInject constructor(
                         SwapType.KLAY_TO_DIDA -> swapToDidaUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
                         else -> swapToKlayUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
                     }.onSuccess {
-                        delay(2000L)
+                        delay(2500L)
                         _navigateToSuccess.emit(Unit)
                     }.onError { e -> catchError(e) }
                 }.onError { e -> catchError(e) }

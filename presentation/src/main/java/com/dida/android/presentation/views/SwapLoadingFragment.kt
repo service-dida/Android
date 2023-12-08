@@ -2,7 +2,6 @@ package com.dida.android.presentation.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.swap.databinding.FragmentSwapLoadingBinding
 import com.dida.swap.loading.SwapLoadingViewModel
