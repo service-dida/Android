@@ -126,38 +126,6 @@
                         app:userNickname="@{vm.detailNftState}"
                         tools:text="user name here" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/whos_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_surface1_radius8"
-                        android:padding="12dp"
-                        app:layout_constraintBottom_toBottomOf="@id/user_img"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/user_img">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_whos"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toRightOf="@id/whos_txt"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/whos_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/pretendard_regular"
-                            android:text="@string/detail_nft_who_text"
-                            android:textColor="@color/white"
-                            android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
