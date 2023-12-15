@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.dida.common.util.UiState
+import com.dida.common.util.addPriceDot
 import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Nft
 import com.dida.nft_detail.bottom.DetailOwnerType
@@ -92,7 +93,19 @@ fun TextView.bindTokenId(uiState: UiState<Nft>) {
 
 @BindingAdapter("NftPrice")
 fun TextView.bindPrice(uiState: UiState<Nft>) {
-    this.text = uiState.successOrNull()?.nftInfo?.price
+    val price = uiState.successOrNull()?.nftInfo?.price
+    if (price.isNullOrEmpty() || price == "NOT SALE" || price == "NO MARKETED") {
+        this.text = "NOT SALE"
+    } else {
+        val roundedValue = (price.toDouble() * 100).toLong() / 100.0
+
+        val formattedValue = if (roundedValue % 1 == 0.0) {
+            String.format("%.0f", roundedValue)
+        } else {
+            String.format("%.2f", roundedValue)
+        }
+        this.text = "${addPriceDot(formattedValue)}"
+    }
 }
 
 @SuppressLint("SetTextI18n")
