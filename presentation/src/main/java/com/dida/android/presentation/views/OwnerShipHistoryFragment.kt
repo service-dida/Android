@@ -2,11 +2,8 @@ package com.dida.android.presentation.views
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
@@ -16,8 +13,8 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -26,14 +23,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Surface1
-import com.dida.compose.theme.Surface4
-import com.dida.compose.theme.Surface8
 import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.LineDivider
+import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.reachEnd
-import com.dida.domain.Contents
-import com.dida.domain.main.model.OwnershipHistory
 import com.dida.ownership_history.OwnerShipHistoryViewModel
 import com.dida.ownership_history.R
 import com.dida.ownership_history.component.OwnershipHistoryItem
@@ -80,15 +74,32 @@ class OwnerShipHistoryFragment : BaseFragment<FragmentOwnershipHistoryBinding, O
                 LaunchedEffect(key1 = nextPage) {
                     if (nextPage) viewModel.nextPage()
                 }
-                Column {
-                    currentOwnerArea(ownerShipHistoryList)
-
-                    //소유권 내역이 하나라면 이전소유내역 비 노출
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    item { OwnerTitle(isCurrent = true) }
+                    ownerShipHistoryList.content.firstOrNull()?.let {
+                        item {
+                            OwnershipHistoryItem(
+                                currentOwner = true,
+                                item = it
+                            )
+                        }
+                    }
                     if (ownerShipHistoryList.content.size > 1) {
-                        Spacer(Modifier.size(32.dp))
-                        LineDivider(Surface1, 8)
-
-                        beforeOwnerArea(ownerShipHistoryList)
+                        item { VerticalDivider(dp = 32) }
+                        item { LineDivider(Surface1, 8) }
+                        item { OwnerTitle(isCurrent = false) }
+                        items(ownerShipHistoryList.size) { index ->
+                            if (index != 0) {
+                                OwnershipHistoryItem(
+                                    currentOwner = false,
+                                    item = ownerShipHistoryList.content[index],
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -96,57 +107,15 @@ class OwnerShipHistoryFragment : BaseFragment<FragmentOwnershipHistoryBinding, O
     }
 
     @Composable
-    private fun currentOwnerArea(ownerShipHistoryList: Contents<OwnershipHistory>) {
-        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
-            Text(
-                text = "현재 소유자",
-                modifier = Modifier
-                    .padding(top = 23.dp),
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 18.dp),
-                color = White
-            )
-
-            if (ownerShipHistoryList.content.isNotEmpty()) {
-                OwnershipHistoryItem(
-                    modifier = Modifier.padding(top = 12.dp),
-                    nameColor = Color.White,
-                    item = ownerShipHistoryList.content[0]
-                )
-            }
-        }
-    }
-
-    @Composable
-    private fun beforeOwnerArea(ownerShipHistoryList: Contents<OwnershipHistory>) {
-        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
-            Text(
-                text = "이전 소유 내역",
-                modifier = Modifier
-                    .padding(top = 24.dp),
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 18.dp),
-                color = White
-            )
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 24.dp)
-            ) {
-                items(ownerShipHistoryList.size) { index ->
-                    if (index != 0) {
-                        OwnershipHistoryItem(
-                            modifier = Modifier,
-                            nameColor = Surface8,
-                            item = ownerShipHistoryList.content[index],
-                        )
-                        Spacer(Modifier.size(12.dp))
-                        LineDivider(Surface4, 1)
-                    }
-                }
-            }
-        }
+    private fun OwnerTitle(isCurrent: Boolean) {
+        val titleLabel = if (isCurrent) R.string.ownership_current_owner_title else R.string.ownership_before_owner_title
+        Text(
+            text = stringResource(id = titleLabel),
+            modifier = Modifier.padding(top = 23.dp),
+            style = DidaTypography.h3,
+            fontSize = dpToSp(dp = 18.dp),
+            color = White
+        )
     }
 
     private fun initToolbar() {

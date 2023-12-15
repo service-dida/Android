@@ -31,12 +31,11 @@ class OwnerShipHistoryViewModel @Inject constructor(
         nftIdState.value = nftId
     }
 
-    fun getOwnershipHistory(){
+    fun getOwnershipHistory() {
         baseViewModelScope.launch {
             ownershipHistoryUseCase(nftId = nftIdState.value, page = 0, pageSize = PAGE_SIZE)
-                .onSuccess {
-                    _ownershipHistoryState.emit(it)
-                }.onError { e -> catchError(e) }
+                .onSuccess { _ownershipHistoryState.value = it }
+                .onError { e -> catchError(e) }
         }
     }
 

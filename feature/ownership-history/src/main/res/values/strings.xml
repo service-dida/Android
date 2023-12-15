@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ownership_history_title">소유권 내역</string>
+    <string name="ownership_current_owner_title">현재 소유자</string>
+    <string name="ownership_before_owner_title">이전 소유 내역</string>
 </resources>
