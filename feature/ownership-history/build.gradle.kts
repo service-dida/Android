@@ -5,4 +5,5 @@ plugins {
 
 dependencies {
     implementation(project(":feature:compose"))
+    implementation(project(":common"))
 }
