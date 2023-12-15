@@ -38,6 +38,8 @@ internal fun Project.configureComposeAndroid(
             add("implementation", libs.findLibrary("androidxLifecycleViewModelCompose").get())
             add("implementation", libs.findLibrary("androidxLifecycleViewModelCompose").get())
             add("implementation", libs.findLibrary("androidxLifecycleViewModelCompose").get())
+            add("implementation", libs.findLibrary("androidxComposeUiTooling").get())
+            add("implementation", libs.findLibrary("androidxComposeUiToolingPreview").get())
             add("implementation", libs.findLibrary("androidx-compose-pager").get())
             add("implementation", libs.findLibrary("androidx-compose-pager-indicator").get())
             add("implementation", libs.findLibrary("coilCompose").get())

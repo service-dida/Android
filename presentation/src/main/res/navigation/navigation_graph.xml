@@ -381,6 +381,11 @@
             app:destination="@id/communityCommunityInputFragment"
             app:enterAnim="@anim/enter_from_right"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_ownerShipHIstoryFragment"
+            app:destination="@id/ownerShipHistoryFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"/>
     </fragment>
 
     <fragment
@@ -742,6 +747,14 @@
             app:popExitAnim="@anim/exit_to_right"
             app:popUpTo="@+id/homeFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerShipHistoryFragment"
+        android:name="com.dida.android.presentation.views.OwnerShipHistoryFragment"
+        android:label="OwnerShipHistoryFragment" >
+        <argument
+            android:name="nftId"
+            app:argType="long" />
     </fragment>
 
 </navigation>

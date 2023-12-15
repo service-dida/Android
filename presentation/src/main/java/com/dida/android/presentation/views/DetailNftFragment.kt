@@ -68,6 +68,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     is DetailNftNavigationAction.NavigateToBlock -> {}
                     is DetailNftNavigationAction.NavigateToUpdate -> {}
                     is DetailNftNavigationAction.NavigateToDelete -> {}
+                    is DetailNftNavigationAction.NavigateToOwnerShipHistory -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToOwnerShipHIstoryFragment(it.nftId))
                     is DetailNftNavigationAction.NavigateToCancel -> { viewModel.setCardId(args.cardId) }
                     is DetailNftNavigationAction.NavigateToWritePost -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityCommunityInputFragment(args.cardId, true))
                     is DetailNftNavigationAction.NavigateToImageDetail -> {

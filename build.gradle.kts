@@ -16,6 +16,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version ("1.8.10") apply false
     id("dagger.hilt.android.plugin") version ("2.44") apply false
     id("androidx.navigation.safeargs.kotlin") version ("2.4.2") apply false
+    alias(libs.plugins.androidDynamicFeature) apply false
 }
 
 tasks.register("clean", Delete::class) {

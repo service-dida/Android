@@ -23,7 +23,6 @@ import com.dida.data.model.market.toDomain
 import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
-import com.dida.data.model.profile.PostMemberPasswordCheckRequest
 import com.dida.data.model.profile.toDomain
 import com.dida.data.model.sns.PatchCommonPostRequest
 import com.dida.data.model.sns.PostCommonCommentsRequest
@@ -50,6 +49,7 @@ import com.dida.domain.main.model.Main
 import com.dida.domain.main.model.MemberProfile
 import com.dida.domain.main.model.MemberWallet
 import com.dida.domain.main.model.Nft
+import com.dida.domain.main.model.OwnershipHistory
 import com.dida.domain.main.model.OwnNft
 import com.dida.domain.main.model.Password
 import com.dida.domain.main.model.Post
@@ -321,6 +321,10 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getKeywords(): NetworkResult<Keywords> {
         return handleApi { didaApi.getKeywords().toDomain() }
+    }
+
+    override suspend fun getOwnershipHistory(nftId: Long, page: Int, size: Int): NetworkResult<Contents<OwnershipHistory>> {
+        return handleApi { didaApi.getOwnershipHistory(nftId, page, size).toDomain() }
     }
 
     override suspend fun getPublicKey(): NetworkResult<PublicKey> {

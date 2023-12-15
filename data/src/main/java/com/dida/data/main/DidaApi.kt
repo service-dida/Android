@@ -35,6 +35,7 @@ import com.dida.data.model.main.GetRecentNftsResponse
 import com.dida.data.model.main.GetSoldOutPageResponse
 import com.dida.data.model.main.GetSoldOutResponse
 import com.dida.data.model.market.GetNftResponse
+import com.dida.data.model.market.GetOwnershipHistoryResponse
 import com.dida.data.model.profile.GetCommonFollowResponse
 import com.dida.data.model.profile.GetCommonProfileNftResponse
 import com.dida.data.model.profile.GetCommonProfileResponse
@@ -44,7 +45,6 @@ import com.dida.data.model.profile.PatchMemberPasswordRequest
 import com.dida.data.model.sns.GetOwnNftsResponse
 import com.dida.data.model.profile.PatchProfileDescriptionRequest
 import com.dida.data.model.profile.PatchProfileNicknameRequest
-import com.dida.data.model.profile.PostMemberPasswordCheckRequest
 import com.dida.data.model.sns.GetCommentsFromPostResponse
 import com.dida.data.model.sns.GetHotPostsResponse
 import com.dida.data.model.sns.GetPostDetailResponse
@@ -455,4 +455,11 @@ interface DidaApi {
     @GET("/keyword")
     suspend fun getKeywords(): GetKeywordsResponse
 
+    //NFT소유권 변경 내역 확인하기
+    @GET("/history/{nftId}")
+    suspend fun getOwnershipHistory(
+        @Path("nftId") nftId: Long,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetOwnershipHistoryResponse
 }
