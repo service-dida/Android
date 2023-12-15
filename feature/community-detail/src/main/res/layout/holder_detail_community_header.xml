@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="@{holder.nftInfo.price}"
+                    decimalPrice="@{holder.nftInfo.price}"
                     android:textColor="@color/hots_coin_txt"
                     android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="@id/dida_img"
