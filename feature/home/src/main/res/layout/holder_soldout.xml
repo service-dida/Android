@@ -107,7 +107,7 @@
                 android:layout_marginLeft="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{holderModel.nftInfo.price}"
+                decimalPrice="@{holderModel.nftInfo.price}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/soldout_img"
                 app:layout_constraintTop_toTopOf="parent">
