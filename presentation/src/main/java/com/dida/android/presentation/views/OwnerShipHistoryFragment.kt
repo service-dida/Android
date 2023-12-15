@@ -82,29 +82,26 @@ class OwnerShipHistoryFragment : BaseFragment<FragmentOwnershipHistoryBinding, O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
-            binding.composeView.apply {
-                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                setContent {
-                    val ownerShipHistoryList by viewModel.ownershipHistoryState.collectAsStateWithLifecycle()
-                    AppLog.e("haha ${ownerShipHistoryList}")
-                    val listState = rememberLazyListState()
-                    val nextPage by remember {
-                        derivedStateOf { listState.reachEnd() }
-                    }
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                val ownerShipHistoryList by viewModel.ownershipHistoryState.collectAsStateWithLifecycle()
+                val listState = rememberLazyListState()
+                val nextPage by remember {
+                    derivedStateOf { listState.reachEnd() }
+                }
 
-                    LaunchedEffect(key1 = nextPage) {
-                        if (nextPage) viewModel.nextPage()
-                    }
-                    Column{
-                        currentOwnerArea(ownerShipHistoryList)
+                LaunchedEffect(key1 = nextPage) {
+                    if (nextPage) viewModel.nextPage()
+                }
+                Column{
+                    currentOwnerArea(ownerShipHistoryList)
 
-                        //소유권 내역이 하나라면 이전소유내역 비 노출
-                        if(ownerShipHistoryList.content.size > 1){
-                            Spacer(Modifier.size(32.dp))
-                            LineDivider(Surface1,8)
+                    //소유권 내역이 하나라면 이전소유내역 비 노출
+                    if (ownerShipHistoryList.content.size > 1) {
+                        Spacer(Modifier.size(32.dp))
+                        LineDivider(Surface1, 8)
 
-                            beforeOwnerArea(ownerShipHistoryList)
-                        }
+                        beforeOwnerArea(ownerShipHistoryList)
                     }
                 }
             }
