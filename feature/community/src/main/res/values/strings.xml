@@ -5,5 +5,6 @@
     <string name="community_hot_title_text">시끌벅적 게시판 👀</string>
     <string name="community_hot_sub_title_text">이야기가 활발한 NFT를 소개합니다</string>
     <string name="community_recent_title_text">최신 게시물</string>
+    <string name="community_post_empty_text">게시글이 아직 없어요\nNFT로 게시글을 만들어 보세요</string>
     <string name="community_floatingActionButton_description">게시물 작성</string>
 </resources>

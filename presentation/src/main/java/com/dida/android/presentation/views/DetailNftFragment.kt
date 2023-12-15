@@ -69,6 +69,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                     is DetailNftNavigationAction.NavigateToUpdate -> {}
                     is DetailNftNavigationAction.NavigateToDelete -> {}
                     is DetailNftNavigationAction.NavigateToOwnerShipHistory -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToOwnerShipHIstoryFragment(it.nftId))
+                    is DetailNftNavigationAction.NavigateToCancel -> { viewModel.setCardId(args.cardId) }
                     is DetailNftNavigationAction.NavigateToWritePost -> navigate(DetailNftFragmentDirections.actionDetailNftFragmentToCommunityCommunityInputFragment(args.cardId, true))
                     is DetailNftNavigationAction.NavigateToImageDetail -> {
                         val intent = ImageViewerActivity.starterIntent(
@@ -120,7 +121,7 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
                         DetailNftBottomSheet(viewModel.detailOwnerTypeState.value) { type ->
                             when(type){
                                 DetailNftMenuType.SELL -> showSellNftDialog()
-                                DetailNftMenuType.CANCEL -> {}
+                                DetailNftMenuType.CANCEL -> showCancelNftDialog()
                                 DetailNftMenuType.REMOVE -> showDeleteNftDialog()
                                 DetailNftMenuType.HIDE -> viewModel.onHideCard()
                                 DetailNftMenuType.REPORT -> showReportDialog(args.cardId)
@@ -170,6 +171,19 @@ class DetailNftFragment : BaseFragment<FragmentDetailNftBinding, DetailNftViewMo
             showToastMessage("마켓에 올라가 있는 NFT는 삭제 할 수 없습니다.")
         }
     }
+
+    private fun showCancelNftDialog(){
+        PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+            if (success) {
+                viewModel.onCancelCard(password)
+            } else {
+                if (password == "reset") {
+                    navigate(DetailNftFragmentDirections.actionDetailNftFragmentToSettingFragment())
+                }
+            }
+        }.show(childFragmentManager, "DetailNftBottomSheet")
+    }
+
 
     private fun showReportDialog(cardId: Long) {
         ReportBottomSheet { confirm, content ->

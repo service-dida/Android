@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.community.databinding.HolderHotCardHeaderBinding
+import com.dida.community.databinding.HolderHotPostHeaderBinding
 
-class HotCardHeaderAdapter: ListAdapter<HotCardHeaderItem, HotCardHeaderAdapter.ViewHolder>(HotCardHeaderDiffCallback) {
+class HotPostHeaderAdapter: ListAdapter<HotPostHeaderItem, HotPostHeaderAdapter.ViewHolder>(HotPostHeaderDiffCallback) {
 
     init { setHasStableIds(true) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            HolderHotCardHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HolderHotPostHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
@@ -23,7 +23,7 @@ class HotCardHeaderAdapter: ListAdapter<HotCardHeaderItem, HotCardHeaderAdapter.
 
     override fun getItemId(position: Int): Long = getItem(position)?.hashCode()?.toLong() ?: -1
 
-    class ViewHolder(private val binding: HolderHotCardHeaderBinding) :
+    class ViewHolder(private val binding: HolderHotPostHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind() {
@@ -31,16 +31,16 @@ class HotCardHeaderAdapter: ListAdapter<HotCardHeaderItem, HotCardHeaderAdapter.
         }
     }
 
-    internal object HotCardHeaderDiffCallback : DiffUtil.ItemCallback<HotCardHeaderItem>() {
-        override fun areItemsTheSame(oldItem: HotCardHeaderItem, newItem: HotCardHeaderItem) =
+    internal object HotPostHeaderDiffCallback : DiffUtil.ItemCallback<HotPostHeaderItem>() {
+        override fun areItemsTheSame(oldItem: HotPostHeaderItem, newItem: HotPostHeaderItem) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: HotCardHeaderItem, newItem: HotCardHeaderItem) =
+        override fun areContentsTheSame(oldItem: HotPostHeaderItem, newItem: HotPostHeaderItem) =
             oldItem.equals(newItem)
     }
 }
 
-object HotCardHeaderItem
+object HotPostHeaderItem
 
 
 

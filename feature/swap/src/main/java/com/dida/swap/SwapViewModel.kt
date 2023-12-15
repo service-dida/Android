@@ -35,8 +35,8 @@ class SwapViewModel @Inject constructor(
 
     val amountInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
-    lateinit var klayAmount: String
-    lateinit var didaAmount: String
+    private var klayAmount: String = ""
+    private var didaAmount: String = ""
 
     fun initWalletAmount() {
         baseViewModelScope.launch {
@@ -49,25 +49,19 @@ class SwapViewModel @Inject constructor(
         }
     }
 
-    fun setWalletAmount() {
-        if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
-            _walletAmountState.value = klayAmount
-        } else {
-            _walletAmountState.value = didaAmount
+    private fun setWalletAmount() {
+        when (swapTypeState.value) {
+            SwapType.KLAY_TO_DIDA ->  _walletAmountState.value = klayAmount
+            SwapType.DIDA_TO_KLAY -> _walletAmountState.value = didaAmount
         }
     }
 
-    // TODO : 지갑 없을 경우 로직 수정
     fun getWalletExists() {
         baseViewModelScope.launch {
             showLoading()
             checkWalletUseCase()
                 .onSuccess { _walletExistsState.emit(it) }
-                .onError { e ->
-//                    if (e is NeedToWalletException) _walletExistsState.emit(false)
-//                    else catchError(e)
-                    catchError(e)
-                }
+                .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
@@ -79,10 +73,9 @@ class SwapViewModel @Inject constructor(
 
     override fun onSwapTypeChange() {
         baseViewModelScope.launch {
-            if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
-                _swapTypeState.emit(SwapType.DIDA_TO_KLAY)
-            } else {
-                _swapTypeState.emit(SwapType.KLAY_TO_DIDA)
+            when (swapTypeState.value) {
+                SwapType.KLAY_TO_DIDA -> _swapTypeState.emit(SwapType.DIDA_TO_KLAY)
+                SwapType.DIDA_TO_KLAY -> _swapTypeState.emit(SwapType.KLAY_TO_DIDA)
             }
             setWalletAmount()
         }
