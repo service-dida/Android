@@ -14,7 +14,7 @@ sealed class DetailNftNavigationAction {
     class NavigateToUpdate(val postId: Long): DetailNftNavigationAction()
     class NavigateToDelete(val postId: Long): DetailNftNavigationAction()
     class NavigateToOwnerShipHistory(val nftId: Long): DetailNftNavigationAction()
-    class NavigateToCancel(): DetailNftNavigationAction()
+    object NavigateToCancel : DetailNftNavigationAction()
     object NavigateToWritePost: DetailNftNavigationAction()
     class NavigateToImageDetail(val imageUrl: String?, val imageTitle: String?, val imageDescription: String?): DetailNftNavigationAction()
 }

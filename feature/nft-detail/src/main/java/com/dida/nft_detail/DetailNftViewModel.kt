@@ -147,7 +147,7 @@ class DetailNftViewModel @Inject constructor(
                 payPwd = payPwd.encryptWithPublicKey(publicKey.publicKey),
                 marketId = marketIdState.value
             ).onSuccess {
-                _navigationEvent.emit(DetailNftNavigationAction.NavigateToCancel())
+                _navigationEvent.emit(DetailNftNavigationAction.NavigateToCancel)
             }.onError { e -> catchError(e) }
             dismissLoading()
         }
