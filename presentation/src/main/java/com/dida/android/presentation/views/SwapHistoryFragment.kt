@@ -50,9 +50,7 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
         }
     }
 
-    override fun initAfterBinding() {
-
-    }
+    override fun initAfterBinding() {}
 
     private fun initToolbar() {
         binding.toolbar.apply {

@@ -18,10 +18,9 @@ data class Swap(
     }
 
     fun getDate(): String {
-        val year = Calendar.getInstance().get(Calendar.YEAR)
         val timeList = this.time.split(" ")
         val date = timeList[0].split("-")
-        return "${year}.${date[0]}.${date[1]} · ${timeList[1]}"
+        return "${date[0]}.${date[1]} · ${timeList[1]}"
     }
 }
 
