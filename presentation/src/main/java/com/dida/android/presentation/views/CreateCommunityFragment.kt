@@ -6,10 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,7 +17,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -37,14 +34,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaMediumText
 import com.dida.compose.theme.BrandLemon
-import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.Surface2
 import com.dida.compose.theme.Surface6
 import com.dida.compose.theme.TextGray
 import com.dida.compose.theme.White
-import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.LineDivider
@@ -117,13 +114,12 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                 Column(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    Text(
+                    DidaBoldText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 20.dp, horizontal = 16.dp),
                         text = getString(R.string.create_community_select_nft_title),
-                        style = DidaTypography.h1,
-                        fontSize = dpToSp(dp = 24.dp),
+                        fontSize = 24,
                         color = White
                     )
                     Tabs(tabs = tabs, pagerState = pagerState, coroutineScope = coroutineScope)
@@ -168,7 +164,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                             pagerState.animateScrollToPage(index)
                         }
                     },
-                    text = { Text(text = tab.str) },
+                    text = { DidaMediumText(text = tab.str) },
                     selectedContentColor = BrandLemon,
                     unselectedContentColor = Surface6,
                     interactionSource = NoRippleInteractionSource()
@@ -296,11 +292,10 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(
+                    DidaBoldText(
                         modifier = Modifier.fillMaxWidth(),
                         text = item.nftName,
-                        style = DidaTypography.h1,
-                        fontSize = dpToSp(dp = 18.dp),
+                        fontSize = 18,
                         color = White
                     )
                     VerticalDivider(dp = 4)
@@ -314,11 +309,10 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                             model = item.memberInfo.profileImgUrl
                         )
                         HorizontalDivider(dp = 8)
-                        Text(
+                        DidaMediumText(
                             modifier = Modifier.fillMaxWidth(),
                             text = item.memberInfo.memberName,
-                            style = DidaTypography.body1,
-                            fontSize = dpToSp(dp = 14.dp),
+                            fontSize = 14,
                             color = TextGray
                         )
                     }
@@ -332,10 +326,9 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                         .clickableSingle { onClicked() },
                     color = Surface2
                 ) {
-                    Text(
+                    DidaMediumText(
                         text = getString(R.string.create_community_my_nft_select),
-                        style = DidaTypography.body1,
-                        fontSize = dpToSp(dp = 14.dp),
+                        fontSize = 14,
                         color = White
                     )
                 }
@@ -352,10 +345,9 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
+            DidaBoldText(
                 text = getString(com.dida.create_community.R.string.create_community_like_empty_text),
-                style = DidaTypography.h1,
-                fontSize = dpToSp(dp = 20.dp),
+                fontSize = 20,
                 color = TextGray
             )
             VerticalDivider(dp = 24)
@@ -366,10 +358,9 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                     .clickableSingle { onClicked() },
                 color = BrandLemon
             ) {
-                Text(
+                DidaBoldText(
                     text = getString(com.dida.create_community.R.string.create_community_empty_like_button_text),
-                    style = DidaTypography.h1,
-                    fontSize = dpToSp(dp = 16.dp),
+                    fontSize = 16,
                     color = MainBlack
                 )
             }
@@ -385,10 +376,9 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
+            DidaBoldText(
                 text = getString(com.dida.create_community.R.string.create_community_create_empty_text),
-                style = DidaTypography.h1,
-                fontSize = dpToSp(dp = 20.dp),
+                fontSize = 20,
                 color = TextGray
             )
             VerticalDivider(dp = 24)
@@ -399,10 +389,9 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                     .clickableSingle { onClicked() },
                 color = BrandLemon
             ) {
-                Text(
+                DidaBoldText(
                     text = getString(com.dida.create_community.R.string.create_community_empty_create_button_text),
-                    style = DidaTypography.h1,
-                    fontSize = dpToSp(dp = 16.dp),
+                    fontSize = 16,
                     color = MainBlack
                 )
             }

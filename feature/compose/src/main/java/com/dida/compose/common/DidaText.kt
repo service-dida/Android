@@ -53,7 +53,7 @@ fun DidaBoldText(
 }
 
 @Composable
-fun HairshopMediumText(
+fun DidaMediumText(
     modifier: Modifier = Modifier,
     text: String,
     fontSize: Int = 15,
@@ -87,7 +87,7 @@ fun HairshopMediumText(
 }
 
 @Composable
-fun HairshopRegularText(
+fun DidaRegularText(
     modifier: Modifier = Modifier,
     text: String,
     fontSize: Int = 14,
