@@ -6,19 +6,15 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,11 +33,12 @@ import com.dida.add.R
 import com.dida.add.databinding.FragmentAddBinding
 import com.dida.add.main.AddViewModel
 import com.dida.ai.keyword.KeywordViewModel
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaMediumText
+import com.dida.compose.common.DidaSemiBoldText
 import com.dida.compose.theme.BrandLemon
-import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.Surface2
-import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.VerticalDivider
@@ -124,9 +121,8 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                 .padding(horizontal = 16.dp)
         ) {
             VerticalDivider(dp = 24)
-            Text(
-                style = DidaTypography.h1,
-                fontSize = dpToSp(dp = 22.dp),
+            DidaBoldText(
+                fontSize = 22,
                 color = Color.White,
                 text = "어떤 이미지로\nNFT를 생성하시겠어요?",
             )
@@ -148,14 +144,13 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                             .weight(1f),
                         model = "https://blog.kakaocdn.net/dn/bCCCDH/btrY8ihFxJf/TGCh6Y5vYs5jkKC6RypuFK/img.jpg"
                     )
-                    Text(
+                    DidaSemiBoldText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(color = Surface2)
                             .padding(vertical = 21.dp),
                         textAlign = TextAlign.Center,
-                        style = DidaTypography.subtitle1,
-                        fontSize = dpToSp(dp = 18.dp),
+                        fontSize = 18,
                         color = Color.White,
                         text = "AI 키워드 그리기",
                     )
@@ -166,28 +161,26 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
+                DidaSemiBoldText(
                     modifier = Modifier
                         .weight(1f)
                         .background(color = Surface2)
                         .padding(vertical = 42.dp)
                         .clickableSingle { navigate(AddFragmentDirections.actionAddFragmentToCreateNftFragment()) },
                     textAlign = TextAlign.Center,
-                    style = DidaTypography.subtitle1,
-                    fontSize = dpToSp(dp = 18.dp),
+                    fontSize = 18,
                     color = Color.White,
                     text = "내 갤러리 그림\n그리기",
                 )
                 HorizontalDivider(dp = 14)
-                Text(
+                DidaSemiBoldText(
                     modifier = Modifier
                         .weight(1f)
                         .background(color = Surface2)
                         .padding(vertical = 42.dp)
                         .clickableSingle { navigate(AddFragmentDirections.actionAddFragmentToKeywordInputFragment()) },
                     textAlign = TextAlign.Center,
-                    style = DidaTypography.subtitle1,
-                    fontSize = dpToSp(dp = 18.dp),
+                    fontSize = 18,
                     color = Color.White,
                     text = "직접 입력해서\n그리기",
                 )
@@ -214,10 +207,9 @@ class AddFragment : BaseFragment<FragmentAddBinding, AddViewModel>(R.layout.frag
                     contentDescription = ""
                 )
                 HorizontalDivider(dp = 4)
-                Text(
+                DidaMediumText(
                     textAlign = TextAlign.Center,
-                    style = DidaTypography.body1,
-                    fontSize = dpToSp(dp = 12.dp),
+                    fontSize = 12,
                     color = Color.Black,
                     text = "DIDA 추천!",
                 )
