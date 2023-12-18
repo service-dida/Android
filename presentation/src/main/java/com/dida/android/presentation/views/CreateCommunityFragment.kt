@@ -17,6 +17,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -164,7 +165,7 @@ class CreateCommunityFragment : BaseFragment<FragmentCreateCommunityBinding, Cre
                             pagerState.animateScrollToPage(index)
                         }
                     },
-                    text = { DidaMediumText(text = tab.str) },
+                    text = { Text(text = tab.str) },
                     selectedContentColor = BrandLemon,
                     unselectedContentColor = Surface6,
                     interactionSource = NoRippleInteractionSource()
