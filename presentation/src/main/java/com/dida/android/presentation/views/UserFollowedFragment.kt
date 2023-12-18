@@ -18,7 +18,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -38,15 +37,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dida.android.R
 import com.dida.common.widget.DefaultSnackBar
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaMediumText
 import com.dida.compose.theme.BrandLemon
-import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.Surface1
 import com.dida.compose.theme.Surface2
 import com.dida.compose.theme.Surface6
 import com.dida.compose.theme.TextGray
 import com.dida.compose.theme.White
-import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.LineDivider
@@ -164,7 +163,7 @@ class UserFollowedFragment :
                             pagerState.animateScrollToPage(index)
                         }
                     },
-                    text = { Text(text = tab.str) },
+                    text = { DidaMediumText(text = tab.str) },
                     selectedContentColor = BrandLemon,
                     unselectedContentColor = Surface6,
                     interactionSource = NoRippleInteractionSource()
@@ -287,19 +286,17 @@ class UserFollowedFragment :
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(
+                    DidaBoldText(
                         modifier = Modifier.fillMaxWidth(),
                         text = item.nickname,
-                        style = DidaTypography.h1,
-                        fontSize = dpToSp(dp = 16.dp),
+                        fontSize = 16,
                         color = White
                     )
                     VerticalDivider(dp = 4)
-                    Text(
+                    DidaMediumText(
                         modifier = Modifier.fillMaxWidth(),
                         text = item.nftCnt.toString() + " 작품",
-                        style = DidaTypography.body1,
-                        fontSize = dpToSp(dp = 14.dp),
+                        fontSize = 14,
                         color = TextGray
                     )
                 }
@@ -313,10 +310,9 @@ class UserFollowedFragment :
                             .clickableSingle { onFollowButtonClicked() },
                         color = BrandLemon
                     ) {
-                        Text(
+                        DidaMediumText(
                             text = "팔로잉",
-                            style = DidaTypography.body1,
-                            fontSize = dpToSp(dp = 12.dp),
+                            fontSize = 12,
                             color = MainBlack
                         )
                     }
@@ -328,10 +324,9 @@ class UserFollowedFragment :
                             .clickableSingle { onFollowButtonClicked() },
                         color = Surface1
                     ) {
-                        Text(
+                        DidaMediumText(
                             text = "팔로우",
-                            style = DidaTypography.body1,
-                            fontSize = dpToSp(dp = 12.dp),
+                            fontSize = 12,
                             color = White
                         )
                     }

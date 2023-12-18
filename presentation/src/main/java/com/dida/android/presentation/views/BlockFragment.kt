@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,11 +29,11 @@ import androidx.navigation.fragment.findNavController
 import coil.compose.AsyncImage
 import com.dida.block.BlockViewModel
 import com.dida.block.databinding.FragmentBlockBinding
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaRegularText
 import com.dida.compose.theme.BrandLemon
-import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Surface1
 import com.dida.compose.theme.White
-import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.clickableSingle
 import com.dida.domain.main.model.HideMember
@@ -132,11 +131,10 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                     )
                 }
                 HorizontalDivider(dp = 12)
-                Text(
+                DidaBoldText(
                     modifier = Modifier.weight(1f),
                     text = user.nickname,
-                    style = DidaTypography.h3,
-                    fontSize = dpToSp(dp = 16.dp),
+                    fontSize = 16,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     color = White
@@ -149,12 +147,11 @@ class BlockFragment : BaseFragment<FragmentBlockBinding, BlockViewModel>(com.did
                     shape = RoundedCornerShape(100.dp),
                     color = Surface1
                 ) {
-                    Text(
+                    DidaRegularText(
                         modifier = Modifier
                             .padding(vertical = 8.dp, horizontal = 16.dp),
                         text = "차단 해제",
-                        style = DidaTypography.caption,
-                        fontSize = dpToSp(dp = 12.dp),
+                        fontSize = 12,
                         color = White
                     )
                 }

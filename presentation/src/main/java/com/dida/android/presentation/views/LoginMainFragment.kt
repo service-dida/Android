@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,11 +32,10 @@ import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
-import com.dida.compose.theme.DidaTypography
+import com.dida.compose.common.DidaBoldText
 import com.dida.compose.theme.KakaoYellow
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.White
-import com.dida.compose.theme.dpToSp
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.dida.login.databinding.FragmentLoginmainBinding
@@ -165,12 +163,12 @@ class LoginMainFragment :
                 contentDescription = "디다 로고"
             )
             Spacer(modifier = Modifier.weight(1f))
-            Text(
+            DidaBoldText(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.login_description),
-                style = DidaTypography.caption,
                 color = White,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontSize = 13
             )
             Spacer(
                 modifier = Modifier
@@ -216,10 +214,9 @@ class LoginMainFragment :
                     contentDescription = "카카오 로고"
                 )
                 Spacer(modifier = Modifier.size(14.dp))
-                Text(
+                DidaBoldText(
                     text = stringResource(id = R.string.kakao_login),
-                    style = DidaTypography.h3,
-                    fontSize = dpToSp(dp = 15.dp),
+                    fontSize = 15,
                     color = MainBlack,
                     textAlign = TextAlign.Center
                 )
@@ -242,13 +239,12 @@ class LoginMainFragment :
             shape = RoundedCornerShape(8.dp),
             onClick = { onKakakoWebLoginClicked() }
         ) {
-            Text(
+            DidaBoldText(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 text = stringResource(id = R.string.kakao_login_web),
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 15.dp),
+                fontSize = 15,
                 color = White,
                 textAlign = TextAlign.Center
             )
