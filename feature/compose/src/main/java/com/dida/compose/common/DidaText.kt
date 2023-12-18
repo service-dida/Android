@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.White
 import com.dida.compose.theme.dpToSp
 
 val DidaBoldTypography = DidaTypography.h3
@@ -25,7 +26,7 @@ fun DidaBoldText(
     text: String,
     fontSize: Int = 22,
     lineHeight: Int = fontSize + 4,
-    color: Color = MainBlack,
+    color: Color = White,
     textAlign: TextAlign = TextAlign.Start,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
@@ -59,7 +60,7 @@ fun DidaSemiBoldText(
     text: String,
     fontSize: Int = 21,
     lineHeight: Int = fontSize + 4,
-    color: Color = MainBlack,
+    color: Color = White,
     textAlign: TextAlign = TextAlign.Start,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
@@ -93,7 +94,7 @@ fun DidaMediumText(
     text: String,
     fontSize: Int = 15,
     lineHeight: Int = fontSize + 4,
-    color: Color = MainBlack,
+    color: Color = White,
     textAlign: TextAlign = TextAlign.Start,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
@@ -127,7 +128,7 @@ fun DidaRegularText(
     text: String,
     fontSize: Int = 14,
     lineHeight: Int = fontSize + 4,
-    color: Color = MainBlack,
+    color: Color = White,
     textAlign: TextAlign = TextAlign.Start,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
