@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,10 +29,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.dida.ai.R
 import com.dida.ai.keyword.Keyword
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaMediumText
 import com.dida.compose.theme.Blue
 import com.dida.compose.theme.BlueGreen
 import com.dida.compose.theme.BrandLemon
-import com.dida.compose.theme.DidaTypography
 import com.dida.compose.theme.Green
 import com.dida.compose.theme.GreenYellow
 import com.dida.compose.theme.MainBlack
@@ -47,7 +47,6 @@ import com.dida.compose.theme.Violet
 import com.dida.compose.theme.VioletBlue
 import com.dida.compose.theme.White
 import com.dida.compose.theme.Yellow
-import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.clickableSingle
 import com.dida.compose.utils.noRippleClickable
 
@@ -176,10 +175,9 @@ fun WriteKeyword(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
+            DidaBoldText(
                 text = stringResource(id = R.string.write_keyword),
-                fontSize = dpToSp(dp = 16.dp),
-                style = DidaTypography.h3,
+                fontSize = 16,
                 color = White,
                 textAlign = TextAlign.Center
             )
@@ -211,10 +209,9 @@ fun DefaultKeywordItem(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .noRippleClickable { onKeywordClicked(item) }
         ) {
-            Text(
+            DidaBoldText(
                 text = item.word,
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 16.dp),
+                fontSize = 16,
                 color = textColor,
                 textAlign = TextAlign.Center
             )
@@ -246,14 +243,13 @@ fun StyleKeywordItem(
             contentScale = ContentScale.FillBounds,
             alpha = 0.7f
         )
-        Text(
+        DidaMediumText(
             modifier = modifier
                 .fillMaxSize()
                 .wrapContentHeight(Alignment.Bottom)
                 .padding(9.dp),
             text = item.word,
-            style = DidaTypography.body1,
-            fontSize = dpToSp(dp = 16.dp),
+            fontSize = 16,
             color = White,
         )
     }
@@ -274,10 +270,9 @@ fun ColorKeywordItem(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .noRippleClickable { onKeywordClicked(item) }
         ) {
-            Text(
+            DidaBoldText(
                 text = item.word,
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 16.dp),
+                fontSize = 16,
                 color = MainBlack,
                 textAlign = TextAlign.Center
             )
@@ -301,10 +296,9 @@ fun SelectedColorKeywordItem(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .noRippleClickable { onKeywordClicked(item) }
         ) {
-            Text(
+            DidaBoldText(
                 text = item.word,
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 16.dp),
+                fontSize = 16,
                 color = White,
                 textAlign = TextAlign.Center
             )

@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,10 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dida.ai.R
 import com.dida.ai.keyword.Keyword
-import com.dida.compose.theme.DidaTypography
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaMediumText
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.White
-import com.dida.compose.theme.dpToSp
 import com.dida.compose.utils.HorizontalDivider
 import kotlinx.coroutines.launch
 
@@ -32,13 +31,12 @@ import kotlinx.coroutines.launch
 fun SelectKeywordTitle(
     isSelected: Boolean
 ) {
-    Text(
+    DidaMediumText(
         text = if (isSelected) stringResource(id = R.string.select_keyword) else stringResource(id = R.string.no_keyword),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        style = DidaTypography.body1,
-        fontSize = dpToSp(dp = 16.dp),
+        fontSize = 16,
         color = White
     )
 }
@@ -87,10 +85,9 @@ fun SelectedKeywordItem(
         Row(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
-            Text(
+            DidaBoldText(
                 text = keyword,
-                style = DidaTypography.h3,
-                fontSize = dpToSp(dp = 16.dp),
+                fontSize = 16,
                 color = MainBlack,
                 textAlign = TextAlign.Center
             )

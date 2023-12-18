@@ -1,7 +1,5 @@
 package com.dida.domain.main.model
 
-import java.util.Calendar
-
 data class Swap(
     val transactionId: Long,
     val type: String,

@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -34,7 +32,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.common.dialog.CentralDialogFragment
-import com.dida.compose.theme.DidaTypography
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaMediumText
 import com.dida.compose.theme.LineSurface
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.NoticeRed
@@ -155,11 +154,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     .fillMaxWidth()
                     .height(16.dp)
             )
-            Text(
+            DidaMediumText(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringResource(id = com.dida.common.R.string.app_version_string),
-                style = DidaTypography.body1,
-                fontSize = 14.sp,
+                fontSize = 14,
                 color = LineSurface
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -167,13 +165,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 modifier = Modifier.clickable { onLogOutClicked() },
                 color = MainBlack
             ) {
-                Text(
+                DidaMediumText(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     text = stringResource(id = com.dida.common.R.string.logout_text),
-                    style = DidaTypography.body1,
-                    fontSize = 16.sp,
+                    fontSize = 16,
                     textAlign = TextAlign.Start,
                     color = NoticeRed
                 )
@@ -269,12 +266,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             ) {
                 Image(painter = painterResource(id = iconRes), contentDescription = "설정 아이템 아이콘")
                 Spacer(modifier = Modifier.size(16.dp))
-                Text(
+                DidaBoldText(
                     text = message,
-                    style = DidaTypography.button,
                     color = White,
                     textAlign = TextAlign.Center,
-                    fontSize = 18.sp
+                    fontSize = 18
                 )
             }
             Spacer(
