@@ -33,6 +33,7 @@ import com.dida.domain.NetworkResult
 import com.dida.domain.main.MainRepository
 import com.dida.domain.main.model.AiPicture
 import com.dida.domain.main.model.Alarm
+import com.dida.domain.main.model.AppVersion
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonFollow
@@ -67,6 +68,10 @@ import javax.inject.Named
 class MainRepositoryImpl @Inject constructor(
     @Named("Main") private val didaApi: DidaApi
 ): MainRepository {
+
+    override suspend fun checkVersion(versionId: Long): NetworkResult<AppVersion> {
+        return handleApi { didaApi.getAppVersion(versionId = versionId).toDomain() }
+    }
 
     override suspend fun login(idToken: String): NetworkResult<LoginToken> {
         val body = PostLoginRequest(idToken = idToken)
