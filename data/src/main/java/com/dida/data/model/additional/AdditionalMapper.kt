@@ -3,6 +3,7 @@ package com.dida.data.model.additional
 import com.dida.domain.Contents
 import com.dida.domain.main.model.AiPicture
 import com.dida.domain.main.model.Alarm
+import com.dida.domain.main.model.AppVersion
 import com.dida.domain.main.model.HideMember
 import com.dida.domain.main.model.HideNft
 import com.dida.domain.main.model.Keywords
@@ -43,5 +44,15 @@ fun GetKeywordsResponse.toDomain(): Keywords {
     return Keywords(
         things = response.things,
         places = response.places
+    )
+}
+
+fun GetAppVersionResponse.toDomain(): AppVersion {
+    val response = this
+    return AppVersion(
+        versionId = response.versionId,
+        version = response.version,
+        changes = response.changes,
+        essentialUpdate = response.essentialUpdate
     )
 }

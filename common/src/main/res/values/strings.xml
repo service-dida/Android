@@ -8,6 +8,12 @@
     <string name="notification_channel_name">DIDA</string>
     <string name="notification_channel_id">dida_notification_channel</string>
 
+    <string name="app_force_update_dialog_label">DIDA 업데이트 안내</string>
+    <string name="app_force_update_dialog_message">DIDA의 새로운 버전이 나왔어요!\n새로운 버전으로 신규기능을 이용해보세요.</string>
+
+    <string name="app_force_update_dialog_positive_button_label">업데이트 하기</string>
+    <string name="app_force_update_dialog_negative_button_label">종료하기</string>
+
     <string name="delete_post_title">게시글을 정말로 삭제할까요?</string>
     <string name="delete_post_description">삭제한 게시글은 되돌릴 수 없어요</string>
 

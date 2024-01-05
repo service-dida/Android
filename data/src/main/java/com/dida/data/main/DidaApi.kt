@@ -1,6 +1,7 @@
 package com.dida.data.main
 
 import com.dida.data.model.additional.GetAlarmsResponse
+import com.dida.data.model.additional.GetAppVersionResponse
 import com.dida.data.model.additional.GetHideMembersResponse
 import com.dida.data.model.additional.GetHideNftsResponse
 import com.dida.data.model.additional.GetKeywordsResponse
@@ -462,4 +463,9 @@ interface DidaApi {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): GetOwnershipHistoryResponse
+
+    // 최신 버전 확인하기
+    @GET("/app/version")
+    suspend fun getAppVersion(@Query("versionId") versionId: Long): GetAppVersionResponse
+
 }

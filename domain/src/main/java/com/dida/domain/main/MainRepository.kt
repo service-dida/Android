@@ -4,6 +4,7 @@ import com.dida.domain.Contents
 import com.dida.domain.NetworkResult
 import com.dida.domain.main.model.AiPicture
 import com.dida.domain.main.model.Alarm
+import com.dida.domain.main.model.AppVersion
 import com.dida.domain.main.model.Block
 import com.dida.domain.main.model.Comment
 import com.dida.domain.main.model.CommonProfile
@@ -34,6 +35,8 @@ import com.dida.domain.main.model.TransactionInfo
 import okhttp3.MultipartBody
 
 interface MainRepository {
+
+    suspend fun checkVersion(versionId: Long): NetworkResult<AppVersion>
 
     suspend fun login(idToken: String): NetworkResult<LoginToken>
 
