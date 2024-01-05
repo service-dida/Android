@@ -76,7 +76,7 @@ class SplashViewModel @Inject constructor(
                     onGoneSplash()
                 }
                 .onError { e ->
-                    onGoneSplash()
+                    _splashScreenGone.emit(true)
                     catchError(e)
                 }
         }
