@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DIDA</string>
     <string name="prefs_key">dida_prefs</string>
-    <string name="app_version">0</string>
+    <string name="app_version">1</string>
     <string name="price_dida">dida</string>
 
     <string name="notification_channel_name">DIDA</string>

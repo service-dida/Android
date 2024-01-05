@@ -4,6 +4,7 @@ import com.dida.common.base.BaseViewModel
 import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
+import com.dida.domain.usecase.AppVersionUseCase
 import com.dida.domain.usecase.CommonProfileUseCase
 import com.dida.domain.usecase.GetKeywordsUseCase
 import com.dida.domain.usecase.PatchDeviceTokenUseCase
@@ -24,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
+    private val appVersionUseCase: AppVersionUseCase,
     private val patchDeviceTokenUseCase: PatchDeviceTokenUseCase,
     private val commonProfileUseCase: CommonProfileUseCase,
     private val refreshTokenUseCase: RefreshTokenUseCase,
@@ -39,17 +41,19 @@ class SplashViewModel @Inject constructor(
     private val _splashScreenGone: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val splashScreenGone: StateFlow<Boolean> = _splashScreenGone.asStateFlow()
 
-    private val _appVersion: MutableStateFlow<Int> = MutableStateFlow(0)
-    val appVersion: SharedFlow<Int> = _appVersion.asStateFlow()
+    private val _forceUpdate: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
+    val forceUpdate: SharedFlow<Boolean> = _forceUpdate.asSharedFlow()
 
     private val _navigateToHome: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val navigateToHome: SharedFlow<Boolean> = _navigateToHome.asSharedFlow()
 
-    // TODO : 버전 체크 API 추가 필요
-    fun onVersionCheck() {
-        baseViewModelScope.launch {
-            _appVersion.emit(0)
-        }
+    fun onVersionCheck(versionId: Long) = baseViewModelScope.launch {
+        appVersionUseCase(versionId = versionId)
+            .onSuccess {
+                if (it.essentialUpdate) _splashScreenGone.emit(true)
+                _forceUpdate.emit(it.essentialUpdate)
+            }
+            .onError { e -> catchError(e) }
     }
 
     fun onAppSetUp(deviceToken: String) {
