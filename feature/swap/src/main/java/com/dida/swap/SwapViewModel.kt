@@ -1,11 +1,10 @@
 package com.dida.swap
 
 import com.dida.common.base.BaseViewModel
-import com.dida.data.model.NeedToWalletException
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.WalletAmountAPI
-import com.dida.domain.usecase.main.WalletExistedAPI
+import com.dida.domain.usecase.CheckWalletUseCase
+import com.dida.domain.usecase.MemberWalletUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SwapViewModel @Inject constructor(
-    private val walletAmountAPI: WalletAmountAPI,
-    private val walletExistedAPI: WalletExistedAPI
+    private val memberWalletUseCase: MemberWalletUseCase,
+    private val checkWalletUseCase: CheckWalletUseCase
 ) : BaseViewModel(), SwapActionHandler {
 
     private val TAG = "SwapViewModel"
@@ -36,12 +35,12 @@ class SwapViewModel @Inject constructor(
 
     val amountInputState: MutableStateFlow<String> = MutableStateFlow<String>("")
 
-    lateinit var klayAmount: String
-    lateinit var didaAmount: String
+    private var klayAmount: String = ""
+    private var didaAmount: String = ""
 
     fun initWalletAmount() {
         baseViewModelScope.launch {
-            walletAmountAPI()
+            memberWalletUseCase()
                 .onSuccess {
                     klayAmount = it.klay.toString()
                     didaAmount = it.dida.toString()
@@ -50,23 +49,19 @@ class SwapViewModel @Inject constructor(
         }
     }
 
-    fun setWalletAmount() {
-        if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
-            _walletAmountState.value = klayAmount
-        } else {
-            _walletAmountState.value = didaAmount
+    private fun setWalletAmount() {
+        when (swapTypeState.value) {
+            SwapType.KLAY_TO_DIDA ->  _walletAmountState.value = klayAmount
+            SwapType.DIDA_TO_KLAY -> _walletAmountState.value = didaAmount
         }
     }
 
     fun getWalletExists() {
         baseViewModelScope.launch {
             showLoading()
-            walletExistedAPI()
-                .onSuccess {
-                    _walletExistsState.emit(it)
-                }.onError { e ->
-                    if (e is NeedToWalletException) _walletExistsState.emit(false)
-                    else catchError(e) }
+            checkWalletUseCase()
+                .onSuccess { _walletExistsState.emit(it) }
+                .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
@@ -78,10 +73,9 @@ class SwapViewModel @Inject constructor(
 
     override fun onSwapTypeChange() {
         baseViewModelScope.launch {
-            if (swapTypeState.value == SwapType.KLAY_TO_DIDA) {
-                _swapTypeState.emit(SwapType.DIDA_TO_KLAY)
-            } else {
-                _swapTypeState.emit(SwapType.KLAY_TO_DIDA)
+            when (swapTypeState.value) {
+                SwapType.KLAY_TO_DIDA -> _swapTypeState.emit(SwapType.DIDA_TO_KLAY)
+                SwapType.DIDA_TO_KLAY -> _swapTypeState.emit(SwapType.KLAY_TO_DIDA)
             }
             setWalletAmount()
         }

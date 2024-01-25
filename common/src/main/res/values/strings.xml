@@ -8,6 +8,12 @@
     <string name="notification_channel_name">DIDA</string>
     <string name="notification_channel_id">dida_notification_channel</string>
 
+    <string name="app_force_update_dialog_label">DIDA 업데이트 안내</string>
+    <string name="app_force_update_dialog_message">DIDA의 새로운 버전이 나왔어요!\n새로운 버전으로 신규기능을 이용해보세요.</string>
+
+    <string name="app_force_update_dialog_positive_button_label">업데이트 하기</string>
+    <string name="app_force_update_dialog_negative_button_label">종료하기</string>
+
     <string name="delete_post_title">게시글을 정말로 삭제할까요?</string>
     <string name="delete_post_description">삭제한 게시글은 되돌릴 수 없어요</string>
 
@@ -16,6 +22,21 @@
 
     <string name="delete_comment_title">댓글을 정말로 삭제할까요?</string>
     <string name="delete_comment_description">삭제한 댓글은 되돌릴 수 없어요</string>
+
+    <string name="draw_back_dialog_title">아직 그림이 완성되지 않았어요!</string>
+    <string name="draw_back_dialog_description">디다로 그림그리기를 나가시겠어요?\n작성중이던 내용은 저장되지 않아요.</string>
+    <string name="draw_back_dialog_positive">나가기</string>
+    <string name="draw_back_dialog_negative">계속 그리기</string>
+
+    <string name="ai_picture_dialog_title">아직 NFT를 생성하지 않았어요!</string>
+    <string name="ai_picture_dialog_description">디다로 그림그리기를 나가시겠어요?\n완성된 그림은 저장되지 않아요.</string>
+    <string name="ai_picture_dialog_positive">계속 그리기</string>
+    <string name="ai_picture_dialog_negative">나가기</string>
+
+    <string name="draw_dialog_title">10Dida를 사용하여 그림 그리기를 시작할까요?</string>
+    <string name="draw_dialog_description">광고가 끝난 후 완성된 그림을 만날 수 있어요!</string>
+    <string name="draw_dialog_positive">시작하기</string>
+    <string name="draw_dialog_negative">계속 그리기</string>
 
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
@@ -35,6 +56,9 @@
 
     <string name="get_gallery">갤러리에서 선택하기</string>
     <string name="get_capture">사진 찍기</string>
+
+    <string name="privacy_url">https://dida-nft.tistory.com/m/2</string>
+    <string name="service_url">https://dida-nft.tistory.com/m/1</string>
 
     <!--네베게이션 메뉴-->
     <string name="bottom_home">홈</string>
@@ -67,7 +91,7 @@
     <string name="create_nft_message">NFT 생성하기</string>
 
     <!--닉네임 화면-->
-    <string name="nickname_main_yourname">당신의 이름은?</string>
+    <string name="nickname_main_yourname">디다에서 사용할 이름을\n알려주세요</string>
     <string name="nickname_main_text">닉네임</string>
     <string name="nickname_edit_hint">8글자 이하의 한글</string>
     <string name="nickname_ok_btn">가입 완료</string>
@@ -161,5 +185,22 @@
     <string name="report_caution_message">허위 신고 시 서비스 이용에 제한을 받을 수 있습니다.</string>
     <string name="report_hint">직접 작성하기</string>
 
+    <!-- 알림화면 -->
+    <string name="alarm_title">알림</string>
+
+    <string name="comment_notification_title">커뮤니티</string>
+    <string name="comment_notification_message">누군가 내 게시글에 댓글을 남겼어요</string>
+
+    <string name="follow_notification_title">커뮤니티</string>
+    <string name="follow_notification_message">누군가 저를 팔로우했어요</string>
+
+    <string name="like_notification_title">NFT</string>
+    <string name="like_notification_message">누군가 내 NFT에 좋아요를 남겼어요</string>
+
+    <string name="sale_notification_title">NFT</string>
+    <string name="sale_notification_message">NFT가 판매 되었어요</string>
+
+    <string name="alarm_footer_message">받은 알림은 30일 동안 보관됩니다.</string>
+    <string name="alarm_empty_message">아직 받은 알림이 없어요</string>
 </resources>
 

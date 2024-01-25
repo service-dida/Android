@@ -3,6 +3,7 @@ package com.dida.android.presentation.views
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
 import com.dida.swap.history.R
@@ -30,7 +31,6 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
         viewModel.getSwapHistory()
@@ -45,14 +45,12 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
 
         viewLifecycleOwner.repeatOnStarted {
             viewModel.swapHistoryState.collectLatest {
-                swapHistoryAdapter.submitList(it)
+                swapHistoryAdapter.submitList(it.content)
             }
         }
     }
 
-    override fun initAfterBinding() {
-
-    }
+    override fun initAfterBinding() {}
 
     private fun initToolbar() {
         binding.toolbar.apply {
@@ -66,5 +64,8 @@ class SwapHistoryFragment : BaseFragment<FragmentSwapHistoryBinding, SwapHistory
 
     private fun initAdapter(){
         binding.swapHistoryRv.adapter = swapHistoryAdapter
+        binding.swapHistoryRv.addOnPagingListener(
+            arrivedBottom = { viewModel.nextPage() }
+        )
     }
 }

@@ -31,7 +31,7 @@
 
         <com.dida.common.customview.CustomEditText
             android:id="@+id/email_check"
-            style="@style/EditText_surface2_radius10_solid_surface5"
+            style="@style/EditText_surface1_radius10_solid_surface4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="38dp"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/custom_surface6_radius6"
+            android:background="@drawable/custom_surface2_radius6"
             android:padding="8dp"
             android:text="@string/email_send"
             app:layout_constraintBottom_toBottomOf="@+id/email_check"
@@ -90,7 +90,7 @@
             android:lineSpacingExtra="20px"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeover_tv"
-            tools:text="@string/email_masking_hint"></TextView>
+            tools:text="@string/email_masking_hint" />
 
         <TextView
             android:id="@+id/ok_btn"

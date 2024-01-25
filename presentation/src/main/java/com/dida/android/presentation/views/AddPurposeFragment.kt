@@ -12,6 +12,7 @@ import com.dida.add.bottom.AddKeepNftBottomSheet
 import com.dida.add.databinding.FragmentAddPurposeBinding
 import com.dida.add.purpose.AddPurposeNavigationAction
 import com.dida.add.purpose.AddPurposeViewModel
+import com.dida.common.util.urlImageToFile
 import com.dida.nft.sale.AddSaleNftBottomSheet
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,8 +38,9 @@ class AddPurposeFragment :
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
-        viewModel.initNFTInfo(getPath(args.imgURL), args.title, args.description)
+
+        val imageUrl = if (args.fromGallery) getPath(args.imgURL) else args.imgURL
+        viewModel.initNFTInfo(imageUrl, args.title, args.description)
         initToolbar()
     }
 
@@ -46,11 +48,9 @@ class AddPurposeFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigationEvent.collectLatest {
                 when (it) {
-                    is AddPurposeNavigationAction.NavigateToNotSaled -> notSaled()
-                    is AddPurposeNavigationAction.NavigateToSaled -> isSaled()
-                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(
-                        AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment()
-                    )
+                    is AddPurposeNavigationAction.NavigateToNotSaled -> createPrivacy()
+                    is AddPurposeNavigationAction.NavigateToSaled -> createSale()
+                    is AddPurposeNavigationAction.NavigateToMyPage -> navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToMyPageFragment())
                 }
             }
         }
@@ -65,37 +65,42 @@ class AddPurposeFragment :
         }
     }
 
-    private fun notSaled() {
-        AddKeepNftBottomSheet {
+    private fun createPrivacy() {
+        val dialog = AddKeepNftBottomSheet {
             PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
                 if (success) {
-                    viewModel.mintNFT(password, AddPurposeViewModel.AddNftType.NOT_SALE, 0.0)
+                    if (args.fromGallery) {
+                        viewModel.mintLocalImageToNFT(password, AddPurposeViewModel.AddNftType.NOT_SALE, 0.0)
+                    } else {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            viewModel.mintFileToNFT(password, AddPurposeViewModel.AddNftType.NOT_SALE, 0.0, requireContext().urlImageToFile(args.imgURL)!!)
+                        }
+                    }
                 } else {
-                    if (password == "reset") {
-                        navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToSettingFragment())
-                    }
-                }
-            }.show(childFragmentManager, "AddNftBottomSheet")
-        }.show(childFragmentManager, "AddPurposeFragment")
-    }
-
-    private fun isSaled() {
-        val dialog = AddSaleNftBottomSheet {
-            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
-                if (success) {
-                    viewModel.mintNFT(
-                        password,
-                        AddPurposeViewModel.AddNftType.SALE,
-                        it.toDouble()
-                    )
-                }else {
-                    if (password == "reset") {
-                        navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToSettingFragment())
-                    }
+                    if (password == "reset") navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToSettingFragment())
                 }
             }.show(childFragmentManager, "AddNftBottomSheet")
         }
-        dialog.show(childFragmentManager, "AddPurposeFragment")
+        dialog.show(childFragmentManager, TAG)
+    }
+
+    private fun createSale() {
+        val dialog = AddSaleNftBottomSheet {
+            PasswordDialog(6, "비밀번호 입력", "6자리를 입력해주세요.") { success, password ->
+                if (success) {
+                    if (args.fromGallery) {
+                        viewModel.mintLocalImageToNFT(password, AddPurposeViewModel.AddNftType.SALE, it.toDouble())
+                    } else {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            viewModel.mintFileToNFT(password, AddPurposeViewModel.AddNftType.SALE, it.toDouble(), requireContext().urlImageToFile(args.imgURL)!!)
+                        }
+                    }
+                } else {
+                    if (password == "reset") navigate(AddPurposeFragmentDirections.actionAddPurposeFragmentToSettingFragment())
+                }
+            }.show(childFragmentManager, "AddNftBottomSheet")
+        }
+        dialog.show(childFragmentManager, TAG)
     }
 
     @SuppressLint("Range")

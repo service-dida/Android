@@ -12,12 +12,11 @@ import com.dida.common.actionhandler.CommunityActionHandler
 import com.dida.common.ballon.showReportPostBalloon
 import com.dida.common.bindingadapters.setOnSingleClickListener
 import com.dida.common.databinding.HolderCommunityBinding
-import com.dida.domain.model.main.PostType
-import com.dida.domain.model.main.Posts
+import com.dida.domain.main.model.Post
 
 class CommunityPagingAdapter(
     private val eventListener: CommunityActionHandler
-) : PagingDataAdapter<Posts, CommunityPagingAdapter.ViewHolder>(CommunityDiffCallback) {
+) : PagingDataAdapter<Post, CommunityPagingAdapter.ViewHolder>(CommunityDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding: HolderCommunityBinding = DataBindingUtil.inflate(
@@ -39,24 +38,24 @@ class CommunityPagingAdapter(
     class ViewHolder(private val binding: HolderCommunityBinding) : RecyclerView.ViewHolder(binding.root) {
         private val adapter = PostCommentsAdapter()
 
-        fun bind(item: Posts) {
+        fun bind(item: Post) {
             binding.holderModel = item
-            if (item.commentList.size > 2) adapter.submitList(item.commentList.slice(0 until 2))
-            else adapter.submitList(item.commentList)
+            if (item.comments.size > 2) adapter.submitList(item.comments.slice(0 until 2))
+            else adapter.submitList(item.comments)
             binding.commentRecycler.adapter = adapter
-            binding.moreBtn.isVisible = item.type == PostType.NOT_MINE
+            binding.moreBtn.isVisible = item.type == "NOT MINE"
             binding.moreBtn.setOnSingleClickListener {
-                it.showReportPostBalloon(postId = item.postId, listener = binding.eventListener!!)
+                it.showReportPostBalloon(postId = item.postInfo.postId, listener = binding.eventListener!!)
             }
             binding.executePendingBindings()
         }
     }
 
-    internal object CommunityDiffCallback : DiffUtil.ItemCallback<Posts>() {
-        override fun areItemsTheSame(oldItem: Posts, newItem: Posts) =
-            oldItem.postId == newItem.postId
+    internal object CommunityDiffCallback : DiffUtil.ItemCallback<Post>() {
+        override fun areItemsTheSame(oldItem: Post, newItem: Post) =
+            oldItem.postInfo.postId == newItem.postInfo.postId
 
-        override fun areContentsTheSame(oldItem: Posts, newItem: Posts) =
+        override fun areContentsTheSame(oldItem: Post, newItem: Post) =
             oldItem == newItem
     }
 }

@@ -34,7 +34,6 @@ class SwapSuccessFragment : BaseFragment<FragmentSwapSuccessBinding, SwapSuccess
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
     }
 
     override fun initDataBinding() {

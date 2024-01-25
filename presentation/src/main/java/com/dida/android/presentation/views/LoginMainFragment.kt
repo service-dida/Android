@@ -18,24 +18,24 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.android.R
 import com.dida.android.util.toLoginFailure
 import com.dida.android.util.toLoginSuccess
-import com.dida.compose.theme.DIDA_THEME
-import com.dida.compose.theme.DidaTypography
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.theme.KakaoYellow
+import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.White
 import com.dida.login.LoginMainViewModel
 import com.dida.login.LoginNavigationAction
 import com.dida.login.databinding.FragmentLoginmainBinding
@@ -80,7 +80,6 @@ class LoginMainFragment :
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
     }
 
     override fun initDataBinding() {
@@ -114,6 +113,7 @@ class LoginMainFragment :
         }
 
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 LoginScreen(
                     onKakaoLoginClicked = { onKakaoTalkLogin() },
@@ -163,12 +163,12 @@ class LoginMainFragment :
                 contentDescription = "디다 로고"
             )
             Spacer(modifier = Modifier.weight(1f))
-            Text(
+            DidaBoldText(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.login_description),
-                style = DidaTypography.caption,
-                color = Color.White,
-                textAlign = TextAlign.Center
+                color = White,
+                textAlign = TextAlign.Center,
+                fontSize = 13
             )
             Spacer(
                 modifier = Modifier
@@ -192,12 +192,14 @@ class LoginMainFragment :
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    private fun onKakaoLoginButton(onKakaoLoginClicked: () -> Unit) {
+    private fun onKakaoLoginButton(
+        onKakaoLoginClicked: () -> Unit
+    ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            color = Color(0xFFFEE500),
+            color = KakaoYellow,
             shape = RoundedCornerShape(8.dp),
             onClick = { onKakaoLoginClicked() }
         ) {
@@ -212,11 +214,10 @@ class LoginMainFragment :
                     contentDescription = "카카오 로고"
                 )
                 Spacer(modifier = Modifier.size(14.dp))
-                Text(
+                DidaBoldText(
                     text = stringResource(id = R.string.kakao_login),
-                    style = DidaTypography.h3,
-                    fontSize = 15.sp,
-                    color = Color.Black,
+                    fontSize = 15,
+                    color = MainBlack,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -226,39 +227,27 @@ class LoginMainFragment :
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    private fun onKakaoWebLoginButton(onKakakoWebLoginClicked: () -> Unit) {
+    private fun onKakaoWebLoginButton(
+        onKakakoWebLoginClicked: () -> Unit
+    ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(horizontal = 16.dp),
-            color = Color(0xFF121212),
+            color = MainBlack,
             shape = RoundedCornerShape(8.dp),
             onClick = { onKakakoWebLoginClicked() }
         ) {
-            Text(
+            DidaBoldText(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 text = stringResource(id = R.string.kakao_login_web),
-                style = DidaTypography.h3,
-                fontSize = 15.sp,
-                color = Color.White,
+                fontSize = 15,
+                color = White,
                 textAlign = TextAlign.Center
             )
         }
-    }
-}
-
-
-@Preview
-@Composable
-fun LoginPreview() {
-    DIDA_THEME {
-        LoginMainFragment().LoginScreen(
-            onKakaoLoginClicked = {},
-            onKakakoWebLoginClicked = {},
-            onCloseButtonClicked = {}
-        )
     }
 }

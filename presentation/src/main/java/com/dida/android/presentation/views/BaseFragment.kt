@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.DialogFragmentNavigator
@@ -27,7 +28,6 @@ import com.dida.common.dialog.DefaultDialogFragment
 import com.dida.common.util.Invoker
 import com.dida.common.util.Scheme
 import com.dida.common.util.SchemeUtils
-import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.NavigationHost
 import com.dida.data.model.InternalServerErrorException
 import com.dida.data.model.ServerNotFoundException
@@ -84,10 +84,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      */
     private val mLoadingDialog: LoadingDialogFragment by lazy { LoadingDialogFragment() }
 
-    /**
-     * Exception을 처리할 SharedFlow
-    */
-    protected var exception: SharedFlow<Throwable>? = null
     private var toast: Toast? = null
 
     /**
@@ -97,9 +93,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
 
     protected var navigationHost: NavigationHost? = null
 
-    private val registerForActivityResult =
+    protected open var registerForActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == 0) navigateToHomeFragment(null)
+            when(result.resultCode) {
+                0 -> navigateToHomeFragment(null)
+            }
         }
 
     override fun onCreateView(
@@ -112,6 +110,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         initStartView()
         initDataBinding()
         initAfterBinding()
+        observeEvent()
         return binding.root
     }
 
@@ -122,13 +121,22 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewLifecycleOwner.repeatOnResumed {
+    override fun onDestroy() {
+        super.onDestroy()
+        toast?.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun observeEvent() {
+        viewLifecycleOwner.lifecycleScope.launch {
             launch {
-                exception?.collectLatest { exception ->
+                viewModel.errorEvent.collectLatest { exception ->
                     dismissLoadingDialog()
-                    when(exception) {
+                    when (exception) {
                         is ErrorWithRetry -> onErrorRetry(exception, exception.retry, exception.retryScope)
                         else -> onError(exception)
                     }
@@ -136,9 +144,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             }
 
             launch {
-                viewModel.loadingEvent.collectLatest {
-                    if (it) showLoadingDialog()
-                    else dismissLoadingDialog()
+                viewModel.loadingEvent.collectLatest { isLoading ->
+                    if (isLoading) {
+                        showLoadingDialog()
+                    } else {
+                        dismissLoadingDialog()
+                    }
                 }
             }
 
@@ -154,24 +165,16 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        toast?.cancel()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     // 로딩 다이얼로그, 즉 로딩창을 띄워줌.
     // 네트워크가 시작될 때 사용자가 무작정 기다리게 하지 않기 위해 작성.
-    private fun showLoadingDialog() {
-        mLoadingDialog.show(childFragmentManager, LoadingDialogFragment.TAG)
+    protected fun showLoadingDialog() {
+        if (!mLoadingDialog.isVisible) {
+            mLoadingDialog.show(childFragmentManager, LoadingDialogFragment.TAG)
+        }
     }
 
     // 띄워 놓은 로딩 다이얼로그를 없앰.
-    private fun dismissLoadingDialog() {
+    protected fun dismissLoadingDialog() {
         if (mLoadingDialog.isVisible) {
             mLoadingDialog.dismiss()
         }
@@ -275,49 +278,19 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * */
     // Error 관련
     private fun onError(exception: Throwable) {
-        sendException(exception)
         when (exception) {
-            is ConnectException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
-            is ServerNotFoundException -> {
-                sendException(exception)
-                showServiceErrorDialog(exception)
-            }
-            is InternalServerErrorException -> {
-                sendException(exception)
-                showServiceErrorFragment(exception)
-            }
-            is UnknownException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
-            else -> showErrorToastMessage(exception)
+            is InternalServerErrorException -> showNetworkErrorDialog()
+            else -> showServiceErrorDialog(exception)
         }
+        sendException(exception)
     }
 
     private fun onErrorRetry(exception: Throwable, retry: suspend () -> Unit = {}, retryScope: CoroutineScope? = null) {
-        sendException(exception)
         when (exception) {
-            is ConnectException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
-            is ServerNotFoundException -> {
-                sendException(exception)
-                showServiceErrorDialog(exception)
-            }
-            is InternalServerErrorException -> {
-                sendException(exception)
-                showServiceErrorFragment(exception)
-            }
-            is UnknownException -> {
-                sendException(exception)
-                showNetworkErrorDialog()
-            }
+            is InternalServerErrorException -> showNetworkErrorDialog()
             else -> showServiceErrorDialog(retry, retryScope)
         }
+        sendException(exception)
     }
 
     // 일반적인 에러
@@ -379,10 +352,6 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
             showToastMessage(message)
             navigateToHomeFragment()
         }
-    }
-
-    private fun showServiceErrorFragment(throwable: Throwable) {
-        showErrorDialog(throwable.cause?.message ?: "") { findNavController().navigateUp() }
     }
 }
 

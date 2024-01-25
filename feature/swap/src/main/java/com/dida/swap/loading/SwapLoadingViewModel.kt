@@ -5,44 +5,49 @@ import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.SwapDidaToKlayAPI
-import com.dida.domain.usecase.main.SwapKlayToDidaAPI
+import com.dida.domain.usecase.PublicKeyUseCase
+import com.dida.domain.usecase.SwapToDidaUseCase
+import com.dida.domain.usecase.SwapToKlayUseCase
 import com.dida.swap.SwapType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import encryptWithPublicKey
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class SwapLoadingViewModel @AssistedInject constructor(
     @Assisted("swapType") val swapType: SwapType,
     @Assisted("password") val password: String,
     @Assisted("amount") val amount: Float,
-    private val swapKlayToDidaApi: SwapKlayToDidaAPI,
-    private val swapDidaToKlayAPI: SwapDidaToKlayAPI
+    private val swapToKlayUseCase: SwapToKlayUseCase,
+    private val swapToDidaUseCase: SwapToDidaUseCase,
+    private val getPublicKeyUseCase: PublicKeyUseCase
 ) : BaseViewModel() {
 
     private val TAG = "SwapLoadingViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<SwapLoadingNavigationAction> =
-        MutableSharedFlow<SwapLoadingNavigationAction>()
-    val navigationEvent: SharedFlow<SwapLoadingNavigationAction> = _navigationEvent
+    private val _navigateToSuccess: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val navigateToSuccess: SharedFlow<Unit> = _navigateToSuccess.asSharedFlow()
 
     init {
-        //TODO : 실패 시 로직 구현해야함
+        swapCoin()
+    }
+
+    private fun swapCoin() {
         baseViewModelScope.launch {
-            when (swapType) {
-                SwapType.KLAY_TO_DIDA -> {
-                    swapKlayToDidaApi(password, amount.toDouble())
-                        .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
-                        .onError { e -> catchError(e) }
-                }
-                else -> {
-                    swapDidaToKlayAPI(password, amount.toDouble())
-                        .onSuccess { _navigationEvent.emit(SwapLoadingNavigationAction.NavigateToSuccess) }
-                        .onError { e -> catchError(e) }
-                }
-            }
+            getPublicKeyUseCase()
+                .onSuccess {
+                    when (swapType) {
+                        SwapType.KLAY_TO_DIDA -> swapToDidaUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
+                        else -> swapToKlayUseCase(password.encryptWithPublicKey(it.publicKey), amount.toInt())
+                    }.onSuccess {
+                        delay(2500L)
+                        _navigateToSuccess.emit(Unit)
+                    }.onError { e -> catchError(e) }
+                }.onError { e -> catchError(e) }
         }
     }
 

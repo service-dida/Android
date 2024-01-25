@@ -15,7 +15,7 @@ import com.dida.common.util.Constants
 import com.dida.common.util.SLIDETYPE
 import com.dida.common.widget.CirclePagerIndicatorDecoration
 import com.dida.common.widget.smoothScrollToPosition
-import com.dida.domain.model.main.HotItems
+import com.dida.domain.main.model.HotItems
 import com.dida.home.HomeActionHandler
 import com.dida.home.databinding.HolderHotsContainerBinding
 import java.lang.ref.WeakReference
@@ -91,7 +91,9 @@ class HotsContainerViewHolder(
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             if ((position == contentSize - 2)) {
-                binding.hotsViewPager.setCurrentItem(2, false)
+                with(binding.hotsViewPager) {
+                    this.post { this.setCurrentItem(2, false) }
+                }
             } else if ((position == 1) && (positionOffset <= scrollFinishOffset)) {
                 binding.hotsViewPager.setCurrentItem(contentSize - 3, false)
             }
@@ -134,7 +136,7 @@ class HotsContainerViewHolder(
             binding.hotsViewPager.smoothScrollToPosition(
                 item = targetPosition,
                 duration = Constants.ROLLING_INTERVAL_MS,
-                pagePxWidth = this.itemView.width / 2
+                pagePxWidth = (this.itemView.width * (0.7f)).toInt()
             )
         }
     }

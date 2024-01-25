@@ -5,7 +5,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.HotSeller" />
+            type="com.dida.domain.main.model.HotSeller" />
 
         <variable
             name="eventListener"
@@ -18,7 +18,7 @@
         android:id="@+id/hots_main"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="14dp"
-        app:onSingleClick="@{() -> eventListener.onHotSellerItemClicked(holderModel.userId)}">
+        app:onSingleClick="@{() -> eventListener.onHotSellerItemClicked(holderModel.memberId)}">
 
         <ImageView
             android:id="@+id/seller_img"
@@ -27,7 +27,7 @@
             android:background="@drawable/custom_surface2_radius14"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            app:image_from_url_rounded="@{holderModel.sellerBackground}"
+            app:image_from_url_rounded="@{holderModel.nftImgUrl}"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />
 
@@ -48,7 +48,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:textSize="14dp"
-                android:text="@{holderModel.sellerName}"
+                android:text="@{holderModel.memberName}"
                 android:textColor="@color/white"
                 android:fontFamily="@font/pretendard_regular">
             </TextView>
@@ -63,7 +63,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/hots_contents_main"
-            app:image_from_url_circle="@{holderModel.sellerProfile}"
+            app:image_from_url_circle="@{holderModel.profileUrl}"
             android:background="@drawable/custom_hotseller_userimg"
             android:adjustViewBounds="true">
         </ImageView>

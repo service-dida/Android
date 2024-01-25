@@ -12,400 +12,407 @@
             type="com.dida.swap.SwapViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainblack">
+        android:hapticFeedbackEnabled="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:background="@color/mainblack">
 
-            <TextView
-                style="@style/TextView_bold_20_white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/swap_toolbar_text" />
-        </androidx.appcompat.widget.Toolbar>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:overScrollMode="never"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="1.0">
-
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/TextView_bold_20_white"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="22dp"
-                    android:paddingRight="22dp">
+                    android:layout_gravity="center"
+                    android:text="@string/swap_toolbar_text" />
+            </androidx.appcompat.widget.Toolbar>
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        style="@style/TextView_regular_20_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:text="@string/swap_asset_title"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/swap_asset_tv"
-                        style="@style/TextView_regular_24_lemon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="start"
-                        android:text="@{vm.walletAmountState}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView11"
-                        tools:text="@string/swap_asset_tools_text" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="@+id/swap_asset_tv"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/swap_asset_tv">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:background="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
-                            android:padding="4dp"
-                            android:src="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
-                            tools:src="@drawable/ic_klaytn" />
-
-                        <TextView
-                            style="@style/TextView_regular_14_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="4dp"
-                            android:gravity="center"
-                            android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_text : @string/swap_dida_text}"
-                            tools:text="@string/swap_klay_text" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="4dp"
-                            android:src="@drawable/ic_swap_change_empty" />
-                    </LinearLayout>
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/top_outer_cl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_surface1_radius10"
-                        android:paddingStart="20dp"
-                        android:paddingTop="18dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/swap_asset_tv">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/top_inner_cl"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <TextView
-                                android:id="@+id/top_send_tv"
-                                style="@style/TextView_regular_13_white"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/swap_send_text"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/top_coin_iv"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginTop="10dp"
-                                android:padding="4dp"
-                                android:background="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
-                                android:src="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/top_send_tv"
-                                tools:src="@drawable/ic_klaytn" />
-
-                            <TextView
-                                android:id="@+id/top_coin_tv"
-                                style="@style/TextView_regular_16_white"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_text : @string/swap_dida_text}"
-                                app:layout_constraintBottom_toBottomOf="@+id/top_coin_iv"
-                                app:layout_constraintStart_toEndOf="@+id/top_coin_iv"
-                                app:layout_constraintTop_toTopOf="@+id/top_coin_iv"
-                                tools:text="@string/swap_klay_text" />
-
-                            <EditText
-                                android:id="@+id/top_coin_amount_et"
-                                style="@style/TextView_regular_22_white"
-                                decimalFormat="@{2}"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:background="@android:color/transparent"
-                                android:gravity="end"
-                                android:hint="@string/swap_example_coin_hint"
-                                android:text="@={vm.amountInputState}"
-                                android:inputType="numberDecimal"
-                                android:textColorHint="@color/surface6"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/top_coin_tv"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/bottom_outer_cl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_surface1_radius10"
-                        android:paddingStart="20dp"
-                        android:paddingTop="18dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/top_outer_cl">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/bottom_inner_cl"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <TextView
-                                android:id="@+id/bottom_send_tv"
-                                style="@style/TextView_regular_13_white"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/swap_receive_text"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/bottom_coin_iv"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginTop="10dp"
-                                android:padding="4dp"
-                                android:background="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
-                                android:src="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/bottom_send_tv"
-                                tools:src="@drawable/ic_dida_logo" />
-
-                            <TextView
-                                android:id="@+id/bottom_coin_tv"
-                                style="@style/TextView_regular_16_white"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:text="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @string/swap_klay_text : @string/swap_dida_text}"
-                                app:layout_constraintBottom_toBottomOf="@+id/bottom_coin_iv"
-                                app:layout_constraintStart_toEndOf="@+id/bottom_coin_iv"
-                                app:layout_constraintTop_toTopOf="@+id/bottom_coin_iv"
-                                tools:text="@string/swap_dida_text" />
-
-                            <EditText
-                                android:id="@+id/bottom_coin_amount_tv"
-                                style="@style/TextView_regular_22_white"
-                                decimalFormat="@{2}"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:background="@android:color/transparent"
-                                android:gravity="end"
-                                android:hint="@string/swap_example_coin_hint"
-                                android:text="@={vm.amountInputState}"
-                                android:inputType="numberDecimal"
-                                android:textColorHint="@color/surface6"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/bottom_coin_tv"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:onSingleClick="@{() -> vm.onSwapTypeChange()}"
-                        android:src="@drawable/ic_swap_change_fill"
-                        app:layout_constraintBottom_toBottomOf="@+id/bottom_outer_cl"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/top_outer_cl" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginTop="22dp"
-                    android:background="@color/surface1" />
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="1.0">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="22dp"
-                    android:paddingRight="22dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <TextView
-                        style="@style/TextView_bold_20_white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/swap_expect_title" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="11dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/TextView_regular_14_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/swap_exchange_percent_text" />
-
-                        <TextView
-                            style="@style/TextView_bold_14_lemon"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="@string/swap_dida_equal_klay" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="11dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/TextView_regular_14_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/swap_min_trade_amount_text" />
-
-                        <TextView
-                            style="@style/TextView_bold_14_lemon"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            tools:text="@string/swap_min_trade_amount_text" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="11dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/TextView_regular_14_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/swap_fee_text" />
-
-                        <TextView
-                            style="@style/TextView_bold_14_lemon"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            tools:text="@string/swap_fee_text" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="11dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/TextView_regular_14_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/swap_exchange_route_text" />
-
-                        <TextView
-                            style="@style/TextView_bold_14_lemon"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_to_dida : @string/swap_dida_to_klay}"
-                            tools:text="@string/swap_klay_to_dida" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/ok_btn"
-                        style="@style/TextView_bold_16_black"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginBottom="40dp"
-                        android:background="@drawable/custom_okbtn_success"
-                        android:fontFamily="@font/pretendard_bold"
-                        android:gravity="center"
-                        app:onSingleClick="@{() -> vm.onSwapClicked()}"
-                        android:padding="18dp"
-                        android:text="@string/swap_confirm_btn_text"
-                        android:textColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="22dp"
+                        android:paddingRight="22dp">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            style="@style/TextView_regular_20_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="@string/swap_asset_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/swap_asset_tv"
+                            style="@style/TextView_regular_24_lemon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="start"
+                            android:text="@{vm.walletAmountState}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView11"
+                            tools:text="@string/swap_asset_tools_text" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="@+id/swap_asset_tv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/swap_asset_tv">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:background="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
+                                android:padding="4dp"
+                                android:src="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
+                                tools:src="@drawable/ic_klaytn" />
+
+                            <TextView
+                                style="@style/TextView_regular_14_white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="4dp"
+                                android:gravity="center"
+                                android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_text : @string/swap_dida_text}"
+                                tools:text="@string/swap_klay_text" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="4dp"
+                                android:src="@drawable/ic_swap_change_empty" />
+                        </LinearLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/top_outer_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/custom_surface1_radius10"
+                            android:paddingStart="20dp"
+                            android:paddingTop="18dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="18dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/swap_asset_tv">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/top_inner_cl"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:id="@+id/top_send_tv"
+                                    style="@style/TextView_regular_13_white"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/swap_send_text"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/top_coin_iv"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
+                                    android:padding="4dp"
+                                    android:src="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/top_send_tv"
+                                    tools:src="@drawable/ic_klaytn" />
+
+                                <TextView
+                                    android:id="@+id/top_coin_tv"
+                                    style="@style/TextView_regular_16_white"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_text : @string/swap_dida_text}"
+                                    app:layout_constraintBottom_toBottomOf="@+id/top_coin_iv"
+                                    app:layout_constraintStart_toEndOf="@+id/top_coin_iv"
+                                    app:layout_constraintTop_toTopOf="@+id/top_coin_iv"
+                                    tools:text="@string/swap_klay_text" />
+
+                                <EditText
+                                    android:id="@+id/top_coin_amount_et"
+                                    style="@style/TextView_regular_22_white"
+                                    decimalFormat="@{2}"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="end"
+                                    android:hint="@string/swap_example_coin_hint"
+                                    android:inputType="numberDecimal"
+                                    android:text="@={vm.amountInputState}"
+                                    android:textColorHint="@color/surface6"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/top_coin_tv"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/bottom_outer_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/custom_surface1_radius10"
+                            android:paddingStart="20dp"
+                            android:paddingTop="18dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="18dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/top_outer_cl">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/bottom_inner_cl"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:id="@+id/bottom_send_tv"
+                                    style="@style/TextView_regular_13_white"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/swap_receive_text"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/bottom_coin_iv"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @drawable/custom_white_radius100 : @drawable/custom_brandlemon_radius100}"
+                                    android:padding="4dp"
+                                    android:src="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @drawable/ic_klaytn : @drawable/ic_dida_logo}"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/bottom_send_tv"
+                                    tools:src="@drawable/ic_dida_logo" />
+
+                                <TextView
+                                    android:id="@+id/bottom_coin_tv"
+                                    style="@style/TextView_regular_16_white"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="@{vm.swapTypeState==SwapType.DIDA_TO_KLAY? @string/swap_klay_text : @string/swap_dida_text}"
+                                    app:layout_constraintBottom_toBottomOf="@+id/bottom_coin_iv"
+                                    app:layout_constraintStart_toEndOf="@+id/bottom_coin_iv"
+                                    app:layout_constraintTop_toTopOf="@+id/bottom_coin_iv"
+                                    tools:text="@string/swap_dida_text" />
+
+                                <EditText
+                                    android:id="@+id/bottom_coin_amount_tv"
+                                    style="@style/TextView_regular_22_white"
+                                    decimalFormat="@{2}"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="end"
+                                    android:hint="@string/swap_example_coin_hint"
+                                    android:inputType="numberDecimal"
+                                    android:text="@={vm.amountInputState}"
+                                    android:textColorHint="@color/surface6"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/bottom_coin_tv"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_swap_change_fill"
+                            app:layout_constraintBottom_toBottomOf="@+id/bottom_outer_cl"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/top_outer_cl"
+                            app:onSingleClick="@{() -> vm.onSwapTypeChange()}" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="22dp"
+                        android:background="@color/surface1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="22dp"
+                        android:paddingRight="22dp">
+
+                        <TextView
+                            style="@style/TextView_bold_20_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/swap_expect_title" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="11dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextView_regular_14_white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/swap_exchange_percent_text" />
+
+                            <TextView
+                                style="@style/TextView_bold_14_lemon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:text="@string/swap_dida_equal_klay" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="11dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextView_regular_14_white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/swap_min_trade_amount_text" />
+
+                            <TextView
+                                style="@style/TextView_bold_14_lemon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                tools:text="@string/swap_min_trade_amount_text" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="11dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextView_regular_14_white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/swap_fee_text" />
+
+                            <TextView
+                                style="@style/TextView_bold_14_lemon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                tools:text="@string/swap_fee_text" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="11dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextView_regular_14_white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/swap_exchange_route_text" />
+
+                            <TextView
+                                style="@style/TextView_bold_14_lemon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:text="@{vm.swapTypeState==SwapType.KLAY_TO_DIDA? @string/swap_klay_to_dida : @string/swap_dida_to_klay}"
+                                tools:text="@string/swap_klay_to_dida" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/ok_btn"
+                            style="@style/TextView_bold_16_black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="40dp"
+                            android:background="@drawable/custom_okbtn_success"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="@string/swap_confirm_btn_text"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:onSingleClick="@{() -> vm.onSwapClicked()}" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

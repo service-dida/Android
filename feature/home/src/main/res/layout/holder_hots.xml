@@ -4,7 +4,7 @@
     <data>
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.Hots" />
+            type="com.dida.domain.main.model.HotItem" />
 
         <variable
             name="eventListener"
@@ -17,7 +17,7 @@
         android:background="@drawable/custom_surface2_radius14"
         android:id="@+id/hots_main"
         android:layout_marginBottom="18dp"
-        app:onSingleClick="@{() -> eventListener.onHotItemClicked(holderModel.cardId)}">
+        app:onSingleClick="@{() -> eventListener.onHotItemClicked(holderModel.nftId)}">
 
         <ImageView
             android:id="@+id/hots_img"
@@ -25,7 +25,7 @@
             android:layout_height="222dp"
             app:layout_constraintTop_toTopOf="parent"
             android:adjustViewBounds="true"
-            app:image_from_url_rounded="@{holderModel.nftImg}"
+            app:image_from_url_rounded="@{holderModel.nftImgUrl}"
             android:scaleType="centerCrop"
             android:background="@drawable/custom_surface2_radius14">
         </ImageView>
@@ -112,7 +112,7 @@
                 android:textSize="15dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:textColor="@color/mainblack"
-                android:text="@{holderModel.heartFormat()}"
+                android:text="@{holderModel.likeCount}"
                 android:layout_marginLeft="8dp">
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>

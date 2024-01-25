@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.DetailNftAPI
-import com.dida.domain.usecase.main.PostCardIdAPI
-import com.dida.domain.usecase.main.PostIdAPI
-import com.dida.domain.usecase.main.UpdatePostAPI
+import com.dida.domain.usecase.NftDetailUseCase
+import com.dida.domain.usecase.PatchPostUseCase
+import com.dida.domain.usecase.PostsDetailUseCase
+import com.dida.domain.usecase.WritePostUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.*
@@ -16,10 +16,10 @@ import kotlinx.coroutines.launch
 
 class CreateCommunityInputViewModel @AssistedInject constructor(
     @Assisted("createdState") val createdState: Boolean,
-    private val detailNftAPI: DetailNftAPI,
-    private val postCardIdAPI: PostCardIdAPI,
-    private val postIdAPI: PostIdAPI,
-    private val updatePostAPI: UpdatePostAPI
+    private val nftDetailUseCase: NftDetailUseCase,
+    private val postsDetailUseCase: PostsDetailUseCase,
+    private val writePostUseCase: WritePostUseCase,
+    private val patchPostUseCase: PatchPostUseCase
 ) : BaseViewModel(), CreateCommunityInputActionHandler {
 
     private val TAG = "CreateCommunityInputViewModel"
@@ -73,49 +73,56 @@ class CreateCommunityInputViewModel @AssistedInject constructor(
     fun getPostDetail(postId: Long) {
         baseViewModelScope.launch {
             postIdState.value = postId
-            postIdAPI(postId = postId)
+            postsDetailUseCase(postId = postId)
                 .onSuccess {
-                    _cardIdState.value = it.cardId
-                    _cardImgState.value = it.cardImgUrl
-                    _cardTitleState.value = it.title
-                    _userImgState.value = it.userImgUrl
-                    _nicknameState.value = it.userName
-                    titleState.value = it.title
-                    descriptionState.value = it.content
+                    _cardIdState.value = it.nftInfo.nftId
+                    _cardImgState.value = it.nftInfo.nftImgUrl
+                    _cardTitleState.value = it.nftInfo.nftName
+                    _userImgState.value = it.memberInfo.profileImgUrl ?: ""
+                    _nicknameState.value = it.memberInfo.memberName
+                    titleState.value = it.postInfo.title
+                    descriptionState.value = it.postInfo.content
                 }.onError { e -> catchError(e) }
         }
     }
 
     fun getCardDetail(cardId: Long) {
         baseViewModelScope.launch {
-            detailNftAPI(cardId = cardId)
+            nftDetailUseCase(nftId = cardId)
                 .onSuccess {
-                    _cardIdState.value = it.cardId
-                    _cardImgState.value = it.imgUrl
-                    _cardTitleState.value = it.title
-                    _userImgState.value = it.profileUrl
-                    _nicknameState.value = it.nickname }
+                    _cardIdState.value = it.nftInfo.nftId
+                    _cardImgState.value = it.nftInfo.nftImgUrl
+                    _cardTitleState.value = it.nftInfo.nftName
+                    _userImgState.value = it.memberInfo.profileImgUrl ?: ""
+                    _nicknameState.value = it.memberInfo.memberName
+                }
                 .onError { e -> catchError(e) }
         }
     }
 
     override fun onBackButtonClicked() {
         baseViewModelScope.launch {
-            if (createdState) _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
+            _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToBack)
         }
     }
 
     override fun onCreateClicked() {
         baseViewModelScope.launch {
             showLoading()
-            if(titleState.value.isNotBlank() && descriptionState.value.isNotBlank()) {
+            if (titleState.value.isNotBlank() && descriptionState.value.isNotBlank()) {
                 if (createdState) {
-                    postCardIdAPI(cardId = _cardIdState.value, title = titleState.value, content = descriptionState.value)
-                        .onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
+                    writePostUseCase(
+                        nftId = _cardIdState.value,
+                        title = titleState.value,
+                        content = descriptionState.value
+                    ).onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
                         .onError { e -> catchError(e) }
                 } else {
-                    updatePostAPI(postId = postIdState.value, title = titleState.value, content = descriptionState.value)
-                        .onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
+                    patchPostUseCase(
+                        postId = postIdState.value,
+                        title = titleState.value,
+                        content = descriptionState.value
+                    ).onSuccess { _navigationEvent.emit(CreateCommunityInputNavigationAction.NavigateToCommunity) }
                         .onError { e -> catchError(e) }
                 }
             }

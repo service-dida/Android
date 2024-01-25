@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.util.Constants
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.removeTrailingDot
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
@@ -28,17 +29,12 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
 
     override val viewModel : SwapViewModel by viewModels()
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getWalletExists()
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-    }
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -55,7 +51,7 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
                                         viewModel.swapTypeState.value
                                     )
                                 )
-                            }else {
+                            } else {
                                 if (password == "reset") {
                                     navigate(SwapFragmentDirections.actionSwapFragmentToSettingFragment())
                                 }
@@ -91,6 +87,19 @@ class SwapFragment : BaseFragment<FragmentSwapBinding, SwapViewModel>(com.dida.s
         }
     }
 
-    override fun initAfterBinding() {
+    override fun initAfterBinding() {}
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getWalletExists()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getWalletExists()
+            requireContext().performHapticEvent()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 }

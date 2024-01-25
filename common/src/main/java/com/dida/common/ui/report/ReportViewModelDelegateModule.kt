@@ -1,8 +1,7 @@
 package com.dida.common.ui.report
 
-import com.dida.domain.usecase.main.ReportCardAPI
-import com.dida.domain.usecase.main.ReportPostAPI
-import com.dida.domain.usecase.main.ReportUserAPI
+import com.dida.domain.usecase.BlockUseCase
+import com.dida.domain.usecase.ReportUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,12 +13,11 @@ class ReportViewModelDelegateModule {
 
     @Provides
     fun provideReportViewModelDelegate(
-        reportUserAPI: ReportUserAPI,
-        reportPostAPI: ReportPostAPI,
-        reportCardAPI: ReportCardAPI
+        reportUseCase: ReportUseCase,
+        blockUseCase: BlockUseCase
     ): ReportViewModelDelegate {
         return DefaultReportViewModelDelegate(
-            reportUserAPI, reportPostAPI, reportCardAPI
+            reportUseCase, blockUseCase
         )
     }
 

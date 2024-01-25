@@ -3,34 +3,41 @@ package com.dida.buy.nft.success
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
+import com.dida.domain.NetworkResult
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.SellNftAPI
+import com.dida.domain.usecase.PublicKeyUseCase
+import com.dida.domain.usecase.SellNftUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
+import encryptWithPublicKey
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class BuySuccessViewModel @AssistedInject constructor(
     @Assisted("cardId") val cardId: Long,
-    private val sellNftAPI: SellNftAPI
+    private val sellNftUseCase: SellNftUseCase,
+    private val getPublicKeyUseCase: PublicKeyUseCase,
 ) : BaseViewModel() , BuySuccessActionHandler {
 
     private val TAG = "BuyNftSuccessViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<BuySuccessNavigationAction> =
-        MutableSharedFlow<BuySuccessNavigationAction>()
-    val navigationEvent: SharedFlow<BuySuccessNavigationAction> = _navigationEvent
+    private val _navigationEvent: MutableSharedFlow<BuySuccessNavigationAction> = MutableSharedFlow<BuySuccessNavigationAction>()
+    val navigationEvent: SharedFlow<BuySuccessNavigationAction> = _navigationEvent.asSharedFlow()
 
     fun sellNft(payPwd: String, price: Double) {
         baseViewModelScope.launch {
             showLoading()
-            sellNftAPI(payPwd, cardId, price)
-                .onSuccess { _navigationEvent.emit(BuySuccessNavigationAction.NavigateToMypage) }
-                .onError { e -> catchError(e) }
+            val publicKey = (getPublicKeyUseCase() as NetworkResult.Success).data
+
+            sellNftUseCase(
+                payPwd = payPwd.encryptWithPublicKey(publicKey.publicKey),
+                nftId = cardId,
+                price = price
+            ).onSuccess { _navigationEvent.emit(BuySuccessNavigationAction.NavigateToMypage)
+            }.onError { e -> catchError(e) }
         }
     }
 

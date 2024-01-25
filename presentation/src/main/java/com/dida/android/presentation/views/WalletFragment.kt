@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.dida.common.util.SnapPagerScrollListener
 import com.dida.common.util.addSnapPagerScroll
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnStarted
 import com.dida.wallet.R
 import com.dida.wallet.WalletNavigationAction
@@ -17,13 +18,15 @@ import com.dida.wallet.WalletViewModel
 import com.dida.wallet.adapter.WalletAdapter
 import com.dida.wallet.adapter.WalletHistoryAdapter
 import com.dida.wallet.databinding.FragmentWalletBinding
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.layout.fragment_wallet) {
+class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.layout.fragment_wallet),
+    AppBarLayout.OnOffsetChangedListener {
 
     private val TAG = "WalletFragment"
 
@@ -41,9 +44,9 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -79,7 +82,28 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletViewModel>(R.la
 
     override fun onResume() {
         super.onResume()
+        binding.walletAppbar.addOnOffsetChangedListener(this)
         viewModel.getHistory()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.walletAppbar.removeOnOffsetChangedListener(this)
+    }
+
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        val isExpanded = verticalOffset == 0
+        if (isExpanded != binding.swipeRefreshLayout.isEnabled) {
+            binding.swipeRefreshLayout.isEnabled = isExpanded
+        }
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getWallet()
+            requireContext().performHapticEvent()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initToolbar() {

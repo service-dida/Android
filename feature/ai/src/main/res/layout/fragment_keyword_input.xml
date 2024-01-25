@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.dida.ai.keyword.input.KeywordInputViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainblack">
+
+        <Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/TextView_bold_20_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/ai_keyword_title" />
+        </Toolbar>
+
+        <TextView
+            android:id="@+id/input_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/input_title"
+            android:textColor="@color/white"
+            android:textSize="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <TextView
+            android:id="@+id/input_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/input_message"
+            android:textColor="@color/surface5"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_title" />
+
+        <com.dida.common.customview.CustomEditText
+            android:id="@+id/input_edit_text"
+            style="@style/EditText_surface2_radius10_solid_surface5"
+            android:layout_width="match_parent"
+            android:layout_height="212dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="top"
+            android:hint="@string/input_edit_text_message"
+            android:inputType="textMultiLine"
+            android:maxLength="300"
+            android:maxLines="30"
+            android:text="@={vm.userInput}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_message" />
+
+        <TextView
+            android:id="@+id/next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="40dp"
+            android:background="@{vm.drawEnable ? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface4_radius10}"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:padding="18dp"
+            android:text="@string/draw"
+            android:textColor="@{vm.drawEnable ? @color/mainblack : @color/surface6}"
+            android:textSize="16dp"
+            android:clickable="@{vm.drawEnable}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:onSingleClick="@{() -> vm.onDrawClicked()}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

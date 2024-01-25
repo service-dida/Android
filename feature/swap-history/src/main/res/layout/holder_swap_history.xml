@@ -3,93 +3,78 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
+
         <variable
             name="eventListener"
-            type="com.dida.swap.history.SwapHistoryActionHandler"/>
+            type="com.dida.swap.history.SwapHistoryActionHandler" />
+
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.SwapHistory" />
+            type="com.dida.domain.main.model.Swap" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:paddingTop="24dp"
-    android:paddingBottom="24dp"
-    android:background="@color/mainblack">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainblack"
+        android:paddingStart="16dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="24dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:src='@{holderModel.sendCoinType.equals("K")? @drawable/ic_klay : @drawable/ic_dida}'
-        tools:src="@drawable/ic_klay"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            style="@style/TextView_regular_18_white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text='@{holderModel.sendCoinType.equals("K")? @string/swap_history_klayToDida_text : @string/swap_history_didaToKlay_text}'
-            tools:text="@string/swap_history_klayToDida_text" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            app:SwapTypeImage='@{holderModel}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_klay" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                style="@style/TextView_regular_14_timeGray"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@{holderModel.timeToDayAndTime().first}" />
+                style="@style/TextView_regular_18_white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:SwapTypeTextLabel='@{holderModel}'
+                tools:text="@string/swap_history_klayToDida_text" />
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:src="@drawable/ic_dot" />
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
 
-            <TextView
-                style="@style/TextView_regular_14_timeGray"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@{holderModel.timeToDayAndTime().second}" />
-
+                <TextView
+                    style="@style/TextView_regular_14_timeGray"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:text="@{holderModel.getDate()}" />
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        style="@style/TextView_bold_20_white"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="@{holderModel.getAmountUnit()}"
-        tools:text="@string/swap_history_amount_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView"
+            style="@style/TextView_bold_20_white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@{holderModel.getAmountUnit()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/swap_history_amount_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

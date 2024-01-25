@@ -6,7 +6,7 @@
 
         <variable
             name="holderModel"
-            type="com.dida.domain.model.main.HotUser" />
+            type="com.dida.domain.main.model.HotSellerPage" />
 
         <variable
             name="eventListener"
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/follow_btn"
-            app:onSingleClick="@{() -> eventListener.onUserClicked(holderModel.userId)}">
+            app:onSingleClick="@{() -> eventListener.onUserClicked(holderModel.memberInfo.memberId)}">
             
             <ImageView
                 android:id="@+id/user_profile"
@@ -40,7 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:image_from_url_circle="@{holderModel.profileUrl}"/>
+                app:image_from_url_circle="@{holderModel.memberInfo.profileUrl}"/>
 
             <TextView
                 android:id="@+id/user_name"
@@ -52,7 +52,7 @@
                 style="@style/TextView_medium_18_white"
                 android:layout_marginStart="10dp"
                 android:padding="2dp"
-                android:text="@{holderModel.name}"/>
+                android:text="@{holderModel.memberInfo.memberName}"/>
 
             <TextView
                 android:id="@+id/card_cnt"
@@ -64,7 +64,7 @@
                 style="@style/TextView_regular_14_timeGray"
                 android:layout_marginStart="10dp"
                 android:padding="2dp"
-                app:cardCount="@{holderModel.cardCnt}"/>
+                app:cardCount="@{holderModel.memberInfo.nftCount}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -80,9 +80,9 @@
             android:paddingBottom="6dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            app:hotUserFollowBtn="@{holderModel.followed}"
+            app:hotUserFollowBtn="@{holderModel.memberInfo.followed}"
             android:fontFamily="@font/pretendard_regular"
-            app:onSingleClick="@{() ->  eventListener.onUserFollowed(holderModel.userId)}"/>
+            app:onSingleClick="@{() ->  eventListener.onUserFollowed(holderModel.memberInfo.memberId)}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_card_recyclerview"

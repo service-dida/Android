@@ -74,7 +74,7 @@
                         android:layout_width="81dp"
                         android:layout_height="81dp"
                         android:layout_marginTop="14dp"
-                        nft_img_rounded="@{vm.detailNftState.imgUrl}"
+                        app:nft_img_rounded="@{vm.detailNftState.nftInfo.nftImgUrl}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:src="@drawable/nft_example_image" />
@@ -95,7 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:text="@{vm.detailNftState.title}"
+                            android:text="@{vm.detailNftState.nftInfo.nftName}"
                             tools:text="NFT name here" />
 
                         <LinearLayout
@@ -112,7 +112,7 @@
                                 android:id="@+id/user_iv"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                image_from_url_circle="@{vm.detailNftState.profileUrl}"
+                                app:image_from_url_circle="@{vm.detailNftState.memberInfo.profileImgUrl}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:src="@drawable/nft_example_image" />
@@ -124,7 +124,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="8dp"
                                 android:gravity="start"
-                                android:text="@{vm.detailNftState.nickname}"
+                                android:text="@{vm.detailNftState.memberInfo.memberName}"
                                 tools:text="User name" />
                         </LinearLayout>
                     </LinearLayout>
@@ -181,7 +181,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        sellerText="@{vm.detailNftState}"
+                        app:sellerText="@{vm.detailNftState.memberInfo.memberName}"
                         tools:text="user name 판매자" />
 
                     <TextView
@@ -190,7 +190,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        buyerText="@{vm.detailNftState}"
+                        app:buyerText="@{vm.userState.memberInfo.memberName}"
                         tools:text="user name 구매자" />
                 </LinearLayout>
 
@@ -234,7 +234,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:textColor="@color/white"
                     android:textSize="18dp"
-                    priceText="@{vm.detailNftState}"
+                    app:priceText="@{vm.detailNftState.nftInfo.price}"
                     app:layout_constraintTop_toTopOf="@id/price_text_view"
                     app:layout_constraintBottom_toBottomOf="@id/price_text_view"
                     app:layout_constraintEnd_toEndOf="parent"

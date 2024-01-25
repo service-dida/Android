@@ -6,14 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dida.domain.model.main.Hots
+import com.dida.domain.main.model.HotItem
 import com.dida.home.HomeActionHandler
 import com.dida.home.R
 import com.dida.home.databinding.HolderHotsBinding
 
 class HotsAdapter(
     private val eventListener: HomeActionHandler
-) : ListAdapter<Hots, HotsAdapter.ViewHolder>(HotsItemDiffCallback){
+) : ListAdapter<HotItem, HotsAdapter.ViewHolder>(HotsItemDiffCallback){
 
     init { setHasStableIds(true) }
 
@@ -32,24 +32,24 @@ class HotsAdapter(
         holder.bind(getItem(position))
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).cardId * -1
+    override fun getItemId(position: Int): Long = getItem(position).nftId * -1
 
     override fun getItemViewType(position: Int): Int = R.layout.holder_hots
 
     class ViewHolder(private val binding: HolderHotsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Hots) {
+        fun bind(item: HotItem) {
             binding.holderModel = item
             binding.executePendingBindings()
         }
     }
 
-    internal object HotsItemDiffCallback : DiffUtil.ItemCallback<Hots>() {
-        override fun areItemsTheSame(oldItem: Hots, newItem: Hots) =
-            oldItem.cardId == newItem.cardId
+    internal object HotsItemDiffCallback : DiffUtil.ItemCallback<HotItem>() {
+        override fun areItemsTheSame(oldItem: HotItem, newItem: HotItem) =
+            oldItem.nftId == newItem.nftId
 
-        override fun areContentsTheSame(oldItem: Hots, newItem: Hots) =
+        override fun areContentsTheSame(oldItem: HotItem, newItem: HotItem) =
             oldItem == newItem
     }
 }

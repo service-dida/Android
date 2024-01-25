@@ -41,10 +41,14 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment -> showBottomNav()
-                R.id.communityFragment -> showBottomNav()
-                R.id.swapFragment -> showBottomNav()
-                R.id.myPageFragment -> showBottomNav()
+                R.id.homeFragment, R.id.swapFragment, R.id.myPageFragment -> {
+                    showBottomNav()
+                    showFloatingAddButton()
+                }
+                R.id.communityFragment -> {
+                    showBottomNav()
+                    hideFloatingAddButton()
+                }
                 else -> hideBottomNav()
             }
         }
@@ -52,11 +56,14 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
 
         // ADD 버튼 클릭
         binding.bottomNavi.menu.getItem(2).isEnabled = false
+
         binding.bottomNaviAddBtn.setOnClickListener {
             navController.navigate(R.id.addFragment)
         }
+        binding.bottomNaviFloatingAddBtn.setOnClickListener {
+            navController.navigate(R.id.addFragment)
+        }
 
-        // 중복터치 막기!!
         binding.bottomNavi.setOnItemReselectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.homeFragment -> {}
@@ -68,6 +75,18 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
         }
     }
 
+    private fun showFloatingAddButton() {
+        binding.bottomNaviFloatingAddBtn.visibility = View.VISIBLE
+        binding.bottomNaviAddBackground.visibility = View.VISIBLE
+        binding.bottomNaviAddBtn.visibility = View.GONE
+    }
+
+    private fun hideFloatingAddButton() {
+        binding.bottomNaviAddBtn.visibility = View.VISIBLE
+        binding.bottomNaviFloatingAddBtn.visibility = View.GONE
+        binding.bottomNaviAddBackground.visibility = View.GONE
+    }
+
     private fun showBottomNav() {
         binding.bottomNavi.visibility = View.VISIBLE
         binding.bottomNaviAddBtn.visibility = View.VISIBLE
@@ -75,8 +94,9 @@ class NavHostActivity : BaseActivity<ActivityNavHostBinding, NavHostViewModel>()
     }
 
     private fun hideBottomNav() {
+        binding.bottomNaviFloatingAddBtn.visibility = View.GONE
         binding.bottomNavi.visibility = View.GONE
-        binding.bottomNaviAddBtn.visibility =View.GONE
+        binding.bottomNaviAddBtn.visibility = View.GONE
         binding.bottomNaviAddBackground.visibility=View.GONE
     }
 

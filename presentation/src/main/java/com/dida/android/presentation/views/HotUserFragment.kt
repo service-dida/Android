@@ -5,10 +5,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
+import com.dida.common.util.addOnPagingListener
 import com.dida.common.util.repeatOnStarted
-import com.dida.hot_user.HotUserNavigationAction
 import com.dida.hot_user.HotUserViewModel
-import com.dida.hot_user.adapter.HotUserPagingAdapter
+import com.dida.hot_user.adapter.HotUserAdapter
 import com.dida.hot_user.databinding.FragmentHotUserBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -24,36 +24,34 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
 
     override val viewModel : HotUserViewModel by viewModels()
     private val navController by lazy { findNavController() }
-    private val hotUserPagingAdapter by lazy { HotUserPagingAdapter(viewModel) }
+    private val hotUserAdapter by lazy { HotUserAdapter(viewModel) }
+
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
+        viewModel.showLoading()
         initToolbar()
         initAdapter()
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.hotUserState.collectLatest {
-                hotUserPagingAdapter.submitData(it)
+            viewModel.hotMemberState.collectLatest {
+                viewModel.dismissLoading()
+                hotUserAdapter.submitList(it.content)
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when(it) {
-                    is HotUserNavigationAction.NavigateToUserProfile -> navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it.userId))
-                    is HotUserNavigationAction.NavigateToFollow -> hotUserPagingAdapter.refresh()
-                }
+            viewModel.navigateToUser.collectLatest {
+                navigate(HotUserFragmentDirections.actionHotUserFragmentToUserProfileFragment(userId = it))
             }
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
     private fun initToolbar(){
         binding.toolbar.apply {
@@ -64,6 +62,9 @@ class HotUserFragment : BaseFragment<FragmentHotUserBinding, HotUserViewModel>(c
     }
 
     private fun initAdapter() {
-        binding.hotUserRecycler.adapter = hotUserPagingAdapter
+        binding.hotUserRecycler.adapter = hotUserAdapter
+        binding.hotUserRecycler.addOnPagingListener(
+            arrivedBottom = { viewModel.nextPage() }
+        )
     }
 }

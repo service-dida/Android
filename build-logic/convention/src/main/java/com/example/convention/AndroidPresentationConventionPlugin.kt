@@ -46,6 +46,10 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                     buildConfigField("String", "KLAYTN_HEADER_AUTHORIZATION", properties["KLAYTN_HEADER_AUTHORIZATION"].toString())
                     /* Hide Key (Must In Local.Properties)*/
                     buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao_native_app_key"].toString())
+
+                    buildConfigField("String", "GOOGLE_ADMOB_APP_ID", properties["GOOGLE_ADMOB_APP_ID"].toString())
+                    buildConfigField("String", "GOOGLE_ADMOB_UNIT_ID", properties["GOOGLE_ADMOB_UNIT_ID"].toString())
+                    buildConfigField("String", "GOOGLE_ADMOB_UNIT_TEST_ID", properties["GOOGLE_ADMOB_UNIT_TEST_ID"].toString())
                 }
 
                 buildFeatures {
@@ -69,6 +73,7 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:swap"))
                 add("implementation", project(":feature:swap-history"))
                 add("implementation", project(":feature:add"))
+                add("implementation", project(":feature:ai"))
                 add("implementation", project(":feature:community"))
                 add("implementation", project(":feature:community-detail"))
                 add("implementation", project(":feature:create-community"))
@@ -85,6 +90,13 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
                 add("implementation", project(":feature:compose"))
                 add("implementation", project(":feature:user-profile"))
                 add("implementation", project(":feature:change-password"))
+                add("implementation", project(":feature:block"))
+                add("implementation", project(":feature:user-followed"))
+                add("implementation", project(":feature:image-viewer"))
+                add("implementation", project(":feature:sold-out"))
+                add("implementation", project(":feature:notification"))
+                add("implementation", project(":feature:ownership-history"))
+
 
                 // Android Common
                 add("implementation", libs.findLibrary("androidx-core").get())
@@ -137,6 +149,12 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                 // Paging
                 add("implementation", libs.findLibrary("androidx-paging").get())
+
+                // Swipe Refresh Layout
+                add("implementation", libs.findLibrary("androidx-swipe-refresh-layout").get())
+
+                //google adMob
+                add("implementation", libs.findLibrary("play-service-ads").get())
             }
         }
     }

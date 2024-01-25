@@ -61,7 +61,7 @@ class CustomEditText @JvmOverloads constructor(
         inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
     }
 
-    fun errorEvent(){
+    fun errorEvent() {
         hideKeyBoard()
         this.setBackgroundResource(R.drawable.custom_noticered_radius10_surface5_width1)
     }

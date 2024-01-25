@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="items"
+            type="java.util.List&lt;com.dida.domain.main.model.CommonProfileNft&gt;" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.common.actionhandler.NftActionHandler" />
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:nestedScrollingEnabled="false"
+        app:eventListener="@{eventListener}"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:userCardItems="@{items}"
+        app:spanCount="2" />
+
+</layout>

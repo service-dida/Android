@@ -8,4 +8,6 @@
     <string name="notification_title">공지사항</string>
     <string name="invisible_title">숨김 목록</string>
     <string name="block_title">차단된 유저</string>
+    <string name="privacy">개인정보 처리방침</string>
+    <string name="service">이용약관</string>
 </resources>

@@ -2,19 +2,23 @@ package com.dida.community_detail
 
 import com.dida.common.actionhandler.CommentActionHandler
 import com.dida.common.base.BaseViewModel
-import com.dida.common.ui.report.ReportType
 import com.dida.common.ui.report.ReportViewModelDelegate
+import com.dida.common.util.FIRST_PAGE
+import com.dida.common.util.PAGE_SIZE
 import com.dida.data.DataApplication
+import com.dida.domain.Contents
 import com.dida.domain.flatMap
-import com.dida.domain.model.main.Comments
-import com.dida.domain.model.main.Post
+import com.dida.domain.main.model.Block
+import com.dida.domain.main.model.Comment
+import com.dida.domain.main.model.Post
+import com.dida.domain.main.model.Report
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CommentAPI
-import com.dida.domain.usecase.main.CommentsPostIdAPI
-import com.dida.domain.usecase.main.DeleteCommentAPI
-import com.dida.domain.usecase.main.DeletePostAPI
-import com.dida.domain.usecase.main.PostIdAPI
+import com.dida.domain.usecase.CommentsFromPostUserUseCase
+import com.dida.domain.usecase.DeletePostCommentsUseCase
+import com.dida.domain.usecase.DeletePostUseCase
+import com.dida.domain.usecase.PostsDetailUseCase
+import com.dida.domain.usecase.WritePostCommentsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,11 +31,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailCommunityViewModel @Inject constructor(
-    private val postIdAPI: PostIdAPI,
-    private val commentsPostIdAPI: CommentsPostIdAPI,
-    private val commentAPI: CommentAPI,
-    private val deleteCommentAPI: DeleteCommentAPI,
-    private val deletePostAPI: DeletePostAPI,
+    private val postsDetailUseCase: PostsDetailUseCase,
+    private val commentsFromPostUserUseCase: CommentsFromPostUserUseCase,
+    private val writePostCommentsUseCase: WritePostCommentsUseCase,
+    private val deletePostCommentsUseCase: DeletePostCommentsUseCase,
+    private val deletePostUseCase: DeletePostUseCase,
     reportViewModelDelegate: ReportViewModelDelegate
 ) : BaseViewModel(), DetailCommunityActionHandler, CommentActionHandler,
     ReportViewModelDelegate by reportViewModelDelegate {
@@ -47,8 +51,10 @@ class DetailCommunityViewModel @Inject constructor(
     private val _postState: MutableStateFlow<Post?> = MutableStateFlow(null)
     val postState: StateFlow<Post?> = _postState.asStateFlow()
 
-    private val _commentList: MutableStateFlow<List<Comments>> = MutableStateFlow(emptyList())
-    val commentList: StateFlow<List<Comments>> = _commentList.asStateFlow()
+    private val _comments: MutableStateFlow<Contents<Comment>> = MutableStateFlow(
+        Contents(page = 0, pageSize = 0, hasNext = true, content = emptyList())
+    )
+    val comments: StateFlow<Contents<Comment>> = _comments.asStateFlow()
 
     val commentState: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -57,20 +63,20 @@ class DetailCommunityViewModel @Inject constructor(
     fun getPost(postId: Long) {
         baseViewModelScope.launch {
             showLoading()
-            postIdAPI.invoke(postId = postId)
+            postsDetailUseCase(postId = postId)
                 .onSuccess { _postState.value = it }
-                .flatMap { commentsPostIdAPI.invoke(postId = postId) }
+                .flatMap { commentsFromPostUserUseCase.invoke(postId = postId, 0 , PAGE_SIZE) }
                 .onSuccess {
-                    _commentList.value = it
-                    isWrite.value = false }
-                .onError { e -> catchError(e) }
+                    _comments.value = it
+                    isWrite.value = false
+                }.onError { e -> catchError(e) }
             dismissLoading()
         }
     }
 
     fun deleteComment(commentId: Long) {
         baseViewModelScope.launch {
-            deleteCommentAPI(commentId = commentId)
+            deletePostCommentsUseCase(commentId = commentId)
                 .onSuccess { _messageEvent.emit(DetailCommunityMessageAction.DeleteReplyMessage) }
                 .onError { e -> catchError(e) }
         }
@@ -80,12 +86,17 @@ class DetailCommunityViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             if (commentState.value.isNotBlank()) {
-                commentAPI(postId = postId, content = commentState.value)
+                writePostCommentsUseCase(postId = postId, content = commentState.value)
                     .onSuccess { commentState.value = "" }
-                    .flatMap { commentsPostIdAPI(postId = postId) }
-                    .onSuccess {
+                    .flatMap {
+                        commentsFromPostUserUseCase(
+                            postId = postId,
+                            page = FIRST_PAGE,
+                            size = PAGE_SIZE
+                        )
+                    }.onSuccess {
                         isWrite.value = true
-                        _commentList.value = it
+                        _comments.value = it
                     }
                     .onError { e -> catchError(e) }
             }
@@ -93,13 +104,19 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    override fun onCommunityMoreClicked(userId: Long, postId: Long) {
+    fun nextPage(postId: Long) {
         baseViewModelScope.launch {
-            if (DataApplication.dataStorePreferences.getUserId() != userId) {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToNotWriterMore(postId))
-            } else {
-                _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToWriterMore(postId))
+            if (!comments.value.hasNext) {
+                return@launch
             }
+            commentsFromPostUserUseCase(
+                postId = postId,
+                page = comments.value.page + 1,
+                size = PAGE_SIZE
+            ).onSuccess {
+                it.content = (comments.value.content.toMutableList()) + it.content
+                _comments.value = it
+            }.onError { e -> catchError(e) }
         }
     }
 
@@ -109,13 +126,13 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onPostReport(postId: Long) {
+    override fun onPostReport(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostReport(postId = postId))
         }
     }
 
-    fun onPostBlock(postId: Long) {
+    override fun onPostBlockClicked(postId: Long) {
         baseViewModelScope.launch {
             _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToPostBlock(postId = postId))
         }
@@ -157,20 +174,34 @@ class DetailCommunityViewModel @Inject constructor(
         }
     }
 
-    fun onReport(type: ReportType, reportId: Long, content: String) {
-        onReportDelegate(coroutineScope = baseViewModelScope, type = type, reportId = reportId, content = content)
+    override fun onDeletePostDialog(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToDeletePostDialog(postId = postId))
+        }
+    }
+
+    override fun onUpdatePost(postId: Long) {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToUpdatePost(postId = postId))
+        }
     }
 
     fun onDeletePost(postId: Long) {
         baseViewModelScope.launch {
-            showLoading()
-            deletePostAPI.invoke(postId)
+            deletePostUseCase.invoke(postId)
                 .onSuccess {
                     _messageEvent.emit(DetailCommunityMessageAction.DeletePostMessage)
                     _navigationEvent.emit(DetailCommunityNavigationAction.NavigateToBack)
                 }
                 .onError { e -> catchError(e) }
-            dismissLoading()
         }
+    }
+
+    fun onReport(type: Report, reportId: Long, content: String) = baseViewModelScope.launch {
+        onReportDelegate(type = type, reportId = reportId, content = content)
+    }
+
+    fun onBlock(type: Block, blockId: Long) = baseViewModelScope.launch {
+        onBlockDelegate(type = type, blockId = blockId)
     }
 }

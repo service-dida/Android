@@ -5,24 +5,32 @@ import com.dida.common.base.BaseViewModel
 import com.dida.domain.NetworkResult
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.*
+import com.dida.domain.usecase.CheckNicknameUseCase
+import com.dida.domain.usecase.CommonProfileUseCase
+import com.dida.domain.usecase.PatchProfileDescriptionUseCase
+import com.dida.domain.usecase.PatchProfileImageUseCase
+import com.dida.domain.usecase.PatchProfileNicknameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
 class UpdateProfileViewModel @Inject constructor(
-    private val nicknameCheckAPI: NicknameCheckAPI,
-    private val updateProfileImageAPI: UpdateProfileImageAPI,
-    private val updateProfileDescriptionAPI: UpdateProfileDescriptionAPI,
-    private val updateProfileNicknameAPI: UpdateProfileNicknameAPI,
-    private val userProfileAPI: UserProfileAPI
-) : BaseViewModel() {
+    private val checkNicknameUseCase: CheckNicknameUseCase,
+    private val patchProfileImageUseCase: PatchProfileImageUseCase,
+    private val patchProfileNicknameUseCase: PatchProfileNicknameUseCase,
+    private val patchProfileDescriptionUseCase: PatchProfileDescriptionUseCase,
+    private val commonProfileUseCase: CommonProfileUseCase
+) : BaseViewModel(), UpdateProfileActionHandler {
 
     private val TAG = "UpdateProfileViewModel"
 
@@ -44,15 +52,15 @@ class UpdateProfileViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-            userProfileAPI.invoke()
+            commonProfileUseCase.invoke()
                 .onSuccess {
-                    profileImageState.emit(it.profileUrl)
-                    nickNameState.emit(it.nickname)
-                    descriptionState.emit(it.description)
+                    profileImageState.emit(it.memberInfo.profileImgUrl ?: "")
+                    nickNameState.emit(it.memberInfo.memberName)
+                    descriptionState.emit(it.description ?: "")
 
-                    currentProfileImage = it.profileUrl
-                    currentNickname = it.nickname
-                    currentDescription = it.description
+                    currentProfileImage = it.memberInfo.profileImgUrl ?: ""
+                    currentNickname = it.memberInfo.memberName
+                    currentDescription = it.description ?: ""
                 }.onError { e -> catchError(e) }
         }
     }
@@ -98,10 +106,10 @@ class UpdateProfileViewModel @Inject constructor(
 
     private fun nicknameAPIServer(nickName: String) {
         baseViewModelScope.launch {
-            nicknameCheckAPI(nickName)
+            checkNicknameUseCase(nickName)
                 .onSuccess {
-                    _nickNameCheckState.value = it.used
-                    if (it.used) setNicknameVerify(2)
+                    _nickNameCheckState.value = it
+                    if (it) setNicknameVerify(2)
                     else setNicknameVerify(3)
                 }.onError { e ->
                     setNicknameVerify(0)
@@ -138,17 +146,20 @@ class UpdateProfileViewModel @Inject constructor(
             val deferreds : MutableList<Deferred<NetworkResult<Unit>>> = mutableListOf()
             if (currentProfileImage != profileImageState.value) {
                 deferreds.add(async {
-                    updateProfileImageAPI(profileImageMultipartState.value!!).onError { e -> catchError(e) }
+                    patchProfileImageUseCase(profileImageMultipartState.value!!)
+                        .onError { e -> catchError(e) }
                 })
             }
             if (currentNickname != nickNameState.value) {
                 deferreds.add(async {
-                    updateProfileNicknameAPI(nickname = nickNameState.value).onError { e -> catchError(e) }
+                    patchProfileNicknameUseCase(nickname = nickNameState.value)
+                        .onError { e -> catchError(e) }
                 })
             }
             if (currentDescription != descriptionState.value) {
                 deferreds.add(async {
-                    updateProfileDescriptionAPI(description = descriptionState.value).onError { e -> catchError(e) }
+                    patchProfileDescriptionUseCase(description = descriptionState.value)
+                        .onError { e -> catchError(e) }
                 })
             }
             deferreds.awaitAll()
@@ -157,22 +168,16 @@ class UpdateProfileViewModel @Inject constructor(
         }
     }
 
-    fun clearNickname(){
-        baseViewModelScope.launch {
-            nickNameState.emit("")
-        }
-    }
-
-    fun clearDescription(){
-        baseViewModelScope.launch {
-            descriptionState.emit("")
-        }
-    }
-
     val profileImageMultipartState : MutableStateFlow<MultipartBody.Part?> = MutableStateFlow<MultipartBody.Part?>(null)
 
     fun selectProfileImage(url : Uri, multipartBody: MultipartBody.Part){
         profileImageMultipartState.value = multipartBody
         profileImageState.value = url.toString()
+    }
+
+    override fun onProfileImageClicked() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(UpdateProfileNavigationAction.NavigateToUpdateProfileImage)
+        }
     }
 }

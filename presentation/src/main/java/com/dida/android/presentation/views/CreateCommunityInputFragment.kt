@@ -42,7 +42,6 @@ class CreateCommunityInputFragment : BaseFragment<FragmentCreateCommunityInputBi
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initView()
     }

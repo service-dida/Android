@@ -1,28 +1,21 @@
 package com.dida.password
 
-import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.get
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dida.common.base.BaseBottomSheetDialogFragment
-import com.dida.common.dialog.CentralDialogFragment
 import com.dida.common.dialog.VerticalDialogFragment
+import com.dida.common.util.performVibrate
 import com.dida.password.databinding.DialogPasswordBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,13 +46,12 @@ class PasswordDialog(
             this.mainTitle = mainTitleStr
             this.subTitle = subTitleStr
             this.findPasswordBtn.visibility =
-                if(showFindPwdBtn){
+                if (showFindPwdBtn) {
                     View.VISIBLE
-                }else {
+                } else {
                     View.GONE
                 }
         }
-        exception = viewModel.errorEvent
         viewModel.initPwdInfo(size, settingYn)
         makePasswordDial()
         dialogFullScreen()
@@ -72,9 +64,7 @@ class PasswordDialog(
             launch {
                 viewModel.stackSizeState.collect {
                     checkImageType(it)
-                    if(it!=0){
-                        buttonVibrator()
-                    }
+                    if (it != 0) requireContext().performVibrate()
                 }
             }
 
@@ -88,27 +78,14 @@ class PasswordDialog(
             launch {
                 viewModel.failEvent.collectLatest {
                     failAction(it)
+                    requireContext().performVibrate(milliseconds = 100, amplitude = 200)
                 }
             }
+        }
 
-            launch {
-                viewModel.dismissEvent.collectLatest {
-                    VerticalDialogFragment.Builder()
-                        .title(getString(R.string.wrong_password_mainTitle))
-                        .message(getString(R.string.wrong_password_subTitle))
-                        .positiveButton(getString(R.string.wrong_password_positive), object : VerticalDialogFragment.OnClickListener {
-                            override fun onClick() {
-                                result.invoke(false,"reset")
-                            }
-                        })
-                        .negativeButton(getString(R.string.wrong_password_negative), object : VerticalDialogFragment.OnClickListener {
-                            override fun onClick() {
-                                result.invoke(false,"")
-                            }
-                        })
-                        .build()
-                        .show(childFragmentManager, "log_out_dialog")
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.dismissEvent.collectLatest {
+                showWrongOverFivePasswordDialog()
             }
         }
     }
@@ -116,6 +93,11 @@ class PasswordDialog(
     override fun initAfterBinding() {
         binding.findPasswordBtn.setOnClickListener {
             result.invoke(false,"reset")
+        }
+
+        binding.closeBtn.setOnClickListener {
+            result.invoke(false, "")
+            dismissAllowingStateLoss()
         }
     }
 
@@ -130,13 +112,13 @@ class PasswordDialog(
                 dialog!!.findViewById(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         }
-        val view = view
-        view!!.post {
-            val parent = view!!.parent as View
+        val view = requireView()
+        view.post {
+            val parent = view.parent as View
             val params = parent.layoutParams as CoordinatorLayout.LayoutParams
             val behavior = params.behavior
             val bottomSheetBehavior = behavior as BottomSheetBehavior<*>?
-            bottomSheetBehavior!!.peekHeight = view!!.measuredHeight
+            bottomSheetBehavior!!.peekHeight = view.measuredHeight
             parent.setBackgroundColor(Color.TRANSPARENT)
         }
     }
@@ -175,13 +157,11 @@ class PasswordDialog(
             imageViewList.forEach {
                 it.setImageResource(R.drawable.ic_password_fail)
             }
-            val animation =
-                AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
+            val animation = AnimationUtils.loadAnimation(context, R.anim.left_right_shake)
             binding.passwordDialLayout.startAnimation(animation)
             binding.mainTitleTv.text = "비밀번호가 일치하지 않아요\n" + "다시 눌러주세요"
             binding.subTitleTv.visibility = View.GONE
             binding.worngCountTv.visibility = View.VISIBLE
-
         } else {
             makePasswordDial()
             binding.passwordDialLayout.clearAnimation()
@@ -191,14 +171,21 @@ class PasswordDialog(
         }
     }
 
-    private fun buttonVibrator(){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val vibratorManager = activity?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                val vibrator = vibratorManager.defaultVibrator
-                vibrator.vibrate(VibrationEffect.createOneShot(50, 50));
-            } else {
-                val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                vibrator.vibrate(1000);
-            }
+    private fun showWrongOverFivePasswordDialog() {
+        VerticalDialogFragment.Builder()
+            .title(getString(R.string.wrong_password_mainTitle))
+            .message(getString(R.string.wrong_password_subTitle))
+            .positiveButton(getString(R.string.wrong_password_positive), object : VerticalDialogFragment.OnClickListener {
+                override fun onClick() {
+                    result.invoke(false,"reset")
+                }
+            })
+            .negativeButton(getString(R.string.wrong_password_negative), object : VerticalDialogFragment.OnClickListener {
+                override fun onClick() {
+                    result.invoke(false,"")
+                }
+            })
+            .build()
+            .show(childFragmentManager, "log_out_dialog")
     }
 }

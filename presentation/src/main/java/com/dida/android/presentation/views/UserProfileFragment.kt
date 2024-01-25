@@ -1,22 +1,26 @@
 package com.dida.android.presentation.views
 
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.paging.LoadState
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dida.android.R
 import com.dida.common.adapter.UserCardAdapter
+import com.dida.common.adapter.UserCardContainerAdapter
+import com.dida.common.adapter.UserCardContainerItem
+import com.dida.common.util.addOnPagingListener
+import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnCreated
-import com.dida.common.util.repeatOnResumed
+import com.dida.common.util.successOrNull
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.data.DataApplication.Companion.dataStorePreferences
 import com.dida.user_profile.UserMessageAction
 import com.dida.user_profile.UserProfileNavigationAction
 import com.dida.user_profile.UserProfileViewModel
+import com.dida.user_profile.adapter.UserProfileHeaderAdapter
+import com.dida.user_profile.adapter.UserProfileSortAdapter
 import com.dida.user_profile.databinding.FragmentUserProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,8 +33,7 @@ class UserProfileFragment :
 
     private val TAG = "UserProfileFragment"
 
-    override val layoutResourceId: Int
-        get() = com.dida.user_profile.R.layout.fragment_user_profile
+    override val layoutResourceId: Int = com.dida.user_profile.R.layout.fragment_user_profile
 
     @Inject
     lateinit var assistedFactory: UserProfileViewModel.AssistedFactory
@@ -43,16 +46,20 @@ class UserProfileFragment :
 
     private val navController: NavController by lazy { findNavController() }
     private val args: UserProfileFragmentArgs by navArgs()
-    private val userCardAdapter by lazy { UserCardAdapter(viewModel) }
+
+    private lateinit var adapter: ConcatAdapter
+    private val userProfileHeaderAdapter by lazy { UserProfileHeaderAdapter(viewModel) }
+    private val userProfileSortAdapter by lazy { UserProfileSortAdapter(viewModel) }
+    private val userCardAdapter: UserCardContainerAdapter by lazy { UserCardContainerAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initSwipeRefresh()
     }
 
     override fun initDataBinding() {
@@ -60,7 +67,6 @@ class UserProfileFragment :
             launch {
                 viewModel.navigationEvent.collectLatest {
                     when (it) {
-                        is UserProfileNavigationAction.NavigateToCardLikeButtonClicked -> userCardAdapter.refresh()
                         is UserProfileNavigationAction.NavigateToDetailNft -> navigate(UserProfileFragmentDirections.actionUserProfileFragmentToDetailNftFragment(it.cardId))
                     }
                 }
@@ -71,58 +77,70 @@ class UserProfileFragment :
                     when(it) {
                         is UserMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
                         is UserMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
-                        is UserMessageAction.AddCardBookmarkMessage -> {
-                            showActionSnackBar(
-                                message = getString(R.string.add_bookmark_message),
-                                label = getString(R.string.add_bookmark_action_title_message),
-                                onClickListener = object : DefaultSnackBar.OnClickListener {
-                                    override fun onClick() {}
-                                }
-                            )
+                        is UserMessageAction.NftBookmarkMessage -> {
+                            if (it.liked) {
+                                showMessageSnackBar(getString(R.string.add_bookmark_message))
+                            } else {
+                                showMessageSnackBar(getString(R.string.delete_bookmark_message))
+                            }
                         }
-                        is UserMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
-
                 }
             }
         }
 
         viewLifecycleOwner.repeatOnCreated {
-            if(args.userId == dataStorePreferences.getUserId()) {
-                navigate(UserProfileFragmentDirections.actionUserProfileFragmentToMyPageFragment())
+            launch {
+                viewModel.userCardState.collectLatest {
+                    userCardAdapter.submitList(listOf(UserCardContainerItem(it.content)))
+                }
             }
-        }
 
-        viewLifecycleOwner.repeatOnResumed {
-            viewModel.userCardState.collectLatest {
-                userCardAdapter.submitData(it)
+            launch {
+                viewModel.userProfileState.collectLatest {
+                    it.successOrNull()?.let { profile ->
+                        userProfileHeaderAdapter.submitList(listOf(profile))
+                    }
+                }
+            }
+
+            launch {
+                viewModel.cardSortTypeState.collectLatest {
+                    userProfileSortAdapter.submitList(listOf(it))
+                }
             }
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getUserProfile()
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getUserProfile()
+            viewModel.getUserNfts()
+            requireContext().performHapticEvent()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initAdapter() {
-        binding.rvUserNft.apply {
-            adapter = userCardAdapter
-            layoutManager = GridLayoutManager(context, 2)
-        }
 
-        userCardAdapter.addLoadStateListener {
-            when(it.append) {
-                is LoadState.NotLoading -> {
-                    binding.emptyView.isVisible = userCardAdapter.snapshot().items.isEmpty()
-                    binding.rvUserNft.isVisible = userCardAdapter.snapshot().items.isNotEmpty()
-                }
-                else -> {}
-            }
-        }
+        val adapterConfig = ConcatAdapter.Config.Builder()
+            .setIsolateViewTypes(true)
+            .setStableIdMode(ConcatAdapter.Config.StableIdMode.SHARED_STABLE_IDS)
+            .build()
+
+        adapter = ConcatAdapter(
+            adapterConfig,
+            userProfileHeaderAdapter,
+            userProfileSortAdapter,
+            userCardAdapter
+        )
+
+        binding.userProfileRecyclerview.adapter = adapter
+        binding.userProfileRecyclerview.addOnPagingListener(
+            arrivedBottom = { viewModel.onNextPage() }
+        )
     }
 
     private fun initToolbar() {

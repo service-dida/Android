@@ -4,7 +4,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.dida.swap.databinding.FragmentSwapLoadingBinding
-import com.dida.swap.loading.SwapLoadingNavigationAction
 import com.dida.swap.loading.SwapLoadingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -37,19 +36,15 @@ class SwapLoadingFragment : BaseFragment<FragmentSwapLoadingBinding, SwapLoading
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
     }
 
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigationEvent.collectLatest {
-                when (it) {
-                    SwapLoadingNavigationAction.NavigateToSuccess -> navigate(SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment(args.swapType))
-                }
+            viewModel.navigateToSuccess.collectLatest {
+                navigate(SwapLoadingFragmentDirections.actionSwapLoadingFragmentToSwapSuccessFragment(args.swapType))
             }
         }
     }
 
-    override fun initAfterBinding() {
-    }
+    override fun initAfterBinding() {}
 }

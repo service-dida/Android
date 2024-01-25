@@ -3,11 +3,12 @@ package com.dida.nickname
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dida.common.base.BaseViewModel
-import com.dida.data.DataApplication
+import com.dida.domain.flatMap
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.CreateUserAPI
-import com.dida.domain.usecase.main.NicknameCheckAPI
+import com.dida.domain.usecase.CheckNicknameUseCase
+import com.dida.domain.usecase.PostUserUseCase
+import com.dida.domain.usecase.local.SetTokenUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.*
@@ -16,8 +17,9 @@ import kotlinx.coroutines.launch
 
 class NicknameViewModel @AssistedInject constructor(
     @Assisted("email") val email: String,
-    private val createUserAPI: CreateUserAPI,
-    private val nicknameCheckAPI: NicknameCheckAPI,
+    private val postUserUseCase: PostUserUseCase,
+    private val checkNicknameUseCase: CheckNicknameUseCase,
+    private val setTokenUseCase: SetTokenUseCase
 ) : BaseViewModel(), NicknameActionHandler {
 
     private val TAG = "NicknameViewModel"
@@ -64,11 +66,15 @@ class NicknameViewModel @AssistedInject constructor(
 
     private fun nicknameAPIServer(nickName: String) {
         baseViewModelScope.launch {
-            nicknameCheckAPI(nickName)
+            if (nickName.isNullOrBlank()) {
+                setNicknameVerify(0)
+                _nickNameCheckState.value = true
+                return@launch
+            }
+            checkNicknameUseCase(nickName)
                 .onSuccess {
-                    _nickNameCheckState.value = it.used
-                    if(it.used) { setNicknameVerify(2) }
-                    else { setNicknameVerify(3) }
+                    _nickNameCheckState.value = it
+                    setNicknameVerify(if (it) 2 else 3)
                 }.onError { e ->
                     setNicknameVerify(0)
                     _nickNameCheckState.value = true
@@ -79,17 +85,15 @@ class NicknameViewModel @AssistedInject constructor(
 
     private fun createUserAPIServer(email: String, nickName: String) {
         baseViewModelScope.launch {
-            createUserAPI(email, nickName)
-                .onSuccess {
-                    DataApplication.dataStorePreferences.setAccessToken(it.accessToken, it.refreshToken)
-//                    DataApplication.mySharedPreferences.setAccessToken(it.accessToken, it.refreshToken)
-                    _navigationEvent.emit(NicknameNavigationAction.NavigateToHome) }
+            postUserUseCase(email, nickName)
+                .flatMap { setTokenUseCase(it.accessToken, it.refreshToken) }
+                .onSuccess { _navigationEvent.emit(NicknameNavigationAction.NavigateToHome) }
                 .onError { e -> catchError(e) }
         }
     }
 
     override fun onCreateItemClicked() {
-        if(!nickNameCheckState.value){
+        if (!nickNameCheckState.value) {
             createUserAPIServer(email, userInputState.value)
         }
     }

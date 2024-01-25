@@ -1,5 +1,7 @@
 package com.dida.android.presentation.views
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -15,29 +17,34 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dida.android.R
 import com.dida.common.dialog.CentralDialogFragment
-import com.dida.compose.theme.DIDA_THEME
-import com.dida.compose.theme.DidaTypography
+import com.dida.compose.common.DidaBoldText
+import com.dida.compose.common.DidaMediumText
+import com.dida.compose.theme.LineSurface
+import com.dida.compose.theme.MainBlack
+import com.dida.compose.theme.NoticeRed
+import com.dida.compose.theme.White
+import com.dida.settings.SETTINGS
 import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>(com.dida.settings.R.layout.fragment_settings) {
@@ -55,7 +62,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         setOnBackPressedEvent()
     }
@@ -73,6 +79,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 SettingScreen(
                     onClicked = {
@@ -82,7 +89,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                             SETTINGS.ACCOUNT -> Unit
                             SETTINGS.NOTIFICATION -> Unit
                             SETTINGS.INVISIBLE_CARD -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
-                            SETTINGS.BLOCK_USER -> Unit
+                            SETTINGS.BLOCK_USER -> navigate(SettingsFragmentDirections.actionSettingFragmentToBlockFragment())
+                            SETTINGS.PRIVACY -> onWebView(getString(com.dida.common.R.string.privacy_url))
+                            SETTINGS.SERVICE -> onWebView(getString(com.dida.common.R.string.service_url))
                         }
                     },
                     onLogOutClicked = { logOutDialog() }
@@ -100,7 +109,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     private fun logOutDialog() {
         CentralDialogFragment.Builder()
-            .message(getString(R.string.logout_dialog_message))
+            .title(getString(R.string.logout_dialog_message))
             .positiveButton(getString(R.string.logout_dialog_positive), object : CentralDialogFragment.OnClickListener {
                 override fun onClick() {
                     viewModel.logOut()
@@ -109,6 +118,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             .negativeButton(getString(R.string.logout_dialog_negative))
             .build()
             .show(childFragmentManager, "log_out_dialog")
+    }
+
+    private fun onWebView(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 
     private fun setOnBackPressedEvent(){
@@ -125,16 +139,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         onClicked: (type: SETTINGS) -> Unit,
         onLogOutClicked: () -> Unit
     ) {
-        val settings = listOf(
-            SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.ACCOUNT,
-            SETTINGS.NOTIFICATION, SETTINGS.INVISIBLE_CARD, SETTINGS.BLOCK_USER
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF121212))
+                .background(MainBlack)
         ) {
+            val settings by viewModel.settings.collectAsStateWithLifecycle()
+
             settings.forEach {
                 SettingType(type = it, onClicked = onClicked)
             }
@@ -143,25 +154,25 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     .fillMaxWidth()
                     .height(16.dp)
             )
-            Text(
+            DidaMediumText(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringResource(id = com.dida.common.R.string.app_version_string),
-                style = DidaTypography.body1,
-                fontSize = 14.sp,
-                color = Color(0x80DADADA)
+                fontSize = 14,
+                color = LineSurface
             )
             Spacer(modifier = Modifier.weight(1f))
             Surface(
                 modifier = Modifier.clickable { onLogOutClicked() },
-                color = Color(0xFF121212)
+                color = MainBlack
             ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                DidaMediumText(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     text = stringResource(id = com.dida.common.R.string.logout_text),
-                    style = DidaTypography.body1,
-                    fontSize = 16.sp,
+                    fontSize = 16,
                     textAlign = TextAlign.Start,
-                    color = Color(0xFFE8625B)
+                    color = NoticeRed
                 )
             }
             Spacer(
@@ -215,10 +226,24 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 }
             SETTINGS.BLOCK_USER ->
                 SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_invisible,
+                    iconRes = com.dida.common.R.drawable.ic_block,
                     message = stringResource(id = com.dida.settings.R.string.block_title)
                 ) {
                     onClicked(SETTINGS.BLOCK_USER)
+                }
+            SETTINGS.PRIVACY ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_privacy,
+                    message = stringResource(id = com.dida.settings.R.string.privacy)
+                ) {
+                    onClicked(SETTINGS.PRIVACY)
+                }
+            SETTINGS.SERVICE ->
+                SettingItem(
+                    iconRes = com.dida.common.R.drawable.ic_service,
+                    message = stringResource(id = com.dida.settings.R.string.service)
+                ) {
+                    onClicked(SETTINGS.SERVICE)
                 }
         }
     }
@@ -241,12 +266,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             ) {
                 Image(painter = painterResource(id = iconRes), contentDescription = "설정 아이템 아이콘")
                 Spacer(modifier = Modifier.size(16.dp))
-                Text(
+                DidaBoldText(
                     text = message,
-                    style = DidaTypography.button,
-                    color = Color.White,
+                    color = White,
                     textAlign = TextAlign.Center,
-                    fontSize = 18.sp
+                    fontSize = 18
                 )
             }
             Spacer(
@@ -254,23 +278,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     .fillMaxWidth()
                     .height(1.dp)
                     .padding(horizontal = 16.dp)
-                    .background(Color(0x80DADADA))
+                    .background(LineSurface)
             )
         }
-    }
-}
-
-enum class SETTINGS {
-    EDIT_PROFILE, EDIT_PASSWORD, ACCOUNT, NOTIFICATION, INVISIBLE_CARD, BLOCK_USER
-}
-
-@Preview
-@Composable
-fun SettingPreview() {
-    DIDA_THEME {
-        SettingsFragment().SettingScreen(
-            onClicked = {},
-            onLogOutClicked = {}
-        )
     }
 }

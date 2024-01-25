@@ -11,22 +11,23 @@ import com.dida.android.R
 import com.dida.android.util.permission.PermissionManagerImpl
 import com.dida.android.util.permission.PermissionRequester
 import com.dida.android.util.permission.Permissions
-import com.dida.home.adapter.RecentNftAdapter
 import com.dida.common.util.*
 import com.dida.common.widget.DefaultSnackBar
-import com.dida.domain.model.main.HotItems
+import com.dida.domain.main.model.HotItems
 import com.dida.home.HomeMessageAction
 import com.dida.home.HomeNavigationAction
 import com.dida.home.HomeViewModel
 import com.dida.home.adapter.*
 import com.dida.home.databinding.FragmentHomeBinding
 import com.dida.home.smoothScrollToView
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.home.R.layout.fragment_home),
+    AppBarLayout.OnOffsetChangedListener {
 
     private val TAG = "HomeFragment"
 
@@ -34,16 +35,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         get() = com.dida.home.R.layout.fragment_home
 
     override val viewModel: HomeViewModel by viewModels()
-    private val hotsContainerAdapter by lazy { HotsContainerAdapter(viewModel) }
 
     private val permissionManager = PermissionManagerImpl(this)
-    private val notificationPermissionRequest: PermissionRequester =
-        permissionManager.forPermission(Permissions.PostNotification)
-            .subscribe(this)
+    private val notificationPermissionRequest: PermissionRequester = permissionManager.forPermission(Permissions.PostNotification).subscribe(this)
 
     private lateinit var hotSellerConcatAdapter: ConcatAdapter
     private lateinit var collectionConcatAdapter: ConcatAdapter
 
+    private val hotsContainerAdapter by lazy { HotsContainerAdapter(viewModel) }
     private val hotSellerAdapter by lazy { HotSellerAdapter(viewModel) }
     private val hotSellerMoreAdapter by lazy { HotSellerMoreAdapter(viewModel) }
     private val homeEmptyAdapter by lazy { HomeEmptyAdapter(viewModel) }
@@ -56,10 +55,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
-        exception = viewModel.errorEvent
         initToolbar()
         initAdapter()
+        initSwipeRefresh()
         initNotificationPermission()
+        initScrollListener()
+        initHomeTab()
     }
 
     override fun initDataBinding() {
@@ -73,7 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                         is HomeNavigationAction.NavigateToRecentNftItem -> navigate(HomeFragmentDirections.actionHomeFragmentToDetailNftFragment(it.nftId))
                         is HomeNavigationAction.NavigateToCollection -> navigate(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(it.userId))
                         is HomeNavigationAction.NavigateToHotSellerMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotSellerFragment())
-                        is HomeNavigationAction.NavigateToSoldOutMore -> Unit
+                        is HomeNavigationAction.NavigateToSoldOutMore -> navigate(HomeFragmentDirections.actionHomeFragmentToSoldOutFragment(viewModel.termState.value))
                         is HomeNavigationAction.NavigateToRecentNftMore -> navigate(HomeFragmentDirections.actionHomeFragmentToRecentNftFragment())
                         is HomeNavigationAction.NavigateToCollectionMore -> navigate(HomeFragmentDirections.actionHomeFragmentToHotUserFragment())
                         is HomeNavigationAction.NavigateToCreateCard -> navigate(HomeFragmentDirections.actionAddFragment())
@@ -86,15 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                     when(it) {
                         is HomeMessageAction.UserFollowMessage -> showMessageSnackBar(String.format(getString(R.string.user_follow_message), it.nickname))
                         is HomeMessageAction.UserUnFollowMessage -> showMessageSnackBar(getString(R.string.user_unfollow_message))
-                        is HomeMessageAction.AddCardBookmarkMessage -> {
-                            showActionSnackBar(
-                                message = getString(R.string.add_bookmark_message),
-                                label = getString(R.string.add_bookmark_action_title_message),
-                                onClickListener = object : DefaultSnackBar.OnClickListener {
-                                    override fun onClick() {}
-                                }
-                            )
-                        }
+                        is HomeMessageAction.AddCardBookmarkMessage -> showMessageSnackBar(getString(R.string.add_bookmark_message))
                         is HomeMessageAction.DeleteCardBookmarkMessage -> showMessageSnackBar(getString(R.string.delete_bookmark_message))
                     }
 
@@ -115,8 +108,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                         homeEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
                     }
 
-                    if (home.getHotUsers.isNotEmpty()) {
-                        collectionAdapter.submitList(home.getHotUsers)
+                    if (home.getHotMembers.isNotEmpty()) {
+                        collectionAdapter.submitList(home.getHotMembers)
                         collectionMoreAdapter.submitList(listOf(CollectionMoreItem(0)))
                     } else {
                         collectionEmptyAdapter.submitList(listOf(HomeEmptyItem(0)))
@@ -126,7 +119,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         }
     }
 
-    override fun initAfterBinding() {
+    override fun initAfterBinding() {}
+
+    override fun onResume() {
+        super.onResume()
+        binding.appBarLayout.addOnOffsetChangedListener(this)
+        viewModel.getHome()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.appBarLayout.removeOnOffsetChangedListener(this)
+    }
+
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        val isExpanded = verticalOffset == 0
+        if (isExpanded != binding.swipeRefreshLayout.isEnabled) {
+            binding.swipeRefreshLayout.isEnabled = isExpanded
+        }
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getHome()
+            requireContext().performHapticEvent()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
+    private fun initScrollListener() {
         binding.homeScroll.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             if (binding.hotSellerRecycler.y + binding.hotSellerRecycler.height <= scrollY && scrollY < binding.soldoutMore.y) {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(1))
@@ -138,11 +159,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getHome()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -169,10 +185,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         binding.collectionRecycler.adapter = collectionConcatAdapter
 
         binding.recentnftRecycler.apply {
-            adapter = RecentNftAdapter(viewModel)
+            adapter = HomeRecentNftAdapter(viewModel)
             layoutManager = GridLayoutManager(context, 2)
         }
+    }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initHomeTab() {
         with(binding.tabLayout) {
             addTab(this.newTab().setText(R.string.home_hotitem_tab))
             addTab(this.newTab().setText(R.string.home_soldout_tab))
@@ -191,7 +210,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
     private fun initToolbar() {
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                com.dida.common.R.id.action_alarm -> {}
+                com.dida.common.R.id.action_alarm -> { navigate(HomeFragmentDirections.actionHomeFragmentToNotificationFragment()) }
             }
             true
         }
@@ -219,14 +238,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(com.dida.h
         DefaultSnackBar.Builder()
             .view(binding.root)
             .message(message)
-            .build()
-    }
-
-    private fun showActionSnackBar(message: String, label: String, onClickListener: DefaultSnackBar.OnClickListener) {
-        DefaultSnackBar.Builder()
-            .view(binding.root)
-            .message(message)
-            .actionButton(label, onClickListener)
             .build()
     }
 }

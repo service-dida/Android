@@ -4,28 +4,33 @@ import com.dida.common.actionhandler.NftActionHandler
 import com.dida.common.base.BaseViewModel
 import com.dida.common.util.SHIMMER_TIME
 import com.dida.common.util.UiState
-import com.dida.data.DataApplication
 import com.dida.domain.flatMap
-import com.dida.domain.model.main.Home
-import com.dida.domain.model.main.SoldOut
+import com.dida.domain.main.model.HotMember
+import com.dida.domain.main.model.Main
+import com.dida.domain.main.model.SoldOut
 import com.dida.domain.onError
 import com.dida.domain.onSuccess
-import com.dida.domain.usecase.main.HomeAPI
-import com.dida.domain.usecase.main.PostLikeAPI
-import com.dida.domain.usecase.main.PostUserFollowAPI
-import com.dida.domain.usecase.main.SoldOutAPI
+import com.dida.domain.usecase.MainUseCase
+import com.dida.domain.usecase.MemberFollowUseCase
+import com.dida.domain.usecase.NftLikeUseCase
+import com.dida.domain.usecase.SoldOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeAPI: HomeAPI,
-    private val soldOutAPI: SoldOutAPI,
-    private val postLikeAPI: PostLikeAPI,
-    private val postUserFollowAPI: PostUserFollowAPI,
+    private val mainUseCase: MainUseCase,
+    private val soldOutUseCase: SoldOutUseCase,
+    private val nftLikeUseCase: NftLikeUseCase,
+    private val memberFollowUseCase: MemberFollowUseCase
 ) : BaseViewModel(), HomeActionHandler, NftActionHandler {
 
     private val TAG = "HomeViewModel"
@@ -36,8 +41,8 @@ class HomeViewModel @Inject constructor(
     private val _messageEvent: MutableSharedFlow<HomeMessageAction> = MutableSharedFlow<HomeMessageAction>()
     val messageEvent: SharedFlow<HomeMessageAction> = _messageEvent.asSharedFlow()
 
-    private val _homeState: MutableStateFlow<UiState<Home>> = MutableStateFlow(UiState.Loading)
-    val homeState: StateFlow<UiState<Home>> = _homeState.asStateFlow()
+    private val _homeState: MutableStateFlow<UiState<Main>> = MutableStateFlow(UiState.Loading)
+    val homeState: StateFlow<UiState<Main>> = _homeState.asStateFlow()
 
     private val _soldoutState: MutableStateFlow<UiState<List<SoldOut>>> = MutableStateFlow(UiState.Loading)
     val soldoutState: StateFlow<UiState<List<SoldOut>>> = _soldoutState.asStateFlow()
@@ -47,14 +52,11 @@ class HomeViewModel @Inject constructor(
 
     fun getHome() {
         baseViewModelScope.launch {
-            soldOutAPI.invoke(term = termState.value)
+            _homeState.value = UiState.Loading
+            soldOutUseCase(range = termState.value)
                 .onSuccess { _soldoutState.value = UiState.Success(it) }
-                .flatMap { homeAPI() }
+                .flatMap { mainUseCase() }
                 .onSuccess {
-                    val userId = DataApplication.dataStorePreferences.getUserId()
-                    it.getHotUsers.forEach { collection ->
-                        if (collection.userId == userId) collection.isMine = true
-                    }
                     delay(SHIMMER_TIME)
                     _homeState.value = UiState.Success(it)
                 }
@@ -64,30 +66,30 @@ class HomeViewModel @Inject constructor(
 
     private fun getMain() {
         baseViewModelScope.launch {
-            homeAPI().onSuccess {
+            mainUseCase().onSuccess {
                 _homeState.value = UiState.Success(it)
                 dismissLoading()
             }.onError { e -> catchError(e) }
         }
     }
 
-    override fun onSoldOutDayClicked(term: Int) {
+    override fun onSoldOutDayClicked(day: Int) {
         baseViewModelScope.launch {
-            soldOutAPI(term)
+            soldOutUseCase(day)
                 .onSuccess {
                     _soldoutState.value = UiState.Success(it)
-                    _termState.value = term }
-                .onError { e -> catchError(e) }
+                    _termState.value = day
+                }.onError { e -> catchError(e) }
         }
     }
 
-    override fun onUserFollowClicked(user: com.dida.domain.model.main.Collection) {
+    override fun onUserFollowClicked(user: HotMember) {
         baseViewModelScope.launch {
             showLoading()
-            postUserFollowAPI(user.userId)
+            memberFollowUseCase(user.memberId)
                 .onSuccess {
-                    if (user.follow) _messageEvent.emit(HomeMessageAction.UserUnFollowMessage)
-                    else _messageEvent.emit(HomeMessageAction.UserFollowMessage(user.userName))
+                    if (user.followed) _messageEvent.emit(HomeMessageAction.UserUnFollowMessage)
+                    else _messageEvent.emit(HomeMessageAction.UserFollowMessage(user.memberName))
                     getMain()
                 }
                 .onError { e -> catchError(e) }
@@ -157,12 +159,16 @@ class HomeViewModel @Inject constructor(
     override fun onLikeBtnClicked(nftId: Long, liked: Boolean) {
         baseViewModelScope.launch {
             showLoading()
-            postLikeAPI(nftId)
+            nftLikeUseCase(nftId)
                 .onSuccess {
-                    if (liked) _messageEvent.emit(HomeMessageAction.DeleteCardBookmarkMessage)
-                    else _messageEvent.emit(HomeMessageAction.AddCardBookmarkMessage)
+                    if (liked) {
+                        _messageEvent.emit(HomeMessageAction.DeleteCardBookmarkMessage)
+                    } else {
+                        _messageEvent.emit(HomeMessageAction.AddCardBookmarkMessage)
+                    }
                     getMain()
-                }.onError { e -> catchError(e) }
+                }
+                .onError { e -> catchError(e) }
             dismissLoading()
         }
     }
