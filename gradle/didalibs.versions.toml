@@ -1,0 +1,206 @@
+[versions]
+# Define the versions
+kotlin = "1.8.10"
+androidGradlePlugin = "7.3.0"
+pluginapplication = "7.2.0"
+pluginkotlin = "1.6.10"
+pluginhilt = "2.44"
+pluginsafeargs = "2.4.2"
+
+# Plugins
+safeargs = "2.4.2"
+
+# Domain
+kotlinStdlib = "1.7.10"
+inject = "1"
+
+# Data & Presentation
+androidCore = "1.7.0"
+appcompat = "1.4.2"
+material = "1.6.1"
+junit = "4.13.2"
+testJunit = "1.1.3"
+espresso = "3.4.0"
+
+constraintLayout = "2.1.3"
+recyclerView = "1.2.1"
+shimmer = "0.5.0"
+
+navigation = "2.4.2"
+fragmentResult = "1.5.2"
+lifecycle = "2.5.1"
+coroutines = "1.5.2"
+room = "2.4.1"
+hilt = "2.44"
+retrofit = "2.9.0"
+okhttp = "4.9.2"
+moshi = "1.9.3"
+moshiKotlin = "1.12.0"
+moshiConverter = "2.9.0"
+gson = "2.9.0"
+okttpInterceptor = "4.9.0"
+glide = "4.13.0"
+
+kakao = "2.8.4"
+circleImageview = "3.1.0"
+datastore = "1.0.0"
+
+firebaseBom = "30.4.1"
+firebaseMessage = "20.1.0"
+googleServices = "4.3.13"
+
+lottie = "3.4.0"
+navigationCompose = "2.5.1"
+
+paging = "3.0.1"
+
+ads = "22.5.0"
+
+# Compose Version
+androidxComposeBom = "2023.04.01"
+androidxComposeCompiler = "1.4.4"
+androidxComposeMaterial3 = "1.1.0-rc01"
+androidxComposeRuntimeTracing = "1.0.0-alpha03"
+
+composeActivityVersion = "1.7.0"
+composeConstraintLayoutVersion = "1.0.1"
+hiltNavigationCompose = "1.0.0"
+coilVersion = "2.2.2"
+accompanist = "0.30.0"
+androidxLifecycleVersion = "2.6.1"
+androidxNavigationVersion = "2.5.3"
+composePager = "0.12.0"
+
+ballon = "1.5.2"
+
+swiperefreshlayout = "1.1.0"
+
+photoViewVersion = "2.3.0"
+agp = "7.3.1"
+kotlin190 = "1.9.0"
+annotation = "1.7.0"
+
+[plugins]
+hilt = { id = "dagger.hilt.android.plugin", version = "hilt" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "safeargs" }
+androidDynamicFeature = { id = "com.android.dynamic-feature", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin190" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+
+[libraries]
+# Define the libraries
+
+# Domain(Kotlin Module)
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinStdlib" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "inject" }
+
+# Data & Presentation(Android Module)
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidCore" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+android-material = { module = "com.google.android.material:material", version.ref = "material" }
+junit-junit = { module = "junit:junit", version.ref = "junit" }
+androidx-test-junit = { module = "androidx.test.ext:junit", version.ref = "testJunit" }
+androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerView" }
+
+androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+androidx-navigation-test = { module = "androidx.navigation:navigation-testing", version.ref = "navigation" }
+androidx-fragment-request = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentResult" }
+
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+
+kotlin-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room = { module = "androidx.room:room-ktx", version.ref = "room" }
+
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+squareup-retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+squareup-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+squareup-okhttp-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okttpInterceptor" }
+
+converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "moshiConverter" }
+moshi-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
+
+kakao-sdk = { module = "com.kakao.sdk:v2-user", version.ref = "kakao" }
+
+circle-imageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleImageview" }
+facebook-shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
+
+datastore-preference = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
+
+glide-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+
+gson-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "gson" }
+
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessage" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-service = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+
+android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+
+android-pluginGradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+androidx-paging = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+play-service-ads = {module = "com.google.android.gms:play-services-ads", version.ref = "ads"}
+photoView = { module = "com.github.chrisbanes:PhotoView", version.ref = "photoViewVersion" }
+
+# Compose
+androidxComposeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidxComposeFoundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidxComposeFoundationLayout = { group = "androidx.compose.foundation", name = "foundation-layout" }
+androidxComposeMaterial = { group = "androidx.compose.material", name = "material" }
+androidxComposeMaterialIconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidxComposeMaterial3 = { group = "androidx.compose.material3", name = "material3",  version.ref = "androidxComposeMaterial3" }
+androidComposeMaterial3WindowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "androidxComposeMaterial3" }
+androidxComposeRuntime = {  group = "androidx.compose.runtime", name = "runtime" }
+androidxComposeRuntimeLivedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+androidxComposeRuntimeTracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version.ref = "androidxComposeRuntimeTracing" }
+androidxComposeAnimation = { group = "androidx.compose.animation", name = "animation" }
+androidxComposeUiUi = { group = "androidx.compose.ui", name = "ui" }
+androidxComposeUiTest = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidxComposeUiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidxComposeUiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidxComposeUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidxComposeUiUtil = { group = "androidx.compose.ui", name = "ui-util" }
+androidxComposeUiGoogleFonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
+androidxActivityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
+androidxConstraintLayoutCompose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "composeConstraintLayoutVersion" }
+androidxLifecycleLivedataKtx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycleVersion" }
+androidxLifecycleRuntimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycleVersion" }
+androidxLifecycleViewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycleVersion" }
+androidx-compose-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "composePager" }
+androidx-compose-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "composePager" }
+coilCompose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
+coilGifCompose = { group = "io.coil-kt", name = "coil-gif", version.ref = "coilVersion" }
+
+skydoves-ballon = { module = "com.github.skydoves:balloon", version.ref = "ballon" }
+
+androidx-swipe-refresh-layout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+
+
+[bundles]
+# Define bundles/groups of libraries
+kotlinx-coroutine = ["kotlin-coroutine-core", "kotlin-coroutine-android"]
+androidx-navigation = ["androidx-navigation-fragment", "androidx-navigation-ui"]
+lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-runtime"]
+room = ["androidx-room-runtime", "androidx-room"]
+moshi = ["converter-moshi", "moshi-moshi", "moshi-kotlin"]
+gson = ["gson-gson", "converter-gson"]
+datastore = ["datastore-preference", "datastore-core"]

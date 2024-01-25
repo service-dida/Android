@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.dida.add.bottom.AddKeepViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mainblack"
+            android:paddingTop="24dp"
+            android:paddingBottom="36dp">
+
+            <TextView
+                android:id="@+id/main_txt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/add_nft_bottom_title"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:fontFamily="@font/pretendard_bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/main_txt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintTop_toBottomOf="@id/main_txt1"
+                android:text="@string/add_nft_bottom_sub_title"
+                android:textColor="@color/surface6"
+                android:textSize="14dp"
+                android:fontFamily="@font/pretendard_bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/ok_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/main_txt2"
+                android:gravity="center"
+                android:padding="18dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/add_nft_bottom_ok_btn_text"
+                android:fontFamily="@font/pretendard_bold"
+                android:textColor="@color/mainblack"
+                android:textSize="16dp"
+                android:background="@drawable/custom_okbtn_success">
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

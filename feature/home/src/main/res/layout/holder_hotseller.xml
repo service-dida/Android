@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="holderModel"
+            type="com.dida.domain.main.model.HotSeller" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.home.HomeActionHandler" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="126dp"
+        android:layout_height="174dp"
+        android:id="@+id/hots_main"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="14dp"
+        app:onSingleClick="@{() -> eventListener.onHotSellerItemClicked(holderModel.memberId)}">
+
+        <ImageView
+            android:id="@+id/seller_img"
+            android:layout_width="match_parent"
+            android:layout_height="126dp"
+            android:background="@drawable/custom_surface2_radius14"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            app:image_from_url_rounded="@{holderModel.nftImgUrl}"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/hots_contents_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/custom_surface1_bottom_radius10"
+            android:paddingBottom="16dp"
+            android:paddingTop="32dp">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:textSize="14dp"
+                android:text="@{holderModel.memberName}"
+                android:textColor="@color/white"
+                android:fontFamily="@font/pretendard_regular">
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/user_img"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@id/hots_contents_main"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/hots_contents_main"
+            app:image_from_url_circle="@{holderModel.profileUrl}"
+            android:background="@drawable/custom_hotseller_userimg"
+            android:adjustViewBounds="true">
+        </ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

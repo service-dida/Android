@@ -1,0 +1,4 @@
+<resources>
+    <!--차단 화면-->
+    <string name="block_user_title">차단된 유저</string>
+</resources>

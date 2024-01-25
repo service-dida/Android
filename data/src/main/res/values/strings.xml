@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">data</string>
+    <string name="prefs_key">dida_prefs</string>
+</resources>

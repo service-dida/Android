@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="default_dialog_title_text">@color/white</color>
+    <color name="default_dialog_text">@color/white</color>
+    <color name="default_dialog_message_type1_text">@color/mainblack</color>
+    <color name="default_dialog_message_type2_text">@color/white</color>
+    <color name="default_dialog_positive_button_text">@color/mainblack</color>
+    <color name="default_dialog_negative_button_text">@color/white</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
+    <color name="trans_parents">#00000000</color>
+
+    <color name="status_bar">#121212</color>
+    <color name="mainblack">#121212</color>
+
+    <color name="notice_red">#E8625B</color>
+    <color name="notice_green">#73BF90</color>
+
+    <color name="brand_lemon">#FFFA69</color>
+    <color name="brand_lignt_lemon">#FDFBC4</color>
+    <color name="brand_ivory">#FFFFE8</color>
+
+    <color name="surface0">#80121212</color>
+    <color name="surface1">#1C1C1E</color>
+    <color name="surface2">#2C2C2E</color>
+    <color name="surface3">#3A3A3C</color>
+    <color name="surface4">#48484A</color>
+    <color name="surface5">#636366</color>
+    <color name="surface6">#595959</color>
+    <color name="surface7">#AEAEB2</color>
+    <color name="surface8">#C7C7CC</color>
+    <color name="surface9">#E5E5EA</color>
+    <color name="surface10">#F2F2F7</color>
+
+    <color name="dim_black_50">#80000000</color>
+    <color name="line_surface1">#80dadada</color>
+    <color name="surface4_opacity80">#cc383838</color>
+    <color name="shimmer_color">#ffaaaaaa</color>
+    <color name="n1">#111111</color>
+    <color name="n6">#f3f3f3</color>
+
+    <!--텍스트 색상-->
+    <color name="mypage_info_gray_text">#AFAFAF</color>
+    <color name="price_gray_text">#C5C5CF</color>
+    <color name="time_gray_text">#C5C5CF</color>
+    <color name="wallet_address_text">#AAAAAA</color>
+    <color name="hots_coin_txt">#C5C5CF</color>
+    <color name="text_c5c5cf">#C5C5CF</color>
+
+    <color name="kakao_login_text_color">#191919</color>
+
+    <!--선 색상-->
+    <color name="view_line">#575757</color>
+    <color name="spinner_devide_line">#66ffffff</color>
+
+</resources>

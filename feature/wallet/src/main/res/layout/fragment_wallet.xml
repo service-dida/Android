@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.dida.wallet.WalletViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hapticFeedbackEnabled="true">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mainblack"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/wallet_appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mainblack"
+                android:fitsSystemWindows="true">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/mainblack"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Toolbar
+                            android:id="@+id/toolbar"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/my_wallet_textview"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:gravity="start"
+                            android:text="@string/wallet_title_text"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/wallet_address_area"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/my_wallet_textview">
+
+                            <TextView
+                                android:id="@+id/my_wallet_address_textview"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="marquee"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:gravity="start"
+                                android:maxLines="1"
+                                android:text="@{vm.walletAddressState}"
+                                android:textColor="@color/wallet_address_text"
+                                android:textSize="14dp"
+                                app:layout_constraintEnd_toStartOf="@id/wallet_address_copy_btn"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/wallet_address_copy_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="16dp"
+                                app:layout_constraintBottom_toBottomOf="@id/my_wallet_address_textview"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/my_wallet_address_textview"
+                                app:srcCompat="@drawable/ic_copy" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/wallet_card_recyclerView"
+                            style="@style/Dida.Padding.16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/wallet_address_area"
+                            tools:itemCount="4"
+                            tools:listitem="@layout/holder_wallet_card" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/nft_history_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:gravity="start"
+                        android:text="@string/wallet_deal_title_text"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/nft_history_textview"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/nft_history_textview">
+
+
+                        <TextView
+                            android:id="@+id/nft_history_all_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:gravity="center"
+                            android:text="@string/all_text"
+                            android:textColor="@{vm.typeHistoryState==0? @color/brand_lemon : @color/surface6}"
+                            android:textSize="13dp"
+                            app:onSingleClick="@{() -> vm.onHistoryTypeClicked(0)}" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_wallet_dot" />
+
+                        <TextView
+                            android:id="@+id/nft_history_buy_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="ㅑ@font/pretendard_regular"
+                            android:gravity="center"
+                            android:text="@string/buy_text_short"
+                            android:textColor="@{vm.typeHistoryState==1? @color/brand_lemon : @color/surface6}"
+                            android:textSize="13dp"
+                            app:onSingleClick="@{() -> vm.onHistoryTypeClicked(1)}" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_wallet_dot" />
+
+                        <TextView
+                            android:id="@+id/nft_history_sell_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:gravity="center"
+                            android:text="@string/sold_text_short"
+                            android:textColor="@{vm.typeHistoryState==2? @color/brand_lemon : @color/surface6}"
+                            android:textSize="13dp"
+                            app:onSingleClick="@{() -> vm.onHistoryTypeClicked(2)}" />
+                    </LinearLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/empty_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="94dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/nft_history_textview">
+
+                        <TextView
+                            android:id="@+id/empty_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:text="@string/wallet_empty_title"
+                            android:textColor="@color/white_50"
+                            android:textSize="20dp"
+                            app:layout_constraintBottom_toTopOf="@id/empty_description"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/empty_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:text="@string/wallet_empty_message"
+                            android:textColor="@color/surface6"
+                            android:textSize="16dp"
+                            app:layout_constraintBottom_toTopOf="@id/empty_create_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/empty_create_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_brandlemon_radius10"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:paddingStart="24dp"
+                            android:paddingTop="14dp"
+                            android:paddingEnd="24dp"
+                            android:paddingBottom="14dp"
+                            android:text="@string/wallet_empty_button_text"
+                            android:textColor="@color/mainblack"
+                            android:textSize="18dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:onSingleClick="@{() -> vm.onHotCardButtonClicked()}" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nft_history_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/mainblack"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nft_history_textview"
+                tools:itemCount="4"
+                tools:layout_editor_absoluteX="-16dp"
+                tools:listitem="@layout/holder_wallet_nft_history" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>
+

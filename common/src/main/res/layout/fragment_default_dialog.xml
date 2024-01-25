@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_surface2_radius16"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/dialog_title_text"
+        style="@style/TextView_bold_20_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/dialog_message_text"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_message_text"
+        style="@style/TextView_regular_14_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="@dimen/default_dialog_message_line_spacing_extra"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_contents_layout"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_title_text" />
+
+    <FrameLayout
+        android:id="@+id/dialog_contents_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_message_type2_margin_view"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_message_text" />
+
+    <View
+        android:id="@+id/dialog_message_type2_margin_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_dialog_message_type2_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_button_view"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_contents_layout" />
+
+    <LinearLayout
+        android:id="@+id/dialog_button_view"
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_message_type2_margin_view"
+        tools:layout_editor_absoluteX="24dp">
+
+        <android.widget.Button
+            android:id="@+id/dialog_negative_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_bold"
+            style="@style/Button_surface3_regular_16_white"
+            app:layout_constraintBottom_toBottomOf="@id/dialog_neutral_button"
+            app:layout_constraintEnd_toStartOf="@id/dialog_neutral_button"
+            app:layout_constraintTop_toTopOf="@id/dialog_neutral_button"/>
+
+        <android.widget.Button
+            android:id="@+id/dialog_neutral_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_bold"
+            style="@style/Button_surface3_regular_16_white"
+            app:layout_constraintBottom_toBottomOf="@id/dialog_positive_button"
+            app:layout_constraintEnd_toStartOf="@id/dialog_positive_button"
+            app:layout_constraintTop_toTopOf="@id/dialog_positive_button" />
+
+        <android.widget.Button
+            android:id="@+id/dialog_positive_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_bold"
+            style="@style/Button_lemon_regular_16_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_message_type2_margin_view" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

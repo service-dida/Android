@@ -1,0 +1,11 @@
+<resources>
+    <string name="detail_community_reply_empty_text">NFT에 대한\n이야기를 나눠보세요</string>
+
+    <string name="block_post_title">게시글을 정말로 차단할까요?</string>
+    <string name="block_post_description">차단한 게시글은 되돌릴 수 없어요</string>
+    <string name="block_user_title">유저을 정말로 차단할까요?</string>
+    <string name="block_user_description">차단한 유저는 되돌릴 수 없어요</string>
+
+    <string name="block_post_positive">네, 차단할래요</string>
+    <string name="block_post_negative">아니오</string>
+</resources>

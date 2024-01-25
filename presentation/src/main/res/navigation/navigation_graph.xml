@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/splashFragment">
+
+    <action
+        android:id="@+id/action_main_fragment"
+        app:destination="@id/homeFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_add_fragment"
+        app:destination="@id/addFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_post_fragment"
+        app:destination="@id/communityDetailFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_nft_fragment"
+        app:destination="@id/detailNftFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_user_followed_fragment"
+        app:destination="@id/userFollowedFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.dida.android.presentation.views.SplashFragment"
+        android:label="SplashFragment" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.dida.android.presentation.views.HomeFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_recentNftFragment"
+            app:destination="@id/recentNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_hotSellerFragment"
+            app:destination="@id/hotSellerFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_hotUserFragment"
+            app:destination="@id/hotUserFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_soldOutFragment"
+            app:destination="@id/soldOutFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/soldOutFragment"
+        android:name="com.dida.android.presentation.views.SoldOutFragment"
+        android:label="SoldOutFragment">
+        <argument
+            android:name="period"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_soldOutFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/swapFragment"
+        android:name="com.dida.android.presentation.views.SwapFragment"
+        android:label="SwapFragment">
+
+        <action
+            android:id="@+id/action_swapFragment_to_swapLoadingFragment"
+            app:destination="@id/swapLoadingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_swapFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+
+        <action
+            android:id="@+id/action_swapFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.dida.android.presentation.views.AddFragment"
+        android:label="AddFragment">
+
+        <action
+            android:id="@+id/action_addFragment_to_emailFragment"
+            app:destination="@id/emailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+
+        <action
+            android:id="@+id/action_addFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addFragment_to_keywordProductFragment"
+            app:destination="@id/keywordProductFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+
+        <action
+            android:id="@+id/action_addFragment_to_createNftFragment"
+            app:destination="@id/createNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+
+        <action
+            android:id="@+id/action_addFragment_to_keywordInputFragment"
+            app:destination="@id/keywordInputFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.dida.android.presentation.views.CommunityFragment"
+        android:label="CommunityFragment">
+        <action
+            android:id="@+id/action_communityFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_communityFragment_to_createCommunityFragment"
+            app:destination="@id/createCommunityFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_communityFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createCommunityFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityFragment"
+        android:label="CreateCommunityFragment">
+        <action
+            android:id="@+id/action_createCommunityFragment_to_communityCommunityInputFragment"
+            app:destination="@id/communityCommunityInputFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_createCommunityFragment_to_addFragment"
+            app:destination="@id/addFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_createCommunityFragment_to_recentNftFragment"
+            app:destination="@id/recentNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createNftFragment"
+        android:name="com.dida.android.presentation.views.CreateNftFragment"
+        android:label="CreateNftFragment">
+        <argument
+            android:name="imgUrl"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_createNftFragment_to_addPurposeFragment"
+            app:destination="@id/addPurposeFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createCommunityNftFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityNftFragment"
+        android:label="CreateCommunityNftFragment"></fragment>
+
+    <fragment
+        android:id="@+id/communityCommunityInputFragment"
+        android:name="com.dida.android.presentation.views.CreateCommunityInputFragment"
+        android:label="CreateCommunityInputFragment">
+        <argument
+            android:name="cardId"
+            app:argType="long" />
+
+        <argument
+            android:name="createState"
+            app:argType="boolean" />
+
+        <argument
+            android:name="postId"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_communityCommunityInputFragment_to_communityFragment"
+            app:destination="@id/communityFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/communityFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityDetailFragment"
+        android:name="com.dida.android.presentation.views.DetailCommunityFragment"
+        android:label="DetailCommunityFragment">
+        <argument
+            android:name="postId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_communityDetailFragment_to_communityCommunityInputFragment"
+            app:destination="@id/communityCommunityInputFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_communityDetailFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_communityDetailFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.dida.android.presentation.views.MyPageFragment"
+        android:label="MyPageFragment">
+        <action
+            android:id="@+id/action_myPageFragment_to_walletFragment"
+            app:destination="@id/walletFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_myPageFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_myPageFragment_to_emailFragment"
+            app:destination="@id/emailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_myPageFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_myPageFragment_to_addFragment"
+            app:destination="@id/addFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_myPageFragment_to_userFollowedFragment"
+            app:destination="@id/userFollowedFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.dida.android.presentation.views.WalletFragment"
+        android:label="WalletFragment">
+        <action
+            android:id="@+id/action_walletFragment_to_swapHistoryFragment"
+            app:destination="@id/swapHistoryFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailNftFragment"
+        android:name="com.dida.android.presentation.views.DetailNftFragment"
+        android:label="DetailNftFragment">
+
+        <argument
+            android:name="cardId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_detailNftFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_communityFragment"
+            app:destination="@id/communityFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+
+        <action
+            android:id="@+id/action_detailNftFragment_to_createCommunityFragment"
+            app:destination="@id/createCommunityFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_buyNftFragment"
+            app:destination="@id/buyNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+
+        <action
+            android:id="@+id/action_detailNftFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+
+        <action
+            android:id="@+id/action_detailNftFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_communityCommunityInputFragment"
+            app:destination="@id/communityCommunityInputFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_detailNftFragment_to_ownerShipHIstoryFragment"
+            app:destination="@id/ownerShipHistoryFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/emailFragment"
+        android:name="com.dida.android.presentation.views.EmailFragment"
+        android:label="EmailFragment">
+        <argument
+            android:name="requestEmailType"
+            app:argType="com.dida.android.presentation.views.RequestEmailType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordProductFragment"
+        android:name="com.dida.android.presentation.views.KeywordProductFragment"
+        android:label="KeywordProductFragment">
+        <action
+            android:id="@+id/action_keywordProductFragment_to_keywordPlaceFragment"
+            app:destination="@id/keywordPlaceFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordPlaceFragment"
+        android:name="com.dida.android.presentation.views.KeywordPlaceFragment"
+        android:label="KeywordPlaceFragment">
+        <action
+            android:id="@+id/action_keywordPlaceFragment_to_keywordStyleFragment"
+            app:destination="@id/keywordStyleFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordStyleFragment"
+        android:name="com.dida.android.presentation.views.KeywordStyleFragment"
+        android:label="KeywordStyleFragment">
+        <action
+            android:id="@+id/action_keywordStyleFragment_to_keywordColorFragment"
+            app:destination="@id/keywordColorFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordColorFragment"
+        android:name="com.dida.android.presentation.views.KeywordColorFragment"
+        android:label="KeywordColorFragment">
+        <action
+            android:id="@+id/action_keywordColorFragment_to_keywordResultFragment"
+            app:destination="@id/keywordResultFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordInputFragment"
+        android:name="com.dida.android.presentation.views.KeywordInputFragment"
+        android:label="KeywordInputFragment">
+        <action
+            android:id="@+id/action_keywordInputFragment_to_keywordResultFragment"
+            app:destination="@id/keywordResultFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/keywordResultFragment"
+        android:name="com.dida.android.presentation.views.KeywordResultFragment"
+        android:label="KeywordResultFragment">
+        <action
+            android:id="@+id/action_keywordResultFragment_to_keywordProductFragment"
+            app:destination="@id/keywordProductFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/keywordProductFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_keywordResultFragment_to_createNftFragment"
+            app:destination="@id/createNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_keywordResultFragment_to_addFragment"
+            app:destination="@id/addFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/addFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addPurposeFragment"
+        android:name="com.dida.android.presentation.views.AddPurposeFragment"
+        android:label="AddPurposeFragment">
+        <argument
+            android:name="fromGallery"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <argument
+            android:name="imgURL"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addPurposeFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/addFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_addPurposeFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.dida.android.presentation.views.UpdateProfileFragment"
+        android:label="UpdateProfileFragment" />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.dida.android.presentation.views.SettingsFragment"
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_settingFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_hideListFragment"
+            app:destination="@id/hideListFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_emailFragment"
+            app:destination="@id/emailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_mypageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_settingFragment_to_blockFragment"
+            app:destination="@id/blockFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/blockFragment"
+        android:name="com.dida.android.presentation.views.BlockFragment"
+        android:label="BlockFragment" />
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.dida.android.presentation.views.NotificationFragment"
+        android:label="NotificationFragment" />
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.dida.android.presentation.views.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+
+    <fragment
+        android:id="@+id/swapLoadingFragment"
+        android:name="com.dida.android.presentation.views.SwapLoadingFragment"
+        android:label="SwapLoadingFragment">
+        <argument
+            android:name="password"
+            android:defaultValue='""'
+            app:argType="string" />
+        <argument
+            android:name="amount"
+            app:argType="float" />
+        <argument
+            android:name="swapType"
+            android:defaultValue="KLAY_TO_DIDA"
+            app:argType="com.dida.swap.SwapType" />
+        <action
+            android:id="@+id/action_swapLoadingFragment_to_swapSuccessFragment"
+            app:destination="@id/swapSuccessFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/swapFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/swapSuccessFragment"
+        android:name="com.dida.android.presentation.views.SwapSuccessFragment"
+        android:label="SwapSuccessFragment">
+        <action
+            android:id="@+id/action_swapSuccessFragment_to_swapHistoryFragment"
+            app:destination="@id/swapHistoryFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/swapFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="swapType"
+            app:argType="com.dida.swap.SwapType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/swapHistoryFragment"
+        android:name="com.dida.android.presentation.views.SwapHistoryFragment"
+        android:label="SwapHistoryFragment" />
+
+    <fragment
+        android:id="@+id/recentNftFragment"
+        android:name="com.dida.android.presentation.views.RecentNftFragment"
+        android:label="RecentNftFragment">
+        <action
+            android:id="@+id/action_recentNftFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/hotUserFragment"
+        android:name="com.dida.android.presentation.views.HotUserFragment"
+        android:label="HotUserFragment">
+        <action
+            android:id="@+id/action_hotUserFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/hotSellerFragment"
+        android:name="com.dida.android.presentation.views.HotSellerFragment"
+        android:label="HotSellerFragment" >
+        <action
+            android:id="@+id/action_hotSellerFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyNftFragment"
+        android:name="com.dida.android.presentation.views.BuyNftFragment"
+        android:label="BuyNftFragment">
+        <argument
+            android:name="nftId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_buyNftFragment_to_buySuccessFragment"
+            app:destination="@id/buySuccessFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/detailNftFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_buyNftFragment_to_swapFragment"
+            app:destination="@id/swapFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_buyNftFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/hideListFragment"
+        android:name="com.dida.android.presentation.views.HideListFragment"
+        android:label="HideListFragment">
+        <action
+            android:id="@+id/action_hideListFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.dida.android.presentation.views.UserProfileFragment"
+        android:label="UserProfileFragment">
+        <argument
+            android:name="userId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_detailNftFragment"
+            app:destination="@id/detailNftFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/userProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userFollowedFragment"
+        android:name="com.dida.android.presentation.views.UserFollowedFragment"
+        android:label="UserFollowedFragment">
+        <argument
+            android:name="userId"
+            app:argType="long" />
+        <argument
+            android:name="type"
+            android:defaultValue="FOLLOWER"
+            app:argType="com.dida.domain.main.model.Follow" />
+        <action
+            android:id="@+id/action_userFollowedFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/buySuccessFragment"
+        android:name="com.dida.android.presentation.views.BuySuccessFragment"
+        android:label="BuySuccessFragment">
+        <action
+            android:id="@+id/action_buySuccessFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="nftId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_buySuccessFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerShipHistoryFragment"
+        android:name="com.dida.android.presentation.views.OwnerShipHistoryFragment"
+        android:label="OwnerShipHistoryFragment" >
+        <argument
+            android:name="nftId"
+            app:argType="long" />
+    </fragment>
+
+</navigation>

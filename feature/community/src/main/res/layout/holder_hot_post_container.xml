@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="holderModel"
+            type="com.dida.domain.main.model.HotPosts.Contents" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.community.HotCardActionHandler" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/hot_post_viewpager"
+            style="@style/Dida.Padding.16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:scrollbars="none"
+            android:nestedScrollingEnabled="false"
+            app:eventListener="@{eventListener}"
+            app:hotPostItem="@{holderModel.contents}"
+            android:paddingStart="78dp"
+            android:paddingEnd="78dp" />
+
+    </FrameLayout>
+
+</layout>

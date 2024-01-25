@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.dida.home.HomeViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hapticFeedbackEnabled="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/mainblack"
+                app:ctl_endLoading="@{vm.homeState}">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fitsSystemWindows="true"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:elevation="0dp">
+
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fitsSystemWindows="true"
+                        app:expandedTitleTextAppearance="@android:color/transparent"
+                        app:layout_scrollFlags="scroll">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="?attr/actionBarSize"
+                            android:adjustViewBounds="true"
+                            app:layout_collapseMode="parallax">
+
+                            <TextView
+                                android:id="@+id/hotitem_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="20dp"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:text="@string/home_hotitem"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/hots_recycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:nestedScrollingEnabled="false"
+                                android:overScrollMode="never"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintTop_toBottomOf="@id/hotitem_txt"
+                                app:rv_endLoading="@{vm.homeState}"
+                                tools:listitem="@layout/holder_hots" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:background="@color/mainblack"
+                            android:contentInsetStart="0dp"
+                            android:contentInsetLeft="0dp"
+                            android:contentInsetEnd="0dp"
+                            android:contentInsetRight="0dp"
+                            app:contentInsetEnd="0dp"
+                            app:contentInsetLeft="0dp"
+                            app:contentInsetRight="0dp"
+                            app:contentInsetStart="0dp"
+                            app:layout_collapseMode="pin"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.Toolbar
+                                    android:id="@+id/home_toolbar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:menu="@menu/menu_home_toolbar"
+                                    app:title="@string/app_name"
+                                    app:titleTextAppearance="@style/ToolBarStyle" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.appcompat.widget.Toolbar>
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/mainblack"
+                        app:tabIndicatorColor="@color/brand_lemon"
+                        app:tabSelectedTextColor="@color/brand_lemon"
+                        app:tabTextAppearance="@style/tab_text"
+                        app:tabTextColor="@color/surface6" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/surface4" />
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/home_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:fillViewport="true"
+                    android:overScrollMode="never"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/soldout_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:constraint_endLoading="@{vm.soldoutState}"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/hot_seller_recycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clipToPadding="false"
+                                android:nestedScrollingEnabled="false"
+                                android:orientation="horizontal"
+                                android:paddingStart="16dp"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintBottom_toTopOf="@id/soldout_txt"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/soldout_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="42dp"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:text="@string/home_soldout"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/hot_seller_recycler" />
+
+                            <TextView
+                                android:id="@+id/soldout_txt2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="@string/home_soldout_sub_title"
+                                android:textColor="@color/hots_coin_txt"
+                                android:textSize="14dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/soldout_txt" />
+
+                            <TextView
+                                android:id="@+id/day7_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:background="@{vm.termState==7? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:padding="12dp"
+                                android:text="@string/home_soldout_period_7"
+                                android:textColor="@{vm.termState==7? @color/mainblack : @color/white}"
+                                android:textSize="16dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/soldout_txt2"
+                                app:onSingleClick="@{() -> vm.onSoldOutDayClicked(7)}" />
+
+                            <TextView
+                                android:id="@+id/day30_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:background="@{vm.termState==30? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:padding="12dp"
+                                android:text="@string/home_soldout_period_30"
+                                android:textColor="@{vm.termState==30? @color/mainblack : @color/white}"
+                                android:textSize="16dp"
+                                app:layout_constraintBottom_toBottomOf="@id/day7_btn"
+                                app:layout_constraintLeft_toRightOf="@id/day7_btn"
+                                app:layout_constraintTop_toTopOf="@id/day7_btn"
+                                app:onSingleClick="@{() -> vm.onSoldOutDayClicked(30)}" />
+
+                            <TextView
+                                android:id="@+id/day180_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:background="@{vm.termState==180? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:padding="12dp"
+                                android:text="@string/home_soldout_period_180"
+                                android:textColor="@{vm.termState==180? @color/mainblack : @color/white}"
+                                android:textSize="16dp"
+                                app:layout_constraintBottom_toBottomOf="@id/day7_btn"
+                                app:layout_constraintLeft_toRightOf="@id/day30_btn"
+                                app:layout_constraintTop_toTopOf="@id/day7_btn"
+                                app:onSingleClick="@{() -> vm.onSoldOutDayClicked(180)}" />
+
+                            <TextView
+                                android:id="@+id/day365_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:background="@{vm.termState==365? @drawable/custom_brandlemon_radius10 : @drawable/custom_surface2_radius10}"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:padding="12dp"
+                                android:text="@string/home_soldout_period_365"
+                                android:textColor="@{vm.termState==365? @color/mainblack : @color/white}"
+                                android:textSize="16dp"
+                                app:layout_constraintBottom_toBottomOf="@id/day7_btn"
+                                app:layout_constraintLeft_toRightOf="@id/day180_btn"
+                                app:layout_constraintTop_toTopOf="@id/day7_btn"
+                                app:onSingleClick="@{() -> vm.onSoldOutDayClicked(365)}" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/soldout_recycler"
+                                style="@style/Dida.Padding.16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:nestedScrollingEnabled="false"
+                                android:orientation="vertical"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintBottom_toTopOf="@id/soldout_more"
+                                app:layout_constraintTop_toBottomOf="@id/day7_btn"
+                                app:soldoutItem="@{vm.soldoutState}"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/holder_soldout" />
+
+                            <TextView
+                                android:id="@+id/soldout_more"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginRight="16dp"
+                                android:background="@drawable/custom_surface2_radius10"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:gravity="center"
+                                android:paddingTop="16dp"
+                                android:paddingBottom="16dp"
+                                android:text="@string/more_text"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/soldout_recycler"
+                                app:onSingleClick="@{() -> vm.onSoldOutMoreClicked()}" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/recentnft_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="42dp"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:text="@string/home_recentnft"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/soldout_layout" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recentnft_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="9dp"
+                            android:nestedScrollingEnabled="false"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toTopOf="@id/recent_more"
+                            app:layout_constraintTop_toBottomOf="@id/recentnft_txt"
+                            app:recentNftItem="@{vm.homeState}"
+                            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            tools:listitem="@layout/holder_mypage_user_cards" />
+
+                        <TextView
+                            android:id="@+id/recent_more"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/custom_surface2_radius10"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:gravity="center"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+                            android:text="@string/more_text"
+                            android:textColor="@color/white"
+                            android:textSize="15dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/recentnft_recycler"
+                            app:onSingleClick="@{() -> vm.onRecentMoreNftClicked()}" />
+
+                        <TextView
+                            android:id="@+id/collection_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="42dp"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:text="@string/home_collection"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/recent_more" />
+
+                        <TextView
+                            android:id="@+id/collection_txt2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:text="@string/home_collection_sub_title"
+                            android:textColor="@color/hots_coin_txt"
+                            android:textSize="14dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/collection_txt" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/collection_recycler"
+                            style="@style/Dida.Padding.16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:nestedScrollingEnabled="false"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/collection_txt2" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.core.widget.NestedScrollView>
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="9dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:startLoading="@{vm.homeState}">
+
+                <include layout="@layout/skeleton_home" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>
+

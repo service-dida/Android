@@ -1,0 +1,455 @@
+<resources>
+    <style name="Dida.Padding.16dp" parent="">
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <style name="Widget.Dida.CardView.HideElevation" parent="">
+        <item name="cardCornerRadius">@dimen/default_card_view_radius</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardUseCompatPadding">false</item>
+    </style>
+
+    <!-- ToolBar -->
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">24dp</item>
+        <item name="actionMenuTextColor">@color/white</item>
+    </style>
+
+    <!--Bottom Navigation Text -->
+    <style name="Widget.BottomNavigationView"
+        parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <!-- TextView 스타일 -->
+    <style name="Password_dial_style" parent="@style/Widget.AppCompat.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#00ff0000</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:hapticFeedbackEnabled">true</item>
+    </style>
+
+    <style name="Password_image_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">11dp</item>
+        <item name="android:layout_marginRight">11dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="TextView_medium_18_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView_medium_20_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView_medium_20_linesurface1" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/line_surface1</item>
+    </style>
+
+    <style name="TextView_bold_15_white" parent="@style/Widget.AppCompat.TextView">\
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_bold_20_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_bold_24_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_bold_14_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_14_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_16_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_18_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_18_black" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_bold_18_black" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_18_brand_lemon" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_14_surface10" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/surface10</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Button_transparents_regular_16_white" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/trans_parents</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Button_transparents_regular_14_brand_lemon" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/trans_parents</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Button_transparents_regular_14_white" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/trans_parents</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Button_transparents_regular_16_brand_lemnon" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/trans_parents</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Button_surface3_regular_16_white" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/custom_surface3_radius10</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_14_surface6" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/surface6</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_14_C5C5CF" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/text_c5c5cf</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_14_timeGray" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/time_gray_text</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_18_timeGray" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/time_gray_text</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Button_lemon_regular_16_black" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/custom_brandlemon_radius16</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!--EditText 스타일 -->
+    <style name="Widget.AppCompat.EditText.DetailCommunity.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:gravity">left</item>
+        <item name="android:hint">@string/detail_community_edit_hint</item>
+        <item name="android:textColorHint">@color/surface6</item>
+        <item name="android:textSize">14dp</item>
+        <item name="fontFamily">@@font/pretendard_regular</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="EditText_surface2_radius10_solid_surface5" parent="Widget.AppCompat.EditText">
+        <item name="android:gravity">left|center</item>
+        <item name="android:hint">@string/detail_community_edit_hint</item>
+        <item name="android:textColorHint">@color/surface6</item>
+        <item name="android:textSize">14dp</item>
+        <item name="fontFamily">@@font/pretendard_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/custom_surface2_radius10_surface5_width1</item>
+        <item name="android:padding">17dp</item>
+    </style>
+
+    <style name="EditText_surface1_radius10_solid_surface4" parent="Widget.AppCompat.EditText">
+        <item name="android:gravity">left|center</item>
+        <item name="android:hint">@string/detail_community_edit_hint</item>
+        <item name="android:textColorHint">@color/surface6</item>
+        <item name="android:textSize">14dp</item>
+        <item name="fontFamily">@@font/pretendard_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/custom_surface1_radius10_surface4_width1</item>
+        <item name="android:padding">17dp</item>
+    </style>
+
+
+    <style name="TextView_bold_14_lemon" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_bold_16_black" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_bold_16_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_12_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_12_white50" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/white_50</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_14_white50" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/white_50</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_13_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_22_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">22dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_bold_22_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">22dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_20_white" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_regular_20_notice" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/notice_red</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_regular_14_notice_red" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/notice_red</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextView_regular_24_lemon" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView_bold_24_brand_lemon" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/brand_lemon</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.DIDA.BottomDialogAboveKeyboard" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="TextView_Regular_16_White" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16dp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+</resources>

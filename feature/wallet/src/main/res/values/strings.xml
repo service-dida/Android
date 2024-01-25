@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--지갑 화면-->
+    <string name="wallet_title_text">내 지갑</string>
+    <string name="wallet_deal_title_text">NFT 거래 내역</string>
+    <string name="wallet_swap_history_text">swap 내역</string>
+
+    <string name="wallet_empty_title">구매 내역이 없어요</string>
+    <string name="wallet_empty_message">NFT를 구매해보세요!</string>
+    <string name="wallet_empty_button_text">지금 핫한 NFT 보러가기</string>
+
+</resources>

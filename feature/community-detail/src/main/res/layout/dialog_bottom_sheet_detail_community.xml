@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.dida.community_detail.DetailCommunityViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_bottom_sheet"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:id="@+id/update_btn"
+            style="@style/TextView_regular_16_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="15dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="@string/bottom_sheet_update"/>
+
+        <TextView
+            android:id="@+id/delete_btn"
+            style="@style/TextView_regular_16_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="15dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="@string/bottom_sheet_delete"/>
+
+    </LinearLayout>
+</layout>

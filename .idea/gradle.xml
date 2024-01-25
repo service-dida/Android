@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-logic" name="build-logic">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-logic" />
+                  <project path="$PROJECT_DIR$/build-logic/convention" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/7.1/libexec" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/convention" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/add" />
+            <option value="$PROJECT_DIR$/feature/ai" />
+            <option value="$PROJECT_DIR$/feature/block" />
+            <option value="$PROJECT_DIR$/feature/buy-nft" />
+            <option value="$PROJECT_DIR$/feature/change-password" />
+            <option value="$PROJECT_DIR$/feature/community" />
+            <option value="$PROJECT_DIR$/feature/community-detail" />
+            <option value="$PROJECT_DIR$/feature/compose" />
+            <option value="$PROJECT_DIR$/feature/create-community" />
+            <option value="$PROJECT_DIR$/feature/create-community-input" />
+            <option value="$PROJECT_DIR$/feature/email" />
+            <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/hot-seller" />
+            <option value="$PROJECT_DIR$/feature/hot-user" />
+            <option value="$PROJECT_DIR$/feature/image-viewer" />
+            <option value="$PROJECT_DIR$/feature/login" />
+            <option value="$PROJECT_DIR$/feature/mypage" />
+            <option value="$PROJECT_DIR$/feature/nft-detail" />
+            <option value="$PROJECT_DIR$/feature/nft-sale" />
+            <option value="$PROJECT_DIR$/feature/nickname" />
+            <option value="$PROJECT_DIR$/feature/password" />
+            <option value="$PROJECT_DIR$/feature/recent-nft" />
+            <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/splash" />
+            <option value="$PROJECT_DIR$/feature/swap" />
+            <option value="$PROJECT_DIR$/feature/swap-history" />
+            <option value="$PROJECT_DIR$/feature/update-profile" />
+            <option value="$PROJECT_DIR$/feature/user-followed" />
+            <option value="$PROJECT_DIR$/feature/user-profile" />
+            <option value="$PROJECT_DIR$/feature/wallet" />
+            <option value="$PROJECT_DIR$/model" />
+            <option value="$PROJECT_DIR$/presentation" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

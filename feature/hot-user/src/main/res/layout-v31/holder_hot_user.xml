@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="holderModel"
+            type="com.dida.domain.main.model.HotSellerPage" />
+
+        <variable
+            name="eventListener"
+            type="com.dida.hot_user.HotUserActionHandler" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/custom_surface3_radius14"
+        android:padding="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/user_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/follow_btn"
+            app:onSingleClick="@{() -> eventListener.onUserClicked(holderModel.memberInfo.memberId)}">
+            
+            <ImageView
+                android:id="@+id/user_profile"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:image_from_url_circle="@{holderModel.memberInfo.profileUrl}"/>
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/user_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/TextView_medium_18_white"
+                android:layout_marginStart="10dp"
+                android:padding="2dp"
+                android:text="@{holderModel.memberInfo.memberName}"/>
+
+            <TextView
+                android:id="@+id/card_cnt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/user_name"
+                app:layout_constraintStart_toEndOf="@id/user_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/TextView_regular_14_timeGray"
+                android:layout_marginStart="10dp"
+                android:padding="2dp"
+                app:cardCount="@{holderModel.memberInfo.nftCount}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/follow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/user_layout"
+            app:layout_constraintBottom_toBottomOf="@id/user_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:textSize="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:hotUserFollowBtn="@{holderModel.memberInfo.followed}"
+            android:fontFamily="@font/pretendard_regular"
+            app:onSingleClick="@{() ->  eventListener.onUserFollowed(holderModel.memberInfo.memberId)}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_card_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/user_layout"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:background="@drawable/custom_surface3_radius14"
+            android:clipToOutline="true"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

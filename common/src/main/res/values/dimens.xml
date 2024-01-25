@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_dialog_margin">18dp</dimen>
+    <dimen name="default_dialog_padding_start">38dp</dimen>
+    <dimen name="default_dialog_padding_top">28dp</dimen>
+    <dimen name="default_dialog_padding_end">38dp</dimen>
+    <dimen name="default_dialog_padding_bottom">9dp</dimen>
+    <dimen name="default_dialog_title_margin_bottom">18dp</dimen>
+    <dimen name="default_dialog_message_margin_bottom">8dp</dimen>
+    <dimen name="default_dialog_message_line_spacing_extra">4dp</dimen>
+    <dimen name="default_dialog_message_type2_margin_bottom">10dp</dimen>
+    <dimen name="default_dialog_button_padding">20dp</dimen>
+
+    <dimen name="line_indicator_view_corner_radius">2dp</dimen>
+    <dimen name="default_card_view_radius">3dp</dimen>
+
+    <dimen name="hots_indicator_height">6dp</dimen>
+    <dimen name="hot_item_width">252dp</dimen>
+    <dimen name="hot_item_interval">65dp</dimen>
+
+    <dimen name="hot_card_item_width">162dp</dimen>
+    <dimen name="hot_card_item_interval">100dp</dimen>
+
+    <!-- 신고 관련 -->
+    <dimen name="report_recycler_view_padding_bottom">@dimen/report_warning_message_height</dimen>
+    <dimen name="report_header_height">48dp</dimen>
+    <dimen name="report_header_padding_top">8dp</dimen>
+
+    <dimen name="report_warning_message_height">70dp</dimen>
+    <dimen name="report_warning_message_padding">16dp</dimen>
+    <dimen name="report_warning_message_line_spacing_extra">3dp</dimen>
+
+    <dimen name="report_button_elevation">2dp</dimen>
+    <dimen name="report_buttons_margin_between">8dp</dimen>
+    <dimen name="report_buttons_margin_top">16dp</dimen>
+    <dimen name="report_buttons_margin_bottom">16dp</dimen>
+
+    <dimen name="report_padding_top">21dp</dimen>
+    <dimen name="report_padding_bottom">21dp</dimen>
+    <dimen name="report_radio_button_width">19dp</dimen>
+    <dimen name="report_radio_button_height">40dp</dimen>
+    <dimen name="report_title_margin_start">10dp</dimen>
+    <dimen name="report_title_margin_end">10dp</dimen>
+    <dimen name="report_description_padding_top">51dp</dimen>
+    <dimen name="report_description_margin_bottom">18dp</dimen>
+    <dimen name="report_description_line_spacing_extra">4dp</dimen>
+</resources>

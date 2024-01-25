@@ -1,0 +1,4 @@
+<resources>
+    <!--Sold Out 화면-->
+    <string name="sold_out_title">Sold Out</string>
+</resources>

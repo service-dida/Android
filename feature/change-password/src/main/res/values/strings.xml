@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="password_check_hint">6자리 숫자</string>
+    <string name="password_before_title">이전 비밀번호</string>
+    <string name="password_after_title">새로운 비밀번호</string>
+
+</resources>

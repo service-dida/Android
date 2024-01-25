@@ -1,0 +1,13 @@
+<resources>
+    <!--설정 화면-->
+    <string name="settings_title">설정</string>
+    <string name="profile_edit_title">프로필 수정</string>
+    <string name="pre_password_title">임시 비밀번호 발급</string>
+    <string name="password_edit_title">비밀번호 변경</string>
+    <string name="account_information_title">계정 정보</string>
+    <string name="notification_title">공지사항</string>
+    <string name="invisible_title">숨김 목록</string>
+    <string name="block_title">차단된 유저</string>
+    <string name="privacy">개인정보 처리방침</string>
+    <string name="service">이용약관</string>
+</resources>

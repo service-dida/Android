@@ -1,0 +1,161 @@
+<resources>
+    <string name="app_name">DIDA</string>
+    <string name="prefs_key">dida_prefs</string>
+    <string name="app_version">1</string>
+    <string name="price_dida">dida</string>
+
+    <string name="notification_channel_name">DIDA</string>
+    <string name="notification_channel_id">dida_notification_channel</string>
+
+    <string name="more_text">더보기</string>
+    <string name="buy_text">구매하기</string>
+    <string name="ok_text">확인</string>
+
+    <string name="all_text">전체</string>
+    <string name="buy_text_short">구매</string>
+    <string name="sold_text_short">판매</string>
+
+    <string name="hot_seller">Hot Seller</string>
+
+    <!--에러 관련-->
+    <string name="service_error_retry_button_label">재시도하기</string>
+    <string name="network_error_message">네트워크 오류나 일시적인 장애가 발생했어요</string>
+    <string name="unknown_error_message">알 수 없는 에러가 발생했어요</string>
+    <string name="network_retry_error_message">일시적인 오류로 인하여 재시도 중이에요</string>
+    <string name="duplicate_login_error_message">다른 기기에서 로그인 해서 로그인이 해제됐어요</string>
+
+    <string name="retry">재시도</string>
+    <string name="exit">종료</string>
+
+    <!--네베게이션 메뉴-->
+    <string name="bottom_home">홈</string>
+    <string name="bottom_swap">스왑</string>
+    <string name="bottom_community">커뮤니티</string>
+    <string name="bottom_my">마이페이지</string>
+
+    <!--Bottom Sheet 관련-->
+    <string name="bottom_sheet_update">수정하기</string>
+    <string name="bottom_sheet_delete">삭제하기</string>
+
+    <!--홈 화면-->
+    <string name="home_hotitem">HOT Item \uD83D\uDD25</string>
+    <string name="home_soldout">Sold Out \uD83D\uDC8E</string>
+    <string name="home_recentnft">최신 NFT \uD83C\uDF40</string>
+    <string name="home_collection">활발한 활동 \uD83C\uDF55</string>
+
+    <string name="home_soldout_sub_title">기간 별 가장 비싸게 팔린 NFT</string>
+    <string name="home_collection_sub_title">한달 간 발행한 Nft 수가 10개 이상인 유저</string>
+
+    <string name="home_hotitem_tab">Hot Seller</string>
+    <string name="home_soldout_tab">Sold Out</string>
+    <string name="home_recentnft_tab">최신 NFT</string>
+    <string name="home_collection_tab">활동</string>
+
+    <string name="home_soldout_period_7">일주일 이내</string>
+    <string name="home_soldout_period_30">1개월</string>
+    <string name="home_soldout_period_180">6개월</string>
+    <string name="home_soldout_period_365">올 한해</string>
+
+    <string name="user_follow">팔로우</string>
+    <string name="user_following">팔로잉</string>
+
+    <!--닉네임 화면-->
+    <string name="nickname_main_yourname">당신의 이름은?</string>
+    <string name="nickname_main_text">닉네임</string>
+    <string name="nickname_edit_hint">8글자 이하의 한글</string>
+    <string name="nickname_ok_btn">가입 완료</string>
+
+    <!--로그인 화면-->
+    <string name="login_description">빠르게 로그인하기</string>
+    <string name="kakao_login">카카오톡으로 시작하기</string>
+    <string name="kakao_login_web">카카오계정 직접 입력하기</string>
+
+    <!--커뮤니티 화면-->
+    <string name="community_reservation_title_text">오늘 곧 민팅될 NFT ⏰</string>
+    <string name="community_hot_title_text">시끌벅적 게시판 👀</string>
+    <string name="community_hot_sub_title_text">이야기가 활발한 NFT를 소개합니다</string>
+    <string name="community_recent_title_text">최신 게시물</string>
+
+    <!--이메일 화면-->
+    <string name="email_main_text">이메일로 전송된 \n인증번호 6자리를 입력해주세요.</string>
+    <string name="email_check_hint">6자리 숫자</string>
+    <string name="email_validation_resend">인증번호 다시 보내기</string>
+
+    <!--비밀번호 다이어로그-->
+    <string name="dialog_title1">비밀번호 설정</string>
+    <string name="dialog_title2">비밀번호 확인</string>
+    <string name="dialog_email_title">이메일</string>
+    <string name="dialog_email_hint">dida@gmail.com</string>
+
+    <!--NFT 설명 예제-->
+    <string name="example_description">얼마나 있는 풀이 열락의 청춘은 물방아 구할 밝은 있다. 능히 작고 그들을 스며들어 가진 이상의 그것은 끓는 남는 교향악이다. 실현에 붙잡아 위하여 봄바람이다. 풍부하게 인간에 유소년에게서 무한한 노래하며 두손을 황금시대를 구하기 약동하다. 가지에 구하지 아니더면, 대고, 가장 있다. 공자는 피어나는 꽃이 속에서 뛰노는 아니다. 그들의 이상의 천지는 소리다.이것은 위하여서. 현저하게 아니한 청춘 사막이다. 바이며, 희망의 많이 생생하며, 봄바람이다. 열매를 노래하며 피가 옷을 이상, 쓸쓸한 발휘하기 사막이다. 얼마나 이것은 예가 하</string>
+
+    <!--게시글 상세-->
+    <string name="detail_community_title">게시글</string>
+    <string name="detail_community_edit_hint">댓글을 남겨보세요.</string>
+
+    <!--NFT 상세-->
+    <string name="detail_nft_title">제목</string>
+    <string name="detail_nft_who_text">소유권 내역</string>
+    <string name="detail_nft_detail_title">상세정보 📎</string>
+    <string name="detail_nft_link_title">컨트랙트 링크 주소</string>
+    <string name="detail_nft_token_title">토큰 ID</string>
+    <string name="detail_nft_community_title">커뮤니티 ✋</string>
+
+    <!--게시글 작성 & 수정-->
+    <string name="create_community_title">게시글 작성</string>
+    <string name="create_community_input_update">게시글 수정</string>
+
+    <string name="create_community_select_nft_title">작성할 NFT 작품을 \n골라주세요</string>
+    <string name="create_community_like_nft">좋아요한 NFT</string>
+    <string name="create_community_my_nft">my NFT</string>
+    <string name="create_community_my_nft_select">선택</string>
+    <string name="create_community_input_okbtn">완료</string>
+
+    <string name="create_community_input_title_hint">게시글 제목을 쓰세요</string>
+    <string name="create_community_input_description_hint">해당 NFT에 대해 자유롭게 이야기해주세요!\n\n(욕설, 비방, 음란, 홍보 등 NFT 주제와 상관없는 게시글은 통보없이 삭제될 수 있습니다.)</string>
+    <string name="create_community_input_back">변경</string>
+
+    <string name="create_community_input_title">제목</string>
+    <string name="create_community_input_description">내용</string>
+    <string name="create_community_input_select">선택</string>
+
+    <!--프로필 수정 화면 -->
+    <string name="profile_title_text">프로필 수정</string>
+    <string name="profile_nickname_text">닉네임</string>
+    <string name="profile_nickname_hint">닉네임을 입력해주세요.</string>
+    <string name="profile_description_text">자기소개</string>
+    <string name="profile_description_hint">30글자 이하의 한글</string>
+    <string name="profile_description_check_text">30자 이내로 줄여주세요.</string>
+
+    <!--지갑 화면-->
+    <string name="wallet_title_text">내 지갑</string>
+    <string name="wallet_deal_title_text">NFT 거래 내역</string>
+
+    <!-- Dialog-->
+    <string name="logout_dialog_message">로그아웃 하시겠어요?</string>
+    <string name="logout_dialog_positive">로그아웃</string>
+    <string name="logout_dialog_negative">취소</string>
+
+    <string name="create_post_dialog_message">게시글 작성이\n완료되었어요</string>
+    <string name="report_dialog_message">게시글 신고가\n완료되었어요</string>
+    <string name="block_dialog_message">게시글 차단이\n완료되었어요</string>
+    <string name="report_user_dialog_message">유저 신고가\n완료되었어요</string>
+    <string name="block_user_dialog_message">유저 차단이\n완료되었어요</string>
+
+    <!-- Snack Bar-->
+    <string name="user_follow_message">%s님을 팔로우 했어요</string>
+    <string name="user_unfollow_message">팔로우를 취소했어요</string>
+    <string name="delete_bookmark_message">찜한 아이템에서 삭제했어요</string>
+    <string name="add_bookmark_message">찜한 아이템에 추가했어요</string>
+    <string name="add_bookmark_action_title_message">보러가기</string>
+    <string name="update_profile_message">프로필 수정이 완료되었어요</string>
+    <string name="delete_post_message">게시글이 삭제되었어요</string>
+    <string name="delete_reply_message">댓글이 삭제되었어요</string>
+    <string name="block_post_message">게시물이 차단되었어요</string>
+
+    <!-- 신고 관련-->
+    <string name="already_report_message">이미 신고했어요</string>
+    <string name="title_ownership_history">Module Title</string>
+
+</resources>
