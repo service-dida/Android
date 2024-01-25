@@ -37,8 +37,8 @@ class AndroidPresentationConventionPlugin : Plugin<Project> {
 
                 defaultConfig {
                     applicationId = "com.dida.android"
-                    versionCode = 1
-                    versionName = "1.0"
+                    versionCode = 20240125
+                    versionName = "1.0.0"
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
                     targetSdk = 33
