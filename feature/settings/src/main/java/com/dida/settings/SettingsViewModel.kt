@@ -19,13 +19,7 @@ class SettingsViewModel @Inject constructor() : BaseViewModel() {
     private val _navigateToMainEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val navigateToMainEvent: SharedFlow<Unit> = _navigateToMainEvent
 
-    val settings: StateFlow<List<SETTINGS>> = MutableStateFlow(
-        listOf(
-            SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.ACCOUNT,
-            SETTINGS.NOTIFICATION, SETTINGS.INVISIBLE_CARD, SETTINGS.BLOCK_USER,
-            SETTINGS.PRIVACY, SETTINGS.SERVICE
-        )
-    ).asStateFlow()
+    val settings: StateFlow<List<SETTINGS>> = MutableStateFlow(initSettings).asStateFlow()
 
     fun logOut() {
         baseViewModelScope.launch {
@@ -34,6 +28,11 @@ class SettingsViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 }
+
+private val initSettings = listOf(
+    SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.INVISIBLE_CARD,
+    SETTINGS.BLOCK_USER, SETTINGS.PRIVACY, SETTINGS.SERVICE
+)
 
 enum class SETTINGS {
     EDIT_PROFILE, EDIT_PASSWORD, ACCOUNT, NOTIFICATION, INVISIBLE_CARD, BLOCK_USER, PRIVACY, SERVICE
