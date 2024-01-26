@@ -26,6 +26,7 @@ import com.dida.ai.keyword.result.KeywordResultViewModel.Companion.INITIALIZE_LI
 import com.dida.ai.keyword.result.RestartKeyword
 import com.dida.ai.keyword.result.dialog.AiPictureRestartBottomSheet
 import com.dida.ai.keyword.result.dialog.RestartMenu
+import com.dida.android.BuildConfig
 import com.dida.common.dialog.CentralDialogFragment
 import com.dida.common.util.AppLog
 import com.dida.common.dialog.DefaultDialogFragment
@@ -215,7 +216,7 @@ class KeywordResultFragment :
     }
     private fun loadAdMob(){
         if (viewModel.aiPictures.value == INITIALIZE_LIST) {
-            RewardedAd.load(requireContext(), "ca-app-pub-3940256099942544/5224354917", adRequest.value, object : RewardedAdLoadCallback() {
+            RewardedAd.load(requireContext(), BuildConfig.GOOGLE_ADMOB_UNIT_ID, adRequest.value, object : RewardedAdLoadCallback() {
                     override fun onAdFailedToLoad(adError: LoadAdError) {
                         rewardedAd = null
                     }
