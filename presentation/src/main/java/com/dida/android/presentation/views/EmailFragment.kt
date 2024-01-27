@@ -12,6 +12,7 @@ import com.dida.email.R
 import com.dida.common.util.maskEmail
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.widget.DefaultSnackBar
+import com.dida.domain.main.model.RequestEmailType
 import com.dida.email.EmailNavigationAction
 import com.dida.email.EmailViewModel
 import com.dida.email.databinding.FragmentEmailBinding
@@ -20,11 +21,6 @@ import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
-enum class RequestEmailType{
-    MAKE_WALLET,
-    RESET_PASSWORD
-}
 
 @AndroidEntryPoint
 class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layout.fragment_email) {
@@ -44,6 +40,7 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
+        initToolbar()
         getMaskingEmail()
         requireActivity().window.setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
     }
@@ -80,15 +77,14 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
     }
 
     override fun initAfterBinding() {
-
         binding.okBtn.setOnClickListener {
-            if(viewModel.verifyNumberCheck()) {
-                if(args.requestEmailType == RequestEmailType.MAKE_WALLET){
+            if (viewModel.verifyNumberCheck()) {
+                if (args.requestEmailType == RequestEmailType.MAKE_WALLET) {
                     makeWallet()
-                }else if(args.requestEmailType == RequestEmailType.RESET_PASSWORD){
+                } else if (args.requestEmailType == RequestEmailType.RESET_PASSWORD) {
                     resetPassword()
                 }
-            }else{
+            } else {
                 showMessageSnackBar(getString(R.string.email_response_not_correct))
             }
         }
@@ -148,6 +144,13 @@ class EmailFragment : BaseFragment<FragmentEmailBinding, EmailViewModel>(R.layou
                     binding.emailMaskingTv.text = "회원가입시 입력한 ${maskEmail(user.kakaoAccount?.email!!)}으로 인증번호가 전송됩니다."
                 }
             }
+        }
+    }
+
+    private fun initToolbar() {
+        binding.toolbar.apply {
+            this.setNavigationIcon(com.dida.common.R.drawable.ic_arrow_left)
+            this.setNavigationOnClickListener { navController.popBackStack() }
         }
     }
 

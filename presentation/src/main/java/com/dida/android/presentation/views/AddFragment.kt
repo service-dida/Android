@@ -43,6 +43,7 @@ import com.dida.compose.utils.DidaImage
 import com.dida.compose.utils.HorizontalDivider
 import com.dida.compose.utils.VerticalDivider
 import com.dida.compose.utils.clickableSingle
+import com.dida.domain.main.model.RequestEmailType
 import com.dida.password.PasswordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
