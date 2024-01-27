@@ -2,6 +2,8 @@ package com.dida.settings
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication
+import com.dida.domain.onSuccess
+import com.dida.domain.usecase.DeleteUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,14 +14,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor() : BaseViewModel() {
+class SettingsViewModel @Inject constructor(
+    private val deleteUserUseCase: DeleteUserUseCase,
+) : BaseViewModel() {
 
     private val TAG = "SettingsViewModel"
 
     private val _navigateToMainEvent: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val navigateToMainEvent: SharedFlow<Unit> = _navigateToMainEvent
 
-    val settings: StateFlow<List<SETTINGS>> = MutableStateFlow(initSettings).asStateFlow()
+    val settings: StateFlow<List<Settings>> = MutableStateFlow(initSettings).asStateFlow()
 
     fun logOut() {
         baseViewModelScope.launch {
@@ -27,13 +31,20 @@ class SettingsViewModel @Inject constructor() : BaseViewModel() {
             _navigateToMainEvent.emit(Unit)
         }
     }
+
+    fun deleteUser() {
+        baseViewModelScope.launch {
+            deleteUserUseCase().onSuccess {
+                DataApplication.dataStorePreferences.removeAccountToken()
+                _navigateToMainEvent.emit(Unit)
+            }
+        }
+    }
 }
 
 private val initSettings = listOf(
-    SETTINGS.EDIT_PROFILE, SETTINGS.EDIT_PASSWORD, SETTINGS.INVISIBLE_CARD,
-    SETTINGS.BLOCK_USER, SETTINGS.PRIVACY, SETTINGS.SERVICE
+    Settings.EditProfile(), Settings.EditPassword(), Settings.InvisibleCard(),
+    Settings.BlockUser(), Settings.Privacy(), Settings.Service()
 )
 
-enum class SETTINGS {
-    EDIT_PROFILE, EDIT_PASSWORD, ACCOUNT, NOTIFICATION, INVISIBLE_CARD, BLOCK_USER, PRIVACY, SERVICE
-}
+
