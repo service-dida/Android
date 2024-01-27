@@ -39,7 +39,7 @@ import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.NoticeRed
 import com.dida.compose.theme.White
 import com.dida.domain.main.model.RequestEmailType
-import com.dida.settings.SETTINGS
+import com.dida.settings.SettingsType
 import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,14 +85,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 SettingScreen(
                     onClicked = {
                         when (it) {
-                            SETTINGS.EDIT_PROFILE -> navigate(SettingsFragmentDirections.actionSettingFragmentToUpdateProfileFragment())
-                            SETTINGS.EDIT_PASSWORD ->  navigate(SettingsFragmentDirections.actionSettingFragmentToEmailFragment(RequestEmailType.RESET_PASSWORD))
-                            SETTINGS.ACCOUNT -> Unit
-                            SETTINGS.NOTIFICATION -> Unit
-                            SETTINGS.INVISIBLE_CARD -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
-                            SETTINGS.BLOCK_USER -> navigate(SettingsFragmentDirections.actionSettingFragmentToBlockFragment())
-                            SETTINGS.PRIVACY -> onWebView(getString(com.dida.common.R.string.privacy_url))
-                            SETTINGS.SERVICE -> onWebView(getString(com.dida.common.R.string.service_url))
+                            SettingsType.EDIT_PROFILE -> navigate(SettingsFragmentDirections.actionSettingFragmentToUpdateProfileFragment())
+                            SettingsType.EDIT_PASSWORD ->  navigate(SettingsFragmentDirections.actionSettingFragmentToEmailFragment(RequestEmailType.RESET_PASSWORD))
+                            SettingsType.ACCOUNT -> Unit
+                            SettingsType.NOTIFICATION -> Unit
+                            SettingsType.INVISIBLE_CARD -> navigate(SettingsFragmentDirections.actionSettingFragmentToHideListFragment())
+                            SettingsType.BLOCK_USER -> navigate(SettingsFragmentDirections.actionSettingFragmentToBlockFragment())
+                            SettingsType.PRIVACY -> onWebView(getString(com.dida.common.R.string.privacy_url))
+                            SettingsType.SERVICE -> onWebView(getString(com.dida.common.R.string.service_url))
                         }
                     },
                     onLogOutClicked = { logOutDialog() }
@@ -137,7 +137,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     @Composable
     fun SettingScreen(
-        onClicked: (type: SETTINGS) -> Unit,
+        onClicked: (type: SettingsType) -> Unit,
         onLogOutClicked: () -> Unit
     ) {
         Column(
@@ -148,7 +148,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             val settings by viewModel.settings.collectAsStateWithLifecycle()
 
             settings.forEach {
-                SettingType(type = it, onClicked = onClicked)
+                SettingItem(
+                    iconRes = it.iconRes,
+                    message = stringResource(id = it.message),
+                    onClicked = { onClicked(it.type) }
+                )
             }
             Spacer(
                 modifier = Modifier
@@ -181,71 +185,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                     .fillMaxWidth()
                     .height(48.dp)
             )
-        }
-    }
-
-    @Composable
-    private fun SettingType(
-        type: SETTINGS,
-        onClicked: (type: SETTINGS) -> Unit
-    ) {
-        when (type) {
-            SETTINGS.EDIT_PROFILE ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_profile_edit,
-                    message = stringResource(id = com.dida.settings.R.string.profile_edit_title)
-                ) {
-                    onClicked(SETTINGS.EDIT_PROFILE)
-                }
-            SETTINGS.EDIT_PASSWORD ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_password_edit,
-                    message = stringResource(id = com.dida.settings.R.string.password_edit_title)
-                ) {
-                    onClicked(SETTINGS.EDIT_PASSWORD)
-                }
-            SETTINGS.ACCOUNT ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_account_information,
-                    message = stringResource(id = com.dida.settings.R.string.account_information_title)
-                ) {
-                    onClicked(SETTINGS.ACCOUNT)
-                }
-            SETTINGS.NOTIFICATION ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_notification,
-                    message = stringResource(id = com.dida.settings.R.string.notification_title)
-                ) {
-                    onClicked(SETTINGS.NOTIFICATION)
-                }
-            SETTINGS.INVISIBLE_CARD ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_invisible,
-                    message = stringResource(id = com.dida.settings.R.string.invisible_title)
-                ) {
-                    onClicked(SETTINGS.INVISIBLE_CARD)
-                }
-            SETTINGS.BLOCK_USER ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_block,
-                    message = stringResource(id = com.dida.settings.R.string.block_title)
-                ) {
-                    onClicked(SETTINGS.BLOCK_USER)
-                }
-            SETTINGS.PRIVACY ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_privacy,
-                    message = stringResource(id = com.dida.settings.R.string.privacy)
-                ) {
-                    onClicked(SETTINGS.PRIVACY)
-                }
-            SETTINGS.SERVICE ->
-                SettingItem(
-                    iconRes = com.dida.common.R.drawable.ic_service,
-                    message = stringResource(id = com.dida.settings.R.string.service)
-                ) {
-                    onClicked(SETTINGS.SERVICE)
-                }
         }
     }
 
