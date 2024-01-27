@@ -10,6 +10,7 @@ import com.dida.common.util.performHapticEvent
 import com.dida.common.util.repeatOnCreated
 import com.dida.common.util.successOrNull
 import com.dida.domain.main.model.Follow
+import com.dida.domain.main.model.RequestEmailType
 import com.dida.mypage.adapter.MyPageEmptyAdapter
 import com.dida.mypage.adapter.MyPageEmptyItem
 import com.dida.mypage.adapter.MyPageHeaderAdapter

@@ -394,7 +394,8 @@
         android:label="EmailFragment">
         <argument
             android:name="requestEmailType"
-            app:argType="com.dida.android.presentation.views.RequestEmailType" />
+            android:defaultValue="MAKE_WALLET"
+            app:argType="com.dida.domain.main.model.RequestEmailType" />
     </fragment>
 
     <fragment

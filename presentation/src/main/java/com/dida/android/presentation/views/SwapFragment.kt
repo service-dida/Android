@@ -11,6 +11,7 @@ import com.dida.common.util.performHapticEvent
 import com.dida.common.util.removeTrailingDot
 import com.dida.common.util.repeatOnResumed
 import com.dida.common.util.repeatOnStarted
+import com.dida.domain.main.model.RequestEmailType
 import com.dida.password.PasswordDialog
 import com.dida.swap.SwapNavigationAction
 import com.dida.swap.SwapViewModel

@@ -38,6 +38,7 @@ import com.dida.compose.theme.LineSurface
 import com.dida.compose.theme.MainBlack
 import com.dida.compose.theme.NoticeRed
 import com.dida.compose.theme.White
+import com.dida.domain.main.model.RequestEmailType
 import com.dida.settings.SETTINGS
 import com.dida.settings.SettingsViewModel
 import com.dida.settings.databinding.FragmentSettingsBinding
