@@ -19,7 +19,7 @@ class KeywordStyleViewModel @Inject constructor(
 
     private val _keywordsState: MutableStateFlow<List<Keyword.Style>> = MutableStateFlow(
         listOf(
-            Keyword.Style(imageUrl = com.dida.common.R.mipmap.img_keyword_style1_foreground, word = "Oil painting"),
+            Keyword.Style(com.dida.common.R.mipmap.img_keyword_style1_foreground, word = "Oil painting"),
             Keyword.Style(com.dida.common.R.mipmap.img_keyword_style2_foreground, "Henri Mattisse"),
             Keyword.Style(com.dida.common.R.mipmap.img_keyword_style3_foreground, "3D art"),
             Keyword.Style(com.dida.common.R.mipmap.img_keyword_style4_foreground, "Water Painting"),
