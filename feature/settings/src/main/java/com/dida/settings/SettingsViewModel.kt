@@ -2,6 +2,8 @@ package com.dida.settings
 
 import com.dida.common.base.BaseViewModel
 import com.dida.data.DataApplication
+import com.dida.domain.onSuccess
+import com.dida.domain.usecase.DeleteUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor() : BaseViewModel() {
+class SettingsViewModel @Inject constructor(
+    private val deleteUserUseCase: DeleteUserUseCase,
+) : BaseViewModel() {
 
     private val TAG = "SettingsViewModel"
 
@@ -25,6 +29,15 @@ class SettingsViewModel @Inject constructor() : BaseViewModel() {
         baseViewModelScope.launch {
             DataApplication.dataStorePreferences.removeAccountToken()
             _navigateToMainEvent.emit(Unit)
+        }
+    }
+
+    fun deleteUser() {
+        baseViewModelScope.launch {
+            deleteUserUseCase().onSuccess {
+                DataApplication.dataStorePreferences.removeAccountToken()
+                _navigateToMainEvent.emit(Unit)
+            }
         }
     }
 }

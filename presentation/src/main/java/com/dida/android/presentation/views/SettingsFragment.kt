@@ -95,7 +95,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                             SettingsType.SERVICE -> onWebView(getString(com.dida.common.R.string.service_url))
                         }
                     },
-                    onLogOutClicked = { logOutDialog() }
+                    onLogOutClicked = { logOutDialog() },
+                    onDeleteUserClicked = { deleteUserDialog() }
                 )
             }
         }
@@ -121,6 +122,20 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             .show(childFragmentManager, "log_out_dialog")
     }
 
+    private fun deleteUserDialog() {
+        CentralDialogFragment.Builder()
+            .title(getString(R.string.delete_user_dialog_title))
+            .message(getString(R.string.delete_user_dialog_message))
+            .positiveButton(getString(R.string.delete_user_dialog_positive), object : CentralDialogFragment.OnClickListener {
+                override fun onClick() {
+                    viewModel.deleteUser()
+                }
+            })
+            .negativeButton(getString(R.string.logout_dialog_negative))
+            .build()
+            .show(childFragmentManager, "log_out_dialog")
+    }
+
     private fun onWebView(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
@@ -138,7 +153,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     @Composable
     fun SettingScreen(
         onClicked: (type: SettingsType) -> Unit,
-        onLogOutClicked: () -> Unit
+        onLogOutClicked: () -> Unit,
+        onDeleteUserClicked: () -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -175,6 +191,20 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                         .fillMaxWidth()
                         .padding(16.dp),
                     text = stringResource(id = com.dida.common.R.string.logout_text),
+                    fontSize = 16,
+                    textAlign = TextAlign.Start,
+                    color = NoticeRed
+                )
+            }
+            Surface(
+                modifier = Modifier.clickable { onDeleteUserClicked() },
+                color = MainBlack
+            ) {
+                DidaMediumText(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    text = stringResource(id = com.dida.common.R.string.delete_user_text),
                     fontSize = 16,
                     textAlign = TextAlign.Start,
                     color = NoticeRed

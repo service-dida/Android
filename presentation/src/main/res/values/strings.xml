@@ -137,6 +137,11 @@
     <string name="logout_dialog_positive">로그아웃</string>
     <string name="logout_dialog_negative">취소</string>
 
+    <string name="delete_user_dialog_title">DIDA를 탈퇴 하시겠어요?</string>
+    <string name="delete_user_dialog_message">DIDA에서 생성한 NFT및 코인에 대한 모든 정보가 사라져요.\n사라진 정보에 대해서는 복구가 불가능합니다.\n이에 대한 법적 책임은 DIDA 에서 책임지지 않습니다.</string>
+    <string name="delete_user_dialog_positive">탈퇴하기</string>
+    <string name="delete_user_dialog_negative">취소</string>
+
     <string name="create_post_dialog_message">게시글 작성이\n완료되었어요</string>
     <string name="report_dialog_message">게시글 신고가\n완료되었어요</string>
     <string name="block_dialog_message">게시글 차단이\n완료되었어요</string>
